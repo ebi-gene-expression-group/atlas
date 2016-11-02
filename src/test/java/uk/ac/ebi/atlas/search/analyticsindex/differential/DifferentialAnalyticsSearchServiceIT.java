@@ -82,6 +82,7 @@ public class DifferentialAnalyticsSearchServiceIT {
         assertThat(result.get("results").getAsJsonArray().size(), greaterThan(0));
         for(JsonElement e: result.get("results").getAsJsonArray()){
             assertTrue(e.getAsJsonObject().has("bioentityIdentifier"));
+            assertTrue(e.getAsJsonObject().has("bioentityName"));
             assertTrue(e.getAsJsonObject().has("experimentAccession"));
             assertTrue(e.getAsJsonObject().has("experimentType"));
             assertTrue(e.getAsJsonObject().has("contrastId"));

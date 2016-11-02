@@ -92,6 +92,7 @@
         <field name="id" type="uuid" indexed="true" stored="true" required="true" />
         <field name="bioentityIdentifier" type="string" indexed="true" stored="true" required="true"/>
         <field name="identifierSearch" type="text" indexed="true" stored="false"/>
+        <field name="keyword_symbol" type="string" indexed="true" stored="true" multiValued="true" />
         <dynamicField name="keyword_*" type="string" indexed="true" stored="false" multiValued="true" />
         <field name="species" type="text_lower" indexed="true" stored="true" required="true"/>
         <field name="kingdom" type="text_lower" indexed="true" stored="true" required="true" />

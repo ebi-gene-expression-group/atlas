@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,12 @@ public class DifferentialResultsReader {
             String contrastId = (String) document.get("contrastId");
             ExperimentType experimentType = ExperimentType.get((String) document.get("experimentType"));
 
+            String bioentityName = "";
+            Object bioentityNamesOrEmpty = document.get("keyword_symbol");
+            if(bioentityNamesOrEmpty!=null && bioentityNamesOrEmpty instanceof Collection && ((Collection) bioentityNamesOrEmpty).size()>0){
+                bioentityName = ((Collection) bioentityNamesOrEmpty).iterator().next().toString();
+            }
+
             Object foldChangeSymbol = document.get("foldChange");
             double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
 
@@ -65,6 +72,7 @@ public class DifferentialResultsReader {
 
             JsonObject o = gson.toJsonTree(document).getAsJsonObject();
             o.addProperty("bioentityIdentifier", (String) document.get("bioentityIdentifier"));
+            o.addProperty("bioentityName", bioentityName);
             o.addProperty("experimentAccession", experimentAccession);
             o.addProperty("experimentType", experimentType.toString());
             o.addProperty("contrastId", contrastId);
