@@ -13,9 +13,9 @@ var Colour = require("color");
 var highlightColour = function(c){
   return (
     c.light()
-    ? c.lighten(0.5)
-    : c.saturate(0.3).darken(0.5)
-  );
+    ? c.clone().lighten(0.5)
+    : c.clone().saturate(0.3).darken(0.5)
+  )
 }
 
 var dataClassesFromSeries = function(dataSeries){
@@ -46,9 +46,9 @@ var dataClassesFromSeries = function(dataSeries){
       theseSeriesValuesSorted.sort(function(l,r){return l-r});
       return {
         min: theseSeriesValuesSorted[0],
-        minColour: ix ==0? highlightColour(Colour(self[ix].colour)): Colour(self[ix-1].colour),
+        minColour: ix ==0? highlightColour(Colour(self[ix].colour)): Colour(self[ix].colour).mix(Colour(self[ix-1].colour)),
         max: theseSeriesValuesSorted[theseSeriesValuesSorted.length-1],
-        maxColour: ix ==self.length-1 ? highlightColour(Colour(self[ix].colour)): Colour(self[ix+1].colour),
+        maxColour: ix ==self.length-1 ? highlightColour(Colour(self[ix].colour)): Colour(self[ix].colour).mix(Colour(self[ix+1].colour)),
         median: theseSeriesValuesSorted[Math.floor(series.data.length/2)],
         medianColour: Colour(self[ix].colour),
         sortedValues: theseSeriesValuesSorted
@@ -59,7 +59,7 @@ var dataClassesFromSeries = function(dataSeries){
     return (
       x.sortedValues.length>3
       && x.sortedValues[0]!=x.sortedValues[x.sortedValues.length-1]
-      && x.minColour.rgb()!==x.maxColour.rgb()
+      && x.minColour.rgbString()!==x.maxColour.rgbString()
     );
   };
 
@@ -71,7 +71,7 @@ var dataClassesFromSeries = function(dataSeries){
         max:x.median,
         maxColour: x.medianColour,
         median: x.sortedValues[Math.floor(x.sortedValues.length/4)],
-        medianColour: x.minColour.mix(x.medianColour),
+        medianColour: x.minColour.clone().mix(x.medianColour),
         sortedValues: x.sortedValues.slice(0, Math.floor(x.sortedValues.length/2))
       },
       {
@@ -80,7 +80,7 @@ var dataClassesFromSeries = function(dataSeries){
         max:x.max,
         maxColour: x.maxColour,
         median: x.sortedValues[Math.floor(3* x.sortedValues.length/4)],
-        medianColour: x.medianColour.mix(x.maxColour),
+        medianColour: x.medianColour.clone().mix(x.maxColour),
         sortedValues: x.sortedValues.slice(Math.floor(x.sortedValues.length/2))
       }
     ];
