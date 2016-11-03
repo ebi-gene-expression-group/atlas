@@ -15677,7 +15677,7 @@ webpackJsonp_name_([6],[
 	//*------------------------------------------------------------------*
 	
 	var highlightColour = function highlightColour(c) {
-	  return c.light() ? c.lighten(0.5) : c.saturate(0.3).darken(0.5);
+	  return c.light() ? c.clone().lighten(0.5) : c.clone().saturate(0.3).darken(0.5);
 	};
 	
 	var dataClassesFromSeries = function dataClassesFromSeries(dataSeries) {
@@ -15701,16 +15701,16 @@ webpackJsonp_name_([6],[
 	    });
 	    return {
 	      min: theseSeriesValuesSorted[0],
-	      minColour: ix == 0 ? highlightColour(Colour(self[ix].colour)) : Colour(self[ix - 1].colour),
+	      minColour: ix == 0 ? highlightColour(Colour(self[ix].colour)) : Colour(self[ix].colour).mix(Colour(self[ix - 1].colour)),
 	      max: theseSeriesValuesSorted[theseSeriesValuesSorted.length - 1],
-	      maxColour: ix == self.length - 1 ? highlightColour(Colour(self[ix].colour)) : Colour(self[ix + 1].colour),
+	      maxColour: ix == self.length - 1 ? highlightColour(Colour(self[ix].colour)) : Colour(self[ix].colour).mix(Colour(self[ix + 1].colour)),
 	      median: theseSeriesValuesSorted[Math.floor(series.data.length / 2)],
 	      medianColour: Colour(self[ix].colour),
 	      sortedValues: theseSeriesValuesSorted
 	    };
 	  });
 	  var needToSplit = function needToSplit(x) {
-	    return x.sortedValues.length > 3 && x.sortedValues[0] != x.sortedValues[x.sortedValues.length - 1] && x.minColour.rgb() !== x.maxColour.rgb();
+	    return x.sortedValues.length > 3 && x.sortedValues[0] != x.sortedValues[x.sortedValues.length - 1] && x.minColour.rgbString() !== x.maxColour.rgbString();
 	  };
 	
 	  var splitInHalf = function splitInHalf(x) {
@@ -15720,7 +15720,7 @@ webpackJsonp_name_([6],[
 	      max: x.median,
 	      maxColour: x.medianColour,
 	      median: x.sortedValues[Math.floor(x.sortedValues.length / 4)],
-	      medianColour: x.minColour.mix(x.medianColour),
+	      medianColour: x.minColour.clone().mix(x.medianColour),
 	      sortedValues: x.sortedValues.slice(0, Math.floor(x.sortedValues.length / 2))
 	    }, {
 	      min: x.median,
@@ -15728,7 +15728,7 @@ webpackJsonp_name_([6],[
 	      max: x.max,
 	      maxColour: x.maxColour,
 	      median: x.sortedValues[Math.floor(3 * x.sortedValues.length / 4)],
-	      medianColour: x.medianColour.mix(x.maxColour),
+	      medianColour: x.medianColour.clone().mix(x.maxColour),
 	      sortedValues: x.sortedValues.slice(Math.floor(x.sortedValues.length / 2))
 	    }];
 	  };
@@ -18238,7 +18238,7 @@ webpackJsonp_name_([6],[
 	    RNASEQ_MRNA_BASELINE: [0, 10, 1000],
 	    PROTEOMICS_BASELINE: [0, 0.001, 8],
 	    DEFAULT: [0, 10, 1000]
-	  }, ["Below cutoff", "Low", "Medium", "High"], ["#eaeaea", "#45affd", "#1E74CA", "#024990"], profilesRows, config) : config.isDifferential ? _dataProportionallyInEachSeries(profilesRows, config, _fns, [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]], [["#0000ff", "#8cc6ff"], ["#808080"], ["#e9967a", "#b22222"]]) : _dataProportionallyInEachSeries(profilesRows, config, [_belowCutoff, _.negate(_belowCutoff)], [["Below cutoff"], ["Low", "Medium", "High"]], [["#808080"], ["#8cc6ff", "#0000ff", "#0000b3"]]);
+	  }, ["Below cutoff", "Low", "Medium", "High"], ["#eaeaea", "#45affd", "#1E74CA", "#024990"], profilesRows, config) : config.isDifferential ? _dataProportionallyInEachSeries(profilesRows, config, _fns, [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]], [["#0000ff", "#8cc6ff"], ["gainsboro"], ["#e9967a", "#b22222"]]) : _dataProportionallyInEachSeries(profilesRows, config, [_belowCutoff, _.negate(_belowCutoff)], [["Below cutoff"], ["Low", "Medium", "High"]], [["gainsboro"], ["#8cc6ff", "#0000ff", "#0000b3"]]);
 	};
 	var _splitDataSetByProportion = function _splitDataSetByProportion(data, names, colours) {
 	  var sortedValues = data.map(function (point) {

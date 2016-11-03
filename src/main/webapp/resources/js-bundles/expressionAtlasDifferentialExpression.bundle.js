@@ -9222,11 +9222,6 @@ webpackJsonp_name_([4],{
 	            return {
 	                facetName: facet.facetName,
 	                facetItems: facet.facetItems.map(function (facetItem) {
-	
-	                    var allFilteredResultsMatchThisFacetItem = filteredResults.every(function (result) {
-	                        return _this4._equalsToOrIncludes(result[facet.facetName], facetItem.name);
-	                    });
-	
 	                    var querySelectAfterSwitchingThisFacetItem = JSON.parse(JSON.stringify(_this4.state.querySelect));
 	                    if (_this4._equalsToOrIncludes(querySelectAfterSwitchingThisFacetItem[facet.facetName], facetItem.name)) {
 	                        _this4._removeElementFromObjectOfArrays(querySelectAfterSwitchingThisFacetItem, facet.facetName, facetItem.name);
@@ -9242,11 +9237,10 @@ webpackJsonp_name_([4],{
 	
 	                    var sameResultsAfterSwitchingThisItem = JSON.stringify(resultIdsAfterSwitchingThisFacetItem) === JSON.stringify(currentResultIds);
 	                    var noResultsAfterSwitchingThisItem = resultIdsAfterSwitchingThisFacetItem.length === 0;
-	
 	                    return {
 	                        name: facetItem.name,
 	                        value: facetItem.value,
-	                        checked: _this4._equalsToOrIncludes(_this4.state.querySelect[facet.facetName], facetItem.name) || sameResultsAfterSwitchingThisItem && allFilteredResultsMatchThisFacetItem,
+	                        checked: _this4._equalsToOrIncludes(_this4.state.querySelect[facet.facetName], facetItem.name) || sameResultsAfterSwitchingThisItem,
 	                        disabled: noResultsAfterSwitchingThisItem || sameResultsAfterSwitchingThisItem
 	                    };
 	                })
