@@ -2,7 +2,6 @@ const React = require(`react`);
 const Modal = require(`react-bootstrap/lib/Modal`);
 const Button = require(`react-bootstrap/lib/Button`);
 const Glyphicon = require(`react-bootstrap/lib/Glyphicon`);
-const Tooltip = require(`react-bootstrap/lib/Tooltip`);
 const Disclaimers = require(`./Disclaimers.jsx`);
 
 const DownloadProfilesButton = React.createClass({
