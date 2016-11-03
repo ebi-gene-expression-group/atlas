@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,13 +32,11 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -63,14 +60,14 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
-    private HeatmapWidgetController(ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
+    private HeatmapWidgetController(SpeciesLookupService speciesLookupService,
                                     BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
                                     @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory
                                                 baselineProfileInputStreamFactory,
                                     SpeciesFactory speciesFactory,FactorGroupingService factorGroupingService) {
-        this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
+        this.anatomogramFactory = new AnatomogramFactory();
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
@@ -102,7 +99,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                 @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
                                 @RequestParam(value = "propertyType", required = false) String propertyType,
                                 @RequestParam(value = "source", required = false) String defaultQueryFactorType,
-                                Model model, HttpServletRequest request) {
+                                Model model) {
 
         if(isBlank(speciesString)){
             Optional<String> maybeSpecies = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery);
@@ -120,8 +117,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                 baselineAnalyticsSearchService.findExpressions(
                         geneQuery, conditionQuery, species, defaultQueryFactorType);
 
-        populateModelWithMultiExperimentResults(
-                request.getContextPath(), geneQuery, conditionQuery,species, searchResult, model);
+        populateModelWithMultiExperimentResults(geneQuery, conditionQuery,species, searchResult, model);
 
         return "heatmap-data";
     }
@@ -130,16 +126,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     public String analyticsJson(@RequestParam(value = "query") SemanticQuery query,
                                 @RequestParam(value = "species") String speciesString,
                                 @RequestParam(value = "source") String defaultQueryFactorType,
-                                Model model, HttpServletRequest request) {
+                                Model model) {
 
         Species species = speciesFactory.create(speciesString);
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(query, species, defaultQueryFactorType);
-        populateModelWithMultiExperimentResults(request.getContextPath(), query, species, searchResult, model);
+        populateModelWithMultiExperimentResults(query, species, searchResult, model);
 
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery geneQuery,
+    private void populateModelWithMultiExperimentResults(SemanticQuery geneQuery,
                                                          SemanticQuery conditionQuery, Species species,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
@@ -147,7 +143,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
             model.addAttribute(
                     "anatomogram",
-                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors), contextRoot));
+                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors)));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }
@@ -162,14 +158,14 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("conditionQuery", conditionQuery);
     }
 
-    private void populateModelWithMultiExperimentResults(String contextRoot, SemanticQuery query, Species species,
+    private void populateModelWithMultiExperimentResults(SemanticQuery query, Species species,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
             model.addAttribute(
                     "anatomogram",
-                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors), contextRoot));
+                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors)));
         } else {
             model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
         }

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
@@ -42,7 +41,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                                          TracksUtil tracksUtil,FactorGroupingService factorGroupingService) {
         super(atlasResourceHub);
         this.applicationProperties = applicationProperties;
-        this.anatomogramFactory = new AnatomogramFactory(applicationProperties);
+        this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.tracksUtil = tracksUtil;
         this.factorGroupingService = factorGroupingService;
@@ -78,7 +77,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
         List<AssayGroupFactor> filteredAssayGroupFactors =requestContext.getOrderedAssayGroupFactors();
-        String contextRoot = request.getContextPath();
+
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("geneQuery", preferences.getGeneQuery());
         model.addAllAttributes(experiment.getAttributes());
@@ -102,7 +101,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("jsonCoexpressions", gson.toJson(heatMapResults.getJsonCoexpressions()));
 
 
-        Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
+        // Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
         model.addAttribute("jsonGeneSetProfiles", "null");
                 /* We decided to disable the feature because it has a performance cost and isn't
                 very useful..
@@ -113,7 +112,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(),
                 experiment.getSpecies(),
-                filteredAssayGroupFactors, contextRoot)));
+                filteredAssayGroupFactors)));
 
         model.addAttribute("isWidget", isWidget);
         if (!isWidget) {
