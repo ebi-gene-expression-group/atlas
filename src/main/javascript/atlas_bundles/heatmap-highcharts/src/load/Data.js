@@ -213,11 +213,11 @@ var getDataSeries = function(profilesRows, config) {
       ? _dataProportionallyInEachSeries(profilesRows, config,
           _fns,
           [["High down", "Down"], ["Below cutoff"], ["Up", "High up"]],
-          [["#0000ff", "#8cc6ff"], ["#808080"], ["#e9967a","#b22222"]])
+          [["#0000ff", "#8cc6ff"], ["gainsboro"], ["#e9967a","#b22222"]])
       : _dataProportionallyInEachSeries(profilesRows, config,
           [_belowCutoff,_.negate(_belowCutoff)],
           [["Below cutoff"],["Low", "Medium", "High"]],
-          [["#808080"],["#8cc6ff","#0000ff","#0000b3"]])
+          [["gainsboro"],["#8cc6ff","#0000ff","#0000b3"]])
 
   )
 };
