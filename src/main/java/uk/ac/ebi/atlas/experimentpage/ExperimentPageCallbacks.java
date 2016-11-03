@@ -1,12 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-//import com.google.common.collect.ImmutableList;
-//import com.google.common.collect.ImmutableSet;
-//import uk.ac.ebi.atlas.search.GeneQuery;
-//import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class ExperimentPageCallbacks {
@@ -21,9 +16,4 @@ public class ExperimentPageCallbacks {
         sourceURLBuilder.deleteCharAt(sourceURLBuilder.lastIndexOf("&"));
         return sourceURLBuilder.toString();
     }
-
-//    public <Preferences extends ExperimentPageRequestPreferences> void
-//    adjustReceivedObjects(Preferences preferences) {
-//        preferences.setGeneQuery(GeneQuery.fromUrlEncodedJson(preferences.getGeneQuery()));
-//    }
 }
