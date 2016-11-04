@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.differential.microarray;
+package uk.ac.ebi.atlas.differential.microarray;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration.XMLConfiguration;

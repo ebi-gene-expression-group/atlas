@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.baseline;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;

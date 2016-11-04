@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.differential.Contrast;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;

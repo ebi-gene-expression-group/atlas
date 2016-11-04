@@ -1,5 +1,5 @@
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.differential;
 
 
 import static com.google.common.base.Preconditions.checkState;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.baseline;
 
 import java.util.Collection;
 import java.util.List;

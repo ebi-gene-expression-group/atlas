@@ -1,5 +1,5 @@
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.differential;
 
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;

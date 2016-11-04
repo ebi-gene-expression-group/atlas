@@ -1,10 +1,10 @@
 
-package uk.ac.ebi.atlas.model.differential.microarray;
+package uk.ac.ebi.atlas.differential.microarray;
 
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.differential.Contrast;
+import uk.ac.ebi.atlas.differential.DifferentialExpression;
 
 public class MicroarrayExpression extends DifferentialExpression {
 

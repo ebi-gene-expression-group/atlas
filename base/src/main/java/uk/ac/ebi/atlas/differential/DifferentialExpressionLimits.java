@@ -1,5 +1,5 @@
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.differential;
 
 public interface DifferentialExpressionLimits {
     double getMaxUpRegulatedExpressionLevel();

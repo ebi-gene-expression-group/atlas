@@ -1,8 +1,8 @@
 
-package uk.ac.ebi.atlas.model.differential.rnaseq;
+package uk.ac.ebi.atlas.differential.rnaseq;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.differential.DifferentialProfile;
 
 public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression> {
 

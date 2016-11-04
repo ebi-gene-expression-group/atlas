@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.baseline;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

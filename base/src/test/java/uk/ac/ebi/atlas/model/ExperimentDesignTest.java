@@ -11,10 +11,6 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: barrera
- */
 public class ExperimentDesignTest {
 
     private static final String ASSAY1 = "ASSAY1";

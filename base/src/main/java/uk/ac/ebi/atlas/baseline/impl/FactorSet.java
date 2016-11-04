@@ -1,10 +1,10 @@
-package uk.ac.ebi.atlas.model.baseline.impl;
+package uk.ac.ebi.atlas.baseline.impl;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.baseline.Factor;
+import uk.ac.ebi.atlas.baseline.FactorGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;

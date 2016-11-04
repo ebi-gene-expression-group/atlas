@@ -1,8 +1,8 @@
 
-package uk.ac.ebi.atlas.model.differential.microarray;
+package uk.ac.ebi.atlas.differential.microarray;
 
 import com.google.common.base.Objects;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.differential.DifferentialProfile;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
 

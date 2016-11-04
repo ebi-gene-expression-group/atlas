@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class SpeciesTest {
@@ -35,9 +35,7 @@ public class SpeciesTest {
         assertThat(new Species("homo sapiens","homo sapiens", "e","k").equals(
                 new Species("mus musculus","mus musculus", "e","k")),is(false));
 
-        assertThat(new Species("homo sapiens","homo sapiens", "e","k").equals(
-                "homo sapiens"),is(false));
-        assertThat(new Species("homo sapiens","homo sapiens", "e","k").equals(
-                null),is(false));
+        assertThat(new Species("homo sapiens","homo sapiens", "e","k").equals("homo sapiens"), is(false));
+        assertThat(new Species("homo sapiens","homo sapiens", "e","k").equals(null),is(false));
     }
 }

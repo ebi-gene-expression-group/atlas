@@ -1,10 +1,10 @@
-package uk.ac.ebi.atlas.model.differential.microarray;
+package uk.ac.ebi.atlas.differential.microarray;
 
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.differential.Contrast;
+import uk.ac.ebi.atlas.differential.DifferentialExperiment;
 
 import java.util.Date;
 import java.util.HashMap;

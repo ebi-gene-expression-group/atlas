@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.baseline;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Splitter;

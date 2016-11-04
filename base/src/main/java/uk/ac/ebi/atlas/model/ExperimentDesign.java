@@ -7,8 +7,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.baseline.Factor;
+import uk.ac.ebi.atlas.baseline.impl.FactorSet;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;

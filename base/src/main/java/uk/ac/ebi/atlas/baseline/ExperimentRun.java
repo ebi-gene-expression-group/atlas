@@ -1,7 +1,7 @@
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.baseline.impl.FactorSet;
 
 import java.io.Serializable;
 import java.util.Objects;
