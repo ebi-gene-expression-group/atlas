@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Homo sapiens",
+    "canonicalName": "homo sapiens",
+    "defaultQueryFactorType": "organism_part",
+    "kingdom": "animals",
+    "resources": [
+      { "type": "genome browser", "url": "http://www.ensembl.org/Homo_sapiens" }
+    ]
+  },
+  {
+    "name": "Oryza sativa Japonica group",
+    "canonicalName": "oryza sativa",
+    "defaultQueryFactorType": "organism_part",
+    "kingdom": "plants",
+    "resources": [
+      { "type": "genome browser", "url": "http://plants.ensembl.org/Oryza_sativa" },
+      { "type": "genome browser", "url": "http://ensembl.gramene.org/Oryza_sativa" }
+    ]
+  },
+  {
+    "name": "Oryza sativa Indica group",
+    "canonicalName": "oryza sativa",
+    "defaultQueryFactorType": "organism_part",
+    "kingdom": "plants",
+    "resources": [
+      { "type": "genome browser", "url": "http://plants.ensembl.org/Oryza_sativa" },
+      { "type": "genome browser", "url": "http://ensembl.gramene.org/Oryza_sativa" }
+    ]
+  },
+  {
+    "name": "Caenorhabditis elegans",
+    "canonicalName": "caenorhabditis elegans",
+    "defaultQueryFactorType": "organism_part",
+    "kingdom": "animals",
+    "resources": [
+      { "type": "genome browser", "url": "http://parasite.wormbase.org/Caenorhabditis_elegans_prjna13758" }
+    ]
+  }
+]

@@ -1,6 +1,9 @@
 web/src/main/javascript/**/.tmp
+# Compiled and auto-generated classes
 target
 **/target
+
+# IntelliJ IDEA project files
 *.iml
 **/*.iml
 _idea
@@ -8,22 +11,30 @@ _idea
 .idea-files
 .project
 .settings/
-src/main/resources/log4j.xml
-src/test/resources/log4j.xml 
+
+
+**/src/main/resources/log4j.xml
+**/src/test/resources/log4j.xml 
 bin
 .classpath
 .project
 .settings/
-src/test/resources/serialized_expression
+
+# OS X “Desktop Services” files
 .DS_Store
 .module-cache
-npm-debug.log
-src/main/**/node_modules
-src/main/javascript/**/dist
-src/main/javascript/expression-atlas-heatmap-highcharts/test/data
 
-tmp/**
-**/rebel.xml
+# JavaScript and npm artifacts
+npm-debug.log
+**/src/main/**/node_modules
+**/src/main/javascript/**/dist
+
+# Different test data
+**/src/main/javascript/expression-atlas-heatmap-highcharts/test/data
+**/src/test/resources/serialized_expression
+**/src/test/resources/expdesign/ExpDesign-TEST-*.tsv
 **/*op-log.tsv
+
+**/tmp
+**/rebel.xml
 *.log
-src/test/resources/expdesign/ExpDesign-TEST-*.tsv

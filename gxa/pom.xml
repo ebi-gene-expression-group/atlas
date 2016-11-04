@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>atlas</artifactId>
+        <groupId>uk.ac.ebi</groupId>
+        <version>3.0</version>
+    </parent>
+
+    <artifactId>gxa</artifactId>
+    <version>3.0</version>
+    <packaging>war</packaging>
+
+    <name>Gene Expression Atlas</name>
+    <url>https://www.ebi.ac.uk/gxa/</url>
+
+
+    <properties>
+        <test.integration.pattern>**/*IT.java</test.integration.pattern>
+        <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
+
+        <selenium.version>2.44.0</selenium.version>
+
+        <!-- default values for configuration properties,
+        they are set to local development machine defaults
+        and are overridden in profiles for specific deployment environments-->
+        <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
+        <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
+
+        <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
+        <!-- mailtrap.io password: atlas-ebi-14 -->
+        <mail.smtp.host>mailtrap.io</mail.smtp.host>
+        <mail.smtp.port>2525</mail.smtp.port>
+        <mail.smtp.user>feedback-mail-3e3ccf8bbcedeb96</mail.smtp.user>
+        <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
+        <mail.smtp.auth>true</mail.smtp.auth>
+
+        <!-- Default log settings -->
+        <log.level.root>warn</log.level.root>
+        <log.level.atlas>info</log.level.atlas>
+        <log.prudent>true</log.prudent>
+    </properties>
+
+    <scm>
+        <url>scm:git:git@github.com:gxa/atlas.git</url>
+        <connection>scm:git:git@github.com:gxa/atlas.git</connection>
+        <developerConnection>scm:git:git@github.com:gxa/atlas.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <build>
+        <finalName>gxa</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>oracleContext.xml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>bioentity_properties/**</exclude>
+                    <exclude>expdesign/**</exclude>
+                    <exclude>magetab/**</exclude>
+                    <exclude>mirbase/**</exclude>
+                    <exclude>ontology/**</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>selenium.test.host</name>
+                            <value>lime</value>
+                        </property>
+                        <property>
+                            <name>selenium.test.portnumber</name>
+                            <value>14092</value>
+                        </property>
+                    </systemProperties>
+                    <excludes>
+                        <exclude>${failsafe.excludes}</exclude>
+                        <exclude>**/*SIT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <path>/gxa</path>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>tomcat-deploy</id>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <url>http://lime:14092/manager/html</url>
+                            <username>tomcat</username>
+                            <password>tomcat</password>
+                            <path>/gxa</path>
+                            <update>true</update>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>uk.ac.ebi</groupId>
+            <artifactId>atlas-base</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.util.concurrent</groupId>
+            <artifactId>atlassian-util-concurrent</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0-rc1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--Commons dependencies-->
+
+
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
+        <!--Spring dependencies-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <!--
+            Bean Factory and JavaBeans utilities (depends on spring-core)
+            Define this if you use Spring Bean APIs (org.springframework.beans.*)
+        -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <!--
+            Application Context (depends on spring-core, spring-expression, spring-aop, spring-beans)
+            This is the central artifact for Spring's Dependency Injection Container and is generally always defined
+        -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.13</version>
+        </dependency>
+        <!--
+            Required by Spring MVC 3 @Configuration
+        -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.7.8</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.lambdaj</groupId>
+            <artifactId>lambdaj</artifactId>
+            <version>2.3.3</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib-nodep</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <!-- Oracle driver and pooling -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ucp</artifactId>
+            <version>11.2.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.ac.ebi.fg</groupId>
+            <artifactId>ae-efo-loader</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+
+
+
+        <!-- JSR 303 validator implementation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.3.0.Final</version>
+        </dependency>
+
+
+
+
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!--
+            Jackson JSON
+        -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>displaytag</groupId>
+            <artifactId>displaytag</artifactId>
+            <version>1.2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-lang</artifactId>
+                    <groupId>commons-lang</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-collections</artifactId>
+                    <groupId>commons-collections</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jcl104-over-slf4j</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <scope>compile</scope>
+            <version>4.3.4</version>
+        </dependency>
+
+        <!-- for URLrewrite proxying -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib-nodep</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- not necessary, but it allows us to download the sources for the selenium server for debugging -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId> selenium-server</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+
+        <!--
+            For URL rewrite, because of possible / suffix
+        -->
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+
+        <!--
+            Java Mail
+        -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+
+        <!--
+            For testing rest services
+        -->
+        <dependency>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>2.3.3</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hamcrest-library</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-collections</artifactId>
+                    <groupId>commons-collections</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.9</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-jxpath</groupId>
+            <artifactId>commons-jxpath</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <!-- not necessary but included here so we can download sources if we need to debug any tomcat classes -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>7.0.42</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>ebi-nexus</id>
+            <name>Nexus</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>ebi-atlas</id>
+            <name>Atlas</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/atlas-repos</url>
+        </repository>
+        <repository>
+            <id>ebi-repo</id>
+            <name>The EBI internal repository</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
+        </repository>
+        <repository>
+            <id>ebi-snapshot-repo</id>
+            <name>The EBI internal snapshot repository</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
+        </repository>
+        <repository>
+            <id>oracleReleases</id>
+            <name>Oracle Released Java Packages</name>
+            <url>http://download.oracle.com/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots/>
+        </repository>
+        <repository>
+            <id>artifactory-repo</id>
+            <url>http://bar.ebi.ac.uk:8081/artifactory/repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <url>http://maven.atlassian.com/content/repositories/atlassian-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>codelds</id>
+            <url>https://dev.lds.org/nexus/content/repositories/thirdparty/</url>
+        </repository>
+
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- Developer Listing -->
+    <developers>
+        <developer>
+            <id>amunoz</id>
+            <name>Alfonso Muñoz-Pomer Fuentes</name>
+            <email>amunoz@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
+        <developer>
+            <id>ebarrera</id>
+            <name>Elisabet Barrera Casanova</name>
+            <email>barrera@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
+        <developer>
+            <id>wbazant</id>
+            <name>Wojtek Bażant</name>
+            <email>wbazant@ebi.ac.uk</email>
+            <organization>EBI</organization>
+            <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties/>
+        </developer>
+    </developers>
+
+    <profiles>
+        <!-- Execution profiles -->
+        <profile>
+            <!-- Used for build that is deployed to ves-hx-77 -->
+            <id>test</id>
+            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <properties>
+                <data.files.location>/srv/gxa/data</data.files.location>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--build used for staging and production -->
+            <id>production</id>
+            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
+            <properties>
+                <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
+                <europepmc.base.url>/europepmc</europepmc.base.url>
+                <data.files.location>/srv/gxa/data</data.files.location>
+                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
+                <mail.smtp.port>25</mail.smtp.port>
+                <mail.smtp.auth>false</mail.smtp.auth>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>integration.test</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <!-- Embedded tomcat started by mvn in Bamboo plan -->
+            <properties>
+                <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
+                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <!-- Development profiles -->
+        <profile>
+            <id>dev</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <solr.host>lime</solr.host>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev.local.vm</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <solr.host>localhost</solr.host>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- for debugging failing database tests -->
+            <id>dev.using.atlas.it</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- For debugging database performance -->
+            <id>dev.using.atlas.acceptance</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-dlvm-039.ebi.ac.uk:1521:VATLASTST</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- Access Oracle via localhost ssh tunnel -->
+            <id>dev.via.tunnel</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@localhost:5205:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>performance</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-maven-plugin</artifactId>
+                        <version>2.0.3</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>jmeter</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-analysis-maven-plugin</artifactId>
+                        <version>1.0.6</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>analyze</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <source>${project.build.directory}/jmeter/results/*</source>
+                            <targetDirectory>${project.build.directory}/reports</targetDirectory>
+                            <processAllFilesFound>true</processAllFilesFound>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>
