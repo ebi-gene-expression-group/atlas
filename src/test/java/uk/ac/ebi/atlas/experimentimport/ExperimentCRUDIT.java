@@ -22,7 +22,7 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBu
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsIndex;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.File;

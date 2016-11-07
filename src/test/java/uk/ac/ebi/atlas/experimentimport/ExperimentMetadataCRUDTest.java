@@ -20,7 +20,7 @@ import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.*;
+import uk.ac.ebi.atlas.experimentimport.condensedSdrf.*;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;

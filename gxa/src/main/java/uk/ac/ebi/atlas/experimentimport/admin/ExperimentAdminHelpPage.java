@@ -6,10 +6,6 @@ import java.util.Map;
 
 public class ExperimentAdminHelpPage {
 
-    public static final String HELP_URL = "admin/experiments/help";
-
-    private String TITLE = "Experiment admin- list of operations";
-
     private String message = "";
 
     public String getMessage(){
@@ -21,8 +17,9 @@ public class ExperimentAdminHelpPage {
 
     private String buildMessage(){
         StringBuilder result = new StringBuilder();
-        addLine(result,TITLE);
-        addLine(result, StringUtils.repeat('-',TITLE.length()));
+        String title = "Experiment admin- list of operations";
+        addLine(result, title);
+        addLine(result, StringUtils.repeat('-', title.length()));
         addLine(result,"");
         addLine(result, "### Operations by name");
         addLine(result,"");

@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ public abstract class ExperimentDataPoint {
     public ExperimentDataPoint(String bioentityIdentifier, Experiment experiment, String conditionSearch){
         this.bioentityIdentifier = bioentityIdentifier;
         propertyMap.put("bioentityIdentifier", bioentityIdentifier);
-        propertyMap.put("species", experiment.getSpecies().mappedName);
+        propertyMap.put("uk/ac/ebi/atlas/species", experiment.getSpecies().mappedName);
         propertyMap.put("kingdom", experiment.getSpecies().kingdom);
         propertyMap.put("experimentAccession", experiment.getAccession());
         propertyMap.put("experimentType", experiment.getType().name().toUpperCase());

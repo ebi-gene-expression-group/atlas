@@ -63,7 +63,7 @@ public class Species {
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         //required by autocomplete and heatmap
-        result.put("species", originalName);
+        result.put("uk/ac/ebi/atlas/species", originalName);
         //required for genome track browser in ensembl
         result.put("ensemblDB", ensemblDb);
         result.put("kingdom", kingdom);

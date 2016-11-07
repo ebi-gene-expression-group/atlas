@@ -1,7 +1,4 @@
-
 package uk.ac.ebi.atlas.utils;
-
-import org.springframework.context.annotation.Scope;
 
 import javax.imageio.ImageIO;
 import javax.inject.Named;
@@ -12,7 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 @Named
-@Scope("singleton")
 public class ImageIOUtils {
 
     public BufferedImage read(InputStream inputStream) throws IOException {

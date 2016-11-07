@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

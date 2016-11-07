@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStreamer;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

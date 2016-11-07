@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.trader.loader;
+package uk.ac.ebi.atlas.trader.cache.loader;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentpage.fastqc;
 
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

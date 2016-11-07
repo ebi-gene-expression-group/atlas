@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.web;
 
 import oracle.ucp.UniversalConnectionPoolException;

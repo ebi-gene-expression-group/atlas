@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import org.apache.solr.common.SolrInputDocument;
-import uk.ac.ebi.atlas.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import java.util.Collection;
 import java.util.Iterator;

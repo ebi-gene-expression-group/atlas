@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
+import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

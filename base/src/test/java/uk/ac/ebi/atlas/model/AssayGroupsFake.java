@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-
 import com.google.common.collect.Sets;
 import org.mockito.Mockito;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;

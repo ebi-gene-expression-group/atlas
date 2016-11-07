@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
+import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import com.google.gson.*;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
-import uk.ac.ebi.atlas.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.differential.Regulation;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 public class DifferentialExperimentDataPoint extends ExperimentDataPoint{
 

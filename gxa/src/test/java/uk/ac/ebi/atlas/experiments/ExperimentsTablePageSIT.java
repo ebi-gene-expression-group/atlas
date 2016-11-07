@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentsTablePage;
 import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
-import uk.ac.ebi.atlas.web.controllers.rest.ExperimentsListController;
 
 import java.io.BufferedReader;
 import java.io.IOException;

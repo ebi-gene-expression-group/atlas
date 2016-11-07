@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

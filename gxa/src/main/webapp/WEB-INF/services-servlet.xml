@@ -21,7 +21,7 @@
     -->
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="uk.ac.ebi.atlas.web.common">
+    <context:component-scan base-package="uk.ac.ebi.atlas.common">
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 

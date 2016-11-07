@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.model.resource;
 
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
 public enum ResourceType {
     PLOT_MA("ma-plot"), //accessed as ma-plot by old heatmap and otherwise ma-plot.png

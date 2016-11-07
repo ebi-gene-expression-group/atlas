@@ -15,7 +15,6 @@ import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

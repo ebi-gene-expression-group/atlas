@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
@@ -10,10 +11,13 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
 import java.util.List;
 
-import static com.jayway.restassured.RestAssured.get;
-import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
+
+
 
 public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssuredFixture {
 
@@ -21,7 +25,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
     @Ignore
     public void hasResultsForEfoAnnotatedContrasts() {
-        Response response = get("query.tsv?geneQuery=&organism=Any&condition=sex");
+        Response response = RestAssured.get("query.tsv?geneQuery=&organism=Any&condition=sex");
 
         ResponseBody body = response.getBody();
 
@@ -83,7 +87,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
     public void downloadSearchGeneQueryWithOrganism() {
         String url = "/query.tsv?geneQuery=Cyba&organism=Homo%20sapiens&condition=";
 
-        Response response = given().urlEncodingEnabled(false).get(url);
+        Response response = RestAssured.given().urlEncodingEnabled(false).get(url);
 
         response.then().assertThat().contentType(ContentType.TEXT);
 
@@ -100,7 +104,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
     public void downloadSearchConditionWithOrganism() {
         String url = "/query.tsv?geneQuery=true&organism=Arabidopsis+thaliana&condition=%22wild+type%22";
 
-        Response response = given().urlEncodingEnabled(false).get(url);
+        Response response = RestAssured.given().urlEncodingEnabled(false).get(url);
 
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
@@ -116,7 +120,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
     public void downloadGene() {
         String url = "/genes/ENSG00000026103.tsv";
 
-        Response response = given().urlEncodingEnabled(false).log().all().get(url);
+        Response response = RestAssured.given().urlEncodingEnabled(false).log().all().get(url);
 
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
@@ -133,7 +137,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
     public void downloadGeneSet() {
         String url = "/genesets/R-HSA-73887.tsv";
 
-        Response response = given().urlEncodingEnabled(false).get(url);
+        Response response = RestAssured.given().urlEncodingEnabled(false).get(url);
 
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
@@ -150,7 +154,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
     public void downloadWithLogFoldChangeOfInfinity() {
         String url = "/genes/ENSMUSG00000070368.tsv";
 
-        Response response = given().urlEncodingEnabled(false).get(url);
+        Response response = RestAssured.given().urlEncodingEnabled(false).get(url);
 
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
