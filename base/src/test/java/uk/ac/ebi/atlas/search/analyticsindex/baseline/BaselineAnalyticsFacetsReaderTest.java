@@ -56,17 +56,17 @@ public class BaselineAnalyticsFacetsReaderTest {
         assertThat(expressions, contains(expression1, expression2, expression3));
     }
 
-    static List<Map<String, Object>> loadJsonWithExperiments() throws IOException {
+    private static List<Map<String, Object>> loadJsonWithExperiments() throws IOException {
         String species = "Homo sapiens";
         String defaultQueryFactorType = "ORGANISM_PART";
-        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/baseline.heatmap.pivot.response.json");
+        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/uk/ac/ebi/atlas/search/analyticsindex/baseline/baseline.heatmap.pivot.response.json");
 
         return JsonPath.read(in, String.format(BaselineAnalyticsSearchDao.EXPERIMENTS_PATH, species,
                 defaultQueryFactorType));
     }
 
-    static List<Map<String, Object>> loadJsonWithFacets() throws IOException {
-        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/baseline.heatmap.pivot.response2.json");
+    private static List<Map<String, Object>> loadJsonWithFacets() throws IOException {
+        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/uk/ac/ebi/atlas/search/analyticsindex/baseline/baseline.heatmap.pivot.response2.json");
         return JsonPath.read(in, BaselineAnalyticsSearchDao.FACET_TREE_PATH);
     }
 

@@ -159,9 +159,9 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "    \"testAssayGroup\": {\n" +
                 "      \"id\": \"g1\",\n" +
                 "      \"assayAccessions\": [\n" +
-                "        \"C3\",\n" +
                 "        \"C1\",\n" +
-                "        \"C2\"\n" +
+                "        \"C2\",\n" +
+                "        \"C3\"\n" +
                 "      ],\n" +
                 "      \"replicates\": 3\n" +
                 "    },\n" +

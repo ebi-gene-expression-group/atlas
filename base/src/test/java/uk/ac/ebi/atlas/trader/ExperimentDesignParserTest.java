@@ -11,7 +11,6 @@ import org.springframework.test.util.MatcherAssertionErrors;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
 import java.util.List;
 

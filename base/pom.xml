@@ -40,15 +40,43 @@
         </dependency>
 
         <dependency>
-            <groupId>uk.ac.ebi.fg</groupId>
-            <artifactId>ae-efo-loader</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.atlassian.util.concurrent</groupId>
             <artifactId>atlassian-util-concurrent</artifactId>
             <version>3.0.0</version>
         </dependency>
+
+        <!-- Retrieved from artifactory-repo http://bar.ebi.ac.uk:8081/artifactory/repo/ -->
+        <dependency>
+            <groupId>uk.ac.ebi.fg</groupId>
+            <artifactId>ae-efo-loader</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+
+        <!-- Required by org.apache.commons.configuration.tree.xpath.XPathExpressionEngine -->
+        <dependency>
+            <groupId>commons-jxpath</groupId>
+            <artifactId>commons-jxpath</artifactId>
+            <version>1.3</version>
+        </dependency>
     </dependencies>
+
+    <!--<build>-->
+        <!--<finalName>atlas-base</finalName>-->
+
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+                <!--<excludes>-->
+                    <!--<exclude>oracleContext.xml</exclude>-->
+                <!--</excludes>-->
+            <!--</resource>-->
+        <!--</resources>-->
+
+        <!--<testResources>-->
+            <!--<testResource>-->
+                <!--<directory>src/test/resources</directory>-->
+            <!--</testResource>-->
+        <!--</testResources>-->
+    <!--</build>-->
 </project>

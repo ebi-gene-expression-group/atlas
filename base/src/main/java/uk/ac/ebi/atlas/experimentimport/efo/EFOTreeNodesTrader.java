@@ -20,7 +20,7 @@ public class EFOTreeNodesTrader {
     private String efoOwlFilePath;
 
     // efoLoader.load is not thread-safe so we serialize concurrent access using a LazyReference
-    private LazyReference<Map<String, EFONode>> urlToEFONode = new LazyReference<Map<String, EFONode>>() {
+    private final LazyReference<Map<String, EFONode>> urlToEFONode = new LazyReference<Map<String, EFONode>>() {
         @Override
         protected Map<String, EFONode> create() throws Exception {
             EFOLoader efoLoader = new EFOLoader();

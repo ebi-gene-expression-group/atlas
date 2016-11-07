@@ -22,9 +22,9 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
 
     public static final String PROPERTY_NAME_FIELD = "property_name";
 
-    public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
+    private static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
 
-    public static final String SPECIES_FIELD = "uk/ac/ebi/atlas/species";
+    public static final String SPECIES_FIELD = "species";
 
     protected StringBuilder queryStringBuilder = new StringBuilder();
 
@@ -55,7 +55,7 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
         return getThis();
     }
 
-    protected Collection<String> transformToConditions(final String fieldName, Set<String> values){
+    private Collection<String> transformToConditions(final String fieldName, Set<String> values){
         return Collections2.transform(values, new Function<String, String>() {
             @Override
             public String apply(String bioEntityType) {
