@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 /*
@@ -72,7 +73,7 @@ public class BaselineAnalytics {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("geneId", geneId)
                 .add("assayGroupId", assayGroupId)
                 .add("expressionLevel", expressionLevel)

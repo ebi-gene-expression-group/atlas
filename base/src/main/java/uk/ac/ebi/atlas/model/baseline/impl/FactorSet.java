@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.baseline.impl;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
@@ -97,7 +98,7 @@ public class FactorSet implements FactorGroup {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this.getClass())
+        return MoreObjects.toStringHelper(this.getClass())
                 .add("factors", factorsByType.values())
                 .toString();
     }

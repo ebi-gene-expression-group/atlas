@@ -34,7 +34,7 @@ public class IndexingProgressTest {
 
     @Before
     public void setUp() throws Exception {
-        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity_properties");
+        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "data-files/bioentity_properties");
 
         tempDirectoryPath = Files.createDirectories(tempDirectoryPath);
         tempFilePath1 = Files.write(tempDirectoryPath.resolve("temp-file1.tsv"), Lists.newArrayList("hello"), Charset.defaultCharset());

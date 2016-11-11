@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin;
 
 import com.google.common.util.concurrent.MoreExecutors;
@@ -36,7 +35,8 @@ public class BioentityIndexAdminTest {
 
     @Before
     public void setup(){
-        subject = new BioentityIndexAdmin(bioentityIndexMock, bioentityIndexMonitorMock, BIOENTITY_PROPERTY_DIRECTORY, sameThreadExecutorService);
+        subject = new BioentityIndexAdmin(bioentityIndexMonitorMock, BIOENTITY_PROPERTY_DIRECTORY, sameThreadExecutorService);
+        subject.setBioentityIndex(bioentityIndexMock);
     }
 
     @Test

@@ -13,7 +13,7 @@ import java.util.Map;
 @Named
 public class DifferentialFacetsReader {
 
-    private static final String[] FACET_FIELDS = {"kingdom", "uk/ac/ebi/atlas/species", "experimentType", "factors", "numReplicates", "regulation"};
+    private static final String[] FACET_FIELDS = {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
 
     public JsonObject generateFacetsTreeJson(String solrResponseAsJson) {
         JsonObject facets = new JsonObject();

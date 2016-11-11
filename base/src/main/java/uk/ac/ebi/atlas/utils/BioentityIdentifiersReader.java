@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -28,7 +27,6 @@ import java.util.HashSet;
  * one method that gets all gene ids for an experiment accession.
  */
 @Named
-@Scope("singleton")
 public class BioentityIdentifiersReader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifiersReader.class);

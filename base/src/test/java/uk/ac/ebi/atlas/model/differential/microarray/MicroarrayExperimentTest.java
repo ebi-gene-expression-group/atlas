@@ -46,7 +46,7 @@ public class MicroarrayExperimentTest {
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test","assay 1"));
 
         subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrast),
-                "description", true, new Species("uk/ac/ebi/atlas/species", "uk/ac/ebi/atlas/species", "kingdom", "ensembl"), Sets.newTreeSet(Sets
+                "description", true, new Species("species", "species", "kingdom", "ensembl"), Sets.newTreeSet(Sets
                 .newHashSet
                 (ARRAY_DESIGN_ACCESSIONS)),
                 new TreeSet<String>(), experimentDesignMock, Sets.newHashSet(PUBMEDID));

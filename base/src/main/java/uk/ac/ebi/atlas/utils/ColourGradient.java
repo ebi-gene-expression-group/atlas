@@ -71,7 +71,7 @@ public class ColourGradient {
     * Determines what colour a heat map cell should be based upon the cell
     * values.
     */
-    protected Color getGradientColour(double value, double min, double max, Color lowValueColour, Color highValueColour) {
+    private Color getGradientColour(double value, double min, double max, Color lowValueColour, Color highValueColour) {
 
         if (value == max) {
             return highValueColour;

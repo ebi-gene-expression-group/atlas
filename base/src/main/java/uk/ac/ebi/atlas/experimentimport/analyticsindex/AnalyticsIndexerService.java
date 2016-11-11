@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentIterable;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
-import com.google.common.base.Throwables;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.UpdateResponse;
@@ -25,7 +24,7 @@ public class AnalyticsIndexerService {
     private final ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
 
     @Inject
-    public AnalyticsIndexerService(@Qualifier("analyticsSolrClient") SolrClient solrClient,
+    public AnalyticsIndexerService(@Qualifier("solrClientAnalytics") SolrClient solrClient,
                                    ExperimentDataPointStreamFactory experimentDataPointStreamFactory) {
         this.solrClient = solrClient;
         this.experimentDataPointStreamFactory = experimentDataPointStreamFactory;
@@ -34,7 +33,8 @@ public class AnalyticsIndexerService {
 
     Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment,
                                                    Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
-        return new SolrInputDocumentIterable(experimentDataPointStreamFactory.stream(experiment).iterator(), bioentityIdToIdentifierSearch);
+        return new SolrInputDocumentIterable(
+                experimentDataPointStreamFactory.stream(experiment).iterator(), bioentityIdToIdentifierSearch);
 
     }
 
@@ -105,7 +105,7 @@ public class AnalyticsIndexerService {
         try {
             LOGGER.error(exception.getMessage(), exception);
             solrClient.rollback();
-            Throwables.propagate(exception);
+            throw new RuntimeException(exception);
         } catch (IOException | SolrServerException e) {
             LOGGER.error(e.getMessage());
         }

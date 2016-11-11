@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 
@@ -71,7 +72,7 @@ public class RnaSeqDifferentialAnalytics implements DifferentialAnalytics {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("designElement", geneId)
                 .add("contrastId", contrastId)
                 .add("pValue", pValue)

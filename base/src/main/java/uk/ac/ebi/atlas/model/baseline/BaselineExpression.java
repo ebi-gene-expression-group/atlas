@@ -4,6 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
@@ -18,7 +19,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     private FactorGroup factorGroup;
     private boolean known;
     private double[] quartiles;
-    public static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
+    private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
     // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
     private BaselineExpression() {}
@@ -135,7 +136,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("levelString", levelString)
                 .add("factorGroup", factorGroup)
                 .toString();

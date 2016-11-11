@@ -1,60 +1,44 @@
-//package uk.ac.ebi.atlas.search.analyticsindex.differential;
-//
-//import com.google.common.collect.Lists;
-//import com.jayway.jsonpath.JsonPath;
-//import com.jayway.jsonpath.ReadContext;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-//import org.springframework.test.context.web.WebAppConfiguration;
-//import ExperimentType;
-//import uk.ac.ebi.atlas.search.GeneQuery;
-//
-//import javax.inject.Inject;
-//
-//import java.util.List;
-//
-//import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.Matchers.contains;
-//import static org.hamcrest.Matchers.hasItem;
-//import static org.hamcrest.core.Is.is;
-//
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@WebAppConfiguration
-//@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-//public class DifferentialAnalyticsSearchDaoIT {
-//
-//    @Inject
-//    private DifferentialAnalyticsSearchDao subject;
-//
-//    @Test
-//    public void differentialSearchWithUrlParams() {
-//
-//        List<String> species = Lists.newArrayList();
-//        species.add("mus musculus");
-//        species.add("homo sapiens");
-//
-//        List<String> experimentTypes = Lists.newArrayList();
-//        experimentTypes.add(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL.getDescription());
-//
-//        List<String> kingdoms = Lists.newArrayList();
-//        kingdoms.add("animals"); kingdoms.add("plants");
-//
-//        List<String> factors = Lists.newArrayList();
-//        factors.add("clinical information");
-//
-//        String json = subject.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(GeneQuery.create("zinc finger"), species, experimentTypes, kingdoms, factors, null, null);
-//
-//        ReadContext jsonCtx = JsonPath.parse(json);
-//
-//        List<String> speciesFromJson = jsonCtx.read("$.response.docs[*].species");
-//        List<String> experimentTypesFromJson = jsonCtx.read("$.response.docs[*].experimentType");
-//
-//        // TODO Uncomment when https://www.pivotaltracker.com/story/show/101118548 gets fixed
-//        assertThat(speciesFromJson, hasItem("mus musculus"));
-//        assertThat(experimentTypesFromJson, hasItem("rnaseq_mrna_differential"));
-//
-//    }
-//
-//}
+package uk.ac.ebi.atlas.search.analyticsindex.differential;
+
+import com.google.common.collect.Lists;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ReadContext;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
+
+import javax.inject.Inject;
+
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+public class DifferentialAnalyticsSearchDaoIT {
+
+    @Inject
+    private SpeciesFactory speciesFactory;
+
+    @Inject
+    private DifferentialAnalyticsSearchDao subject;
+
+    @Test
+    public void differentialSearchWithUrlParams() {
+        String json = subject.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(SemanticQuery.create("zinc finger"), SemanticQuery.create(), speciesFactory.create("mus musculus").mappedName);
+
+        ReadContext jsonCtx = JsonPath.parse(json);
+
+        List<String> speciesFromJson = jsonCtx.read("$.response.docs[*].species");
+        List<String> experimentTypesFromJson = jsonCtx.read("$.response.docs[*].experimentType");
+
+        assertThat(speciesFromJson, hasItem("mus musculus"));
+        assertThat(experimentTypesFromJson, hasItem("MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL"));
+
+    }
+
+}

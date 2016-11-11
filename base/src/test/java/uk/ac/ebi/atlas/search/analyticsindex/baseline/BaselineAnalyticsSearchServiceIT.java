@@ -5,11 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
@@ -21,16 +18,16 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class BaselineAnalyticsSearchServiceIT {
-
-    private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
 
     public static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Set<Factor> organismPartFactors = new HashSet<>();
@@ -72,7 +69,7 @@ public class BaselineAnalyticsSearchServiceIT {
     }
 
     private static final String CELL_LINE = "CELL_LINE";
-    static Set<Factor> cellLineFactors = new HashSet<>();
+    private static Set<Factor> cellLineFactors = new HashSet<>();
     static {
         cellLineFactors.add(new Factor(CELL_LINE, "A549"));
         cellLineFactors.add(new Factor(CELL_LINE, "AG445"));
@@ -118,7 +115,6 @@ public class BaselineAnalyticsSearchServiceIT {
             assertThat(profile.getShortName(), not(isEmptyOrNullString()));
             assertThat(ExperimentType.get(profile.getExperimentType()).isBaseline(), is(true));
             assertThat(profile.getMinExpressionLevel(), is(lessThanOrEqualTo(profile.getMaxExpressionLevel())));
-          // why?  assertThat(profile.getFilterFactors(), is(EMPTY_FACTOR_SET));
             assertThat(profile.getConditions().size(), greaterThan(4));
             assertThat(profile.isExpressedOnAnyOf(organismPartFactors), is(true));
             assertThat(profile.isExpressedOnAnyOf(cellLineFactors), is(false));

@@ -19,7 +19,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//ToDo: (N) to be removed <- (B) and replaced with what??
 @Named
 @Scope("prototype")
 public class ExperimentDesignParser {
@@ -27,10 +26,10 @@ public class ExperimentDesignParser {
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic\\[(.*?)\\]\\s*");
-    static final Pattern SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic Ontology Term\\[(.*?)\\]\\s*");
+    private static final Pattern SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic Ontology Term\\[(.*?)\\]\\s*");
 
-    static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value\\[(.*?)\\]\\s*");
-    static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
+    private static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value\\[(.*?)\\]\\s*");
+    private static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;

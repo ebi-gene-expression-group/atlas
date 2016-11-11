@@ -24,9 +24,9 @@ public class SpeciesLookupService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesLookupService.class);
 
-    public static final String SPECIES_FIELD = "uk/ac/ebi/atlas/species";
-    public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
-    public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
+    private static final String SPECIES_FIELD = "species";
+    private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
+    private static final String PROPERTY_LOWER_FIELD = "property_value_lower";
 
     private GxaSolrClient solrServer;
 
@@ -77,7 +77,7 @@ public class SpeciesLookupService {
     }
 
     // this is faster than fetchSpeciesForGeneSet because it doesn't facet
-    Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
+    private Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
         LOGGER.debug("fetch first species for {}:{}", fieldName, queryToken);
 
         SolrQuery query = new SolrQuery(fieldName + ":" + encloseInQuotes(queryToken));

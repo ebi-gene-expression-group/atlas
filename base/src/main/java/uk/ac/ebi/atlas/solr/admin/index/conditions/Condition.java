@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Iterables;
 import org.apache.solr.client.solrj.beans.Field;
 
@@ -63,7 +64,7 @@ public class Condition {
 
     @Override
     public String toString() {
-        return com.google.common.base.Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("experimentAccession", experimentAccession)
                 .add("assayGroupId", assayGroupId)
                 .add("values", values)

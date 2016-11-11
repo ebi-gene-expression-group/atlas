@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles;
 
-
 import au.com.bytecode.opencsv.CSVReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
@@ -21,14 +19,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class BaselineExpressionsKryoReaderIT {
 
     private static final String E_MTAB_1733 = "E-MTAB-513";

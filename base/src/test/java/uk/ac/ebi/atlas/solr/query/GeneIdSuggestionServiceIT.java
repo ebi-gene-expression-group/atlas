@@ -5,9 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -17,8 +16,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class GeneIdSuggestionServiceIT {
 
     private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
@@ -29,7 +27,6 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findGeneNameSuggestionsForPartialGeneNames() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("mt-at", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(2));
@@ -42,7 +39,6 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findGeneNameSuggestionsForFullGeneNames() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("mt-atp6", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(1));
@@ -59,7 +55,6 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findSuggestionsForProteinCoding() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("protein_c", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(1));
@@ -113,8 +108,8 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findSomethingStupidShouldReturnEmpty() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx>", HOMO_SAPIENS_SPECIES);
+
         assertThat(properties.size(), is(0));
 
         properties = subject.fetchGeneIdSuggestionsInName("mt-at$", HOMO_SAPIENS_SPECIES);
@@ -123,8 +118,8 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findGeneSynonymSuggestions() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInSynonym("atpase-", HOMO_SAPIENS_SPECIES);
+
         assertThat(properties.size(), is(1));
         assertThat(properties.get(0).value(), is("ATPase-6"));
         assertThat(properties.get(0).category(), is("synonym"));
@@ -145,7 +140,6 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findGeneNameSuggestionsShouldSupportSingleTermQueries() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
@@ -157,7 +151,6 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findGeneNameSuggestionsShouldNotContainSpeciesTerms() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("mus", MUS_MUSCULUS_SPECIES);
 
         assertThat(properties.size(), is(3));
@@ -172,7 +165,6 @@ public class GeneIdSuggestionServiceIT {
 
     @Test
     public void findGeneNameSuggestionsShouldNotSupportMultitermQueries() {
-
         List<SemanticQueryTerm> properties = subject.fetchGeneIdSuggestionsInName("En p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(0));

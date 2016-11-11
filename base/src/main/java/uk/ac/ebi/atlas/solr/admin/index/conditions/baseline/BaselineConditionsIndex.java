@@ -13,7 +13,8 @@ import javax.inject.Named;
 public class BaselineConditionsIndex extends ConditionsIndex {
 
     @Inject
-    public BaselineConditionsIndex(@Qualifier("baselineConditionsSolrClient") SolrClient factorSolrClient, BaselineConditionsBuilder propertiesBuilder) {
-        super(factorSolrClient, propertiesBuilder);
+    public BaselineConditionsIndex(@Qualifier("solrClientBaselineConditions") SolrClient solrClient,
+                                   BaselineConditionsBuilder propertiesBuilder) {
+        super(solrClient, propertiesBuilder);
     }
 }

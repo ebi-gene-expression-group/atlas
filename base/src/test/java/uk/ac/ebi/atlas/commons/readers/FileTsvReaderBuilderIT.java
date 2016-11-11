@@ -8,12 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderDummy;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 
 import java.nio.file.NoSuchFileException;
-
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -21,8 +19,7 @@ import static org.hamcrest.Matchers.isA;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class FileTsvReaderBuilderIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";

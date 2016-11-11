@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.SpeciesTest;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
@@ -18,18 +17,15 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class AnalyticsSearchServiceIT {
 
     @Inject
     AnalyticsSearchService subject;
 
-    SemanticQuery query = SemanticQuery.create("zinc finger");
-
-    SemanticQuery condition = SemanticQuery.create("pish");
-
-    Species species = SpeciesTest.RICE;
+    private SemanticQuery query = SemanticQuery.create("zinc finger");
+    private SemanticQuery condition = SemanticQuery.create("pish");
+    private Species species = SpeciesTest.RICE;
 
     @Test
     public void fetchExperimentTypes1() {
@@ -86,4 +82,5 @@ public class AnalyticsSearchServiceIT {
 
         assertThat(result, is(true));
     }
+
 }

@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentalFactorsFactoryTest {
 
-    public static final String SPECIES = "uk/ac/ebi/atlas/species";
+    public static final String SPECIES = "species";
     public static final String DEFAULT_QUERY_FACTOR_TYPE = "defaultQueryFactorType";
     public static final String FACTOR_TYPE = "factorType";
 

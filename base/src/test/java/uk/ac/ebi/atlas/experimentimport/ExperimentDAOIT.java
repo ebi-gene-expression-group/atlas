@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
@@ -7,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
@@ -16,18 +14,20 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class ExperimentDAOIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_GEOD_5614 = "E-GEOD-5614";
     private static final ExperimentType TYPE_BASELINE = ExperimentType.RNASEQ_MRNA_BASELINE;
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
-    public static final String SECRET_111 = "Secret_111";
+    private static final String SECRET_111 = "Secret_111";
 
     @Inject
     private ExperimentDAO subject;

@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import javax.annotation.Nullable;
 
@@ -64,7 +64,7 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("assayGroupId", assayGroupId)
                 .add("factor", factor)
                 .toString();

@@ -1,19 +1,41 @@
-
 package uk.ac.ebi.atlas.solr.admin;
 
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.params.SolrParams;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.admin.index.BioentityIndex;
+import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
+
+import javax.inject.Inject;
+import java.io.IOException;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.concurrent.CountDownLatch;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-//this will shutdown spring context, otherwise things like singletons remain initialized between different test classes :(
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})//Embedded.xml"})
-public class BioentityIndexAdminIT { /*implements Observer {
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+public class BioentityIndexAdminIT implements Observer {
+
+    @Inject
+    private EmbeddedSolrServer embeddedSolrServer;
+
+    @Inject
+    private BioentityIndex bioentityIndex;
 
     @Inject
     private BioentityIndexAdmin subject;
@@ -23,37 +45,23 @@ public class BioentityIndexAdminIT { /*implements Observer {
 
     private CountDownLatch updateEventLatch; // used to react to event
 
-    private static SolrServer embeddedSolrServer;
-
-    @Inject
-    public void setEmbeddedSolrServer(EmbeddedSolrServer embeddedSolrServer) {
-        BioentityIndexAdminIT.embeddedSolrServer = embeddedSolrServer;
-    }
-
     @Before
-    public void init() {
+    public void setUp() throws IOException {
+        bioentityIndex.setSolrClient(embeddedSolrServer);
+        subject.setBioentityIndex(bioentityIndex);
+
         updateEventLatch = new CountDownLatch(1);
         bioentityIndexMonitor.addObserver(this);
     }
 
     @After
-    public void cleanupData() throws IOException, SolrServerException {
+    public void tearDown() throws IOException, SolrServerException {
         embeddedSolrServer.deleteByQuery("*:*");
         embeddedSolrServer.commit();
     }
 
-    @AfterClass
-    public static void shutDown() {
-        embeddedSolrServer.shutdown();
-    }*/
-
-    @Test
-    public void removeMe() {
-
-    }
-
-    // TODO: enable test again @Test(timeout = 3000) //expect the indexing to happen in less than 2 seconds
-    /*public void rebuildIndexShouldSucceed() throws Exception {
+    @Test(timeout = 3000)
+    public void rebuildIndex() throws Exception {
         subject.rebuildIndex();
 
         updateEventLatch.await();
@@ -61,7 +69,7 @@ public class BioentityIndexAdminIT { /*implements Observer {
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
         QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
-        assertThat(bioentityProperties, hasSize(640));
+        assertThat(bioentityProperties, hasSize(325));
 
         BioentityIndexMonitor.Status status = bioentityIndexMonitor.getStatus();
         assertThat(status, is(BioentityIndexMonitor.Status.COMPLETED));
@@ -70,7 +78,7 @@ public class BioentityIndexAdminIT { /*implements Observer {
     @Override
     public void update(Observable observable, Object argument) {
         assertTrue(observable == bioentityIndexMonitor);
-
         updateEventLatch.countDown();
-    } */
+    }
+
 }

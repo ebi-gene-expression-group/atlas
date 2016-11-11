@@ -31,7 +31,7 @@ public class BaselineConditionsSearchService {
     private ConditionsSolrQueryBuilder queryBuilder;
 
     @Inject
-    public BaselineConditionsSearchService(@Qualifier("baselineConditionsSolrClient") SolrClient baselineConditionsSolrClient, ConditionsSolrQueryBuilder queryBuilder) {
+    public BaselineConditionsSearchService(@Qualifier("solrClientBaselineConditions") SolrClient baselineConditionsSolrClient, ConditionsSolrQueryBuilder queryBuilder) {
         this.baselineConditionsSolrClient = baselineConditionsSolrClient;
         this.queryBuilder = queryBuilder;
     }

@@ -1,13 +1,11 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
@@ -20,18 +18,15 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class DifferentialAnalyticsSearchServiceIT {
 
     @Inject
     DifferentialAnalyticsSearchService subject;
 
-    SemanticQuery query = SemanticQuery.create("zinc finger");
-
-    SemanticQuery condition = SemanticQuery.create("pish");
-
-    String species = "oryza sativa";
+    private SemanticQuery query = SemanticQuery.create("zinc finger");
+    private SemanticQuery condition = SemanticQuery.create("pish");
+    private String species = "oryza sativa";
 
 
     @Test
@@ -73,7 +68,7 @@ public class DifferentialAnalyticsSearchServiceIT {
         assertThat(result.entrySet().size(), greaterThan(0));
         for(Map.Entry<String,?> e: result.entrySet()){
             assertThat(e.getKey(),
-                    isOneOf("kingdom", "uk/ac/ebi/atlas/species", "experimentType", "factors", "numReplicates","regulation"));
+                    isOneOf("kingdom", "species", "experimentType", "factors", "numReplicates","regulation"));
         }
     }
 

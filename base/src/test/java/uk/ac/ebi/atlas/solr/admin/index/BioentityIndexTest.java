@@ -57,7 +57,7 @@ public class BioentityIndexTest {
 
     @Before
     public void setUp() throws Exception {
-        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity_properties/mirbase");
+        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "data-files/bioentity_properties/mirbase");
 
         tempDirectoryPath = Files.createDirectories(tempDirectoryPath);
         tsvFilePath1 = Files.createFile(tempDirectoryPath.resolve("temp-file1.tsv"));
@@ -65,7 +65,7 @@ public class BioentityIndexTest {
         nonTsvFilePath = Files.createFile(tempDirectoryPath.resolve("temp-file.abc"));
 
 
-        reactomePath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity_properties/reactome");
+        reactomePath = Paths.get(System.getProperty("java.io.tmpdir"), "data-files/bioentity_properties/reactome");
         reactomePath = Files.createDirectories(reactomePath);
         reactomeFilePath1 = Files.createFile(reactomePath.resolve("react-file1.tsv"));
 
@@ -74,7 +74,8 @@ public class BioentityIndexTest {
         bioentityProperties = Lists.newArrayList(mock(BioentityProperty.class));
         given(propertiesStreamMock.next()).willReturn(bioentityProperties, bioentityProperties, null);
 
-        subject = new BioentityIndex(bioentityIndexMonitorMock, solrClientMock, streamBuilderMock);
+        subject = new BioentityIndex(bioentityIndexMonitorMock, streamBuilderMock, "");
+        subject.setSolrClient(solrClientMock);
     }
 
     @After

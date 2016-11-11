@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import java.text.MessageFormat;
 
 public enum BioentityPropertyName {
+
     UNKNOWN,
     IDENTIFIER_SEARCH("identifierSearch", false),
     GENE_BIOTYPE("gene_biotype", true),
@@ -53,9 +54,9 @@ public enum BioentityPropertyName {
         return MessageFormat.format("keyword_{0}",name);
     }
 
-    public static BioentityPropertyName getByAnalyticsIndexKeyword(String keywordName){
-        return getByName(keywordName.replace("keyword_", ""));
-    }
+//    public static BioentityPropertyName getByAnalyticsIndexKeyword(String keywordName){
+//        return getByName(keywordName.replace("keyword_", ""));
+//    }
 
     public static BioentityPropertyName getByName(String propertyName){
         if (Strings.isNullOrEmpty(propertyName)){
@@ -74,18 +75,4 @@ public enum BioentityPropertyName {
         this.isId = isId;
     }
 
-
-
-
-        /*
-
-        index.property_names.bioentity_name=symbol
-index.property_names.synonym=synonym
-index.property_names.identifier=pathwayid,gene_biotype,embl,ensfamily,ensgene,ensprotein,enstranscript,entrezgene,flybase_gene_id,flybase_transcript_id,go,interpro,rgd,mgi_id,mirbase_accession,mirbase_id,refseq,unigene,uniprot,mirbase_name,design_element,po
-index.property_names.tooltip=synonym,goterm,interproterm
-index.property_names.identifier.search=gene_biotype,hgnc_symbol,rgd_symbol,flybasename_gene,symbol,mirbase_name,synonym,description,mgi_id,mgi_description,goterm,go,poterm,po,interproterm,interpro,pathwayname,pathwayid,uniprot,design_element
-index.property_names.genepage=symbol,description,synonym,ortholog,go,po,interpro,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,mirbase_accession,mirbase_id,mirbase_sequence,design_element
-index.property_names.genesetpage=reactome,go,po,interpro,plant_reactome
-         */
 }
-

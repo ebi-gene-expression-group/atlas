@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
@@ -88,10 +91,10 @@ public class ExperimentDTO {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("ExperimentAccession", experimentAccession)
                 .add("ExperimentType", experimentType)
-                .add("uk/ac/ebi/atlas/species", species)
+                .add("species", species)
                 .add("pubmedIds", pubmedIds)
                 .add("title", title)
                 .add("isPrivate", isPrivate)
@@ -105,7 +108,7 @@ public class ExperimentDTO {
         result.add("type", new JsonPrimitive(experimentType.name()));
         JsonArray speciesArray = new JsonArray();
         speciesArray.add(new JsonPrimitive(species));
-        result.add("uk/ac/ebi/atlas/species", speciesArray);
+        result.add("species", speciesArray);
         JsonArray pubmedIdsArray = new JsonArray();
         for(String id: pubmedIds){
             pubmedIdsArray.add(new JsonPrimitive(id));

@@ -73,7 +73,7 @@ public class BaselineExperimentTest {
             experimentDesign, AssayGroups assayGroups){
             return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                     experimentalFactors,
-                    "description", "displayName", "", new Species("uk/ac/ebi/atlas/species", "uk/ac/ebi/atlas/species", "kingdom",
+                    "description", "displayName", "", new Species("species", "species", "kingdom",
                     "ensembl"), true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
                     Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
 

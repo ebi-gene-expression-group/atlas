@@ -4,15 +4,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class AnalyticsIndexerManagerIT {
 
     @Inject
@@ -20,7 +18,6 @@ public class AnalyticsIndexerManagerIT {
 
     @Test
     public void testIndexAllPublicExperiments() throws Exception {
-
         try {
             subject.addToAnalyticsIndex("E-PROT-1");
         } catch(Exception e){

@@ -60,23 +60,28 @@
         </dependency>
     </dependencies>
 
-    <!--<build>-->
-        <!--<finalName>atlas-base</finalName>-->
+    <build>
+        <finalName>atlas-base</finalName>
 
-        <!--<resources>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<filtering>true</filtering>-->
-                <!--<excludes>-->
-                    <!--<exclude>oracleContext.xml</exclude>-->
-                <!--</excludes>-->
-            <!--</resource>-->
-        <!--</resources>-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>oracleContext.xml</exclude>
+                    <!--<exclude>solr/**</exclude>-->
+                </excludes>
+            </resource>
+        </resources>
 
-        <!--<testResources>-->
-            <!--<testResource>-->
-                <!--<directory>src/test/resources</directory>-->
-            <!--</testResource>-->
-        <!--</testResources>-->
-    <!--</build>-->
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>data-files/**</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+    </build>
 </project>

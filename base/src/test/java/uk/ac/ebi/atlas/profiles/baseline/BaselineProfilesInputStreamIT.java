@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import org.junit.Before;
@@ -6,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -20,8 +18,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class BaselineProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
@@ -31,21 +28,20 @@ public class BaselineProfilesInputStreamIT {
 
     private ObjectInputStream<BaselineProfile> subject;
 
-    String queryFactorType = "ORGANISM_PART";
-    double defaultCutoff = 0.5;
-    Set<Factor> noFilterFactors = Collections.emptySet();
+    private Set<Factor> noFilterFactors = Collections.emptySet();
 
     @Before
     public void setUp() throws Exception {
+        double defaultCutoff = 0.5;
         setUp(defaultCutoff);
     }
 
     public void setUp(double cutoff) throws Exception {
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, queryFactorType, cutoff,
-                noFilterFactors);
+        String queryFactorType = "ORGANISM_PART";
+        subject =
+                inputStreamFactory.createBaselineProfileInputStream(
+                        EXPERIMENT_ACCESSION, queryFactorType, cutoff, noFilterFactors);
     }
-
-
 
     @Test
     public void readNextShouldReturnFalseGivenAllExpressionLevelsHaveBeenRead() throws Exception {
@@ -53,22 +49,16 @@ public class BaselineProfilesInputStreamIT {
         while (subject.readNext() != null) {
             ++countProfiles;
         }
-
         assertThat(countProfiles, greaterThan(10L));
 
-
         setUp(5);
-
         long countProfiles2 = 0;
         while (subject.readNext() != null) {
             ++countProfiles2;
         }
-
         assertThat(countProfiles2, greaterThan(10L));
-
         assertTrue(countProfiles>countProfiles2);
     }
-
 
     @Test(expected = IllegalStateException.class)
     public void givenTheReaderHasBeenClosedReadNextShouldThrowIllegalStateException() throws Exception {
@@ -77,7 +67,6 @@ public class BaselineProfilesInputStreamIT {
         //when
         subject.readNext();
     }
-
 
     @Test
     public void closingTwiceShouldNotThrowException() throws Exception {

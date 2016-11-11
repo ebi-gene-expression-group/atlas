@@ -1,19 +1,18 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
+import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 
-@Named
+@Component
 public class GoPoTermTrader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GoPoTermTrader.class);
@@ -28,7 +27,7 @@ public class GoPoTermTrader {
             accessionToTerm = new GoPoTermTSVParser(tsvReader).parse();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
 
     }

@@ -92,7 +92,7 @@ public class ExperimentChecker {
         }
     }
 
-    void checkFilesAreAllPresentAndWeCanReadThem(Collection<String> pathTemplatePropertyKeys, String... pathArguments) {
+    private void checkFilesAreAllPresentAndWeCanReadThem(Collection<String> pathTemplatePropertyKeys, String... pathArguments) {
         for (String pathTemplatePropertyKey : pathTemplatePropertyKeys) {
             checkFileExistsAndIsReadable(pathTemplatePropertyKey, pathArguments);
         }

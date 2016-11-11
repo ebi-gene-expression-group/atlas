@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
@@ -119,7 +119,7 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     }
 
     public String toString() {
-        return Objects.toStringHelper(this.getClass())
+        return MoreObjects.toStringHelper(this.getClass())
                 .addValue(super.toString())
                 .add("queryFactorType", queryFactorType)
                 .add("cutoff", cutoff)

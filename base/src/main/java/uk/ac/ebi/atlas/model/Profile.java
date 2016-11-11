@@ -1,6 +1,6 @@
-
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
@@ -63,7 +63,7 @@ public abstract class Profile<K, T extends Expression> {
         return null;
     }
 
-    public boolean isKnownLevel(K condition){
+    protected boolean isKnownLevel(K condition){
         Expression expression = expressionsByCondition.get(condition);
         return expression != null && expression.isKnown();
     }
@@ -98,7 +98,7 @@ public abstract class Profile<K, T extends Expression> {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("expressionsByCondition", expressionsByCondition.values())
                 .add("id", id)
                 .add("name", name)

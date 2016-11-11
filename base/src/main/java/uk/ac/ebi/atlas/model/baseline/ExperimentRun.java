@@ -1,13 +1,12 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.MoreObjects;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ExperimentRun implements Comparable<ExperimentRun>, Serializable {
@@ -60,7 +59,7 @@ public class ExperimentRun implements Comparable<ExperimentRun>, Serializable {
 
     @Override
     public String toString() {
-        return toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("runAccession", runAccession)
                 .add("factorGroup", factorGroup).toString();
     }

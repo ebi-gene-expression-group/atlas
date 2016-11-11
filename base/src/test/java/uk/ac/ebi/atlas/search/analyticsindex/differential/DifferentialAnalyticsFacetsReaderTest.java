@@ -8,26 +8,21 @@
 //import org.junit.runner.RunWith;
 //import org.mockito.Mock;
 //import org.mockito.runners.MockitoJUnitRunner;
-//import Experiment;
-//import ExperimentType;
-//import Contrast;
-//import ContrastTrader;
-//import ExperimentTrader;
-//import ColourGradient;
+//import uk.ac.ebi.atlas.model.Experiment;
+//import uk.ac.ebi.atlas.model.ExperimentType;
+//import uk.ac.ebi.atlas.model.differential.Contrast;
+//import uk.ac.ebi.atlas.trader.ContrastTrader;
+//import uk.ac.ebi.atlas.trader.ExperimentTrader;
+//import uk.ac.ebi.atlas.utils.ColourGradient;
 //
 //import static org.hamcrest.MatcherAssert.assertThat;
 //import static org.hamcrest.core.Is.is;
-//import static org.mockito.Matchers.any;
 //import static org.mockito.Mockito.when;
-//
-///**
-// * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 12/03/15.
-// */
 //
 //@RunWith(MockitoJUnitRunner.class)
 //public class DifferentialAnalyticsFacetsReaderTest {
 //
-//    DifferentialAnalyticsFacetsReader subject;
+//    private DifferentialFacetsReader subject;
 //
 //    private Gson gson;
 //
@@ -180,13 +175,12 @@
 //
 //    @Before
 //    public void setUp() {
-//
-//        subject = new DifferentialAnalyticsFacetsReader(experimentTraderMock, contrastTraderMock, colourGradientMock);
+//        subject = new DifferentialFacetsReader();
 //        gson = new GsonBuilder().disableHtmlEscaping().create();
 //        //gson = new GsonBuilder().create();
 //    }
 //
-//    @Ignore
+//    @Test
 //    public void normalResultsTest() {
 //        when(experimentTraderMock.getExperimentFromCache("E-MTAB-698", ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).thenReturn(E_MTAB_698ExperimentMock);
 //        when(experimentTraderMock.getExperimentFromCache("E-MEXP-1276", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL)).thenReturn(E_MEXP_1276ExperimentMock);
@@ -215,12 +209,12 @@
 //        when(G3_G2E_GEOD_12108ContrastMock.getDisplayName()).thenReturn("'Francisella tularensis novicida' vs 'uninfected'");
 //
 //
-//        assertThat(gson.toJson(subject.extractResultsAsJson(ASPM_RESPONSE)), is(ASPM_RESULTS));
+//        assertThat(gson.toJson(subject.generateFacetsTreeJson(ASPM_RESPONSE)), is(ASPM_RESULTS));
 //    }
 //
-//    @Ignore
+//    @Test
 //    public void noResultsTest() {
-//        assertThat(gson.toJson(subject.extractResultsAsJson(FOOBAR_RESPONSE)), is(FOOBAR_RESULTS));
+//        assertThat(gson.toJson(subject.generateFacetsTreeJson(FOOBAR_RESPONSE)), is(FOOBAR_RESULTS));
 //    }
 //
 //}

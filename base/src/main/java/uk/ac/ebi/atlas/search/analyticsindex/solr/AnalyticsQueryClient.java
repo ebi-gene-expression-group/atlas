@@ -41,10 +41,10 @@ public class AnalyticsQueryClient {
 
     @Inject
     public AnalyticsQueryClient(RestTemplate restTemplate, @Qualifier("solrAnalyticsServerURL") String solrBaseUrl,
-                                @Value("classpath:/solr/baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
-                                @Value("classpath:/solr/differential.facets.query.json") Resource differentialFacetsQueryJSON,
-                                @Value("classpath:/solr/experimentType.query.json") Resource experimentTypesQueryJson,
-                                @Value("classpath:/solr/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
+                                @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json") Resource  baselineFacetsQueryJSON,
+                                @Value("classpath:/solr-queries/differential.facets.query.json") Resource differentialFacetsQueryJSON,
+                                @Value("classpath:/solr-queries/experimentType.query.json") Resource experimentTypesQueryJson,
+                                @Value("classpath:/solr-queries/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson){
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
         this.baselineFacetsQueryJSON = baselineFacetsQueryJSON;
@@ -252,7 +252,7 @@ public class AnalyticsQueryClient {
         EXPERIMENT_TYPE("experimentType"),
         EXPERIMENT_ACCESSION("experimentAccession"),
         BIOENTITY_IDENTIFIER("bioentityIdentifier"),
-        SPECIES("uk/ac/ebi/atlas/species"),
+        SPECIES("species"),
         IDENTIFIER_SEARCH("identifierSearch"),
         CONDITIONS_SEARCH("conditionsSearch"),
         FACTOR_TYPE("defaultQueryFactorType");

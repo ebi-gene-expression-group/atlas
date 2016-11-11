@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin;
 
 import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
@@ -21,23 +20,25 @@ public class BioentityIndexAdmin {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIndexAdmin.class);
 
+    private BioentityIndex bioentityIndex;
     private BioentityIndexMonitor bioentityIndexMonitor;
     private String bioentityPropertiesDirectory;
     private ExecutorService executorService;
 
-    private BioentityIndex bioentityIndex;
-
     // Injecting the ExecutorService allows us to inject a sameThreadExecutor in our unit tests,
     // so that verifications can be executed on the runnable task being started
     @Inject
-    BioentityIndexAdmin(BioentityIndex bioentityIndex, BioentityIndexMonitor bioentityIndexMonitor,
+    BioentityIndexAdmin(BioentityIndexMonitor bioentityIndexMonitor,
                         @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory,
-                        @Named("singleThreadExecutorService") ExecutorService executorService){
-
-        this.bioentityIndex = bioentityIndex;
+                        @Named("singleThreadExecutorService") ExecutorService executorService) {
         this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesDirectory = bioentityPropertiesDirectory;
         this.executorService = executorService;
+    }
+
+    @Inject
+    public void setBioentityIndex(BioentityIndex bioentityIndex) {
+        this.bioentityIndex = bioentityIndex;
     }
 
     public void rebuildIndex() {

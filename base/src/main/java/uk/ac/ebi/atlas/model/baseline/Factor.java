@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 import org.apache.velocity.util.StringUtils;
@@ -87,7 +88,7 @@ public class Factor implements Comparable<Factor> {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("type", type)
                 .add("value", value)
                 .add("valueOntologyTerms", Collections.singletonList(valueOntologyTerms))

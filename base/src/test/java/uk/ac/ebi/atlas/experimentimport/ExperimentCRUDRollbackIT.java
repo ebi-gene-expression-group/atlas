@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
@@ -29,8 +28,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class ExperimentCRUDRollbackIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCRUDRollbackIT.class);
@@ -45,16 +43,22 @@ public class ExperimentCRUDRollbackIT {
 
     @Inject
     ExperimentDAO experimentDAO;
+
     @Inject
     ExperimentDesignFileService experimentDesignFileService;
+
     @Inject
     ExperimentTrader experimentTrader;
+
     @Inject
     CondensedSdrfParser condensedSdrfParser;
+
     @Inject
     ExperimentMetadataCRUD experimentMetadataCRUD;
+
     @Inject
     EFOLookupService efoParentsLookupService;
+
     @Inject
     AnalyticsIndexerManager analyticsIndexerManager;
 
@@ -76,14 +80,14 @@ public class ExperimentCRUDRollbackIT {
 
     @After
     public void cleanup() {
-        // needed otherwise other tests run by maven/bamboo will die!
+        // needed otherwise other tests run by Maven/Bamboo will die!
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
     @Test
     public void rollbackDatabaseChangesOnSolrFailure() throws IOException {
-        assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline expressions already exist in db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("Experiment already exists in DB", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("Baseline expressions already exist in DB", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
         String exceptionMessage = null;
 
@@ -95,10 +99,10 @@ public class ExperimentCRUDRollbackIT {
 
         LOGGER.info("importExperiment complete");
 
-        assertThat("no exception thrown", exceptionMessage, is("die!"));
+        assertThat("No exception thrown", exceptionMessage, is("die!"));
 
-        assertThat("experiment not rolled back", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline expressions not rolled back", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("Experiment not rolled back", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("Baseline expressions not rolled back", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
     private int experimentCount(String accession) {

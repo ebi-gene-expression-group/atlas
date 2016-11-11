@@ -61,7 +61,7 @@ public class QuerySearchController {
 
         String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species.originalName);
         model.addAttribute("searchDescription", searchDescription);
-        model.addAttribute("uk/ac/ebi/atlas/species", species.mappedName);
+        model.addAttribute("species", species.mappedName);
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
 

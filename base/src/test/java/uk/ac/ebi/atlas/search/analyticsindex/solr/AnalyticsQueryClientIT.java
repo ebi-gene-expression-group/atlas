@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
@@ -17,27 +16,37 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-
-
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class AnalyticsQueryClientIT {
 
-    @Qualifier("solrAnalyticsServerURL") String solrBaseUrl;
-    @Value("classpath:/solr/baseline.heatmap.pivot.query.json")
+    @Qualifier("solrAnalyticsServerURL")
+    private String solrBaseUrl;
+
+    @Value("classpath:/solr/conf")
+    Resource solrConf;
+
+    @Value("classpath:/solr-queries/baseline.heatmap.pivot.query.json")
     Resource baselineFacetsQueryJSON;
-    @Value("classpath:/solr/differential.facets.query.json") Resource differentialFacetsQueryJSON;
-    @Value("classpath:/solr/experimentType.query.json") Resource experimentTypesQueryJson;
-    @Value("classpath:/solr/bioentityIdentifier.query.json") Resource bioentityIdentifiersQueryJson;
+
+    @Value("classpath:/solr-queries/differential.facets.query.json")
+    Resource differentialFacetsQueryJSON;
+
+    @Value("classpath:/solr-queries/experimentType.query.json")
+    Resource experimentTypesQueryJson;
+
+    @Value("classpath:/solr-queries/bioentityIdentifier.query.json")
+    Resource bioentityIdentifiersQueryJson;
 
     @Mock
     RestTemplate restTemplate;
 
-    AnalyticsQueryClient subject;
+    private AnalyticsQueryClient subject;
 
     @Before
     public void setUp(){

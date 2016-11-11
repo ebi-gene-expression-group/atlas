@@ -1,5 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.UnmodifiableIterator;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
@@ -17,7 +22,6 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
-import com.google.common.collect.*;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
@@ -35,14 +39,15 @@ public class ExperimentDataPointStreamFactory {
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
     private final BaselineConditionsBuilder baselineConditionsBuilder;
+
     @Inject
     public ExperimentDataPointStreamFactory(EFOLookupService efoParentsLookupService,
                                             MicroarrayDifferentialAnalyticsInputStreamFactory
                                             microarrayDifferentialAnalyticsInputStreamFactory,
                                             RnaSeqDifferentialAnalyticsInputStreamFactory
-                                                rnaSeqDifferentialAnalyticsInputStreamFactory,
-                                            BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory
-                                    ){
+                                                        rnaSeqDifferentialAnalyticsInputStreamFactory,
+                                            BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
+
         this.efoParentsLookupService = efoParentsLookupService;
         this.microarrayDifferentialAnalyticsInputStreamFactory = microarrayDifferentialAnalyticsInputStreamFactory;
         this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
@@ -64,7 +69,7 @@ public class ExperimentDataPointStreamFactory {
         }
     }
 
-    Iterable<BaselineExperimentDataPoint> stream(BaselineExperiment experiment){
+    private Iterable<BaselineExperimentDataPoint> stream(BaselineExperiment experiment){
 
         return new BaselineExperimentDataPointStream(
                 experiment,
@@ -79,7 +84,7 @@ public class ExperimentDataPointStreamFactory {
         );
     }
 
-    Iterable<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment){
+    private Iterable<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment){
 
         return new DifferentialExperimentDataPointStream(experiment,
                 new IterableObjectInputStream<>(
@@ -93,13 +98,13 @@ public class ExperimentDataPointStreamFactory {
         );
     }
 
-    Iterable<DifferentialExperimentDataPoint> stream(final MicroarrayExperiment experiment){
+    private Iterable<DifferentialExperimentDataPoint> stream(final MicroarrayExperiment experiment){
 
-        class MicroarrayExperimentDataPointIterator extends UnmodifiableIterator<DifferentialExperimentDataPoint>{
+        class MicroarrayExperimentDataPointIterator extends UnmodifiableIterator<DifferentialExperimentDataPoint> {
 
             private final Iterator<String> arrayDesigns;
             private Iterator<DifferentialExperimentDataPoint> current = null;
-            public MicroarrayExperimentDataPointIterator(Iterator<String> arrayDesigns){
+            MicroarrayExperimentDataPointIterator(Iterator<String> arrayDesigns){
                 this.arrayDesigns = arrayDesigns;
             }
             @Override
@@ -173,6 +178,4 @@ public class ExperimentDataPointStreamFactory {
         return builder.build();
 
     }
-
-
 }

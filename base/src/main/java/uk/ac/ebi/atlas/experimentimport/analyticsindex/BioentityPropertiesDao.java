@@ -62,6 +62,6 @@ public class BioentityPropertiesDao {
         query.setFields("property_name", "property_value");
         query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", bioentityIdentifier));
 
-        return gxaSolrClient.queryForProperties2(query);
+        return gxaSolrClient.queryForProperties(query);
     }
 }

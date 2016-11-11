@@ -1,7 +1,6 @@
-
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
@@ -23,7 +22,7 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("geneName", getName())
                 .add("designElementName", designElementName)
                 .add("expressions", expressionsByCondition)

@@ -11,7 +11,6 @@ import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-@Scope("singleton")
 public class IdfReaderFactory {
 
     private UrlTsvReaderBuilder urlTsvReaderBuilder;

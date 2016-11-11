@@ -10,11 +10,12 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-@Controller
-@Scope("request")
+@Named
+@Scope("prototype")
 public class SuggestionService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SuggestionService.class);

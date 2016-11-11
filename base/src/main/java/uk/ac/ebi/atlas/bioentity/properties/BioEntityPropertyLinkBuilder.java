@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import uk.ac.ebi.atlas.model.SpeciesUtils;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import com.google.common.base.Optional;
 import org.apache.commons.lang.StringUtils;
@@ -82,7 +83,7 @@ public class BioEntityPropertyLinkBuilder {
         }
         String speciesToken = " (" + StringUtils.capitalize(species.get()) + ")";
 
-        Set<String> propertyValuesForGeneId = bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, "symbol");
+        Set<String> propertyValuesForGeneId = bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);
         if (!propertyValuesForGeneId.isEmpty()) {
             String symbol = propertyValuesForGeneId.iterator().next();
             return symbol + speciesToken;

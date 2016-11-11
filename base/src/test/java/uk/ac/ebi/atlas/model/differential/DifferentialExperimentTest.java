@@ -60,7 +60,7 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
         subject = new DifferentialExperiment("accession", new Date(), Sets.newHashSet(contrastMock1, contrastMock2),
-                "description", true, new Species("uk/ac/ebi/atlas/species","species name", "kingdom", "ensembl"), Sets.newHashSet(PUBMEDID), experimentDesignMock);
+                "description", true, new Species("species","species name", "kingdom", "ensembl"), Sets.newHashSet(PUBMEDID), experimentDesignMock);
     }
 
     @Test

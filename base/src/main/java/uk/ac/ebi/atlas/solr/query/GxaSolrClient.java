@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Sets;
@@ -13,7 +12,7 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
+import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import javax.inject.Inject;
@@ -22,26 +21,23 @@ import java.io.IOException;
 import java.util.*;
 
 @Named
-@Scope("singleton")
 public class GxaSolrClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(GxaSolrClient.class);
 
-    public static final String PROPERTY_NAME_FIELD = "property_name";
+    private static final String PROPERTY_NAME_FIELD = "property_name";
     private static final String PROPERTY_VALUE_FIELD = "property_value";
 
     private SolrClient solrClient;
 
     @Inject
-    public GxaSolrClient(SolrClient solrClient){
+    public GxaSolrClient(@Qualifier("solrClientGxa") SolrClient solrClient){
         this.solrClient = solrClient;
     }
 
     public QueryResponse query(SolrQuery solrQuery) {
         try {
             QueryResponse queryResponse = solrClient.query(solrQuery);
-
-//            LOGGER.debug("<query> Solr query time: {} ms, status code: {}", queryResponse.getStatus(), queryResponse.getQTime() );
-
+            LOGGER.debug("<query> Solr query time: {} ms, status code: {}", queryResponse.getStatus(), queryResponse.getQTime() );
             return queryResponse;
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -50,7 +46,6 @@ public class GxaSolrClient {
     }
 
     public Set<String> query(SolrQuery solrQuery, boolean returnUppercaseValues, String field){
-
         QueryResponse queryResponse = query(solrQuery);
 
         Set<String> results = Sets.newHashSet();
@@ -63,7 +58,6 @@ public class GxaSolrClient {
     }
 
     public Set<String> queryFormatted(SolrQuery solrQuery, boolean returnUppercaseValues, String formatString, String... fields){
-
         QueryResponse queryResponse = query(solrQuery);
 
         Set<String> results = Sets.newHashSet();
@@ -80,24 +74,7 @@ public class GxaSolrClient {
         return results;
     }
 
-    @Deprecated
-    public SortedSetMultimap<String, String> queryForProperties(SolrQuery solrQuery){
-
-        QueryResponse queryResponse = query(solrQuery);
-
-        SortedSetMultimap<String, String> results = TreeMultimap.create();
-        for (SolrDocument document : queryResponse.getResults()) {
-            String key = document.getFieldValue(PROPERTY_NAME_FIELD).toString();
-            String value = document.getFieldValue(PROPERTY_VALUE_FIELD).toString();
-            results.put(key, value);
-        }
-
-        return results;
-
-    }
-
-    public Map<BioentityPropertyName, Set<String>> queryForProperties2(SolrQuery solrQuery){
-
+    public Map<BioentityPropertyName, Set<String>> queryForProperties(SolrQuery solrQuery){
         Map<BioentityPropertyName, Set<String>> result = new HashMap<>();
         QueryResponse queryResponse = query(solrQuery);
 
@@ -112,8 +89,6 @@ public class GxaSolrClient {
         }
 
         return result;
-
     }
-
 
 }

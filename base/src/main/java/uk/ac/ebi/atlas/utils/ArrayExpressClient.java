@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.IdfParser;
-import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +46,7 @@ public class ArrayExpressClient {
             String experimentName = idfParser.parse(experimentAccession).getLeft();
 
             if (experimentName.isEmpty()) {
-                Throwables.propagate(e);    // Give cache loaders a chance to set the name from the DTO
+                throw new RuntimeException(e);    // Give cache loaders a chance to set the name from the DTO
             }
 
             return experimentName;

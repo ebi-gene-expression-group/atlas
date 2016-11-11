@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
+import com.google.common.base.MoreObjects;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import com.google.common.base.Objects;
 
@@ -78,7 +79,7 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("designElement", designElement)
                 .add("contrastId", contrastId)
                 .add("pValue", pValue)

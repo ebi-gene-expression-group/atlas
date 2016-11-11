@@ -19,7 +19,6 @@ import java.util.List;
 
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
-
     private final ExperimentType experimentType;
     private final BaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;

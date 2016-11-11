@@ -4,11 +4,16 @@ package uk.ac.ebi.atlas.solr.query.builders;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -38,30 +43,44 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
     public T withBioentityTypes(Set<String> bioentityTypes){
         checkArgument(CollectionUtils.isNotEmpty(bioentityTypes));
 
-        Collection<String> bioentityTypeConditions = transformToConditions(BIOENTITY_TYPE_FIELD, bioentityTypes);
+        Collection<String> bioentityTypeConditions = transformToConditions(BIOENTITY_TYPE_FIELD, Lists.newArrayList(bioentityTypes));
 
         queryStringBuilder.append(" AND (");
         Joiner.on(" OR ").appendTo(queryStringBuilder, bioentityTypeConditions).append(")");
         return getThis();
     }
 
+    public T withPropertyNames(BioentityPropertyName... propertyNames){
+        return withPropertyNames(mapBioentityPropertyNames(propertyNames));
+    }
+
     public T withPropertyNames(String... propertyNames){
         checkArgument(org.apache.commons.lang3.ArrayUtils.isNotEmpty(propertyNames));
 
-        Collection<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, Sets.newHashSet(propertyNames));
+        Collection<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, Lists.newArrayList(propertyNames));
 
         queryStringBuilder.append(" AND (");
         Joiner.on(" OR ").appendTo(queryStringBuilder, propertyNameConditions).append(")");
         return getThis();
     }
 
-    private Collection<String> transformToConditions(final String fieldName, Set<String> values){
-        return Collections2.transform(values, new Function<String, String>() {
+    private String[] mapBioentityPropertyNames(BioentityPropertyName... propertyNames) {
+        return FluentIterable.from(propertyNames).transform(new Function<BioentityPropertyName, String>() {
+            @Nullable
             @Override
-            public String apply(String bioEntityType) {
-                return fieldName.concat(":\"").concat(bioEntityType).concat("\"");
+            public String apply(BioentityPropertyName bioentityPropertyName) {
+                return bioentityPropertyName.name;
             }
-        });
+        }).toArray(String.class);
+    }
+
+    private <V> Collection<String> transformToConditions(final String fieldName, List<V> values){
+        return FluentIterable.from(values).transform(new Function<V, String>() {
+            @Override
+            public String apply(V bioEntityType) {
+                return fieldName.concat(":\"").concat(bioEntityType.toString()).concat("\"");
+            }
+        }).toList();
 
     }
 

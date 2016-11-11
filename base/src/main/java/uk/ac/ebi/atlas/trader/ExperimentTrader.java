@@ -42,17 +42,19 @@ public class ExperimentTrader {
 
         this.experimentDAO = experimentDAO;
         this.publicExperimentTypesCache = publicExperimentTypesCache;
-        ImmutableMap.Builder b = ImmutableMap.<ExperimentType, ExperimentsCache<? extends Experiment>>builder()
-                .put(ExperimentType.RNASEQ_MRNA_BASELINE,rnaSeqBaselineExperimentsCache)
+        ImmutableMap.Builder<ExperimentType, ExperimentsCache<? extends Experiment>> builder = ImmutableMap.builder();
+
+        builder.put(ExperimentType.RNASEQ_MRNA_BASELINE,rnaSeqBaselineExperimentsCache)
                 .put(ExperimentType.PROTEOMICS_BASELINE,proteomicsBaselineExperimentsCache)
                 .put(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, rnaSeqDiffExperimentsCache);
 
-        for(ExperimentType t: ExperimentType.values()){
-            if(t.isMicroarray()){
-                b.put(t, microarrayExperimentsCache);
+        for(ExperimentType type: ExperimentType.values()){
+            if(type.isMicroarray()){
+                builder.put(type, microarrayExperimentsCache);
             }
         }
-        experimentCachesPerType = b.build();
+        experimentCachesPerType = builder.build();
+
     }
 
 

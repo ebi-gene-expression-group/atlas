@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.solr.query.conditions;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.Objects;
 
 public class IndexedAssayGroup {
@@ -34,7 +36,7 @@ public class IndexedAssayGroup {
 
     @Override
     public String toString() {
-        return com.google.common.base.Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("experimentAccession", experimentAccession)
                 .add("assayGroupOrContrastId", assayGroupOrContrastId)
                 .toString();

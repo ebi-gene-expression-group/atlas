@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
@@ -138,7 +139,7 @@ public class BioEntityPropertyService {
 
     private void addMirBaseSequence(SortedSetMultimap<String, String> propertyValuesByType) {
         String mirbase_id = propertyValuesByType.get("mirbase_id").first();
-        Set<String> mirbase_sequence = bioEntityPropertyDao.fetchPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
+        Set<String> mirbase_sequence = bioEntityPropertyDao.fetchPropertyValuesForGeneId(mirbase_id, BioentityPropertyName.MIRBASE_SEQUENCE);
         propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 

@@ -13,7 +13,7 @@ import javax.inject.Named;
 public class DifferentialConditionsIndex extends ConditionsIndex {
 
     @Inject
-    public DifferentialConditionsIndex(@Qualifier("differentialConditionsSolrClient") SolrClient solrClient, DifferentialConditionsBuilder propertiesBuilder) {
+    public DifferentialConditionsIndex(@Qualifier("solrClientDifferentialConditions") SolrClient solrClient, DifferentialConditionsBuilder propertiesBuilder) {
         super(solrClient, propertiesBuilder);
     }
 }

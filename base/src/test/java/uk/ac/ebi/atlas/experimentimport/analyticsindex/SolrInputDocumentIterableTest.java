@@ -57,7 +57,7 @@ public class SolrInputDocumentIterableTest {
 
         //Generic fields for any record
         assertThat(result.keySet(),
-                hasItems("bioentityIdentifier", "uk/ac/ebi/atlas/species", "kingdom",  "experimentAccession", "experimentType"));
+                hasItems("bioentityIdentifier", "species", "kingdom",  "experimentAccession", "experimentType"));
 
         //Baseline specific
         assertThat(result.keySet(),

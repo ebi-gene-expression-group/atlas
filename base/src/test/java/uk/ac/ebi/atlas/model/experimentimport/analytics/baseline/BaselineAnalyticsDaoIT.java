@@ -8,7 +8,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsDAO;
@@ -24,8 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 @Transactional  // enable transaction manager, so that changes to the database are rolled back after each test method
 public class BaselineAnalyticsDaoIT {
 
@@ -51,19 +49,15 @@ public class BaselineAnalyticsDaoIT {
         assertThat(getCount(), is(0));
 
         baselineAnalyticsDAO.loadAnalytics(EXPERIMENT_ACCESSION, rnaSeqBaselineAnalyticsInputStream);
-
         assertThat(getCount(), is(2));
 
         baselineAnalyticsDAO.deleteAnalytics(EXPERIMENT_ACCESSION);
-
         assertThat(getCount(), is(0));
-
         verify(rnaSeqBaselineAnalyticsInputStream).close();
     }
 
     private int getCount() {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM RNASEQ_BSLN_EXPRESSIONS where experiment = ?", Integer.class, EXPERIMENT_ACCESSION);
     }
-
 
 }

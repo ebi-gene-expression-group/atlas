@@ -1,8 +1,6 @@
-
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
@@ -22,7 +20,7 @@ public class MicroarrayExpression extends DifferentialExpression {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("p-value", getPValue())
                 .add("foldChange", getFoldChange())
                 .toString();

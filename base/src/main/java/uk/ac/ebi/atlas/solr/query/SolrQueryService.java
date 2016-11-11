@@ -8,9 +8,8 @@ import com.google.common.base.Stopwatch;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -70,13 +69,7 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(RequestContext requestContext, String species)
-            throws GenesNotFoundException {
-        return fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), species);
-    }
-
-    public GeneQueryResponse fetchResponseBasedOnRequestContext(SemanticQuery geneQuery, String species)
-            throws GenesNotFoundException {
+    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String species) throws GenesNotFoundException {
 
         if (geneQuery.isEmpty()) {
             return new GeneQueryResponse();

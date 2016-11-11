@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
@@ -14,8 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class GoPoTermTraderIT {
 
     private static final String GO_0000001 = "GO:0000001";
@@ -27,9 +25,8 @@ public class GoPoTermTraderIT {
     private static final String PO_0030087 = "PO:0030087";
     private static final OntologyTerm PO_0030087_TERM = OntologyTerm.create(PO_0030087, "non-vascular leaf initial cell");
 
-
     @Inject
-    GoPoTermTrader subject;
+    private GoPoTermTrader subject;
 
     @Test
     public void hasGO_0000001() throws IOException {
