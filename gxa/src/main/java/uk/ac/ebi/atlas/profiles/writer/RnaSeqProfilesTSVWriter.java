@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import javax.inject.Inject;

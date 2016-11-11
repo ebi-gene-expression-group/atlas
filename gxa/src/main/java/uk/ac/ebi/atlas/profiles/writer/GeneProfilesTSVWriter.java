@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 

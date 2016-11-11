@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
@@ -10,7 +8,9 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
+import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.io.IOException;
@@ -105,7 +105,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         return ", filtered by " + Joiner.on(" and ").join(transformedSelectedFilterFactors);
     }
 
-    protected String formatSelectedQueryFactors(BaselineRequestContext requestContext) {
+    private String formatSelectedQueryFactors(BaselineRequestContext requestContext) {
         String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorDisplayName(requestContext.getQueryFactorType());
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
         if (CollectionUtils.isEmpty(selectedQueryFactors)) {

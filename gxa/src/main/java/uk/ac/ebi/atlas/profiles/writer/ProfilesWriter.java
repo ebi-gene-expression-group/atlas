@@ -1,14 +1,14 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.ProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.io.IOException;
 import java.io.Writer;

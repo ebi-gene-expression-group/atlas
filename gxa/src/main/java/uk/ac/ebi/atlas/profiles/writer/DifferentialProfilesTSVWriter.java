@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
@@ -12,15 +10,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.wrap;
 
@@ -87,6 +91,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
                 return constrast.getDisplayName();
             }
         });
+
         return "contrast" + (selectedContrasts.size() == 1 ? ": " : "s: ") + Joiner.on(", ").join(selectedContrasts);
     }
 
@@ -103,7 +108,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
         return conditionLevelStrings;
     }
 
-    final String[] getExpressionLevelStrings(K expression) {
+    private String[] getExpressionLevelStrings(K expression) {
         String[] expressionLevelData = new String[getExpressionColumnsHeaders().size()];
         if (expression == null) {
             return expressionLevelData;
@@ -115,7 +120,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
 
     protected abstract List<Double> getExpressionLevelData(K expression);
 
-    protected Function<Double, String> expressionValueToString() {
+    private Function<Double, String> expressionValueToString() {
         return new Function<Double, String>() {
             @Override
             public String apply(Double expressionValue) {

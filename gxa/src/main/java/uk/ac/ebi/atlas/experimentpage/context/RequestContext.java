@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.base.MoreObjects;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
-import com.google.common.base.Objects;
 
 import java.util.Set;
 
@@ -73,7 +73,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(getClass())
+        return MoreObjects.toStringHelper(getClass())
                 .add("requestPreferences", getRequestPreferences())
                 .add("filteredBySpecies", filteredBySpecies)
                 .toString();

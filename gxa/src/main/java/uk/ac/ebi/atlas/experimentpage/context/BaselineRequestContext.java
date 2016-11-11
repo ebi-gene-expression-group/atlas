@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(getClass())
+        return MoreObjects.toStringHelper(getClass())
                 .addValue(super.toString())
                 .add("selectedFilterFactors", selectedFilterFactors)
                 .add("experiment", experiment).toString();

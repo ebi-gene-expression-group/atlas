@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.web;
 
-import uk.ac.ebi.atlas.model.AnatomogramType;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
@@ -33,20 +32,6 @@ public class ApplicationProperties {
         this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.configurationProperties = configurationProperties;
         this.arrayDesignTrader = arrayDesignTrader;
-    }
-
-    public String getAnatomogramFileName(String species, AnatomogramType anatomogramType) {
-        String key = "organism.anatomogram." + species.toLowerCase();
-        String ending = "";
-        if(anatomogramType.equals(AnatomogramType.MALE)) {
-            ending = ".male";
-        } else if (anatomogramType.equals(AnatomogramType.FEMALE)) {
-            ending = ".female";
-        } else if (anatomogramType.equals(AnatomogramType.BRAIN)) {
-            ending = ".brain";
-        }
-
-        return configurationProperties.getProperty(key + ending);
     }
 
     //This is invoked from jsp el

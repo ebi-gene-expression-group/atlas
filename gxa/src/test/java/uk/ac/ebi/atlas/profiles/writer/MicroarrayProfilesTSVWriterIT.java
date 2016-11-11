@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
-import uk.ac.ebi.atlas.testutils.RegexMatcher;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.testutils.RegexMatcher;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -20,8 +19,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class MicroarrayProfilesTSVWriterIT {
 
     private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-GEOD-13316";

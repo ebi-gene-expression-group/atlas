@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 public class GenesNotFoundException extends Exception {

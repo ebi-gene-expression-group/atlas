@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -30,6 +31,8 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -71,7 +74,7 @@ public class GeneNameTooltipController {
     public String getTooltipContent(@RequestParam(value = "geneName") String geneName,
                                     @RequestParam(value = "identifier") String identifier) {
 
-        Multimap<String, String> multimap = bioEntityPropertyDao.fetchTooltipProperties(identifier);
+        Map<BioentityPropertyName, Set<String>> multimap = bioEntityPropertyDao.fetchTooltipProperties(identifier);
 
         String synonyms = buildSynonyms(multimap);
 

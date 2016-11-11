@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.web;
 
 import org.junit.Before;
@@ -6,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
@@ -14,7 +12,6 @@ import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -107,23 +104,6 @@ public class ApplicationPropertiesTest {
         when(arrayDesignTraderMock.getArrayDesignAccession(A_AFFY_35_NAME)).thenReturn(A_AFFY_35);
 
         subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, arrayDesignTraderMock);
-    }
-
-    @Test
-    public void testGetAnatomogramFileName() throws Exception {
-        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIES, AnatomogramType.MALE);
-        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIES, AnatomogramType.FEMALE);
-        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIES, AnatomogramType.MALE);
-        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIES, AnatomogramType.FEMALE);
-        String fileNameRatMale = subject.getAnatomogramFileName(RAT_SPECIES, AnatomogramType.MALE);
-        String fileNameRatFemale = subject.getAnatomogramFileName(RAT_SPECIES, AnatomogramType.FEMALE);
-
-        assertThat(fileNameMale, is(HOMO_SAPIENS_MALE_FILE_NAME));
-        assertThat(fileNameFemale, is(HOMO_SAPIENS_FEMALE_FILE_NAME));
-        assertThat(fileNameMouseMale, is(MOUSE_MALE_FILE_NAME));
-        assertThat(fileNameMouseFemale, is(MOUSE_FEMALE_FILE_NAME));
-        assertThat(fileNameRatMale, is(RAT_FILE_NAME));
-        assertThat(fileNameRatFemale, is(nullValue()));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -15,7 +15,7 @@ public class RnaSeqRequestContext extends DifferentialRequestContext<Differentia
 
     @Override
     public String toString(){
-        return Objects.toStringHelper(getClass())
+        return MoreObjects.toStringHelper(getClass())
                 .addValue(super.toString()).toString();
     }
 

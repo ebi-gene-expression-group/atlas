@@ -49,7 +49,7 @@ public class BaselineProfilesWriterService {
 
         if (totalCoexpressionsRequested == 0) {
             requestContext = BaselineRequestContext.createFor(experiment, preferences);
-            geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext, requestContext.getFilteredBySpecies());
+            geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
         } else {
 
             GeneQueryResponse originalResponse = solrQueryService.fetchResponseBasedOnRequestContext(preferences

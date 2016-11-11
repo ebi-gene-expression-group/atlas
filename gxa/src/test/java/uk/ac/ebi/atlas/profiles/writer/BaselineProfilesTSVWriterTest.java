@@ -20,7 +20,9 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;

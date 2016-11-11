@@ -1,8 +1,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;

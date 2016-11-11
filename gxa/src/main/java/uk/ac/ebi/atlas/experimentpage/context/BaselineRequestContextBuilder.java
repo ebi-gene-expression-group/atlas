@@ -1,14 +1,18 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import com.google.common.base.Optional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 

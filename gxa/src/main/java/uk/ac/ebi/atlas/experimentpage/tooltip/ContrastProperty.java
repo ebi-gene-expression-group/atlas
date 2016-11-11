@@ -1,7 +1,6 @@
-
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.gson.JsonObject;
 
 public class ContrastProperty extends AssayProperty {
@@ -25,10 +24,9 @@ public class ContrastProperty extends AssayProperty {
 
         ContrastProperty that = (ContrastProperty) o;
 
-        if (referenceValue != null ? !referenceValue.equalsIgnoreCase(that.referenceValue) : that.referenceValue != null)
-            return false;
-
-        return true;
+        return referenceValue != null ?
+                referenceValue.equalsIgnoreCase(that.referenceValue) :
+                that.referenceValue == null;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class ContrastProperty extends AssayProperty {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("propertyName", propertyName)
                 .add("referenceValue", referenceValue)
                 .add("testValue", testValue)
@@ -52,4 +50,5 @@ public class ContrastProperty extends AssayProperty {
         o.addProperty("referenceValue", referenceValue);
         return o;
     }
+
 }

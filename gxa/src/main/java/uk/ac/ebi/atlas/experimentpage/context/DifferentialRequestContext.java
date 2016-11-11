@@ -1,7 +1,6 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -51,7 +50,7 @@ public class DifferentialRequestContext<T extends DifferentialExperiment> extend
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this.getClass())
+        return MoreObjects.toStringHelper(this.getClass())
                 .addValue(super.toString())
                 .add("regulation", getRegulation())
                 .add("experiment", getExperiment())
