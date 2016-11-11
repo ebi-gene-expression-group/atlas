@@ -36,7 +36,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/versioned-resources-" + props.getProperty("resources.version") + "/**")
                 .addResourceLocations("/versioned-resources/");
-        registry.addResourceHandler("/json/gene-by-cutoff/**").addResourceLocations("classpath:/cutoff-histograms/");
         registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + experimentDataLocation);
     }
 
