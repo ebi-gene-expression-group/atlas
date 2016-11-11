@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -84,10 +83,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model, request,true);
         try {
             baselineExperimentPageService.populateModelWithHeatmapData(experiment, preferences, model,request, true);
-        } catch (GenesNotFoundException e) {
+        } catch (uk.ac.ebi.atlas.web.GenesNotFoundException e) {
             throw new ResourceNotFoundException("No genes found matching query: '" + preferences.getGeneQuery() + "'");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
 
         return "heatmap-data";

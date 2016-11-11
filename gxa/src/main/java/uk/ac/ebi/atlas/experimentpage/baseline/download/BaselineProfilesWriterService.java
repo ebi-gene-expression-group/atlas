@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -39,7 +38,7 @@ public class BaselineProfilesWriterService {
     }
 
     public long write(Writer writer, BaselineRequestPreferences preferences, BaselineExperiment experiment,
-                      Map<String, Integer> coexpressionsRequested) throws GenesNotFoundException {
+                      Map<String, Integer> coexpressionsRequested)  {
         int totalCoexpressionsRequested = 0;
         for (Map.Entry<String, Integer> e : coexpressionsRequested.entrySet()) {
             totalCoexpressionsRequested += e.getValue();
@@ -49,10 +48,10 @@ public class BaselineProfilesWriterService {
 
         if (totalCoexpressionsRequested == 0) {
             requestContext = BaselineRequestContext.createFor(experiment, preferences);
-            geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
+            geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
         } else {
 
-            GeneQueryResponse originalResponse = solrQueryService.fetchResponseBasedOnRequestContext(preferences
+            GeneQueryResponse originalResponse = solrQueryService.fetchResponse(preferences
                     .getGeneQuery(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
 
             geneQueryResponse = coexpressedGenesService

@@ -37,7 +37,7 @@ public class BioentityPropertiesDao {
 
         ImmutableMap.Builder<String, Map<BioentityPropertyName, Set<String>>> mapBuilder = new ImmutableMap.Builder<>();
         for (String bioentityIdentifier : bioentityIdentifiers) {
-            mapBuilder.put(bioentityIdentifier, getMap(bioentityIdentifier));
+            mapBuilder.put(bioentityIdentifier, gxaSolrClient.getMap(bioentityIdentifier));
         }
 
         stopWatch.stop();
@@ -45,23 +45,5 @@ public class BioentityPropertiesDao {
 
         return mapBuilder.build();
     }
-    
-    private Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier) {
-        SolrQuery query = new SolrQuery();
 
-        query.setRows(1000);
-        query.setFilterQueries("property_name:(\"" +
-                Joiner.on("\" OR \"").join(FluentIterable.from(ExperimentDataPoint.bioentityPropertyNames).transform(
-                        new Function<BioentityPropertyName, String>() {
-                            @Nullable
-                            @Override
-                            public String apply(@Nullable BioentityPropertyName bioentityPropertyName) {
-                                return bioentityPropertyName.name().toLowerCase();
-                            }
-                        })) + "\")");
-        query.setFields("property_name", "property_value");
-        query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", bioentityIdentifier));
-
-        return gxaSolrClient.queryForProperties(query);
-    }
 }

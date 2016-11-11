@@ -113,7 +113,7 @@ public class BaselineProfilesWriterServiceTest {
         extendedResponse.addGeneIds(geneName+":coexpressions", range);
 
 
-        when(solrQueryService.fetchResponseBasedOnRequestContext(eq(geneQuery), anyString())).thenReturn(response);
+        when(solrQueryService.fetchResponse(eq(geneQuery), anyString())).thenReturn(response);
 
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
@@ -149,7 +149,7 @@ public class BaselineProfilesWriterServiceTest {
         }
 
 
-        when(solrQueryService.fetchResponseBasedOnRequestContext(eq(geneQuery), anyString()))
+        when(solrQueryService.fetchResponse(eq(geneQuery), anyString()))
                 .thenReturn(response);
 
 
@@ -160,7 +160,7 @@ public class BaselineProfilesWriterServiceTest {
         when(inputStreamFactory.create(any(BaselineProfileStreamOptions.class))).thenReturn(inputStream);
 
         GeneQueryResponse responseFromSolr = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponseBasedOnRequestContext(any(RequestContext.class), anyString()))
+        when(solrQueryService.fetchResponse(any(RequestContext.class), anyString()))
                 .thenReturn(responseFromSolr);
 
         subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions);

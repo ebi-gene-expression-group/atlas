@@ -2,11 +2,11 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
 
 public enum BioentityPropertyName {
-
     UNKNOWN,
     IDENTIFIER_SEARCH("identifierSearch", false),
     GENE_BIOTYPE("gene_biotype", true),
@@ -19,25 +19,28 @@ public enum BioentityPropertyName {
     DESCRIPTION("description", false),
     MGI_ID("mgi_id", true),
     MGI_DESCRIPTION("mgi_description", false),
-    GOTERM("goterm", false),
-    GO("go", true),
-    POTERM("poterm", false),
-    PO("po", true),
-    INTERPROTERM("interproterm", false),
-    INTERPRO("interpro", true),
-    PATHWAYNAME("pathwayname", false),
-    PATHWAYID("pathwayid", true),
-    UNIPROT("uniprot", true),
+    GOTERM("goterm", false, "Gene Ontology"),
+    GO("go", true,"Gene Ontology"),
+    POTERM("poterm", false, "Plant Ontology"),
+    PO("po", true,"Plant Ontology"),
+    INTERPROTERM("interproterm", false, "InterPro"),
+    INTERPRO("interpro", true,"InterPro"),
+    PATHWAYNAME("pathwayname", false, "Pathway Name"),
+    PATHWAYID("pathwayid", true,"Pathway Id"),
+    UNIPROT("uniprot", true, "UniProt"),
     DESIGN_ELEMENT("design_element", true),
     ORTHOLOG("ortholog", false),
     MIRBASE_ACCESSION("mirbase_accession", false),
-    ENSGENE("ensgene", false),
-    ENTREZGENE("entrezgene", false),
-    ENSFAMILY_DESCRIPTION("ensfamily_description", false),
-    MIRBASE_ID("mirbase_id", false),
-    MIRBASE_SEQUENCE("mirbase_sequence", false);
+    ENSGENE("ensgene", false,"Ensembl Gene"),
+    ENTREZGENE("entrezgene", false, "Entrez"),
+    ENSFAMILY_DESCRIPTION("ensfamily_description", false, "Ensembl Family"),
+    MIRBASE_ID("mirbase_id", false, "miRBase Identifier"),
+    MIRBASE_SEQUENCE("mirbase_sequence", false, "miRBase Sequence"),
+    REACTOME("reactome", false), //does not come from the files- currently,fetched from Uniprot
+    ENSTRANSCRIPT("enstranscript", true, "Ensembl Transcript"), ENSPROTEIN("ensprotein", true, "Ensembl Protein");//not used for analytics index now
 
     public final String name;
+    public final String label;
     public final boolean isId;
 
     static private ImmutableMap<String, BioentityPropertyName> propertiesByName;
@@ -71,8 +74,13 @@ public enum BioentityPropertyName {
     }
 
     BioentityPropertyName(String name, boolean isId) {
+        this(name, isId, StringUtils.capitalize(name.replace("_", " ")));
+    }
+
+    BioentityPropertyName(String name, boolean isId, String label) {
         this.name = name;
         this.isId = isId;
+        this.label = label;
     }
 
 }

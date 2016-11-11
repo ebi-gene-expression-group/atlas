@@ -86,7 +86,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void rightQueriesToDataSources() throws Exception{
         GeneQueryResponse response = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponseBasedOnRequestContext((RequestContext) Mockito.any(),anyString()))
+        when(solrQueryService.fetchResponse((RequestContext) Mockito.any(),anyString()))
                 .thenReturn(response);
 
         subject.getJsonProfiles();
@@ -99,7 +99,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void rightQueriesToDataSourcesForGeneSets() throws Exception{
         GeneQueryResponse response = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponseBasedOnRequestContext((RequestContext) Mockito.any(),anyString()))
+        when(solrQueryService.fetchResponse((RequestContext) Mockito.any(),anyString()))
                 .thenReturn(response);
 
         when(response.containsGeneSets()).thenReturn(true);

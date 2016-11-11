@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -20,7 +19,6 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +69,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     }
 
     public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
-                                             Model model, HttpServletRequest request, boolean isWidget) throws GenesNotFoundException, UnsupportedEncodingException {
+                                             Model model, HttpServletRequest request, boolean isWidget) {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 

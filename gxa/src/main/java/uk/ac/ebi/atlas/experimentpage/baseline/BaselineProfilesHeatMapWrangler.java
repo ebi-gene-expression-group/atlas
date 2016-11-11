@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
@@ -9,12 +7,14 @@ import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService.GenesNotFoundException;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class BaselineProfilesHeatMapWrangler {
         return requestContext.getFilteredBySpecies();
     }
 
-    private GeneQueryResponse getGeneQueryResponseForProfiles() throws GenesNotFoundException {
+    private GeneQueryResponse getGeneQueryResponseForProfiles()  {
         if (geneQueryResponseForProfiles == null) {
             geneQueryResponseForProfiles =
                     solrQueryService.fetchResponse(requestContext.getGeneQuery(), getSpecies());
@@ -61,18 +61,18 @@ public class BaselineProfilesHeatMapWrangler {
         return geneQueryResponseForProfiles;
     }
 
-    private void fetchProfilesIfMissing() throws GenesNotFoundException {
+    private void fetchProfilesIfMissing()   {
         if (jsonProfiles == null) {
             jsonProfiles = baselineProfilesHeatMap.fetch(requestContext, getGeneQueryResponseForProfiles(), false);
         }
     }
 
-    public JsonObject getJsonProfiles() throws GenesNotFoundException {
+    public JsonObject getJsonProfiles()  {
         fetchProfilesIfMissing();
         return baselineProfilesViewModelBuilder.build(jsonProfiles, requestContext.getFilterFactorsInTheSameOrderAsTheExperimentHeader());
     }
 
-    public Optional<JsonObject> getJsonProfilesAsGeneSets() throws SolrQueryService.GenesNotFoundException {
+    public Optional<JsonObject> getJsonProfilesAsGeneSets()  {
         GeneQueryResponse r = getGeneQueryResponseForProfiles();
         return r.containsGeneSets()
                 ? Optional.of(baselineProfilesViewModelBuilder.build(baselineProfilesHeatMap.fetch(requestContext, r, true),
@@ -80,7 +80,7 @@ public class BaselineProfilesHeatMapWrangler {
                 : Optional.<JsonObject>absent();
     }
 
-    public JsonArray getJsonCoexpressions() throws GenesNotFoundException {
+    public JsonArray getJsonCoexpressions()   {
         fetchProfilesIfMissing();
         JsonArray result = new JsonArray();
 

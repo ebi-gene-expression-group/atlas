@@ -170,7 +170,7 @@ public class BaselineProfilesHeatMapTest {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=leukocyte
     @Test
-    public void eMTab513react71_Specific_QueryFactorLeukocyte() throws GenesNotFoundException {
+    public void eMTab513react71_Specific_QueryFactorLeukocyte()  {
         isSpecific();
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
@@ -189,7 +189,7 @@ public class BaselineProfilesHeatMapTest {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&queryFactorValues=leukocyte
     @Test
-    public void eMTab513react71_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
+    public void eMTab513react71_NotSpecific_QueryFactorLeukocyte()  {
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
         BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, false);
@@ -215,7 +215,7 @@ public class BaselineProfilesHeatMapTest {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=leukocyte&geneSetMatch=true
     @Test
-    public void eMTab513react71_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
+    public void eMTab513react71_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults()  {
         isSpecific();
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
@@ -227,7 +227,7 @@ public class BaselineProfilesHeatMapTest {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=prostate&geneSetMatch=true
     @Test
-    public void eMTab513react71_Specific_GeneSet_QueryFactorProstateGeneSet_CheckExpressionLevelsForReact71() throws GenesNotFoundException {
+    public void eMTab513react71_Specific_GeneSet_QueryFactorProstateGeneSet_CheckExpressionLevelsForReact71()  {
         isSpecific();
         queryFactors(Collections.singleton(factor("prostate")));
 
@@ -242,7 +242,7 @@ public class BaselineProfilesHeatMapTest {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&queryFactorValues=leukocyte&geneSetMatch=true
     @Test
-    public void eMTab513react71_NotSpecific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
+    public void eMTab513react71_NotSpecific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults()  {
         queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
         BaselineProfilesList profiles = subject.fetch(options, geneQueryResponse, true);

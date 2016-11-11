@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -22,7 +21,6 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -52,12 +50,12 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences = new MicroarrayRequestPreferences();
     }
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException, ExecutionException {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) , ExecutionException {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
     private MicroarrayRequestContext populateRequestContext(String experimentAccession, double cutoff, double
-            logFoldCutoff) throws GenesNotFoundException, ExecutionException {
+            logFoldCutoff) , ExecutionException {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -90,7 +88,7 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    private void testDefaultParameters(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testDefaultParameters(String accession) , ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -99,7 +97,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testNotSpecific(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testNotSpecific(String accession) , ExecutionException {
         requestPreferences.setSpecific(false);
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -109,7 +107,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) , ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesAll = subject.fetch(requestContext);

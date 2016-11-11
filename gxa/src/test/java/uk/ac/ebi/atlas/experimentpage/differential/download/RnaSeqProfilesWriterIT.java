@@ -14,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -136,7 +135,7 @@ public class RnaSeqProfilesWriterIT {
         requestPreferences = new DifferentialRequestPreferences();
     }
 
-    public void defaultParametersHeader(String accession) throws GenesNotFoundException, ExecutionException {
+    public void defaultParametersHeader(String accession) , ExecutionException {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         subject.write(printWriterMock, requestContext);
 
@@ -153,7 +152,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(columnHeaders.length, greaterThan(2));
                     }
 
-    public void weHaveSomeResults(String accession) throws GenesNotFoundException, ExecutionException {
+    public void weHaveSomeResults(String accession) , ExecutionException {
         requestPreferences.setCutoff(1D);
         requestPreferences.setFoldChangeCutOff(0D);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
@@ -170,12 +169,12 @@ public class RnaSeqProfilesWriterIT {
     }
 
 
-    public void notSpecific(String accession) throws GenesNotFoundException, ExecutionException {
+    public void notSpecific(String accession) , ExecutionException {
         requestPreferences.setSpecific(false);
         weHaveSomeResults(accession);
     }
     
-    public void upDownRegulationWorks(String accession) throws GenesNotFoundException, ExecutionException {
+    public void upDownRegulationWorks(String accession) , ExecutionException {
         requestPreferences.setRegulation(Regulation.UP);
 
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
@@ -211,7 +210,7 @@ public class RnaSeqProfilesWriterIT {
          }
 
     
-    public void noDataWithVeryStrictPValueCutoff(String accession) throws GenesNotFoundException, ExecutionException {
+    public void noDataWithVeryStrictPValueCutoff(String accession) , ExecutionException {
         requestPreferences.setCutoff(1e-100);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -220,7 +219,7 @@ public class RnaSeqProfilesWriterIT {
 
 
     
-    public void noDataWithVeryLargeFoldChangeCutoff(String accession) throws GenesNotFoundException, ExecutionException {
+    public void noDataWithVeryLargeFoldChangeCutoff(String accession) , ExecutionException {
         requestPreferences.setFoldChangeCutOff(50000D);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);

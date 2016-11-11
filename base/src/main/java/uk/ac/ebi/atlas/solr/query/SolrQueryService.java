@@ -69,7 +69,7 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String species) throws GenesNotFoundException {
+    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String species) {
 
         if (geneQuery.isEmpty()) {
             return new GeneQueryResponse();

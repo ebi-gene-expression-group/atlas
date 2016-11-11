@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
@@ -8,8 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -45,7 +47,8 @@ public class GeneSetPageController extends BioentityPageController {
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create
                 (identifier), species);
 
-        return super.showBioentityPage(identifier, species,identifier, model, experimentTypes,geneSetPropertyService.propertyValuesByType(identifier));
+        return super.showBioentityPage(identifier, species,identifier, model, experimentTypes,
+                GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier));
     }
 
     @Override
@@ -53,8 +56,7 @@ public class GeneSetPageController extends BioentityPageController {
         String speciesString = matchesReactomeID(identifier) ? species.originalName : "";
         String s = "Expression summary for " + description +
                 (StringUtils.isNotBlank(speciesString) ?
-                        " - " + StringUtils.capitalize(speciesString) :
-                        "");
+                        " - " + StringUtils.capitalize(speciesString) : "");
         return ImmutableMap.<String, Object>of(
                 "mainTitle", s,
                 "pageDescription", s,

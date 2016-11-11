@@ -1,26 +1,47 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.Properties;
+import com.google.common.collect.ImmutableMap;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
-@Named
+import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
+
+
 public class BioEntityCardProperties {
-    private static final String PROPERTY_PREFIX = "property.";
-    private static final String LINK_PREFIX = "link.";
 
-    private Properties bioEntityCardProperties;
+    public static final ImmutableMap<BioentityPropertyName, String> linkTemplates =
+        ImmutableMap.<BioentityPropertyName, String>builder()
+        .put(ORTHOLOG,
+                "/gxa/genes/{0}")
+        .put(GOTERM,
+                "http://amigo.geneontology.org/cgi-bin/amigo/search.cgi?search_constraint=term&exact_match=yes&action=new-search&search_query={0}")
+        .put(GO,
+                "http://amigo.geneontology.org/amigo/term/{0}")
+        .put(INTERPROTERM,
+                "http://www.ebi.ac.uk/interpro/search?q={0}")
+        .put(INTERPRO,
+                "http://www.ebi.ac.uk/interpro/entry/{0}")
+        .put(ENSFAMILY_DESCRIPTION,
+                "http://www.ensembl.org/{1}/Search/Results?q={2};facet_feature_type=Protein%20Family" )
+        .put(ENSGENE,
+                "http://www.ensemblgenomes.org/id-gene/{0}")
+        .put(ENSTRANSCRIPT,
+                "http://www.ensemblgenomes.org/id/{0}")
+        .put(ENSPROTEIN,
+                "http://www.ensemblgenomes.org/id/{0}")
+        .put(MGI_DESCRIPTION,
+                "http://www.informatics.jax.org/searchtool/Search.do?query={0}")
+        .put(ENTREZGENE,
+                "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term={0}")
+        .put(UNIPROT,
+                "http://www.uniprot.org/uniprot/{0}")
+        .put(MGI_ID,
+                "http://www.emouseatlas.org/emagewebapp/pages/emage_general_query_result.jsf?genes={0}")
+        .put(GENE_BIOTYPE,
+                "http://www.ensembl.org/Help/Glossary?id=275" /*seems wrong*/)
+        .put(REACTOME,
+                "http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID={0}")
+        .put(MIRBASE_ACCESSION,
+                " http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc={0}")
+        .build();
 
-    @Inject
-    public BioEntityCardProperties(@Named("bioEntityCardPropertyFile") Properties bioEntityCardProperties) {
-        this.bioEntityCardProperties = bioEntityCardProperties;
-    }
-
-    public String getPropertyName(String propertyType) {
-        return bioEntityCardProperties.getProperty(PROPERTY_PREFIX + propertyType, propertyType);
-    }
-
-    String getLinkTemplate(String propertyType) {
-        return bioEntityCardProperties.getProperty(LINK_PREFIX + propertyType);
-    }
 }

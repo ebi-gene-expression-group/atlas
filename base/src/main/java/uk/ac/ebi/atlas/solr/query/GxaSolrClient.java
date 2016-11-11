@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -13,11 +16,14 @@ import org.apache.solr.common.SolrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.*;
 
 @Named
@@ -74,9 +80,28 @@ public class GxaSolrClient {
         return results;
     }
 
-    public Map<BioentityPropertyName, Set<String>> queryForProperties(SolrQuery solrQuery){
+    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier){
+        return getMap(bioentityIdentifier, ExperimentDataPoint.bioentityPropertyNames);
+    }
+
+    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier,Collection<BioentityPropertyName> bioentityPropertyNames) {
+        SolrQuery query = new SolrQuery();
+
+        query.setRows(1000);
+        query.setFilterQueries("property_name:(\"" +
+                Joiner.on("\" OR \"").join(FluentIterable.from(bioentityPropertyNames).transform(
+                        new Function<BioentityPropertyName, String>() {
+                            @Nullable
+                            @Override
+                            public String apply(@Nullable BioentityPropertyName bioentityPropertyName) {
+                                return bioentityPropertyName.name().toLowerCase();
+                            }
+                        })) + "\")");
+        query.setFields("property_name", "property_value");
+        query.setQuery(MessageFormat.format("bioentity_identifier:\"{0}\"", bioentityIdentifier));
+
         Map<BioentityPropertyName, Set<String>> result = new HashMap<>();
-        QueryResponse queryResponse = query(solrQuery);
+        QueryResponse queryResponse = query(query);
 
         for (SolrDocument document : queryResponse.getResults()) {
             BioentityPropertyName key = BioentityPropertyName.getByName(document.getFieldValue(PROPERTY_NAME_FIELD).toString());

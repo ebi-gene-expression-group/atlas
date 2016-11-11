@@ -1,16 +1,5 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
-import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import com.google.common.collect.SortedSetMultimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.http.HttpStatus;
@@ -18,9 +7,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -77,7 +78,7 @@ public abstract class BioentityPageController {
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
     public String showBioentityPage(String identifier, Species species, String entityName, Model model, Set<String>
-            experimentTypes, SortedSetMultimap<String, String> propertyValuesByType){
+            experimentTypes, List<BioentityPropertyName> desiredOrderOfPropertyNames, Map<BioentityPropertyName, Set<String>>propertyValuesByType){
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -100,7 +101,7 @@ public abstract class BioentityPageController {
         TODO For now the callback might match slightly too much which is a bug.
          */
         model.addAttribute("geneQuery", SemanticQuery.create(identifier).toUrlEncodedJson());
-        model.addAllAttributes(bioEntityPropertyService.modelAttributes(identifier, species,propertyNames,
+        model.addAllAttributes(bioEntityPropertyService.modelAttributes(identifier, species,desiredOrderOfPropertyNames,
                 entityName, propertyValuesByType));
 
         return "bioentities";

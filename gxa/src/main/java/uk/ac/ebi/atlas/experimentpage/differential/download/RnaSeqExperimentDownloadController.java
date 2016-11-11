@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;

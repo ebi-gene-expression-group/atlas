@@ -10,18 +10,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 
 @Controller
 @Scope("request")
 public class GenePageController extends BioentityPageController {
-
-    @Value("#{configuration['index.property_names.genepage']}")
-    void setGenePagePropertyTypes(String[] propertyNames) {
-        this.propertyNames = propertyNames;
-    }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier,
@@ -30,16 +28,15 @@ public class GenePageController extends BioentityPageController {
         Species species = speciesFactory.create(GeneSetUtil.matchesReactomeID(identifier)? speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""): "");
         model.addAttribute("species", species.originalName);
 
-        SortedSetMultimap<String, String> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties
-                (identifier, propertyNames);
-        SortedSet<String> entityNames = propertyValuesByType.get("symbol");
-        if (entityNames.isEmpty()) {
-            entityNames.add(identifier);
+        Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
+        Set<String> entityNames = propertyValuesByType.get(BioentityPropertyName.SYMBOL);
+        if (entityNames == null || entityNames.isEmpty()) {
+            entityNames = ImmutableSet.of(identifier);
         }
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, species,entityNames.first(), model, experimentTypes,propertyValuesByType);
+        return super.showBioentityPage(identifier, species,entityNames.iterator().next(), model, experimentTypes,propertyValuesByType);
     }
 
     @Override

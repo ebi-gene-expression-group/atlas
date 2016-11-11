@@ -48,12 +48,12 @@ public class RnaSeqProfilesHeatMapIT {
         requestPreferences = new DifferentialRequestPreferences();
     }
 
-    private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException, ExecutionException {
+    private RnaSeqRequestContext populateRequestContext(String experimentAccession) , ExecutionException {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
     private RnaSeqRequestContext populateRequestContext(String experimentAccession, double cutoff, double
-            logFoldCutoff) throws GenesNotFoundException, ExecutionException {
+            logFoldCutoff) , ExecutionException {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -86,7 +86,7 @@ public class RnaSeqProfilesHeatMapIT {
     }
 
 
-     private void testDefaultParameters(String accession) throws GenesNotFoundException, ExecutionException {
+     private void testDefaultParameters(String accession) , ExecutionException {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -95,7 +95,7 @@ public class RnaSeqProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-     private void testNotSpecific(String accession) throws GenesNotFoundException, ExecutionException {
+     private void testNotSpecific(String accession) , ExecutionException {
         requestPreferences.setSpecific(false);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -105,7 +105,7 @@ public class RnaSeqProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) , ExecutionException {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesAll = subject.fetch(requestContext);

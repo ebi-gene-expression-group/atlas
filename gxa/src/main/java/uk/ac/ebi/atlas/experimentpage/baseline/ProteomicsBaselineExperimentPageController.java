@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -70,10 +69,8 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
             baselineExperimentPageService.populateModelWithHeatmapData(
                     (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                     preferences, model, request, false);
-        } catch (GenesNotFoundException e) {
+        } catch (uk.ac.ebi.atlas.web.GenesNotFoundException e) {
             result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-        } catch (UnsupportedEncodingException e) {
-            result.addError(new ObjectError("requestPreferences", "Error decoding gene query: '" + preferences.getGeneQuery().toJson()));
         }
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

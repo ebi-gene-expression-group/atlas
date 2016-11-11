@@ -48,12 +48,12 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences = new MicroarrayRequestPreferences();
     }
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException, ExecutionException {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) , ExecutionException {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
     private MicroarrayRequestContext populateRequestContext(String experimentAccession, double cutoff, double
-            logFoldCutoff) throws GenesNotFoundException, ExecutionException {
+            logFoldCutoff) , ExecutionException {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -86,7 +86,7 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    private void testDefaultParameters(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testDefaultParameters(String accession) , ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -95,7 +95,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testNotSpecific(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testNotSpecific(String accession) , ExecutionException {
         requestPreferences.setSpecific(false);
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -105,7 +105,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws GenesNotFoundException, ExecutionException {
+    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) , ExecutionException {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesAll = subject.fetch(requestContext);

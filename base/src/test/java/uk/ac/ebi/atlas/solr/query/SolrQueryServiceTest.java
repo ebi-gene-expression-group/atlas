@@ -56,13 +56,13 @@ public class SolrQueryServiceTest {
         given(facetedPropertyValueQueryBuilderMock.buildBioentityQuery(BIOENTITY_IDENTIFIER)).willReturn(solrQueryMock);
         given(solrQueryBuilderFactoryMock.createFacetedPropertyValueQueryBuilder()).willReturn(facetedPropertyValueQueryBuilderMock);
 
-        subject = new BioEntityPropertyDao(solrQueryBuilderFactoryMock, gxaSolrClientMock);
+        subject = new BioEntityPropertyDao(gxaSolrClientMock);
     }
 
     @Test(expected = BioentityNotFoundException.class)
     public void shouldThrowException() throws Exception {
         Map<BioentityPropertyName, Set<String>> emptyPropertyValues = new HashMap<>();
-        given(gxaSolrClientMock.queryForProperties(solrQueryMock)).willReturn(emptyPropertyValues);
+        //given(gxaSolrClientMock.queryForProperties(solrQueryMock)).willReturn(emptyPropertyValues);
 
         subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER, BioentityPropertyName.values());
     }

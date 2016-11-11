@@ -14,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -147,7 +146,7 @@ public class MicroarrayProfilesWriterIT {
         subject = null;
     }
 
-    public void defaultParametersHeader(String accession, String arrayDesignAccession) throws GenesNotFoundException,
+    public void defaultParametersHeader(String accession, String arrayDesignAccession) ,
             ExecutionException {
         setFoldChangeCutOff(0);
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
@@ -166,7 +165,7 @@ public class MicroarrayProfilesWriterIT {
         assertTrue(columnHeaders.length > 3);
     }
 
-    public void defaultParameters(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
+    public void defaultParameters(String accession, String arrayDesignAccession) , ExecutionException {
         setFoldChangeCutOff(0);
         requestPreferences.setCutoff(1d);
 
@@ -179,13 +178,13 @@ public class MicroarrayProfilesWriterIT {
         assertEquals(genesCount, geneNames.size());
     }
 
-    public void notSpecific(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
+    public void notSpecific(String accession, String arrayDesignAccession) , ExecutionException {
         setNotSpecific();
         defaultParameters(accession, arrayDesignAccession);
     }
 
 
-    public void upDownRegulationWorks(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
+    public void upDownRegulationWorks(String accession, String arrayDesignAccession) , ExecutionException {
         setFoldChangeCutOff(0);
         requestPreferences.setCutoff(1d);
         requestPreferences.setRegulation(Regulation.UP);
@@ -219,7 +218,7 @@ public class MicroarrayProfilesWriterIT {
     }
 
 
-    public void verySmallPValueGivesNoData(String accession, String arrayDesignAccession) throws GenesNotFoundException, ExecutionException {
+    public void verySmallPValueGivesNoData(String accession, String arrayDesignAccession) , ExecutionException {
         requestPreferences.setCutoff(1E-100);
 
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);

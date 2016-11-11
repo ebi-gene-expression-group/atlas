@@ -4,7 +4,6 @@ import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamF
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
@@ -36,8 +35,8 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
         this.solrQueryService = solrQueryService;
     }
 
-    public long write(PrintWriter outputWriter, MicroarrayRequestContext requestContext, String arrayDesign) throws GenesNotFoundException {
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext(requestContext,"");
+    public long write(PrintWriter outputWriter, MicroarrayRequestContext requestContext, String arrayDesign)  {
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(),"");
         MicroarrayProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext, arrayDesign);
         Set<Contrast> contrasts = Sets.newHashSet(inputStream.getOrderedContrastsPresentInStream());
         return super.write(outputWriter, inputStream, requestContext, contrasts,geneQueryResponse);

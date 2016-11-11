@@ -1,14 +1,20 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
 
 @Named
 public class GeneSetPropertyService {
@@ -26,33 +32,26 @@ public class GeneSetPropertyService {
         this.reactomeClient = reactomeClient;
     }
 
-    public SortedSetMultimap<String, String> propertyValuesByType(String identifier) {
+    public static final List<BioentityPropertyName> all =
+            ImmutableList.of(REACTOME, GO,PO,INTERPRO);
 
-        SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
-
+    public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier) {
         identifier = identifier.toUpperCase();
-
         if (GeneSetUtil.matchesReactomeID(identifier)) {
-            propertyValuesByType.put("reactome", identifier);
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
+            return propertyValuesByType(REACTOME, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            String termName = goPoTermTrader.getTerm(identifier).name();
-            propertyValuesByType.put("go", identifier);
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
+            return propertyValuesByType(GO, identifier, goPoTermTrader.getTerm(identifier).name());
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            String termName = goPoTermTrader.getTerm(identifier).name();
-            propertyValuesByType.put("po", identifier);
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
-        } else if (GeneSetUtil.matchesInterProAccession(identifier)) {
-            String term = interProTermTrader.getTermName(identifier);
-            propertyValuesByType.put("interpro", identifier);
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
-        } else if (GeneSetUtil.matchesPlantReactomeID(identifier)) {
-            propertyValuesByType.put("plant_reactome", identifier);
+            return propertyValuesByType(PO, identifier, goPoTermTrader.getTerm(identifier).name());
+        }else if (GeneSetUtil.matchesInterProAccession(identifier)) {
+            return propertyValuesByType(INTERPRO, identifier, interProTermTrader.getTermName(identifier));
+        } else {
+            return ImmutableMap.of();
         }
+    }
 
-        return propertyValuesByType;
-
+    Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,String identifier,String value){
+        return ImmutableMap.of(which, (Set<String>)ImmutableSet.of(identifier), DESCRIPTION,ImmutableSet.of(value));
     }
 
 }

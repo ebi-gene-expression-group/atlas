@@ -19,7 +19,6 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyLinkBuilder {
 
-    private BioEntityCardProperties bioEntityCardProperties;
     private ReactomeClient reactomeClient;
     private BioEntityPropertyDao bioEntityPropertyDao;
     private SpeciesLookupService speciesLookupService;
@@ -27,10 +26,9 @@ public class BioEntityPropertyLinkBuilder {
     private InterProTrader interProTermTrader;
 
     @Inject
-    public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeClient reactomeClient,
+    public BioEntityPropertyLinkBuilder(ReactomeClient reactomeClient,
                                         BioEntityPropertyDao bioEntityPropertyDao, SpeciesLookupService speciesLookupService,
                                         GoPoTermTrader goPoTermTrader, InterProTrader interProTermTrader) {
-        this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeClient = reactomeClient;
         this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.speciesLookupService = speciesLookupService;
@@ -38,16 +36,17 @@ public class BioEntityPropertyLinkBuilder {
         this.interProTermTrader = interProTermTrader;
     }
 
-    Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species, int relevance) {
+    Optional<PropertyLink> createLink(String identifier, BioentityPropertyName propertyName, String propertyValue, String species, int
+            relevance) {
         final String linkSpecies = SpeciesUtils.convertSpacesToUnderscore(species);
 
-        String linkText = fetchLinkText(propertyType, propertyValue);
+        String linkText = fetchLinkText(propertyName, propertyValue);
 
         if (linkText == null) {
             return Optional.absent();
         }
 
-        String link = bioEntityCardProperties.getLinkTemplate(propertyType);
+        String link = BioEntityCardProperties.linkTemplates.get(propertyName);
 
         if (link != null) {
 
@@ -59,17 +58,17 @@ public class BioEntityPropertyLinkBuilder {
         return Optional.of(new PropertyLink(linkText,relevance));
     }
 
-    private String fetchLinkText(String propertyType, String propertyValue) {
-        switch (propertyType) {
-            case "ortholog":
+    private String fetchLinkText(BioentityPropertyName propertyName, String propertyValue) {
+        switch (propertyName) {
+            case ORTHOLOG:
                 return fetchSymbolAndSpeciesForOrtholog(propertyValue);
-            case "reactome":
+            case REACTOME:
                 return reactomeClient.fetchPathwayNameFailSafe(propertyValue);
-            case "go":
+            case GO:
                 return goPoTermTrader.getTerm(propertyValue).name();
-            case "interpro":
+            case INTERPRO:
                 return interProTermTrader.getTermName(propertyValue);
-            case "po":
+            case PO:
                 return goPoTermTrader.getTerm(propertyValue).name();
             default:
                 return propertyValue;

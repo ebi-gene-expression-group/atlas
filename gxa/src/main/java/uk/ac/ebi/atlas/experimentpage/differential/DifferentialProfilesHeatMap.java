@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
@@ -39,9 +38,9 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
         this.queryBySpecies = queryBySpecies;
     }
 
-    public DifferentialProfilesList<P> fetch(R requestContext) throws GenesNotFoundException {
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
-                (requestContext, queryBySpecies ? requestContext.getFilteredBySpecies(): "");
+    public DifferentialProfilesList<P> fetch(R requestContext)  {
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
+                (requestContext.getGeneQuery(), queryBySpecies ? requestContext.getFilteredBySpecies(): "");
         return profilesHeatmapSource.fetch(requestContext,rankProfilesFactory.create(requestContext),
                 geneQueryResponse, false);
     }

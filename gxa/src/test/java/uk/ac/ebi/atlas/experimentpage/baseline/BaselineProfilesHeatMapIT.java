@@ -7,7 +7,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
@@ -69,11 +68,11 @@ public class BaselineProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1733?displayLevels=true&_specific=on&geneQuery=R-HSA-73887&geneSetMatch=true
     @Test
-    public void weCanGetAnyExperimentAtAll() throws GenesNotFoundException {
+    public void weCanGetAnyExperimentAtAll()  {
         setNotSpecific();
         setGeneQuery("protein_coding");
 
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponseBasedOnRequestContext
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
                 (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
 
         BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, true);

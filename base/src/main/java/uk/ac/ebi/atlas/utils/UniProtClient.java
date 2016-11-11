@@ -29,7 +29,7 @@ public class UniProtClient {
         this.restTemplate = restTemplate;
     }
 
-    public Collection<String> fetchReactomeIds(String uniprotId) {
+    public Collection<String> fetchReactomeIds(String uniprotId) {//Wouldn't it be nice if the pipeline did this instead? :)
         String url = MessageFormat.format(UNIPROT_URL, uniprotId);
 
         try {
