@@ -62,9 +62,9 @@ public class SolrQueryServiceTest {
     @Test(expected = BioentityNotFoundException.class)
     public void shouldThrowException() throws Exception {
         Map<BioentityPropertyName, Set<String>> emptyPropertyValues = new HashMap<>();
-        //given(gxaSolrClientMock.queryForProperties(solrQueryMock)).willReturn(emptyPropertyValues);
+        given(gxaSolrClientMock.getMap(BIOENTITY_IDENTIFIER)).willReturn(emptyPropertyValues);
 
-        subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER, BioentityPropertyName.values());
+        subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER);
     }
 
     @Test

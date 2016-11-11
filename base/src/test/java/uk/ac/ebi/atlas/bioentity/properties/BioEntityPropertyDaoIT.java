@@ -31,7 +31,7 @@ public class BioEntityPropertyDaoIT {
     public void fetchGenePageProperties() throws Exception {
         // given
         Map<BioentityPropertyName, Set<String>> properties =
-                subject.fetchGenePageProperties("ENSMUSG00000029816", BioentityPropertyName.values());
+                subject.fetchGenePageProperties("ENSMUSG00000029816");
 
         assertThat(numberOfValues(properties), greaterThan(50));
         assertThat(properties.get(BioentityPropertyName.SYNONYM).size(), is(3));

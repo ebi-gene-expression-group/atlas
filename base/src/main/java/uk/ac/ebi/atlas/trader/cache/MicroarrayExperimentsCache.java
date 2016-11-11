@@ -9,28 +9,11 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
-
-    private LoadingCache<String, MicroarrayExperiment> experiments;
+public class MicroarrayExperimentsCache extends ExperimentsCache<MicroarrayExperiment> {
 
     @Inject
     public MicroarrayExperimentsCache(@Qualifier("microarrayExperimentsLoadingCache") LoadingCache<String, MicroarrayExperiment> experiments) {
-        this.experiments = experiments;
-    }
-
-    @Override
-    public MicroarrayExperiment getExperiment(String experimentAccession) throws ExecutionException {
-        return experiments.get(experimentAccession);
-    }
-
-    @Override
-    public void evictExperiment(String experimentAccession) {
-        experiments.invalidate(experimentAccession);
-    }
-
-    @Override
-    public void evictAll() {
-        experiments.invalidateAll();
+        super(experiments);
     }
 
 }

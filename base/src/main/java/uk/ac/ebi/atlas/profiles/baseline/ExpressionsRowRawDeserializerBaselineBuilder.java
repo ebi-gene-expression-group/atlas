@@ -1,15 +1,14 @@
 
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -20,10 +19,6 @@ public class ExpressionsRowRawDeserializerBaselineBuilder implements Expressions
     private String experimentAccession;
 
     private RnaSeqBaselineExperimentsCache experimentsCache;
-
-    public ExpressionsRowRawDeserializerBaselineBuilder() {
-        //for subclassing
-    }
 
     @Inject
     public ExpressionsRowRawDeserializerBaselineBuilder(RnaSeqBaselineExperimentsCache experimentsCache) {
@@ -45,16 +40,13 @@ public class ExpressionsRowRawDeserializerBaselineBuilder implements Expressions
 
     @Override
     public ExpressionsRowRawDeserializerBaseline build() {
-        try {
-            checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
+        checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
-            BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-            //TODO: ordered factor groups should be passed in from the top, not looked up here
-            return new ExpressionsRowRawDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
-        } catch (ExecutionException e) {
-            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession);
-        }
+        //TODO: ordered factor groups should be passed in from the top, not looked up here
+        return new ExpressionsRowRawDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
+
     }
 
 }

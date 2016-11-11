@@ -45,16 +45,12 @@ public class ExpressionsRowDeserializerBaselineBuilder implements ExpressionsRow
 
     @Override
     public ExpressionsRowTsvDeserializerBaseline build() {
-        try {
-            checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
+        checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
-            BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
+        BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-            //TODO: ordered factor groups should be passed in from the top, not looked up here
-            return new ExpressionsRowTsvDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
-        } catch (ExecutionException e) {
-            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
-        }
+        //TODO: ordered factor groups should be passed in from the top, not looked up here
+        return new ExpressionsRowTsvDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
     }
 
 }

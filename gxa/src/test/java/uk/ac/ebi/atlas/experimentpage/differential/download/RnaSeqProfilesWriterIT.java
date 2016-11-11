@@ -84,7 +84,7 @@ public class RnaSeqProfilesWriterIT {
     @Inject
     private ExperimentTrader experimentTrader;
 
-    private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws ExecutionException {
+    private RnaSeqRequestContext populateRequestContext(String experimentAccession) {
         MockitoAnnotations.initMocks(this);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -135,7 +135,7 @@ public class RnaSeqProfilesWriterIT {
         requestPreferences = new DifferentialRequestPreferences();
     }
 
-    public void defaultParametersHeader(String accession) , ExecutionException {
+    public void defaultParametersHeader(String accession)  {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         subject.write(printWriterMock, requestContext);
 
@@ -152,7 +152,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(columnHeaders.length, greaterThan(2));
                     }
 
-    public void weHaveSomeResults(String accession) , ExecutionException {
+    public void weHaveSomeResults(String accession){
         requestPreferences.setCutoff(1D);
         requestPreferences.setFoldChangeCutOff(0D);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
@@ -169,12 +169,12 @@ public class RnaSeqProfilesWriterIT {
     }
 
 
-    public void notSpecific(String accession) , ExecutionException {
+    public void notSpecific(String accession) {
         requestPreferences.setSpecific(false);
         weHaveSomeResults(accession);
     }
     
-    public void upDownRegulationWorks(String accession) , ExecutionException {
+    public void upDownRegulationWorks(String accession) {
         requestPreferences.setRegulation(Regulation.UP);
 
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
@@ -210,7 +210,7 @@ public class RnaSeqProfilesWriterIT {
          }
 
     
-    public void noDataWithVeryStrictPValueCutoff(String accession) , ExecutionException {
+    public void noDataWithVeryStrictPValueCutoff(String accession) {
         requestPreferences.setCutoff(1e-100);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -219,7 +219,7 @@ public class RnaSeqProfilesWriterIT {
 
 
     
-    public void noDataWithVeryLargeFoldChangeCutoff(String accession) , ExecutionException {
+    public void noDataWithVeryLargeFoldChangeCutoff(String accession) {
         requestPreferences.setFoldChangeCutOff(50000D);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);

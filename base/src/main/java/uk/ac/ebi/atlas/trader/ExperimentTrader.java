@@ -98,11 +98,7 @@ public class ExperimentTrader {
 
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
-        try {
-            return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
-        } catch (ExecutionException | UncheckedExecutionException e) {
-            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
-        }
+        return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
     }
 
     public Set<String> getBaselineExperimentAccessions() {

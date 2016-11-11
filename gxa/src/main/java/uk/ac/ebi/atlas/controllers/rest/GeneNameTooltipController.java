@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
+
 @Controller
 @Scope("request")
 public class GeneNameTooltipController {
@@ -74,13 +76,13 @@ public class GeneNameTooltipController {
     public String getTooltipContent(@RequestParam(value = "geneName") String geneName,
                                     @RequestParam(value = "identifier") String identifier) {
 
-        Map<BioentityPropertyName, Set<String>> multimap = bioEntityPropertyDao.fetchTooltipProperties(identifier);
+        Map<BioentityPropertyName, Set<String>> bioentityProperties = bioEntityPropertyDao.fetchTooltipProperties(identifier);
 
-        String synonyms = buildSynonyms(multimap);
+        String synonyms = format(bioentityProperties.get(SYNONYM), false, NUMBER_OF_TERMS_TO_SHOW);
 
-        String goTerms = format(multimap.get("goterm"), true, NUMBER_OF_TERMS_TO_SHOW);
+        String goTerms = format(bioentityProperties.get(GOTERM), true, NUMBER_OF_TERMS_TO_SHOW);
 
-        String interproTerms = format(multimap.get("interproterm"), true, NUMBER_OF_TERMS_TO_SHOW);
+        String interproTerms = format(bioentityProperties.get(INTERPROTERM), true, NUMBER_OF_TERMS_TO_SHOW);
 
         return MessageFormat.format(htmlTemplate, geneName, synonyms, identifier, goTerms, interproTerms);
 
@@ -95,17 +97,20 @@ public class GeneNameTooltipController {
     }
 
     public JsonObject getTooltipContentJsonObject(String identifier){
-        Multimap<String, String> multimap = bioEntityPropertyDao.fetchTooltipProperties(identifier);
+        Map<BioentityPropertyName, Set<String>> bioentityProperties = bioEntityPropertyDao.fetchTooltipProperties(identifier);
 
         JsonObject result = new JsonObject();
-        result.add("synonyms", formatJson(multimap.get("synonym"),NUMBER_OF_TERMS_TO_SHOW));
-        result.add("goterms", formatJson(multimap.get("goterm"),NUMBER_OF_TERMS_TO_SHOW));
-        result.add("interproterms", formatJson(multimap.get("interproterm"),NUMBER_OF_TERMS_TO_SHOW));
+        result.add("synonyms", formatJson(bioentityProperties.get(SYNONYM),NUMBER_OF_TERMS_TO_SHOW));
+        result.add("goterms", formatJson(bioentityProperties.get(GOTERM),NUMBER_OF_TERMS_TO_SHOW));
+        result.add("interproterms", formatJson(bioentityProperties.get(INTERPROTERM),NUMBER_OF_TERMS_TO_SHOW));
         return result;
     }
 
     JsonArray formatJson(Collection<String> values, int restrictListLengthTo){
         JsonArray result = new JsonArray();
+        if(values==null){
+            return result;
+        }
         int i = 0;
         loop:
         for(String value: values){
@@ -134,15 +139,6 @@ public class GeneNameTooltipController {
         }
 
         return WORD_SPAN_OPEN + Joiner.on(WORD_SPAN_CLOSE + " " + WORD_SPAN_OPEN).join(subList) + WORD_SPAN_CLOSE;
-    }
-
-    String buildSynonyms(Multimap<String, String> multimap) {
-
-        String synonyms = format(multimap.get("synonym"), false, NUMBER_OF_TERMS_TO_SHOW);
-
-        List<String> synonymsList = Lists.newArrayList(synonyms);
-
-        return Joiner.on(" ").join(synonymsList);
     }
 
 }

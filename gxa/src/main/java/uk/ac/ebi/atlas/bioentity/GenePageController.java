@@ -36,7 +36,8 @@ public class GenePageController extends BioentityPageController {
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, species,entityNames.iterator().next(), model, experimentTypes,propertyValuesByType);
+        return super.showBioentityPage(identifier, species,entityNames.iterator().next(), model, experimentTypes,
+                ExperimentDataPoint.bioentityPropertyNames,propertyValuesByType);
     }
 
     @Override

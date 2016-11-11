@@ -33,8 +33,7 @@ public class BioEntityPropertyDao {
     }
 
     public Map<BioentityPropertyName, Set<String>> fetchTooltipProperties(String identifier) {
-        return solrClient.getMap(identifier, ImmutableList.of(BioentityPropertyName.SYNONYM, BioentityPropertyName
-                .GOTERM, BioentityPropertyName.INTERPROTERM));
+        return solrClient.getMap(identifier, ImmutableList.of(BioentityPropertyName.SYNONYM, BioentityPropertyName.GOTERM, BioentityPropertyName.INTERPROTERM));
 
     }
 

@@ -39,27 +39,23 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
     @Override
     public ExpressionsRowDeserializerDifferentialBuilder<T, K> withHeaders(String... tsvFileHeaders) {
 
-        try {
-            LOGGER.debug("<withHeaders> data file headers: {}", Arrays.toString(tsvFileHeaders));
+        LOGGER.debug("<withHeaders> data file headers: {}", Arrays.toString(tsvFileHeaders));
 
-            checkState(experimentAccession != null, "Builder not properly initialized!");
+        checkState(experimentAccession != null, "Builder not properly initialized!");
 
-            DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+        DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-            List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
+        List<String> columnHeaders = Arrays.asList(tsvFileHeaders);
 
-            orderedContrasts = new LinkedList<>();
-            for (String columnHeader : columnHeaders) {
-                if (columnHeader.endsWith(".p-value")) {
-                    String contrastId = StringUtils.substringBefore(columnHeader, ".");
-                    orderedContrasts.add(experiment.getContrast(contrastId));
-                }
+        orderedContrasts = new LinkedList<>();
+        for (String columnHeader : columnHeaders) {
+            if (columnHeader.endsWith(".p-value")) {
+                String contrastId = StringUtils.substringBefore(columnHeader, ".");
+                orderedContrasts.add(experiment.getContrast(contrastId));
             }
-
-            return this;
-        } catch (ExecutionException e) {
-            throw new IllegalStateException("Failed to load experiment from cache: " + experimentAccession, e);
         }
+
+        return this;
     }
 
     @Override

@@ -76,7 +76,6 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
-            try {
 
                 MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 
@@ -88,9 +87,6 @@ public class ExperimentInfoListBuilder {
 
                 experimentInfos.add(experimentInfo);
 
-            } catch (ExecutionException e) {
-                // continue;
-            }
         }
 
         return experimentInfos;
@@ -101,7 +97,6 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
-            try {
 
                 DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
@@ -112,9 +107,6 @@ public class ExperimentInfoListBuilder {
 
                 experimentInfos.add(experimentInfo);
 
-            } catch (ExecutionException e) {
-                // continue;
-            }
         }
 
         return experimentInfos;
@@ -125,7 +117,6 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
-            try {
 
                 BaselineExperiment experiment = rnaSeqBaselineExperimentsCache.getExperiment(experimentAccession);
 
@@ -134,9 +125,6 @@ public class ExperimentInfoListBuilder {
 
                 experimentInfos.add(experimentInfo);
 
-            } catch (ExecutionException e) {
-                // continue;
-            }
         }
 
         return experimentInfos;
@@ -147,7 +135,6 @@ public class ExperimentInfoListBuilder {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
         for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
-            try {
 
                   BaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
 
@@ -156,9 +143,6 @@ public class ExperimentInfoListBuilder {
 
                 experimentInfos.add(experimentInfo);
 
-            } catch (ExecutionException e) {
-                // continue;
-            }
         }
 
         return experimentInfos;

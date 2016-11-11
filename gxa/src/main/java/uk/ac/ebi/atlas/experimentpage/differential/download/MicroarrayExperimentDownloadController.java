@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.GenesNotFoundException;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

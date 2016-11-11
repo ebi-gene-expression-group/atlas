@@ -9,29 +9,10 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-public class RnaSeqBaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
-
-    private LoadingCache<String, BaselineExperiment> experiments;
+public class RnaSeqBaselineExperimentsCache extends ExperimentsCache<BaselineExperiment> {
 
     @Inject
     public RnaSeqBaselineExperimentsCache(@Qualifier("rnaSeqBaselineExperimentsLoadingCache") LoadingCache<String, BaselineExperiment> experiments) {
-        this.experiments = experiments;
+        super(experiments);
     }
-
-    @Override
-    public BaselineExperiment getExperiment(String experimentAccession) throws ExecutionException {
-        return experiments.get(experimentAccession);
-    }
-
-    @Override
-    public void evictExperiment(String experimentAccession) {
-        experiments.invalidate(experimentAccession);
-    }
-
-    @Override
-    public void evictAll() {
-        experiments.invalidateAll();
-    }
-
-
 }

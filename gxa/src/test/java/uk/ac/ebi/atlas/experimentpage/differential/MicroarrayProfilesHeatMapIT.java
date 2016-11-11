@@ -8,11 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
@@ -50,12 +46,12 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences = new MicroarrayRequestPreferences();
     }
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) , ExecutionException {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
     private MicroarrayRequestContext populateRequestContext(String experimentAccession, double cutoff, double
-            logFoldCutoff) , ExecutionException {
+            logFoldCutoff) {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -88,7 +84,7 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    private void testDefaultParameters(String accession) , ExecutionException {
+    private void testDefaultParameters(String accession) {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -97,7 +93,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testNotSpecific(String accession) , ExecutionException {
+    private void testNotSpecific(String accession) {
         requestPreferences.setSpecific(false);
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -107,7 +103,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) , ExecutionException {
+    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesAll = subject.fetch(requestContext);
