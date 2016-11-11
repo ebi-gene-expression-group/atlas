@@ -27,7 +27,6 @@
     </bean>
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
-    <util:properties id="bioEntityCardPropertyFile" location="classpath:bundles/bioEntityCard.properties"/>
     <util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>
 
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
