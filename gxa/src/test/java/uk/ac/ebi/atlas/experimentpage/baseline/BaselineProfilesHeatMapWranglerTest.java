@@ -12,21 +12,17 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
-import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 
-import java.util.*;
+import java.util.List;
+import java.util.TreeSet;
 
 import static org.mockito.Matchers.anySet;
 import static org.mockito.Matchers.anyString;
@@ -90,12 +86,12 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void rightQueriesToDataSources() throws Exception{
         GeneQueryResponse response = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponse((RequestContext) Mockito.any(),anyString()))
+        when(solrQueryService.fetchResponse((SemanticQuery) Mockito.any(),anyString()))
                 .thenReturn(response);
 
         subject.getJsonProfiles();
 
-        verify(solrQueryService).fetchResponseBasedOnRequestContext((RequestContext) Mockito.any(),anyString());
+        verify(solrQueryService).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
         verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.eq(response),
                 Matchers.eq(false));
     }
@@ -103,7 +99,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void rightQueriesToDataSourcesForGeneSets() throws Exception{
         GeneQueryResponse response = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponse((RequestContext) Mockito.any(),anyString()))
+        when(solrQueryService.fetchResponse(Mockito.any(SemanticQuery.class) ,anyString()))
                 .thenReturn(response);
 
         when(response.containsGeneSets()).thenReturn(true);
@@ -111,7 +107,7 @@ public class BaselineProfilesHeatMapWranglerTest {
 
         subject.getJsonProfilesAsGeneSets();
 
-        verify(solrQueryService).fetchResponseBasedOnRequestContext((RequestContext) Mockito.any(),anyString());
+        verify(solrQueryService).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
         verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.eq(response),
                 Matchers.eq(true));
     }
@@ -126,7 +122,7 @@ public class BaselineProfilesHeatMapWranglerTest {
             subject.getJsonProfiles();
         }
 
-        verify(solrQueryService).fetchResponseBasedOnRequestContext((RequestContext) Mockito.any(),anyString());
+        verify(solrQueryService).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
         verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
                 (GeneQueryResponse.class),
                 Matchers.eq(false));

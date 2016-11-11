@@ -11,20 +11,19 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-
 import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -73,7 +72,7 @@ public class BaselineProfilesHeatMapIT {
         setGeneQuery("protein_coding");
 
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
-                (baselineRequestContext,baselineRequestContext.getFilteredBySpecies());
+                (baselineRequestContext.getGeneQuery(),baselineRequestContext.getFilteredBySpecies());
 
         BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, true);
 

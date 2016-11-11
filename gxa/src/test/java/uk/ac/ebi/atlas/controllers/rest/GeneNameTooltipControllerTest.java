@@ -1,7 +1,9 @@
 
 package uk.ac.ebi.atlas.controllers.rest;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,10 +12,13 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -49,6 +54,16 @@ public class GeneNameTooltipControllerTest {
         InputStream inputStream = new ByteArrayInputStream("{0} {1} {2} {3}".getBytes());
 
         when(htmlTemplateResourceMock.getInputStream()).thenReturn(inputStream);
+
+
+        Map<BioentityPropertyName, Set<String>> m = ImmutableMap.of(
+                BioentityPropertyName.GO, (Set<String>) ImmutableSet.of("go"),
+                BioentityPropertyName.INTERPROTERM, ImmutableSet.of("interproterm"),
+                BioentityPropertyName.SYNONYM, ImmutableSet.of(SYNONYM_1, SYNONYM_2)
+        );
+
+
+        when(propertyDaoMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(m);
     }
 
     @Test
@@ -61,13 +76,6 @@ public class GeneNameTooltipControllerTest {
     @Test
     public void testGetTooltipContent() throws Exception {
 
-        SortedSetMultimap<String, String> hashMultimap = TreeMultimap.create();
-        hashMultimap.put(GOTERM, GOTERM);
-        hashMultimap.put(INTERPROTERM, INTERPROTERM);
-        hashMultimap.put(SYNONYM, SYNONYM_1);
-        hashMultimap.put(SYNONYM, SYNONYM_2);
-
-        when(propertyDaoMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(hashMultimap);
         subject.initTemplate();
 
         String tooltipContent = subject.getTooltipContent(GENE_NAME, IDENTIFIER);
@@ -80,29 +88,10 @@ public class GeneNameTooltipControllerTest {
     @Test
     public void testGetTooltipContentJson() throws Exception {
 
-        SortedSetMultimap<String, String> hashMultimap = TreeMultimap.create();
-        hashMultimap.put(GOTERM, GOTERM);
-        hashMultimap.put(INTERPROTERM, INTERPROTERM);
-        hashMultimap.put(SYNONYM, SYNONYM_1);
-        hashMultimap.put(SYNONYM, SYNONYM_2);
-
-        when(propertyDaoMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(hashMultimap);
-
         JsonObject tooltipContent = subject.getTooltipContentJsonObject(IDENTIFIER);
         assertThat(tooltipContent.get("goterms").getAsJsonArray().get(0).getAsString(), is(GOTERM));
         assertThat(tooltipContent.get("interproterms").getAsJsonArray().get(0).getAsString(), is(INTERPROTERM));
         assertThat(tooltipContent.get("synonyms").getAsJsonArray().size(), is(2));
-    }
-
-    @Test
-    public void buildSynonyms() throws Exception {
-
-        Multimap<String, String> hashMultimap = HashMultimap.create();
-        hashMultimap.put(SYNONYM, "a");
-        hashMultimap.put(SYNONYM, "b");
-
-        String identifier = subject.buildSynonyms(hashMultimap);
-        assertThat(identifier, is("<span class='gxaPropertyValueMarkup'>b</span> <span class='gxaPropertyValueMarkup'>a</span>"));
     }
 
     @Test

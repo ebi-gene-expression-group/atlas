@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.testutils.RegexMatcher;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -17,6 +16,7 @@ import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
@@ -54,7 +54,7 @@ public class MicroarrayProfilesTSVWriterIT {
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 
-        assertThat(headerRows[1], RegexMatcher.matches("# Query: Genes.*differentially.*"+MICROARRAY_EXPERIMENT_ACCESSION));
+        assertTrue(headerRows[1].matches("# Query: Genes.*differentially.*"+MICROARRAY_EXPERIMENT_ACCESSION));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
     }
 }

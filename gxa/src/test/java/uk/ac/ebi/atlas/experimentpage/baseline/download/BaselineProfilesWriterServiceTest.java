@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -160,7 +159,7 @@ public class BaselineProfilesWriterServiceTest {
         when(inputStreamFactory.create(any(BaselineProfileStreamOptions.class))).thenReturn(inputStream);
 
         GeneQueryResponse responseFromSolr = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponse(any(RequestContext.class), anyString()))
+        when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString()))
                 .thenReturn(responseFromSolr);
 
         subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions);
