@@ -50,12 +50,7 @@ public class BioEntityPropertyService {
     }
 
     public Map<String, Object> modelAttributes(String identifier, Species species, String [] propertyNames,
-                                               String entityName, SortedSetMultimap<String, String> propertyValuesByType){
-        // this is to add mirbase sequence for ENSEMBL mirnas
-        if (propertyValuesByType.containsKey("mirbase_id") && !propertyValuesByType.containsKey("mirbase_sequence")) {
-            addMirBaseSequence(propertyValuesByType);
-        }
-
+                                               String entityName, Map<BioentityPropertyName, Set<String>> propertyValuesByType){
         Map<String, Object> result = new HashMap<>();
         result.put("entityName",entityName);
         result.put("bioEntityDescription",getBioEntityDescription(propertyValuesByType));
@@ -135,12 +130,6 @@ public class BioEntityPropertyService {
         } else {
             return 0;
         }
-    }
-
-    private void addMirBaseSequence(SortedSetMultimap<String, String> propertyValuesByType) {
-        String mirbase_id = propertyValuesByType.get("mirbase_id").first();
-        Set<String> mirbase_sequence = bioEntityPropertyDao.fetchPropertyValuesForGeneId(mirbase_id, BioentityPropertyName.MIRBASE_SEQUENCE);
-        propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 
     private void addDesignElements(String identifier, SortedSetMultimap<String, String> propertyValuesByType) {
