@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
+<!-- 
      For more details about configurations options that may appear in
      this file, see http://wiki.apache.org/solr/SolrConfigXml. 
 -->
@@ -18,7 +18,7 @@
          that you fully re-index after changing this setting as it can
          affect both how text is indexed and queried.
     -->
-    <luceneMatchVersion>LUCENE_CURRENT</luceneMatchVersion>
+    <luceneMatchVersion>5.1.0</luceneMatchVersion>
 
     <!-- <lib/> directives can be used to instruct Solr to load an Jars
        identified and use them to resolve any "plugins" specified in
@@ -55,17 +55,17 @@
        The examples below can be used to load some solr-contribs along 
        with their external dependencies.
     -->
-    <lib dir="../../../contrib/extraction/lib" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-cell-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/extraction/lib" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-cell-\d.*\.jar"/>-->
 
-    <lib dir="../../../contrib/clustering/lib/" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-clustering-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/clustering/lib/" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-clustering-\d.*\.jar"/>-->
 
-    <lib dir="../../../contrib/langid/lib/" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-langid-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/langid/lib/" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-langid-\d.*\.jar"/>-->
 
-    <lib dir="../../../contrib/velocity/lib" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-velocity-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/velocity/lib" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-velocity-\d.*\.jar"/>-->
 
     <!-- an exact 'path' can be used instead of a 'dir' to specify a
        specific jar file.  This will cause a serious error to be logged 
@@ -1068,8 +1068,7 @@ current implementation relies on the updateLog feature being enabled. -->
        Admin Handlers - This will register all the standard admin
        RequestHandlers.  
     -->
-    <requestHandler name="/admin/"
-                    class="solr.admin.AdminHandlers"/>
+    <!--<requestHandler name="/admin/" class="solr.admin.AdminHandlers"/>-->
     <!-- This single handler is equivalent to the following... -->
     <!--
      <requestHandler name="/admin/luke"       class="solr.admin.LukeRequestHandler" />
@@ -1116,33 +1115,22 @@ current implementation relies on the updateLog feature being enabled. -->
         </lst>
     </requestHandler>
 
-    <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,schema.xml,stopwords.txt,synonyms.txt</str>
-    <requestHandler name="/replication" class="solr.ReplicationHandler">
-        <lst name="master">
-            <str name="replicateAfter">optimize</str>
-            <str name="backupAfter">optimize</str>
-            <str name="confFiles">schema.xml,stopwords.txt,synonyms.txt</str>
-            <str name="commitReserveDuration">00:00:10</str>
-        </lst>
-        <int name="maxNumberOfBackups">2</int>
-    </requestHandler>
-
     <!-- Replication handler -->
     <!-- Uncomment master or slave block as needed -->
     <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,schema.xml,stopwords.txt,synonyms.txt</str>
     <requestHandler name="/replication" class="solr.ReplicationHandler">
-        <lst name="master">
-            <str name="replicateAfter">optimize</str>
-            <str name="backupAfter">optimize</str>
-            <str name="confFiles">schema.xml,stopwords.txt,synonyms.txt</str>
-            <str name="commitReserveDuration">00:00:10</str>
-        </lst>
-        <int name="maxNumberOfBackups">2</int>
-
-        <!--<lst name="slave">-->
-            <!--<str name="masterUrl">http://ves-hx-69:8983/solr/baselineConditions/replication</str>-->
-            <!--<str name="pollInterval">00:01:00</str>-->
+        <!--<lst name="master">-->
+            <!--<str name="replicateAfter">optimize</str>-->
+            <!--<str name="backupAfter">optimize</str>-->
+            <!--<str name="confFiles">schema.xml,stopwords.txt,synonyms.txt</str>-->
+            <!--<str name="commitReserveDuration">00:00:10</str>-->
         <!--</lst>-->
+        <!--<int name="maxNumberOfBackups">2</int>-->
+
+        <lst name="slave">
+            <str name="masterUrl">http://ves-hx-69:8983/solr/differentialConditions/replication</str>
+            <str name="pollInterval">00:01:00</str>
+        </lst>
     </requestHandler>
 
     <!-- Search Components

@@ -18,7 +18,7 @@
          that you fully re-index after changing this setting as it can
          affect both how text is indexed and queried.
     -->
-    <luceneMatchVersion>LUCENE_CURRENT</luceneMatchVersion>
+    <luceneMatchVersion>5.1.0</luceneMatchVersion>
 
     <!-- <lib/> directives can be used to instruct Solr to load an Jars
        identified and use them to resolve any "plugins" specified in
@@ -55,17 +55,17 @@
        The examples below can be used to load some solr-contribs along 
        with their external dependencies.
     -->
-    <lib dir="../../../contrib/extraction/lib" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-cell-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/extraction/lib" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-cell-\d.*\.jar"/>-->
 
-    <lib dir="../../../contrib/clustering/lib/" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-clustering-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/clustering/lib/" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-clustering-\d.*\.jar"/>-->
 
-    <lib dir="../../../contrib/langid/lib/" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-langid-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/langid/lib/" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-langid-\d.*\.jar"/>-->
 
-    <lib dir="../../../contrib/velocity/lib" regex=".*\.jar"/>
-    <lib dir="../../../dist/" regex="solr-velocity-\d.*\.jar"/>
+    <!--<lib dir="../../../contrib/velocity/lib" regex=".*\.jar"/>-->
+    <!--<lib dir="../../../dist/" regex="solr-velocity-\d.*\.jar"/>-->
 
     <!-- an exact 'path' can be used instead of a 'dir' to specify a
        specific jar file.  This will cause a serious error to be logged 
@@ -84,8 +84,7 @@
     -->
     <!--
     you need to specify this as a JVM property: -Dsolr.data.dir=...
-    
-    <dataDir>${...}</dataDir>
+    <dataDir>${solr.data.dir}gxa/</dataDir>
     -->
 
     <!-- The DirectoryFactory to use for indexes.
@@ -779,7 +778,7 @@ is recommended (see below).
         <lst name="defaults">
             <str name="echoParams">explicit</str>
             <int name="rows">10</int>
-            <str name="df">text</str>
+            <str name="df">property_value_search</str>
         </lst>
         <!-- In addition to defaults, "appends" params can be specified
            to identify values which should be appended to the list of
@@ -856,105 +855,6 @@ current implementation relies on the updateLog feature being enabled. -->
             <str name="indent">true</str>
         </lst>
     </requestHandler>
-
-
-    <!-- A Robust Example
-       
-       This example SearchHandler declaration shows off usage of the
-       SearchHandler with many defaults declared
-
-       Note that multiple instances of the same Request Handler
-       (SearchHandler) can be registered multiple times with different
-       names (and different init parameters)
-    -->
-    <requestHandler name="/browse" class="solr.SearchHandler">
-        <lst name="defaults">
-            <str name="echoParams">explicit</str>
-
-            <!-- VelocityResponseWriter settings -->
-            <str name="wt">velocity</str>
-            <str name="v.template">browse</str>
-            <str name="v.layout">layout</str>
-            <str name="title">Solritas</str>
-
-            <!-- Query settings -->
-            <str name="defType">edismax</str>
-            <str name="qf">
-                text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
-                title^10.0 description^5.0 keywords^5.0 author^2.0 resourcename^1.0
-            </str>
-            <str name="df">text</str>
-            <str name="mm">100%</str>
-            <str name="q.alt">*:*</str>
-            <str name="rows">10</str>
-            <str name="fl">*,score</str>
-
-            <str name="mlt.qf">
-                text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
-                title^10.0 description^5.0 keywords^5.0 author^2.0 resourcename^1.0
-            </str>
-            <str name="mlt.fl">text,features,name,sku,id,manu,cat,title,description,keywords,author,resourcename</str>
-            <int name="mlt.count">3</int>
-
-            <!-- Faceting defaults -->
-            <str name="facet">on</str>
-            <str name="facet.field">cat</str>
-            <str name="facet.field">manu_exact</str>
-            <str name="facet.field">content_type</str>
-            <str name="facet.field">author_s</str>
-            <str name="facet.query">ipod</str>
-            <str name="facet.query">GB</str>
-            <str name="facet.mincount">1</str>
-            <str name="facet.pivot">cat,inStock</str>
-            <str name="facet.range.other">after</str>
-            <str name="facet.range">price</str>
-            <int name="f.price.facet.range.start">0</int>
-            <int name="f.price.facet.range.end">600</int>
-            <int name="f.price.facet.range.gap">50</int>
-            <str name="facet.range">popularity</str>
-            <int name="f.popularity.facet.range.start">0</int>
-            <int name="f.popularity.facet.range.end">10</int>
-            <int name="f.popularity.facet.range.gap">3</int>
-            <str name="facet.range">manufacturedate_dt</str>
-            <str name="f.manufacturedate_dt.facet.range.start">NOW/YEAR-10YEARS</str>
-            <str name="f.manufacturedate_dt.facet.range.end">NOW</str>
-            <str name="f.manufacturedate_dt.facet.range.gap">+1YEAR</str>
-            <str name="f.manufacturedate_dt.facet.range.other">before</str>
-            <str name="f.manufacturedate_dt.facet.range.other">after</str>
-
-            <!-- Highlighting defaults -->
-            <str name="hl">on</str>
-            <str name="hl.fl">content features title name</str>
-            <str name="hl.encoder">html</str>
-            <str name="hl.simple.pre">&lt;b&gt;</str>
-            <str name="hl.simple.post">&lt;/b&gt;</str>
-            <str name="f.title.hl.fragsize">0</str>
-            <str name="f.title.hl.alternateField">title</str>
-            <str name="f.name.hl.fragsize">0</str>
-            <str name="f.name.hl.alternateField">name</str>
-            <str name="f.content.hl.snippets">3</str>
-            <str name="f.content.hl.fragsize">200</str>
-            <str name="f.content.hl.alternateField">content</str>
-            <str name="f.content.hl.maxAlternateFieldLength">750</str>
-
-            <!-- Spell checking defaults -->
-            <str name="spellcheck">on</str>
-            <str name="spellcheck.extendedResults">false</str>
-            <str name="spellcheck.count">5</str>
-            <str name="spellcheck.alternativeTermCount">2</str>
-            <str name="spellcheck.maxResultsForSuggest">5</str>
-            <str name="spellcheck.collate">true</str>
-            <str name="spellcheck.collateExtendedResults">true</str>
-            <str name="spellcheck.maxCollationTries">5</str>
-            <str name="spellcheck.maxCollations">3</str>
-        </lst>
-
-        <!-- append spellchecking to our list of components -->
-        <arr name="last-components">
-            <str>spellcheck</str>
-        </arr>
-    </requestHandler>
-
 
     <!-- Update Request Handler.
        
@@ -1068,8 +968,7 @@ current implementation relies on the updateLog feature being enabled. -->
        Admin Handlers - This will register all the standard admin
        RequestHandlers.  
     -->
-    <requestHandler name="/admin/"
-                    class="solr.admin.AdminHandlers"/>
+    <!--<requestHandler name="/admin/" class="solr.admin.AdminHandlers"/>-->
     <!-- This single handler is equivalent to the following... -->
     <!--
      <requestHandler name="/admin/luke"       class="solr.admin.LukeRequestHandler" />
@@ -1116,6 +1015,8 @@ current implementation relies on the updateLog feature being enabled. -->
         </lst>
     </requestHandler>
 
+    <!-- Replication handler -->
+    <!-- Uncomment master or slave block as needed -->
     <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,schema.xml,stopwords.txt,synonyms.txt</str>
     <requestHandler name="/replication" class="solr.ReplicationHandler">
         <lst name="master">
@@ -1125,24 +1026,11 @@ current implementation relies on the updateLog feature being enabled. -->
             <str name="commitReserveDuration">00:00:10</str>
         </lst>
         <int name="maxNumberOfBackups">2</int>
-    </requestHandler>
 
-    <!-- Replication handler -->
-    <!-- Uncomment master or slave block as needed -->
-    <str name="confFiles">solrconfig_slave.xml:solrconfig.xml,schema.xml,stopwords.txt,synonyms.txt</str>
-    <requestHandler name="/replication" class="solr.ReplicationHandler">
-        <!--<lst name="master">-->
-            <!--<str name="replicateAfter">optimize</str>-->
-            <!--<str name="backupAfter">optimize</str>-->
-            <!--<str name="confFiles">schema.xml,stopwords.txt,synonyms.txt</str>-->
-            <!--<str name="commitReserveDuration">00:00:10</str>-->
+        <!--<lst name="slave">-->
+            <!--<str name="masterUrl">http://ves-hx-69:8983/solr/gxa/replication</str>-->
+            <!--<str name="pollInterval">00:01:00</str>-->
         <!--</lst>-->
-        <!--<int name="maxNumberOfBackups">2</int>-->
-
-        <lst name="slave">
-            <str name="masterUrl">http://ves-hx-69:8983/solr/baselineConditions/replication</str>
-            <str name="pollInterval">00:01:00</str>
-        </lst>
     </requestHandler>
 
     <!-- Search Components
@@ -1187,131 +1075,6 @@ current implementation relies on the updateLog feature being enabled. -->
       always be executed after the "last-components"
 
     -->
-
-    <!-- Spell Check
-
-       The spell check component can return a list of alternative spelling
-       suggestions.
-
-       http://wiki.apache.org/solr/SpellCheckComponent
-    -->
-    <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
-
-        <str name="queryAnalyzerFieldType">text_general</str>
-
-        <!-- Multiple "Spell Checkers" can be declared and used by this
-           component
-        -->
-
-        <!-- a spellchecker built from a field of the main index -->
-        <lst name="spellchecker">
-            <str name="name">default</str>
-            <str name="field">text</str>
-            <str name="classname">solr.DirectSolrSpellChecker</str>
-            <!-- the spellcheck distance measure used, the default is the internal levenshtein -->
-            <str name="distanceMeasure">internal</str>
-            <!-- minimum accuracy needed to be considered a valid spellcheck suggestion -->
-            <float name="accuracy">0.5</float>
-            <!-- the maximum #edits we consider when enumerating terms: can be 1 or 2 -->
-            <int name="maxEdits">2</int>
-            <!-- the minimum shared prefix when enumerating terms -->
-            <int name="minPrefix">1</int>
-            <!-- maximum number of inspections per result. -->
-            <int name="maxInspections">5</int>
-            <!-- minimum length of a query term to be considered for correction -->
-            <int name="minQueryLength">4</int>
-            <!-- maximum threshold of documents a query term can appear to be considered for correction -->
-            <float name="maxQueryFrequency">0.01</float>
-            <!-- uncomment this to require suggestions to occur in 1% of the documents
-                <float name="thresholdTokenFrequency">.01</float>
-            -->
-        </lst>
-
-        <!-- a spellchecker that can break or combine words.  See "/spell" handler below for usage -->
-        <lst name="spellchecker">
-            <str name="name">wordbreak</str>
-            <str name="classname">solr.WordBreakSolrSpellChecker</str>
-            <str name="field">name</str>
-            <str name="combineWords">true</str>
-            <str name="breakWords">true</str>
-            <int name="maxChanges">10</int>
-        </lst>
-
-        <!-- a spellchecker that uses a different distance measure -->
-        <!--
-          <lst name="spellchecker">
-            <str name="name">jarowinkler</str>
-            <str name="field">spell</str>
-            <str name="classname">solr.DirectSolrSpellChecker</str>
-            <str name="distanceMeasure">
-              org.apache.lucene.search.spell.JaroWinklerDistance
-            </str>
-          </lst>
-        -->
-
-        <!-- a spellchecker that use an alternate comparator
-
-           comparatorClass be one of:
-            1. score (default)
-            2. freq (Frequency first, then score)
-            3. A fully qualified class name
-        -->
-        <!--
-         <lst name="spellchecker">
-           <str name="name">freq</str>
-           <str name="field">lowerfilt</str>
-           <str name="classname">solr.DirectSolrSpellChecker</str>
-           <str name="comparatorClass">freq</str>
-        -->
-
-        <!-- A spellchecker that reads the list of words from a file -->
-        <!--
-         <lst name="spellchecker">
-           <str name="classname">solr.FileBasedSpellChecker</str>
-           <str name="name">file</str>
-           <str name="sourceLocation">spellings.txt</str>
-           <str name="characterEncoding">UTF-8</str>
-           <str name="spellcheckIndexDir">spellcheckerFile</str>
-         </lst>
-        -->
-    </searchComponent>
-
-    <!-- A request handler for demonstrating the spellcheck component.
-
-       NOTE: This is purely as an example.  The whole purpose of the
-       SpellCheckComponent is to hook it into the request handler that
-       handles your normal user queries so that a separate request is
-       not needed to get suggestions.
-
-       IN OTHER WORDS, THERE IS REALLY GOOD CHANCE THE SETUP BELOW IS
-       NOT WHAT YOU WANT FOR YOUR PRODUCTION SYSTEM!
-       
-       See http://wiki.apache.org/solr/SpellCheckComponent for details
-       on the request parameters.
-    -->
-    <requestHandler name="/spell" class="solr.SearchHandler" startup="lazy">
-        <lst name="defaults">
-            <str name="df">text</str>
-            <!-- Solr will use suggestions from both the 'default' spellchecker
-        and from the 'wordbreak' spellchecker and combine them.
-        collations (re-written queries) can include a combination of
-        corrections from both spellcheckers -->
-            <str name="spellcheck.dictionary">default</str>
-            <str name="spellcheck.dictionary">wordbreak</str>
-            <str name="spellcheck">on</str>
-            <str name="spellcheck.extendedResults">true</str>
-            <str name="spellcheck.count">10</str>
-            <str name="spellcheck.alternativeTermCount">5</str>
-            <str name="spellcheck.maxResultsForSuggest">5</str>
-            <str name="spellcheck.collate">true</str>
-            <str name="spellcheck.collateExtendedResults">true</str>
-            <str name="spellcheck.maxCollationTries">10</str>
-            <str name="spellcheck.maxCollations">5</str>
-        </lst>
-        <arr name="last-components">
-            <str>spellcheck</str>
-        </arr>
-    </requestHandler>
 
     <!-- Term Vector Component
 
@@ -1775,58 +1538,43 @@ current implementation relies on the updateLog feature being enabled. -->
     </admin>
 
     <searchComponent class="solr.SpellCheckComponent" name="suggest_properties">
-
-        <str name="queryAnalyzerFieldType">text_standard</str>
-
         <lst name="spellchecker">
-
             <str name="name">suggest_properties</str>
-
             <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+            <str name="lookupImpl">org.apache.solr.spelling.suggest.fst.AnalyzingLookupFactory</str>
 
-            <str name="lookupImpl">org.apache.solr.spelling.suggest.fst.WFSTLookupFactory</str>
+            <!--  AnalyzingSuggester uses this analyzer to modify the field before it is stored in the FST. Also used on query terms -->
+            <str name="suggestAnalyzerFieldType">text_standard</str>
 
-            <str name="field">property_value_autocomplete</str>
-            <!-- the indexed field to derive suggestions from -->
+            <!-- the un-analyzed form that is returned as the suggestion -->
+            <str name="field">property_value</str>
 
+            <!-- applied to the spellcheck.q parameter before it reaches the AnalyzingSuggester -->
+            <str name="fieldType">string</str>
+
+            <!-- no threshold, terms that appear at least once will be added to FST -->
             <float name="threshold">0</float>
 
-            <str name="buildOnCommit">true</str>
+            <!-- store the FST to disk so we don't have to build it after ever core (re)load -->
+            <str name="storeDir">suggest_properties_store</str>
 
+            <!-- rebuild the FST when the index is optimised -->
+            <str name="buildOnOptimize">true</str>
         </lst>
-
     </searchComponent>
 
+    <!-- eg: http://lime:8983/solr/gxa/suggest_properties?q="<multiTermToken>"&wt=json&omitHeader=true&rows=0&json.nl=arrarr -->
     <requestHandler class="org.apache.solr.handler.component.SearchHandler" name="/suggest_properties">
-
         <lst name="defaults">
-
             <str name="spellcheck">true</str>
-
             <str name="spellcheck.dictionary">suggest_properties</str>
-
             <str name="spellcheck.onlyMorePopular">true</str>
-
             <str name="spellcheck.count">30</str>
-
-            <str name="spellcheck.collate">true</str>
-
-            <str name="spellcheck.maxCollations">15</str>
-
-            <str name="spellcheck.maxCollationTries">1000</str>
-
-            <str name="spellcheck.collateExtendedResults">false</str>
-
         </lst>
-
         <arr name="components">
-
             <str>suggest_properties</str>
-
             <str>query</str>
-
         </arr>
-
     </requestHandler>
 
 </config>
