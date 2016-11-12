@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.qc;
 
-
 import com.google.common.base.Throwables;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,14 +11,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 
-import static java.nio.file.Files.*;
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.newInputStream;
 
 @Named
-@Scope("singleton")
 public class QCReportUtil {
 
     private String qcFilePathTemplate;

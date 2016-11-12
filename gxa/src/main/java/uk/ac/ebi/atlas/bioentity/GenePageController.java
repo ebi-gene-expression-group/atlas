@@ -1,21 +1,20 @@
 package uk.ac.ebi.atlas.bioentity;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.model.Species;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
+
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 
 @Controller
 @Scope("request")
@@ -36,8 +35,8 @@ public class GenePageController extends BioentityPageController {
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, species,entityNames.iterator().next(), model, experimentTypes,
-                ExperimentDataPoint.bioentityPropertyNames,propertyValuesByType);
+        return super.showBioentityPage(identifier, species, entityNames.iterator().next(), model, experimentTypes,
+                BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
     }
 
     @Override
