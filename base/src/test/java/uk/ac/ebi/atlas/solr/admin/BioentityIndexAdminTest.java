@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.solr.admin.index.BioentityIndex;
@@ -11,10 +12,10 @@ import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -29,7 +30,7 @@ public class BioentityIndexAdminTest {
     @Mock
     private BioentityIndexMonitor bioentityIndexMonitorMock;
 
-    private ExecutorService sameThreadExecutorService = MoreExecutors.sameThreadExecutor();
+    private ExecutorService sameThreadExecutorService = MoreExecutors.newDirectExecutorService();
 
     private BioentityIndexAdmin subject;
 
@@ -48,7 +49,7 @@ public class BioentityIndexAdminTest {
 
         verify(bioentityIndexMock).deleteAll();
 
-        verify(bioentityIndexMock).indexAll(any(DirectoryStream.class));
+        verify(bioentityIndexMock).indexAll(Matchers.<DirectoryStream<Path>>any());
 
     }
 
@@ -60,7 +61,7 @@ public class BioentityIndexAdminTest {
         subject.rebuildIndex();
 
         verify(bioentityIndexMock,never()).deleteAll();
-        verify(bioentityIndexMock,never()).indexAll(any(DirectoryStream.class));
+        verify(bioentityIndexMock,never()).indexAll(Matchers.<DirectoryStream<Path>>any());
 
     }
 

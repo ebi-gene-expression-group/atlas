@@ -57,12 +57,9 @@ public class BaselineAnalyticsFacetsReaderTest {
     }
 
     private static List<Map<String, Object>> loadJsonWithExperiments() throws IOException {
-        String species = "Homo sapiens";
-        String defaultQueryFactorType = "ORGANISM_PART";
         InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/uk/ac/ebi/atlas/search/analyticsindex/baseline/baseline.heatmap.pivot.response.json");
 
-        return JsonPath.read(in, String.format(BaselineAnalyticsSearchDao.EXPERIMENTS_PATH, species,
-                defaultQueryFactorType));
+        return JsonPath.read(in, BaselineAnalyticsSearchDao.EXPERIMENTS_PATH);
     }
 
     private static List<Map<String, Object>> loadJsonWithFacets() throws IOException {

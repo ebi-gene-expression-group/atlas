@@ -42,52 +42,51 @@ public class ExperimentCRUDRollbackIT {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    ExperimentDAO experimentDAO;
+    private ExperimentDAO experimentDAO;
 
     @Inject
-    ExperimentDesignFileService experimentDesignFileService;
+    private ExperimentDesignFileService experimentDesignFileService;
 
     @Inject
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    CondensedSdrfParser condensedSdrfParser;
+    private CondensedSdrfParser condensedSdrfParser;
 
     @Inject
-    ExperimentMetadataCRUD experimentMetadataCRUD;
+    private ExperimentMetadataCRUD experimentMetadataCRUD;
 
     @Inject
-    EFOLookupService efoParentsLookupService;
+    private EFOLookupService efoParentsLookupService;
 
     @Inject
-    AnalyticsIndexerManager analyticsIndexerManager;
+    private AnalyticsIndexerManager analyticsIndexerManager;
 
     @Mock
-    ConditionsIndexTrader conditionsIndexTrader;
-
+    private ConditionsIndexTrader conditionsIndexTraderMock;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        when(conditionsIndexTrader.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
+        when(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
         ExperimentMetadataCRUD experimentMetadataCRUDmock =
                 new ExperimentMetadataCRUD(experimentDAO, experimentTrader, condensedSdrfParser, efoParentsLookupService);
-        experimentMetadataCRUDmock.setConditionsIndexTrader(conditionsIndexTrader);
+        experimentMetadataCRUDmock.setConditionsIndexTrader(conditionsIndexTraderMock);
         experimentMetadataCRUDmock.setExperimentDesignFileService(experimentDesignFileService);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
     }
 
     @After
-    public void cleanup() {
+    public void tearDown() {
         // needed otherwise other tests run by Maven/Bamboo will die!
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
     @Test
     public void rollbackDatabaseChangesOnSolrFailure() throws IOException {
-        assertThat("Experiment already exists in DB", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("Baseline expressions already exist in DB", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat(experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat(baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
         String exceptionMessage = null;
 
