@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfileComparatorTest {
 
-    private DifferentialProfileComparator subject;
+    private DifferentialProfileComparator<DifferentialProfile> subject;
 
     @Mock
     private Contrast contrastMock1;
@@ -41,10 +41,10 @@ public class DifferentialProfileComparatorTest {
     private Set<Contrast> nonSelectedContrasts;
 
     @Mock
-    private DifferentialProfile profileMock1;
+    private DifferentialProfile<DifferentialExpression> profileMock1;
 
     @Mock
-    private DifferentialProfile profileMock2;
+    private DifferentialProfile<DifferentialExpression> profileMock2;
 
     @Mock
     private Predicate<DifferentialExpression> anyExpression;
@@ -58,13 +58,13 @@ public class DifferentialProfileComparatorTest {
         selectedContrasts = Sets.newHashSet(contrastMock1);
         nonSelectedContrasts = Sets.newHashSet(contrastMock2, contrastMock3);
 
-        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP);
+        subject = new DifferentialProfileComparator<>(true, selectedContrasts, allContrasts, Regulation.UP);
     }
 
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
         //when
-        subject = new DifferentialProfileComparator(true, null, allContrasts, Regulation.UP);
+        subject = new DifferentialProfileComparator<>(true, null, allContrasts, Regulation.UP);
 
         when(profileMock1.getSpecificity(Regulation.UP)).thenReturn(1);
         when(profileMock2.getSpecificity(Regulation.UP)).thenReturn(2);
@@ -101,7 +101,7 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void testGetExpressionLevelFoldChangeOnWhenAllContrastsAreSelected() throws Exception {
-        subject = new DifferentialProfileComparator(true, selectedContrasts, allContrasts, Regulation.UP);
+        subject = new DifferentialProfileComparator<>(true, selectedContrasts, allContrasts, Regulation.UP);
 
         //when
         when(profileMock1.getStrongestExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.05);
@@ -133,10 +133,10 @@ public class DifferentialProfileComparatorTest {
         when(differentialProfileMock3.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(2D);
         when(differentialProfileMock3.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
 
-        subject = new DifferentialProfileComparator(false, Collections.emptySet(), Collections.emptySet(), Regulation.UP_DOWN);
+        subject = new DifferentialProfileComparator<>(false, Collections.<Contrast>emptySet(), Collections.<Contrast>emptySet(), Regulation.UP_DOWN);
 
         //when
-        SortedSet<DifferentialProfile> profiles = new TreeSet<DifferentialProfile>(subject);
+        SortedSet<DifferentialProfile> profiles = new TreeSet<>(subject);
         profiles.add(differentialProfileMock1);
         profiles.add(differentialProfileMock2);
         profiles.add(differentialProfileMock3);
@@ -155,12 +155,12 @@ public class DifferentialProfileComparatorTest {
     private static final String P_VALUE_IGNORED = "999";
     private static final String FOLD_CHANGE_IGNORED = "0";
 
-    public static final String FOLD_CHANGE_20 = "20";
-    public static final String FOLD_CHANGE_10 = "10";
-    public static final String FOLD_CHANGE_7 = "7";
-    public static final String FOLD_CHANGE_5 = "5";
-    public static final String FOLD_CHANGE_3 = "3";
-    public static final String FOLD_CHANGE_1 = "0.1";
+    private static final String FOLD_CHANGE_20 = "20";
+    private static final String FOLD_CHANGE_10 = "10";
+    private static final String FOLD_CHANGE_7 = "7";
+    private static final String FOLD_CHANGE_5 = "5";
+    private static final String FOLD_CHANGE_3 = "3";
+    private static final String FOLD_CHANGE_1 = "0.1";
 
     private static final String P_VALUE_0_DOT_1 = "0.1";
     private static final String P_VALUE_0_DOT_2 = "0.2";
@@ -173,17 +173,17 @@ public class DifferentialProfileComparatorTest {
 
     private static final String DESIGN_ELEMENT = "design_element";
 
-    String specificOneContrast                    = Joiner.on("\t").join(new String[] {GENE_1, GENE_1, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_1,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
-    String twoContrastHighFoldChange              = Joiner.on("\t").join(new String[] {GENE_2, GENE_2, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_20,   P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_10});
-    String twoContrastHighFoldChangeOtherContrast = Joiner.on("\t").join(new String[] {GENE_6, GENE_6, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10,   P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_20});
-    String twoContrastLowFoldChange               = Joiner.on("\t").join(new String[] {GENE_3, GENE_3, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10,   P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10});
-    String twoContrastSameFoldChangeLowPValue     = Joiner.on("\t").join(new String[] {GENE_4, GENE_4, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5});
-    String twoContrastSameFoldChangeHighPValue    = Joiner.on("\t").join(new String[] {GENE_5, GENE_5, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5});
+    private String specificOneContrast                    = Joiner.on("\t").join(new String[] {GENE_1, GENE_1, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_1,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
+    private String twoContrastHighFoldChange              = Joiner.on("\t").join(new String[] {GENE_2, GENE_2, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_20,   P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_10});
+    private String twoContrastHighFoldChangeOtherContrast = Joiner.on("\t").join(new String[] {GENE_6, GENE_6, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10,   P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_20});
+    private String twoContrastLowFoldChange               = Joiner.on("\t").join(new String[] {GENE_3, GENE_3, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10,   P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10});
+    private String twoContrastSameFoldChangeLowPValue     = Joiner.on("\t").join(new String[] {GENE_4, GENE_4, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5});
+    private String twoContrastSameFoldChangeHighPValue    = Joiner.on("\t").join(new String[] {GENE_5, GENE_5, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5});
 
-    String sequenceLines = Joiner.on("\n").join(new String[] {specificOneContrast, twoContrastHighFoldChangeOtherContrast, twoContrastSameFoldChangeHighPValue, twoContrastSameFoldChangeLowPValue, twoContrastLowFoldChange, twoContrastHighFoldChange});
-    ImmutableList<MicroarrayProfile> sequenceProfiles;
+    private String sequenceLines = Joiner.on("\n").join(new String[] {specificOneContrast, twoContrastHighFoldChangeOtherContrast, twoContrastSameFoldChangeHighPValue, twoContrastSameFoldChangeLowPValue, twoContrastLowFoldChange, twoContrastHighFoldChange});
+    private ImmutableList<MicroarrayProfile> sequenceProfiles;
 
-    IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff().setPValueCutoff(1).setRegulation(Regulation.UP_DOWN).setFoldChangeCutOff(0);
+    private IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff().setPValueCutoff(1).setRegulation(Regulation.UP_DOWN).setFoldChangeCutOff(0);
 
     @Before
     public void loadProfiles() {
@@ -194,7 +194,7 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void sequence_Specific_AllContrasts() {
-        subject = new DifferentialProfileComparator(true, Collections.emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+        subject = new DifferentialProfileComparator<>(true, Collections.<Contrast>emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
@@ -205,7 +205,7 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void sequence_Specific_SelectedContrast() {
-        subject = new DifferentialProfileComparator(true, Sets.newHashSet(contrastMock1), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+        subject = new DifferentialProfileComparator<>(true, Sets.newHashSet(contrastMock1), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
@@ -216,7 +216,7 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void sequence_NonSpecific_AllContrasts() {
-        subject = new DifferentialProfileComparator(false, Collections.emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+        subject = new DifferentialProfileComparator<>(false, Collections.<Contrast>emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
@@ -227,7 +227,7 @@ public class DifferentialProfileComparatorTest {
 
     @Test
     public void sequence_NonSpecific_SelectedContrast() {
-        subject = new DifferentialProfileComparator(false, Sets.newHashSet(contrastMock1), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+        subject = new DifferentialProfileComparator<>(false, Sets.newHashSet(contrastMock1), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
@@ -236,17 +236,17 @@ public class DifferentialProfileComparatorTest {
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_2, GENE_3, GENE_6, GENE_4, GENE_5, GENE_1));
     }
 
-    String oneContrastHigh = Joiner.on("\t").join(new String[] {GENE_1, GENE_1, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_7,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
-    String twoContrastMid = Joiner.on("\t").join(new String[] {GENE_2, GENE_2, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_3,    P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_3});
-    String oneContrastLow = Joiner.on("\t").join(new String[] {GENE_3, GENE_3, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
+    private String oneContrastHigh = Joiner.on("\t").join(new String[] {GENE_1, GENE_1, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_7,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
+    private String twoContrastMid = Joiner.on("\t").join(new String[] {GENE_2, GENE_2, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_3,    P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_3});
+    private String oneContrastLow = Joiner.on("\t").join(new String[] {GENE_3, GENE_3, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
 
-    String sequenceLines2 = Joiner.on("\n").join(new String[] {oneContrastHigh, twoContrastMid, oneContrastLow});
-    ImmutableList<MicroarrayProfile> sequenceProfiles2;
+    private String sequenceLines2 = Joiner.on("\n").join(new String[] {oneContrastHigh, twoContrastMid, oneContrastLow});
+    private ImmutableList<MicroarrayProfile> sequenceProfiles2;
 
     //mimics AT3G48131, DML1, F14M2.2 on http://localhost:8080/gxa/experiments/E-GEOD-38400?_specific=on
     @Test
     public void sequence2_NonSpecific_Averaging_Of_Multiple_Contrasts_Vs_Single_Contrast() {
-        subject = new DifferentialProfileComparator(false, Collections.emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+        subject = new DifferentialProfileComparator<>(false, Collections.<Contrast>emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
         DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles2, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
@@ -255,8 +255,8 @@ public class DifferentialProfileComparatorTest {
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_2, GENE_3));
     }
 
-    private DifferentialProfile[] sortProfiles(ImmutableList<MicroarrayProfile> sequenceProfiles, DifferentialProfileComparator comparator) {
-        SortedSet<MicroarrayProfile> sortedProfiles = new TreeSet<MicroarrayProfile>(comparator);
+    private DifferentialProfile[] sortProfiles(ImmutableList<MicroarrayProfile> sequenceProfiles, DifferentialProfileComparator<DifferentialProfile> comparator) {
+        SortedSet<MicroarrayProfile> sortedProfiles = new TreeSet<>(comparator);
         sortedProfiles.addAll(sequenceProfiles);
         return sortedProfiles.toArray(new MicroarrayProfile[sequenceProfiles.size()]);
     }
