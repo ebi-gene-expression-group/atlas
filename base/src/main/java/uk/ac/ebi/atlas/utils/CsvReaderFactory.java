@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class CsvReaderFactory {
             return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

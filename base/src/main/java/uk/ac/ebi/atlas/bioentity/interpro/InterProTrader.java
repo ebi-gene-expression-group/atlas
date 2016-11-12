@@ -2,19 +2,16 @@ package uk.ac.ebi.atlas.bioentity.interpro;
 
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-@Scope("singleton")
 public class InterProTrader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InterProTrader.class);
@@ -29,7 +26,7 @@ public class InterProTrader {
             interProAccessionToTerm = new InterProTSVParser(tsvReader).parse();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
 
     }
