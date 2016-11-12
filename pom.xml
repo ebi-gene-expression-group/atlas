@@ -239,7 +239,7 @@
 
         <dependency>
             <groupId>junit</groupId>
-            <artifactId>junit-dep</artifactId>
+            <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
@@ -271,6 +271,29 @@
             <artifactId>ucp</artifactId>
             <version>11.2.0.3</version>
             <scope>provided</scope>
+        </dependency>
+
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.7.8</version>
         </dependency>
     </dependencies>
 
@@ -334,7 +357,57 @@
     </developers>
 
     <profiles>
-        <!-- Execution profiles -->
+        <!-- Development profiles -->
+        <profile>
+            <id>dev</id>
+            <!--<build>-->
+            <!--<resources>-->
+            <!--<resource>-->
+            <!--<directory>src/main/resources</directory>-->
+            <!--<includes>-->
+            <!--<include>oracleContext.xml</include>-->
+            <!--<include>solrContext.xml</include>-->
+            <!--</includes>-->
+            <!--</resource>-->
+            <!--</resources>-->
+            <!--</build>-->
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <solr.host>lime</solr.host>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev.local.vm</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>oracleContext.xml</include>
+                            <include>solrContext.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <solr.host>localhost</solr.host>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+        </profile>
+
         <profile>
             <!-- Used for build that is deployed to ves-hx-77 -->
             <id>test</id>
@@ -388,56 +461,7 @@
             </properties>
         </profile>
 
-        <!-- Development profiles -->
-        <profile>
-            <id>dev</id>
-            <!--<build>-->
-                <!--<resources>-->
-                    <!--<resource>-->
-                        <!--<directory>src/main/resources</directory>-->
-                        <!--<includes>-->
-                            <!--<include>oracleContext.xml</include>-->
-                            <!--<include>solrContext.xml</include>-->
-                        <!--</includes>-->
-                    <!--</resource>-->
-                <!--</resources>-->
-            <!--</build>-->
-            <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
-                <solr.host>lime</solr.host>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
 
-        <profile>
-            <id>dev.local.vm</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>oracleContext.xml</include>
-                            <include>solrContext.xml</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
-                <solr.host>localhost</solr.host>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
 
         <profile>
             <!-- for debugging failing database tests -->
