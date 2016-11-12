@@ -22,42 +22,15 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
-    <!--<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">-->
-        <!--<property name="locations" value="classpath:jdbc.properties"/>-->
-    <!--</bean>-->
-
     <util:properties id="configuration" location="classpath:/test-configuration.properties"/>
-    <!--<util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>-->
 
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>
 
-    <!--<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">-->
-        <!--<property name="customEditors">-->
-            <!--<map>-->
-                <!--<entry key="uk.ac.ebi.atlas.search.SemanticQuery">-->
-                    <!--<bean class="uk.ac.ebi.atlas.search.SemanticQueryPropertyEditor">-->
-                    <!--</bean>-->
-                <!--</entry>-->
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
-
     <!-- uk.ac.ebi.atlas.solr.admin.BioentityIndexAdmin -->
     <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor"/>
 
-    <!--<bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig" factory-method="custom"/>-->
-    <!--<bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build" />-->
-
-    <!--<bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" destroy-method="shutdown"/>-->
-    <!--<bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">-->
-        <!--<property name="defaultRequestConfig" ref="requestConfig" />-->
-        <!--<property name="connectionManager" ref="httpClientConnectionManager"/>-->
-    <!--</bean>-->
-    <!--<bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />-->
-
-    <!--<bean id="efoLoader" class="uk.ac.ebi.arrayexpress.utils.efo.EFOLoader" />-->
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
     </bean>

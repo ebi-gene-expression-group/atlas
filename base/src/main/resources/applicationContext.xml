@@ -22,10 +22,6 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
-    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="classpath:jdbc.properties"/>
-    </bean>
-
     <util:properties id="configuration" location="classpath:configuration.properties"/>
     <util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>
 

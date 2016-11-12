@@ -29,7 +29,6 @@
     </bean>
 
     <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory">
-        <constructor-arg value="classpath:/solr" type="org.springframework.core.io.Resource"/>
     </bean>
 
     <bean id="embeddedSolrServer"

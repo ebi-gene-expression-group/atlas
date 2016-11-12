@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <!--jdbc.properties read in applicationContext.xml-->
+    <!-- jdbc.properties read in applicationContext.xml -->
 
     <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
         <property name="URL" value="${oracle.jdbc.url}"/>
