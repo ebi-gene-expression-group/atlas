@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.commons.streams;
 
 import java.io.IOException;
@@ -8,14 +7,14 @@ import java.util.Enumeration;
  * Concatenates multiple ObjectInputStreams. When one stream ends, continues
  * from the next stream.
  *
- * (This code was adapted from JAVA's SequenceInputStream class).
+ * (This code was adapted from Java’s SequenceInputStream class).
  *
  * @param <T>
  */
 public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
 
-    Enumeration<ObjectInputStream<T>> e;
-    ObjectInputStream<T> in;
+    private Enumeration<ObjectInputStream<T>> e;
+    private ObjectInputStream<T> in;
 
     public SequenceObjectInputStream(Enumeration<ObjectInputStream<T>> e) {
         this.e = e;
@@ -30,7 +29,7 @@ public class SequenceObjectInputStream<T> implements ObjectInputStream<T> {
     /**
      * Continues reading in the next stream if an EOF is reached.
      */
-    final void nextStream() throws IOException {
+    private void nextStream() throws IOException {
         if (in != null) {
             in.close();
         }
