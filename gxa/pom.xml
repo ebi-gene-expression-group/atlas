@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi</groupId>
@@ -29,9 +28,6 @@
         and are overridden in profiles for specific deployment environments-->
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
-
-
-
     </properties>
 
     <build>
@@ -51,13 +47,6 @@
             <testResource>
                 <directory>src/test/resources</directory>
                 <filtering>true</filtering>
-                <excludes>
-                    <exclude>bioentity_properties/**</exclude>
-                    <exclude>expdesign/**</exclude>
-                    <exclude>magetab/**</exclude>
-                    <exclude>mirbase/**</exclude>
-                    <exclude>ontology/**</exclude>
-                </excludes>
             </testResource>
         </testResources>
 
@@ -132,8 +121,6 @@
                 <artifactId>selenium-maven-plugin</artifactId>
                 <version>2.3</version>
             </plugin>
-
-
         </plugins>
     </build>
 
@@ -339,11 +326,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
-            <version>1.9</version>
-        </dependency>
+
 
     </dependencies>
 
