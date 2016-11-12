@@ -2,12 +2,12 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
-import org.mockito.Matchers;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class SemanticQueryTest {
 
