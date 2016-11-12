@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 
 import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
-
 
 public class BioEntityCardProperties {
 
@@ -43,5 +43,29 @@ public class BioEntityCardProperties {
         .put(MIRBASE_ACCESSION,
                 " http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc={0}")
         .build();
+
+    public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
+            BioentityPropertyName.SYNONYM,
+            BioentityPropertyName.ORTHOLOG,
+            BioentityPropertyName.GOTERM,
+            BioentityPropertyName.GO,
+            BioentityPropertyName.PO,
+            BioentityPropertyName.INTERPROTERM,
+            BioentityPropertyName.INTERPRO,
+            BioentityPropertyName.ENSFAMILY_DESCRIPTION,
+            BioentityPropertyName.ENSGENE,
+            BioentityPropertyName.ENSTRANSCRIPT,
+            BioentityPropertyName.ENSPROTEIN,
+            BioentityPropertyName.ENTREZGENE,
+            BioentityPropertyName.UNIPROT,
+            BioentityPropertyName.MGI_ID,
+            BioentityPropertyName.MGI_DESCRIPTION,
+            BioentityPropertyName.GENE_BIOTYPE,
+            BioentityPropertyName.DESIGN_ELEMENT,
+            BioentityPropertyName.REACTOME,
+            BioentityPropertyName.MIRBASE_ID,
+            BioentityPropertyName.MIRBASE_ACCESSION,
+            BioentityPropertyName.MIRBASE_SEQUENCE
+    );
 
 }

@@ -3,19 +3,13 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,7 +31,7 @@ public class BioentityPropertiesDao {
 
         ImmutableMap.Builder<String, Map<BioentityPropertyName, Set<String>>> mapBuilder = new ImmutableMap.Builder<>();
         for (String bioentityIdentifier : bioentityIdentifiers) {
-            mapBuilder.put(bioentityIdentifier, gxaSolrClient.getMap(bioentityIdentifier));
+            mapBuilder.put(bioentityIdentifier, gxaSolrClient.getMap(bioentityIdentifier, ExperimentDataPoint.bioentityPropertyNames));
         }
 
         stopWatch.stop();

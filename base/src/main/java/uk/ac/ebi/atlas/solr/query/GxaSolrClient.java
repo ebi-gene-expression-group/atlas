@@ -63,28 +63,7 @@ public class GxaSolrClient {
         return results;
     }
 
-    public Set<String> queryFormatted(SolrQuery solrQuery, boolean returnUppercaseValues, String formatString, String... fields){
-        QueryResponse queryResponse = query(solrQuery);
-
-        Set<String> results = Sets.newHashSet();
-
-        for (SolrDocument doc : queryResponse.getResults()) {
-
-            ArrayList<String> fieldValues = new ArrayList<>(fields.length);
-            for (String field : fields) {
-                String fieldValue = returnUppercaseValues ? StringUtils.upperCase(doc.getFieldValue(field).toString()) : doc.getFieldValue(field).toString();
-                fieldValues.add(fieldValue);
-            }
-            results.add(String.format(formatString, fieldValues.toArray()));
-        }
-        return results;
-    }
-
-    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier){
-        return getMap(bioentityIdentifier, ExperimentDataPoint.bioentityPropertyNames);
-    }
-
-    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier,Collection<BioentityPropertyName> bioentityPropertyNames) {
+    public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier, Collection<BioentityPropertyName> bioentityPropertyNames) {
         SolrQuery query = new SolrQuery();
 
         query.setRows(1000);
