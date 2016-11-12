@@ -5,12 +5,10 @@ import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
 
 @Named("mailSender")
-@Scope("singleton")
 public class MailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
