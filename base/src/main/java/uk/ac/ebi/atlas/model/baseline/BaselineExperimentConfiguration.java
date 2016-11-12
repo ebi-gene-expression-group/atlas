@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.model.baseline;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class BaselineExperimentConfiguration {
         return config.getString("landingPageDisplayName");
     }
 
-    private List<String> getListOfStrings(List<Object> objects) {
+    private List<String> getListOfStrings(List<String> objects) {
         List<String> result = newArrayList();
         for (Object object : objects) {
             result.add(object != null ? object.toString() : null);
@@ -34,18 +35,17 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getDataProviderURL() {
-        return getListOfStrings(config.getList("dataProviderURL"));
+        return getListOfStrings(config.getList(String.class, "dataProviderURL"));
     }
 
     public List<String> getDataProviderDescription() {
-        return getListOfStrings(config.getList("dataProviderDescription"));
+        return getListOfStrings(config.getList(String.class, "dataProviderDescription"));
     }
 
     public Set<Factor> getDefaultFilterFactors() {
 
         Set<Factor> defaultFilterFactors = new HashSet<>();
-        List<HierarchicalConfiguration> fields =
-                config.configurationsAt("defaultFilterFactors.filterFactor");
+        List<HierarchicalConfiguration<ImmutableNode>> fields = config.configurationsAt("defaultFilterFactors.filterFactor");
         for (HierarchicalConfiguration sub : fields) {
             String factorType = sub.getString("type");
             String factorValue = sub.getString("value");
@@ -86,8 +86,7 @@ public class BaselineExperimentConfiguration {
     public Map<String, String> getSpeciesMapping() {
 
         Map<String, String> mapping = new HashMap<>();
-        List<HierarchicalConfiguration> fields =
-                config.configurationsAt("speciesMapping.mapping");
+        List<HierarchicalConfiguration<ImmutableNode>> fields = config.configurationsAt("speciesMapping.mapping");
         for (HierarchicalConfiguration sub : fields) {
             String samples = sub.getString("samples").toLowerCase();
             String genes = sub.getString("genes").toLowerCase();
