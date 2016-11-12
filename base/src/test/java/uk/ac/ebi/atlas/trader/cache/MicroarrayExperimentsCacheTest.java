@@ -39,7 +39,7 @@ public class MicroarrayExperimentsCacheTest {
         assertThat(subject.getExperiment("bla"), is(microarrayExperimentMock));
     }
 
-    @Test(expected = ExecutionException.class)
+    @Test(expected = RuntimeException.class)
     public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
         subject.getExperiment("");
