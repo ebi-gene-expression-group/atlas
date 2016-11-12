@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.model.differential;
-
 
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
@@ -118,13 +116,13 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         }
     }
 
-    void addUpRegulatedExpression(double expressionLevel) {
+    private void addUpRegulatedExpression(double expressionLevel) {
         maxUpRegulatedExpressionLevel = (maxUpRegulatedExpressionLevel == null) ? expressionLevel : max(maxUpRegulatedExpressionLevel, expressionLevel);
         minUpRegulatedExpressionLevel = (minUpRegulatedExpressionLevel == null) ? expressionLevel : min(minUpRegulatedExpressionLevel, expressionLevel);
         upRegulatedExpressionsCount++;
     }
 
-    void addDownRegulatedExpression(double expressionLevel) {
+    private void addDownRegulatedExpression(double expressionLevel) {
         maxDownRegulatedExpressionLevel = (maxDownRegulatedExpressionLevel == null) ? expressionLevel : -max(Math.abs(maxDownRegulatedExpressionLevel), Math.abs(expressionLevel));
         minDownRegulatedExpressionLevel = (minDownRegulatedExpressionLevel == null) ? expressionLevel : -min(Math.abs(minDownRegulatedExpressionLevel), Math.abs(expressionLevel));
         downRegulatedExpressionsCount++;
