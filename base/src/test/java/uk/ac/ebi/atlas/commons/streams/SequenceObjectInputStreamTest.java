@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.commons.streams;
 
 import org.junit.Before;
@@ -22,19 +21,19 @@ public class SequenceObjectInputStreamTest {
     private final static Object RETURN_VALUE2 = new Object();
 
     @Mock
-    private ObjectInputStream objectInputStreamMock1;
+    private ObjectInputStream<Object> objectInputStreamMock1;
 
     @Mock
-    private ObjectInputStream objectInputStreamMock2;
+    private ObjectInputStream<Object> objectInputStreamMock2;
 
-    private SequenceObjectInputStream subject;
+    private SequenceObjectInputStream<Object> subject;
 
     @Before
     public void setUp() throws Exception {
-        Vector<ObjectInputStream> inputStreamVector = new Vector();
+        Vector<ObjectInputStream<Object>> inputStreamVector = new Vector<>();
         inputStreamVector.add(objectInputStreamMock1);
         inputStreamVector.add(objectInputStreamMock2);
-        subject = new SequenceObjectInputStream(inputStreamVector.elements());
+        subject = new SequenceObjectInputStream<>(inputStreamVector.elements());
     }
 
     @Test
