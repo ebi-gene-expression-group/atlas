@@ -16,7 +16,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
 
     private ExpressionsRowDeserializer<String, K> expressionsRowTsvDeserializer;
 
-    protected TsvInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
+    protected TsvInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBuilder<String, K> expressionsRowDeserializerBuilder) {
         this.csvReader = csvReader;
 
         String[] firstCsvLine = readCsvLine();

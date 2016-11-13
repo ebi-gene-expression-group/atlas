@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.model.resource;
 
-import com.google.common.base.Throwables;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -19,7 +17,7 @@ public abstract class ExternalImage extends ExternalResource<InputStream> {
         try {
             return Files.newInputStream(path);
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 }

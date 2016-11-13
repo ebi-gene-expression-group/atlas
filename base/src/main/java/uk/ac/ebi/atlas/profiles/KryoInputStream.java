@@ -12,7 +12,7 @@ public abstract class KryoInputStream<T, K extends Expression> implements Expres
 
     private ExpressionsRowDeserializer<BaselineExpression, K> expressionsRowRawDeserializer;
 
-    protected KryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader, String experimentAccession, ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
+    protected KryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader, String experimentAccession, ExpressionsRowDeserializerBuilder<BaselineExpression, K> expressionsRowDeserializerBuilder) {
         this.baselineExpressionsKryoReader = baselineExpressionsKryoReader;
 
         String[] firstLine = baselineExpressionsKryoReader.rewindAndReadAssays();

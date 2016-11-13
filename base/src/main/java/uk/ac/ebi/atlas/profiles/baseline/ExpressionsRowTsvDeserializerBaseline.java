@@ -18,7 +18,7 @@ public class ExpressionsRowTsvDeserializerBaseline extends ExpressionsRowTsvDese
     private static final double[] ZERO_QUARTILES = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 
     final int expectedNumberOfValues;
-    Iterator<FactorGroup> factorGroups;
+    private Iterator<FactorGroup> factorGroups;
 
     public ExpressionsRowTsvDeserializerBaseline(List<FactorGroup> orderedFactorGroups) {
         expectedNumberOfValues = orderedFactorGroups.size();
@@ -26,7 +26,7 @@ public class ExpressionsRowTsvDeserializerBaseline extends ExpressionsRowTsvDese
     }
 
     @Override
-    public ExpressionsRowTsvDeserializer reload(String... values) {
+    public ExpressionsRowTsvDeserializer<BaselineExpression> reload(String... values) {
         if (values.length != expectedNumberOfValues) {
             throw new IllegalArgumentException(String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
         }

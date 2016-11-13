@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Sets;
@@ -13,7 +12,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfileTest {
 
@@ -26,14 +24,14 @@ public class DifferentialProfileTest {
     @Mock
     private DifferentialExpression differentialExpressionMock2;
 
-    private DifferentialProfile subject;
-
     @Mock
     private Contrast contrastMock1;
 
+    private DifferentialProfile<DifferentialExpression> subject;
+
     @Before
     public void setUp() throws Exception {
-        this.subject = new DifferentialProfile(GENE_ID, GENE_NAME);
+        this.subject = new DifferentialProfile<>(GENE_ID, GENE_NAME);
     }
 
     @Test

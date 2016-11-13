@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;

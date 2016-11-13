@@ -4,7 +4,6 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.utils.ResourceUtils;
 import com.google.common.base.Stopwatch;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -53,17 +52,16 @@ public class AnalyticsQueryClient {
         this.bioentityIdentifiersQueryJson = bioentityIdentifiersQueryJson;
     }
 
-    public String fetchResults(SolrQuery... qs ) {
+    private String fetchResults(SolrQuery... qs ) {
         String result = "{}";
 
-        loop:
         for(SolrQuery q: qs){
             Stopwatch stopwatch = Stopwatch.createStarted();
             LOGGER.debug("fetchResults q={} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
             result = fetchResponseAsString(MessageFormat.format("{0}query?{1}", solrBaseUrl, q.toString()));
             stopwatch.stop();
             if(responseNonEmpty(result)){
-                break loop;
+                break;
             }
         }
         return result;
@@ -79,7 +77,7 @@ public class AnalyticsQueryClient {
         try {
             return restTemplate.getForObject(new URI(url), String.class);
         } catch (RestClientException | URISyntaxException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -145,7 +143,7 @@ public class AnalyticsQueryClient {
         public Builder bioentityIdentifierFacets(int facetLimit){
             solrQuery.setRows(0);
             solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(bioentityIdentifiersQueryJson).replace("\"limit\": -1",
-                    MessageFormat.format("\"limit\": {0}", new Integer(facetLimit).toString())).replaceAll("\\s+",""));
+                    MessageFormat.format("\"limit\": {0}", Integer.toString(facetLimit))).replaceAll("\\s+",""));
             return this;
         }
 
@@ -237,7 +235,7 @@ public class AnalyticsQueryClient {
         }
     }
 
-    static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses){
+    private static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses){
 
         if (queryClauses.isEmpty()) {
             return ImmutableList.of(Builder.DEFAULT_QUERY);

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import uk.ac.ebi.atlas.solr.BioentityProperty;
@@ -74,9 +73,9 @@ public class BioentityPropertiesBuilder {
     }
 
     private List<BioentityProperty> buildDesignMappingProperty() {
-        List designMappingProperty = Lists.newArrayList();
-        String designMapping =  propertyValues.get(0);
-        if (StringUtils.isNotBlank(designMapping)){
+        List<BioentityProperty> designMappingProperty = Lists.newArrayList();
+        String designMapping = propertyValues.get(0);
+        if (StringUtils.isNotBlank(designMapping)) {
             designMappingProperty.add(new BioentityProperty(bioentityIdentifier, bioentityType,
                     species, DESIGN_ELEMENT_PROPERTY_NAME, propertyValues.get(0)));
         }
@@ -111,7 +110,7 @@ public class BioentityPropertiesBuilder {
         return bioentityProperties;
     }
 
-    boolean isDesignElementProperty() {
+    private boolean isDesignElementProperty() {
         return DESIGN_ELEMENT_PROPERTY_NAME.equals(propertyNames.get(0));
     }
 

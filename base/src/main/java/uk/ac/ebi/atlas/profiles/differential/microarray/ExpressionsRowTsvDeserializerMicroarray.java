@@ -14,7 +14,6 @@ import static com.google.common.base.Preconditions.checkState;
 //ToDo: duplicate code with RnaSeqDiffExpressionsQueue
 public class ExpressionsRowTsvDeserializerMicroarray extends ExpressionsRowTsvDeserializer<MicroarrayExpression> {
 
-
     private Iterator<Contrast> expectedContrasts;
 
     private List<Contrast> orderedContrasts;
@@ -54,7 +53,7 @@ public class ExpressionsRowTsvDeserializerMicroarray extends ExpressionsRowTsvDe
         return new MicroarrayExpression(pValue, foldChange, tStatistic, contrast);
     }
 
-    double parseDouble(String value) {
+    private double parseDouble(String value) {
         if (value.equalsIgnoreCase("inf")) {
             return Double.POSITIVE_INFINITY;
         }

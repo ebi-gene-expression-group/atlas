@@ -1,6 +1,6 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 import com.google.common.base.Joiner;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -18,7 +18,7 @@ public class ExpressionsRowTsvDeserializerProteomicsBaseline extends Expressions
     }
 
     @Override
-    public ExpressionsRowTsvDeserializer reload(String... values) {
+    public ExpressionsRowTsvDeserializer<BaselineExpression> reload(String... values) {
         if (values.length < expectedNumberOfValues) {
             throw new IllegalArgumentException(String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
         }

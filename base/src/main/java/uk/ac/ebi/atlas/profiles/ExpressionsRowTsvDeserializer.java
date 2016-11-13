@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.model.Expression;
@@ -30,7 +29,7 @@ public abstract class ExpressionsRowTsvDeserializer<T extends Expression> implem
     private Queue<String> tsvRow = new LinkedList<>();
 
     @Override
-    public ExpressionsRowTsvDeserializer reload(String... values) {
+    public ExpressionsRowTsvDeserializer<T> reload(String... values) {
         checkState(this.tsvRow.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         Collections.addAll(this.tsvRow, values);

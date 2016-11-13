@@ -37,7 +37,7 @@ public class ExpressionsRowTsvDeserializerRnaSeq extends ExpressionsRowTsvDeseri
         return new DifferentialExpression(pValue, foldChange, contrast);
     }
 
-    double parseDouble(String value) {
+    private double parseDouble(String value) {
         if (value.equalsIgnoreCase("inf")) {
             return Double.POSITIVE_INFINITY;
         }

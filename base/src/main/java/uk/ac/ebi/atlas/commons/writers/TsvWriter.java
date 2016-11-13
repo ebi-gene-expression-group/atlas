@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.commons.writers;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.google.common.base.Throwables;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -19,7 +18,7 @@ public class TsvWriter extends CSVWriter {
             super.writeAll(allLines);
             super.flush();
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -29,7 +28,7 @@ public class TsvWriter extends CSVWriter {
             super.writeNext(line);
             super.flush();
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 }
