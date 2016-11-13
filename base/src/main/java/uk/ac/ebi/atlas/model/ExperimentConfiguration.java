@@ -4,8 +4,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,6 +18,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.nio.file.Path;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -26,15 +27,16 @@ public class ExperimentConfiguration {
 
     private static final String EXPERIMENT_TYPE = "experimentType";
     private static final String RDATA = "r_data";
+
     private XMLConfiguration xmlConfiguration;
-
     private Document document;
-
     private XPath xpath = XPathFactory.newInstance().newXPath();
+    private Path pathToFile;
 
-    public ExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document) {
+    public ExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document, Path pathToFile) {
         this.xmlConfiguration = xmlConfiguration;
         this.document = document;
+        this.pathToFile = pathToFile;
     }
 
     public Set<Contrast> getContrasts() {
@@ -106,8 +108,7 @@ public class ExperimentConfiguration {
         return (attribute == null) ? null : attribute.getNodeValue();
     }
 
-
-    public Set<String> getAssayAccessions(){
+    public Set<String> getAssayAccessions() {
         try {
 
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group/assay");
@@ -142,7 +143,7 @@ public class ExperimentConfiguration {
         String type = configuration.getAttribute(EXPERIMENT_TYPE);
 
         if (StringUtils.isEmpty(type)) {
-            throw new IllegalStateException(String.format("Missing %s attribute on root element of %s", EXPERIMENT_TYPE, xmlConfiguration.getFileName()));
+            throw new IllegalStateException(String.format("Missing %s attribute on root element of %s", EXPERIMENT_TYPE, pathToFile.toString()));
         }
 
         ExperimentType experimentType = ExperimentType.get(type);

@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 @Named
 public class ExperimentTrader {

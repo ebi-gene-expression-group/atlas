@@ -200,6 +200,12 @@
             <artifactId>commons-configuration2</artifactId>
             <version>2.1</version>
         </dependency>
+        <!-- http://commons.apache.org/proper/commons-configuration/dependencies.html -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
 
         <!-- Serialization -->
         <dependency>

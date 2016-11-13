@@ -28,9 +28,13 @@ public class BaselineExperimentConfiguration {
 
     private List<String> getListOfStrings(List<String> objects) {
         List<String> result = newArrayList();
-        for (Object object : objects) {
-            result.add(object != null ? object.toString() : null);
+
+        if (objects != null) {
+            for (Object object : objects) {
+                result.add(object != null ? object.toString() : null);
+            }
         }
+
         return result;
     }
 

@@ -1,7 +1,6 @@
-
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,19 +17,19 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExperimentConfigurationTest {
 
-    public static final String ARRAYDESIGN = "ARRAYDESIGN";
+    private static final String ARRAYDESIGN = "ARRAYDESIGN";
 
     @Mock
-    XMLConfiguration xmlConfigurationMock;
+    private XMLConfiguration xmlConfigurationMock;
 
-    MicroarrayExperimentConfiguration subject;
+    private MicroarrayExperimentConfiguration subject;
 
     @Before
     public void setUp() throws Exception {
-        List list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add(ARRAYDESIGN);
-        when(xmlConfigurationMock.getList("analytics/array_design")).thenReturn(list);
-        subject = new MicroarrayExperimentConfiguration(xmlConfigurationMock, null);
+        when(xmlConfigurationMock.getList(String.class, "analytics/array_design")).thenReturn(list);
+        subject = new MicroarrayExperimentConfiguration(xmlConfigurationMock, null, null);
     }
 
     @Test

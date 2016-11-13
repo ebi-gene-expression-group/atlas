@@ -1,8 +1,13 @@
 package uk.ac.ebi.atlas.model;
 
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -11,13 +16,18 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class ExperimentConfigurationTest {
+
+    private static Path tmpFilePath;
 
     private static final String RNASEQ_BASELINE_CONFIGURATION_XML =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -65,20 +75,39 @@ public class ExperimentConfigurationTest {
 
     private ExperimentConfiguration subject;
 
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        // In Commons Configuration 2 XMLConfiguration needs at least a well-formed XML file:
+        // http://stackoverflow.com/questions/39573880/apache-commons-configuration2-how-to-read-data-from-inputstream
+        tmpFilePath = Files.createTempFile("dummy", ".xml");
+        Files.write(tmpFilePath, ImmutableList.of("<_/>"), Charset.forName("UTF-8"));
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        Files.delete(tmpFilePath);
+    }
+
     @Before
     public void setUp() throws Exception {
         InputStream inputStream = new ByteArrayInputStream(RNASEQ_BASELINE_CONFIGURATION_XML.getBytes(StandardCharsets.UTF_8));
 
-        XMLConfiguration xmlConfiguration = new XMLConfiguration();
-        xmlConfiguration.load(inputStream);
-        xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
+        Parameters params = new Parameters();
+        FileBasedConfigurationBuilder<XMLConfiguration> fileBuilder =
+                new FileBasedConfigurationBuilder<>(XMLConfiguration.class)
+                        .configure(params.xml()
+                                .setPath(tmpFilePath.toString())
+                                .setExpressionEngine(new XPathExpressionEngine()));
+
+        XMLConfiguration xmlConfiguration = fileBuilder.getConfiguration();
+        xmlConfiguration.read(inputStream);
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         inputStream.reset();
         Document document = builder.parse(inputStream);
 
-        subject = new ExperimentConfiguration(xmlConfiguration, document);
+        subject = new ExperimentConfiguration(xmlConfiguration, document, null);
     }
 
     @Test

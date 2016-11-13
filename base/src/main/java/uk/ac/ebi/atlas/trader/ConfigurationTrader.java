@@ -1,8 +1,12 @@
 package uk.ac.ebi.atlas.trader;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.builder.fluent.PropertiesBuilderParameters;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,16 +52,15 @@ public class ConfigurationTrader {
     }
 
     private ExperimentConfiguration getExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
-
+        Path pathToConfigurationFile = Paths.get(MessageFormat.format(configurationPathTemplate, experimentAccession));
         XMLConfiguration xmlConfiguration = getXmlConfiguration(configurationPathTemplate, experimentAccession, false);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
         Document document = parseConfigurationXml(experimentAccession);
         if (isMicroarray) {
-            return new MicroarrayExperimentConfiguration(xmlConfiguration, document);
+            return new MicroarrayExperimentConfiguration(xmlConfiguration, document, pathToConfigurationFile);
         }
-        return new ExperimentConfiguration(xmlConfiguration, document);
+        return new ExperimentConfiguration(xmlConfiguration, document, pathToConfigurationFile);
     }
-
 
     private Document parseConfigurationXml(String experimentAccession) {
         Path path = Paths.get(MessageFormat.format(configurationPathTemplate, experimentAccession));
@@ -73,23 +76,25 @@ public class ConfigurationTrader {
 
     private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession, boolean splitOnComma) {
         Path path = Paths.get(MessageFormat.format(pathTemplate, experimentAccession));
-
         File file = path.toFile();
-
         if (!file.exists()) {
             throw new IllegalStateException("Configuration file " + path.toString() + " does not exist");
         }
 
         try {
-            XMLConfiguration xmlConfiguration = new XMLConfiguration();
-            if (!splitOnComma) {
-                xmlConfiguration.setDelimiterParsingDisabled(true);
+            PropertiesBuilderParameters builderParams =
+                    new Parameters().properties()
+                            .setFile(path.toFile());
+            if (splitOnComma) {
+                builderParams.setListDelimiterHandler(new DefaultListDelimiterHandler(','));
             }
-            xmlConfiguration.load(path.toFile());
-            return xmlConfiguration;
-        } catch (ConfigurationException cex) {
-            LOGGER.error(cex.getMessage(), cex);
-            throw new IllegalStateException("Cannot read configuration from path " + path.toString(), cex);
+
+            FileBasedConfigurationBuilder<XMLConfiguration> builder =
+                    new FileBasedConfigurationBuilder<>(XMLConfiguration.class).configure(builderParams);
+            return builder.getConfiguration();
+        } catch (ConfigurationException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException("Cannot read configuration from path " + path.toString(), e);
         }
 
     }
