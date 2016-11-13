@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
@@ -15,7 +14,6 @@
            http://www.springframework.org/schema/util
            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-
     <!-- enables annotation-based dependency injection -->
     <context:annotation-config/>
 
@@ -30,7 +28,6 @@
 
     <!-- uk.ac.ebi.atlas.solr.admin.BioentityIndexAdmin -->
     <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor"/>
-
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
     </bean>
