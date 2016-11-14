@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.bioentity;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,11 +26,6 @@ public class GeneSetPageController extends BioentityPageController {
     @Inject
     public void setGeneSetPropertyService(GeneSetPropertyService geneSetPropertyService) {
         this.geneSetPropertyService = geneSetPropertyService;
-    }
-
-    @Value("#{configuration['index.property_names.genesetpage']}")
-    void setGenePagePropertyTypes(String[] propertyNames) {
-        this.propertyNames = propertyNames;
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")

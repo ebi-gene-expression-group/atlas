@@ -34,12 +34,7 @@ public abstract class BioentityPageController {
     protected SpeciesLookupService speciesLookupService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     protected BioEntityPropertyDao bioentityPropertyDao;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
-
-
     protected SpeciesFactory speciesFactory;
-
-    protected String[] propertyNames;
 
     @Inject
     public void setAnalyticsSearchService(AnalyticsSearchService analyticsSearchService) {
@@ -90,6 +85,7 @@ public abstract class BioentityPageController {
         model.addAttribute("hasBaselineResults", hasBaselineResults);
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
 
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         if (hasBaselineResults) {
             model.addAttribute("jsonFacets", gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch
                     (SemanticQuery.create(identifier), species)));
