@@ -23,9 +23,8 @@ public class TsvReaderImpl implements TsvReader {
         this.tsvFileInputStreamReader = tsvFileInputStreamReader;
     }
 
-    @Override
-    public String[] readLine(long lineIndex) {
-        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')) {
+    public static String[] readLine(CSVReader csvReader, long lineIndex){
+        try {
 
             String[] line = null;
             for (int i = 0; i <= lineIndex; i++) {
@@ -35,8 +34,19 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error("Cannot read TSV file: " + e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                csvReader.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+    @Override
+    public String[] readLine(long lineIndex) {
+        return readLine(new CSVReader(tsvFileInputStreamReader, '\t'), lineIndex);
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
@@ -32,17 +33,14 @@ public class BaselineExpressionsKryoReaderIT {
     private static final int GENE_NAME_INDEX = 1;
     private static final int FIRST_LEVEL_INDEX = 2;
 
-    @Value("#{configuration['experiment.magetab.path.template']}")
-    private String baselineExperimentDataFileUrlTemplate;
-
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     private String baselineExperimentSerializedDataFileUrlTemplate;
 
     @Inject
-    private CsvReaderFactory csvReaderFactory;
+    private KryoReaderFactory kryoReaderFactory;
 
     @Inject
-    private KryoReaderFactory kryoReaderFactory;
+    private DataFileHub dataFileHub;
 
     private BaselineExpressionsKryoReader subject;
 
@@ -54,8 +52,7 @@ public class BaselineExpressionsKryoReaderIT {
 
     @Test
     public void serializedFilesAreEqualToTsvFiles() throws IOException {
-        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, E_MTAB_1733);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
+        CSVReader csvReader = dataFileHub.getExperimentFiles(E_MTAB_1733).main.get();
 
         // Read header
         String[] tsvLine = csvReader.readNext();

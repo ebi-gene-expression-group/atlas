@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -16,7 +18,9 @@ import java.util.Properties;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-
+/*
+TODO think how this test should work. Maybe it should go away?
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentCheckerTest {
 
@@ -37,6 +41,8 @@ public class ExperimentCheckerTest {
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
     private ExperimentChecker subject;
 
     @Before
@@ -45,7 +51,7 @@ public class ExperimentCheckerTest {
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet("ARRAYDESIGN")));
 
-        subject = new ExperimentChecker(configurationPropertiesMock, configurationTraderMock);
+        subject = new ExperimentChecker(configurationPropertiesMock, dataFileHub,configurationTraderMock);
     }
 
     @Test
@@ -67,7 +73,7 @@ public class ExperimentCheckerTest {
     public void testCheckBaseline() throws Exception {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
-        when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
+        //when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkBaselineFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(2)).getProperty(anyString());
@@ -115,7 +121,7 @@ public class ExperimentCheckerTest {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
+       // when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());

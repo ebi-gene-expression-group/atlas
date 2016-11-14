@@ -2,12 +2,11 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.loader.ProteomicsBaselineExperimentExpressionLevelFile;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -32,7 +31,7 @@ public class ExpressionsRowDeserializerProteomicsBaselineBuilder extends Express
 
     @Override
     public ExpressionsRowDeserializerProteomicsBaselineBuilder withHeaders(String... tsvFileHeaders) {
-        this.indicesOfAssayGroups = ProteomicsBaselineExperimentExpressionLevelFile.indicesOfAssayGroups(tsvFileHeaders);
+        this.indicesOfAssayGroups = StringArrayUtil.indicesOf(tsvFileHeaders, "withinSampleAbundance");
         return this;
     }
 

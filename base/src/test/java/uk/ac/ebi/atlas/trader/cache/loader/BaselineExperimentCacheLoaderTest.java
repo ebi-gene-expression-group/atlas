@@ -7,24 +7,25 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.ExperimentConfiguration;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactorsFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.util.Collections;
 import java.util.Date;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
@@ -37,9 +38,8 @@ public class BaselineExperimentCacheLoaderTest {
     class Loader extends BaselineExperimentsCacheLoader {
 
         protected Loader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
-                         BaselineExperimentExpressionLevelFile expressionLevelFile,
-                         ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
-            super(experimentalFactorsFactory, experimentType, expressionLevelFile, configurationTrader,speciesFactory);
+                         ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
+            super( experimentalFactorsFactory,experimentType, configurationTrader,speciesFactory,dataFileHub);
         }
     }
 
@@ -51,8 +51,6 @@ public class BaselineExperimentCacheLoaderTest {
             .<String>emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
     @Mock
     ExperimentalFactorsFactory experimentalFactorsFactory;
-    @Mock
-    BaselineExperimentExpressionLevelFile expressionLevelFile;
     @Mock
     ConfigurationTrader configurationTrader ;
     @Mock
@@ -67,13 +65,15 @@ public class BaselineExperimentCacheLoaderTest {
     AssayGroups assayGroups;
     @Mock
     ExperimentDesign experimentDesign;
+    @Spy
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
 
     BaselineExperimentsCacheLoader subject;
 
     @Before
     public void setUp(){
-        subject = new Loader(experimentalFactorsFactory,experimentType,expressionLevelFile,configurationTrader,
-                speciesFactory);
+        subject = new Loader(experimentalFactorsFactory,experimentType, configurationTrader, speciesFactory, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
@@ -94,12 +94,12 @@ public class BaselineExperimentCacheLoaderTest {
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean());
         verify(speciesFactory).create(dto,baselineConfiguration);
         if(!baselineConfiguration.orderCurated()){
-            verify(expressionLevelFile).readOrderedAssayGroupIds(experimentAccession);
+            verify(dataFileHub).getExperimentFiles(experimentAccession);
         }
     }
 
     private void noMoreInteractionsWithCollaborators() {
-        verifyNoMoreInteractions(experimentalFactorsFactory, expressionLevelFile, configurationTrader,
+        verifyNoMoreInteractions(experimentalFactorsFactory, dataFileHub, configurationTrader,
                 speciesFactory);
     }
 
@@ -146,7 +146,15 @@ public class BaselineExperimentCacheLoaderTest {
         verify(alternativeViewBaselineConfiguration).getDefaultQueryFactorType();
         verify(configurationTrader).getBaselineFactorsConfiguration(alternativeViewAccession);
         noMoreInteractionsWithCollaborators();
+    }
 
+    @Test
+    public void extractAssayGroupIdsProteomics() {
+        String[] tsvFileHeader = "GeneID\tg1.SpectralCount\tg2.SpectralCount\tg3.SpectralCount\tg4.SpectralCount\tg5.SpectralCount\tg6.SpectralCount\tg7.SpectralCount\tg8.SpectralCount\tg9.SpectralCount\tg10.SpectralCount\tg11.SpectralCount\tg12.SpectralCount\tg13.SpectralCount\tg14.SpectralCount\tg15.SpectralCount\tg16.SpectralCount\tg17.SpectralCount\tg18.SpectralCount\tg19.SpectralCount\tg20.SpectralCount\tg21.SpectralCount\tg22.SpectralCount\tg23.SpectralCount\tg24.SpectralCount\tg25.SpectralCount\tg26.SpectralCount\tg27.SpectralCount\tg28.SpectralCount\tg29.SpectralCount\tg30.SpectralCount\tg1.WithInSampleAbundance\tg2.WithInSampleAbundance\tg3.WithInSampleAbundance\tg4.WithInSampleAbundance\tg5.WithInSampleAbundance\tg6.WithInSampleAbundance\tg7.WithInSampleAbundance\tg8.WithInSampleAbundance\tg9.WithInSampleAbundance\tg10.WithInSampleAbundance\tg11.WithInSampleAbundance\tg12.WithInSampleAbundance\tg13.WithInSampleAbundance\tg14.WithInSampleAbundance\tg15.WithInSampleAbundance\tg16.WithInSampleAbundance\tg17.WithInSampleAbundance\tg18.WithInSampleAbundance\tg19.WithInSampleAbundance\tg20.WithInSampleAbundance\tg21.WithInSampleAbundance\tg22.WithInSampleAbundance\tg23.WithInSampleAbundance\tg24.WithInSampleAbundance\tg25.WithInSampleAbundance\tg26.WithInSampleAbundance\tg27.WithInSampleAbundance\tg28.WithInSampleAbundance\tg29.WithInSampleAbundance\tg30.WithInSampleAbundance".split("\t");
+        assertThat(subject.readOrderedAssayGroupIds(tsvFileHeader, ExperimentType.PROTEOMICS_BASELINE), is(new String[]{"g1", "g2",
+                "g3", "g4", "g5",
+                "g6", "g7", "g8", "g9",
+                "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21", "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30"}));
     }
     
 }

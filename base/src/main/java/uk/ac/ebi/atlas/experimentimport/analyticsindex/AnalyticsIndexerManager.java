@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 import uk.ac.ebi.atlas.utils.ExperimentSorter;
@@ -28,12 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AnalyticsIndexerManager extends Observable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
-
-    @Value("#{configuration['experiment.magetab.path.template']}")
-    private String baselineTsvFileTemplate;
-
-    @Value("#{configuration['diff.experiment.data.path.template']}")
-    private String differentialTsvFileTemplate;
 
     private AnalyticsIndexerService analyticsIndexerService;
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;

@@ -1,17 +1,21 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactorsFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
+import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,25 +24,24 @@ import java.util.List;
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
     private final ExperimentType experimentType;
-    private final BaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
     private final ExperimentalFactorsFactory experimentalFactorsFactory;
     private final SpeciesFactory speciesFactory;
+    private final DataFileHub dataFileHub;
 
-    protected BaselineExperimentsCacheLoader(ExperimentType experimentType, BaselineExperimentExpressionLevelFile
-            expressionLevelFile, ConfigurationTrader configurationTrader,SpeciesFactory speciesFactory) {
-        this(new ExperimentalFactorsFactory(), experimentType, expressionLevelFile, configurationTrader,speciesFactory);
+    protected BaselineExperimentsCacheLoader(ExperimentType experimentType, ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
+        this(new ExperimentalFactorsFactory(), experimentType, configurationTrader,
+                speciesFactory,dataFileHub);
     }
 
-    BaselineExperimentsCacheLoader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType
-            experimentType, BaselineExperimentExpressionLevelFile expressionLevelFile,
+    BaselineExperimentsCacheLoader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
                                    ConfigurationTrader configurationTrader,
-                                   SpeciesFactory speciesFactory) {
+                                   SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
         this.experimentalFactorsFactory = experimentalFactorsFactory;
         this.experimentType = experimentType;
         this.configurationTrader = configurationTrader;
-        this.expressionLevelFile = expressionLevelFile;
         this.speciesFactory = speciesFactory;
+        this.dataFileHub = dataFileHub;
     }
 
 
@@ -61,7 +64,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
         } else {
             orderCurated = false;
-            orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+            orderedAssayGroupIds = readOrderedAssayGroupIds(experimentAccession, experimentDTO.getExperimentType());
         }
 
         return new BaselineExperimentBuilder()
@@ -95,6 +98,22 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                     (alternativeViewAccession).getDefaultQueryFactorType().toLowerCase());
         }
         return Pair.of(accessions, descriptions);
+    }
+
+    String[] readOrderedAssayGroupIds(String experimentAccession , ExperimentType experimentType){
+        return readOrderedAssayGroupIds(TsvReaderImpl.readLine(
+                dataFileHub.getExperimentFiles(experimentAccession).main.get(), 0), experimentType);
+    }
+
+    String[] readOrderedAssayGroupIds(String[] experimentRunHeaders, ExperimentType experimentType){
+        if(experimentType.isProteomicsBaseline()){
+            String[] filtered = StringArrayUtil.filterBySubstring(experimentRunHeaders, "WithInSampleAbundance");
+            return StringArrayUtil.substringBefore(filtered, ".");
+        } else {
+            int ASSAY_GROUP_HEADER_START_INDEX = 2;
+            return ArrayUtils.subarray(experimentRunHeaders,
+                    ASSAY_GROUP_HEADER_START_INDEX, experimentRunHeaders.length);
+        }
     }
 
 }

@@ -4,8 +4,6 @@ package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;

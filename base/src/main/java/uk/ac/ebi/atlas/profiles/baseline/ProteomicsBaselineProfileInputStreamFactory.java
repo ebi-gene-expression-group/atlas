@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 import org.springframework.context.annotation.Scope;
 
@@ -12,10 +12,13 @@ import javax.inject.Named;
 public class ProteomicsBaselineProfileInputStreamFactory extends BaselineProfileInputStreamFactory {
 
     @Inject
-    public ProteomicsBaselineProfileInputStreamFactory(ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
+    public ProteomicsBaselineProfileInputStreamFactory(DataFileHub dataFileHub,
+                                                       ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
                                                        ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
-                                                       CsvReaderFactory csvReaderFactory, KryoReaderFactory kryoReaderFactory) {
-        super(expressionsRowDeserializerProteomicsBaselineBuilder, expressionsRowRawDeserializerBaselineBuilder, csvReaderFactory, kryoReaderFactory);
+                                                       KryoReaderFactory kryoReaderFactory) {
+        super(dataFileHub,expressionsRowDeserializerProteomicsBaselineBuilder,
+                expressionsRowRawDeserializerBaselineBuilder,
+                kryoReaderFactory);
 
     }
 

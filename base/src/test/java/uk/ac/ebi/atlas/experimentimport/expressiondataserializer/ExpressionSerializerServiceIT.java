@@ -5,13 +5,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Value;
+import org.mockito.Spy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -37,10 +38,10 @@ public class ExpressionSerializerServiceIT {
     @Mock
     ExperimentChecker experimentChecker;
 
-    private String serializedExpressionsFileTemplate;
+    @Spy
+    DataFileHub dataFileHub = MockDataFileHub.get();
 
-    @Value("#{configuration['experiment.magetab.path.template']}")
-    public String tsvFileTemplate;
+    private String serializedExpressionsFileTemplate;
 
     private ExpressionSerializerService subject;
 
@@ -52,13 +53,14 @@ public class ExpressionSerializerServiceIT {
         Path tmp = Files.createTempDirectory("serialized_expression");
         serializedExpressionsFileTemplate = tmp.toString() + "/{0}.kryo";
 
-        subject = new ExpressionSerializerService(experimentTrader, new RnaSeqBaselineExpressionKryoSerializer(serializedExpressionsFileTemplate, tsvFileTemplate, new CsvReaderFactory()),
+        subject = new ExpressionSerializerService(experimentTrader, new RnaSeqBaselineExpressionKryoSerializer(dataFileHub,
+                serializedExpressionsFileTemplate),
                 experimentChecker);
     }
 
     @Test
     public void weCanSerializeTheFile() {
-        assertThat(fileExists(tsvFileTemplate, accession), is(true));
+        assertThat(dataFileHub.getExperimentFiles(accession).main.exists(), is(true));
         assertThat(fileExists(serializedExpressionsFileTemplate, accession), is(false));
 
         subject.kryoSerializeExpressionData(accession);

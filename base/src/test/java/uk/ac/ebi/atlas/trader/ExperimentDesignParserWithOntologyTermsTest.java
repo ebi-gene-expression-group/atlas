@@ -16,6 +16,8 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
 import java.util.List;
@@ -79,6 +81,8 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     @Mock
     private TsvReader tsvReaderMock;
 
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
     private ExperimentDesignParser subject;
 
     @Before
@@ -89,8 +93,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
         when(tsvReaderMock.readAll()).thenReturn(DATA);
 
-        subject = new ExperimentDesignParser();
-        subject.setFileTsvReaderBuilder(fileTsvReaderBuilderMock);
+        subject = new ExperimentDesignParser(dataFileHub);
     }
 
     @Test

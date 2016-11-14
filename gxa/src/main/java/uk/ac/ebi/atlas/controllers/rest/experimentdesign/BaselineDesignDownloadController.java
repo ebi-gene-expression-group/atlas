@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;

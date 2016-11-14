@@ -8,7 +8,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;

@@ -5,9 +5,9 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
-import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -23,29 +23,24 @@ import java.util.Set;
 public class BaselineProfileInputStreamFactory
 implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, Factor> {
 
-    @Value("#{configuration['experiment.magetab.path.template']}")
-    protected String baselineExperimentDataFileUrlTemplate;
-
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     protected String baselineExperimentSerializedDataFileUrlTemplate;
 
     private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
     private ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder;
 
-    private CsvReaderFactory csvReaderFactory;
+    private final DataFileHub dataFileHub;
     private KryoReaderFactory kryoReaderFactory;
 
-    public BaselineProfileInputStreamFactory() {
-    }
-
     @Inject
-    public BaselineProfileInputStreamFactory(ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
+    public BaselineProfileInputStreamFactory(DataFileHub dataFileHub,
+                                             ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                              ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
-                                             CsvReaderFactory csvReaderFactory, KryoReaderFactory kryoReaderFactory) {
+                                             KryoReaderFactory kryoReaderFactory) {
+        this.dataFileHub = dataFileHub;
         this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
         this.expressionsRowRawDeserializerBaselineBuilder = expressionsRowRawDeserializerBaselineBuilder;
 
-        this.csvReaderFactory = csvReaderFactory;
         this.kryoReaderFactory = kryoReaderFactory;
     }
 
@@ -62,9 +57,9 @@ implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, F
             return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
-            String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
-            CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-            return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+            return new BaselineProfilesTsvInputStream(dataFileHub.getExperimentFiles(experimentAccession).main.get(),
+                    experimentAccession,
+                    expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }
 

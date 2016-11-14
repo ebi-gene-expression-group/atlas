@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Preconditions;
@@ -9,28 +11,22 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 
 @Named
 public class BaselineAnalyticsInputStreamFactory {
 
-    private final CsvReaderFactory csvReaderFactory;
-    private final String fileTemplate;
+    private final DataFileHub dataFileHub;
 
     @Inject
-    public BaselineAnalyticsInputStreamFactory(@Value("#{configuration['experiment.magetab.path.template']}")
-                                               String fileTemplate,
-                                               CsvReaderFactory csvReaderFactory) {
-        this.fileTemplate = fileTemplate;
-        this.csvReaderFactory = csvReaderFactory;
+    public BaselineAnalyticsInputStreamFactory(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
     }
 
     public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType) {
         Preconditions.checkArgument(experimentType.isBaseline());
-        String tsvFilePath = MessageFormat.format(fileTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFilePath);
+        AtlasResource<CSVReader> r = dataFileHub.getExperimentFiles(experimentAccession).main;
         return experimentType.isProteomicsBaseline()
-                ? new ProteomicsBaselineAnalyticsInputStream(csvReader, tsvFilePath)
-                : new RnaSeqBaselineAnalyticsInputStream(csvReader, tsvFilePath);
+                ? new ProteomicsBaselineAnalyticsInputStream(r.get(), r.toString())
+                : new RnaSeqBaselineAnalyticsInputStream(r.get(), r.toString());
     }
 }

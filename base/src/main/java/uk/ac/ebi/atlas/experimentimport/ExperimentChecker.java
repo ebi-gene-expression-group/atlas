@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
@@ -24,12 +26,16 @@ public class ExperimentChecker {
 
     private Properties configurationProperties;
 
+    private final DataFileHub dataFileHub;
+
     private ConfigurationTrader configurationTrader;
 
     @Inject
     public ExperimentChecker(@Named("configuration") Properties configurationProperties,
+                             DataFileHub dataFileHub,
                              ConfigurationTrader configurationTrader) {
         this.configurationProperties = configurationProperties;
+        this.dataFileHub = dataFileHub;
         this.configurationTrader = configurationTrader;
     }
 
@@ -61,9 +67,11 @@ public class ExperimentChecker {
 
     void checkBaselineFiles(String experimentAccession) {
         Set<String> baselineExperimentPathTemplates =
-                Sets.newHashSet("experiment.magetab.path.template", "experiment.factors.path.template");
+                Sets.newHashSet("experiment.factors.path.template");
 
         checkFilesAreAllPresentAndWeCanReadThem(baselineExperimentPathTemplates, experimentAccession);
+
+        experimentFilesFromDataHubExist(experimentAccession);
     }
 
     void checkDifferentialFiles(String experimentAccession) {
@@ -107,5 +115,18 @@ public class ExperimentChecker {
     public void checkConfigurationFile(String accession) {
         checkFileExistsAndIsReadable("experiment.configuration.path.template", accession);
     }
+
+    void experimentFilesFromDataHubExist(String accession){
+        DataFileHub.ExperimentFiles experimentFiles = dataFileHub.getExperimentFiles(accession);
+        checkFileExistsAndIsReadable(experimentFiles.condensedSdrf);
+        checkFileExistsAndIsReadable(experimentFiles.main);
+    }
+
+    void checkFileExistsAndIsReadable(AtlasResource<?> resource){
+        checkState(resource.exists(), "Required file does not exist: " + resource.toString());
+        checkState(resource.isReadable(), "Required file can not be read: " + resource.toString());
+    }
+
+
 
 }

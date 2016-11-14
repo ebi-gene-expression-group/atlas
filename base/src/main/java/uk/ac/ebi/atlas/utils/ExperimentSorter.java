@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
@@ -26,16 +27,15 @@ public class ExperimentSorter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentSorter.class);
 
-    @Value("#{configuration['experiment.magetab.path.template']}")
-    private String baselineTsvFileTemplate;
-
     @Value("#{configuration['diff.experiment.data.path.template']}")
     private String differentialTsvFileTemplate;
 
+    private final DataFileHub dataFileHub;
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public ExperimentSorter(ExperimentTrader experimentTrader) {
+    public ExperimentSorter(DataFileHub dataFileHub, ExperimentTrader experimentTrader) {
+        this.dataFileHub =dataFileHub;
         this.experimentTrader = experimentTrader;
     }
 
@@ -82,7 +82,10 @@ public class ExperimentSorter {
     }
 
     private long estimateSizeOfBaselineExperiment(String experimentAccession){
-        String tsvFilePath = MessageFormat.format(baselineTsvFileTemplate, experimentAccession);
-        return new File(tsvFilePath).length();
+        try {
+            return dataFileHub.getExperimentFiles(experimentAccession).main.get().readAll().size();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

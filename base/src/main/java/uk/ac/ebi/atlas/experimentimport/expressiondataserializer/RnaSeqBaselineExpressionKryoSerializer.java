@@ -1,12 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
-import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
-import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
@@ -14,6 +7,14 @@ import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
+import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,16 +37,13 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
 
     private String serializedExpressionsFileTemplate;
-    private String tsvFileTemplate;
-    private CsvReaderFactory csvReaderFactory;
+    private final DataFileHub dataFileHub;
 
     @Inject
-    public RnaSeqBaselineExpressionKryoSerializer(@Value("#{configuration['experiment.kryo_expressions.path.template']}") String serializedExpressionsFileTemplate,
-                                                  @Value("#{configuration['experiment.magetab.path.template']}") String tsvFileTemplate,
-                                                  CsvReaderFactory csvReaderFactory) {
+    public RnaSeqBaselineExpressionKryoSerializer(DataFileHub dataFileHub,
+                                                  @Value("#{configuration['experiment.kryo_expressions.path.template']}") String serializedExpressionsFileTemplate) {
+        this.dataFileHub = dataFileHub;
         this.serializedExpressionsFileTemplate = serializedExpressionsFileTemplate;
-        this.tsvFileTemplate = tsvFileTemplate;
-        this.csvReaderFactory = csvReaderFactory;
     }
 
 
@@ -57,15 +55,13 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
 
-        String tsvFilePath = MessageFormat.format(tsvFileTemplate, experimentAccession);
         String serializedExpressionsFileURL = MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession);
 
         try (FileOutputStream expressionsOutputStream = new FileOutputStream(serializedExpressionsFileURL);
              UnsafeOutput expressionsOutput = new UnsafeOutput(expressionsOutputStream);
-             CSVReader tsvReaderForLineCount = csvReaderFactory.createTsvReader(tsvFilePath);
-             CSVReader tsvReader = csvReaderFactory.createTsvReader(tsvFilePath)) {
+             CSVReader tsvReaderForLineCount = dataFileHub.getExperimentFiles(experimentAccession).main.get();
+             CSVReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).main.get()) {
 
-            LOGGER.debug("Parsing {}", tsvFilePath);
             LOGGER.debug("Writing full baseline expressions to {}", serializedExpressionsFileURL);
 
             // Count number of genes (lines except the header)

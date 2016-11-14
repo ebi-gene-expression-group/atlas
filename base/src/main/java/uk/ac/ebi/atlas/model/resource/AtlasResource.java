@@ -15,6 +15,10 @@ public abstract class AtlasResource<T> {
         return Files.exists(path);
     }
 
+    public boolean isReadable() {
+        return Files.isReadable(path);
+    }
+
 
     public abstract T get();
 
