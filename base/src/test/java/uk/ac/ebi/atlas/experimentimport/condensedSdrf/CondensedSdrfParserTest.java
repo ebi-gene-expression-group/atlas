@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,7 +14,8 @@ import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.util.Arrays;
 
@@ -116,6 +118,8 @@ public class CondensedSdrfParserTest {
     @Mock
     IdfParser idfParserMock;
 
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
     private CondensedSdrfParser subject;
 
     @Rule
@@ -127,7 +131,7 @@ public class CondensedSdrfParserTest {
         given(fileTsvReaderBuilderMock.withExperimentAccession(anyString())).willReturn(fileTsvReaderBuilderMock);
         given(fileTsvReaderBuilderMock.build()).willReturn(tsvReaderImplMock);
 
-        subject = new CondensedSdrfParser("", fileTsvReaderBuilderMock, idfParserMock);
+        subject = new CondensedSdrfParser(dataFileHub, idfParserMock);
     }
 
     @Test

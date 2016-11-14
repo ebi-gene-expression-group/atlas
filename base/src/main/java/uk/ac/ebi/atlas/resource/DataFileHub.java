@@ -35,7 +35,7 @@ public class DataFileHub {
     diff.experiment.data.path.template = ${data.files.location}/magetab/{0}/{0}-analytics.tsv
     diff.experiment.raw-counts.path.template = ${data.files.location}/magetab/{0}/{0}-raw-counts.tsv
     (done) experiment.magetab.path.template = ${data.files.location}/magetab/{0}/{0}.tsv
-    experiment.condensed-sdrf.path.template = ${data.files.location}/magetab/{0}/{0}.condensed-sdrf.tsv
+    (done) experiment.condensed-sdrf.path.template = ${data.files.location}/magetab/{0}/{0}.condensed-sdrf.tsv
     (done) experiment.op_log.template = ${data.files.location}/admin/{0}-op-log.tsv
 
 

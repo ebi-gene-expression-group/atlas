@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
-import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,17 +42,15 @@ public class CondensedSdrfParser {
     private static final String FACTOR = "factor";
     private static final String CHARACTERISTIC = "characteristic";
 
-    private FileTsvReaderBuilder fileTsvReaderBuilder;
+    private final DataFileHub dataFileHub;
     private final IdfParser idfParser;
     // private final ValueAndUnitJoiner valueAndUnitJoiner;
 
 
     @Inject
-    public CondensedSdrfParser(@Value("#{configuration['experiment.condensed-sdrf.path.template']}") String sdrfPathTemplate,
-                               FileTsvReaderBuilder fileTsvReaderBuilder,
+    public CondensedSdrfParser(DataFileHub dataFileHub,
                                IdfParser idfParser) { //ValueAndUnitJoiner valueAndUnitJoiner) {
-
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate);
+        this.dataFileHub = dataFileHub;
         this.idfParser = idfParser;
         // this.valueAndUnitJoiner = valueAndUnitJoiner;
 
@@ -63,7 +60,7 @@ public class CondensedSdrfParser {
     public CondensedSdrfParserOutput parse(String experimentAccession, ExperimentType experimentType) throws CondensedSdrfParserException {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experimentAccession).build();
+        TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf.get();
 
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
