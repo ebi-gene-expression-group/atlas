@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.controllers.rest;
-
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -106,21 +104,22 @@ public class GeneNameTooltipController {
         return result;
     }
 
-    JsonArray formatJson(Collection<String> values, int restrictListLengthTo){
+    private JsonArray formatJson(Collection<String> values, int restrictListLengthTo){
         JsonArray result = new JsonArray();
         if(values==null){
             return result;
         }
+
         int i = 0;
-        loop:
         for(String value: values){
             result.add(new JsonPrimitive(value));
             i++;
             if(i==restrictListLengthTo)
-                break loop;
+                break;
         }
+
         if(values.size()> restrictListLengthTo){
-            result.add(new JsonPrimitive("(...and " + (values.size()-restrictListLengthTo) + " more)"));
+            result.add(new JsonPrimitive(" (...and " + (values.size()-restrictListLengthTo) + " more)"));
         }
 
         return result;

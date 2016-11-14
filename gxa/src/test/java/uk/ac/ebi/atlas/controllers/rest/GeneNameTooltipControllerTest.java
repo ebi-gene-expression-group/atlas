@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.controllers.rest;
 
 import com.google.common.collect.ImmutableMap;
@@ -29,13 +28,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GeneNameTooltipControllerTest {
 
-    public static final String IDENTIFIER = "identifier";
-    public static final String GENE_NAME = "geneName";
-    public static final String GOTERM = "goterm";
-    public static final String INTERPROTERM = "interproterm";
-    public static final String SYNONYM = "synonym";
-    public static final String SYNONYM_1 = "synonym1";
-    public static final String SYNONYM_2 = "synonym2";
+    private static final String IDENTIFIER = "identifier";
+    private static final String GENE_NAME = "geneName";
+    private static final String GOTERM = "goterm";
+    private static final String INTERPROTERM = "interproterm";
+    private static final String SYNONYM_1 = "synonym1";
+    private static final String SYNONYM_2 = "synonym2";
+
     private GeneNameTooltipController subject;
 
     @Mock
@@ -55,13 +54,11 @@ public class GeneNameTooltipControllerTest {
 
         when(htmlTemplateResourceMock.getInputStream()).thenReturn(inputStream);
 
-
         Map<BioentityPropertyName, Set<String>> m = ImmutableMap.of(
-                BioentityPropertyName.GO, (Set<String>) ImmutableSet.of("go"),
+                BioentityPropertyName.GOTERM, (Set<String>) ImmutableSet.of("goterm"),
                 BioentityPropertyName.INTERPROTERM, ImmutableSet.of("interproterm"),
                 BioentityPropertyName.SYNONYM, ImmutableSet.of(SYNONYM_1, SYNONYM_2)
         );
-
 
         when(propertyDaoMock.fetchTooltipProperties(IDENTIFIER)).thenReturn(m);
     }
