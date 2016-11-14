@@ -1,13 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
-import uk.ac.ebi.atlas.commons.writers.TsvWriter;
-import com.google.common.base.Throwables;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderDummy;
+import uk.ac.ebi.atlas.commons.writers.TsvWriter;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,32 +17,22 @@ import java.util.List;
 @Named
 public class ExperimentOpLogWriter {
 
-
-
-    private final String opLogTemplate;
-
-    private final FileTsvReaderBuilder fileTsvReaderBuilder;
-    private final FileTsvWriterBuilder fileTsvWriterBuilder;
+    private final DataFileHub dataFileHub;
 
     public static final int MAX_LENGTH = 50;
 
     @Inject
-    public ExperimentOpLogWriter(@Value("#{configuration['experiment.op_log.template']}")  String opLogTemplate,
-                                 FileTsvReaderBuilder  fileTsvReaderBuilder, FileTsvWriterBuilder fileTsvWriterBuilder) {
-        Validate.notEmpty(opLogTemplate);
-        this.opLogTemplate = opLogTemplate;
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder;
-        this.fileTsvWriterBuilder = fileTsvWriterBuilder;
+    public ExperimentOpLogWriter(DataFileHub dataFileHub){
+        this.dataFileHub = dataFileHub;
     }
 
     List<Pair<String, Pair<Long, Long>>> getCurrentOpLog(String accession) {
         List<Pair<String, Pair<Long, Long>>> result = new ArrayList<>();
 
-        TsvReader tsvReader = fileTsvReaderBuilder
-                .forTsvFilePathTemplate(opLogTemplate)
-                .withExperimentAccession(accession)
-                .returnDummyIfFileMissing()
-                .build();
+        AtlasResource<TsvReader> r = dataFileHub.getExperimentFiles(accession).adminOpLog;
+
+        TsvReader tsvReader = r.exists() ? r.get() : new TsvReaderDummy();
+
         for (String[] line : tsvReader.readAll()) {
             Validate.isTrue(line.length == 3);
             result.add(Pair.of(line[0], Pair.of(Long.parseLong(line[1]), Long.parseLong(line[2]))));
@@ -52,11 +41,8 @@ public class ExperimentOpLogWriter {
     }
 
     void persistOpLog(String accession, List<Pair<String, Pair<Long, Long>>> opLog) {
-        TsvWriter tsvWriter = fileTsvWriterBuilder
-                .forTsvFilePathTemplate(opLogTemplate)
-                .withExperimentAccession(accession)
-                .withAppend(false)
-                .build();
+
+        TsvWriter tsvWriter =  dataFileHub.getExperimentFiles(accession).adminOpLogWrite.get();
         List<String[]> lines = new ArrayList<>();
         for (int i = opLog.size() - Math.min(opLog.size(), MAX_LENGTH); i < opLog.size(); i++) {
             Pair<String, Pair<Long, Long>> loggedOp = opLog.get(i);
@@ -70,7 +56,7 @@ public class ExperimentOpLogWriter {
         try {
             tsvWriter.close();
         } catch (IOException e) {
-            Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 }

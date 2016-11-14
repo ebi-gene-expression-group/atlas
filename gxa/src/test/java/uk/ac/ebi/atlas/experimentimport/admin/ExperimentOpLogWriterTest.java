@@ -4,8 +4,11 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,14 +24,19 @@ public class ExperimentOpLogWriterTest {
 
     private ExperimentOpLogWriter subject;
 
+
     @Before
     public void setUp() {
 
+
+
         File dir = new File(System.getProperty("java.io.tmpdir") + "/" + System.currentTimeMillis());
         dir.mkdir();
+        new File(dir.getAbsolutePath()+"/admin").mkdir();
         dir.deleteOnExit();
-        subject = new ExperimentOpLogWriter(dir.getAbsolutePath() + "/{0}-temp.tsv",
-                new FileTsvReaderBuilder(), new FileTsvWriterBuilder());
+
+        subject = new ExperimentOpLogWriter(new DataFileHub(dir.getPath()));
+
     }
 
     @Test
@@ -49,6 +57,7 @@ public class ExperimentOpLogWriterTest {
 
     @Test
     public void writeManyExperimentsAndPersistJustTheTail() {
+        assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), hasSize(0));
         List<Pair<String, Pair<Long, Long>>> opLog = new ArrayList<>();
 
         int ourMax = ExperimentOpLogWriter.MAX_LENGTH + 10;

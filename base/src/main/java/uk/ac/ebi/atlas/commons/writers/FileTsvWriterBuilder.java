@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.FileSystem;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 
 @Named
@@ -39,6 +41,14 @@ public class FileTsvWriterBuilder {
         String path = MessageFormat.format(tsvFilePathTemplate, experimentAccession);
         try {
             return new TsvWriter(new OutputStreamWriter(new FileOutputStream(new File(path), append)));
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot write TSV file to path " + path, e);
+        }
+    }
+
+    public TsvWriter build(Path path, boolean appendTo) {
+        try {
+            return new TsvWriter(new OutputStreamWriter(new FileOutputStream(path.toFile(), appendTo)));
         } catch (IOException e) {
             throw new IllegalStateException("Cannot write TSV file to path " + path, e);
         }

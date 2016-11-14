@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.resource;
 
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.resource.TsvFile;
 
 import javax.inject.Inject;
@@ -31,39 +33,44 @@ public class DataFileHub {
     diff.experiment.raw-counts.path.template = ${data.files.location}/magetab/{0}/{0}-raw-counts.tsv
     experiment.magetab.path.template = ${data.files.location}/magetab/{0}/{0}.tsv
     experiment.condensed-sdrf.path.template = ${data.files.location}/magetab/{0}/{0}.condensed-sdrf.tsv
-    experiment.op_log.template = ${data.files.location}/admin/{0}-op-log.tsv
+    (done) experiment.op_log.template = ${data.files.location}/admin/{0}-op-log.tsv
 
 
 
      */
 
-    class ExperimentFiles {
+    public class ExperimentFiles {
 
-        public final TsvFile analysisMethods;
-        public final TsvFile experimentDesign;
-        public final TsvFile main;
-        public final TsvFile condensedSdrf;
-        public final TsvFile adminOpLog;
+        public final TsvFile<TsvReader> analysisMethods;
+        public final TsvFile<TsvReader> experimentDesign;
+        public final TsvFile<TsvReader> main;
+        public final TsvFile<TsvReader> condensedSdrf;
+        public final TsvFile<TsvReader> adminOpLog;
+        public final TsvFile<TsvWriter> adminOpLogWrite;
+        public final TsvFile<TsvWriter> adminOpLogAppend;
 
         ExperimentFiles(String experimentAccession){
-            this.analysisMethods = new TsvFile(dataFilesLocation, "/magetab/{0}/{0}-analysis-methods.tsv", experimentAccession);
-            this.experimentDesign = new TsvFile(dataFilesLocation, "/expdesign/ExpDesign-{0}.tsv", experimentAccession);
-            this.main = new TsvFile(dataFilesLocation, "/magetab/{0}/{0}.tsv", experimentAccession);
-            this.condensedSdrf = new TsvFile(dataFilesLocation, "/magetab/{0}/{0}.condensed-sdrf.tsv", experimentAccession);
-            this.adminOpLog = new TsvFile(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);
+            this.analysisMethods = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-analysis-methods.tsv",
+                    experimentAccession);
+            this.experimentDesign = new TsvFile.ReadOnly(dataFilesLocation, "/expdesign/ExpDesign-{0}.tsv", experimentAccession);
+            this.main = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}.tsv", experimentAccession);
+            this.condensedSdrf = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}.condensed-sdrf.tsv", experimentAccession);
+            this.adminOpLog = new TsvFile.ReadOnly(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);
+            this.adminOpLogWrite = new TsvFile.Overwrite(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);
+            this.adminOpLogAppend = new TsvFile.Appendable(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);
         }
 
     }
 
     class DifferentialExperimentFiles extends ExperimentFiles {
 
-        public final TsvFile analytics;
-        public final TsvFile rawCounts;
+        public final TsvFile<TsvReader> analytics;
+        public final TsvFile<TsvReader> rawCounts;
 
         DifferentialExperimentFiles(String experimentAccession){
             super(experimentAccession);
-            this.analytics = new TsvFile(dataFilesLocation, "/magetab/{0}/{0}-analytics.tsv", experimentAccession);
-            this.rawCounts = new TsvFile(dataFilesLocation, "/magetab/{0}/{0}-raw-counts.tsv", experimentAccession);
+            this.analytics = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-analytics.tsv", experimentAccession);
+            this.rawCounts = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-raw-counts.tsv", experimentAccession);
         }
     }
 

@@ -42,12 +42,21 @@ public class FileTsvReaderBuilder {
         String tsvFilePath = MessageFormat.format(tsvFilePathTemplate, experimentAccession);
         Path tsvFileSystemPath = FileSystems.getDefault().getPath(tsvFilePath);
         try {
-            if(defaultToADummyIfFileMissing && !tsvFileSystemPath.toFile().exists()) {
+            if (defaultToADummyIfFileMissing && !tsvFileSystemPath.toFile().exists()) {
                 return new TsvReaderDummy();
             } else {
                 InputStreamReader tsvFileInputStreamReader = new InputStreamReader(Files.newInputStream(tsvFileSystemPath));
                 return new TsvReaderImpl(tsvFileInputStreamReader);
             }
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public TsvReader build(Path tsvFileSystemPath) {
+        try {
+            InputStreamReader tsvFileInputStreamReader = new InputStreamReader(Files.newInputStream(tsvFileSystemPath));
+            return new TsvReaderImpl(tsvFileInputStreamReader);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
