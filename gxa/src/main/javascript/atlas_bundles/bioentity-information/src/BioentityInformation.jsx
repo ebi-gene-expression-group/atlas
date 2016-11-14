@@ -1,45 +1,43 @@
-"use strict";
-
-var React = require('react');
+const React = require('react');
 require("./BioentityInformation.css");
 
-var PropertyLinkShape = {
+const PropertyLinkShape = {
   text: React.PropTypes.string.isRequired,
   url: React.PropTypes.string.isRequired,
   relevance: React.PropTypes.number.isRequired
-}
+};
 
-var BioentityPropertyShape = {
+const BioentityPropertyShape = {
   type: React.PropTypes.string.isRequired,
   name: React.PropTypes.string.isRequired,
   values: React.PropTypes.arrayOf(React.PropTypes.shape(PropertyLinkShape)).isRequired
-}
+};
 
-var BioentityPropertiesShape = {
+const BioentityPropertiesShape = {
   bioentityProperties: React.PropTypes.arrayOf(React.PropTypes.shape(BioentityPropertyShape))
-}
+};
 
-var BioentityProperty = React.createClass({
+const BioentityProperty = React.createClass({
   propTypes: BioentityPropertyShape,
 
-  getInitialState: function(){
+  getInitialState() {
     return {
       showAll: false
     }
   },
 
   // take three most relevant links and then all of the same relevance
-  _pickMostRelevant: function(properties){
+  _pickMostRelevant(properties) {
     const relevanceThreshold =
       properties
-      .map((p)=>p.relevance)
-      .sort((l,r)=>r-l)
+      .map(p => p.relevance)
+      .sort((l,r) => r-l)
       .concat([0,0,0])
-      [properties.size<3? properties.size-1: 2]
-    return properties.filter((p)=>p.relevance>=relevanceThreshold);
+      [properties.size < 3 ? properties.size-1 : 2];
+    return properties.filter(p => p.relevance>=relevanceThreshold);
   },
 
-  _renderProperty: function(property, ix){
+  _renderProperty(property, ix) {
     return (
       property.url
       ? <a key={property.url+" "+ix} className={"bioEntityCardLink"} href={property.url} target="_blank">
@@ -51,7 +49,7 @@ var BioentityProperty = React.createClass({
     )
   },
 
-  _zipWithCommaSpans: function(elts){
+  _zipWithCommaSpans(elts) {
     return (
       [].concat.apply([],
         elts.map((e, ix)=>[e, <span key={"comma "+ix}>, </span>])
@@ -60,9 +58,9 @@ var BioentityProperty = React.createClass({
     )
   },
 
-  render: function(){
+  render() {
     const numUnshownLinks =
-      this.props.values.length - this._pickMostRelevant(this.props.values).length
+      this.props.values.length - this._pickMostRelevant(this.props.values).length;
     const hasOptionalLinks =
       ["go","po"].indexOf(this.props.type)>-1
       && numUnshownLinks >0;
@@ -101,7 +99,7 @@ var BioentityProperty = React.createClass({
                }.bind(this)}>
                 {this.state.showAll
                   ? " (show less)"
-                  : "... and "+numUnshownLinks+" more"}
+                  : " … and "+numUnshownLinks+" more"}
               </a>
               </span>
             : this._zipWithCommaSpans(
@@ -115,10 +113,10 @@ var BioentityProperty = React.createClass({
   }
 });
 
-var BioentityInformation = React.createClass({
+const BioentityInformation = React.createClass({
   propTypes: BioentityPropertiesShape,
 
-  render: function(){
+  render() {
     return (
       <div className={"gxaBioentityInformationCard"}>
         <table>
@@ -126,7 +124,7 @@ var BioentityInformation = React.createClass({
           {this.props.bioentityProperties.map(function(bioentityProperty){
             return (
               <BioentityProperty
-                key={bioentityProperty.name}
+                key={bioentityProperty.type}
                 {...bioentityProperty} />
             )
           })}
