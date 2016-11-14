@@ -30,7 +30,7 @@ public final class BaselineProfileDeserializer {
         return buildProfiles(normalizedFactorType, factorGroups, profileLines, cutOff);
     }
 
-    static ImmutableList<BaselineProfile> buildProfiles(String factorType, OrderedFactorGroups factorGroups, String expressions, double cutOff) {
+    public static ImmutableList<BaselineProfile> buildProfiles(String factorType, OrderedFactorGroups factorGroups, String expressions, double cutOff) {
         ImmutableList.Builder<BaselineProfile> builder = ImmutableList.builder();
         String[] expressionLines = expressions.split("\n");
 
@@ -63,7 +63,7 @@ public final class BaselineProfileDeserializer {
         return !expression.isKnown() || expression.isGreaterThan(cutOff);
     }
 
-    static OrderedFactorGroups orderedFactorGroupsOfSameFactorType(String factorType, String factorValues) {
+    public static OrderedFactorGroups orderedFactorGroupsOfSameFactorType(String factorType, String factorValues) {
         ImmutableList.Builder<FactorGroup> builder = ImmutableList.builder();
         String[] values = factorValues.split(",");
 
