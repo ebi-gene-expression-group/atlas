@@ -30,7 +30,7 @@ public class ExperimentDesignFileWriter {
     private TsvWriter tsvWriter;
     private ExperimentType experimentType;
 
-    ExperimentDesignFileWriter(TsvWriter tsvWriter, ExperimentType experimentType){
+    public ExperimentDesignFileWriter(TsvWriter tsvWriter, ExperimentType experimentType){
         this.tsvWriter = tsvWriter;
         this.experimentType = experimentType;
     }

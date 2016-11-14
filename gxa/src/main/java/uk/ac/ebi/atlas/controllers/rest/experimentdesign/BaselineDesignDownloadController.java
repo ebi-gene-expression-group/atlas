@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,9 @@ import java.util.Set;
 public class BaselineDesignDownloadController extends ExperimentDesignDownloadController<BaselineExperiment> {
 
     @Inject
-    public BaselineDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder,ExperimentTrader experimentTrader) {
-        super(fileTsvReaderBuilder,experimentTrader);
+    public BaselineDesignDownloadController(DataFileHub dataFileHub,
+                                            ExperimentTrader experimentTrader) {
+        super(dataFileHub, experimentTrader);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=RNASEQ_MRNA_BASELINE"})

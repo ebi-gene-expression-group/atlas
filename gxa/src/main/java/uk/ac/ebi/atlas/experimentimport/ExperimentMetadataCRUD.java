@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.base.Optional;
@@ -32,8 +33,8 @@ public class ExperimentMetadataCRUD {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentMetadataCRUD.class);
 
+    private final DataFileHub dataFileHub;
     private ExperimentDAO experimentDAO;
-    private ExperimentDesignFileService experimentDesignFileService;
     private ExperimentTrader experimentTrader;
     private final CondensedSdrfParser condensedSdrfParser;
     private ConditionsIndexTrader conditionsIndexTrader;
@@ -42,10 +43,12 @@ public class ExperimentMetadataCRUD {
 
     //TODO: refactor this class - it has too many collaborators
     @Inject
-    public ExperimentMetadataCRUD(ExperimentDAO experimentDAO,
+    public ExperimentMetadataCRUD(DataFileHub dataFileHub,
+            ExperimentDAO experimentDAO,
                                   ExperimentTrader experimentTrader,
                                   CondensedSdrfParser condensedSdrfParser,
                                   EFOLookupService efoParentsLookupService) {
+        this.dataFileHub = dataFileHub;
         this.experimentDAO = experimentDAO;
         this.experimentTrader = experimentTrader;
         this.condensedSdrfParser = condensedSdrfParser;
@@ -62,11 +65,6 @@ public class ExperimentMetadataCRUD {
     @Inject
     public void setConditionsIndexTrader(ConditionsIndexTrader conditionsIndexTrader) {
         this.conditionsIndexTrader = conditionsIndexTrader;
-    }
-
-    @Inject
-    public void setExperimentDesignFileService(ExperimentDesignFileService experimentDesignFileService) {
-        this.experimentDesignFileService = experimentDesignFileService;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -109,7 +107,9 @@ public class ExperimentMetadataCRUD {
     }
 
     void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
-        experimentDesignFileService.write(accession,experimentType,experimentDesign);
+        new ExperimentDesignFileWriter(
+                dataFileHub.getExperimentFiles(accession).experimentDesignWrite.get(),
+                experimentType).write(experimentDesign);
     }
 
     public void deleteExperiment(ExperimentDTO experimentDTO) {

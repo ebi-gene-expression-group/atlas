@@ -1,16 +1,16 @@
 
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,20 +21,12 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialDesignDownloadController.class);
 
-    @Value("#{configuration['experiment.experiment-design.path.template']}")
-    private String pathTemplate;
-
-    private FileTsvReaderBuilder fileTsvReaderBuilder;
-
     private final ExperimentTrader experimentTrader;
+    private final DataFileHub dataFileHub;
 
-    @PostConstruct
-    protected void initializeTsvReader() {
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
-    }
 
-    public ExperimentDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder,ExperimentTrader experimentTrader) {
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder;
+    public ExperimentDesignDownloadController(DataFileHub dataFileHub, ExperimentTrader experimentTrader) {
+        this.dataFileHub = dataFileHub;
         this.experimentTrader =experimentTrader;
     }
 
@@ -42,7 +34,7 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
             accessKey) throws IOException {
         T experiment = (T) experimentTrader.getExperiment(experimentAccession,accessKey);
 
-        TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experiment.getAccession()).build();
+        TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get();
 
         // read contents from file
         List<String[]> csvLines = new ArrayList<>(tsvReader.readAll());

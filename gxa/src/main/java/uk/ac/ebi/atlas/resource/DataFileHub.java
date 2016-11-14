@@ -28,7 +28,7 @@ public class DataFileHub {
 
         /*
     Replaces:
-    experiment.experiment-design.path.template = ${data.files.location}/expdesign/ExpDesign-{0}.tsv
+    (done) experiment.experiment-design.path.template = ${data.files.location}/expdesign/ExpDesign-{0}.tsv
     diff.experiment.data.path.template = ${data.files.location}/magetab/{0}/{0}-analytics.tsv
     diff.experiment.raw-counts.path.template = ${data.files.location}/magetab/{0}/{0}-raw-counts.tsv
     experiment.magetab.path.template = ${data.files.location}/magetab/{0}/{0}.tsv
@@ -43,6 +43,7 @@ public class DataFileHub {
 
         public final TsvFile<TsvReader> analysisMethods;
         public final TsvFile<TsvReader> experimentDesign;
+        public final TsvFile<TsvWriter> experimentDesignWrite;
         public final TsvFile<TsvReader> main;
         public final TsvFile<TsvReader> condensedSdrf;
         public final TsvFile<TsvReader> adminOpLog;
@@ -53,6 +54,7 @@ public class DataFileHub {
             this.analysisMethods = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-analysis-methods.tsv",
                     experimentAccession);
             this.experimentDesign = new TsvFile.ReadOnly(dataFilesLocation, "/expdesign/ExpDesign-{0}.tsv", experimentAccession);
+            this.experimentDesignWrite = new TsvFile.Overwrite(dataFilesLocation, "/expdesign/ExpDesign-{0}.tsv", experimentAccession);
             this.main = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}.tsv", experimentAccession);
             this.condensedSdrf = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}.condensed-sdrf.tsv", experimentAccession);
             this.adminOpLog = new TsvFile.ReadOnly(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);

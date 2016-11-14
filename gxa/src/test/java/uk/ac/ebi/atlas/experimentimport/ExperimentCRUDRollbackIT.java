@@ -13,9 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -62,6 +63,8 @@ public class ExperimentCRUDRollbackIT {
     @Inject
     private AnalyticsIndexerManager analyticsIndexerManager;
 
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
     @Mock
     private ConditionsIndexTrader conditionsIndexTraderMock;
 
@@ -71,9 +74,9 @@ public class ExperimentCRUDRollbackIT {
 
         when(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
         ExperimentMetadataCRUD experimentMetadataCRUDmock =
-                new ExperimentMetadataCRUD(experimentDAO, experimentTrader, condensedSdrfParser, efoParentsLookupService);
+                new ExperimentMetadataCRUD(dataFileHub,experimentDAO, experimentTrader, condensedSdrfParser,
+                        efoParentsLookupService);
         experimentMetadataCRUDmock.setConditionsIndexTrader(conditionsIndexTraderMock);
-        experimentMetadataCRUDmock.setExperimentDesignFileService(experimentDesignFileService);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
     }
 

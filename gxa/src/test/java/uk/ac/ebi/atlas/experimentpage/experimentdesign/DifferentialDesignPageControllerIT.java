@@ -35,9 +35,6 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class DifferentialDesignPageControllerIT {
 
-    @Value("#{configuration['experiment.experiment-design.path.template']}")
-    private String experimentDesignTemplate;
-
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-25185";
 
     private ExperimentDesignPageRequestHandler subject;

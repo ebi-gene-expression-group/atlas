@@ -2,24 +2,25 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.MatcherAssertionErrors;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
 import static uk.ac.ebi.atlas.trader.ExperimentDesignParser.SAMPLE_COLUMN_HEADER_PATTERN;
 import static uk.ac.ebi.atlas.trader.ExperimentDesignParser.extractMatchingContent;
 
@@ -52,87 +53,91 @@ public class ExperimentDesignParserTest {
     @Mock
     private TsvReader tsvReaderMock;
 
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
     private ExperimentDesignParser subject;
 
     @Before
     public void setUp() throws Exception {
-        when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(fileTsvReaderBuilderMock);
-        when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
-        when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
+        Mockito.when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(Matchers.anyString())).thenReturn(fileTsvReaderBuilderMock);
+        Mockito.when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
+        Mockito.when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
-        when(tsvReaderMock.readAll()).thenReturn(DATA);
+        Mockito.when(tsvReaderMock.readAll()).thenReturn(DATA);
 
-        subject = new ExperimentDesignParser();
-        subject.setFileTsvReaderBuilder(fileTsvReaderBuilderMock);
+        subject = new ExperimentDesignParser(dataFileHub);
     }
 
     @Test
     public void testParseHeaders() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getFactorHeaders(), contains(GENOTYPE));
-        assertThat(experimentDesign.getSampleHeaders(), contains(SAMPLE_NAME_1, "Genotype", "Organism", SAMPLE_NAME_2));
+        MatcherAssert.assertThat(experimentDesign.getFactorHeaders(), IsIterableContainingInOrder.contains(GENOTYPE));
+        MatcherAssert.assertThat(experimentDesign.getSampleHeaders(), IsIterableContainingInOrder.contains(SAMPLE_NAME_1, "Genotype", "Organism", SAMPLE_NAME_2));
     }
 
     @Test
     public void testParseFactors() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
-        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
-        assertThat(experimentDesign.getFactorValue(DUMMY, GENOTYPE), is(nullValue()));
+        MatcherAssert.assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, GENOTYPE), CoreMatchers.is(CYC_C_MUTANT));
+        MatcherAssert.assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), CoreMatchers.is(Matchers
+                .isNull()));
+        MatcherAssert.assertThat(experimentDesign.getFactorValue(DUMMY, GENOTYPE), CoreMatchers.is(Matchers.isNull()));
     }
 
     @Test
     public void testParseSamples() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_2), is(""));
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_2), is(OREGON_R));
-        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
-        assertThat(experimentDesign.getSampleCharacteristicValue(DUMMY, SAMPLE_NAME_1), is(nullValue()));
+        MatcherAssert.assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1), CoreMatchers.is(RD_INSTAR_LARVA));
+        MatcherAssert.assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1), CoreMatchers.is(RD_INSTAR_LARVA));
+        MatcherAssert.assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_2), CoreMatchers.is(""));
+        MatcherAssert.assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_2), CoreMatchers.is(OREGON_R));
+        MatcherAssert.assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, DUMMY),
+                CoreMatchers.is(Matchers.isNull()));
+        MatcherAssert.assertThat(experimentDesign.getSampleCharacteristicValue(DUMMY, SAMPLE_NAME_1), CoreMatchers.is
+                (Matchers.isNull()));
     }
 
     @Test
     public void testAssays() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_1), is(A_AFFY_35));
-        assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_2), is(A_AFFY_35));
+        MatcherAssert.assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_1), CoreMatchers.is(A_AFFY_35));
+        MatcherAssert.assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_2), CoreMatchers.is(A_AFFY_35));
     }
 
     @Test
     public void testAssayHeaders() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getAssayHeaders(), contains(ASSAY, ARRAY));
+        MatcherAssert.assertThat(experimentDesign.getAssayHeaders(), IsIterableContainingInOrder.contains(ASSAY, ARRAY));
     }
 
     @Test
     public void testGetAllRunOrAssay() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getAllRunOrAssay(), contains(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
+        MatcherAssert.assertThat(experimentDesign.getAllRunOrAssay(), IsIterableContainingInOrder.contains(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
     }
 
     @Test
     public void testGetSpeciesForAssays() {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         String species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
-        assertThat(species, is(SPECIES_1));
+        MatcherAssert.assertThat(species, CoreMatchers.is(SPECIES_1));
     }
 
     @Test
     public void testExtractGroup1Match() throws Exception {
         String matchingString = extractMatchingContent("Assay Bello", SAMPLE_COLUMN_HEADER_PATTERN);
-        MatcherAssertionErrors.assertThat(matchingString, is(nullValue()));
+        MatcherAssertionErrors.assertThat(matchingString, CoreMatchers.is(Matchers.isNull()));
 
         matchingString = extractMatchingContent("Assay Bello[assai]", SAMPLE_COLUMN_HEADER_PATTERN);
-        MatcherAssertionErrors.assertThat(matchingString, is(nullValue()));
+        MatcherAssertionErrors.assertThat(matchingString, CoreMatchers.is(Matchers.isNull()));
 
         matchingString = extractMatchingContent("Sample Characteristic[bello assai] ", SAMPLE_COLUMN_HEADER_PATTERN);
-        MatcherAssertionErrors.assertThat(matchingString, is("bello assai"));
+        MatcherAssertionErrors.assertThat(matchingString, CoreMatchers.is("bello assai"));
 
         matchingString = extractMatchingContent("Sample Characteristic[bello assai]", SAMPLE_COLUMN_HEADER_PATTERN);
-        MatcherAssertionErrors.assertThat(matchingString, is("bello assai"));
+        MatcherAssertionErrors.assertThat(matchingString, CoreMatchers.is("bello assai"));
 
         matchingString = extractMatchingContent("Sample  Characteristic[bello assai]", SAMPLE_COLUMN_HEADER_PATTERN);
-        MatcherAssertionErrors.assertThat(matchingString, is(nullValue()));
+        MatcherAssertionErrors.assertThat(matchingString, CoreMatchers.is(Matchers.isNull()));
     }
 }

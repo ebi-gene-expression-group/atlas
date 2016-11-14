@@ -10,16 +10,12 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Matchers;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileService;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -28,11 +24,12 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -111,6 +108,9 @@ public class ExperimentMetadataCRUDTest {
     @Mock
     private ExperimentDTO experimentDTOMock;
 
+    @Spy
+    DataFileHub dataFileHub = MockDataFileHub.get();
+
     @Captor
     private ArgumentCaptor<String> experimentAccessionCaptor;
 
@@ -146,23 +146,23 @@ public class ExperimentMetadataCRUDTest {
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(allOntologyTermIdsByAssayAccession);
         when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
-        subject = new ExperimentMetadataCRUD(experimentDAOMock, experimentTraderMock, condensedSdrfParserMock, efoParentsLookupServiceMock);
+        DataFileHub.ExperimentFiles experimentFiles = Mockito.mock(DataFileHub.ExperimentFiles.class);
+
+
+        when(dataFileHub.getExperimentFiles(anyString())).thenReturn(experimentFiles);
+
+        subject = new ExperimentMetadataCRUD(dataFileHub, experimentDAOMock, experimentTraderMock,
+                condensedSdrfParserMock,
+                efoParentsLookupServiceMock);
         subject.setConditionsIndexTrader(conditionsIndexTraderMock);
-        subject.setExperimentDesignFileService(experimentDesignFileServiceMock);
         subject.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
     }
 
     @Test
-    public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
+    public void generateExperimentDesignShouldUseTheFiles() throws Exception {
 
         subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
-        verify(experimentDesignFileServiceMock).write(EXPERIMENT_ACCESSION,experimentType,experimentDesignMock);
-    }
-
-    @Test(expected = IOException.class)
-    public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
-        willThrow(new IOException()).given(experimentDesignFileServiceMock).write(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE,experimentDesignMock);
-        subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
+        verify(dataFileHub).getExperimentFiles(EXPERIMENT_ACCESSION);
     }
 
     @Test

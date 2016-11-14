@@ -4,10 +4,11 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import com.google.common.collect.ImmutableList;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,29 +32,22 @@ public class ExperimentDesignParser {
     private static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value\\[(.*?)\\]\\s*");
     private static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
 
-    @Value("#{configuration['experiment.experiment-design.path.template']}")
-    private String pathTemplate;
-
-    private FileTsvReaderBuilder fileTsvReaderBuilder;
+    private final DataFileHub dataFileHub;
 
     @Inject
-    void setFileTsvReaderBuilder(FileTsvReaderBuilder fileTsvReaderBuilder) {
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder;
+    ExperimentDesignParser(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
     }
 
 
     public ExperimentDesign parse(String experimentAccession) {
 
-        TsvReader tsvReader = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate)
-                                              .withExperimentAccession(experimentAccession)
-                                              .build();
+        AtlasResource<TsvReader> r = dataFileHub.getExperimentFiles(experimentAccession).experimentDesign;
 
-        List<String[]> csvLines = new ArrayList<>(tsvReader.readAll());
-
-        if (csvLines.isEmpty()) {
-            String tsvFilePath = MessageFormat.format(pathTemplate, experimentAccession);
-            throw new IllegalStateException(String.format("%s is empty", tsvFilePath));
+        if (!r.exists()) {
+            throw new IllegalStateException(String.format("%s does not exist", r));
         }
+        List<String[]> csvLines = new ArrayList<>(r.get().readAll());
 
         String[] headerLine = csvLines.remove(0);
 

@@ -59,7 +59,7 @@ public class DifferentialDesignDownloadControllerTest {
         when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
         when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
-        subject = new DifferentialDesignDownloadController(fileTsvReaderBuilderMock,experimentTrader);
+        subject = new DifferentialDesignDownloadController(fileTsvReaderBuilderMock);
         subject.initializeTsvReader();
 
         List<String[]> designs = Lists.newArrayList();

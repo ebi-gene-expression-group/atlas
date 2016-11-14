@@ -4,11 +4,8 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
-import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,14 +25,7 @@ public class ExperimentOpLogWriterTest {
     @Before
     public void setUp() {
 
-
-
-        File dir = new File(System.getProperty("java.io.tmpdir") + "/" + System.currentTimeMillis());
-        dir.mkdir();
-        new File(dir.getAbsolutePath()+"/admin").mkdir();
-        dir.deleteOnExit();
-
-        subject = new ExperimentOpLogWriter(new DataFileHub(dir.getPath()));
+        subject = new ExperimentOpLogWriter(MockDataFileHub.get());
 
     }
 
