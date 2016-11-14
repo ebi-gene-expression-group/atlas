@@ -84,8 +84,8 @@ public class ExperimentCheckerTest {
     public void testCheckDifferential() throws Exception {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
-        when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
+        //when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
+        //when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkDifferentialFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(2)).getProperty(anyString());
@@ -133,8 +133,8 @@ public class ExperimentCheckerTest {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
+        //when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
+        //when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());

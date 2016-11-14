@@ -1,30 +1,26 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 
 @Named
 public class RnaSeqDifferentialAnalyticsInputStreamFactory {
 
-    private final CsvReaderFactory csvReaderFactory;
-    private final String fileTemplate;
+    private final DataFileHub dataFileHub;
 
     @Inject
-    public RnaSeqDifferentialAnalyticsInputStreamFactory(@Value("#{configuration['diff.experiment.data.path.template']}")
-                                                         String fileTemplate,
-                                                         CsvReaderFactory csvReaderFactory) {
-        this.fileTemplate = fileTemplate;
-        this.csvReaderFactory = csvReaderFactory;
+    public RnaSeqDifferentialAnalyticsInputStreamFactory(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
     }
 
     public RnaSeqDifferentialAnalyticsInputStream create(String experimentAccession) {
-        String tsvFilePath = MessageFormat.format(fileTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFilePath);
-        return new RnaSeqDifferentialAnalyticsInputStream(csvReader, tsvFilePath);
+        AtlasResource<CSVReader> r = dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics;
+        return new RnaSeqDifferentialAnalyticsInputStream(r.get(), r.toString());
     }
 }

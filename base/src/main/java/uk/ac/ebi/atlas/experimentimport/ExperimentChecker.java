@@ -75,10 +75,10 @@ public class ExperimentChecker {
     }
 
     void checkDifferentialFiles(String experimentAccession) {
-        Set<String> differentialExperimentPathTemplates =
-                Sets.newHashSet("diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
-
-        checkFilesAreAllPresentAndWeCanReadThem(differentialExperimentPathTemplates, experimentAccession);
+        DataFileHub.DifferentialExperimentFiles differentialExperimentFiles = dataFileHub
+                .getDifferentialExperimentFiles(experimentAccession);
+        checkFileExistsAndIsReadable(differentialExperimentFiles.analysisMethods);
+        checkFileExistsAndIsReadable(differentialExperimentFiles.rawCounts);
     }
 
     void checkMicroarrayFiles(String experimentAccession) {

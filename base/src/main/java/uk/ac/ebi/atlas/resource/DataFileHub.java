@@ -32,7 +32,7 @@ public class DataFileHub {
         /*
     Replaces:
     (done) experiment.experiment-design.path.template = ${data.files.location}/expdesign/ExpDesign-{0}.tsv
-    diff.experiment.data.path.template = ${data.files.location}/magetab/{0}/{0}-analytics.tsv
+    (done) diff.experiment.data.path.template = ${data.files.location}/magetab/{0}/{0}-analytics.tsv
     diff.experiment.raw-counts.path.template = ${data.files.location}/magetab/{0}/{0}-raw-counts.tsv
     (done) experiment.magetab.path.template = ${data.files.location}/magetab/{0}/{0}.tsv
     (done) experiment.condensed-sdrf.path.template = ${data.files.location}/magetab/{0}/{0}.condensed-sdrf.tsv
@@ -67,14 +67,14 @@ public class DataFileHub {
 
     }
 
-    class DifferentialExperimentFiles extends ExperimentFiles {
+    public class DifferentialExperimentFiles extends ExperimentFiles {
 
-        public final TsvFile<TsvReader> analytics;
+        public final AtlasResource<CSVReader> analytics;
         public final TsvFile<TsvReader> rawCounts;
 
         DifferentialExperimentFiles(String experimentAccession){
             super(experimentAccession);
-            this.analytics = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-analytics.tsv", experimentAccession);
+            this.analytics = new CsvFile(dataFilesLocation, "/magetab/{0}/{0}-analytics.tsv", experimentAccession);
             this.rawCounts = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-raw-counts.tsv", experimentAccession);
         }
     }

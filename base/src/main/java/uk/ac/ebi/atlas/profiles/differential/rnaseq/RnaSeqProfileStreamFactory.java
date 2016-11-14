@@ -5,34 +5,29 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
-import au.com.bytecode.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
 
 @Named
 @Scope("prototype")
 public class RnaSeqProfileStreamFactory
 implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile, Contrast> {
 
-    @Value("#{configuration['diff.experiment.data.path.template']}")
-    private String experimentDataFileUrlTemplate;
+    private final DataFileHub dataFileHub;
 
     private ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder;
 
-    private CsvReaderFactory csvReaderFactory;
-
     @Inject
-    public RnaSeqProfileStreamFactory(ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder,
-                                      CsvReaderFactory csvReaderFactory) {
+    public RnaSeqProfileStreamFactory(DataFileHub dataFileHub,
+                                      ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder) {
+        this.dataFileHub = dataFileHub;
         this.expressionsRowDeserializerRnaSeqBuilder = expressionsRowDeserializerRnaSeqBuilder;
-        this.csvReaderFactory = csvReaderFactory;
     }
 
     public ObjectInputStream<RnaSeqProfile> create(DifferentialProfileStreamOptions options) {
@@ -45,8 +40,6 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
     }
 
     public RnaSeqProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) {
-        String tsvFileURL = MessageFormat.format(experimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
         expressionFilter.setPValueCutoff(pValueCutOff);
@@ -55,7 +48,9 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
 
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
 
-        return new RnaSeqProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
+        return new RnaSeqProfilesTsvInputStream(
+                dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.get(),
+                experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
     }
 
 }
