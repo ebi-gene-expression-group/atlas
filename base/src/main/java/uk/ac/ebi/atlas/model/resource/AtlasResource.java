@@ -18,4 +18,9 @@ public abstract class AtlasResource<T> {
 
     public abstract T get();
 
+    @Override
+    public String toString(){
+        return this.getClass().getName()+" with path "+path.toString();
+    }
+
 }
