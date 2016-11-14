@@ -23,12 +23,12 @@ public class ExperimentOpLogWriterTest {
 
     @Before
     public void setUp() {
-        subject = new ExperimentOpLogWriter(new FileTsvReaderBuilder(), new FileTsvWriterBuilder());
 
         File dir = new File(System.getProperty("java.io.tmpdir") + "/" + System.currentTimeMillis());
         dir.mkdir();
         dir.deleteOnExit();
-        subject.opLogTemplate = dir.getAbsolutePath() + "/{0}-temp.tsv";
+        subject = new ExperimentOpLogWriter(dir.getAbsolutePath() + "/{0}-temp.tsv",
+                new FileTsvReaderBuilder(), new FileTsvWriterBuilder());
     }
 
     @Test

@@ -82,7 +82,7 @@ public class ExperimentAdminController {
         JsonArray result = new JsonArray();
         JsonObject messageObject = new JsonObject();
         messageObject.addProperty("accession", accessionParameter);
-        messageObject.addProperty("error",e.getMessage());
+        messageObject.addProperty("error", e.getMessage()!=null? e.getMessage() : e.toString());
         result.add(messageObject);
         return result;
     }

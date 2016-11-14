@@ -19,8 +19,8 @@ import java.util.List;
 public class ExperimentOpLogWriter {
 
 
-    @Value("#{configuration['experiment.op_log.template']}")
-    String opLogTemplate;
+
+    private final String opLogTemplate;
 
     private final FileTsvReaderBuilder fileTsvReaderBuilder;
     private final FileTsvWriterBuilder fileTsvWriterBuilder;
@@ -28,7 +28,10 @@ public class ExperimentOpLogWriter {
     public static final int MAX_LENGTH = 50;
 
     @Inject
-    public ExperimentOpLogWriter(FileTsvReaderBuilder fileTsvReaderBuilder, FileTsvWriterBuilder fileTsvWriterBuilder) {
+    public ExperimentOpLogWriter(@Value("#{configuration['experiment.op_log.template']}")  String opLogTemplate,
+                                 FileTsvReaderBuilder  fileTsvReaderBuilder, FileTsvWriterBuilder fileTsvWriterBuilder) {
+        Validate.notEmpty(opLogTemplate);
+        this.opLogTemplate = opLogTemplate;
         this.fileTsvReaderBuilder = fileTsvReaderBuilder;
         this.fileTsvWriterBuilder = fileTsvWriterBuilder;
     }
