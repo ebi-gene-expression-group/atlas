@@ -7909,9 +7909,7 @@ webpackJsonp_name_([3],{
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	//*------------------------------------------------------------------*
+	'use strict';
 	
 	module.exports = __webpack_require__(/*! ./src/renderer.js */ 2317);
 
@@ -7923,19 +7921,14 @@ webpackJsonp_name_([3],{
   \*************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2318);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 2474);
 	
-	//*------------------------------------------------------------------*
-	
 	var BioentityInformation = __webpack_require__(/*! ./BioentityInformation.jsx */ 2475);
 	
-	//*------------------------------------------------------------------*
-	
 	exports.render = function (options) {
-	
 	    ReactDOM.render(React.createElement(BioentityInformation, { bioentityProperties: options.payload }), typeof options.target === "string" ? document.getElementById(options.target) : options.target);
 	};
 
@@ -8923,6 +8916,7 @@ webpackJsonp_name_([3],{
 	    };
 	  },
 	
+	
 	  // take three most relevant links and then all of the same relevance
 	  _pickMostRelevant: function _pickMostRelevant(properties) {
 	    var relevanceThreshold = properties.map(function (p) {
@@ -8934,7 +8928,6 @@ webpackJsonp_name_([3],{
 	      return p.relevance >= relevanceThreshold;
 	    });
 	  },
-	
 	  _renderProperty: function _renderProperty(property, ix) {
 	    return property.url ? React.createElement(
 	      "a",
@@ -8946,7 +8939,6 @@ webpackJsonp_name_([3],{
 	      property.text
 	    );
 	  },
-	
 	  _zipWithCommaSpans: function _zipWithCommaSpans(elts) {
 	    return [].concat.apply([], elts.map(function (e, ix) {
 	      return [e, React.createElement(
@@ -8956,7 +8948,6 @@ webpackJsonp_name_([3],{
 	      )];
 	    })).slice(0, -1);
 	  },
-	
 	  render: function render() {
 	    var numUnshownLinks = this.props.values.length - this._pickMostRelevant(this.props.values).length;
 	    var hasOptionalLinks = ["go", "po"].indexOf(this.props.type) > -1 && numUnshownLinks > 0;
@@ -8989,7 +8980,7 @@ webpackJsonp_name_([3],{
 	                    return { showAll: !previousState.showAll };
 	                  });
 	                }.bind(this) },
-	              this.state.showAll ? " (show less)" : "... and " + numUnshownLinks + " more"
+	              this.state.showAll ? " (show less)" : " … and " + numUnshownLinks + " more"
 	            )
 	          ) : this._zipWithCommaSpans(this.props.values.map(this._renderProperty))
 	        )
@@ -9015,7 +9006,7 @@ webpackJsonp_name_([3],{
 	          null,
 	          this.props.bioentityProperties.map(function (bioentityProperty) {
 	            return React.createElement(BioentityProperty, _extends({
-	              key: bioentityProperty.name
+	              key: bioentityProperty.type
 	            }, bioentityProperty));
 	          })
 	        )
