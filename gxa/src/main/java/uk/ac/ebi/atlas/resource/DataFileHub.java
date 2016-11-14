@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.resource;
 
+import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.model.resource.CsvFile;
 import uk.ac.ebi.atlas.model.resource.TsvFile;
 
 import javax.inject.Inject;
@@ -41,21 +44,21 @@ public class DataFileHub {
 
     public class ExperimentFiles {
 
-        public final TsvFile<TsvReader> analysisMethods;
-        public final TsvFile<TsvReader> experimentDesign;
-        public final TsvFile<TsvWriter> experimentDesignWrite;
-        public final TsvFile<TsvReader> main;
-        public final TsvFile<TsvReader> condensedSdrf;
-        public final TsvFile<TsvReader> adminOpLog;
-        public final TsvFile<TsvWriter> adminOpLogWrite;
-        public final TsvFile<TsvWriter> adminOpLogAppend;
+        public final AtlasResource<TsvReader> analysisMethods;
+        public final AtlasResource<TsvReader> experimentDesign;
+        public final AtlasResource<TsvWriter> experimentDesignWrite;
+        public final AtlasResource<CSVReader> main;
+        public final AtlasResource<TsvReader> condensedSdrf;
+        public final AtlasResource<TsvReader> adminOpLog;
+        public final AtlasResource<TsvWriter> adminOpLogWrite;
+        public final AtlasResource<TsvWriter> adminOpLogAppend;
 
         ExperimentFiles(String experimentAccession){
             this.analysisMethods = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}-analysis-methods.tsv",
                     experimentAccession);
             this.experimentDesign = new TsvFile.ReadOnly(dataFilesLocation, "/expdesign/ExpDesign-{0}.tsv", experimentAccession);
             this.experimentDesignWrite = new TsvFile.Overwrite(dataFilesLocation, "/expdesign/ExpDesign-{0}.tsv", experimentAccession);
-            this.main = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}.tsv", experimentAccession);
+            this.main = new CsvFile(dataFilesLocation, "/magetab/{0}/{0}.tsv", experimentAccession);
             this.condensedSdrf = new TsvFile.ReadOnly(dataFilesLocation, "/magetab/{0}/{0}.condensed-sdrf.tsv", experimentAccession);
             this.adminOpLog = new TsvFile.ReadOnly(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);
             this.adminOpLogWrite = new TsvFile.Overwrite(dataFilesLocation, "/admin/{0}-op-log.tsv", experimentAccession);
