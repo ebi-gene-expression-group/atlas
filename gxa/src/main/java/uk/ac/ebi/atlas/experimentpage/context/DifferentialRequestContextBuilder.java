@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.Preconditions;
@@ -42,7 +41,7 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
-        requestContext.setFilteredBySpecies(experiment.getSpeciesString().toLowerCase());
+        requestContext.setFilteredBySpecies(experiment.getSpecies().originalName);
 
         requestContext.setAllQueryFactors(experiment.getContrasts());
 

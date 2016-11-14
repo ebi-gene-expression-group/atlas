@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.search;
 
+import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree;
+
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class SearchDescription {
@@ -11,7 +13,7 @@ public class SearchDescription {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (geneQuery.isNotEmpty()) {
-            String geneQueryString = geneQuery.asAnalyticsIndexQueryClause();
+            String geneQueryString = AnalyticsSolrQueryTree.createForIdentifierSearch(geneQuery).toString();
 
             if (geneQuery.size() > 1 && conditionQuery.isNotEmpty()) {
                 stringBuilder.append("(").append(geneQueryString).append(")");
@@ -25,7 +27,7 @@ public class SearchDescription {
         }
 
         if (conditionQuery.isNotEmpty()) {
-            String conditionQueryString = conditionQuery.asAnalyticsIndexQueryClause();
+            String conditionQueryString = AnalyticsSolrQueryTree.createForIdentifierSearch(conditionQuery).toString();
 
             if (conditionQuery.size() > 1 && geneQuery.isNotEmpty()) {
                 stringBuilder.append("(").append(conditionQueryString).append(")");
@@ -49,7 +51,7 @@ public class SearchDescription {
         return getSimple(geneQuery, SemanticQuery.create(), "");
     }
 
-    public static String getSimple(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+    private static String getSimple(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
             return "default query";
         }
@@ -91,13 +93,4 @@ public class SearchDescription {
         return stringBuilder.toString();
     }
 
-    public static String getRaw(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append("geneQuery = ").append(geneQuery.toJson()).append(", ");
-        stringBuilder.append("conditionQuery = ").append(conditionQuery.toJson()).append(", ");
-        stringBuilder.append("species = ").append(species);
-
-        return stringBuilder.toString();
-    }
 }

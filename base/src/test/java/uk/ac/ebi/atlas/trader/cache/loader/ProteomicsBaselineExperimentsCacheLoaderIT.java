@@ -69,7 +69,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load(E_PROT_1);
         //then
-        String species = experiment.getSpeciesString();
+        String species = experiment.getSpecies().originalName;
         assertThat(species, is("Homo sapiens"));
 
     }

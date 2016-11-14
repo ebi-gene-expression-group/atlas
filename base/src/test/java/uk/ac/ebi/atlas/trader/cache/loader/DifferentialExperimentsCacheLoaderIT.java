@@ -31,7 +31,7 @@ public class DifferentialExperimentsCacheLoaderIT {
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
         //then
-        assertThat(experiment.getSpeciesString(), is("Mus musculus"));
+        assertThat(experiment.getSpecies().originalName, is("Mus musculus"));
     }
 
     @Test

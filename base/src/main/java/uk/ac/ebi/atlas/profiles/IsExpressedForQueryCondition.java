@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Set;
 
-public class IsExpressedForQueryCondition<K, P extends Profile> implements Predicate<P> {
+public class IsExpressedForQueryCondition<K, P extends Profile<K, ?>> implements Predicate<P> {
     private Set<K> queryConditions;
 
     public IsExpressedForQueryCondition(Set<K> queryConditions){

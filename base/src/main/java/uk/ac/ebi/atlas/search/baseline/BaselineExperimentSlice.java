@@ -24,7 +24,7 @@ public abstract class BaselineExperimentSlice {
     }
 
     public String species() {
-        return experiment().getSpeciesString();
+        return experiment().getSpecies().originalName;
     }
 
     public String experimentAccession() {

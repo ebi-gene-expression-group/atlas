@@ -35,7 +35,7 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error("Cannot read TSV file: " + e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -57,7 +57,7 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

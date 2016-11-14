@@ -81,11 +81,6 @@ public abstract class Experiment implements Serializable {
         return accession;
     }
 
-    @Deprecated
-    public String getSpeciesString() {
-        return species.originalName;
-    }
-
     public Species getSpecies(){
         return species;
     }

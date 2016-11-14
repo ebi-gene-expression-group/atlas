@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R extends
         DifferentialRequestContext<?>> {
 
-    SolrQueryService solrQueryService;
+    private SolrQueryService solrQueryService;
     private final boolean queryBySpecies;
 
     private final RankProfilesFactory<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>
@@ -32,8 +33,7 @@ public class DifferentialProfilesHeatMap<P extends DifferentialProfile<?>, R ext
                                        ProfileStreamFactory inputStreamFactory,
                                      SolrQueryService solrQueryService,boolean queryBySpecies) {
         this.rankProfilesFactory = rankProfilesFactory;
-        this.profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new
-                DifferentialProfileStreamFilters<P>());
+        this.profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new DifferentialProfileStreamFilters<P>());
         this.solrQueryService = solrQueryService;
         this.queryBySpecies = queryBySpecies;
     }

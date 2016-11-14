@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
-
 import com.google.common.collect.Lists;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;

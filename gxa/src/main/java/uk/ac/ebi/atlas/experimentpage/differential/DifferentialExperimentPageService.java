@@ -91,7 +91,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                 }
 
             } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery().asAnalyticsIndexQueryClause() + "'"));
+                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery().description() + "'"));
             }
 
         }

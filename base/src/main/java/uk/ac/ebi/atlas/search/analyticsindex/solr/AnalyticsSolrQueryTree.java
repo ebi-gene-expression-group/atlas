@@ -1,5 +1,10 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
+import com.google.common.collect.Collections2;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -7,17 +12,21 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
-import com.google.common.collect.*;
+
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
 
 public class AnalyticsSolrQueryTree {
-    public static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
+    private static final String UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE = "__identifierSearch";
 
     public enum Operator {
         AND(" AND "),
@@ -96,7 +105,7 @@ public class AnalyticsSolrQueryTree {
             Function<TreeNode, String> wrapParentsInParenthesis = new Function<TreeNode, String>() {
                 @Nullable
                 @Override
-                public String apply(@Nullable TreeNode treeNode) {
+                public String apply(TreeNode treeNode) {
                     if (treeNode instanceof Parent) {
                         return "(" + treeNode.toString() + ")";
                     } else {
@@ -150,31 +159,6 @@ public class AnalyticsSolrQueryTree {
         return root.toString();
     }
 
-    private static final Function<SemanticQueryTerm, String> semanticQueryTermToSolr = new Function<SemanticQueryTerm, String>() {
-        @Nullable
-        @Override
-        public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
-            return semanticQueryTerm.hasNoCategory()
-                    ? semanticQueryTerm.value()
-                    : String.format("%s:{%s}", semanticQueryTerm.category(), semanticQueryTerm.value());
-        }
-    };
-
-    @Deprecated
-        //convenience method
-    AnalyticsSolrQueryTree(String searchField, SemanticQuery searchValue) {
-        //if searchValue has categories, it should really be identifierSearch or conditionsSearch
-        this(searchField, searchValue.terms());
-    }
-
-    @Deprecated
-    AnalyticsSolrQueryTree(String searchField, Collection<SemanticQueryTerm> allowedValuesForField) {
-        this(searchField,
-                FluentIterable.from(allowedValuesForField)
-                        .transform(semanticQueryTermToSolr)
-                        .toArray(String.class));
-    }
-
     //We want this search field to match at least one of these values
     AnalyticsSolrQueryTree(String searchField, String... searchValues) {
         if (searchValues.length == 1) {
@@ -218,7 +202,7 @@ public class AnalyticsSolrQueryTree {
 
 
     //package
-    static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
+    public static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
         Multimap<String, String> m = HashMultimap.create();
         for (SemanticQueryTerm term : geneQuery.terms()) {
             if (term.hasValue()) {
@@ -241,7 +225,7 @@ public class AnalyticsSolrQueryTree {
     List<String> toQueryPlan() {
         TreeNode n = root.filter(new Predicate<Leaf>() {
             @Override
-            public boolean apply(@Nullable Leaf leaf) {
+            public boolean apply(Leaf leaf) {
                 return leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE);
             }
         });
@@ -288,7 +272,7 @@ public class AnalyticsSolrQueryTree {
 
     }
 
-    static ImmutableList<String> possibleIdentifierKeywords(){
+    private static ImmutableList<String> possibleIdentifierKeywords(){
         ImmutableList.Builder<String> b = ImmutableList.builder();
         for(BioentityPropertyName bioentityPropertyName: ExperimentDataPoint.bioentityPropertyNames){
             if(bioentityPropertyName.isId){
