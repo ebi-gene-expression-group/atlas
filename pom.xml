@@ -2,9 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.ac.ebi</groupId>
+    <groupId>uk.ac.ebi.atlas</groupId>
     <artifactId>atlas</artifactId>
-    <version>3.0</version>
+    <version>1.0</version>
+
+    <name>Atlas</name>
+    <url>https://www.ebi.ac.uk/gxa/</url>
 
     <packaging>pom</packaging>
 
@@ -43,6 +46,8 @@
     </properties>
 
     <build>
+        <defaultGoal>package</defaultGoal>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -94,21 +99,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>artifactory-repo</id>
-            <url>http://bar.ebi.ac.uk:8081/artifactory/repo/</url>
-        </repository>
-        <repository>
-            <id>codelds</id>
-            <url>https://dev.lds.org/nexus/content/repositories/thirdparty/</url>
-        </repository>
-        <repository>
-            <id>atlassian-public</id>
-            <url>http://maven.atlassian.com/content/repositories/atlassian-public/</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <!-- Guava -->

@@ -6,8 +6,8 @@
 
     <parent>
         <artifactId>atlas</artifactId>
-        <groupId>uk.ac.ebi</groupId>
-        <version>3.0</version>
+        <groupId>uk.ac.ebi.atlas</groupId>
+        <version>1.0</version>
     </parent>
 
     <artifactId>sc</artifactId>
@@ -62,4 +62,11 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>uk.ac.ebi.atlas</groupId>
+            <artifactId>base</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

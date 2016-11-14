@@ -5,12 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>atlas</artifactId>
-        <groupId>uk.ac.ebi</groupId>
-        <version>3.0</version>
+        <groupId>uk.ac.ebi.atlas</groupId>
+        <version>1.0</version>
     </parent>
 
-    <artifactId>atlas-base</artifactId>
+    <artifactId>base</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Atlas base</name>
+    <url>https://www.ebi.ac.uk/gxa/</url>
 
     <properties>
         <!-- Override parent log settings -->
@@ -18,6 +22,17 @@
         <log.level.atlas>warn</log.level.atlas>
         <log.prudent>false</log.prudent>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>artifactory-repo</id>
+            <url>http://bar.ebi.ac.uk:8081/artifactory/repo/</url>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <url>http://maven.atlassian.com/content/repositories/atlassian-public/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
