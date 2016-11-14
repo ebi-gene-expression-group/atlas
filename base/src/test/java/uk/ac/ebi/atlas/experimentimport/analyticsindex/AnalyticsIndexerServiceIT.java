@@ -99,7 +99,7 @@ public class AnalyticsIndexerServiceIT {
 
     @Test
     public void weGenerateDocumentsCompatibleWithIndexContent(){
-        weGenerateDocumentsCompatibleWithIndexContent("E-MTAB-2706");
+        weGenerateDocumentsCompatibleWithIndexContent("E-MTAB-513");
     }
 
     private void weGenerateDocumentsCompatibleWithIndexContent(String accession){
