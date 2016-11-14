@@ -47,10 +47,8 @@ public class BioEntityCardProperties {
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
             BioentityPropertyName.SYNONYM,
             BioentityPropertyName.ORTHOLOG,
-            BioentityPropertyName.GOTERM,
             BioentityPropertyName.GO,
             BioentityPropertyName.PO,
-            BioentityPropertyName.INTERPROTERM,
             BioentityPropertyName.INTERPRO,
             BioentityPropertyName.ENSFAMILY_DESCRIPTION,
             BioentityPropertyName.ENSGENE,
