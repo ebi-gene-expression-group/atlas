@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrInputDocument;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,19 +38,17 @@ public class AnalyticsIndexerServiceTest {
     @Mock
     ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
 
+    private AnalyticsIndexerService subject;
 
-    AnalyticsIndexerService subject;
-
-    Experiment experiment = BaselineExperimentTest.mockExperiment();
+    private Experiment experiment = BaselineExperimentTest.mockExperiment();
 
     @Before
     public void setUp() throws Exception {
         UpdateResponse r = Mockito.mock(UpdateResponse.class);
         when(r.getQTime()).thenReturn(10);
-        when(solrClient.add(Matchers.anyCollection())).thenReturn(r);
+        when(solrClient.add(Matchers.anyCollectionOf(SolrInputDocument.class))).thenReturn(r);
 
         subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
-
     }
 
     @Test
@@ -67,7 +66,7 @@ public class AnalyticsIndexerServiceTest {
 
         int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
 
-        Mockito.verify(solrClient, times(0)).add(Matchers.anyCollection());
+        Mockito.verify(solrClient, times(0)).add(Matchers.anyCollectionOf(SolrInputDocument.class));
 
         assertThat(response, is(0));
     }
@@ -94,7 +93,7 @@ public class AnalyticsIndexerServiceTest {
 
         int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
 
-        Mockito.verify(solrClient, times(2)).add(Matchers.anyCollection());
+        Mockito.verify(solrClient, times(2)).add(Matchers.anyCollectionOf(SolrInputDocument.class));
 
         assertThat(response, is(2));
     }
@@ -119,7 +118,7 @@ public class AnalyticsIndexerServiceTest {
 
     @Test
     public void exceptionsFromSolrAreLoggedButTheCodeProceeds() throws Exception{
-        when(solrClient.add(Matchers.anyCollection())).thenThrow(new IOException(""));
+        when(solrClient.add(Matchers.anyCollectionOf(SolrInputDocument.class))).thenThrow(new IOException(""));
 
         final ExperimentDataPoint experimentDataPoint = Mockito.mock(ExperimentDataPoint.class);
         when(experimentDataPoint.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList
