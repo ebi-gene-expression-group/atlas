@@ -68,6 +68,11 @@ public class ExperimentSorter {
     }
 
     private long estimateSizeOfDifferentialExperiment(String experimentAccession){
+        return 1000L;
+        /*
+        I used to look into the directory and count the files but the dataFileHub API isn't rich enough for this yet.
+        Make me more accurate!
+
         long diffExperimentSize = 0;
         Path diffExperimentDir = FileSystems.getDefault().getPath(MessageFormat.format(differentialTsvFileTemplate, experimentAccession)).getParent();
         Path diffExperimentGlobPath = FileSystems.getDefault().getPath(MessageFormat.format(differentialTsvFileTemplate, experimentAccession + "*")).getFileName();
@@ -79,6 +84,7 @@ public class ExperimentSorter {
             LOGGER.error(e.getMessage());
         }
         return diffExperimentSize;
+        */
     }
 
     private long estimateSizeOfBaselineExperiment(String experimentAccession){

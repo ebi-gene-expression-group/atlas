@@ -1,7 +1,9 @@
 
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -9,25 +11,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
-import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
+import javax.annotation.Nullable;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentDesignParserWithOntologyTermsTest {
@@ -81,17 +81,14 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     @Mock
     private TsvReader tsvReaderMock;
 
-    DataFileHub dataFileHub = MockDataFileHub.get();
+    MockDataFileHub dataFileHub = MockDataFileHub.get();
 
     private ExperimentDesignParser subject;
 
     @Before
     public void setUp() throws Exception {
-        when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(fileTsvReaderBuilderMock);
-        when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
-        when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
-        when(tsvReaderMock.readAll()).thenReturn(DATA);
+        dataFileHub.addTemporaryTsv(MessageFormat.format("/expdesign/ExpDesign-{0}.tsv",EXPERIMENT_ACCESSION), DATA);
 
         subject = new ExperimentDesignParser(dataFileHub);
     }

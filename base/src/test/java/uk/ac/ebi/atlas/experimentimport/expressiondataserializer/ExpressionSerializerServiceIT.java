@@ -38,8 +38,8 @@ public class ExpressionSerializerServiceIT {
     @Mock
     ExperimentChecker experimentChecker;
 
-    @Spy
-    DataFileHub dataFileHub = MockDataFileHub.get();
+    @Inject
+    DataFileHub dataFileHub;
 
     private String serializedExpressionsFileTemplate;
 

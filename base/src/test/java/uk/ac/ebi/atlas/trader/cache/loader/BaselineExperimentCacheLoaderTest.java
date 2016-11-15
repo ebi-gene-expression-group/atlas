@@ -20,8 +20,11 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
+import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
@@ -66,18 +69,21 @@ public class BaselineExperimentCacheLoaderTest {
     @Mock
     ExperimentDesign experimentDesign;
     @Spy
-    DataFileHub dataFileHub = MockDataFileHub.get();
+    MockDataFileHub dataFileHub = MockDataFileHub.get();
 
 
     BaselineExperimentsCacheLoader subject;
 
     @Before
     public void setUp(){
+        Set<String> assayGroupIds =  ImmutableSet.of("assay group id 1");
+        dataFileHub.addTemporaryFile(MessageFormat.format("/magetab/{0}/{0}.tsv", experimentAccession),assayGroupIds);
+
         subject = new Loader(experimentalFactorsFactory,experimentType, configurationTrader, speciesFactory, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
-        when(assayGroups.getAssayGroupIds()).thenReturn(ImmutableSet.of("assay group id 1"));
+        when(assayGroups.getAssayGroupIds()).thenReturn(assayGroupIds);
         when(speciesFactory.create(dto,baselineConfiguration)).thenReturn(new Species("homo_sapiens","homo_sapiens","kingdom",
                 "ensembl_db"));
 
@@ -94,12 +100,12 @@ public class BaselineExperimentCacheLoaderTest {
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean());
         verify(speciesFactory).create(dto,baselineConfiguration);
         if(!baselineConfiguration.orderCurated()){
-            verify(dataFileHub).getExperimentFiles(experimentAccession);
+            verify(dataFileHub, atLeastOnce()).getExperimentFiles(experimentAccession);
         }
     }
 
     private void noMoreInteractionsWithCollaborators() {
-        verifyNoMoreInteractions(experimentalFactorsFactory, dataFileHub, configurationTrader,
+        verifyNoMoreInteractions(experimentalFactorsFactory, configurationTrader,
                 speciesFactory);
     }
 

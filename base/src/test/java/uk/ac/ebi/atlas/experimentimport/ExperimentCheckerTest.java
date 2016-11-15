@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
@@ -14,6 +15,8 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import java.io.File;
+import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.Properties;
 
 import static org.mockito.Matchers.anyString;
@@ -41,12 +44,22 @@ public class ExperimentCheckerTest {
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
-    DataFileHub dataFileHub = MockDataFileHub.get();
+    @Spy
+    MockDataFileHub dataFileHub = MockDataFileHub.get();
 
     private ExperimentChecker subject;
 
     @Before
     public void setUp() throws Exception {
+        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.tsv", EXPERIMENT_ACCESSION)
+                , Collections.<String[]>emptyList());
+        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", EXPERIMENT_ACCESSION)
+                , Collections.<String[]>emptyList());
+        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}-analysis-methods.tsv", EXPERIMENT_ACCESSION)
+                , Collections.<String[]>emptyList());
+        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}-raw-counts.tsv", EXPERIMENT_ACCESSION)
+                , Collections.<String[]>emptyList());
+
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet("ARRAYDESIGN")));
@@ -76,20 +89,15 @@ public class ExperimentCheckerTest {
         //when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkBaselineFiles(EXPERIMENT_ACCESSION);
-        verify(configurationPropertiesMock, times(2)).getProperty(anyString());
+        verify(configurationPropertiesMock).getProperty(anyString());
         tempFile.delete();
+        verify(dataFileHub).getExperimentFiles(EXPERIMENT_ACCESSION);
     }
 
     @Test
     public void testCheckDifferential() throws Exception {
-        File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
-        String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
-        //when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
-        //when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkDifferentialFiles(EXPERIMENT_ACCESSION);
-        verify(configurationPropertiesMock, times(2)).getProperty(anyString());
-        tempFile.delete();
+        verify(dataFileHub).getDifferentialExperimentFiles(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -124,7 +132,8 @@ public class ExperimentCheckerTest {
        // when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(configurationPropertiesMock, times(3)).getProperty(anyString());
+        verify(configurationPropertiesMock, times(2)).getProperty(anyString());
+        verify(dataFileHub).getExperimentFiles(EXPERIMENT_ACCESSION);
         tempFile.delete();
     }
 
@@ -137,8 +146,9 @@ public class ExperimentCheckerTest {
         //when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
-        verify(configurationPropertiesMock, times(3)).getProperty(anyString());
+        verify(configurationPropertiesMock, times(1)).getProperty(anyString());
         tempFile.delete();
+        verify(dataFileHub).getDifferentialExperimentFiles(EXPERIMENT_ACCESSION);
     }
 
     @Test
