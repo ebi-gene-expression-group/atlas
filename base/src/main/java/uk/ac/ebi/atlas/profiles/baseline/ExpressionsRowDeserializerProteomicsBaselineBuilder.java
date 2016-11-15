@@ -31,7 +31,7 @@ public class ExpressionsRowDeserializerProteomicsBaselineBuilder extends Express
 
     @Override
     public ExpressionsRowDeserializerProteomicsBaselineBuilder withHeaders(String... tsvFileHeaders) {
-        this.indicesOfAssayGroups = StringArrayUtil.indicesOf(tsvFileHeaders, "withinSampleAbundance");
+        this.indicesOfAssayGroups = StringArrayUtil.indicesOf(tsvFileHeaders, "WithInSampleAbundance");
         return this;
     }
 
