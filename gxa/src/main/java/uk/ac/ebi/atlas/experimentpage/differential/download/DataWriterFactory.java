@@ -1,14 +1,15 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.PrintWriter;
@@ -37,29 +38,28 @@ public class DataWriterFactory {
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    private ExpressionsWriter getWriter(DifferentialExperiment experiment, PrintWriter responseWriter,AtlasResource<CSVReader> r){
-        final AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
-        headerBuilder.setExperiment(experiment);
-
-        return new ExpressionsWriterReadingFromAtlasResource(r, headerBuilder, new CSVWriter(responseWriter, '\t',
-                NO_QUOTE_CHARACTER));
-    }
-
     public ExpressionsWriter getRnaSeqAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
-        return getWriter(experiment, responseWriter, dataFileHub
-                .getDifferentialExperimentFiles(experiment.getAccession()).analytics);
+        final AnalyticsDataHeaderBuilder analyticsDataHeaderBuilder = new AnalyticsDataHeaderBuilder(experiment);
+        return new ExpressionsWriterReadingFromAtlasResource(dataFileHub.getDifferentialExperimentFiles(experiment
+                .getAccession()).analytics, new Function<String[], String[]>() {
+            @Nullable
+            @Override
+            public String[] apply(@Nullable String[] strings) {
+                return analyticsDataHeaderBuilder.buildHeader(strings);
+            }
+        }, new CSVWriter(responseWriter, '\t'));
+
     }
 
     public ExpressionsWriter getRnaSeqRawDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
-        return getWriter(experiment, responseWriter, dataFileHub
-                .getDifferentialExperimentFiles(experiment.getAccession()).rawCounts);
+        return new ExpressionsWriterReadingFromAtlasResource(dataFileHub.getDifferentialExperimentFiles(experiment
+                .getAccession()).rawCounts, Functions.<String[]>identity(), new CSVWriter(responseWriter, '\t'));
     }
 
 
     public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
 
-        final MicroarrayDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder();
-        headerBuilder.setExperiment(experiment);
+        final MicroarrayDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder(experiment);
 
         ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(csvReaderFactory);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentAnalyticsFileUrlTemplate);

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Function;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.io.IOException;
@@ -15,13 +16,14 @@ class ExpressionsWriterReadingFromAtlasResource implements ExpressionsWriter {
 
     private CSVWriter csvWriter;
 
+    private final Function<String[], String[]>
+            whatToDoWithTheHeaders;
 
-    private AnalyticsDataHeaderBuilder headerBuilder;
-
-    public ExpressionsWriterReadingFromAtlasResource(AtlasResource<CSVReader> reader, AnalyticsDataHeaderBuilder
-            headerBuilder,CSVWriter csvWriter) {
+    public ExpressionsWriterReadingFromAtlasResource(AtlasResource<CSVReader> reader,
+                                                     Function<String[], String[]>
+                                                             whatToDoWithTheHeaders, CSVWriter csvWriter) {
         this.reader = reader;
-        this.headerBuilder = headerBuilder;
+        this.whatToDoWithTheHeaders = whatToDoWithTheHeaders;
         this.csvWriter = csvWriter;
     }
 
@@ -31,7 +33,7 @@ class ExpressionsWriterReadingFromAtlasResource implements ExpressionsWriter {
         long lineCount = 0;
 
         try (CSVReader csvReader = reader.get()) {
-            String[] headers = buildHeader(csvReader.readNext());
+            String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
 
             csvWriter.writeNext(headers);
 
@@ -47,14 +49,6 @@ class ExpressionsWriterReadingFromAtlasResource implements ExpressionsWriter {
         csvWriter.flush();
 
         return lineCount;
-    }
-
-    String[] buildHeader(String[] headers) {
-        //write header
-        if (headerBuilder != null) {
-            headers = headerBuilder.buildHeader(headers);
-        }
-        return headers;
     }
 
     @Override

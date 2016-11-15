@@ -10,12 +10,15 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Named
 class AnalyticsDataHeaderBuilder {
-    private DifferentialExperiment experiment;
+    private final DifferentialExperiment experiment;
+
+    public AnalyticsDataHeaderBuilder(DifferentialExperiment experiment){
+        checkNotNull(experiment, "Experiment should be not null!");
+        this.experiment = experiment;
+    }
 
     public String[] buildHeader(String[] header) {
-        checkNotNull(experiment, "Experiment should be not null!");
 
         List<String> result = new ArrayList<>();
         for (int i = 0; i < getFixedColumnNumber(); i++) {
@@ -33,10 +36,6 @@ class AnalyticsDataHeaderBuilder {
         String contrastId = StringUtils.substringBefore(columnHeader, ".");
         String displayName = experiment.getContrast(contrastId).getDisplayName();
         return StringUtils.replace(columnHeader, contrastId, displayName);
-    }
-
-    public void setExperiment(DifferentialExperiment experiment) {
-        this.experiment = experiment;
     }
 
     protected int getFixedColumnNumber() {

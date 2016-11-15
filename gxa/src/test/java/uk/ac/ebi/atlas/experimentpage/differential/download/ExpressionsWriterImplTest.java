@@ -42,8 +42,6 @@ public class ExpressionsWriterImplTest {
                 .thenReturn(line2)
                 .thenReturn(null);
 
-        AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
-
         subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
         subject.setHeaderBuilder(null);

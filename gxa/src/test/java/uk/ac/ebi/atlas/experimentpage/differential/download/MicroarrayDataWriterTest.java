@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -39,8 +40,6 @@ public class MicroarrayDataWriterTest {
         when(csvReaderMock.readNext()).thenReturn(header)
                 .thenReturn(line)
                 .thenReturn(null);
-
-        AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
 
         subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
