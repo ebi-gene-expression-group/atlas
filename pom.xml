@@ -100,6 +100,27 @@
         </plugins>
     </build>
 
+    <repositories>
+        <!-- Oracle OJDBC6 11.2.0.3 and UCP 11.2.0.3 -->
+        <repository>
+            <id>maven.oracle.com</id>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>https://maven.oracle.com</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven.oracle.com</id>
+            <url>https://maven.oracle.com</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <!-- Guava -->
         <dependency>
