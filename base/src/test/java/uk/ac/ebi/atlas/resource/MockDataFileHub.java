@@ -26,7 +26,7 @@ public class MockDataFileHub extends DataFileHub{
                 FluentIterable.from(lines).transform(new Function<String[], String>() {
                     @Nullable
                     @Override
-                    public String apply(@Nullable String[] strings) {
+                    public String apply(String[] strings) {
                         return Joiner.on('\t').join(strings);
                     }
                 }).toList());

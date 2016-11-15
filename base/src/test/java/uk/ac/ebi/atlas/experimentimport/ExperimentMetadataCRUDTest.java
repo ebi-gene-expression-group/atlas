@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentimport;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -6,7 +5,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +21,6 @@ import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
@@ -44,7 +41,6 @@ public class ExperimentMetadataCRUDTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String EXPERIMENT_ASSAY = "EXPERIMENT_ASSAY";
-    private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
 
     private static final String EFO_0000761 = "EFO_0000761";
     private static final String EFO_0000001 = "EFO_0000001";
@@ -62,9 +58,6 @@ public class ExperimentMetadataCRUDTest {
 
     @Mock
     private ArrayDesignDAO arrayDesignDAOMock;
-
-    @Mock
-    private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -103,7 +96,7 @@ public class ExperimentMetadataCRUDTest {
     private ExperimentDTO experimentDTOMock;
 
     @Spy
-    DataFileHub dataFileHub = MockDataFileHub.get();
+    private DataFileHub dataFileHub = MockDataFileHub.get();
 
     @Captor
     private ArgumentCaptor<String> experimentAccessionCaptor;
@@ -111,12 +104,11 @@ public class ExperimentMetadataCRUDTest {
     private ImmutableSetMultimap<String,String> allOntologyTermIdsByAssayAccession = ImmutableSetMultimap.of
             (EXPERIMENT_ASSAY,EFO_0000761);
 
-    ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
+    private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
 
     @Before
     public void setUp() throws Exception {
 
-        when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
         given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
@@ -140,11 +132,6 @@ public class ExperimentMetadataCRUDTest {
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(allOntologyTermIdsByAssayAccession);
         when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
-        DataFileHub.ExperimentFiles experimentFiles = Mockito.mock(DataFileHub.ExperimentFiles.class);
-
-
-        when(dataFileHub.getExperimentFiles(anyString())).thenReturn(experimentFiles);
-
         subject = new ExperimentMetadataCRUD(dataFileHub, experimentDAOMock, experimentTraderMock,
                 condensedSdrfParserMock,
                 efoParentsLookupServiceMock);
@@ -154,7 +141,6 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void generateExperimentDesignShouldUseTheFiles() throws Exception {
-
         subject.writeExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
         verify(dataFileHub).getExperimentFiles(EXPERIMENT_ACCESSION);
     }
