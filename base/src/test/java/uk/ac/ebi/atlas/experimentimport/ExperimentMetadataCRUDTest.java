@@ -12,12 +12,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -34,13 +34,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.*;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentMetadataCRUDTest {
@@ -68,9 +65,6 @@ public class ExperimentMetadataCRUDTest {
 
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
-
-    @Mock
-    private ExperimentDesignFileService experimentDesignFileServiceMock;
 
     @Mock
     private ExperimentDAO experimentDAOMock;

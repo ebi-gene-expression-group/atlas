@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.io.Files;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,12 @@ public class ExperimentOpLogWriterTest {
 
     @Before
     public void setUp() {
+        File dir = Files.createTempDir();
+        new File(dir.getAbsolutePath()+"/admin").mkdir();
 
-        subject = new ExperimentOpLogWriter(MockDataFileHub.get());
+        dir.deleteOnExit();
+
+        subject = new ExperimentOpLogWriter(new DataFileHub(dir.getPath()));
 
     }
 

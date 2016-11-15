@@ -46,9 +46,6 @@ public class ExperimentCRUDRollbackIT {
     private ExperimentDAO experimentDAO;
 
     @Inject
-    private ExperimentDesignFileService experimentDesignFileService;
-
-    @Inject
     private ExperimentTrader experimentTrader;
 
     @Inject
@@ -59,9 +56,6 @@ public class ExperimentCRUDRollbackIT {
 
     @Inject
     private EFOLookupService efoParentsLookupService;
-
-    @Inject
-    private AnalyticsIndexerManager analyticsIndexerManager;
 
     DataFileHub dataFileHub = MockDataFileHub.get();
 
