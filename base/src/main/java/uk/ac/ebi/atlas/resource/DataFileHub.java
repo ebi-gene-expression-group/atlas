@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
@@ -18,6 +19,7 @@ public class DataFileHub {
 
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
+        Validate.notNull(dataFilesLocation);
         this.dataFilesLocation = dataFilesLocation;
     }
 
