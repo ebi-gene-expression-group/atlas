@@ -68,13 +68,4 @@ public class SemanticQueryTest {
         assertThat(subject.size(), is(2));
     }
 
-    @Test
-    public void turnsIntoRightBitOfSolrQuery() {
-        SemanticQuery s1 = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
-        assertThat(s1.asAnalyticsIndexQueryClause(), equalTo("\"zinc finger\" OR \"BRCA2B\""));
-
-        SemanticQuery s2 = SemanticQuery.fromJson("[{\"value\":\"BRCA2\",\"category\":\"symbol\"}]");
-        assertThat(s2.asAnalyticsIndexQueryClause(), equalTo("\"symbol:{BRCA2}\""));
-
-    }
 }

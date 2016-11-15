@@ -35,6 +35,9 @@ import static org.mockito.Mockito.when;
 public class BaselineProfilesWriterServiceTest {
 
     @Mock
+    ObjectInputStream<BaselineProfile> objectInputStreamMock;
+
+    @Mock
     ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
     @Mock
@@ -46,7 +49,7 @@ public class BaselineProfilesWriterServiceTest {
     @Mock
     CoexpressedGenesService coexpressedGenesService;
 
-    BaselineProfilesWriterService subject;
+    private BaselineProfilesWriterService subject;
 
     @Mock
     private AssayGroups assayGroupsMock;
@@ -67,7 +70,7 @@ public class BaselineProfilesWriterServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        subject = new BaselineProfilesWriterService(inputStreamFactory,profilesWriter,solrQueryService,coexpressedGenesService);
+        subject = new BaselineProfilesWriterService(inputStreamFactory, profilesWriter, solrQueryService, coexpressedGenesService);
 
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
@@ -80,7 +83,7 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", "some species", "ensembldb", "animals"));
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
-        when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(t);
+        when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);
     }
 
     @Test
@@ -107,13 +110,11 @@ public class BaselineProfilesWriterServiceTest {
 
         Set<String> range = new HashSet<>();
         for(int i =0 ; i< coexpressions.get(geneId) ; i++ ){
-            range.add("coexpresion_"+i);
+            range.add("coexpression_"+i);
         }
         extendedResponse.addGeneIds(geneName+":coexpressions", range);
 
-
         when(solrQueryService.fetchResponse(eq(geneQuery), anyString())).thenReturn(response);
-
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
                 coexpressions)).thenReturn(extendedResponse);
@@ -130,7 +131,7 @@ public class BaselineProfilesWriterServiceTest {
     }
 
     //TODO make this test reasonable and useful again
-    public void theFlowOfTheDataIsRightForCoexpressions(Map<String, Integer> coexpressions) throws Exception {
+    private void theFlowOfTheDataIsRightForCoexpressions(Map<String, Integer> coexpressions) throws Exception {
         Writer writer = Mockito.mock(Writer.class);
 
         GeneQueryResponse response = new GeneQueryResponse();
@@ -147,28 +148,23 @@ public class BaselineProfilesWriterServiceTest {
             extendedResponse.addGeneIds(geneName + ":coexpressions", range);
         }
 
+        when(solrQueryService.fetchResponse(eq(geneQuery), anyString())).thenReturn(response);
 
-        when(solrQueryService.fetchResponse(eq(geneQuery), anyString()))
-                .thenReturn(response);
+        when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
+                baselineExperimentMock, response, coexpressions)).thenReturn(extendedResponse);
 
-
-        when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
-                coexpressions)).thenReturn(extendedResponse);
-
-        ObjectInputStream<BaselineProfile> inputStream = Mockito.mock(ObjectInputStream.class);
+        ObjectInputStream<BaselineProfile> inputStream = objectInputStreamMock;
         when(inputStreamFactory.create(any(BaselineProfileStreamOptions.class))).thenReturn(inputStream);
 
-        GeneQueryResponse responseFromSolr = Mockito.mock(GeneQueryResponse.class);
-        when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString()))
-                .thenReturn(responseFromSolr);
+        when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString())).thenReturn(response);
 
-        subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions);
+        subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
 
         //query solr, create a stream, pass the results on
         //TODO Mockito.verify(solrQueryService)
         Mockito.verify(inputStreamFactory).create(any(BaselineProfileStreamOptions.class));
-        Mockito.verify(profilesWriter).write(eq(writer), eq(inputStream), any(BaselineRequestContext.class), anySet()
-                , any(GeneQueryResponse.class));
+        Mockito.verify(profilesWriter).write(eq(writer), eq(inputStream), any(BaselineRequestContext.class),
+                anySetOf(Factor.class), any(GeneQueryResponse.class));
         Mockito.verifyNoMoreInteractions(/*solrQueryService,*/ inputStreamFactory, profilesWriter);
         Mockito.reset(solrQueryService, inputStreamFactory, profilesWriter);
     }
@@ -180,8 +176,8 @@ public class BaselineProfilesWriterServiceTest {
 
         long expected = 123L;
 
-        when(profilesWriter.write(eq(writer), any(ObjectInputStream.class), any(BaselineRequestContext.class), anySet()
-                , any(GeneQueryResponse.class))).thenReturn(expected);
+        when(profilesWriter.write(eq(writer), any(objectInputStreamMock.getClass()), any(BaselineRequestContext.class),
+                anySetOf(Factor.class), any(GeneQueryResponse.class))).thenReturn(expected);
 
         long returnValue = subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions );
 

@@ -18,7 +18,7 @@ import java.util.Set;
 I'm announcing a competition for a new name for this class.
 It's not a writer: it connects the input and the writer through a pipeline.
 */
-public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions<K>> {
+public class ProfilesWriter<P extends Profile<K, ?>, K, O extends ProfileStreamOptions<K>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesWriter.class);
 

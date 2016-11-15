@@ -1,0 +1,36 @@
+<settings>
+  <proxies>
+    <proxy>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>www-proxy.ebi.ac.uk</host>
+      <port>3128</port>
+      <nonProxyHosts>ebi.ac.uk</nonProxyHosts>
+    </proxy>
+  </proxies>
+  <servers>
+    <server>
+      <id>maven.oracle.com </id>
+      <username>amunoz@ebi.ac.uk</username>
+      <password>{1QW6QMC5cEMHnYcGCIobb72+i3Ej56wio1KP7vnqYwavaGiJefpZwuO0QJPx06HP}</password>
+      <configuration>
+        <basicAuthScope>
+          <host>ANY </host>
+          <port>ANY </port>
+          <realm>OAM 11g </realm>
+        </basicAuthScope>
+        <httpConfiguration>
+          <all>
+            <params>
+              <property>
+                <name>http.protocol.allow-circular-redirects </name>
+                <value>%b,true </value>
+              </property>
+            </params>
+          </all>
+        </httpConfiguration>
+      </configuration>
+    </server>
+  </servers>
+</settings>
+

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqRequestContextBuilderTest {
 
-    private static final String SPECIES = "species";
+    private static final Species SPECIES = new Species("homo sapiens", "homo sapiens", "homo sapiens", "animals");
     
     @Mock
     DifferentialExperiment experimentMock;
@@ -28,7 +29,7 @@ public class RnaSeqRequestContextBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        when(experimentMock.getSpeciesString()).thenReturn(SPECIES);
+        when(experimentMock.getSpecies()).thenReturn(SPECIES);
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }
@@ -37,6 +38,6 @@ public class RnaSeqRequestContextBuilderTest {
     public void testBuild() throws Exception {
         RnaSeqRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context, is(not(nullValue())));
-        assertThat(context.getFilteredBySpecies(), is(SPECIES.toLowerCase()));
+        assertThat(context.getFilteredBySpecies(), is("homo sapiens"));
     }
 }

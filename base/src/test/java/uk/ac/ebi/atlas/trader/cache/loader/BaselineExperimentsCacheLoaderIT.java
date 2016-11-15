@@ -27,7 +27,7 @@ public class BaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load("E-MTAB-513");
         //then
-        String species = experiment.getSpeciesString();
+        String species = experiment.getSpecies().originalName;
         assertThat(species, is("Homo sapiens"));
     }
 

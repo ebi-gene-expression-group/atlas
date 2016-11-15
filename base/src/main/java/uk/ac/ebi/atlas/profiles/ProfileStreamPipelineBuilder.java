@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import java.util.Set;
 
-public class ProfileStreamPipelineBuilder<P extends Profile, O extends ProfileStreamOptions<T>, T> {
+public class ProfileStreamPipelineBuilder<P extends Profile<T, ?>, O extends ProfileStreamOptions<T>, T> {
 
     private ProfileStreamFilters<P,T> profileStreamFilters;
 

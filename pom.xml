@@ -125,6 +125,27 @@
         </plugins>
     </build>
 
+    <repositories>
+        <!-- Oracle OJDBC6 11.2.0.3 and UCP 11.2.0.3 -->
+        <repository>
+            <id>maven.oracle.com</id>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>https://maven.oracle.com</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven.oracle.com</id>
+            <url>https://maven.oracle.com</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <!-- Guava -->
         <dependency>
@@ -387,17 +408,6 @@
         <!-- Development profiles -->
         <profile>
             <id>dev</id>
-            <!--<build>-->
-            <!--<resources>-->
-            <!--<resource>-->
-            <!--<directory>src/main/resources</directory>-->
-            <!--<includes>-->
-            <!--<include>oracleContext.xml</include>-->
-            <!--<include>solrContext.xml</include>-->
-            <!--</includes>-->
-            <!--</resource>-->
-            <!--</resources>-->
-            <!--</build>-->
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
@@ -412,17 +422,6 @@
 
         <profile>
             <id>dev.local.vm</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>oracleContext.xml</include>
-                            <include>solrContext.xml</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
@@ -450,6 +449,16 @@
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>oracleContext.xml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
             <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>

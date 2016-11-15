@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -26,8 +25,8 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfilesTsvInputStreamTest {
 
-    public static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
-    public static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
+    private static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
+    private static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
     private static final BaselineProfile EMPTY_BASELINE_PROFILE = new BaselineProfile("gene_id", "gene_name");
 
     @Mock
@@ -158,6 +157,5 @@ public class BaselineProfilesTsvInputStreamTest {
         subject.close();
         //then expect exception to be thrown
     }
-
 
 }

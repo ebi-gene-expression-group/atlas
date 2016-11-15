@@ -33,7 +33,7 @@ public class GeneSetPropertyService {
     }
 
     public static final List<BioentityPropertyName> all =
-            ImmutableList.of(REACTOME, GO,PO,INTERPRO);
+            ImmutableList.of(REACTOME, GO, PO, INTERPRO);
 
     public Map<BioentityPropertyName, Set<String>> propertyValuesByType(String identifier) {
         identifier = identifier.toUpperCase();
@@ -50,7 +50,7 @@ public class GeneSetPropertyService {
         }
     }
 
-    Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,String identifier,String value){
+    private Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,String identifier,String value){
         return ImmutableMap.of(which, (Set<String>)ImmutableSet.of(identifier), DESCRIPTION,ImmutableSet.of(value));
     }
 

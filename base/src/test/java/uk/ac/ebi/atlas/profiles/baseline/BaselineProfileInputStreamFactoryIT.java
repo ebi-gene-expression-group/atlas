@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -28,12 +29,20 @@ public class BaselineProfileInputStreamFactoryIT {
     private final String E_MTAB_513 = "E-MTAB-513";
     private final String DEFAULT_QUERY_FACTOR = "ORGANISM_PART";
 
+    @Inject
+    private ExpressionSerializerService expressionSerializerService;
+
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     private String baselineExperimentSerializedDataFileUrlTemplate;
 
     @Inject
     @Qualifier("baselineProfileInputStreamFactory")
-     BaselineProfileInputStreamFactory subject;
+    private BaselineProfileInputStreamFactory subject;
+
+    @Before
+    public void setUp() {
+        expressionSerializerService.kryoSerializeExpressionData(E_MTAB_513);
+    }
 
     @Test
     public void experimentWithoutSerializedFileIsReadFromTsvFile() {

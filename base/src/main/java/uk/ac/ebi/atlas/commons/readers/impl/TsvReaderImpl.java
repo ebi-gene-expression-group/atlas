@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.commons.readers.impl;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.common.base.Predicate;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,7 @@ public class TsvReaderImpl implements TsvReader {
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
     }
 

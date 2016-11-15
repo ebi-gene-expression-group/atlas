@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
@@ -8,12 +10,12 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class IsDifferentialProfileSpecific<P extends DifferentialProfile> implements Predicate<P> {
+public class IsDifferentialProfileSpecific<P extends DifferentialProfile<? extends DifferentialExpression>> implements Predicate<P> {
 
-    private final Set<?> selectedQueryContrasts;
-    private final Sets.SetView<?> nonSelectedQueryContrasts;
+    private final Set<Contrast> selectedQueryContrasts;
+    private final Sets.SetView<Contrast> nonSelectedQueryContrasts;
 
-    public IsDifferentialProfileSpecific(Set<?> selectedQueryContrasts, Set<?> allQueryFactors) {
+    public IsDifferentialProfileSpecific(Set<Contrast> selectedQueryContrasts, Set<Contrast> allQueryFactors) {
         checkArgument(!selectedQueryContrasts.isEmpty(),"selectedQueryContrasts is empty");
         checkArgument(!allQueryFactors.isEmpty(), "allQueryFactors is empty");
 

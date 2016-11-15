@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Set;
 
-public abstract class ProfileStreamFilters<P extends Profile,K> {
+public abstract class ProfileStreamFilters<P extends Profile<K,?>, K> {
 
     public abstract Iterable<P> averageIntoGeneSets(Iterable<P> profiles,
                                                   ImmutableSetMultimap<String, String> geneSetIdsToGeneIds);

@@ -26,13 +26,6 @@ public abstract class SemanticQueryTerm {
                 : String.format("property_name:\"%s\" AND property_value_search:\"%s\"", category(), value().replace(":", "\\:").replace("[", "\\[").replace("]", "\\]"));
     }
 
-    @Deprecated
-    public String asAnalyticsIndexQueryLiteral(){
-        return hasNoCategory()
-                ? String.format("\"%s\"", value())
-                : String.format("\"%s:{%s}\"", category(), value());
-    }
-
     public boolean hasNoCategory() {
         return isBlank(category());
     }
@@ -47,10 +40,5 @@ public abstract class SemanticQueryTerm {
         } else {
             return (String.format("%s (%s)", value(), category()));
         }
-    }
-
-    @Override
-    public String toString() {
-        return asAnalyticsIndexQueryLiteral();
     }
 }

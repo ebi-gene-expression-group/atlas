@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
 import javax.inject.Inject;
@@ -28,10 +28,16 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class BaselineExpressionsKryoReaderIT {
 
-    private static final String E_MTAB_1733 = "E-MTAB-513";
+    private static final String E_MTAB_513 = "E-MTAB-513";
     private static final int GENE_ID_INDEX = 0;
     private static final int GENE_NAME_INDEX = 1;
     private static final int FIRST_LEVEL_INDEX = 2;
+
+    @Inject
+    private ExpressionSerializerService expressionSerializerService;
+
+    @Value("#{configuration['experiment.magetab.path.template']}")
+    private String baselineExperimentDataFileUrlTemplate;
 
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     private String baselineExperimentSerializedDataFileUrlTemplate;
@@ -45,14 +51,15 @@ public class BaselineExpressionsKryoReaderIT {
     private BaselineExpressionsKryoReader subject;
 
     @Before
-    public void initializeKryo() {
-        String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, E_MTAB_1733);
+    public void setUp() {
+        expressionSerializerService.kryoSerializeExpressionData(E_MTAB_513);
+        String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, E_MTAB_513);
         subject = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
     }
 
     @Test
     public void serializedFilesAreEqualToTsvFiles() throws IOException {
-        CSVReader csvReader = dataFileHub.getExperimentFiles(E_MTAB_1733).main.get();
+        CSVReader csvReader = dataFileHub.getExperimentFiles(E_MTAB_513).main.get();
 
         // Read header
         String[] tsvLine = csvReader.readNext();

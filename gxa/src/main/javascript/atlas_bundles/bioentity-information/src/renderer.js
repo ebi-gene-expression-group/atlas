@@ -1,16 +1,9 @@
-"use strict";
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-//*------------------------------------------------------------------*
-
-var BioentityInformation = require('./BioentityInformation.jsx');
-
-//*------------------------------------------------------------------*
+const BioentityInformation = require('./BioentityInformation.jsx');
 
 exports.render = function(options) {
-
     ReactDOM.render(
         React.createElement(
             BioentityInformation,
