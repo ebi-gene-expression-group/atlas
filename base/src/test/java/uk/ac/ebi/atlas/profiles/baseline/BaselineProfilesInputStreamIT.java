@@ -6,10 +6,12 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Set;
 
@@ -23,6 +25,9 @@ public class BaselineProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
+    @Inject
+    private ExpressionSerializerService expressionSerializerService;
+
     @Resource(name = "baselineProfileInputStreamFactory")
     private BaselineProfileInputStreamFactory inputStreamFactory;
 
@@ -32,6 +37,7 @@ public class BaselineProfilesInputStreamIT {
 
     @Before
     public void setUp() throws Exception {
+        expressionSerializerService.kryoSerializeExpressionData(EXPERIMENT_ACCESSION);
         double defaultCutoff = 0.5;
         setUp(defaultCutoff);
     }

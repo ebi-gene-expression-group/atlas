@@ -2,11 +2,13 @@ package uk.ac.ebi.atlas.profiles;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
@@ -27,10 +29,13 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
 public class BaselineExpressionsKryoReaderIT {
 
-    private static final String E_MTAB_1733 = "E-MTAB-513";
+    private static final String E_MTAB_513 = "E-MTAB-513";
     private static final int GENE_ID_INDEX = 0;
     private static final int GENE_NAME_INDEX = 1;
     private static final int FIRST_LEVEL_INDEX = 2;
+
+    @Inject
+    private ExpressionSerializerService expressionSerializerService;
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineExperimentDataFileUrlTemplate;
@@ -47,14 +52,15 @@ public class BaselineExpressionsKryoReaderIT {
     private BaselineExpressionsKryoReader subject;
 
     @Before
-    public void initializeKryo() {
-        String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, E_MTAB_1733);
+    public void setUp() {
+        expressionSerializerService.kryoSerializeExpressionData(E_MTAB_513);
+        String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, E_MTAB_513);
         subject = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
     }
 
     @Test
     public void serializedFilesAreEqualToTsvFiles() throws IOException {
-        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, E_MTAB_1733);
+        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, E_MTAB_513);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
         // Read header
