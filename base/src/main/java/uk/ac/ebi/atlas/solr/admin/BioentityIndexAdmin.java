@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Named
 @Scope("prototype")
@@ -25,12 +26,15 @@ public class BioentityIndexAdmin {
     private String bioentityPropertiesDirectory;
     private ExecutorService executorService;
 
-    // Injecting the ExecutorService allows us to inject a sameThreadExecutor in our unit tests,
-    // so that verifications can be executed on the runnable task being started
     @Inject
     BioentityIndexAdmin(BioentityIndexMonitor bioentityIndexMonitor,
-                        @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory,
-                        @Named("singleThreadExecutorService") ExecutorService executorService) {
+                        @Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectory) {
+        this(bioentityIndexMonitor,bioentityPropertiesDirectory, Executors.newSingleThreadExecutor() );
+    }
+
+    BioentityIndexAdmin(BioentityIndexMonitor bioentityIndexMonitor,
+                        String bioentityPropertiesDirectory,
+                        ExecutorService executorService) {
         this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesDirectory = bioentityPropertiesDirectory;
         this.executorService = executorService;

@@ -26,9 +26,6 @@
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>
 
-    <!-- uk.ac.ebi.atlas.solr.admin.BioentityIndexAdmin -->
-    <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype" factory-method="newSingleThreadExecutor"/>
-
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>
             <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
