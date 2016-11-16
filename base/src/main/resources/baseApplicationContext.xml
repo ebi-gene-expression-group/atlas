@@ -4,11 +4,8 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.2.xsd
            http://www.springframework.org/schema/util
@@ -22,6 +19,9 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
+    <import resource="baseOracleContext.xml" />
+
+
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>
@@ -32,19 +32,6 @@
                   p:readTimeout="120000"
                   p:connectTimeout="120000" />
         </constructor-arg>
-    </bean>
-
-    <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSourceOracle"/>
-    </bean>
-    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSourceOracle"/>
-    </bean>
-
-    <!-- enables transactions where @Transaction annotations encountered -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSourceOracle"/>
     </bean>
 
 </beans>

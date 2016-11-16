@@ -18,8 +18,9 @@
 
     <!-- enables annotation-based dependency injection -->
     <context:annotation-config/>
-
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
+
+    <import resource="classpath*:baseApplicationContext.xml" />
 
 </beans>
