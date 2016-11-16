@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
-import uk.ac.ebi.atlas.model.SpeciesTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
@@ -25,11 +26,13 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class BaselineAnalyticsSearchServiceIT {
 
     public static final String ORGANISM_PART = "ORGANISM_PART";
+    public static final Species HUMAN = new Species("Homo sapiens", "homo sapiens", "ensembldb","animals");
     private static final Set<Factor> organismPartFactors = new HashSet<>();
     static {
         organismPartFactors.add(new Factor(ORGANISM_PART, "adipose tissue"));
@@ -104,7 +107,7 @@ public class BaselineAnalyticsSearchServiceIT {
     public void singleSpeciesGeneAccessionTissues() {
         //"ENSG00000006062" seems to be a famous enough gene
         BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("ENSG00000006062"),
-                SemanticQuery.create(), SpeciesTest.HUMAN, "ORGANISM_PART");
+                SemanticQuery.create(), HUMAN, "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
@@ -122,7 +125,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
         // test organism part is the default
         BaselineExperimentSearchResult result2 = subject.findExpressions(SemanticQuery.create("ENSG00000006062"),
-                SemanticQuery.create(), SpeciesTest.HUMAN, "");
+                SemanticQuery.create(), HUMAN, "");
 
         assertEquals(result.getExperimentProfiles(), result2.getExperimentProfiles());
 
@@ -130,7 +133,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void geneQueryCellLine() {
-        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("protein_coding"), SemanticQuery.create(),  SpeciesTest.HUMAN, CELL_LINE);
+        BaselineExperimentSearchResult result = subject.findExpressions(SemanticQuery.create("protein_coding"), SemanticQuery.create(),  HUMAN, CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 

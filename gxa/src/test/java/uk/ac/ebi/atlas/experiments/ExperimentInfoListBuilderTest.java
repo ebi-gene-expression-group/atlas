@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experiments.ExperimentInfoListBuilder;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -21,7 +20,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.PublicExperimentTypesCache;
@@ -56,7 +55,7 @@ public class ExperimentInfoListBuilderTest {
     private static final String DIFFERENTIAL_ACCESSION = "E-BLAH-3";
 
     @Mock
-    private ExperimentTrader experimentTraderMock;
+    private ExpressionAtlasExperimentTrader experimentTraderMock;
 
     @Mock
     private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCacheMock;

@@ -22,7 +22,7 @@ import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -32,7 +32,6 @@ import java.io.Writer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -82,7 +81,7 @@ public class RnaSeqProfilesWriterIT {
     private SolrQueryService solrQueryService;
 
     @Inject
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) {
         MockitoAnnotations.initMocks(this);

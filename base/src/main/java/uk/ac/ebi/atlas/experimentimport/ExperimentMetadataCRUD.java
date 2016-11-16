@@ -1,70 +1,49 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
-import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentConfiguration;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
+import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
+import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
+import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-// Experiment metadata is sourced from SDRF/IDF files, and stored in experiment design files, the database, and the Solr conditions Index
-@Named
-@Scope("prototype")
 public class ExperimentMetadataCRUD {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentMetadataCRUD.class);
-
-    private final DataFileHub dataFileHub;
+    //protected final DataFileHub dataFileHub;
+    private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
+    private final CondensedSdrfParser condensedSdrfParser;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
-    private final CondensedSdrfParser condensedSdrfParser;
     private ConditionsIndexTrader conditionsIndexTrader;
     private EFOLookupService efoParentsLookupService;
     private AnalyticsIndexerManager analyticsIndexerManager;
 
-    //TODO: refactor this class - it has too many collaborators
-    @Inject
-    public ExperimentMetadataCRUD(DataFileHub dataFileHub,
-            ExperimentDAO experimentDAO,
-                                  ExperimentTrader experimentTrader,
-                                  CondensedSdrfParser condensedSdrfParser,
-                                  EFOLookupService efoParentsLookupService) {
-        this.dataFileHub = dataFileHub;
-        this.experimentDAO = experimentDAO;
-        this.experimentTrader = experimentTrader;
-        this.condensedSdrfParser = condensedSdrfParser;
+        public ExperimentMetadataCRUD(CondensedSdrfParser condensedSdrfParser, EFOLookupService efoParentsLookupService,
+                                      ExperimentDesignFileWriterService experimentDesignFileWriterService, ConditionsIndexTrader conditionsIndexTrader, ExperimentDAO experimentDAO, AnalyticsIndexerManager analyticsIndexerManager, ExperimentTrader experimentTrader) {
+            this.condensedSdrfParser = condensedSdrfParser;
         this.efoParentsLookupService = efoParentsLookupService;
-    }
-
-    // The purpose of having AnalyticsIndexerManager in a setter is to allow mocking. By having the mock do nothing,
-    // tests that delete experiments or set them private have no effect on the Analytics index.
-    @Inject
-    public void setAnalyticsIndexerManager(AnalyticsIndexerManager analyticsIndexerManager) {
-        this.analyticsIndexerManager = analyticsIndexerManager;
-    }
-
-    @Inject
-    public void setConditionsIndexTrader(ConditionsIndexTrader conditionsIndexTrader) {
+        this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.conditionsIndexTrader = conditionsIndexTrader;
+        this.experimentDAO = experimentDAO;
+        this.analyticsIndexerManager = analyticsIndexerManager;
+        this.experimentTrader = experimentTrader;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -75,7 +54,7 @@ public class ExperimentMetadataCRUD {
         CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession, experimentType);
 
         ExperimentDesign experimentDesign = condensedSdrfParserOutput.getExperimentDesign();
-        writeExperimentDesignFile(accession, experimentType, experimentDesign);
+        experimentDesignFileWriterService.writeExperimentDesignFile(accession, experimentType, experimentDesign);
 
 
         UUID uuid = experimentDAO.addExperiment
@@ -106,11 +85,6 @@ public class ExperimentMetadataCRUD {
         conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, efoParentsLookupService.expandOntologyTerms(termIdsByAssayAccession));
     }
 
-    void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
-        new ExperimentDesignFileWriter(
-                dataFileHub.getExperimentFiles(accession).experimentDesignWrite.get(),
-                experimentType).write(experimentDesign);
-    }
 
     public void deleteExperiment(ExperimentDTO experimentDTO) {
         checkNotNull(experimentDTO);
@@ -152,7 +126,6 @@ public class ExperimentMetadataCRUD {
         updateExperimentDesign(experimentDTO);
     }
 
-
     void updateExperimentDesign(ExperimentDTO experimentDTO) {
         String accession = experimentDTO.getExperimentAccession();
         ExperimentType type = experimentDTO.getExperimentType();
@@ -161,7 +134,7 @@ public class ExperimentMetadataCRUD {
             experimentTrader.removeExperimentFromCache(accession);
 
             ExperimentDesign newDesign = condensedSdrfParser.parse(accession, type).getExperimentDesign();
-            writeExperimentDesignFile(accession, type, newDesign);
+            experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, newDesign);
 
             LOGGER.info("updated design for experiment {}", accession);
 

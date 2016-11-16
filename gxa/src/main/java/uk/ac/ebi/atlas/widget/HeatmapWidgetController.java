@@ -33,7 +33,6 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

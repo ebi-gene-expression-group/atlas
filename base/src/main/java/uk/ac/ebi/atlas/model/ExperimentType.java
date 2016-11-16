@@ -13,7 +13,8 @@ public enum ExperimentType {
     ,MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential")
     ,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
     ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential")
-    ,PROTEOMICS_BASELINE("proteomics_baseline");
+    ,PROTEOMICS_BASELINE("proteomics_baseline")
+    ,SINGLE_CELL_RNASEQ_MRNA_BASELINE("single_cell_rnaseq_mrna_baseline");
 
     private ExperimentType parent;
     private String description;
@@ -25,6 +26,10 @@ public enum ExperimentType {
     ExperimentType(ExperimentType parent, String description) {
         this(description);
         this.parent = parent;
+    }
+
+    public boolean isSingleCell(){
+        return equals(SINGLE_CELL_RNASEQ_MRNA_BASELINE);
     }
 
     public boolean isMicroarray() {

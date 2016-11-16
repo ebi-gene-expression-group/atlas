@@ -23,6 +23,18 @@ public class ExperimentCRUD {
     private ConfigurationTrader configurationTrader;
     private ExpressionSerializerService expressionSerializerService;
 
+    ExperimentCRUD(ExperimentChecker experimentChecker,
+     ExperimentMetadataCRUD experimentMetadataCRUD,
+     AnalyticsLoaderFactory analyticsLoaderFactory,
+     ConfigurationTrader configurationTrader,
+     ExpressionSerializerService expressionSerializerService){
+        setExperimentChecker(experimentChecker);
+        setExperimentMetadataCRUD(experimentMetadataCRUD);
+        setAnalyticsLoaderFactory(analyticsLoaderFactory);
+        setConfigurationTrader(configurationTrader);
+        setExpressionSerializerService(expressionSerializerService);
+    }
+
     // requires no-arg constructor for @Transactional proxying, hence setter injection of dependencies
     public ExperimentCRUD() {
     }

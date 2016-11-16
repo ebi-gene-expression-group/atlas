@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
 public class RnaSeqProfilesHeatMapIT {
 
     @Inject
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
     private RnaSeqDiffExperimentsCache experimentsCache;

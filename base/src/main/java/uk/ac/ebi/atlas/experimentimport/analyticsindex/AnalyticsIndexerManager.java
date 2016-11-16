@@ -1,20 +1,16 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
-import uk.ac.ebi.atlas.utils.ExperimentSorter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
+import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Observable;
@@ -25,50 +21,36 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Named
 public class AnalyticsIndexerManager extends Observable {
-
+    public static final String DEFAULT_THREADS_8 = "8";
+    public static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
+    public static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
-
-    private AnalyticsIndexerService analyticsIndexerService;
-    private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
-    private final ExperimentTrader experimentTrader;
-    private final BioentityIdentifiersReader bioentityIdentifiersReader;
-    private final BioentityPropertiesDao bioentityPropertiesDao;
-    private final ExperimentSorter experimentSorter;
-
-    protected static final String DEFAULT_THREADS_8 = "8";
-    protected static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
-    protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
-
     private static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
+    protected final AnalyticsIndexerMonitor analyticsIndexerMonitor;
+    protected final ExperimentTrader experimentTrader;
+    protected final BioentityIdentifiersReader bioentityIdentifiersReader;
+    protected final BioentityPropertiesDao bioentityPropertiesDao;
+    protected final ExperimentSorter experimentSorter;
+    protected AnalyticsIndexerService analyticsIndexerService;
 
-    @Inject
-    public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService,
-                                   AnalyticsIndexerMonitor analyticsIndexerMonitor,
-                                   ExperimentTrader experimentTrader,
-                                   BioentityIdentifiersReader bioentityIdentifiersReader,
-                                   BioentityPropertiesDao bioentityPropertiesDao,
-                                   ExperimentSorter experimentSorter) {
-        this.analyticsIndexerService = analyticsIndexerService;
-        this.analyticsIndexerMonitor = analyticsIndexerMonitor;
-        this.experimentTrader = experimentTrader;
-        this.bioentityIdentifiersReader = bioentityIdentifiersReader;
-        this.bioentityPropertiesDao = bioentityPropertiesDao;
+    public AnalyticsIndexerManager(ExperimentSorter experimentSorter, AnalyticsIndexerMonitor analyticsIndexerMonitor, BioentityIdentifiersReader bioentityIdentifiersReader, AnalyticsIndexerService analyticsIndexerService, ExperimentTrader experimentTrader, BioentityPropertiesDao bioentityPropertiesDao) {
         this.experimentSorter = experimentSorter;
+        this.analyticsIndexerMonitor = analyticsIndexerMonitor;
+        this.bioentityIdentifiersReader = bioentityIdentifiersReader;
+        this.analyticsIndexerService = analyticsIndexerService;
+        this.experimentTrader = experimentTrader;
+        this.bioentityPropertiesDao = bioentityPropertiesDao;
     }
-
 
     public int addToAnalyticsIndex(String experimentAccession) {
         return addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
                 (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
     }
 
-
     public void deleteFromAnalyticsIndex(String experimentAccession) {
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
     }
-
 
     public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
@@ -96,7 +78,6 @@ public class AnalyticsIndexerManager extends Observable {
         deleteObserver(analyticsIndexerMonitor);
     }
 
-
     public void indexPublicExperiments(ExperimentType experimentType, int threads, int batchSize, int timeout) throws
             InterruptedException {
         addObserver(analyticsIndexerMonitor);
@@ -113,7 +94,6 @@ public class AnalyticsIndexerManager extends Observable {
 
         deleteObserver(analyticsIndexerMonitor);
     }
-    //
 
     private int addToAnalyticsIndex(String experimentAccession,
                                     ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch, int batchSize) {
@@ -125,9 +105,8 @@ public class AnalyticsIndexerManager extends Observable {
         return analyticsIndexerService.index(experiment, bioentityIdToIdentifierSearch, batchSize);
     }
 
-
     private void indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, ImmutableMap<String,
-            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch, int threads,int batchSize, int timeout) {
+            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch, int threads, int batchSize, int timeout) {
 
         LOGGER.debug("Starting ExecutorService with {} threads, {} timeout", threads, timeout);
 

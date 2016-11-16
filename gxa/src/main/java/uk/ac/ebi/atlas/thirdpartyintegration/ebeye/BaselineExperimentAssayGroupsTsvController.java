@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -26,10 +26,10 @@ import java.util.Iterator;
 @Scope("request")
 public class BaselineExperimentAssayGroupsTsvController {
 
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    public BaselineExperimentAssayGroupsTsvController(ExperimentTrader experimentTrader) {
+    public BaselineExperimentAssayGroupsTsvController(ExpressionAtlasExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 

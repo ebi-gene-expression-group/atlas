@@ -10,13 +10,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
+import uk.ac.ebi.atlas.utils.ExpressionAtlasBioentityIdentifiersReader;
 
 import javax.inject.Inject;
 
@@ -34,9 +35,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class AnalyticsIndexerServiceIT {
 
     @Mock
@@ -52,7 +53,7 @@ public class AnalyticsIndexerServiceIT {
     private ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
 
     @Inject
-    private BioentityIdentifiersReader bioentityIdentifiersReader;
+    private ExpressionAtlasBioentityIdentifiersReader bioentityIdentifiersReader;
 
     @Inject
     private AnalyticsQueryClient analyticsQueryClient;

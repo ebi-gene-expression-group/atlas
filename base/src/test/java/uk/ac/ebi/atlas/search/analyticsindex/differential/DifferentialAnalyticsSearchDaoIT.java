@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import com.google.common.collect.Lists;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import org.junit.Test;

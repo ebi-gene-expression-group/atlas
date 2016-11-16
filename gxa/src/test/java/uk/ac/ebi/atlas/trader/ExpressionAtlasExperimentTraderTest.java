@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExperimentTraderTest {
+public class ExpressionAtlasExperimentTraderTest {
 
     private static final String E_TABM_713 = "E-TABM-713";
     private static final String E_MTAB_513 = "E-MTAB-513";
@@ -36,7 +36,7 @@ public class ExperimentTraderTest {
     private static final String E_GEOD_21860 = "E-GEOD-21860";
     private static final String E_PROT_1 = "E-PROT-1";
 
-    private ExperimentTrader subject;
+    private ExpressionAtlasExperimentTrader subject;
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -70,7 +70,7 @@ public class ExperimentTraderTest {
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets.newHashSet(E_PROT_1));
 
-        subject = new ExperimentTrader(experimentDAOMock,
+        subject = new ExpressionAtlasExperimentTrader(experimentDAOMock,
                 rnaSeqBaselineExperimentsCacheMock,
                                         rnaSeqDiffExperimentsCacheMock,
                                         microarrayExperimentsCacheMock,

@@ -1,11 +1,15 @@
 package uk.ac.ebi.atlas.utils;
 
 import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 
@@ -16,12 +20,23 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class ExperimentSorterIT {
 
     @Inject
+    DataFileHub dataFileHub;
+
+    @Inject
+    ExperimentTrader experimentTrader;
+
     ExperimentSorter subject;
+
+    @Before
+    public void setUp(){
+        subject = new ExperimentSorter(dataFileHub,experimentTrader);
+    }
 
     @Test
     public void testReverseSortExperimentsPerSize() {

@@ -2,7 +2,6 @@
 package uk.ac.ebi.atlas.controllers.page;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.slf4j.Logger;
@@ -11,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -25,7 +25,7 @@ public class BaselineExperimentsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentsController.class);
 
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     private SortedSetMultimap<String, String> experimentAccessionsBySpecies;
 
@@ -34,7 +34,7 @@ public class BaselineExperimentsController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public BaselineExperimentsController(ExperimentTrader experimentTrader) {
+    public BaselineExperimentsController(ExpressionAtlasExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 

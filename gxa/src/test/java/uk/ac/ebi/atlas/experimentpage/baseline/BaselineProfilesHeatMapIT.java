@@ -14,7 +14,7 @@ import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -51,7 +51,7 @@ public class BaselineProfilesHeatMapIT {
     private BaselineRequestContext baselineRequestContext;
 
     @Inject
-    ExperimentTrader experimentTrader;
+    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Before
     public void initRequestContext() throws ExecutionException {

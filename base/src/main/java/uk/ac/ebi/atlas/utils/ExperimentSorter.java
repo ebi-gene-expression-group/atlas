@@ -21,19 +21,19 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Collections;
 
-@Named
-@Scope("singleton")
 public class ExperimentSorter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentSorter.class);
 
+    /*
+    I am no longer a bean! :(
     @Value("#{configuration['diff.experiment.data.path.template']}")
     private String differentialTsvFileTemplate;
+    */
 
     private final DataFileHub dataFileHub;
     private ExperimentTrader experimentTrader;
 
-    @Inject
     public ExperimentSorter(DataFileHub dataFileHub, ExperimentTrader experimentTrader) {
         this.dataFileHub =dataFileHub;
         this.experimentTrader = experimentTrader;

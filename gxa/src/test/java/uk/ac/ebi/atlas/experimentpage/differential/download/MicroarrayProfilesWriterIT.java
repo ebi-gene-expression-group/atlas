@@ -23,7 +23,7 @@ import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -78,7 +78,7 @@ public class MicroarrayProfilesWriterIT {
     private SolrQueryService solrQueryService;
 
     @Inject
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     private MicroarrayRequestContext setUpAndPopulateRequestContext(String experimentAccession){
         MockitoAnnotations.initMocks(this);

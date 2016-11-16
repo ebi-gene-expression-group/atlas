@@ -2,7 +2,7 @@
 package uk.ac.ebi.atlas.experiments;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.PublicExperimentTypesCache;
@@ -18,7 +18,6 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("prototype")
@@ -34,13 +33,13 @@ public class ExperimentInfoListBuilder {
 
     private PublicExperimentTypesCache publicExperimentTypesCache;
 
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     private ArrayDesignTrader arrayDesignTrader;
 
 
     @Inject
-    public ExperimentInfoListBuilder(ExperimentTrader experimentTrader,
+    public ExperimentInfoListBuilder(ExpressionAtlasExperimentTrader experimentTrader,
                                      RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache,
                                      ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,

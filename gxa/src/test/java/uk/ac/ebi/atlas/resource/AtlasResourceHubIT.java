@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class AtlasResourceHubIT {
 
 
     @Inject
-    ExperimentTrader experimentTrader;
+    ExpressionAtlasExperimentTrader experimentTrader;
 
 
     @Test

@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +18,10 @@ import java.util.*;
 @Scope("request")
 public class DifferentialExperimentContrastsTsvController {
 
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    public DifferentialExperimentContrastsTsvController(ExperimentTrader experimentTrader) {
+    public DifferentialExperimentContrastsTsvController(ExpressionAtlasExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 

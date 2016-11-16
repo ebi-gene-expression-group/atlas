@@ -13,53 +13,46 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
+import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsIndex;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.anySetOf;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class ExperimentCRUDIT {
 
     @Value("#{configuration['experiment.data.location']}")
     String experimentDataLocation;
 
-    @Value("#{configuration['experiment.kryo_expressions.path.template']}")
-    String serializedExpressionsFileTemplate;
-
-    @Inject
-    private ExperimentCRUD subject;
-
     @Spy
     @Inject
     private ExperimentChecker experimentCheckerSpy;
-
-    @Inject
-    private ExperimentMetadataCRUD experimentMetadataCRUD;
 
     @Mock
     EFOLookupService efoLookupServiceMock;
@@ -74,9 +67,32 @@ public class ExperimentCRUDIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Inject
+    AnalyticsLoaderFactory analyticsLoaderFactory;
+
+    @Mock
+    ExpressionSerializerService expressionSerializerService;
+
+    @Inject
+    DataFileHub dataFileHub;
+    @Inject
+    ExperimentDAO experimentDAO;
+    @Inject
+    ExpressionAtlasExperimentTrader experimentTrader;
+    @Inject
+    CondensedSdrfParser condensedSdrfParser;
+    @Inject
+    EFOLookupService efoParentsLookupService;
+    @Inject
+    AnalyticsIndexerManager analyticsIndexerManager;
+    @Inject
+    ConfigurationTrader configurationTrader;
+
+    ExperimentMetadataCRUD experimentMetadataCRUD;
+    ExperimentCRUD experimentCRUD;
 
     @Before
     public void setUp() throws IOException {
@@ -84,23 +100,25 @@ public class ExperimentCRUDIT {
 
         when(efoLookupServiceMock.getLabels(anySetOf(String.class))).thenReturn(ImmutableSet.<String>of());
 
-        BaselineConditionsBuilder baselineConditionsBuilder = new BaselineConditionsBuilder(efoLookupServiceMock);
-        BaselineConditionsIndex baselineConditionIndex = new BaselineConditionsIndex(solrClientMock, baselineConditionsBuilder);
-
-        DifferentialConditionsBuilder differentialConditionsBuilder = new DifferentialConditionsBuilder(efoLookupServiceMock);
-        DifferentialConditionsIndex differentialConditionIndex = new DifferentialConditionsIndex(solrClientMock, differentialConditionsBuilder);
-
-        ConditionsIndexTrader conditionsIndexTrader = new ConditionsIndexTrader(baselineConditionIndex, differentialConditionIndex);
-        experimentMetadataCRUD.setConditionsIndexTrader(conditionsIndexTrader);
-
-        subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
-        subject.setExperimentChecker(experimentCheckerSpy);
+        experimentMetadataCRUD = new ExpressionAtlasExperimentMetadataCRUD(dataFileHub,experimentDAO,experimentTrader,
+                condensedSdrfParser, efoParentsLookupService,analyticsIndexerManager,
+                new ConditionsIndexTrader(
+                        new BaselineConditionsIndex(solrClientMock, new BaselineConditionsBuilder(efoLookupServiceMock))
+                        , new DifferentialConditionsIndex(solrClientMock, new DifferentialConditionsBuilder(efoLookupServiceMock)))
+        );
+        experimentCRUD = new ExperimentCRUD(
+                experimentCheckerSpy,
+                experimentMetadataCRUD,
+                analyticsLoaderFactory,
+                configurationTrader,
+                expressionSerializerService
+        );
     }
 
     @Test
     public void deleteNonExistentExperimentThrowsResourceNotFoundException() {
         thrown.expect(ResourceNotFoundException.class);
-        subject.deleteExperiment("FOOBAR");
+        experimentCRUD.deleteExperiment("FOOBAR");
     }
 
     @Test
@@ -141,13 +159,12 @@ public class ExperimentCRUDIT {
         String experimentAccession = "TEST-RNASEQ-BASELINE";
         ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
         importNewExperimentInsertsDB(experimentAccession,experimentType);
-        new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession)).delete();
-        assumeFalse(kryoFileIsPresent(experimentAccession));
-        subject.serializeExpressionData(experimentAccession);
-        assertTrue(kryoFileIsPresent(experimentAccession));
+
+        experimentCRUD.serializeExpressionData(experimentAccession);
+        verify(expressionSerializerService).kryoSerializeExpressionData(experimentAccession);
 
         deleteExperimentDeletesDB(experimentAccession,experimentType);
-        assertFalse(kryoFileIsPresent(experimentAccession));
+        verify(expressionSerializerService).removeKryoFile(experimentAccession);
     }
 
 
@@ -164,14 +181,14 @@ public class ExperimentCRUDIT {
         assumeThat(expressionsCount(experimentAccession, experimentType), is(0));
         assumeThat(new File(experimentDataLocation, experimentAccession).exists(), is(true));
 
-        subject.importExperiment(experimentAccession, false);
+        experimentCRUD.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
         assertThat(expressionsCount(experimentAccession, experimentType), is(1));
     }
 
     public void importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType) throws IOException {
         ExperimentDTO originalExperimentDTO = experimentMetadataCRUD.findExperiment(experimentAccession);
-        subject.importExperiment(experimentAccession, false);
+        experimentCRUD.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
         assertThat(expressionsCount(experimentAccession, experimentType), is(1));
 
@@ -191,13 +208,9 @@ public class ExperimentCRUDIT {
     }
 
     public void deleteExperimentDeletesDB(String experimentAccession, ExperimentType experimentType) {
-        subject.deleteExperiment(experimentAccession);
+        experimentCRUD.deleteExperiment(experimentAccession);
         assertThat(experimentCount(experimentAccession), is(0));
         assertThat(expressionsCount(experimentAccession, experimentType), is(0));
-    }
-
-    boolean kryoFileIsPresent(String experimentAccession){
-        return new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession)).exists();
     }
 
     private int experimentCount(String accession) {

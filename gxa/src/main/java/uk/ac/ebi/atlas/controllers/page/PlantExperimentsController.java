@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ import java.util.*;
 public class PlantExperimentsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlantExperimentsController.class);
 
-    private ExperimentTrader experimentTrader;
+    private ExpressionAtlasExperimentTrader experimentTrader;
 
     private Integer numberOfPlantExperiments;
 
@@ -38,7 +38,7 @@ public class PlantExperimentsController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public PlantExperimentsController(ExperimentTrader experimentTrader) {
+    public PlantExperimentsController(ExpressionAtlasExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 
