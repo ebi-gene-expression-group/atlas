@@ -93,7 +93,7 @@ public class ApplicationProperties {
         allParameters.put("geneQuery", new String[]{geneQuery.toUrlEncodedJson()});
         StringBuilder sourceURLBuilder = new StringBuilder(
                 request.getRequestURI()
-                        .replaceFirst(request.getContextPath(), "")
+                        .replaceFirst("^.*"+request.getContextPath(), "")
                         .replace("/json/experiments", "/experiments")
                         .replaceFirst("\\??$", TSV_FILE_EXTENSION+"?"));
         for(Map.Entry<String, String[]> e: allParameters.entrySet()){

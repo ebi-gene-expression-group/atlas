@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,9 +35,13 @@ public class ApplicationPropertiesTest {
     private static final String PUBMED_URL = "https://europepmc.org/abstract/MED/";
     private static final String PUB_MED_ID = "123456";
 
-    private static final String EXPERIMENT_URL = "http://x.y/z";
-    private static final String REQUEST_PARAMETERS = "p1=1&p2=2";
-    private static final String DOWNLOAD_URL = EXPERIMENT_URL + ".tsv?" + REQUEST_PARAMETERS;
+    private static final String EXPERIMENT_URL = "http://x.y/z/experiments/X";
+    private static final String CONTEXT_PATH = "/z";
+
+    private static final Map<?,?> REQUEST_PARAMETERS_MAP = ImmutableMap.of("p1",new String[]{"1"},"p2",new
+            String[]{"2"});
+    private static final String REQUEST_PARAMETERS = "p2=2&p1=1";
+    private static final String DOWNLOAD_URL = "/experiments/X.tsv?" + REQUEST_PARAMETERS+"&geneQuery="+SemanticQuery.create().toUrlEncodedJson();
 
     @Mock
     private HttpServletRequest httpServletRequestMock;
@@ -69,8 +75,9 @@ public class ApplicationPropertiesTest {
         when(configurationPropertiesMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
 
         //given
-        when(httpServletRequestMock.getAttribute("javax.servlet.forward.request_uri")).thenReturn(EXPERIMENT_URL);
-        when(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).thenReturn(REQUEST_PARAMETERS);
+        when(httpServletRequestMock.getContextPath()).thenReturn(CONTEXT_PATH);
+        when(httpServletRequestMock.getRequestURI()).thenReturn(EXPERIMENT_URL);
+        when(httpServletRequestMock.getParameterMap()).thenReturn(REQUEST_PARAMETERS_MAP);
 
         when(arrayDesignTraderMock.getArrayDesignAccession(A_AFFY_35_NAME)).thenReturn(A_AFFY_35);
 
@@ -104,18 +111,6 @@ public class ApplicationPropertiesTest {
 
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
-    }
-
-    @Test
-    public void buildDownloadUrlWithoutQueryParameters() {
-        //given
-        given(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).willReturn(null);
-
-        //when
-        String downloadUrl = subject.buildDownloadURL(SemanticQuery.create(),httpServletRequestMock);
-
-        //then
-        assertThat(downloadUrl, is(EXPERIMENT_URL + ".tsv"));
     }
 
     @Test
