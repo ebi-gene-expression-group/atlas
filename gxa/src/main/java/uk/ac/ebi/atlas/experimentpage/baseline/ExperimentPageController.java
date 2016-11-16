@@ -1,13 +1,15 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.gson.Gson;
 import org.apache.solr.common.SolrException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-public abstract class BaselineExperimentController {
+public abstract class ExperimentPageController {
+
+    protected Gson gson = new Gson();
 
     @ExceptionHandler(value = {SolrException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -17,5 +19,4 @@ public abstract class BaselineExperimentController {
 
         return mav;
     }
-
 }

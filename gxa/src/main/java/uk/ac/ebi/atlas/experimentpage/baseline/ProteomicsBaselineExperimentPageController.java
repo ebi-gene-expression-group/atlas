@@ -21,12 +21,11 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Controller
 @Scope("request")
-public class ProteomicsBaselineExperimentPageController extends BaselineExperimentController {
+public class ProteomicsBaselineExperimentPageController extends BaselineExperimentPageController {
 
     private BaselineExperimentPageService baselineExperimentPageService;
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
@@ -64,17 +63,13 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     public String baselineExperimentData(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
-                                         BindingResult result, Model model, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            baselineExperimentPageService.populateModelWithHeatmapData(
-                    (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                    preferences, model, request, false);
-        } catch (uk.ac.ebi.atlas.web.GenesNotFoundException e) {
-            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-        }
+                                         Model model, HttpServletRequest request, HttpServletResponse response) {
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return "heatmap-data";
+
+        return gson.toJson(baselineExperimentPageService.populateModelWithHeatmapData(
+                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                preferences, model, request, false));
     }
 
 }

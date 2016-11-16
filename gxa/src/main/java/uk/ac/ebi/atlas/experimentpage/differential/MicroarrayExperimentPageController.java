@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import org.springframework.beans.factory.annotation.Required;
@@ -8,10 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -72,18 +69,18 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
+    @ResponseBody
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
                                        @PathVariable String experimentAccession,
                                        @RequestParam(required = false) String accessKey,
-                                       BindingResult result, Model model, HttpServletResponse response) {
+                                       BindingResult result, Model model,HttpServletRequest request,
+                                       HttpServletResponse response) {
 //        experimentPageCallbacks.adjustReceivedObjects(preferences);
 
-        differentialExperimentPageService.populateModelWithHeatmapData(
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        return gson.toJson(differentialExperimentPageService.populateModelWithHeatmapData(request,
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 preferences, result, model
-        );
-
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return "heatmap-data";
+        ));
     }
 }

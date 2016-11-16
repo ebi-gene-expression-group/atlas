@@ -117,9 +117,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/static-template.jsp"/>
     </definition>
 
-    <definition name="heatmap-data" template="/WEB-INF/jsp/includes/heatmap-data.jsp">
-    </definition>
-
     <definition name="widget-error" template="/WEB-INF/jsp/error/widget-error.jsp">
     </definition>
 

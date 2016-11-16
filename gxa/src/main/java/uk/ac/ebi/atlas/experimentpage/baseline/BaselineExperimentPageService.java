@@ -6,6 +6,8 @@ import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import com.google.gson.JsonArray;
@@ -17,6 +19,7 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
+import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -36,19 +39,14 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
                                          AtlasResourceHub atlasResourceHub,
-                                         TracksUtil tracksUtil,FactorGroupingService factorGroupingService) {
-        super(atlasResourceHub);
+                                         TracksUtil tracksUtil,FactorGroupingService factorGroupingService,
+                                         HeatmapDataToJsonService heatmapDataToJsonService) {
+        super(atlasResourceHub, heatmapDataToJsonService);
         this.applicationProperties = applicationProperties;
         this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.tracksUtil = tracksUtil;
         this.factorGroupingService = factorGroupingService;
-    }
-
-    //TODO I got misplaced when refactoring, I belong in a controller, not here
-    @InitBinder("preferences")
-    protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
@@ -68,7 +66,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAllAttributes(headerAttributes(experiment, preferences));
     }
 
-    public void populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
+    public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
                                              Model model, HttpServletRequest request, boolean isWidget) {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
@@ -94,19 +92,22 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         model.addAttribute("jsonColumnGroupings", gson.toJson(factorGroupingService.group(filteredAssayGroupFactors)));
 
-        model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
+        try {
+            model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
 
-        model.addAttribute("jsonCoexpressions", gson.toJson(heatMapResults.getJsonCoexpressions()));
+            model.addAttribute("jsonCoexpressions", gson.toJson(heatMapResults.getJsonCoexpressions()));
 
-
-        // Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
-        model.addAttribute("jsonGeneSetProfiles", "null");
+            // Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
+            model.addAttribute("jsonGeneSetProfiles", "null");
                 /* We decided to disable the feature because it has a performance cost and isn't
                 very useful..
                 TODO remove (or make more useful)
                 geneSets.isPresent()
                 ? viewModelAsJson(geneSets.get())
                 : "null");*/
+        } catch (GenesNotFoundException e){
+            return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+        }
 
         model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(),
                 experiment.getSpecies(),
@@ -120,6 +121,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         }
 
         model.addAllAttributes(payloadAttributes(experiment, preferences));
+        return heatmapDataToJsonService.toJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create(),
+                model.asMap());
     }
 
     // heatmap-data.jsp will understand "" as empty

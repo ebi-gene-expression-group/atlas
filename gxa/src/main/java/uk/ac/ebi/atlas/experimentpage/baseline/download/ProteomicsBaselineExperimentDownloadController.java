@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentController;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageController;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
-public class ProteomicsBaselineExperimentDownloadController extends BaselineExperimentController {
+public class ProteomicsBaselineExperimentDownloadController extends BaselineExperimentPageController {
 
     private final String PARAMS_TYPE_PROTEOMICS_BASELINE = "type=PROTEOMICS_BASELINE";
 

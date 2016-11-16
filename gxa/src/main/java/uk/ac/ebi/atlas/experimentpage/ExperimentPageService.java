@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -14,10 +15,12 @@ import java.util.Map;
 public class ExperimentPageService {
 
     private final AtlasResourceHub atlasResourceHub;
+    protected final HeatmapDataToJsonService heatmapDataToJsonService;
     protected final Gson gson = new Gson();
 
-    public ExperimentPageService(AtlasResourceHub atlasResourceHub){
+    public ExperimentPageService(AtlasResourceHub atlasResourceHub,HeatmapDataToJsonService heatmapDataToJsonService){
         this.atlasResourceHub = atlasResourceHub;
+        this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
     protected Map<String, ?> headerAttributes(Experiment experiment,

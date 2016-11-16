@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -14,10 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -71,17 +68,17 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
+    @ResponseBody
     public String showGeneProfilesData(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
                                        @PathVariable String experimentAccession,
                                        @RequestParam(required = false) String accessKey,
-                                       BindingResult result, Model model, HttpServletResponse response) {
+                                       BindingResult result, Model model,HttpServletRequest request,
+                                       HttpServletResponse response) {
 //        experimentPageCallbacks.adjustReceivedObjects(preferences);
-
-        differentialExperimentPageService.populateModelWithHeatmapData(
-                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model
-        );
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return "heatmap-data";
+        return gson.toJson(differentialExperimentPageService.populateModelWithHeatmapData(request,
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model
+        ));
     }
 
 }

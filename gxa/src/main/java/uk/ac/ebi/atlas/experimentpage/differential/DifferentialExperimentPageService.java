@@ -1,25 +1,33 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
-import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummaryBuilder;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
-import com.google.gson.*;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
+import uk.ac.ebi.atlas.experimentpage.tooltip.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
+import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +49,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                                                 DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                 TracksUtil tracksUtil,
                                                 AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
-        super(atlasResourceHub);
+        super(atlasResourceHub, new HeatmapDataToJsonService(applicationProperties));
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
@@ -64,7 +72,8 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
         model.addAllAttributes(headerAttributes(experiment, preferences));
     }
 
-    public void populateModelWithHeatmapData(T experiment, K preferences, BindingResult result, Model model) {
+    public JsonObject populateModelWithHeatmapData(HttpServletRequest request,T experiment, K preferences,
+                                                   BindingResult result, Model model) {
         DifferentialRequestContext requestContext = initRequestContext(experiment, preferences);
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
@@ -89,11 +98,24 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                     model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts)));
                 }
+                return heatmapDataToJsonService.toJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create
+                        (), model.asMap());
 
             } catch (GenesNotFoundException e) {
-                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery().description() + "'"));
+                String msg = "No genes found matching query: '" + preferences.getGeneQuery().description() + "'";
+                result.addError(new ObjectError("requestPreferences",msg ));//I'm not sure if this works- on error
+                // Spring MVC magic kicks in?
+                return heatmapDataToJsonService.jsonError(msg);
             }
 
+        } else {
+            return heatmapDataToJsonService.jsonError(FluentIterable.from(result.getAllErrors()).transform(new Function<ObjectError, String>() {
+                @Nullable
+                @Override
+                public String apply(@Nullable ObjectError objectError) {
+                    return objectError.toString();
+                }
+            }).join(Joiner.on(',')));
         }
     }
 

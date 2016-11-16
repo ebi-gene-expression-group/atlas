@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentController;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageController;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -21,7 +21,7 @@ import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
-public class RnaSeqBaselineExperimentDownloadController extends BaselineExperimentController {
+public class RnaSeqBaselineExperimentDownloadController extends BaselineExperimentPageController {
 
 
     protected static final String PARAMS_TYPE_RNASEQ_BASELINE = "type=RNASEQ_MRNA_BASELINE";

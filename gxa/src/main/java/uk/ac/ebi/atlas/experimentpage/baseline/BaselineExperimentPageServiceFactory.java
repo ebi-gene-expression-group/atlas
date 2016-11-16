@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
@@ -26,13 +27,15 @@ public class BaselineExperimentPageServiceFactory {
     private final RankBaselineProfilesFactory rankProfilesFactory;
     private final FactorGroupingService factorGroupingService;
     private final AtlasResourceHub atlasResourceHub;
+    private final HeatmapDataToJsonService heatmapDataToJsonService;
 
     @Inject
     public BaselineExperimentPageServiceFactory(TracksUtil tracksUtil, ApplicationProperties applicationProperties,
                                                 BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                 JdbcTemplate jdbcTemplate,
                                                 SolrQueryService solrQueryService, RankBaselineProfilesFactory rankProfilesFactory,
-                                                FactorGroupingService factorGroupingService, AtlasResourceHub atlasResourceHub) {
+                                                FactorGroupingService factorGroupingService, AtlasResourceHub
+                                                            atlasResourceHub,HeatmapDataToJsonService heatmapDataToJsonService) {
         this.tracksUtil = tracksUtil;
         this.applicationProperties = applicationProperties;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
@@ -41,13 +44,14 @@ public class BaselineExperimentPageServiceFactory {
         this.rankProfilesFactory = rankProfilesFactory;
         this.factorGroupingService = factorGroupingService;
         this.atlasResourceHub = atlasResourceHub;
+        this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
     public BaselineExperimentPageService create(BaselineProfileInputStreamFactory inputStreamFactory){
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
                 inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
                 applicationProperties,atlasResourceHub,
-                tracksUtil,factorGroupingService
+                tracksUtil,factorGroupingService, heatmapDataToJsonService
         );
     }
 }
