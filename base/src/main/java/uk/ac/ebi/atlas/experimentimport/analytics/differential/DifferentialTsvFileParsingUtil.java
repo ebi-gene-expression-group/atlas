@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class DifferentialTsvFileParsingUtil {
 

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import java.sql.Array;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
 

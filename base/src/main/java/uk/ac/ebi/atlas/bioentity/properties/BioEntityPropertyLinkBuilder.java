@@ -4,7 +4,7 @@ import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import com.google.common.base.Optional;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.utils.ReactomeClient;

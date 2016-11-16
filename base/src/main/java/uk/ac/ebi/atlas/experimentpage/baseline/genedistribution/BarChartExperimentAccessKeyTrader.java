@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.annotation.Scope;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Named;
 import java.util.HashMap;
 import java.util.Map;
 
 @Named
-@Scope("singleton")
 public class BarChartExperimentAccessKeyTrader {
 
     private Map<String, String> experimentAccessKeyMap;

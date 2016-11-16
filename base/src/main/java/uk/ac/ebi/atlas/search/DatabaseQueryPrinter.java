@@ -7,7 +7,7 @@ import oracle.sql.ARRAY;
 import oracle.sql.Datum;
 import oracle.sql.STRUCT;
 import oracle.sql.TypeDescriptor;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 import java.util.Iterator;

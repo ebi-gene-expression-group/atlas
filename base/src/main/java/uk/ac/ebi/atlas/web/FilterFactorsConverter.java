@@ -1,8 +1,7 @@
-
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.ArrayList;

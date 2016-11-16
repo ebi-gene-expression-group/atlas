@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;
 

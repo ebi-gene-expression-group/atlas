@@ -1,8 +1,7 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.Is;
 import org.junit.Before;

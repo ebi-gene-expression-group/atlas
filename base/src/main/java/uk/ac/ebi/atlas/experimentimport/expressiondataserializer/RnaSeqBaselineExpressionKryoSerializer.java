@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 import au.com.bytecode.opencsv.CSVReader;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -74,7 +73,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
 
             // First line contains an array {"Gene ID", "Gene Name", "g1", "g2", "g3",  ...}
             String[] assays = tsvReader.readNext();
-            assays = (String[]) ArrayUtils.subarray(assays, FIRST_EXPRESSION_LEVEL_INDEX, assays.length);
+            assays = ArrayUtils.subarray(assays, FIRST_EXPRESSION_LEVEL_INDEX, assays.length);
             kryo.writeObject(expressionsOutput, assays);
 
             FactorGroup[] factorGroups = new FactorGroup[assays.length];

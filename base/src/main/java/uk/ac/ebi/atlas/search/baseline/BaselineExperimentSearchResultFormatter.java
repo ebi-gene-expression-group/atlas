@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.NotImplementedException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.SortedSet;
 
 public class BaselineExperimentSearchResultFormatter implements Iterable<String[]> {
-    final BaselineExperimentProfilesList experimentProfiles;
-    final SortedSet<Factor> factorsAcrossAllExperiments;
+    private final BaselineExperimentProfilesList experimentProfiles;
+    private final SortedSet<Factor> factorsAcrossAllExperiments;
 
     public BaselineExperimentSearchResultFormatter(BaselineExperimentSearchResult searchResult) {
         this(searchResult.getExperimentProfiles(), searchResult.getFactorsAcrossAllExperiments());
@@ -87,7 +87,7 @@ public class BaselineExperimentSearchResultFormatter implements Iterable<String[
 
         @Override
         public void remove() {
-            throw new NotImplementedException();
+            throw new NotImplementedException("remove() not implemented");
         }
     }
 }
