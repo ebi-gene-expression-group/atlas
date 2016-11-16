@@ -91,8 +91,11 @@ public class ApplicationProperties {
     public String buildDownloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
         Map<String, String[]> allParameters = new HashMap<>(request.getParameterMap());
         allParameters.put("geneQuery", new String[]{geneQuery.toUrlEncodedJson()});
-        StringBuilder sourceURLBuilder = new StringBuilder(request.getRequestURI().replace("/json/experiments",
-                "/experiments").replaceFirst("\\??$", TSV_FILE_EXTENSION+"?"));
+        StringBuilder sourceURLBuilder = new StringBuilder(
+                request.getRequestURI()
+                        .replaceFirst(request.getContextPath(), "")
+                        .replace("/json/experiments", "/experiments")
+                        .replaceFirst("\\??$", TSV_FILE_EXTENSION+"?"));
         for(Map.Entry<String, String[]> e: allParameters.entrySet()){
             if(e.getValue().length>0) {
                 sourceURLBuilder.append(e.getKey()).append("=").append(e.getValue()[0]).append("&");

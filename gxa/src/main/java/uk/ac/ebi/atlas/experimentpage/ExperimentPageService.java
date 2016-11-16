@@ -29,11 +29,11 @@ public class ExperimentPageService {
         result.put("hasExtraInfo", atlasResourceHub.hasExtraInfo(experiment));
         return result;
     }
-    protected Map<String, ?> payloadAttributes(Experiment experiment,
+    protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
                                                ExperimentPageRequestPreferences requestPreferences){
-        Map<String, Object> result = new HashMap<>();
+        Map<String, JsonElement> result = new HashMap<>();
 
-        result.put("jsonExperiment", gson.toJson(prepareExperimentDescription(experiment, requestPreferences)));
+        result.put("jsonExperiment", prepareExperimentDescription(experiment, requestPreferences));
         return result;
     }
 

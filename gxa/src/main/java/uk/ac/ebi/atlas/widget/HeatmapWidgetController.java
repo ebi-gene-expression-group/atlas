@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.widget;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
@@ -8,9 +8,6 @@ import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -118,10 +115,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                 baselineAnalyticsSearchService.findExpressions(
                         geneQuery, conditionQuery, species, defaultQueryFactorType);
 
-        populateModelWithMultiExperimentResults(geneQuery, conditionQuery,species, searchResult, model);
-
-        return gson.toJson(heatmapDataToJsonService.toJson(request, SemanticQuery.create(), SemanticQuery.create(),
-                model.asMap()));
+        return gson.toJson(populateModelWithMultiExperimentResults(request,geneQuery,conditionQuery, species, searchResult, model));
     }
 
     @RequestMapping(value = "/json/search/baselineResults", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -134,54 +128,55 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
         Species species = speciesFactory.create(speciesString);
         BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(query, species, defaultQueryFactorType);
-        populateModelWithMultiExperimentResults(query, species, searchResult, model);
 
-        return gson.toJson(heatmapDataToJsonService.toJson(request, SemanticQuery.create(), SemanticQuery.create(),
-                model.asMap()));
+        return gson.toJson(populateModelWithMultiExperimentResults(request,query, species, searchResult, model));
     }
 
-    private void populateModelWithMultiExperimentResults(SemanticQuery geneQuery,
+    private JsonObject populateModelWithMultiExperimentResults(HttpServletRequest request,SemanticQuery geneQuery,
                                                                SemanticQuery conditionQuery, Species species,
                                                                BaselineExperimentSearchResult searchResult, Model model) {
-        List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
-
-        if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute(
-                    "anatomogram",
-                    anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors)));
-        } else {
-            model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
-        }
-
-        BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
-        addJsonForHeatMap(experimentProfiles, orderedFactors, model);
-
-        model.addAttribute("species", species.mappedName);
-        model.addAttribute("isWidget", true);
-        model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
         model.addAttribute("geneQuery", geneQuery);
         model.addAttribute("conditionQuery", conditionQuery);
+        return resultsFromDataAndModel(request, species, searchResult, model);
     }
 
-    private void populateModelWithMultiExperimentResults(SemanticQuery query, Species species,
+    private JsonObject populateModelWithMultiExperimentResults(HttpServletRequest request,SemanticQuery query, Species species,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
+        model.addAttribute("query", query);
+        return resultsFromDataAndModel(request, species, searchResult, model);
+    }
+
+    private JsonObject resultsFromDataAndModel(HttpServletRequest request, Species species,
+                                BaselineExperimentSearchResult searchResult, Model model){
+
+        JsonObject result = new JsonObject();
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
 
         if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            model.addAttribute(
+            result.add(
                     "anatomogram",
                     anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors)));
         } else {
-            model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
+            result.add("anatomogram", JsonNull.INSTANCE);
         }
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
-        addJsonForHeatMap(experimentProfiles, orderedFactors, model);
+        if(!experimentProfiles.isEmpty()){
+            result.add("columnHeaders", gson.toJsonTree(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
+            result.add("columnGroupings", factorGroupingService.group(convert(orderedFactors)));
+            result.add("profiles", baselineExperimentProfilesViewModelBuilder.buildJson
+                    (experimentProfiles, orderedFactors));
+            result.add("geneSetProfiles", JsonNull.INSTANCE);
+            result.add("jsonCoexpressions", new JsonArray());
+        }
 
         model.addAttribute("species", species.mappedName);
         model.addAttribute("isWidget", true);
-        model.addAttribute("experiment", gson.toJson(JsonNull.INSTANCE));
-        model.addAttribute("query", query);
+        result.add("experiment", JsonNull.INSTANCE);
+
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(request, SemanticQuery.create(), SemanticQuery.create(),
+                model.asMap()));
+        return result;
     }
 
     private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
@@ -192,15 +187,5 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         }
 
         return new ArrayList<>(builder.build());
-    }
-
-    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, List<Factor> orderedFactors, Model model) {
-        if (baselineProfiles.isEmpty()) {
-            return;
-        }
-
-        model.addAttribute("jsonColumnHeaders", gson.toJson(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
-        model.addAttribute("jsonColumnGroupings", gson.toJson(factorGroupingService.group(convert(orderedFactors))));
-        model.addAttribute("jsonProfiles", gson.toJson(baselineExperimentProfilesViewModelBuilder.buildJson(baselineProfiles, orderedFactors)));
     }
 }

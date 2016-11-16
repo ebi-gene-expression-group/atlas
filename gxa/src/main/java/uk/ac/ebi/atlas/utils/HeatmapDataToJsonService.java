@@ -18,19 +18,9 @@ I used to be "heatmap-data.jsp" but it got complicated when we split into base a
 public class HeatmapDataToJsonService {
 
     private final ApplicationProperties applicationProperties;
-    private final Gson gson = new GsonBuilder().serializeNulls().create();
     @Inject
     public HeatmapDataToJsonService(ApplicationProperties applicationProperties){
         this.applicationProperties = applicationProperties;
-    }
-
-    public String toJson(HttpServletRequest request, SemanticQuery geneQuery, SemanticQuery conditionQuery,
-                         Map<String, Object> model){
-        return gson.toJson(toJsonObject(request, geneQuery, conditionQuery, model));
-    }
-
-    public String error(String message){
-        return gson.toJson(jsonError(message));
     }
 
     public JsonObject jsonError(String message){
@@ -39,14 +29,8 @@ public class HeatmapDataToJsonService {
             return result;
     }
 
-    public JsonObject toJsonObject(HttpServletRequest request, SemanticQuery geneQuery, SemanticQuery conditionQuery,
-                            Map<String, Object> model){
-
-        if(model.get("jsonProfiles") == null){
-            return jsonError("No expression found for "+ SearchDescription.getSimple(geneQuery));
-        }
-        JsonObject result = new JsonObject();
-
+    public JsonObject configAsJsonObject(HttpServletRequest request, SemanticQuery geneQuery, SemanticQuery conditionQuery,
+                                         Map<String, Object> model){
         JsonObject config = new JsonObject();
         config.addProperty("atlasHost", applicationProperties.buildAtlasHostURL(request));
         config.addProperty("contextRoot", request.getContextPath());
@@ -66,26 +50,7 @@ public class HeatmapDataToJsonService {
                         ? applicationProperties.buildDownloadURL(geneQuery,request)
                         : get(model, "downloadURL"));
         config.addProperty("disclaimer", get(model, "disclaimer"));
-        result.add("config", config);
-
-
-        result.add("columnHeaders", getJsonOrDefault(model, "jsonColumnHeaders", JsonNull.INSTANCE));
-        result.add("columnGroupings", getJsonOrDefault(model, "jsonColumnGroupings", new JsonArray()));
-        result.add("profiles",getJsonOrDefault(model, "jsonProfiles", JsonNull.INSTANCE));
-        result.add("geneSetProfiles", getJsonOrDefault(model, "geneSetProfiles",JsonNull.INSTANCE));
-        result.add("jsonCoexpressions", getJsonOrDefault(model, "jsonCoexpressions",new JsonArray()));
-        result.add("anatomogram", getJsonOrDefault(model, "anatomogram",JsonNull.INSTANCE));
-        result.add("experiment", getJsonOrDefault(model, "jsonExperiment",JsonNull.INSTANCE));
-
-        return result;
-    }
-
-    private JsonElement getJsonOrDefault(Map<String, Object> model, String key, JsonElement defaultValue){
-        if(model.containsKey(key)){
-            return gson.toJsonTree(model.get(key));
-        } else {
-            return defaultValue;
-        }
+        return config;
     }
 
     private String getOrDefault(Map<String, Object> model, String key, String defaultValue){

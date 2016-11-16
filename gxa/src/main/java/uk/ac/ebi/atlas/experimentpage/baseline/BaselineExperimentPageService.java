@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.tooltip.AssayGroupSummaryBuilder;
@@ -13,8 +15,6 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -68,6 +68,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
     public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
                                              Model model, HttpServletRequest request, boolean isWidget) {
+        JsonObject result = new JsonObject();
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
@@ -87,18 +88,18 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,experiment);
 
-        model.addAttribute("jsonColumnHeaders",
-                gson.toJson(constructColumnHeaders(filteredAssayGroupFactors,experiment)));
+        result.add("columnHeaders",
+                constructColumnHeaders(filteredAssayGroupFactors,experiment));
 
-        model.addAttribute("jsonColumnGroupings", gson.toJson(factorGroupingService.group(filteredAssayGroupFactors)));
+        result.add("columnGroupings",factorGroupingService.group(filteredAssayGroupFactors));
 
         try {
-            model.addAttribute("jsonProfiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
+            result.add("profiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
 
-            model.addAttribute("jsonCoexpressions", gson.toJson(heatMapResults.getJsonCoexpressions()));
+            result.add("jsonCoexpressions", heatMapResults.getJsonCoexpressions());
 
             // Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
-            model.addAttribute("jsonGeneSetProfiles", "null");
+            result.add("jsonGeneSetProfiles", new JsonArray());
                 /* We decided to disable the feature because it has a performance cost and isn't
                 very useful..
                 TODO remove (or make more useful)
@@ -109,9 +110,9 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         }
 
-        model.addAttribute("anatomogram", gson.toJson(anatomogramFactory.get(requestContext.getQueryFactorType(),
+        result.add("anatomogram", anatomogramFactory.get(requestContext.getQueryFactorType(),
                 experiment.getSpecies(),
-                filteredAssayGroupFactors)));
+                filteredAssayGroupFactors));
 
         model.addAttribute("isWidget", isWidget);
         if (!isWidget) {
@@ -120,18 +121,22 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
         }
 
-        model.addAllAttributes(payloadAttributes(experiment, preferences));
-        return heatmapDataToJsonService.toJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create(),
-                model.asMap());
+        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
+            result.add(e.getKey(), e.getValue());
+        }
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create(),
+                model.asMap()));
+
+        return result;
     }
 
     // heatmap-data.jsp will understand "" as empty
-    private String viewModelAsJson(JsonObject viewModel){
+    private JsonElement viewModelAsJson(JsonObject viewModel){
         return viewModel.has("rows")
                 && viewModel.get("rows").isJsonArray()
                 && viewModel.get("rows").getAsJsonArray().size() >0
-                ? gson.toJson(viewModel)
-                : "";
+                ? viewModel
+                : new JsonPrimitive("");
     }
     
     private JsonArray constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors, BaselineExperiment experiment){

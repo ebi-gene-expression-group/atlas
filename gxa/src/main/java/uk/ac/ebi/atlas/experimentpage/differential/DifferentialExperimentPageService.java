@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
@@ -73,7 +74,8 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
     }
 
     public JsonObject populateModelWithHeatmapData(HttpServletRequest request,T experiment, K preferences,
-                                                   BindingResult result, Model model) {
+                                                   BindingResult bindingResult, Model model) {
+        JsonObject result = new JsonObject();
         DifferentialRequestContext requestContext = initRequestContext(experiment, preferences);
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
@@ -83,10 +85,12 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
 
         model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
-        model.addAttribute("anatomogram", gson.toJson(JsonNull.INSTANCE));
+        result.add("anatomogram", JsonNull.INSTANCE);
         model.addAttribute("experimentDescription", gson.toJson(JsonNull.INSTANCE));
-        model.addAllAttributes(payloadAttributes(experiment, preferences));
-        if (!result.hasErrors()) {
+        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
+            result.add(e.getKey(), e.getValue());
+        }
+        if (!bindingResult.hasErrors()) {
 
             try {
 
@@ -94,22 +98,30 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
                 if (!differentialProfiles.isEmpty()) {
                     model.addAttribute("gseaPlots", gson.toJson(atlasResourceHub.createJsonByContrastIdForTheOldHeatmap(experiment
                             .getAccession(), contrasts)));
-                    model.addAttribute("jsonColumnHeaders", gson.toJson(constructColumnHeaders(contrasts,experiment)));
-                    model.addAttribute("jsonProfiles", gson.toJson(differentialProfilesViewModelBuilder.build
-                            (differentialProfiles, contrasts)));
+                    result.add("columnGroupings", new JsonArray());
+                    result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
+                    result.add("profiles",differentialProfilesViewModelBuilder.build
+                            (differentialProfiles, contrasts));
+                    result.add("geneSetProfiles", JsonNull.INSTANCE);
+                    result.add("jsonCoexpressions", new JsonArray());
+                    result.add("config",heatmapDataToJsonService.configAsJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create
+                            (), model.asMap()));
+                    return result;
+                } else {
+                    //copypasted:(
+                    String msg = "No genes found matching query: '" + preferences.getGeneQuery().description() + "'";
+                    bindingResult.addError(new ObjectError("requestPreferences",msg ));
+                    return heatmapDataToJsonService.jsonError(msg);
                 }
-                return heatmapDataToJsonService.toJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create
-                        (), model.asMap());
-
             } catch (GenesNotFoundException e) {
                 String msg = "No genes found matching query: '" + preferences.getGeneQuery().description() + "'";
-                result.addError(new ObjectError("requestPreferences",msg ));//I'm not sure if this works- on error
+                bindingResult.addError(new ObjectError("requestPreferences",msg ));//I'm not sure if this works- on error
                 // Spring MVC magic kicks in?
                 return heatmapDataToJsonService.jsonError(msg);
             }
 
         } else {
-            return heatmapDataToJsonService.jsonError(FluentIterable.from(result.getAllErrors()).transform(new Function<ObjectError, String>() {
+            return heatmapDataToJsonService.jsonError(FluentIterable.from(bindingResult.getAllErrors()).transform(new Function<ObjectError, String>() {
                 @Nullable
                 @Override
                 public String apply(@Nullable ObjectError objectError) {

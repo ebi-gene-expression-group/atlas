@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import org.springframework.beans.factory.annotation.Required;
@@ -9,10 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -60,6 +57,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
+    @ResponseBody
     public String baselineExperimentData(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
