@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
 import javax.inject.Inject;
@@ -13,7 +13,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 @Named("applicationProperties")
 public class ApplicationProperties {
@@ -85,14 +88,18 @@ public class ApplicationProperties {
         return url.toExternalForm();
     }
 
-    public String buildDownloadURL(HttpServletRequest request) {
-        // get original query string, not the one modified by ExperimentDispatcher
-        String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
-        String requestUri = (String) request.getAttribute("javax.servlet.forward.request_uri");
-        String uri = StringUtils.remove(requestUri, request.getContextPath());
-
-        return Joiner.on("?").skipNulls()
-                .join(new String[]{uri.replace("/json/experiments","/experiments") + TSV_FILE_EXTENSION, queryString});
+    public String buildDownloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
+        Map<String, String[]> allParameters = new HashMap<>(request.getParameterMap());
+        allParameters.put("geneQuery", new String[]{geneQuery.toUrlEncodedJson()});
+        StringBuilder sourceURLBuilder = new StringBuilder(request.getRequestURI().replace("/json/experiments",
+                "/experiments").replaceFirst("\\??$", TSV_FILE_EXTENSION+"?"));
+        for(Map.Entry<String, String[]> e: allParameters.entrySet()){
+            if(e.getValue().length>0) {
+                sourceURLBuilder.append(e.getKey()).append("=").append(e.getValue()[0]).append("&");
+            }
+        }
+        sourceURLBuilder.deleteCharAt(sourceURLBuilder.lastIndexOf("&"));
+        return sourceURLBuilder.toString();
     }
 
     public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {

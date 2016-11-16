@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
@@ -100,7 +100,7 @@ public class ApplicationPropertiesTest {
     @Test
     public void buildDownloadUrl() {
         //when
-        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+        String downloadUrl = subject.buildDownloadURL(SemanticQuery.create(),httpServletRequestMock);
 
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
@@ -112,7 +112,7 @@ public class ApplicationPropertiesTest {
         given(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).willReturn(null);
 
         //when
-        String downloadUrl = subject.buildDownloadURL(httpServletRequestMock);
+        String downloadUrl = subject.buildDownloadURL(SemanticQuery.create(),httpServletRequestMock);
 
         //then
         assertThat(downloadUrl, is(EXPERIMENT_URL + ".tsv"));

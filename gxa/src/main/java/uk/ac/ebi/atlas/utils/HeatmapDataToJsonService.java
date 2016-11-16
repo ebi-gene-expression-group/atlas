@@ -62,8 +62,8 @@ public class HeatmapDataToJsonService {
                         ? Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()) : false);
         config.addProperty("showMaPlotButton", true);
         config.addProperty("downloadProfilesURL",
-                Strings.isNullOrEmpty((String) model.get("downloadURL("))
-                        ? applicationProperties.buildDownloadURL(request)
+                Strings.isNullOrEmpty((String) model.get("downloadURL"))
+                        ? applicationProperties.buildDownloadURL(geneQuery,request)
                         : get(model, "downloadURL"));
         config.addProperty("disclaimer", get(model, "disclaimer"));
         result.add("config", config);
@@ -71,6 +71,7 @@ public class HeatmapDataToJsonService {
 
         result.add("columnHeaders", getJsonOrDefault(model, "jsonColumnHeaders", JsonNull.INSTANCE));
         result.add("columnGroupings", getJsonOrDefault(model, "jsonColumnGroupings", new JsonArray()));
+        result.add("profiles",getJsonOrDefault(model, "jsonProfiles", JsonNull.INSTANCE));
         result.add("geneSetProfiles", getJsonOrDefault(model, "geneSetProfiles",JsonNull.INSTANCE));
         result.add("jsonCoexpressions", getJsonOrDefault(model, "jsonCoexpressions",new JsonArray()));
         result.add("anatomogram", getJsonOrDefault(model, "anatomogram",JsonNull.INSTANCE));
