@@ -47,10 +47,6 @@ public class BaselineExperiment extends Experiment {
         return getExperimentalFactors().getFactors(assayGroupIds, factorType);
     }
 
-    public boolean isTissueExperiment() {
-        return getExperimentalFactors().getDefaultQueryFactorType().equals("ORGANISM_PART");
-    }
-
     @Override
     protected Set<String> getAnalysedRowsAccessions() {
         return getExperimentRunAccessions();

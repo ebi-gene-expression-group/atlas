@@ -84,7 +84,6 @@ public class BaselineExperimentSearchTest {
         when(experimentTrader.getPublicExperiment(E_MTAB_599)).thenReturn(baselineExperiment1);
 
         when(baselineExperiment1.getExperimentalFactors()).thenReturn(experimentalFactors1);
-        when(baselineExperiment1.isTissueExperiment()).thenReturn(true);
         when(baselineExperiment1.getAccession()).thenReturn(E_MTAB_599);
         when(baselineExperiment1.getDisplayName()).thenReturn(E_MTAB_599_NAME);
         when(experimentalFactors1.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
@@ -97,7 +96,6 @@ public class BaselineExperimentSearchTest {
         when(experimentTrader.getPublicExperiment(E_GEOD_26284)).thenReturn(baselineExperiment2);
 
         when(baselineExperiment2.getExperimentalFactors()).thenReturn(experimentalFactors2);
-        when(baselineExperiment2.isTissueExperiment()).thenReturn(false);
         when(baselineExperiment2.getAccession()).thenReturn(E_GEOD_26284);
         when(baselineExperiment2.getDisplayName()).thenReturn(E_GEOD_26284_NAME);
         when(experimentalFactors2.getFactorGroup("g12")).thenReturn(new FactorSet(IMR_90));

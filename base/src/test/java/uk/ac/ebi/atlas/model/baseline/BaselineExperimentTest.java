@@ -104,14 +104,4 @@ public class BaselineExperimentTest {
     public void testGetExperimentDesign() throws Exception {
         assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
     }
-
-    @Test
-    public void isTissue(){
-        when(experimentalFactorsMock.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
-        assertEquals(true, subject.isTissueExperiment());
-
-        when(experimentalFactorsMock.getDefaultQueryFactorType()).thenReturn("CELL_LINE");
-        assertEquals(false, subject.isTissueExperiment());
-    }
-
 }
