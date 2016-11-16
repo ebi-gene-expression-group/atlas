@@ -48,7 +48,7 @@ public class ExperimentDesignParserTest {
 
     @Before
     public void setUp() throws Exception {
-        dataFileHub.addTemporaryTsv("/expdesign/ExpDesign-ACCESSION.tsv", DATA);
+        dataFileHub.addExperimentDesignFile(EXPERIMENT_ACCESSION, DATA);
         subject = new ExperimentDesignParser(dataFileHub);
     }
 

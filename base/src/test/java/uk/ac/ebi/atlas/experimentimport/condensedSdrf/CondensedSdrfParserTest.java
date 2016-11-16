@@ -10,20 +10,15 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
-import java.text.MessageFormat;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CondensedSdrfParserTest {
@@ -111,15 +106,9 @@ public class CondensedSdrfParserTest {
     };
 
     @Mock
-    TsvReaderImpl tsvReaderImplMock;
-
-    @Mock
-    FileTsvReaderBuilder fileTsvReaderBuilderMock;
-
-    @Mock
     IdfParser idfParserMock;
 
-    MockDataFileHub dataFileHub = MockDataFileHub.get();
+    private MockDataFileHub dataFileHub = MockDataFileHub.get();
 
     private CondensedSdrfParser subject;
 
@@ -128,24 +117,15 @@ public class CondensedSdrfParserTest {
 
     @Before
     public void setUp() {
-        given(fileTsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).willReturn(fileTsvReaderBuilderMock);
-        given(fileTsvReaderBuilderMock.withExperimentAccession(anyString())).willReturn(fileTsvReaderBuilderMock);
-        given(fileTsvReaderBuilderMock.build()).willReturn(tsvReaderImplMock);
-
         subject = new CondensedSdrfParser(dataFileHub, idfParserMock);
     }
 
     @Test
     public void parse() {
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MTAB_513), Arrays
-                .asList(E_MTAB_513_CONDENSED_SDRF_ARRAY));
+        dataFileHub.addCondensedSdrfFile(E_MTAB_513, Arrays.asList(E_MTAB_513_CONDENSED_SDRF_ARRAY));
         given(idfParserMock.parse(E_MTAB_513)).willReturn(new ImmutablePair<>(E_MTAB_513_TITLE, E_MTAB_513_PUBMED_IDS));
 
-        //when
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
-
-        //then
         assertThat(output.getExperimentAccession(), is(E_MTAB_513));
         assertThat(output.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(output.getTitle(), is (E_MTAB_513_TITLE));
@@ -164,15 +144,11 @@ public class CondensedSdrfParserTest {
 
     @Test
     public void parseRunWithoutFactorIsDiscarded() {
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MTAB_513),
-                ImmutableList.copyOf(Arrays.copyOfRange(E_MTAB_513_CONDENSED_SDRF_ARRAY, 0, E_MTAB_513_CONDENSED_SDRF_ARRAY.length - 1)));
+        dataFileHub.addCondensedSdrfFile(E_MTAB_513, ImmutableList.copyOf(Arrays.copyOfRange(E_MTAB_513_CONDENSED_SDRF_ARRAY, 0, E_MTAB_513_CONDENSED_SDRF_ARRAY.length - 1)));
         given(idfParserMock.parse(E_MTAB_513)).willReturn(new ImmutablePair<>(E_MTAB_513_TITLE, E_MTAB_513_PUBMED_IDS));
 
-        //when
         CondensedSdrfParserOutput output = subject.parse(E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE);
 
-        //then
         ExperimentDesign experimentDesign = output.getExperimentDesign();
         assertThat(experimentDesign.getAllRunOrAssay(), containsInAnyOrder(E_MTAB_513_ASSAYS[0], E_MTAB_513_ASSAYS[1], E_MTAB_513_ASSAYS[2]));
         assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder(AGE, ORGANISM_PART, ETHNIC_GROUP, ORGANISM));
@@ -180,73 +156,53 @@ public class CondensedSdrfParserTest {
 
     @Test
     public void parseAssayWithCompoundAndDose() {
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MEXP_1810), Arrays
-                .asList(E_MEXP_1810_CONDENSED_SDRF_ARRAY));
+        dataFileHub.addCondensedSdrfFile(E_MEXP_1810, Arrays.asList(E_MEXP_1810_CONDENSED_SDRF_ARRAY));
         given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
-        //when
         CondensedSdrfParserOutput output = subject.parse(E_MEXP_1810, ExperimentType.RNASEQ_MRNA_BASELINE);
 
-        //then
         ExperimentDesign experimentDesign = output.getExperimentDesign();
         assertThat(experimentDesign.getFactor(H_RIL_14_NON_DAUER_1, "compound").getValue(), is(COMPOUND_VALUE + " " + DOSE_VALUE));
     }
 
     @Test
     public void parseAssayWithCompoundAndNoDose() {
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MEXP_1810),
-                ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[1]));
+        dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[1]));
         given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
-        //when
         CondensedSdrfParserOutput output = subject.parse(E_MEXP_1810, ExperimentType.RNASEQ_MRNA_BASELINE);
 
-        //then
         ExperimentDesign experimentDesign = output.getExperimentDesign();
         assertThat(experimentDesign.getFactor(H_RIL_14_NON_DAUER_1, "compound").getValue(), is(COMPOUND_VALUE));
     }
 
     @Test
     public void parseAssayWithDoseAndNoCompoundOrIrradiate() {
-        //then
         thrown.expect(CondensedSdrfParser.CondensedSdrfParserException.class);
 
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MEXP_1810),
-                ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[2]));
+        dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[2]));
         given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
-        //when
+
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }
 
     @Test
     public void parseMultipleArrayDesigns() {
-        //then
         thrown.expect(CondensedSdrfParser.CondensedSdrfParserException.class);
 
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MEXP_1810),
-                ImmutableList.copyOf(MULTIPLE_ARRAY_DESIGNS_CONDENSED_SDRF_ARRAY));
+        dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.copyOf(MULTIPLE_ARRAY_DESIGNS_CONDENSED_SDRF_ARRAY));
         given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>("", ImmutableSet.of("")));
 
-        //when
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }
 
     @Test
     public void parseOtherThanFactorOrCharacteristic() {
-        //then
         thrown.expect(CondensedSdrfParser.CondensedSdrfParserException.class);
 
-        //given
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", E_MEXP_1810),
-                ImmutableList.copyOf(NO_FACTOR_OR_CHARACTERISTIC_CONDENSED_SDRF_ARRAY));
-        given(tsvReaderImplMock.readAll()).willReturn(ImmutableList.copyOf(NO_FACTOR_OR_CHARACTERISTIC_CONDENSED_SDRF_ARRAY));
+        dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.copyOf(NO_FACTOR_OR_CHARACTERISTIC_CONDENSED_SDRF_ARRAY));
         given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>("", ImmutableSet.of("")));
 
-        //when
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }
 

@@ -81,14 +81,14 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     @Mock
     private TsvReader tsvReaderMock;
 
-    MockDataFileHub dataFileHub = MockDataFileHub.get();
+    private MockDataFileHub dataFileHub = MockDataFileHub.get();
 
     private ExperimentDesignParser subject;
 
     @Before
     public void setUp() throws Exception {
 
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/expdesign/ExpDesign-{0}.tsv",EXPERIMENT_ACCESSION), DATA);
+        dataFileHub.addExperimentDesignFile(EXPERIMENT_ACCESSION, DATA);
 
         subject = new ExperimentDesignParser(dataFileHub);
     }

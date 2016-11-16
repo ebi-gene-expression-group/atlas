@@ -8,14 +8,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import java.io.File;
-import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Properties;
 
@@ -51,14 +49,10 @@ public class ExperimentCheckerTest {
 
     @Before
     public void setUp() throws Exception {
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.tsv", EXPERIMENT_ACCESSION)
-                , Collections.<String[]>emptyList());
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}.condensed-sdrf.tsv", EXPERIMENT_ACCESSION)
-                , Collections.<String[]>emptyList());
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}-analysis-methods.tsv", EXPERIMENT_ACCESSION)
-                , Collections.<String[]>emptyList());
-        dataFileHub.addTemporaryTsv(MessageFormat.format("/magetab/{0}/{0}-raw-counts.tsv", EXPERIMENT_ACCESSION)
-                , Collections.<String[]>emptyList());
+        dataFileHub.addExpressionFile(EXPERIMENT_ACCESSION, Collections.<String[]>emptyList());
+        dataFileHub.addCondensedSdrfFile(EXPERIMENT_ACCESSION, Collections.<String[]>emptyList());
+        dataFileHub.addAnalysisMethods(EXPERIMENT_ACCESSION, Collections.<String[]>emptyList());
+        dataFileHub.addRawCountsFile(EXPERIMENT_ACCESSION, Collections.<String[]>emptyList());
 
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);

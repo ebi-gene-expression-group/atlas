@@ -9,10 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class MockDataFileHub extends DataFileHub{
+public class MockDataFileHub extends DataFileHub {
 
     final File dir;
 
@@ -21,7 +22,7 @@ public class MockDataFileHub extends DataFileHub{
         this.dir = dir;
     }
 
-    public void addTemporaryTsv(String where, Collection<String[]> lines){
+    private void addTemporaryTsv(String where, Collection<String[]> lines){
         addTemporaryFile( where,
                 FluentIterable.from(lines).transform(new Function<String[], String>() {
                     @Nullable
@@ -46,6 +47,26 @@ public class MockDataFileHub extends DataFileHub{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addCondensedSdrfFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(CONDENSED_SDRF_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addRawCountsFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(RAW_COUNTS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addAnalysisMethods(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(ANALYSIS_METHODS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addExpressionFile(String accession, Collection<String[]> lines) {
+        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public static MockDataFileHub get() {
