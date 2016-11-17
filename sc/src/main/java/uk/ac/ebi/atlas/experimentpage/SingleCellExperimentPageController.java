@@ -8,13 +8,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 
 @Controller
 public class SingleCellExperimentPageController extends ExperimentPageController {
+
+    private final ExperimentTrader experimentTrader;
+
+    @Inject
+    public SingleCellExperimentPageController(ExperimentTrader experimentTrader){
+        this.experimentTrader = experimentTrader;
+    }
 
     @RequestMapping(value = "/experiments/{experimentAccession}")
     @ResponseBody
@@ -24,7 +33,6 @@ public class SingleCellExperimentPageController extends ExperimentPageController
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
 
-        return gson.toJson(new JsonPrimitive(MessageFormat.format("You asked me for an experiment {0}. Nice one",
-                experimentAccession)));
+        return gson.toJson(experimentTrader.getPublicExperiment(experimentAccession).getAttributes());
     }
 }

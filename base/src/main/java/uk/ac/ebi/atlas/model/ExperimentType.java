@@ -14,7 +14,7 @@ public enum ExperimentType {
     ,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
     ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential")
     ,PROTEOMICS_BASELINE("proteomics_baseline")
-    ,SINGLE_CELL_RNASEQ_MRNA_BASELINE("single_cell_rnaseq_mrna_baseline");
+    ,SINGLE_CELL_RNASEQ_MRNA_BASELINE("scrnaseq_mrna_baseline");
 
     private ExperimentType parent;
     private String description;
