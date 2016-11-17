@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import uk.ac.ebi.atlas.experimentpage.baseline.ExperimentPageController;
+import uk.ac.ebi.atlas.experimentpage.ExperimentPageController;
 
 public class DifferentialExperimentPageController  extends ExperimentPageController {
 

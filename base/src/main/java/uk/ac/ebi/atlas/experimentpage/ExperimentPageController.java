@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.Gson;
 import org.apache.solr.common.SolrException;
