@@ -4,7 +4,6 @@ import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
@@ -25,10 +24,9 @@ public class ExpressionAtlasExperimentMetadataCRUD extends ExperimentMetadataCRU
                                                  ExperimentDAO experimentDAO,
                                                  ExpressionAtlasExperimentTrader experimentTrader,
                                                  CondensedSdrfParser condensedSdrfParser,
-                                                 EFOLookupService efoParentsLookupService,
                                                  AnalyticsIndexerManager analyticsIndexerManager,
                                                  ConditionsIndexTrader conditionsIndexTrader) {
-        super(condensedSdrfParser, efoParentsLookupService, new ExperimentDesignFileWriterService(dataFileHub),
+        super(condensedSdrfParser, new ExperimentDesignFileWriterService(dataFileHub),
                 conditionsIndexTrader, experimentDAO,
                 analyticsIndexerManager, experimentTrader);
     }

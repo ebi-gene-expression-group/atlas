@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
+import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import com.google.common.collect.ImmutableSet;
@@ -8,6 +10,7 @@ import com.google.common.collect.SetMultimap;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,7 +31,13 @@ public abstract class ConditionsBuilder {
         this.efoLookupService = efoLookupService;
     }
 
-    public abstract Collection buildProperties(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession);
+    protected abstract Collection buildProperties(Experiment experiment, SetMultimap<String, String>
+            ontologyTermIdsByAssayAccession);
+
+    public Collection buildProperties(Experiment experiment){
+        return buildProperties(experiment, efoLookupService.expandOntologyTerms(experiment.getExperimentDesign()
+                .getAllOntologyTermIdsByAssayAccession()));
+    }
 
     protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> assayGroupIdToOntologyTermId) {
 

@@ -1,20 +1,17 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSetMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -32,14 +29,12 @@ public class ExperimentMetadataCRUD {
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
     private ConditionsIndexTrader conditionsIndexTrader;
-    private EFOLookupService efoParentsLookupService;
     private AnalyticsIndexerManager analyticsIndexerManager;
 
-        public ExperimentMetadataCRUD(CondensedSdrfParser condensedSdrfParser, EFOLookupService efoParentsLookupService,
+        public ExperimentMetadataCRUD(CondensedSdrfParser condensedSdrfParser,
                                       ExperimentDesignFileWriterService experimentDesignFileWriterService, ConditionsIndexTrader conditionsIndexTrader, ExperimentDAO experimentDAO, AnalyticsIndexerManager analyticsIndexerManager, ExperimentTrader experimentTrader) {
             this.condensedSdrfParser = condensedSdrfParser;
-        this.efoParentsLookupService = efoParentsLookupService;
-        this.experimentDesignFileWriterService = experimentDesignFileWriterService;
+            this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.conditionsIndexTrader = conditionsIndexTrader;
         this.experimentDAO = experimentDAO;
         this.analyticsIndexerManager = analyticsIndexerManager;
@@ -74,15 +69,14 @@ public class ExperimentMetadataCRUD {
     }
 
     private void addPublicExperimentToConditionsIndex(String accession, ExperimentDesign experimentDesign) {
+
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
-        ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-        conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment, efoParentsLookupService.expandOntologyTerms(termIdsByAssayAccession));
+        conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment);
     }
 
     private void updatePublicExperimentInConditionsIndex(String accession, ExperimentDesign experimentDesign) {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
-        ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-        conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment, efoParentsLookupService.expandOntologyTerms(termIdsByAssayAccession));
+        conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment);
     }
 
 

@@ -1,15 +1,18 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.*;
-import org.springframework.beans.factory.annotation.Value;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -32,7 +35,6 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -46,9 +48,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class ExperimentCRUDIT {
-
-    @Value("#{configuration['experiment.data.location']}")
-    String experimentDataLocation;
 
     @Spy
     @Inject
@@ -99,9 +98,15 @@ public class ExperimentCRUDIT {
         MockitoAnnotations.initMocks(this);
 
         when(efoLookupServiceMock.getLabels(anySetOf(String.class))).thenReturn(ImmutableSet.<String>of());
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return invocationOnMock.getArguments()[0];
+            }
+        }).when(efoLookupServiceMock).expandOntologyTerms(Matchers.<ImmutableSetMultimap<String, String>>any());
 
         experimentMetadataCRUD = new ExpressionAtlasExperimentMetadataCRUD(dataFileHub,experimentDAO,experimentTrader,
-                condensedSdrfParser, efoParentsLookupService,analyticsIndexerManager,
+                condensedSdrfParser, analyticsIndexerManager,
                 new ConditionsIndexTrader(
                         new BaselineConditionsIndex(solrClientMock, new BaselineConditionsBuilder(efoLookupServiceMock))
                         , new DifferentialConditionsIndex(solrClientMock, new DifferentialConditionsBuilder(efoLookupServiceMock)))
@@ -113,6 +118,26 @@ public class ExperimentCRUDIT {
                 configurationTrader,
                 expressionSerializerService
         );
+    }
+
+    @After
+    public void tryCleanUp() {
+        tryDelete("TEST-RNASEQ-BASELINE");
+        tryDelete("TEST-RNASEQ-DIFFERENTIAL");
+        tryDelete("TEST-MICROARRAY-1COLOUR-MRNA-DIFFERENTIAL");
+        tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
+        tryDelete("TEST-MICROARRAY-1COLOUR-MICRORNA-DIFFERENTIAL");
+        tryDelete("TEST-MICROARRAY-2COLOUR-MRNA-DIFFERENTIAL");
+        tryDelete("TEST-PROTEOMICS-BASELINE");
+    }
+
+    private boolean tryDelete(String accession) {
+        try{
+            experimentCRUD.deleteExperiment(accession);
+            return true;
+        } catch (ResourceNotFoundException e){
+            return false;
+        }
     }
 
     @Test
@@ -179,7 +204,7 @@ public class ExperimentCRUDIT {
     public void importNewExperimentInsertsDB(String experimentAccession, ExperimentType experimentType) throws IOException {
         assumeThat(experimentCount(experimentAccession), is(0));
         assumeThat(expressionsCount(experimentAccession, experimentType), is(0));
-        assumeThat(new File(experimentDataLocation, experimentAccession).exists(), is(true));
+        assumeThat(dataFileHub.getExperimentFiles(experimentAccession).main.exists(), is(true));
 
         experimentCRUD.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));

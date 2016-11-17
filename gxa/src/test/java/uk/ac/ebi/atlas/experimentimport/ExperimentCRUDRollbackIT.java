@@ -72,7 +72,7 @@ public class ExperimentCRUDRollbackIT {
 
         when(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
         ExperimentMetadataCRUD experimentMetadataCRUDmock =
-                new ExperimentMetadataCRUD(condensedSdrfParser, efoParentsLookupService,
+                new ExperimentMetadataCRUD(condensedSdrfParser,
                         experimentDesignFileWriterService, conditionsIndexTraderMock, experimentDAO,
                         analyticsIndexerManagerMock,
                         experimentTrader );

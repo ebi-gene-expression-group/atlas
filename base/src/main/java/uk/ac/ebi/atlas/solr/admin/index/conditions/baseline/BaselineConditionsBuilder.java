@@ -26,7 +26,8 @@ public class BaselineConditionsBuilder extends ConditionsBuilder {
     }
 
     @Override
-    public Collection<Condition> buildProperties(Experiment experiment, SetMultimap<String, String> assayGroupIdToOntologyTermIds) {
+    protected Collection<Condition> buildProperties(Experiment experiment, SetMultimap<String, String>
+            assayGroupIdToOntologyTermIds) {
 
         Collection<Condition> conditions = Lists.newLinkedList();
 

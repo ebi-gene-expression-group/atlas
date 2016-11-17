@@ -1,11 +1,10 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import uk.ac.ebi.atlas.model.Experiment;
-import com.google.common.collect.SetMultimap;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.model.Experiment;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -24,20 +23,19 @@ public abstract class ConditionsIndex {
         this.propertiesBuilder = propertiesBuilder;
     }
 
-
-    public void updateConditions(Experiment experiment, SetMultimap<String, String> ontologyTerms) {
+    public void updateConditions(Experiment experiment) {
 
         LOGGER.info("<updateConditions> {}", experiment.getAccession());
 
         removeConditions(experiment.getAccession());
 
-        addConditions(experiment, ontologyTerms);
+        addConditions(experiment);
     }
 
-    public void addConditions(Experiment experiment, SetMultimap<String, String> assayGroupIdToOntologyTermIds) {
+    public void addConditions(Experiment experiment) {
         try {
 
-            Collection propertiesBeans = propertiesBuilder.buildProperties(experiment, assayGroupIdToOntologyTermIds);
+            Collection propertiesBeans = propertiesBuilder.buildProperties(experiment);
 
             solrClient.addBeans(propertiesBeans);
             solrClient.commit();

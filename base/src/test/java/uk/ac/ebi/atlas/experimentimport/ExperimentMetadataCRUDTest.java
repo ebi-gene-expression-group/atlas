@@ -4,13 +4,11 @@ import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.SetMultimap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
@@ -135,7 +133,7 @@ public class ExperimentMetadataCRUDTest {
         when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(condensedSdrfParserMock,
-                efoParentsLookupServiceMock,experimentDesignFileWriterService,
+                experimentDesignFileWriterService,
                 conditionsIndexTraderMock,experimentDAOMock,analyticsIndexerManagerMock,experimentTraderMock);
     }
 
@@ -156,13 +154,13 @@ public class ExperimentMetadataCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION);
-        verify(conditionsIndexMock).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
+        verify(conditionsIndexMock).updateConditions(any(Experiment.class));
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfigurationMock, false, Optional.<String>absent());
-        verify(conditionsIndexMock).addConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
+        verify(conditionsIndexMock).addConditions(any(Experiment.class));
     }
 
     @Test

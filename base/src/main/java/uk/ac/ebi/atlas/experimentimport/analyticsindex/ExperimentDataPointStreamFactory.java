@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.SetMultimap;
 import com.google.common.collect.UnmodifiableIterator;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsInputStreamFactory;
@@ -33,7 +32,6 @@ import java.util.Map;
 
 @Named
 public class ExperimentDataPointStreamFactory {
-    private final EFOLookupService efoParentsLookupService;
     private final MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory;
     private final RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
@@ -48,7 +46,6 @@ public class ExperimentDataPointStreamFactory {
                                                         rnaSeqDifferentialAnalyticsInputStreamFactory,
                                             BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
 
-        this.efoParentsLookupService = efoParentsLookupService;
         this.microarrayDifferentialAnalyticsInputStreamFactory = microarrayDifferentialAnalyticsInputStreamFactory;
         this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
@@ -77,9 +74,7 @@ public class ExperimentDataPointStreamFactory {
                         baselineAnalyticsInputStreamFactory.create(
                                 experiment.getAccession(), experiment.getType())
                 ),
-                buildAssayGroupIdToConditionsSearchTerms(experiment,
-                        efoParentsLookupService.expandOntologyTerms(
-                                experiment.getExperimentDesign().getAllOntologyTermIdsByAssayAccession())
+                buildAssayGroupIdToConditionsSearchTerms(experiment
                 )
         );
     }
@@ -90,9 +85,7 @@ public class ExperimentDataPointStreamFactory {
                 new IterableObjectInputStream<>(
                         rnaSeqDifferentialAnalyticsInputStreamFactory.create(experiment.getAccession())
                 ),
-                buildConditionSearchTermsByAssayGroupId(experiment,
-                        efoParentsLookupService
-                                .expandOntologyTerms(experiment.getExperimentDesign().getAllOntologyTermIdsByAssayAccession())
+                buildConditionSearchTermsByAssayGroupId(experiment
                 ),
                 buildNumReplicatesByContrastId(experiment)
         );
@@ -135,9 +128,7 @@ public class ExperimentDataPointStreamFactory {
                 new IterableObjectInputStream<>(
                         microarrayDifferentialAnalyticsInputStreamFactory.create(experiment.getAccession(),designElement)
                 ),
-                buildConditionSearchTermsByAssayGroupId(experiment,
-                        efoParentsLookupService
-                                .expandOntologyTerms(experiment.getExperimentDesign().getAllOntologyTermIdsByAssayAccession())
+                buildConditionSearchTermsByAssayGroupId(experiment
                 ),
                 buildNumReplicatesByContrastId(experiment)
         );
@@ -154,8 +145,8 @@ public class ExperimentDataPointStreamFactory {
         return builder.build();
     }
 
-    private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment, SetMultimap<String, String> AssayIdToOntologyAccessions) {
-        Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment, AssayIdToOntologyAccessions);
+    private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment) {
+        Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment);
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 
         for (Condition condition : conditions) {
@@ -165,9 +156,9 @@ public class ExperimentDataPointStreamFactory {
         return builder.build();
     }
 
-    private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment) {
 
-        Collection<DifferentialCondition> conditions = diffConditionsBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
+        Collection<DifferentialCondition> conditions = diffConditionsBuilder.buildProperties(experiment);
 
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 

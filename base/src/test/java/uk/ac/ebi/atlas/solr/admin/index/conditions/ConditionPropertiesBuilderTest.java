@@ -1,9 +1,13 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
@@ -18,11 +22,11 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -75,10 +79,11 @@ public class ConditionPropertiesBuilderTest {
 
     @Test
     public void buildDifferentialConditionProperties() throws Exception {
+        when(efoLookupService.expandOntologyTerms((ImmutableSetMultimap<String, String>) Matchers.any())).thenReturn(
+                ImmutableSetMultimap.<String, String>of()
+        );
 
-        SetMultimap<String, String> emptyOntologyTerms = ImmutableSetMultimap.of();
-
-        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock, emptyOntologyTerms);
+        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
 
         assertThat(result.size(), is(2));
         assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
@@ -89,12 +94,12 @@ public class ConditionPropertiesBuilderTest {
     @Test
     public void buildDifferentialConditionPropertiesIncludingOntologyTerms() throws Exception {
 
-        SetMultimap<String, String> ontologyTerms =
+        when(efoLookupService.expandOntologyTerms((ImmutableSetMultimap<String, String>) Matchers.any())).thenReturn(
                 new ImmutableSetMultimap.Builder<String, String>()
                         .putAll("Assay1", "obo", "efo")
-                        .build();
-
-        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock, ontologyTerms);
+                        .build()
+        );
+        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
 
         assertThat(result.size(), is(3));
         assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1", "obo", "efo"))), is(true));  //Assay1

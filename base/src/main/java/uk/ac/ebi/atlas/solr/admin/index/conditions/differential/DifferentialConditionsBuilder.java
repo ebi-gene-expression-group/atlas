@@ -26,7 +26,9 @@ public class DifferentialConditionsBuilder extends ConditionsBuilder {
         super(efoLookupService);
     }
 
-    public Collection<DifferentialCondition> buildProperties(Experiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    @Override
+    protected Collection<DifferentialCondition> buildProperties(Experiment experiment, SetMultimap<String, String>
+            ontologyTermIdsByAssayAccession) {
 
         Collection<DifferentialCondition> conditions = Lists.newLinkedList();
 
@@ -48,11 +50,11 @@ public class DifferentialConditionsBuilder extends ConditionsBuilder {
         Collection<DifferentialCondition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
-            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession, ontologyTermIdsByAssayAccession);
 
-            DifferentialCondition differentialCondition = new DifferentialCondition(experiment.getAccession(),
-                    assayGroup.getId(), contrastId, values);
-            conditions.add(differentialCondition);
+            conditions.add(new DifferentialCondition(experiment.getAccession(),
+                    assayGroup.getId(), contrastId,
+                    collectAssayProperties(experiment.getExperimentDesign(),
+                            assayAccession, ontologyTermIdsByAssayAccession)));
         }
 
         return conditions;
