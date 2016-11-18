@@ -5,34 +5,38 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 
+@Named
 public class RnaSeqBaselineAnalyticsLoader implements AnalyticsLoader {
 
-    private final BaselineAnalyticsDAO baselineAnalyticsDAO;
-    private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
+    private BaselineAnalyticsDAO analyticsDAO;
+    private BaselineAnalyticsInputStreamFactory analyticsInputStreamFactory;
 
-    public RnaSeqBaselineAnalyticsLoader(BaselineAnalyticsDAO baselineAnalyticsDAO, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
-        this.baselineAnalyticsDAO = baselineAnalyticsDAO;
-        this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
+    @Inject
+    public void setAnalyticsDAO(BaselineAnalyticsDAO analyticsDAO) {
+        this.analyticsDAO = analyticsDAO;
+    }
+
+    @Inject
+    public void setAnalyticsInputStreamFactory(BaselineAnalyticsInputStreamFactory analyticsInputStreamFactory) {
+        this.analyticsInputStreamFactory = analyticsInputStreamFactory;
     }
 
     @Override
     @Transactional
     public void loadAnalytics(String accession) throws IOException {
-        loadBaselineExpressions(accession);
-    }
-
-    private void loadBaselineExpressions(String accession) {
-        ObjectInputStream<BaselineAnalytics> baselineAnalyticsInputStream = baselineAnalyticsInputStreamFactory.create
-                (accession, ExperimentType.RNASEQ_MRNA_BASELINE);
-        baselineAnalyticsDAO.loadAnalytics(accession, baselineAnalyticsInputStream);
+        ObjectInputStream<BaselineAnalytics> baselineAnalyticsInputStream =
+                analyticsInputStreamFactory.create(accession, ExperimentType.RNASEQ_MRNA_BASELINE);
+        analyticsDAO.loadAnalytics(accession, baselineAnalyticsInputStream);
     }
 
     @Override
     @Transactional
     public void deleteAnalytics(String accession) {
-        baselineAnalyticsDAO.deleteAnalytics(accession);
+        analyticsDAO.deleteAnalytics(accession);
     }
 
 }

@@ -3,16 +3,23 @@ package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 
+@Named
 public class RnaSeqDifferentialAnalyticsLoader implements AnalyticsLoader {
 
-    private final RnaSeqDifferentialAnalyticsDao analyticsDao;
-    private final RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory;
+    private RnaSeqDifferentialAnalyticsDao analyticsDao;
+    private RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory;
 
-    public RnaSeqDifferentialAnalyticsLoader(RnaSeqDifferentialAnalyticsDao analyticsDao,
-                                             RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
+    @Inject
+    public void setAnalyticsDao(RnaSeqDifferentialAnalyticsDao analyticsDao) {
         this.analyticsDao = analyticsDao;
+    }
+
+    @Inject
+    public void setAnalyticsInputStreamFactory(RnaSeqDifferentialAnalyticsInputStreamFactory analyticsInputStreamFactory) {
         this.analyticsInputStreamFactory = analyticsInputStreamFactory;
     }
 
