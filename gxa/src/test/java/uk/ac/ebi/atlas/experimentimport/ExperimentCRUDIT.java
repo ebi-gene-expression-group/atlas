@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
-import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.After;
 import org.junit.Before;
@@ -11,8 +8,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.*;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,23 +25,21 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Collection;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
-import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.*;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
-public class ExperimentCRUDIT {
+public class ExperimentCrudIT {
 
     @Spy
     @Inject
@@ -89,24 +82,18 @@ public class ExperimentCRUDIT {
     @Inject
     ConfigurationTrader configurationTrader;
 
-    ExperimentMetadataCRUD experimentMetadataCRUD;
-    ExperimentCRUD experimentCRUD;
+    ExperimentCrud experimentCrud;
+
 
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        experimentMetadataCRUD = new ExperimentMetadataCRUD(condensedSdrfParser, experimentDesignFileWriterService,
+        experimentCrud = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
                 conditionsIndexingService,
-                experimentDAO, analyticsIndexerManager, experimentTrader);
+                experimentDAO, analyticsIndexerManager, experimentTrader, experimentCheckerSpy,
+                analyticsLoaderFactory, configurationTrader);
 
-        experimentCRUD = new ExperimentCRUD(
-                experimentCheckerSpy,
-                experimentMetadataCRUD,
-                analyticsLoaderFactory,
-                configurationTrader,
-                expressionSerializerService
-        );
     }
 
     @After
@@ -122,7 +109,7 @@ public class ExperimentCRUDIT {
 
     private boolean tryDelete(String accession) {
         try{
-            experimentCRUD.deleteExperiment(accession);
+            experimentCrud.deleteExperiment(accession);
             return true;
         } catch (ResourceNotFoundException e){
             return false;
@@ -132,7 +119,7 @@ public class ExperimentCRUDIT {
     @Test
     public void deleteNonExistentExperimentThrowsResourceNotFoundException() {
         thrown.expect(ResourceNotFoundException.class);
-        experimentCRUD.deleteExperiment("FOOBAR");
+        experimentCrud.deleteExperiment("FOOBAR");
     }
 
     @Test
@@ -167,21 +154,6 @@ public class ExperimentCRUDIT {
         verify(experimentCheckerSpy, times(2)).checkBaselineFiles("TEST-PROTEOMICS-BASELINE");
     }
 
-    @Test
-    public void weCanSerializeARnaSeqBaselineExperimentAndTidyUpTheFilesWhenDeleting()
-            throws Exception{
-        String experimentAccession = "TEST-RNASEQ-BASELINE";
-        ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
-        importNewExperimentInsertsDB(experimentAccession,experimentType);
-
-        experimentCRUD.serializeExpressionData(experimentAccession);
-        verify(expressionSerializerService).kryoSerializeExpressionData(experimentAccession);
-
-        deleteExperimentDeletesDB(experimentAccession,experimentType);
-        verify(expressionSerializerService).removeKryoFile(experimentAccession);
-    }
-
-
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {
         importNewExperimentInsertsDB(experimentAccession, experimentType);
         verifyConditionsAddedToSolr(experimentAccession, experimentType);
@@ -195,18 +167,18 @@ public class ExperimentCRUDIT {
         assumeThat(expressionsCount(experimentAccession, experimentType), is(0));
         assumeThat(dataFileHub.getExperimentFiles(experimentAccession).main.exists(), is(true));
 
-        experimentCRUD.importExperiment(experimentAccession, false);
+        experimentCrud.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
         assertThat(expressionsCount(experimentAccession, experimentType), is(1));
     }
 
     public void importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType) throws IOException {
-        ExperimentDTO originalExperimentDTO = experimentMetadataCRUD.findExperiment(experimentAccession);
-        experimentCRUD.importExperiment(experimentAccession, false);
+        ExperimentDTO originalExperimentDTO = experimentCrud.findExperiment(experimentAccession);
+        experimentCrud.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
         assertThat(expressionsCount(experimentAccession, experimentType), is(1));
 
-        ExperimentDTO newExperimentDTO = experimentMetadataCRUD.findExperiment(experimentAccession);
+        ExperimentDTO newExperimentDTO = experimentCrud.findExperiment(experimentAccession);
         assertThat(originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
     }
 
@@ -217,7 +189,7 @@ public class ExperimentCRUDIT {
     }
 
     public void deleteExperimentDeletesDB(String experimentAccession, ExperimentType experimentType) {
-        experimentCRUD.deleteExperiment(experimentAccession);
+        experimentCrud.deleteExperiment(experimentAccession);
         assertThat(experimentCount(experimentAccession), is(0));
         assertThat(expressionsCount(experimentAccession, experimentType), is(0));
     }

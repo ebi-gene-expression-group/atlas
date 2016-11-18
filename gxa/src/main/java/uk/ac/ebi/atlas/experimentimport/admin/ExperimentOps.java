@@ -10,9 +10,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
-import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,21 +30,24 @@ public class ExperimentOps {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentOps.class);
 
-    private ExperimentCRUD experimentCRUD;
-    private ExperimentMetadataCRUD experimentMetadataCRUD;
+    private ExperimentCrud experimentCrud;
     private ExperimentOpLogWriter experimentOpLogWriter;
     private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     private AnalyticsIndexerManager analyticsIndexerManager;
+    private final ExpressionSerializerService expressionSerializerService;
 
 
     @Inject
-    public ExperimentOps(ExperimentCRUD experimentCRUD, ExperimentMetadataCRUD experimentMetadataCRUD,
-                         ExperimentOpLogWriter experimentOpLogWriter, BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader, AnalyticsIndexerManager analyticsIndexerManager) {
-        this.experimentCRUD = experimentCRUD;
-        this.experimentMetadataCRUD = experimentMetadataCRUD;
+    public ExperimentOps(ExperimentCrud experimentCrud,
+                         ExperimentOpLogWriter experimentOpLogWriter,
+                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
+                         AnalyticsIndexerManager analyticsIndexerManager,
+                         ExpressionSerializerService expressionSerializerService) {
+        this.experimentCrud = experimentCrud;
         this.experimentOpLogWriter = experimentOpLogWriter;
         this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.analyticsIndexerManager = analyticsIndexerManager;
+        this.expressionSerializerService = expressionSerializerService;
     }
 
     static Long UNFINISHED = new Long(-1);
@@ -72,7 +75,7 @@ public class ExperimentOps {
 
 
     private JsonArray perform(Collection<Op> ops){
-        List<ExperimentDTO> dtos = experimentMetadataCRUD.findAllExperiments();
+        List<ExperimentDTO> dtos = experimentCrud.findAllExperiments();
         //default case of all experiments and a request to list them, optimised here
         if (ops.equals(Collections.singleton(Op.LIST))) {
             JsonArray array = new JsonArray();
@@ -90,7 +93,7 @@ public class ExperimentOps {
     }
 
     private JsonArray perform(Op op){
-        List<ExperimentDTO> dtos = experimentMetadataCRUD.findAllExperiments();
+        List<ExperimentDTO> dtos = experimentCrud.findAllExperiments();
         //default case of all experiments and a request to list them, optimised here
         if (op.equals(Op.LIST)) {
             JsonArray array = new JsonArray();
@@ -198,7 +201,7 @@ public class ExperimentOps {
     private Pair<OpResult, ? extends JsonElement> performOneOp(String accession, Op op){
         switch (op) {
             case LIST:
-                return Pair.of(OpResult.SUCCESS, experimentMetadataCRUD.findExperiment(accession).toJson());
+                return Pair.of(OpResult.SUCCESS, experimentCrud.findExperiment(accession).toJson());
             case LOG:
                 return Pair.of(OpResult.SUCCESS, getCurrentOpLogAsJson(accession));
             case STATUS:
@@ -272,25 +275,26 @@ public class ExperimentOps {
         int loadCount;
         switch (op) {
             case UPDATE_PRIVATE:
-                experimentMetadataCRUD.makeExperimentPrivate(accession);
+                experimentCrud.makeExperimentPrivate(accession);
                 break;
             case UPDATE_PUBLIC:
-                experimentMetadataCRUD.makeExperimentPublic(accession);
+                experimentCrud.makeExperimentPublic(accession);
                 break;
             case UPDATE_DESIGN_ONLY:
-                experimentMetadataCRUD.updateExperimentDesign(accession);
+                experimentCrud.updateExperimentDesign(accession);
                 break;
             case IMPORT_PUBLIC:
                 isPrivate = false;
             case IMPORT:
-                UUID accessKeyUUID = experimentCRUD.importExperiment(accession, isPrivate);
+                UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
                 resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
                 break;
             case SERIALIZE:
-                resultOfTheOp = new JsonPrimitive(experimentCRUD.serializeExpressionData(accession));
+                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(accession));
                 break;
             case DELETE:
-                experimentCRUD.deleteExperiment(accession);
+                experimentCrud.deleteExperiment(accession);
+                expressionSerializerService.removeKryoFile(accession);
                 break;
             case COEXPRESSION_UPDATE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);

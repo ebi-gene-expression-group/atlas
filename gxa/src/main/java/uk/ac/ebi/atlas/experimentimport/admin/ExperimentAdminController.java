@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -25,16 +25,16 @@ public class ExperimentAdminController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminController.class);
 
     private final ExperimentOps experimentOps;
-    private final ExperimentMetadataCRUD experimentMetadataCRUD;
+    private final ExperimentCrud experimentCrud;
     private final ExperimentAdminHelpPage helpPage = new ExperimentAdminHelpPage();
     private final Gson gson= new GsonBuilder().setPrettyPrinting().create();
 
     
     @Inject
     public ExperimentAdminController(ExperimentOps experimentOps,
-                                     ExperimentMetadataCRUD experimentMetadataCRUD) {
+                                     ExperimentCrud experimentCrud) {
         this.experimentOps = experimentOps;
-        this.experimentMetadataCRUD = experimentMetadataCRUD;
+        this.experimentCrud = experimentCrud;
     }
 
     @RequestMapping(
@@ -98,7 +98,7 @@ public class ExperimentAdminController {
         if (accessionParameter.contains("*")) {
             List<String> result = new ArrayList<>();
             Pattern pattern = Pattern.compile(accessionParameter.replaceAll("\\*", ".*"));
-            for (ExperimentDTO dto : experimentMetadataCRUD.findAllExperiments()) {
+            for (ExperimentDTO dto : experimentCrud.findAllExperiments()) {
                 if (pattern.matcher(dto.getExperimentAccession()).matches()) {
                     result.add(dto.getExperimentAccession());
                 }

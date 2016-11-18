@@ -15,11 +15,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.*;
@@ -27,9 +27,7 @@ import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ExperimentOpsTest {
@@ -37,28 +35,30 @@ public class ExperimentOpsTest {
     ExperimentOps experimentOps;
 
     @Mock
-    ExperimentCRUD experimentCRUD;
-    @Mock
-    ExperimentMetadataCRUD experimentMetadataCRUD;
+    ExperimentCrud experimentCrud;
     @Mock
     ExperimentOpLogWriter experimentOpLogWriter;
     @Mock
     BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     @Mock
     AnalyticsIndexerManager analyticsIndexerManager;
+    @Mock
+    ExpressionSerializerService expressionSerializerService;
 
     final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
 
    private String accession = "E-EXAMPLE-1";
 
+    
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        experimentOps = new ExperimentOps(experimentCRUD, experimentMetadataCRUD, experimentOpLogWriter,
-                baselineCoexpressionProfileLoader, analyticsIndexerManager);
+        experimentOps = new ExperimentOps(experimentCrud, experimentOpLogWriter,
+                baselineCoexpressionProfileLoader, analyticsIndexerManager,expressionSerializerService);
 
-        when(experimentCRUD.serializeExpressionData(Matchers.anyString())).thenReturn("skipped");
+        when(expressionSerializerService.kryoSerializeExpressionData(Matchers.anyString())).thenReturn("skipped");
 
         Mockito.doAnswer(new Answer<ExperimentDTO>() {
             @Override
@@ -72,7 +72,7 @@ public class ExperimentOpsTest {
                                          "Homo sapiens", new HashSet<String>(),
                                          "title", new Date(), false, UUID.randomUUID().toString());
             }
-        }).when(experimentMetadataCRUD).findExperiment(Matchers.anyString());
+        }).when(experimentCrud).findExperiment(Matchers.anyString());
 
 
         Mockito.doAnswer(new Answer<List<Pair<String, Pair<Long, Long>>>>() {
@@ -128,7 +128,7 @@ public class ExperimentOpsTest {
     @Test
     public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        Mockito.when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
         List<Op> ops= new ArrayList<>();
         ops.add(Op.UPDATE_DESIGN_ONLY); // says "success!"
         ops.add(Op.CLEAR_LOG); // says "success!"
@@ -206,7 +206,7 @@ public class ExperimentOpsTest {
     @Test
     public void errorLeavesLogDirty() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        Mockito.when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
 
         JsonObject result = experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
                 .DELETE))
@@ -227,28 +227,28 @@ public class ExperimentOpsTest {
         assertEquals(Op.opsForParameter("LOAD_PUBLIC"), ImmutableList.of(Op.IMPORT_PUBLIC,Op.COEXPRESSION_UPDATE,
                 Op.SERIALIZE,Op.ANALYTICS_IMPORT) );
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(experimentOps, experimentCrud).doOp(accession, "LOAD_PUBLIC");
 
-        verify(experimentCRUD).importExperiment(accession, false);
+        verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(experimentCRUD).serializeExpressionData(accession);
+        verify(expressionSerializerService).kryoSerializeExpressionData(accession);
         verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
 
-        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled1() throws Exception {
         Mockito.doThrow(new RuntimeException("The files are bad!"))
-                .when(experimentCRUD)
+                .when(experimentCrud)
                 .importExperiment(accession,false);
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(experimentOps, experimentCrud).doOp(accession, "LOAD_PUBLIC");
 
-        verify(experimentCRUD).importExperiment(accession, false);
+        verify(experimentCrud).importExperiment(accession, false);
 
-        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
@@ -257,31 +257,31 @@ public class ExperimentOpsTest {
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(experimentOps, experimentCrud).doOp(accession, "LOAD_PUBLIC");
 
-        verify(experimentCRUD).importExperiment(accession, false);
+        verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
 
-        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
     }
 
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws Exception {
         Mockito.doThrow(new RuntimeException("Serializing failed"))
-                .when(experimentCRUD)
-                .serializeExpressionData(accession);
+                .when(expressionSerializerService)
+                .kryoSerializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps,experimentMetadataCRUD)
+                new ExperimentAdminController(experimentOps, experimentCrud)
                         .doOp(accession, "LOAD_PUBLIC");
 
-        verify(experimentCRUD).importExperiment(accession, false);
+        verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        verify(experimentCRUD).serializeExpressionData(accession);
+        verify(expressionSerializerService).kryoSerializeExpressionData(accession);
 
-        verifyNoMoreInteractions(experimentCRUD,experimentMetadataCRUD,analyticsIndexerManager,baselineCoexpressionProfileLoader);
+        verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
 
         assertThat(response, containsString("Serializing failed"));
         assertThat(response, containsString("error"));
@@ -290,11 +290,11 @@ public class ExperimentOpsTest {
     @Test
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws Exception {
         Mockito.doThrow(new NullPointerException())
-                .when(experimentCRUD)
-                .serializeExpressionData(accession);
+                .when(expressionSerializerService)
+                .kryoSerializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps,experimentMetadataCRUD)
+                new ExperimentAdminController(experimentOps, experimentCrud)
                         .doOp(accession, "LOAD_PUBLIC");
 
         assertThat(response, containsString("error"));
