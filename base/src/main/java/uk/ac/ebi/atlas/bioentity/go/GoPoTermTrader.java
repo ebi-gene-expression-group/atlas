@@ -20,10 +20,9 @@ public class GoPoTermTrader {
     private final ImmutableMap<String, OntologyTerm> accessionToTerm;
 
     @Inject
-    public GoPoTermTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath,
-                          CsvReaderFactory csvReaderFactory) {
+    public GoPoTermTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath) {
 
-        try (CSVReader tsvReader = csvReaderFactory.createTsvReader(goPoTSVFilePath)) {
+        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(goPoTSVFilePath)) {
             accessionToTerm = new GoPoTermTSVParser(tsvReader).parse();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);

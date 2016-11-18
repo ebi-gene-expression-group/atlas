@@ -19,10 +19,9 @@ public class InterProTrader {
     private final ImmutableMap<String, String> interProAccessionToTerm;
 
     @Inject
-    public InterProTrader(@Value("#{configuration['interpro.terms.file']}") String interProTSVFilePath,
-                          CsvReaderFactory csvReaderFactory) {
+    public InterProTrader(@Value("#{configuration['interpro.terms.file']}") String interProTSVFilePath) {
 
-        try (CSVReader tsvReader = csvReaderFactory.createTsvReader(interProTSVFilePath)) {
+        try (CSVReader tsvReader = CsvReaderFactory.createForTsv(interProTSVFilePath)) {
             interProAccessionToTerm = new InterProTSVParser(tsvReader).parse();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
