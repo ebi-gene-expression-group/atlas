@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
@@ -12,6 +14,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.Iterator;
 
 /**
@@ -25,6 +28,8 @@ import java.util.Iterator;
 @Controller
 @Scope("request")
 public class BaselineExperimentAssayGroupsTsvController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentAssayGroupsTsvController.class);
 
     private ExpressionAtlasExperimentTrader experimentTrader;
 
@@ -41,21 +46,26 @@ public class BaselineExperimentAssayGroupsTsvController {
     private void getAllBaselineExperimentsAssayGroups(HttpServletResponse response) throws IOException {
         BaselineExperiment baselineExperiment;
         BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines;
+        response.setContentType("text/tab-separated-values");
+        PrintWriter writer = response.getWriter();
+
 
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
-            baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            baselineExperimentAssayGroupsLines = new BaselineExperimentAssayGroupsLines(baselineExperiment);
-            extractLinesToTSVFormat(baselineExperimentAssayGroupsLines, response);
-
+            try {
+                baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+                baselineExperimentAssayGroupsLines = new BaselineExperimentAssayGroupsLines(baselineExperiment);
+                extractLinesToTSVFormat(baselineExperimentAssayGroupsLines, writer);
+            } catch (RuntimeException e){
+                LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experimentAccession, e));
+                writer.write("Error while attempting to write "+experimentAccession+", file incomplete!!!");
+                break;
+            }
         }
     }
 
 
-    private void extractLinesToTSVFormat(BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines, HttpServletResponse response) throws IOException {
-        PrintWriter writer = response.getWriter();
-
-        response.setContentType("text/tab-separated-values");
+    private void extractLinesToTSVFormat(BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines, PrintWriter writer ) throws IOException {
 
         Iterator<String[]> lines = baselineExperimentAssayGroupsLines.iterator();
 
