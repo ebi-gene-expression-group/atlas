@@ -59,8 +59,6 @@
                     <target>${java-version}</target>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
-                    <!--<executable>${env.JAVA_HOME_7}/bin/javac</executable>-->
-                    <!--<fork>true</fork>-->
                 </configuration>
             </plugin>
 
@@ -320,17 +318,6 @@
         </dependency>
     </dependencies>
 
-    <!--<distributionManagement>-->
-        <!--<repository>-->
-            <!--<id>ebi-repo</id>-->
-            <!--<url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo</url>-->
-        <!--</repository>-->
-        <!--<snapshotRepository>-->
-            <!--<id>ebi-repo-snapshots</id>-->
-            <!--<url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots</url>-->
-        <!--</snapshotRepository>-->
-    <!--</distributionManagement>-->
-
     <licenses>
         <license>
             <name>Apache Software License 2.0</name>
@@ -412,6 +399,16 @@
         <profile>
             <!-- Used for build that is deployed to ves-hx-77 -->
             <id>test</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>**/resources</directory>
+                        <excludes>
+                            <exclude>oracleContext.xml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
             <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
@@ -427,7 +424,13 @@
             <build>
                 <resources>
                     <resource>
-                        <directory>src/main/resources</directory>
+                        <directory>gxa/src/main/resources</directory>
+                        <excludes>
+                            <exclude>oracleContext.xml</exclude>
+                        </excludes>
+                    </resource>
+                    <resource>
+                        <directory>base/src/main/resources</directory>
                         <excludes>
                             <exclude>oracleContext.xml</exclude>
                         </excludes>
