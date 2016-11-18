@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
-public class EFOLookupServiceIT {
+public class EFOLookupServiceEIT {
 
     private static final String BTO_0002690 = "BTO_0002690";
     private static final String GO_0023014 = "GO_0023014";

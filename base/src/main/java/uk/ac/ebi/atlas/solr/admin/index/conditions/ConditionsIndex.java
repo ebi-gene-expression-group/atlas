@@ -15,10 +15,10 @@ public abstract class ConditionsIndex {
 
     private SolrClient solrClient;
 
-    private ConditionsBuilder propertiesBuilder;
+    private ConditionsLookupService propertiesBuilder;
 
 
-    public ConditionsIndex(SolrClient solrClient, ConditionsBuilder propertiesBuilder) {
+    public ConditionsIndex(SolrClient solrClient, ConditionsLookupService propertiesBuilder) {
         this.solrClient = solrClient;
         this.propertiesBuilder = propertiesBuilder;
     }

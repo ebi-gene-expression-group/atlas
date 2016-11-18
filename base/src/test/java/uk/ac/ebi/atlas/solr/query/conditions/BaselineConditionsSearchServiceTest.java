@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 
 import java.io.IOException;
 

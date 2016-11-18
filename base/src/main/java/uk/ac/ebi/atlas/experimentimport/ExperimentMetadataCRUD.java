@@ -6,13 +6,11 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.io.IOException;
@@ -28,14 +26,18 @@ public class ExperimentMetadataCRUD {
     private final CondensedSdrfParser condensedSdrfParser;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
-    private ConditionsIndexTrader conditionsIndexTrader;
+    private final ConditionsIndexingService conditionsIndexingService;
     private AnalyticsIndexerManager analyticsIndexerManager;
 
         public ExperimentMetadataCRUD(CondensedSdrfParser condensedSdrfParser,
-                                      ExperimentDesignFileWriterService experimentDesignFileWriterService, ConditionsIndexTrader conditionsIndexTrader, ExperimentDAO experimentDAO, AnalyticsIndexerManager analyticsIndexerManager, ExperimentTrader experimentTrader) {
+                                      ExperimentDesignFileWriterService experimentDesignFileWriterService,
+                                      ConditionsIndexingService conditionsIndexingService,
+                                      ExperimentDAO experimentDAO,
+                                      AnalyticsIndexerManager analyticsIndexerManager,
+                                      ExperimentTrader experimentTrader) {
             this.condensedSdrfParser = condensedSdrfParser;
             this.experimentDesignFileWriterService = experimentDesignFileWriterService;
-        this.conditionsIndexTrader = conditionsIndexTrader;
+            this.conditionsIndexingService = conditionsIndexingService;
         this.experimentDAO = experimentDAO;
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.experimentTrader = experimentTrader;
@@ -62,38 +64,24 @@ public class ExperimentMetadataCRUD {
         //from cache gets this experiment from the DB first
         //TODO: change this so it uses experimentConfiguration, experimentDesign, and accession rather than experiment
         if (!isPrivate) {
-            addPublicExperimentToConditionsIndex(accession, experimentDesign);
+            conditionsIndexingService.indexConditions(accession, experimentType, experimentDesign);
         }
 
         return uuid;
     }
 
-    private void addPublicExperimentToConditionsIndex(String accession, ExperimentDesign experimentDesign) {
-
-        Experiment experiment = experimentTrader.getPublicExperiment(accession);
-        conditionsIndexTrader.getIndex(experiment.getType()).addConditions(experiment);
-    }
-
-    private void updatePublicExperimentInConditionsIndex(String accession, ExperimentDesign experimentDesign) {
-        Experiment experiment = experimentTrader.getPublicExperiment(accession);
-        conditionsIndexTrader.getIndex(experiment.getType()).updateConditions(experiment);
-    }
-
-
     public void deleteExperiment(ExperimentDTO experimentDTO) {
         checkNotNull(experimentDTO);
 
-        String experimentAccession = experimentDTO.getExperimentAccession();
 
         if (!experimentDTO.isPrivate()) {
-            conditionsIndexTrader.getIndex(experimentDTO.getExperimentType()).removeConditions(experimentAccession);
-            analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
+            conditionsIndexingService.removeConditions(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
+            analyticsIndexerManager.deleteFromAnalyticsIndex(experimentDTO.getExperimentAccession());
         }
 
         experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession());
 
-        experimentDAO.deleteExperiment(experimentAccession);
-
+        experimentDAO.deleteExperiment(experimentDTO.getExperimentAccession());
     }
 
     public ExperimentDTO findExperiment(String experimentAccession) {
@@ -133,7 +121,7 @@ public class ExperimentMetadataCRUD {
             LOGGER.info("updated design for experiment {}", accession);
 
             if (!experimentDTO.isPrivate()) {
-                updatePublicExperimentInConditionsIndex(accession,newDesign);
+                conditionsIndexingService.indexConditions(accession, type, newDesign);
             }
 
         } catch (IOException e) {

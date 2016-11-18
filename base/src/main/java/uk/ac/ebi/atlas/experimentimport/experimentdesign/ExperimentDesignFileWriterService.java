@@ -4,12 +4,16 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 
+@Named
 public class ExperimentDesignFileWriterService {
 
     private final DataFileHub dataFileHub;
 
+    @Inject
     public ExperimentDesignFileWriterService(DataFileHub dataFileHub){
         this.dataFileHub = dataFileHub;
     }

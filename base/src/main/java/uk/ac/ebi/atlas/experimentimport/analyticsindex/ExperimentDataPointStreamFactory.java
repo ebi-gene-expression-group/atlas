@@ -18,10 +18,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
-import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsLookupService;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.DifferentialCondition;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
@@ -32,26 +30,24 @@ import java.util.Map;
 
 @Named
 public class ExperimentDataPointStreamFactory {
+    private final ConditionsLookupService conditionsLookupService;
     private final MicroarrayDifferentialAnalyticsInputStreamFactory microarrayDifferentialAnalyticsInputStreamFactory;
     private final RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
-    private final DifferentialConditionsBuilder diffConditionsBuilder;
-    private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public ExperimentDataPointStreamFactory(EFOLookupService efoParentsLookupService,
+    public ExperimentDataPointStreamFactory(ConditionsLookupService conditionsLookupService,
                                             MicroarrayDifferentialAnalyticsInputStreamFactory
-                                            microarrayDifferentialAnalyticsInputStreamFactory,
+                                                         microarrayDifferentialAnalyticsInputStreamFactory,
                                             RnaSeqDifferentialAnalyticsInputStreamFactory
                                                         rnaSeqDifferentialAnalyticsInputStreamFactory,
-                                            BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
+                                            BaselineAnalyticsInputStreamFactory
+                                                        baselineAnalyticsInputStreamFactory) {
 
+        this.conditionsLookupService = conditionsLookupService;
         this.microarrayDifferentialAnalyticsInputStreamFactory = microarrayDifferentialAnalyticsInputStreamFactory;
         this.rnaSeqDifferentialAnalyticsInputStreamFactory = rnaSeqDifferentialAnalyticsInputStreamFactory;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
-        this.diffConditionsBuilder = new DifferentialConditionsBuilder(efoParentsLookupService);
-        this.baselineConditionsBuilder = new BaselineConditionsBuilder(efoParentsLookupService);
-
     }
 
     public Iterable<? extends ExperimentDataPoint> stream(Experiment experiment){
@@ -146,7 +142,9 @@ public class ExperimentDataPointStreamFactory {
     }
 
     private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment) {
-        Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment);
+        Collection<Condition> conditions = conditionsLookupService.buildPropertiesForBaselineExperiment(experiment
+                .getAccession(),
+                experiment.getExperimentDesign(), experiment.getAssayGroups());
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 
         for (Condition condition : conditions) {
@@ -158,7 +156,9 @@ public class ExperimentDataPointStreamFactory {
 
     private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment) {
 
-        Collection<DifferentialCondition> conditions = diffConditionsBuilder.buildProperties(experiment);
+        Collection<DifferentialCondition> conditions = conditionsLookupService.buildPropertiesForDifferentialExperiment
+                (experiment.getAccession(), experiment
+                .getExperimentDesign(), experiment.getContrasts());
 
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 

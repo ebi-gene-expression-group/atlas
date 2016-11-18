@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
@@ -26,6 +25,7 @@ import java.io.IOException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -61,23 +61,15 @@ public class ExperimentCRUDRollbackIT {
     ExperimentDesignFileWriterService experimentDesignFileWriterService;
 
     @Mock
-    private ConditionsIndexTrader conditionsIndexTraderMock;
-
-    @Mock
     AnalyticsIndexerManager analyticsIndexerManagerMock;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        when(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).thenThrow(new IllegalStateException("die!"));
-        ExperimentMetadataCRUD experimentMetadataCRUDmock =
-                new ExperimentMetadataCRUD(condensedSdrfParser,
-                        experimentDesignFileWriterService, conditionsIndexTraderMock, experimentDAO,
-                        analyticsIndexerManagerMock,
-                        experimentTrader );
+        experimentMetadataCRUD = mock(ExperimentMetadataCRUD.class);
 
-        subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
+        subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
     @After

@@ -22,16 +22,15 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsIndex;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
@@ -54,10 +53,7 @@ public class ExperimentCRUDIT {
     private ExperimentChecker experimentCheckerSpy;
 
     @Mock
-    EFOLookupService efoLookupServiceMock;
-
-    @Mock
-    private SolrClient solrClientMock;
+    ConditionsIndexingService conditionsIndexingService;
 
     @Captor
     ArgumentCaptor<Collection<Condition>> collectionConditionCaptor;
@@ -74,6 +70,9 @@ public class ExperimentCRUDIT {
 
     @Mock
     ExpressionSerializerService expressionSerializerService;
+
+    @Mock
+    ExperimentDesignFileWriterService experimentDesignFileWriterService;
 
     @Inject
     DataFileHub dataFileHub;
@@ -97,20 +96,10 @@ public class ExperimentCRUDIT {
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        when(efoLookupServiceMock.getLabels(anySetOf(String.class))).thenReturn(ImmutableSet.<String>of());
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return invocationOnMock.getArguments()[0];
-            }
-        }).when(efoLookupServiceMock).expandOntologyTerms(Matchers.<ImmutableSetMultimap<String, String>>any());
+        experimentMetadataCRUD = new ExperimentMetadataCRUD(condensedSdrfParser, experimentDesignFileWriterService,
+                conditionsIndexingService,
+                experimentDAO, analyticsIndexerManager, experimentTrader);
 
-        experimentMetadataCRUD = new ExpressionAtlasExperimentMetadataCRUD(dataFileHub,experimentDAO,experimentTrader,
-                condensedSdrfParser, analyticsIndexerManager,
-                new ConditionsIndexTrader(
-                        new BaselineConditionsIndex(solrClientMock, new BaselineConditionsBuilder(efoLookupServiceMock))
-                        , new DifferentialConditionsIndex(solrClientMock, new DifferentialConditionsBuilder(efoLookupServiceMock)))
-        );
         experimentCRUD = new ExperimentCRUD(
                 experimentCheckerSpy,
                 experimentMetadataCRUD,
@@ -195,9 +184,9 @@ public class ExperimentCRUDIT {
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {
         importNewExperimentInsertsDB(experimentAccession, experimentType);
-        verifyConditionsAddedToSolr(experimentAccession);
+        verifyConditionsAddedToSolr(experimentAccession, experimentType);
         importExistingExperimentUpdatesDB(experimentAccession, experimentType);
-        verifyConditionsAddedToSolr(experimentAccession);
+        verifyConditionsAddedToSolr(experimentAccession, experimentType);
         deleteExperimentDeletesDB(experimentAccession, experimentType);
     }
 
@@ -221,15 +210,10 @@ public class ExperimentCRUDIT {
         assertThat(originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
     }
 
-    public void verifyConditionsAddedToSolr(String experimentAccession) throws SolrServerException, IOException {
-        verify(solrClientMock).addBeans(collectionConditionCaptor.capture());
-
-        Collection<Condition> beans = collectionConditionCaptor.getValue();
-
-        assertThat(beans, hasSize(greaterThan(0)));
-        assertThat(beans.iterator().next().getExperimentAccession(), is(experimentAccession));
-
-        reset(solrClientMock);
+    public void verifyConditionsAddedToSolr(String experimentAccession, ExperimentType experimentType) throws SolrServerException,
+            IOException {
+        verify(conditionsIndexingService, atLeastOnce()).indexConditions(eq(experimentAccession), eq(experimentType), Matchers
+                .<ExperimentDesign>any());
     }
 
     public void deleteExperimentDeletesDB(String experimentAccession, ExperimentType experimentType) {

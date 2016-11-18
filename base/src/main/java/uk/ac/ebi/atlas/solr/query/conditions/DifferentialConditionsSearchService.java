@@ -10,9 +10,8 @@ import org.apache.solr.common.SolrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.DifferentialCondition;
 
 import javax.inject.Inject;
 import javax.inject.Named;

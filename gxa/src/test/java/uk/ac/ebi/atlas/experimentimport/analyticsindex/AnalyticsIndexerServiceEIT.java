@@ -38,7 +38,7 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
-public class AnalyticsIndexerServiceIT {
+public class AnalyticsIndexerServiceEIT {
 
     @Mock
     private SolrClient solrClient;

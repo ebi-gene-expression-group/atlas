@@ -1,6 +1,5 @@
-package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
+package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Collection;

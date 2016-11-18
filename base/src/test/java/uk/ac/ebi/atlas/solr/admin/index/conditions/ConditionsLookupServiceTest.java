@@ -15,8 +15,6 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,26 +28,28 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ConditionPropertiesBuilderTest {
+public class ConditionsLookupServiceTest {
 
-    private DifferentialConditionsBuilder subject;
+    private ConditionsLookupService subject;
 
-    @Mock
-    private DifferentialExperiment experimentMock;
+    ExperimentDesign experimentDesignMock;
+
+    String experimentAccession = "EXP-1";
+
+    Contrast contrastMock;
 
     @Mock
     private EFOLookupService efoLookupService;
 
     @Before
     public void setup(){
-        given(experimentMock.getAccession()).willReturn("EXP-1");
 
-        Contrast contrastMock = mock(Contrast.class);
+        contrastMock = mock(Contrast.class);
         given(contrastMock.getReferenceAssayGroup()).willReturn(new AssayGroup("g1", "Assay1", "Assay2"));
         given(contrastMock.getTestAssayGroup()).willReturn(new AssayGroup("g2", "Assay3"));
         given(contrastMock.getId()).willReturn("g1_g2");
 
-        ExperimentDesign experimentDesignMock = mock(ExperimentDesign.class);
+        experimentDesignMock = mock(ExperimentDesign.class);
         HashMap<String, String> factors1 = Maps.newHashMap();
         factors1.put("fn1", "fv1");
         HashMap<String, String> factors2 = Maps.newHashMap();
@@ -69,12 +69,9 @@ public class ConditionPropertiesBuilderTest {
         given(experimentDesignMock.getSampleCharacteristicsValues("Assay2")).willReturn(samples1);
         given(experimentDesignMock.getSampleCharacteristicsValues("Assay3")).willReturn(samples2);
 
-        given(experimentMock.getContrasts()).willReturn(Sets.newHashSet(contrastMock));
-        given(experimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
-
         given(efoLookupService.getLabels(anySetOf(String.class))).willReturn(ImmutableSet.<String>of());
 
-        subject = new DifferentialConditionsBuilder(efoLookupService);
+        subject = new ConditionsLookupService(efoLookupService);
     }
 
     @Test
@@ -83,7 +80,8 @@ public class ConditionPropertiesBuilderTest {
                 ImmutableSetMultimap.<String, String>of()
         );
 
-        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
+        Collection<DifferentialCondition> result = subject.buildPropertiesForDifferentialExperiment
+                (experimentAccession,experimentDesignMock, ImmutableSet.of(contrastMock));
 
         assertThat(result.size(), is(2));
         assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
@@ -99,7 +97,7 @@ public class ConditionPropertiesBuilderTest {
                         .putAll("Assay1", "obo", "efo")
                         .build()
         );
-        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
+        Collection<DifferentialCondition> result = subject.buildPropertiesForDifferentialExperiment(experimentAccession,experimentDesignMock, ImmutableSet.of(contrastMock));
 
         assertThat(result.size(), is(3));
         assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1", "obo", "efo"))), is(true));  //Assay1

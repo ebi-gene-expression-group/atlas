@@ -24,7 +24,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.util.Arrays;
@@ -43,10 +43,6 @@ public class ExperimentMetadataCRUDTest {
     private static final String EXPERIMENT_ASSAY = "EXPERIMENT_ASSAY";
 
     private static final String EFO_0000761 = "EFO_0000761";
-    private static final String EFO_0000001 = "EFO_0000001";
-    private static final String EFO_0001443 = "snap#SpecificallyDependentContinuant";
-    private static final String EFO_0001438 = "snap#Disposition";
-    private static final Set<String> EXPANDED_EFO_TERMS = new HashSet<>(Arrays.asList(EFO_0001438, EFO_0001443, EFO_0000001));
 
     private ExperimentMetadataCRUD subject;
 
@@ -69,9 +65,6 @@ public class ExperimentMetadataCRUDTest {
     private DifferentialExperiment differentialExperimentMock;
 
     @Mock
-    private ConditionsIndexTrader conditionsIndexTraderMock;
-
-    @Mock
     private ConditionsIndex conditionsIndexMock;
 
     @Mock
@@ -87,9 +80,6 @@ public class ExperimentMetadataCRUDTest {
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
 
     @Mock
-    private EFOLookupService efoParentsLookupServiceMock;
-
-    @Mock
     private AnalyticsIndexerManager analyticsIndexerManagerMock;
 
     @Mock
@@ -97,6 +87,9 @@ public class ExperimentMetadataCRUDTest {
 
     @Mock
     ExperimentDesignFileWriterService experimentDesignFileWriterService;
+
+    @Mock
+    ConditionsIndexingService conditionsIndexingService;
 
     @Captor
     private ArgumentCaptor<String> experimentAccessionCaptor;
@@ -111,8 +104,6 @@ public class ExperimentMetadataCRUDTest {
 
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
-        given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
-        given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
         doNothing().when(conditionsIndexMock).removeConditions(anyString());
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
@@ -130,11 +121,10 @@ public class ExperimentMetadataCRUDTest {
         given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
 
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(allOntologyTermIdsByAssayAccession);
-        when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(condensedSdrfParserMock,
                 experimentDesignFileWriterService,
-                conditionsIndexTraderMock,experimentDAOMock,analyticsIndexerManagerMock,experimentTraderMock);
+                conditionsIndexingService,experimentDAOMock, analyticsIndexerManagerMock,experimentTraderMock);
     }
 
     @Test
@@ -154,25 +144,19 @@ public class ExperimentMetadataCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION);
-        verify(conditionsIndexMock).updateConditions(any(Experiment.class));
+        verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
     }
 
     @Test
-    public void importExperimentShouldAddExperimentToIndex() throws Exception {
+    public void importExperimentIndexesConditions() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfigurationMock, false, Optional.<String>absent());
-        verify(conditionsIndexMock).addConditions(any(Experiment.class));
+        verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
     }
 
     @Test
-    public void importExperimentExpandsOntologyTerms() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfigurationMock, false, Optional.<String>absent());
-        verify(efoParentsLookupServiceMock).expandOntologyTerms(allOntologyTermIdsByAssayAccession);
-    }
-
-    @Test
-    public void updateExperimentExpandsOntologyTerms() throws Exception {
+    public void updateExperimentIndexesConditions() throws Exception {
         subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
-        verify(efoParentsLookupServiceMock).expandOntologyTerms(allOntologyTermIdsByAssayAccession);
+        verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
     }
 
     @Test
