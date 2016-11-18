@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.model.resource;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -19,8 +22,15 @@ public abstract class AtlasResource<T> {
         return Files.isReadable(path);
     }
 
-
     public abstract T get();
+
+    public Reader getReader() throws IOException {
+        return Files.newBufferedReader(path, StandardCharsets.UTF_8);
+    }
+
+    public long size() {
+        return path.toFile().length();
+    }
 
     @Override
     public String toString(){

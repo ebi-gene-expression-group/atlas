@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.model.resource;
 
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.commons.writers.FileTsvWriterBuilder;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 
@@ -14,7 +17,6 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
         super(Paths.get(dataFilesLocation+MessageFormat.format(template, args)));
     }
 
-
     public static class ReadOnly extends TsvFile<TsvReader> {
 
         public ReadOnly(String dataFilesLocation, String template, String... args) {
@@ -23,10 +25,13 @@ public abstract class TsvFile<T> extends AtlasResource<T>{
 
         @Override
         public TsvReader get() {
-            return new FileTsvReaderBuilder().build(path);
+            try {
+                return new TsvReaderImpl(Files.newBufferedReader(path, StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
         }
     }
-
 
     public static class Appendable extends TsvFile<TsvWriter> {
 
