@@ -12,19 +12,16 @@ import java.text.MessageFormat;
 @Named
 public class BaselineCoexpressionProfileInputStreamFactory {
 
-    private final CsvReaderFactory csvReaderFactory;
     private final String fileTemplate;
 
     @Inject
-    public BaselineCoexpressionProfileInputStreamFactory(@Value("#{configuration['experiment.coexpression_matrix.template']}") String fileTemplate,
-                                                         CsvReaderFactory csvReaderFactory) {
+    public BaselineCoexpressionProfileInputStreamFactory(@Value("#{configuration['experiment.coexpression_matrix.template']}") String fileTemplate) {
         this.fileTemplate = fileTemplate;
-        this.csvReaderFactory = csvReaderFactory;
     }
 
     public BaselineCoexpressionProfileInputStream create(String experimentAccession) throws NoSuchFileException {
         String tsvGzFilePath = MessageFormat.format(fileTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvGzReader(tsvGzFilePath);
+        CSVReader csvReader = CsvReaderFactory.createForTsvGz(tsvGzFilePath);
         return new BaselineCoexpressionProfileInputStream(csvReader, tsvGzFilePath);
     }
 }
