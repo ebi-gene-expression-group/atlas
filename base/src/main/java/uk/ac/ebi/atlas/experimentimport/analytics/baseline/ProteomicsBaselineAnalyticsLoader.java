@@ -26,7 +26,6 @@ public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void loadAnalytics(String accession) throws IOException {
         ObjectInputStream<BaselineAnalytics> analyticsInputStream =
                 analyticsInputStreamFactory.create(accession, ExperimentType.PROTEOMICS_BASELINE);
@@ -34,7 +33,6 @@ public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void deleteAnalytics(String accession) {
         analyticsDao.deleteAnalytics(accession);
     }

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
@@ -22,20 +23,42 @@ import java.util.Set;
 public class ApplicationProperties {
 
     private static final String TSV_FILE_EXTENSION = ".tsv";
-
-    private Properties speciesToExperimentProperties;
-
     private Properties configurationProperties;
     private ArrayDesignTrader arrayDesignTrader;
 
     @Inject
     ApplicationProperties(@Named("configuration") Properties configurationProperties,
-                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
                           ArrayDesignTrader arrayDesignTrader) {
-        this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.configurationProperties = configurationProperties;
         this.arrayDesignTrader = arrayDesignTrader;
     }
+
+    Map<String,String> speciesToExperimentProperties =
+            ImmutableMap.<String,String>builder()
+                    .put("anolis_carolinensis","E-MTAB-3727")
+                    .put("arabidopsis_thaliana","E-GEOD-30720")
+                    .put("bos_taurus","E-MTAB-2798")
+                    .put("brachypodium_distachyon","E-MTAB-4401")
+                    .put("caenorhabditis_elegans","E-MTAB-2812")
+                    .put("equus_caballus","E-GEOD-46858")
+                    .put("gallus_gallus","E-MTAB-2797")
+                    .put("glycine_max","E-GEOD-61857")
+                    .put("homo_sapiens","E-MTAB-2836")
+                    .put("hordeum_vulgare","E-MTAB-2809")
+                    .put("macaca_mulatta","E-MTAB-2799")
+                    .put("monodelphis_domestica","E-MTAB-3719")
+                    .put("mus_musculus","E-MTAB-3718")
+                    .put("oryza_sativa","E-MTAB-2037")
+                    .put("ovis_aries","E-MTAB-3838")
+                    .put("papio_anubis","E-MTAB-2848")
+                    .put("rattus_norvegicus","E-GEOD-53960")
+                    .put("solanum_lycopersicum","E-MTAB-4765")
+                    .put("sorghum_bicolor","E-MTAB-4400")
+                    .put("triticum_aestivum","E-MTAB-4260")
+                    .put("vitis_vinifera","E-MTAB-4350")
+                    .put("xenopus_tropicalis","E-MTAB-3726")
+                    .put("zea_mays","E-MTAB-4342").build();
+
 
     //This is invoked from jsp el
     public String getArrayExpressURL(String experimentAccession) {
@@ -73,7 +96,7 @@ public class ApplicationProperties {
     }
 
     public String getBaselineReferenceExperimentAccession(String species) {
-        return speciesToExperimentProperties.getProperty(species.toLowerCase().replace(" ", "_"));
+        return speciesToExperimentProperties.get(species.toLowerCase().replace(" ", "_"));
     }
 
     public String buildServerURL(HttpServletRequest request) throws MalformedURLException {

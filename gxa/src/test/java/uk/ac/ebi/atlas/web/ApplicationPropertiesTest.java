@@ -81,7 +81,7 @@ public class ApplicationPropertiesTest {
 
         when(arrayDesignTraderMock.getArrayDesignAccession(A_AFFY_35_NAME)).thenReturn(A_AFFY_35);
 
-        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, arrayDesignTraderMock);
+        subject = new ApplicationProperties(configurationPropertiesMock, arrayDesignTraderMock);
     }
 
     @Test

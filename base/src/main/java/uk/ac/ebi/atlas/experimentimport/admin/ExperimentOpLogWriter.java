@@ -14,14 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Named
 public class ExperimentOpLogWriter {
 
     private final DataFileHub dataFileHub;
 
     public static final int MAX_LENGTH = 50;
 
-    @Inject
     public ExperimentOpLogWriter(DataFileHub dataFileHub){
         this.dataFileHub = dataFileHub;
     }

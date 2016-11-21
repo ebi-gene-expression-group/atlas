@@ -60,7 +60,7 @@ public class ExperimentOpsTest {
 
 
         experimentOps = new ExperimentOps(experimentOpLogWriter,
-                new ExperimentOpsExecutionService(
+                new ExpressionAtlasExperimentOpsExecutionService(
                         experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
                         expressionSerializerService,experimentTrader));
 
@@ -233,7 +233,7 @@ public class ExperimentOpsTest {
         assertEquals(Op.opsForParameter("LOAD_PUBLIC"), ImmutableList.of(Op.IMPORT_PUBLIC,Op.COEXPRESSION_UPDATE,
                 Op.SERIALIZE,Op.ANALYTICS_IMPORT) );
 
-        new ExperimentAdminController(experimentOps, experimentCrud).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -250,7 +250,7 @@ public class ExperimentOpsTest {
                 .when(experimentCrud)
                 .importExperiment(accession,false);
 
-        new ExperimentAdminController(experimentOps, experimentCrud).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
 
@@ -263,7 +263,7 @@ public class ExperimentOpsTest {
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
-        new ExperimentAdminController(experimentOps, experimentCrud).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -279,8 +279,7 @@ public class ExperimentOpsTest {
                 .kryoSerializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps, experimentCrud)
-                        .doOp(accession, "LOAD_PUBLIC");
+                new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -300,8 +299,7 @@ public class ExperimentOpsTest {
                 .kryoSerializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps, experimentCrud)
-                        .doOp(accession, "LOAD_PUBLIC");
+                new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
 
         assertThat(response, containsString("error"));
     }

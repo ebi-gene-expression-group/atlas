@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,7 +38,7 @@ public class ExperimentOpsExecutionServiceTest {
 
     @Before
     public void setUp(){
-        subject = new ExperimentOpsExecutionService(experimentCrud,baselineCoexpressionProfileLoader,analyticsIndexerManager,
+        subject = new ExpressionAtlasExperimentOpsExecutionService(experimentCrud,baselineCoexpressionProfileLoader,analyticsIndexerManager,
                 expressionSerializerService, experimentTrader );
     }
 

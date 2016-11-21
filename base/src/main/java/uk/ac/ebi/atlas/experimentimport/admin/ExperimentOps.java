@@ -10,14 +10,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
-import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
-import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +23,6 @@ Executors.newCachedThreadPool();
 with a very large queue (that would take all experiments if needed), and 0 to say 4 worker threads
 
  */
-@Named
 public class ExperimentOps {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentOps.class);
@@ -37,7 +30,6 @@ public class ExperimentOps {
     private final ExperimentOpLogWriter experimentOpLogWriter;
     private final ExperimentOpsExecutionService experimentOpsExecutionService;
 
-    @Inject
     public ExperimentOps(ExperimentOpLogWriter experimentOpLogWriter,
                          ExperimentOpsExecutionService experimentOpsExecutionService) {
         this.experimentOpLogWriter = experimentOpLogWriter;
@@ -66,6 +58,10 @@ public class ExperimentOps {
         }
     }
 
+    List<String> findAllExperiments(){
+        return experimentOpsExecutionService.findAllExperiments();
+    }
+
 
 
     private JsonArray perform(Collection<Op> ops){
@@ -78,7 +74,7 @@ public class ExperimentOps {
             }
             return array;
         } else {
-            return perform(experimentOpsExecutionService.findAllExperiments(), ops);
+            return perform(findAllExperiments(), ops);
         }
     }
 
@@ -92,7 +88,7 @@ public class ExperimentOps {
             }
             return array;
         } else {
-            return perform(experimentOpsExecutionService.findAllExperiments(), op);
+            return perform(findAllExperiments(), op);
         }
     }
 

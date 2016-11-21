@@ -22,9 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-//TODO extract interface, write a different one for the Single Cell Atlas
-@Named
-public class ExperimentOpsExecutionService {
+public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentOpsExecutionService {
 
 
     private final ExperimentCrud experimentCrud;
@@ -33,13 +31,11 @@ public class ExperimentOpsExecutionService {
     private final ExpressionSerializerService expressionSerializerService;
     private final ExperimentTrader experimentTrader;
 
-
-    @Inject
-    public ExperimentOpsExecutionService(ExperimentCrud experimentCrud,
-                                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
-                                         AnalyticsIndexerManager analyticsIndexerManager,
-                                         ExpressionSerializerService expressionSerializerService,
-                                         ExperimentTrader experimentTrader) {
+    public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
+                                                        BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
+                                                        AnalyticsIndexerManager analyticsIndexerManager,
+                                                        ExpressionSerializerService expressionSerializerService,
+                                                        ExperimentTrader experimentTrader) {
         this.experimentCrud = experimentCrud;
         this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.analyticsIndexerManager = analyticsIndexerManager;
@@ -47,6 +43,7 @@ public class ExperimentOpsExecutionService {
         this.experimentTrader = experimentTrader;
     }
 
+    @Override
     public ImmutableList<String> findAllExperiments(){
         return FluentIterable.from(experimentCrud.findAllExperiments()).transform(new Function<ExperimentDTO, String>
                 () {
@@ -58,6 +55,7 @@ public class ExperimentOpsExecutionService {
         }).toList();
     }
 
+    @Override
     public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
         switch (op) {
             case LIST:
@@ -67,6 +65,7 @@ public class ExperimentOpsExecutionService {
         }
     }
 
+    @Override
     public Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Collection<Op> ops){
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
@@ -75,6 +74,7 @@ public class ExperimentOpsExecutionService {
         }
     }
 
+    @Override
     public Optional<? extends List<Pair<String,? extends JsonElement>>> attemptExecuteForAllAccessions(Op op){
         if (op.equals(Op.LIST)) {
             return Optional.of(list());
@@ -94,6 +94,7 @@ public class ExperimentOpsExecutionService {
         }).toList();
     }
 
+    @Override
     public JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws Exception {
         JsonPrimitive resultOfTheOp = ExperimentOps.DEFAULT_SUCCESS_RESULT;
         boolean isPrivate = true;

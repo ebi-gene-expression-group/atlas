@@ -18,10 +18,10 @@
     <!-- enables annotation-based dependency injection -->
     <context:annotation-config/>
 
+    <util:properties id="configuration" location="classpath:configuration.properties"/>
+
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
-
-    <util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>
 
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>

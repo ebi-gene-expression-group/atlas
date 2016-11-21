@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
-import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 
 import javax.inject.Inject;
@@ -24,14 +23,12 @@ public class RnaSeqDifferentialAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void loadAnalytics(String accession) throws IOException {
         RnaSeqDifferentialAnalyticsInputStream analyticsInputStream = analyticsInputStreamFactory.create(accession);
         analyticsDao.loadAnalytics(accession, analyticsInputStream);
     }
 
     @Override
-    @Transactional
     public void deleteAnalytics(String accession) {
         analyticsDao.deleteAnalytics(accession);
     }

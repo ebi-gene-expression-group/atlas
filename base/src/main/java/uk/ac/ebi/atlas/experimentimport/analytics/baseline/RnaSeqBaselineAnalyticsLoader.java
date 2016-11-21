@@ -26,7 +26,6 @@ public class RnaSeqBaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void loadAnalytics(String accession) throws IOException {
         ObjectInputStream<BaselineAnalytics> baselineAnalyticsInputStream =
                 analyticsInputStreamFactory.create(accession, ExperimentType.RNASEQ_MRNA_BASELINE);
@@ -34,7 +33,6 @@ public class RnaSeqBaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void deleteAnalytics(String accession) {
         analyticsDAO.deleteAnalytics(accession);
     }

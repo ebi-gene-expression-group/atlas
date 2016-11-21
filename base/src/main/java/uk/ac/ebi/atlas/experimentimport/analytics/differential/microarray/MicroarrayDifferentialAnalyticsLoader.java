@@ -32,7 +32,6 @@ public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void loadAnalytics(String accession) throws IOException {
         Set<String> arrayDesigns =
                 configurationTrader.getMicroarrayExperimentConfiguration(accession).getArrayDesignAccessions();
@@ -45,7 +44,6 @@ public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    @Transactional
     public void deleteAnalytics(String accession) {
         analyticsDao.deleteAnalytics(accession);
     }
