@@ -55,8 +55,11 @@ public class ExperimentOpsTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        experimentOps = new ExperimentOps(experimentCrud, experimentOpLogWriter,
-                baselineCoexpressionProfileLoader, analyticsIndexerManager,expressionSerializerService);
+
+        experimentOps = new ExperimentOps(experimentOpLogWriter,
+                new ExperimentOpsExecutionService(
+                        experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
+                        expressionSerializerService));
 
         when(expressionSerializerService.kryoSerializeExpressionData(Matchers.anyString())).thenReturn("skipped");
 

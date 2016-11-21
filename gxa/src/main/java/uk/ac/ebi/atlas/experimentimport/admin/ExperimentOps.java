@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
+import com.google.common.base.Supplier;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.DateTime;
@@ -12,11 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
+import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /*
 consider support for async:
@@ -30,30 +34,33 @@ public class ExperimentOps {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentOps.class);
 
-    private ExperimentCrud experimentCrud;
-    private ExperimentOpLogWriter experimentOpLogWriter;
-    private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
-    private AnalyticsIndexerManager analyticsIndexerManager;
-    private final ExpressionSerializerService expressionSerializerService;
+    private final ExperimentOpLogWriter experimentOpLogWriter;
+    private final ExperimentOpsExecutionService experimentOpsExecutionService;
 
 
-    @Inject
+    @Deprecated
     public ExperimentOps(ExperimentCrud experimentCrud,
                          ExperimentOpLogWriter experimentOpLogWriter,
                          BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                          AnalyticsIndexerManager analyticsIndexerManager,
                          ExpressionSerializerService expressionSerializerService) {
-        this.experimentCrud = experimentCrud;
+        this(experimentOpLogWriter,
+                new ExperimentOpsExecutionService(
+                        experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
+                        expressionSerializerService));
+    }
+
+    @Inject
+    public ExperimentOps(ExperimentOpLogWriter experimentOpLogWriter,
+                         ExperimentOpsExecutionService experimentOpsExecutionService) {
         this.experimentOpLogWriter = experimentOpLogWriter;
-        this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
-        this.analyticsIndexerManager = analyticsIndexerManager;
-        this.expressionSerializerService = expressionSerializerService;
+        this.experimentOpsExecutionService = experimentOpsExecutionService;
     }
 
     static Long UNFINISHED = new Long(-1);
 
     private enum OpResult {SUCCESS, FAILURE}
-    private static JsonPrimitive DEFAULT_SUCCESS_RESULT = new JsonPrimitive("success");
+    public static final JsonPrimitive DEFAULT_SUCCESS_RESULT = new JsonPrimitive("success");
 
 
     public JsonArray perform(Optional<? extends Collection<String>> accessions, Collection<Op> ops){
@@ -75,40 +82,35 @@ public class ExperimentOps {
 
 
     private JsonArray perform(Collection<Op> ops){
-        List<ExperimentDTO> dtos = experimentCrud.findAllExperiments();
-        //default case of all experiments and a request to list them, optimised here
-        if (ops.equals(Collections.singleton(Op.LIST))) {
+        Optional<? extends List<Pair<String,? extends JsonElement>>> r =
+                experimentOpsExecutionService.attemptExecuteForAllAccessions(ops);
+        if(r.isPresent()){
             JsonArray array = new JsonArray();
-            for (ExperimentDTO dto : dtos) {
-                array.add(showResult(dto.getExperimentAccession(),OpResult.SUCCESS, dto.toJson()));
+            for(Pair<String,? extends JsonElement> p : r.get()){
+                array.add(showSuccess(p));
             }
             return array;
         } else {
-            List<String> accessions = new ArrayList<>();
-            for (ExperimentDTO dto : dtos) {
-                accessions.add(dto.getExperimentAccession());
-            }
-            return perform(accessions, ops);
+            return perform(experimentOpsExecutionService.findAllExperiments(), ops);
         }
     }
 
     private JsonArray perform(Op op){
-        List<ExperimentDTO> dtos = experimentCrud.findAllExperiments();
-        //default case of all experiments and a request to list them, optimised here
-        if (op.equals(Op.LIST)) {
+        Optional<? extends List<Pair<String,? extends JsonElement>>> r =
+                experimentOpsExecutionService.attemptExecuteForAllAccessions(op);
+        if(r.isPresent()){
             JsonArray array = new JsonArray();
-            for (ExperimentDTO dto : dtos) {
-                array.add(showResult(dto.getExperimentAccession(),OpResult.SUCCESS, dto.toJson()));
+            for(Pair<String,? extends JsonElement> p : r.get()){
+                array.add(showSuccess(p));
             }
             return array;
         } else {
-            List<String> accessions = new ArrayList<>();
-            for (ExperimentDTO dto : dtos) {
-                accessions.add(dto.getExperimentAccession());
-            }
-            return perform(accessions, op);
+            return perform(experimentOpsExecutionService.findAllExperiments(), op);
         }
     }
+
+
+
 
     private JsonArray perform(Collection<String> accessions, Op op) {
         JsonArray result = new JsonArray();
@@ -198,19 +200,38 @@ public class ExperimentOps {
         return Joiner.on(',').join(names);
     }
 
-    private Pair<OpResult, ? extends JsonElement> performOneOp(String accession, Op op){
+    private Pair<OpResult, ? extends JsonElement> performOneOp(final String accession, final Op op){
+        return attemptPerformOneOpRelatedToTheOpLog(accession, op)
+                .or(
+                        experimentOpsExecutionService.attemptExecuteOneStatelessOp(accession, op)
+                ).transform(new Function<JsonElement, Pair<OpResult, ? extends JsonElement>>() {
+                    @Override
+                    public Pair<OpResult, ? extends JsonElement> apply(@Nullable JsonElement jsonElement) {
+                        return Pair.of(OpResult.SUCCESS, jsonElement);
+                    }
+                }).or(new Supplier<Pair<OpResult, ? extends JsonElement>>() {
+                    @Override
+                    public Pair<OpResult, ? extends JsonElement> get() {
+                        return performStatefulOp(accession, op);
+                    }
+                });
+    }
+
+    private Optional<JsonElement> attemptPerformOneOpRelatedToTheOpLog(String accession, Op op){
         switch (op) {
-            case LIST:
-                return Pair.of(OpResult.SUCCESS, experimentCrud.findExperiment(accession).toJson());
             case LOG:
-                return Pair.of(OpResult.SUCCESS, getCurrentOpLogAsJson(accession));
+                return Optional.of(getCurrentOpLogAsJson(accession));
             case STATUS:
-                return Pair.of(OpResult.SUCCESS, readStatusFromOpLog(accession));
+                return Optional.of(readStatusFromOpLog(accession));
             case CLEAR_LOG:
-                return Pair.of(OpResult.SUCCESS, clearOpLog(accession));
+                return Optional.of(clearOpLog(accession));
             default:
-                return performStatefulOp(accession, op);
+                return Optional.absent();
         }
+    }
+
+    private JsonElement showSuccess(Pair<String,? extends JsonElement> accessionAndOpValue){
+        return showResult(accessionAndOpValue.getLeft(), OpResult.SUCCESS, accessionAndOpValue.getRight());
     }
 
 
@@ -244,7 +265,9 @@ public class ExperimentOps {
             opRecords.add(newOpRecord);
             experimentOpLogWriter.persistOpLog(accession, opRecords);
             try {
-                result = Pair.of(OpResult.SUCCESS, attemptExecuteStatefulOp(accession, op));
+                result = Pair.of(OpResult.SUCCESS,
+                        experimentOpsExecutionService
+                                .attemptExecuteStatefulOp(accession, op));
                 updateOpRecordsWithNewOp(OpResult.SUCCESS, opRecords, newOpRecord);
             } catch (Exception e) {
                 String text = e.getMessage()!=null? e.getMessage() : e.toString();
@@ -266,62 +289,6 @@ public class ExperimentOps {
         opRecords.add(Pair.of((result.equals(OpResult.FAILURE)?"FAILED: ":"")
                 +newOpRecord.getLeft(), Pair.of(newOpRecord.getRight().getLeft(),
                 System.currentTimeMillis())));
-    }
-
-    private JsonPrimitive attemptExecuteStatefulOp(String accession, Op op) throws Exception {
-        JsonPrimitive resultOfTheOp = DEFAULT_SUCCESS_RESULT;
-        boolean isPrivate = true;
-        int deleteCount;
-        int loadCount;
-        switch (op) {
-            case UPDATE_PRIVATE:
-                experimentCrud.makeExperimentPrivate(accession);
-                break;
-            case UPDATE_PUBLIC:
-                experimentCrud.makeExperimentPublic(accession);
-                break;
-            case UPDATE_DESIGN_ONLY:
-                experimentCrud.updateExperimentDesign(accession);
-                break;
-            case IMPORT_PUBLIC:
-                isPrivate = false;
-            case IMPORT:
-                UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
-                resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
-                break;
-            case SERIALIZE:
-                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(accession));
-                break;
-            case DELETE:
-                experimentCrud.deleteExperiment(accession);
-                expressionSerializerService.removeKryoFile(accession);
-                break;
-            case COEXPRESSION_UPDATE:
-                deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
-                loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" deleted %,d and loaded %,d " +
-                        "coexpression profiles", deleteCount, loadCount));
-                break;
-            case COEXPRESSION_IMPORT:
-                loadCount = baselineCoexpressionProfileLoader.loadBaselineCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" loaded %,d " +
-                        "coexpression profiles", loadCount));
-                break;
-            case COEXPRESSION_DELETE:
-                deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);
-                resultOfTheOp = new JsonPrimitive(String.format(" deleted %,d coexpression profiles", deleteCount));
-                break;
-            case ANALYTICS_IMPORT:
-                loadCount = analyticsIndexerManager.addToAnalyticsIndex(accession);
-                resultOfTheOp = new JsonPrimitive(String.format("(re)indexed %,d documents", loadCount));
-                break;
-            case ANALYTICS_DELETE:
-                analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
-                break;
-            default:
-                break;
-        }
-        return resultOfTheOp;
     }
 
     private JsonElement clearOpLog(String accession) {
