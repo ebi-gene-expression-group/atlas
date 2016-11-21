@@ -30,8 +30,8 @@ public class ConditionsLookupService {
     public ConditionsLookupService(EFOLookupService efoLookupService){
         this.efoLookupService = efoLookupService;
     }
-    
-    public ImmutableList<DifferentialCondition> buildPropertiesForDifferentialExperiment(String experimentAccession,
+
+    public ImmutableSet<DifferentialCondition> buildPropertiesForDifferentialExperiment(String experimentAccession,
                                                                                        ExperimentDesign experimentDesign, Set<Contrast> contrasts){
         DifferentialConditionsBuilder b = new DifferentialConditionsBuilder(experimentAccession,experimentDesign);
         for(Contrast c: contrasts){
@@ -40,7 +40,7 @@ public class ConditionsLookupService {
         return b.build();
     }
 
-    public ImmutableList<Condition> buildPropertiesForBaselineExperiment(String experimentAccession,
+    public ImmutableSet<Condition> buildPropertiesForBaselineExperiment(String experimentAccession,
                                                                                    ExperimentDesign experimentDesign,
                                                                                    AssayGroups assayGroups){
         BaselineConditionsBuilder b = new BaselineConditionsBuilder(experimentAccession,experimentDesign);
@@ -73,7 +73,7 @@ public class ConditionsLookupService {
 
     abstract class ConditionsBuilder<Cond extends Condition> {
 
-        protected ImmutableList.Builder<Cond> builder = new ImmutableList.Builder<>();
+        protected ImmutableSet.Builder<Cond> builder = new ImmutableSet.Builder<>();
         protected final String experimentAccession;
         protected final ExperimentDesign experimentDesign;
         protected final SetMultimap<String, String> assayGroupIdToOntologyTermId;
@@ -86,7 +86,7 @@ public class ConditionsLookupService {
                             .getAllOntologyTermIdsByAssayAccession());
         }
 
-        ImmutableList<Cond> build(){
+        ImmutableSet<Cond> build(){
             return builder.build();
         }
     }
