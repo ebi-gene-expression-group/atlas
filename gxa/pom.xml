@@ -75,7 +75,6 @@
                         </property>
                     </systemProperties>
                     <excludes>
-                        <!--<exclude>${failsafe.excludes}</exclude> &lt;!&ndash; Defined externally as a param in mvn &ndash;&gt;-->
                         <exclude>**/*SIT.java</exclude>
                     </excludes>
                 </configuration>
