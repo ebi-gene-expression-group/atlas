@@ -7,7 +7,6 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Set;
 
@@ -17,7 +16,6 @@ public class ExperimentSorter {
     private final ExperimentTrader experimentTrader;
     private final ConfigurationTrader configurationTrader;
 
-    @Inject
     public ExperimentSorter(DataFileHub dataFileHub, ExperimentTrader experimentTrader, ConfigurationTrader configurationTrader) {
         this.dataFileHub = dataFileHub;
         this.experimentTrader = experimentTrader;

@@ -116,7 +116,7 @@ public class MicroarrayExperimentDownloadController {
 
 
     private void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession, MicroarrayRequestContext
-            requestContext, String arrayDesign){
+            requestContext, String arrayDesign) throws IOException {
         try {
 
             long genesCount = profilesWriter.write(writer, requestContext, arrayDesign);

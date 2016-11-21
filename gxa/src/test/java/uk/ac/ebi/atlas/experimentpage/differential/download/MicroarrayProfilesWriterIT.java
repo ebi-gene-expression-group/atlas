@@ -142,7 +142,7 @@ public class MicroarrayProfilesWriterIT {
         subject = null;
     }
 
-    public void defaultParametersHeader(String accession, String arrayDesignAccession) {
+    public void defaultParametersHeader(String accession, String arrayDesignAccession) throws Exception {
         setFoldChangeCutOff(0);
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
         subject.write(printWriterMock, requestContext, arrayDesignAccession);
@@ -160,7 +160,7 @@ public class MicroarrayProfilesWriterIT {
         assertTrue(columnHeaders.length > 3);
     }
 
-    public void defaultParameters(String accession, String arrayDesignAccession) {
+    public void defaultParameters(String accession, String arrayDesignAccession) throws Exception {
         setFoldChangeCutOff(0);
         requestPreferences.setCutoff(1d);
 
@@ -173,13 +173,13 @@ public class MicroarrayProfilesWriterIT {
         assertEquals(genesCount, geneNames.size());
     }
 
-    public void notSpecific(String accession, String arrayDesignAccession) {
+    public void notSpecific(String accession, String arrayDesignAccession) throws Exception {
         setNotSpecific();
         defaultParameters(accession, arrayDesignAccession);
     }
 
 
-    public void upDownRegulationWorks(String accession, String arrayDesignAccession) {
+    public void upDownRegulationWorks(String accession, String arrayDesignAccession) throws Exception {
         setFoldChangeCutOff(0);
         requestPreferences.setCutoff(1d);
         requestPreferences.setRegulation(Regulation.UP);
@@ -213,7 +213,7 @@ public class MicroarrayProfilesWriterIT {
     }
 
 
-    public void verySmallPValueGivesNoData(String accession, String arrayDesignAccession) {
+    public void verySmallPValueGivesNoData(String accession, String arrayDesignAccession) throws Exception {
         requestPreferences.setCutoff(1E-100);
 
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
@@ -221,7 +221,7 @@ public class MicroarrayProfilesWriterIT {
         assertEquals(accession, 0, genesCount);
     }
 
-    public void veryLargeLogFoldCutoffGivesNoData(String accession, String arrayDesignAccession)  {
+    public void veryLargeLogFoldCutoffGivesNoData(String accession, String arrayDesignAccession) throws Exception {
         requestPreferences.setFoldChangeCutOff(1e100);
 
         MicroarrayRequestContext requestContext = setUpAndPopulateRequestContext(accession);
@@ -231,7 +231,7 @@ public class MicroarrayProfilesWriterIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3&_specific=on
 
-    public void withContrastQueryFactor(String accession, String arrayDesignAccession, Set<String> queryFactors) {
+    public void withContrastQueryFactor(String accession, String arrayDesignAccession, Set<String> queryFactors) throws Exception {
         MicroarrayRequestContext requestContext;
 
         setFoldChangeCutOff(0);
@@ -266,7 +266,7 @@ public class MicroarrayProfilesWriterIT {
     }
 
     public void withContrastQueryFactorNonspecific(String accession, String arrayDesignAccession, Set<String>
-            queryFactors){
+            queryFactors) throws Exception {
         MicroarrayRequestContext requestContext;
 
         setNotSpecific();

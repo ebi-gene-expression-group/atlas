@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 public abstract class BioentityIdentifiersReader {
@@ -15,7 +16,7 @@ public abstract class BioentityIdentifiersReader {
         before flattening the set when we call builder.build() and therefore using up much more memory than needed in this case, where the number
         of repeated elements is very high.
          */
-    public HashSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) {
+    public HashSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) throws IOException {
 
         HashSet<String> bioentityIds = new HashSet<>();
 
@@ -39,7 +40,7 @@ public abstract class BioentityIdentifiersReader {
         return bioentityIds;
     }
 
-    protected abstract int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType);
+    protected abstract int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) throws IOException;
 
-    public abstract HashSet<String> getBioentityIdsFromExperiment(String experimentAccession);
+    public abstract HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) throws IOException;
 }

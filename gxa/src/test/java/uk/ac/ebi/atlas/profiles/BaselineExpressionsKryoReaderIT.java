@@ -61,7 +61,7 @@ public class BaselineExpressionsKryoReaderIT {
 
     @Test
     public void serializedFilesAreEqualToTsvFiles() throws IOException {
-        CSVReader csvReader = dataFileHub.getExperimentFiles(E_MTAB_513).main.get();
+        CSVReader csvReader = new CSVReader(dataFileHub.getBaselineExperimentFiles(E_MTAB_513).main.getReader(), '\t');
 
         // Read header
         String[] tsvLine = csvReader.readNext();

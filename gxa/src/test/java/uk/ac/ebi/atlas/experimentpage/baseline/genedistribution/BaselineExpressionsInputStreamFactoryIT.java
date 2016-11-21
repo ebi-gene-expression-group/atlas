@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,7 +8,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import javax.inject.Inject;
-
+import java.io.IOException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -20,12 +19,12 @@ public class BaselineExpressionsInputStreamFactoryIT extends ObjectInputStreamer
     BaselineExpressionsInputStreamFactory subject;
 
     @Override
-    protected ObjectInputStream<?> createStream(String experimentAccession) {
+    protected ObjectInputStream<?> createStream(String experimentAccession) throws IOException {
         return subject.createGeneExpressionsInputStream(experimentAccession);
     }
 
     @Test
-    public void testThreadSafe(){
+    public void testThreadSafe() throws Exception {
         testMultithreaded("E-MTAB-2037", 10,10);
         testSinglethreaded("E-PROT-1",1);
         testMultithreaded("E-PROT-1", 10,10);

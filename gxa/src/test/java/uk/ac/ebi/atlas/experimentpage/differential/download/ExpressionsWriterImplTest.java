@@ -3,12 +3,16 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Joiner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
+
+import java.io.Reader;
+import java.io.StringReader;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,16 +40,18 @@ public class ExpressionsWriterImplTest {
 
     @Before
     public void initSubject() throws Exception {
-        when(csvReaderFactoryMock.createTsvReader(anyString())).thenReturn(csvReaderMock);
-        when(csvReaderMock.readNext()).thenReturn(header)
-                .thenReturn(line1)
-                .thenReturn(line2)
-                .thenReturn(null);
-
-        subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
-        subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
-        subject.setHeaderBuilder(null);
-        subject.setResponseWriter(csvWriterMock);
+//        when(csvReaderFactoryMock.createForTsv(anyString())).thenReturn(csvReaderMock);
+//        when(csvReaderMock.readNext()).thenReturn(header)
+//                .thenReturn(line1)
+//                .thenReturn(line2)
+//                .thenReturn(null);
+//
+//        StringReader reader = new StringReader(Joiner.on('\n').join(header, line1, line2))
+//
+//        subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
+//        subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
+//        subject.setHeaderBuilder(null);
+//        subject.setResponseWriter(csvWriterMock);
     }
 
     @Test

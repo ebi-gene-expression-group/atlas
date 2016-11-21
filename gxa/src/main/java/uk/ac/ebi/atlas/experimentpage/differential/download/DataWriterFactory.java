@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -7,7 +6,6 @@ import com.google.common.base.Functions;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -19,6 +17,7 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 @Named
 public class DataWriterFactory {
 
+    // TODO replace with AtlasResource
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String microarrayExperimentAnalyticsFileUrlTemplate;
 
@@ -29,13 +28,10 @@ public class DataWriterFactory {
     private String microarrayExperimentLogFoldFileUrlTemplate;
 
     private final DataFileHub dataFileHub;
-    private CsvReaderFactory csvReaderFactory;
-
 
     @Inject
-    public DataWriterFactory(DataFileHub dataFileHub, CsvReaderFactory csvReaderFactory) {
+    public DataWriterFactory(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
-        this.csvReaderFactory = csvReaderFactory;
     }
 
     public ExpressionsWriter getRnaSeqAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
@@ -61,7 +57,7 @@ public class DataWriterFactory {
 
         final MicroarrayDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder(experiment);
 
-        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(csvReaderFactory);
+        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl();
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentAnalyticsFileUrlTemplate);
         microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
         microarrayDataWriter.setHeaderBuilder(headerBuilder);
@@ -74,7 +70,7 @@ public class DataWriterFactory {
 
     public ExpressionsWriter getMicroarrayRawDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
 
-        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(csvReaderFactory);
+        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl();
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentNormalizedFileUrlTemplate);
         microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
 
@@ -83,10 +79,9 @@ public class DataWriterFactory {
         return microarrayDataWriter;
     }
 
-    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter
-            , String arrayDesignAccession) {
+    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
 
-        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(csvReaderFactory);
+        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl();
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentLogFoldFileUrlTemplate);
         microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
 

@@ -123,8 +123,8 @@
     <dependencies>
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
-            <artifactId>base</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>atlas-base</artifactId>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
@@ -204,6 +204,14 @@
             <artifactId>jsp-api</artifactId>
             <version>2.2</version>
             <scope>provided</scope>
+        </dependency>
+
+
+        <!-- For URL rewrite, because of possible / suffix -->
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.3</version>
         </dependency>
 
         <!--

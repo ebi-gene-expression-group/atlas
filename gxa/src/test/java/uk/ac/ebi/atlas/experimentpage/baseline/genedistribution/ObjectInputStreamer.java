@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public abstract class ObjectInputStreamer {
 
 
-    protected abstract ObjectInputStream<?> createStream(String experimentAccession);
+    protected abstract ObjectInputStream<?> createStream(String experimentAccession) throws Exception;
 
     public void testMultithreaded(final String experimentAccession,
                                   final int concurrentThreads,
@@ -16,13 +16,17 @@ public abstract class ObjectInputStreamer {
             new Runnable(){
                 @Override
                 public void run() {
-                    testSinglethreaded(experimentAccession,concurrentStreamsPerThread);
+                    try {
+                        testSinglethreaded(experimentAccession,concurrentStreamsPerThread);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }.run();
         }
     }
 
-    public void testSinglethreaded(String experimentAccession, int concurrentStreams){
+    public void testSinglethreaded(String experimentAccession, int concurrentStreams) throws Exception {
         ObjectInputStream<?>[] streams = new ObjectInputStream[concurrentStreams];
         for(int i = 0; i< concurrentStreams; i++){
             streams[i]= createStream(experimentAccession);

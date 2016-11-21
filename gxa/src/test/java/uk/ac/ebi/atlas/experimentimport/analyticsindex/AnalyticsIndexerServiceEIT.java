@@ -66,14 +66,14 @@ public class AnalyticsIndexerServiceEIT {
     }
 
     @Test
-    public void testSomeExperiments() {
+    public void testSomeExperiments() throws Exception {
         experimentInformationEndsUpInTheIndex("E-MTAB-513");
         experimentInformationEndsUpInTheIndex("E-PROT-1");
         experimentInformationEndsUpInTheIndex("E-GEOD-48549");
         experimentInformationEndsUpInTheIndex("E-GEOD-22351");
     }
 
-    private Iterable<SolrInputDocument> getResults(Experiment experiment){
+    private Iterable<SolrInputDocument> getResults(Experiment experiment) throws Exception {
 
         return subject.solrInputDocuments(
                 experiment,
@@ -82,7 +82,7 @@ public class AnalyticsIndexerServiceEIT {
 
     }
 
-    private void experimentInformationEndsUpInTheIndex(String accession) {
+    private void experimentInformationEndsUpInTheIndex(String accession) throws Exception {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         Iterable<SolrInputDocument> result = getResults(experiment);
 
@@ -99,11 +99,11 @@ public class AnalyticsIndexerServiceEIT {
     }
 
     @Test
-    public void weGenerateDocumentsCompatibleWithIndexContent(){
+    public void weGenerateDocumentsCompatibleWithIndexContent() throws Exception {
         weGenerateDocumentsCompatibleWithIndexContent("E-MTAB-513");
     }
 
-    private void weGenerateDocumentsCompatibleWithIndexContent(String accession){
+    private void weGenerateDocumentsCompatibleWithIndexContent(String accession) throws Exception {
         Collection<SolrInputDocument> results =
                 ImmutableList.copyOf(getResults(experimentTrader.getPublicExperiment(accession)));
 
