@@ -1,17 +1,14 @@
-
 package uk.ac.ebi.atlas.trader;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -20,8 +17,6 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
-import javax.annotation.Nullable;
-import java.text.MessageFormat;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -76,14 +71,16 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final Factor FACTOR_GENOTYPE = new Factor(GENOTYPE, CYC);
 
     @Mock
-    private FileTsvReaderBuilder fileTsvReaderBuilderMock;
-
-    @Mock
     private TsvReader tsvReaderMock;
 
-    private MockDataFileHub dataFileHub = MockDataFileHub.get();
+    private static MockDataFileHub dataFileHub;
 
     private ExperimentDesignParser subject;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        dataFileHub = new MockDataFileHub();
+    }
 
     @Before
     public void setUp() throws Exception {

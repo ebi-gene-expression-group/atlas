@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -42,9 +43,14 @@ public class ExperimentDesignParserTest {
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_1, OREGON_R, "wild_type"};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);
 
-    private MockDataFileHub dataFileHub = MockDataFileHub.get();
+    private static MockDataFileHub dataFileHub;
 
     private ExperimentDesignParser subject;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        dataFileHub = new MockDataFileHub();
+    }
 
     @Before
     public void setUp() throws Exception {

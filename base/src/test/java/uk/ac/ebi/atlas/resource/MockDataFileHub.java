@@ -8,18 +8,19 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.HashSet;
 
 public class MockDataFileHub extends DataFileHub {
 
-    final File dir;
-
-    public MockDataFileHub(File dir) {
-        super(dir.getPath());
-        this.dir = dir;
+    public MockDataFileHub() throws IOException {
+        super(Files.createTempDirectory("").toString());
+        new File(dataFilesLocation, "admin").mkdir();
+        new File(dataFilesLocation, "magetab").mkdir();
+        new File(dataFilesLocation, "expdesign").mkdir();
+        new File(dataFilesLocation).deleteOnExit();
     }
 
     private void addTemporaryTsv(String where, Collection<String[]> lines){
@@ -33,12 +34,8 @@ public class MockDataFileHub extends DataFileHub {
                 }).toList());
     }
 
-    public void addTemporaryEmptyFile(String where){
-       addTemporaryTsv(where, new HashSet<String[]>());
-    }
-
     public void addTemporaryFile(String where, Collection<String> lines){
-        File f = new File(dir.getAbsolutePath()+where);
+        File f = new File(dataFilesLocation + where);
         f.deleteOnExit();
         f.getParentFile().mkdirs();
         try {
@@ -57,27 +54,23 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(CONDENSED_SDRF_FILE_PATH_TEMPLATE, accession), lines);
     }
 
-    public void addRawCountsFile(String accession, Collection<String[]> lines) {
-        addTemporaryTsv(MessageFormat.format(RAW_COUNTS_FILE_PATH_TEMPLATE, accession), lines);
+//    public void addRawCountsFile(String accession, Collection<String[]> lines) {
+//        addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, accession), lines);
+//    }
+//
+//    public void addAnalysisMethodsFile(String accession, Collection<String[]> lines) {
+//        addTemporaryTsv(MessageFormat.format(ANALYSIS_METHODS_FILE_PATH_TEMPLATE, accession), lines);
+//    }
+//
+//    public void addExpressionFile(String accession, Collection<String[]> lines) {
+//        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
+//    }
+
+    public void addFactorsFile(String accession, Collection<String> lines) {
+        addTemporaryFile(MessageFormat.format(FACTORS_FILE_PATH_TEMPLATE, accession), lines);
     }
 
-    public void addAnalysisMethods(String accession, Collection<String[]> lines) {
-        addTemporaryTsv(MessageFormat.format(ANALYSIS_METHODS_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
-    public void addExpressionFile(String accession, Collection<String[]> lines) {
-        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
-    }
-
-    public static MockDataFileHub get() {
-        File dir = new File(System.getProperty("java.io.tmpdir") + "/" + System.currentTimeMillis());
-        dir.mkdir();
-        new File(dir.getAbsolutePath()+"/admin").mkdir();
-        new File(dir.getAbsolutePath()+"/magetab").mkdir();
-        new File(dir.getAbsolutePath()+"/expdesign").mkdir();
-        dir.deleteOnExit();
-
-         return new MockDataFileHub(dir);
-
+    public String getFactorsFilePathTemplate() {
+        return FileSystems.getDefault().getPath(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE).toString();
     }
 }
