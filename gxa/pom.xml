@@ -75,7 +75,7 @@
                         </property>
                     </systemProperties>
                     <excludes>
-                        <exclude>${failsafe.excludes}</exclude> <!-- Defined externally as a param in mvn -->
+                        <!--<exclude>${failsafe.excludes}</exclude> &lt;!&ndash; Defined externally as a param in mvn &ndash;&gt;-->
                         <exclude>**/*SIT.java</exclude>
                     </excludes>
                 </configuration>
@@ -133,7 +133,7 @@
             <version>3.2.2</version>
         </dependency>
 
-        <!--Spring dependencies-->
+        <!-- Spring dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -177,9 +177,7 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.13</version>
         </dependency>
-        <!--
-            Required by Spring MVC 3 @Configuration
-        -->
+        <!-- Required by Spring MVC 3 @Configuration -->
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
@@ -214,9 +212,7 @@
             <version>4.0.3</version>
         </dependency>
 
-        <!--
-            Jackson JSON
-        -->
+        <!-- Jackson JSON -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
@@ -295,18 +291,14 @@
             <scope>test</scope>
         </dependency>
 
-        <!--
-            Java Mail
-        -->
+        <!-- Java Mail -->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
         </dependency>
 
-        <!--
-            For testing rest services
-        -->
+        <!-- For testing REST services -->
         <dependency>
             <groupId>com.jayway.restassured</groupId>
             <artifactId>rest-assured</artifactId>
