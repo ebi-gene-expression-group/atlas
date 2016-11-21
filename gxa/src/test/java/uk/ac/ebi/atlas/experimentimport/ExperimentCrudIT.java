@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
-public class ExperimentCrudsIT {
+public class ExperimentCrudIT {
 
     @Spy
     @Inject
@@ -82,14 +82,14 @@ public class ExperimentCrudsIT {
     @Inject
     ConfigurationTrader configurationTrader;
 
-    ExperimentCrud experimentCrud;
+    private ExperimentCrud subject;
 
 
     @Before
     public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        experimentCrud = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
+        subject = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
                 conditionsIndexingService,
                 experimentDAO, experimentCheckerSpy,
                 analyticsLoaderFactory, configurationTrader);
@@ -109,7 +109,7 @@ public class ExperimentCrudsIT {
 
     private boolean tryDelete(String accession) {
         try{
-            experimentCrud.deleteExperiment(accession);
+            subject.deleteExperiment(accession);
             return true;
         } catch (ResourceNotFoundException e){
             return false;
@@ -119,7 +119,7 @@ public class ExperimentCrudsIT {
     @Test
     public void deleteNonExistentExperimentThrowsResourceNotFoundException() {
         thrown.expect(ResourceNotFoundException.class);
-        experimentCrud.deleteExperiment("FOOBAR");
+        subject.deleteExperiment("FOOBAR");
     }
 
     @Test
@@ -167,18 +167,18 @@ public class ExperimentCrudsIT {
         assumeThat(expressionsCount(experimentAccession, experimentType), is(0));
         assumeThat(dataFileHub.getExperimentFiles(experimentAccession).configuration.exists(), is(true));
 
-        experimentCrud.importExperiment(experimentAccession, false);
+        subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
         assertThat(expressionsCount(experimentAccession, experimentType), is(1));
     }
 
     public void importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType) throws IOException {
-        ExperimentDTO originalExperimentDTO = experimentCrud.findExperiment(experimentAccession);
-        experimentCrud.importExperiment(experimentAccession, false);
+        ExperimentDTO originalExperimentDTO = subject.findExperiment(experimentAccession);
+        subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
         assertThat(expressionsCount(experimentAccession, experimentType), is(1));
 
-        ExperimentDTO newExperimentDTO = experimentCrud.findExperiment(experimentAccession);
+        ExperimentDTO newExperimentDTO = subject.findExperiment(experimentAccession);
         assertThat(originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
     }
 
@@ -189,7 +189,7 @@ public class ExperimentCrudsIT {
     }
 
     public void deleteExperimentDeletesDB(String experimentAccession, ExperimentType experimentType) {
-        experimentCrud.deleteExperiment(experimentAccession);
+        subject.deleteExperiment(experimentAccession);
         assertThat(experimentCount(experimentAccession), is(0));
         assertThat(expressionsCount(experimentAccession, experimentType), is(0));
     }
