@@ -39,7 +39,7 @@ import static org.mockito.Mockito.*;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
-public class ExperimentCrudIT {
+public class ExperimentCrudsIT {
 
     @Spy
     @Inject
