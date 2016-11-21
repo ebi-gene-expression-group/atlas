@@ -30,27 +30,7 @@ public class ConditionsLookupService {
     public ConditionsLookupService(EFOLookupService efoLookupService){
         this.efoLookupService = efoLookupService;
     }
-
-    @Deprecated
-    public ImmutableList<? extends Condition> buildProperties(Experiment experiment){
-        if(experiment.getType().isDifferential()){
-            return buildPropertiesForDifferentialExperiment((DifferentialExperiment) experiment);
-        } else {
-            return buildPropertiesForBaselineExperiment((BaselineExperiment) experiment);
-        }
-    }
-
-    public ImmutableList<Condition> buildPropertiesForBaselineExperiment(BaselineExperiment baselineExperiment){
-        return buildPropertiesForBaselineExperiment(baselineExperiment.getAccession(),
-                baselineExperiment.getExperimentDesign(), baselineExperiment.getAssayGroups());
-    }
-
-    public ImmutableList<DifferentialCondition> buildPropertiesForDifferentialExperiment(DifferentialExperiment
-                                                                                      differentialExperiment){
-        return buildPropertiesForDifferentialExperiment(differentialExperiment.getAccession(), differentialExperiment
-                .getExperimentDesign(), differentialExperiment.getContrasts());
-    }
-
+    
     public ImmutableList<DifferentialCondition> buildPropertiesForDifferentialExperiment(String experimentAccession,
                                                                                        ExperimentDesign experimentDesign, Set<Contrast> contrasts){
         DifferentialConditionsBuilder b = new DifferentialConditionsBuilder(experimentAccession,experimentDesign);

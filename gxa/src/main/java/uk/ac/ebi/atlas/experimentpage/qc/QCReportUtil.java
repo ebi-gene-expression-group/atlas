@@ -41,7 +41,7 @@ public class QCReportUtil {
         try(InputStream f = newInputStream(filePath)) {
             IOUtils.copy(f, out);
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
 
     }

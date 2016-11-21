@@ -22,7 +22,6 @@ import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -60,9 +59,6 @@ public class ExperimentCrudTest {
 
     @Mock
     private DifferentialExperiment differentialExperimentMock;
-
-    @Mock
-    private ConditionsIndex conditionsIndexMock;
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -119,7 +115,6 @@ public class ExperimentCrudTest {
 
         when(experimentConfigurationMock.getExperimentType()).thenReturn(experimentType);
 
-        doNothing().when(conditionsIndexMock).removeConditions(anyString());
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
         when(experimentDAOMock.findExperiment(anyString(), anyBoolean())).thenReturn(experimentDTOMock);

@@ -41,7 +41,7 @@ public class AnatomicalSystemTrader {
                 return b.build();
 
             } catch (IOException e) {
-                throw Throwables.propagate(e);
+                throw new RuntimeException(e);
             }
         }
     };
