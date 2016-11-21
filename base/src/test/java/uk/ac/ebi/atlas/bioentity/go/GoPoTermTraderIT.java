@@ -7,7 +7,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
-import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -29,22 +28,22 @@ public class    GoPoTermTraderIT {
     private GoPoTermTrader subject;
 
     @Test
-    public void hasGO_0000001() throws IOException {
+    public void hasGO_0000001() throws Exception {
         assertThat(subject.getTerm(GO_0000001), is(GO_0000001_TERM));
     }
 
     @Test
-    public void hasGO_2001317() throws IOException {
+    public void hasGO_2001317() throws Exception {
         assertThat(subject.getTerm(GO_2001317), is(GO_2001317_TERM));
     }
 
     @Test
-    public void hasPO_0000001() throws IOException {
+    public void hasPO_0000001() throws Exception {
         assertThat(subject.getTerm(PO_0000001), is(PO_0000001_TERM));
     }
 
     @Test
-    public void hasPO_0030087() throws IOException {
+    public void hasPO_0030087() throws Exception {
         assertThat(subject.getTerm(PO_0030087), is(PO_0030087_TERM));
     }
 

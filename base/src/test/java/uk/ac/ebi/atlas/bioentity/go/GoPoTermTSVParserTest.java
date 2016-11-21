@@ -51,7 +51,7 @@ public class GoPoTermTSVParserTest {
     }
 
     @Test
-    public void duplicatesGetMinimumDepth() throws IOException {
+    public void duplicatesGetMinimumDepth() throws Exception {
         //given
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6 + 1)})
@@ -68,7 +68,7 @@ public class GoPoTermTSVParserTest {
     }
 
     @Test
-    public void lineWithoutDepthGetsDefaultDepth() throws IOException {
+    public void lineWithoutDepthGetsDefaultDepth() throws Exception {
         //given
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {PO_0000001, EMBRYO_PROPER})
@@ -84,7 +84,7 @@ public class GoPoTermTSVParserTest {
     }
 
     @Test
-    public void ignoreLineWithoutValidAccessionPrefix() throws IOException {
+    public void ignoreLineWithoutValidAccessionPrefix() throws Exception {
         //given
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {"foo:0000001", "bar"})
@@ -98,7 +98,7 @@ public class GoPoTermTSVParserTest {
     }
 
     @Test
-    public void emptyFieldsAreIgnored() throws IOException {
+    public void emptyFieldsAreIgnored() throws Exception {
         //given
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {GO_0000001, "", "", "", "", ""})
@@ -115,7 +115,7 @@ public class GoPoTermTSVParserTest {
 
 
     @Test
-    public void emptyLinesAreIgnored() throws IOException {
+    public void emptyLinesAreIgnored() throws Exception {
         //given
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {})

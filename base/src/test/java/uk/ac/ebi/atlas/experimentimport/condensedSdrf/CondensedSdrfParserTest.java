@@ -15,7 +15,6 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -118,7 +117,7 @@ public class CondensedSdrfParserTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
-    public static void setUpClass() throws IOException {
+    public static void setUpClass() throws Exception {
         dataFileHub = new MockDataFileHub();
     }
 
