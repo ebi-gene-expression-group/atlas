@@ -8,11 +8,9 @@ import com.google.common.collect.TreeMultimap;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Collections;
 import java.util.Set;
 
-@Named
 public class ExperimentSorter {
 
     private final DataFileHub dataFileHub;
