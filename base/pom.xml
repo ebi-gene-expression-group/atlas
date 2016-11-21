@@ -54,14 +54,14 @@
             <version>2.0.0</version>
         </dependency>
 
-        <!-- Retrieved from Atlassian repo http://maven.atlassian.com/content/repositories/atlassian-public/ -->
+        <!-- From repository http://maven.atlassian.com/content/repositories/atlassian-public/ -->
         <dependency>
             <groupId>com.atlassian.util.concurrent</groupId>
             <artifactId>atlassian-util-concurrent</artifactId>
             <version>3.0.0</version>
         </dependency>
 
-        <!-- Retrieved from Artifactory repo http://bar.ebi.ac.uk:8081/artifactory/repo/ -->
+        <!-- From repository http://bar.ebi.ac.uk:8081/artifactory/repo/ -->
         <dependency>
             <groupId>uk.ac.ebi.fg</groupId>
             <artifactId>ae-efo-loader</artifactId>
