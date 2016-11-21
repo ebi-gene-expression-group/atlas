@@ -397,21 +397,15 @@
         </profile>
 
         <profile>
-            <!-- Used for build that is deployed to ves-hx-77 -->
-            <id>test</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>**/resources</directory>
-                        <excludes>
-                            <exclude>oracleContext.xml</exclude>
-                        </excludes>
-                    </resource>
-                </resources>
-            </build>
-            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <id>integration</id>
+            <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
-                <data.files.location>/srv/gxa/data</data.files.location>
+                <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
+                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <solr.host>lime</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
@@ -450,32 +444,26 @@
         </profile>
 
         <profile>
-            <id>integration.test</id>
-            <!--<build>-->
-                <!--<resources>-->
-                    <!--<resource>-->
-                        <!--<directory>src/main/resources</directory>-->
-                        <!--<includes>-->
-                            <!--<include>oracleContext.xml</include>-->
-                            <!--<include>solrContext.xml</include>-->
-                        <!--</includes>-->
-                    <!--</resource>-->
-                <!--</resources>-->
-            <!--</build>-->
-            <!-- Embedded tomcat started by mvn in Bamboo plan -->
+            <!-- Used for build that is deployed to ves-hx-77 -->
+            <id>test</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>**/resources</directory>
+                        <excludes>
+                            <exclude>oracleContext.xml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <properties>
-                <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <data.files.location>/srv/gxa/data</data.files.location>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
         </profile>
-
-
 
         <profile>
             <!-- for debugging failing database tests -->
