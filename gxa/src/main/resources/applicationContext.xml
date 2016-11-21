@@ -23,8 +23,6 @@
 
     <util:properties id="speciesToExperimentPropertyFile" location="classpath:bundles/speciesToExperiment.properties"/>
 
-    <import resource="classpath*:baseApplicationContext.xml" />
-
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>

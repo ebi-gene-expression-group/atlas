@@ -16,12 +16,14 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 //TODO extract interface, write a different one for the Single Cell Atlas
+@Named
 public class ExperimentOpsExecutionService {
 
 

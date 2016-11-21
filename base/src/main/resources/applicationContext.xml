@@ -19,7 +19,7 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <import resource="baseOracleContext.xml" />
+    <import resource="oracleContext.xml" />
 
 
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">

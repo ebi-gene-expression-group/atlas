@@ -165,7 +165,7 @@ public class ExperimentCrudIT {
     public void importNewExperimentInsertsDB(String experimentAccession, ExperimentType experimentType) throws IOException {
         assumeThat(experimentCount(experimentAccession), is(0));
         assumeThat(expressionsCount(experimentAccession, experimentType), is(0));
-        assumeThat(dataFileHub.getExperimentFiles(experimentAccession).main.exists(), is(true));
+        assumeThat(dataFileHub.getExperimentFiles(experimentAccession).configuration.exists(), is(true));
 
         experimentCrud.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
