@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -24,21 +25,24 @@ import java.util.UUID;
 public class ExperimentOpsExecutionService {
 
 
-    private ExperimentCrud experimentCrud;
-    private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
-    private AnalyticsIndexerManager analyticsIndexerManager;
+    private final ExperimentCrud experimentCrud;
+    private final BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
+    private final AnalyticsIndexerManager analyticsIndexerManager;
     private final ExpressionSerializerService expressionSerializerService;
+    private final ExperimentTrader experimentTrader;
 
 
     @Inject
     public ExperimentOpsExecutionService(ExperimentCrud experimentCrud,
                                          BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
                                          AnalyticsIndexerManager analyticsIndexerManager,
-                                         ExpressionSerializerService expressionSerializerService) {
+                                         ExpressionSerializerService expressionSerializerService,
+                                         ExperimentTrader experimentTrader) {
         this.experimentCrud = experimentCrud;
         this.baselineCoexpressionProfileLoader = baselineCoexpressionProfileLoader;
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.expressionSerializerService = expressionSerializerService;
+        this.experimentTrader = experimentTrader;
     }
 
     public ImmutableList<String> findAllExperiments(){
@@ -101,11 +105,13 @@ public class ExperimentOpsExecutionService {
                 experimentCrud.makeExperimentPublic(accession);
                 break;
             case UPDATE_DESIGN_ONLY:
+                experimentTrader.removeExperimentFromCache(accession);
                 experimentCrud.updateExperimentDesign(accession);
                 break;
             case IMPORT_PUBLIC:
                 isPrivate = false;
             case IMPORT:
+                experimentTrader.removeExperimentFromCache(accession);
                 UUID accessKeyUUID = experimentCrud.importExperiment(accession, isPrivate);
                 resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
                 break;
@@ -113,6 +119,7 @@ public class ExperimentOpsExecutionService {
                 resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(accession));
                 break;
             case DELETE:
+                experimentTrader.removeExperimentFromCache(accession);
                 experimentCrud.deleteExperiment(accession);
                 expressionSerializerService.removeKryoFile(accession);
                 break;

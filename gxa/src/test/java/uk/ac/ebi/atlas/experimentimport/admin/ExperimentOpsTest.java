@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -44,6 +45,8 @@ public class ExperimentOpsTest {
     AnalyticsIndexerManager analyticsIndexerManager;
     @Mock
     ExpressionSerializerService expressionSerializerService;
+    @Mock
+    ExperimentTrader experimentTrader;
 
     final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
 
@@ -59,7 +62,7 @@ public class ExperimentOpsTest {
         experimentOps = new ExperimentOps(experimentOpLogWriter,
                 new ExperimentOpsExecutionService(
                         experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
-                        expressionSerializerService));
+                        expressionSerializerService,experimentTrader));
 
         when(expressionSerializerService.kryoSerializeExpressionData(Matchers.anyString())).thenReturn("skipped");
 

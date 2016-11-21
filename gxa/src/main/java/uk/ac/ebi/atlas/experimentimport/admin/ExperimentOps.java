@@ -37,19 +37,6 @@ public class ExperimentOps {
     private final ExperimentOpLogWriter experimentOpLogWriter;
     private final ExperimentOpsExecutionService experimentOpsExecutionService;
 
-
-    @Deprecated
-    public ExperimentOps(ExperimentCrud experimentCrud,
-                         ExperimentOpLogWriter experimentOpLogWriter,
-                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
-                         AnalyticsIndexerManager analyticsIndexerManager,
-                         ExpressionSerializerService expressionSerializerService) {
-        this(experimentOpLogWriter,
-                new ExperimentOpsExecutionService(
-                        experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
-                        expressionSerializerService));
-    }
-
     @Inject
     public ExperimentOps(ExperimentOpLogWriter experimentOpLogWriter,
                          ExperimentOpsExecutionService experimentOpsExecutionService) {

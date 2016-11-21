@@ -139,7 +139,7 @@ public class ExperimentCrudTest {
 
         subject = new ExperimentCrud(condensedSdrfParserMock,
                 experimentDesignFileWriterService,
-                conditionsIndexingService,experimentDAOMock, analyticsIndexerManagerMock,experimentTraderMock,
+                conditionsIndexingService,experimentDAOMock, analyticsIndexerManagerMock,
                 experimentChecker,
                 analyticsLoaderFactory,configurationTrader );
     }
@@ -158,9 +158,8 @@ public class ExperimentCrudTest {
     }
 
     @Test
-    public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
+    public void updateExperimentDesignAlsoIndexesConditions() throws Exception {
         subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
-        verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION);
         verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
     }
 

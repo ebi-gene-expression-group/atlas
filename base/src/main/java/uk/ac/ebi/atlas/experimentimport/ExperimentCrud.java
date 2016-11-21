@@ -28,7 +28,6 @@ public class ExperimentCrud {
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
     private ExperimentDAO experimentDAO;
-    private ExperimentTrader experimentTrader;
     private final ConditionsIndexingService conditionsIndexingService;
     private AnalyticsIndexerManager analyticsIndexerManager;
     /*
@@ -36,9 +35,6 @@ public class ExperimentCrud {
     How to share the two classes:
     take out
     conditionsIndexingService and analyticsIndexerManager?
-
-    TODO experimentTrader is even more funny here, it invalidates caches but that could be a separate op
-
      */
     private final ExperimentChecker experimentChecker;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
@@ -49,7 +45,6 @@ public class ExperimentCrud {
                           ConditionsIndexingService conditionsIndexingService,
                           ExperimentDAO experimentDAO,
                           AnalyticsIndexerManager analyticsIndexerManager,
-                          ExperimentTrader experimentTrader,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
                           ConfigurationTrader configurationTrader) {
@@ -58,7 +53,6 @@ public class ExperimentCrud {
         this.conditionsIndexingService = conditionsIndexingService;
         this.experimentDAO = experimentDAO;
         this.analyticsIndexerManager = analyticsIndexerManager;
-        this.experimentTrader = experimentTrader;
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.configurationTrader = configurationTrader;
@@ -112,8 +106,6 @@ public class ExperimentCrud {
             analyticsIndexerManager.deleteFromAnalyticsIndex(experimentDTO.getExperimentAccession());
         }
 
-        experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession());
-
         experimentDAO.deleteExperiment(experimentDTO.getExperimentAccession());
 
         return experimentDTO.getAccessKey();
@@ -153,7 +145,6 @@ public class ExperimentCrud {
 
     void updateExperimentDesign(String accession, ExperimentType type, boolean isPrivate, ExperimentDesign experimentDesign) {
         try {
-            experimentTrader.removeExperimentFromCache(accession);
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
             if (!isPrivate) {
