@@ -1,9 +1,8 @@
-
 package uk.ac.ebi.atlas.experimentpage.analysismethods;
 
-import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
@@ -27,19 +26,16 @@ import java.text.MessageFormat;
 @Scope("request")
 public class AnalysisMethodsPageController {
 
-    private FileTsvReaderBuilder fileTsvReaderBuilder;
-
     private String pdfFileTemplate;
-
+    private final DataFileHub dataFileHub;
     private final ExperimentTrader experimentTrader;
 
     @Inject
-    public AnalysisMethodsPageController(FileTsvReaderBuilder fileTsvReaderBuilder,
-                                         @Value("#{configuration['experiment.analysis-method.path.template']}") String pathTemplate,
+    public AnalysisMethodsPageController(DataFileHub dataFileHub,
                                          ExperimentTrader experimentTrader,
                                          @Value("#{configuration['analysis-methods.pdf.path.template']}") String pdfFileTemplate) {
 
-        this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
+        this.dataFileHub = dataFileHub;
         this.experimentTrader = experimentTrader;
         this.pdfFileTemplate = pdfFileTemplate;
     }
@@ -73,7 +69,7 @@ public class AnalysisMethodsPageController {
             IOException {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession,accessKey);
 
-        TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experimentAccession).build();
+        TsvReader tsvReader = dataFileHub.getExperimentFiles(experimentAccession).analysisMethods.get();
 
         model.addAttribute("csvLines", tsvReader.readAll());
 

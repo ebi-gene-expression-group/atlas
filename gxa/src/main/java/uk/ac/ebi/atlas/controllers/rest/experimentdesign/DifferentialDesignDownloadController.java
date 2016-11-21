@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;

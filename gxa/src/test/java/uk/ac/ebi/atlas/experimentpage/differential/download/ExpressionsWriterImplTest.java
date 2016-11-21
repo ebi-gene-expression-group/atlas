@@ -36,7 +36,7 @@ public class ExpressionsWriterImplTest {
 
     @Before
     public void initSubject() throws Exception {
-        when(csvReaderFactoryMock.createTsvReader(anyString())).thenReturn(csvReaderMock);
+        when(csvReaderFactoryMock.createForTsv(anyString())).thenReturn(csvReaderMock);
         when(csvReaderMock.readNext()).thenReturn(header)
                 .thenReturn(line1)
                 .thenReturn(line2)

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
@@ -9,11 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-
 class ExpressionsWriterImpl implements ExpressionsWriter {
-
-
-    private CsvReaderFactory csvReaderFactory;
 
     private CSVWriter csvWriter;
 
@@ -22,10 +17,6 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
     private String experimentAccession;
     private AnalyticsDataHeaderBuilder headerBuilder;
     private String arrayDesignAccession;
-
-    public ExpressionsWriterImpl(CsvReaderFactory csvReaderFactory) {
-        this.csvReaderFactory = csvReaderFactory;
-    }
 
     public void setResponseWriter(CSVWriter csvWriter) {
         this.csvWriter = csvWriter;
@@ -76,12 +67,12 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         csvWriter.close();
     }
 
-    CSVReader getCsvReader() {
+    private CSVReader getCsvReader() {
         String tsvFileURL = formatUrl(fileUrlTemplate);
-        return csvReaderFactory.createTsvReader(tsvFileURL);
+        return CsvReaderFactory.createForTsv(tsvFileURL);
     }
 
-    String formatUrl(String fileUrlTemplate) {
+    private String formatUrl(String fileUrlTemplate) {
         if (StringUtils.isNotBlank(arrayDesignAccession)){
             return MessageFormat.format(fileUrlTemplate, experimentAccession, arrayDesignAccession);
         }
