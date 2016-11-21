@@ -77,11 +77,6 @@ public class ExperimentCRUD {
 
         analyticsLoaderFactory.getLoader(configuration.getExperimentType()).loadAnalytics(experimentAccession);
 
-        // TODO If baseline experiment serialize on import here https://www.pivotaltracker.com/story/show/96273286
-        // if (configuration.getExperimentType() == ExperimentType.RNASEQ_MRNA_BASELINE || ExperimentType.{a serializable experiment type}...) {
-        //     kryoSerializeExpressionData(experimentAccession, experimentType);
-        // }
-
         return experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate, accessKey);
     }
 
@@ -115,7 +110,7 @@ public class ExperimentCRUD {
         return configuration;
     }
 
-    public String serializeExpressionData(String experimentAccession) {
+    public String serializeExpressionData(String experimentAccession) throws IOException {
         return expressionSerializerService.kryoSerializeExpressionData(experimentAccession);
     }
 }

@@ -32,7 +32,8 @@ public class AnalyticsIndexerService {
 
 
     Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment,
-                                                   Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch) {
+                                                   Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch)
+    throws IOException {
         return new SolrInputDocumentIterable(
                 experimentDataPointStreamFactory.stream(experiment).iterator(), bioentityIdToIdentifierSearch);
 

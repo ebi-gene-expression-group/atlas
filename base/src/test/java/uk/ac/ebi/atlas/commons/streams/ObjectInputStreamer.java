@@ -1,25 +1,32 @@
 package uk.ac.ebi.atlas.commons.streams;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public abstract class ObjectInputStreamer {
 
-    protected abstract ObjectInputStream<?> createStream(String experimentAccession);
+    protected abstract ObjectInputStream<?> createStream(String experimentAccession) throws IOException;
 
     public void testMultithreaded(final String experimentAccession,
                                   final int concurrentThreads,
-                                  final int concurrentStreamsPerThread){
+                                  final int concurrentStreamsPerThread) {
         for(int i = 0; i< concurrentThreads; i++){
             new Runnable(){
                 @Override
                 public void run() {
-                    testSinglethreaded(experimentAccession,concurrentStreamsPerThread);
+                    try {
+                        testSinglethreaded(experimentAccession,concurrentStreamsPerThread);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
             }.run();
         }
     }
 
-    public void testSinglethreaded(String experimentAccession, int concurrentStreams){
+    public void testSinglethreaded(String experimentAccession, int concurrentStreams) throws IOException {
         ObjectInputStream<?>[] streams = new ObjectInputStream[concurrentStreams];
         for(int i = 0; i< concurrentStreams; i++){
             streams[i]= createStream(experimentAccession);

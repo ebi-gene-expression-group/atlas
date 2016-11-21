@@ -30,10 +30,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfilesHeatMapTest {
 
-    public static final double POLR2B_LEUKOCYTE = 47D;
-    public static final double SNRPA_LEUKOCYTE = 19D;
-    public static final double CCNT2_LEUKOCYTE = 9D;
-    public static final double ZKSCAN5_LEUKOCYTE = 5D;
+    private static final double POLR2B_LEUKOCYTE = 47D;
+    private static final double SNRPA_LEUKOCYTE = 19D;
+    private static final double CCNT2_LEUKOCYTE = 9D;
+    private static final double ZKSCAN5_LEUKOCYTE = 5D;
     private static final double NUMBER_OF_GENES_IN_GENE_SET = 7;
     private static final int NUMBER_OF_FRACTIONAL_DIGITS = 0;
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
@@ -55,7 +55,7 @@ public class BaselineProfilesHeatMapTest {
     BaselineProfileInputStreamFactory inputStreamFactory;
 
     @Before
-    public void before() {
+    public void before() throws Exception {
         when(inputStreamFactory.create(Matchers.any(BaselineProfileStreamOptions.class)))
                 .thenReturn( eMTab513react71InputStream);
 

@@ -27,9 +27,11 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Named
 public class ExperimentDataPointStreamFactory {
@@ -57,7 +59,7 @@ public class ExperimentDataPointStreamFactory {
 
     }
 
-    public Iterable<? extends ExperimentDataPoint> stream(Experiment experiment){
+    public Iterable<? extends ExperimentDataPoint> stream(Experiment experiment) throws IOException {
         if(experiment instanceof MicroarrayExperiment){
             return stream((MicroarrayExperiment) experiment);
         } else if (experiment instanceof DifferentialExperiment){
@@ -69,7 +71,7 @@ public class ExperimentDataPointStreamFactory {
         }
     }
 
-    private Iterable<BaselineExperimentDataPoint> stream(BaselineExperiment experiment){
+    private Iterable<BaselineExperimentDataPoint> stream(BaselineExperiment experiment) throws IOException {
 
         return new BaselineExperimentDataPointStream(
                 experiment,
@@ -84,7 +86,7 @@ public class ExperimentDataPointStreamFactory {
         );
     }
 
-    private Iterable<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment){
+    private Iterable<DifferentialExperimentDataPoint> stream(DifferentialExperiment experiment) throws IOException {
 
         return new DifferentialExperimentDataPointStream(experiment,
                 new IterableObjectInputStream<>(
@@ -98,7 +100,7 @@ public class ExperimentDataPointStreamFactory {
         );
     }
 
-    private Iterable<DifferentialExperimentDataPoint> stream(final MicroarrayExperiment experiment){
+    private Iterable<DifferentialExperimentDataPoint> stream(final MicroarrayExperiment experiment) {
 
         class MicroarrayExperimentDataPointIterator extends UnmodifiableIterator<DifferentialExperimentDataPoint> {
 
@@ -114,10 +116,14 @@ public class ExperimentDataPointStreamFactory {
 
             @Override
             public DifferentialExperimentDataPoint next() {
-                if(current == null || !current.hasNext()){
-                    current = stream(experiment, arrayDesigns.next()).iterator();
+                try {
+                    if(current == null || !current.hasNext()){
+                        current = stream(experiment, arrayDesigns.next()).iterator();
+                    }
+                    return current.next();
+                } catch (IOException e) {
+                    throw new NoSuchElementException(e.getMessage());
                 }
-                return current.next();
             }
         }
 
@@ -129,7 +135,7 @@ public class ExperimentDataPointStreamFactory {
         };
     }
 
-    private Iterable<DifferentialExperimentDataPoint> stream(MicroarrayExperiment experiment, String designElement){
+    private Iterable<DifferentialExperimentDataPoint> stream(MicroarrayExperiment experiment, String designElement) throws IOException {
 
         return new DifferentialExperimentDataPointStream(experiment,
                 new IterableObjectInputStream<>(

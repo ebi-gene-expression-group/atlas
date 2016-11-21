@@ -50,7 +50,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
     // Kryo instance, as Kryo isn’t thread safe.
     @Override
-    public String serializeExpressionData(final String experimentAccession, ExperimentalFactors experimentalFactors) throws IOException {
+    public String serializeExpressionData(final String experimentAccession, ExperimentalFactors experimentalFactors) {
         Kryo kryo = new Kryo();
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
