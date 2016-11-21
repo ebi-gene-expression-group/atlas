@@ -9,7 +9,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>base</artifactId>
+    <artifactId>atlas-base</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -54,27 +54,21 @@
             <version>2.0.0</version>
         </dependency>
 
-        <!-- For URL rewrite, because of possible / suffix -->
-        <dependency>
-            <groupId>org.tuckey</groupId>
-            <artifactId>urlrewritefilter</artifactId>
-            <version>4.0.3</version>
-        </dependency>
-
+        <!-- Retrieved from Atlassian repo http://maven.atlassian.com/content/repositories/atlassian-public/ -->
         <dependency>
             <groupId>com.atlassian.util.concurrent</groupId>
             <artifactId>atlassian-util-concurrent</artifactId>
             <version>3.0.0</version>
         </dependency>
 
-        <!-- Retrieved from artifactory-repo http://bar.ebi.ac.uk:8081/artifactory/repo/ -->
+        <!-- Retrieved from Artifactory repo http://bar.ebi.ac.uk:8081/artifactory/repo/ -->
         <dependency>
             <groupId>uk.ac.ebi.fg</groupId>
             <artifactId>ae-efo-loader</artifactId>
             <version>1.0.5</version>
         </dependency>
 
-        <!-- Required by org.apache.commons.configuration.tree.xpath.XPathExpressionEngine -->
+        <!-- Required by org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine -->
         <dependency>
             <groupId>commons-jxpath</groupId>
             <artifactId>commons-jxpath</artifactId>
@@ -83,18 +77,12 @@
     </dependencies>
 
     <build>
-        <finalName>atlas-base</finalName>
-
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <excludes>
-                    <exclude>oracleContext.xml</exclude>
-                </excludes>
             </resource>
         </resources>
-
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
