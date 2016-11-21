@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
@@ -24,13 +25,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class ConditionsIndexingServiceIT {
 
-    @Mock
     SolrClient baselineConditionsCore;
 
-    @Mock
     SolrClient differentialConditionsCore;
 
     @Inject
@@ -46,6 +45,9 @@ public class ConditionsIndexingServiceIT {
 
     @Before
     public void setUp(){
+
+        baselineConditionsCore = Mockito.mock(SolrClient.class);
+        differentialConditionsCore = Mockito.mock(SolrClient.class);
         subject = new ConditionsIndexingService(baselineConditionsCore,differentialConditionsCore,
                 conditionsLookupService,configurationTrader);
     }
