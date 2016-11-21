@@ -35,14 +35,14 @@ public class MicroarrayDataWriterTest {
 
     @Before
     public void initSubject() throws Exception {
-        when(csvReaderFactoryMock.createForTsv(anyString())).thenReturn(csvReaderMock);
-        when(csvReaderMock.readNext()).thenReturn(header)
-                .thenReturn(line)
-                .thenReturn(null);
-
-        subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
-        subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
-        subject.setResponseWriter(csvWriterMock);
+//        when(csvReaderFactoryMock.createForTsv(anyString())).thenReturn(csvReaderMock);
+//        when(csvReaderMock.readNext()).thenReturn(header)
+//                .thenReturn(line)
+//                .thenReturn(null);
+//
+//        subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
+//        subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
+//        subject.setResponseWriter(csvWriterMock);
     }
 
     @Test

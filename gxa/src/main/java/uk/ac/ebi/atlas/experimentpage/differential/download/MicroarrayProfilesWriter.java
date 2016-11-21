@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
         this.solrQueryService = solrQueryService;
     }
 
-    public long write(PrintWriter outputWriter, MicroarrayRequestContext requestContext, String arrayDesign)  {
+    public long write(PrintWriter outputWriter, MicroarrayRequestContext requestContext, String arrayDesign) throws IOException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(),"");
         MicroarrayProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext, arrayDesign);
         Set<Contrast> contrasts = Sets.newHashSet(inputStream.getOrderedContrastsPresentInStream());

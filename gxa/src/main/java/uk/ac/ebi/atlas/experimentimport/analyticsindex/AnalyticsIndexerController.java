@@ -39,7 +39,8 @@ public class AnalyticsIndexerController {
     public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
                                       @RequestParam(value = "threads", required = false, defaultValue =  AnalyticsIndexerManager.DEFAULT_THREADS_8) int numThreads,
                                       @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE_8192) int batchSize,
-                                      @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS_24) int timeout) {
+                                      @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS_24) int timeout)
+    throws IOException {
 
         try {
             if (!Strings.isNullOrEmpty(experimentType)) {

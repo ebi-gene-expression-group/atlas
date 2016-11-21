@@ -83,12 +83,12 @@ public class BarChartTraderBuilderTest {
     private FactorGroup factorHashSet2;
     private FactorGroup factorHashSet3;
 
-    public static final BaselineExpressions GENE_PROFILE_1 = mock(BaselineExpressions.class);
-    public static final BaselineExpressions GENE_PROFILE_2 = mock(BaselineExpressions.class);
+    private static final BaselineExpressions GENE_PROFILE_1 = mock(BaselineExpressions.class);
+    private static final BaselineExpressions GENE_PROFILE_2 = mock(BaselineExpressions.class);
 
 
     @Before
-    public void initializeSubject() {
+    public void initializeSubject() throws Exception {
 
         when(factorMock1.getValue()).thenReturn(ORGANISM_PART_1);
         when(factorMock2.getValue()).thenReturn(ORGANISM_PART_2);

@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 @Named
@@ -33,7 +34,7 @@ public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast
         this.solrQueryService = solrQueryService;
     }
 
-    public long write(PrintWriter outputWriter, RnaSeqRequestContext requestContext)  {
+    public long write(PrintWriter outputWriter, RnaSeqRequestContext requestContext) throws IOException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext
                 .getFilteredBySpecies());
         ObjectInputStream<RnaSeqProfile> inputStream = inputStreamFactory.create(requestContext);

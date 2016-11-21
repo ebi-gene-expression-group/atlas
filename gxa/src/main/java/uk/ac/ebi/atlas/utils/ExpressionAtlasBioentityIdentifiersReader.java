@@ -48,7 +48,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
     }
 
     @Override
-    protected int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) {
+    protected int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) throws IOException {
         if (experimentType.isBaseline()) {
 
             if (experimentType.isProteomicsBaseline()) {
@@ -68,7 +68,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         }
     }
 
-    private int addBioentityIdentifiersFromBaselineExperiments(HashSet<String> bioentityIdentifiers) {
+    private int addBioentityIdentifiersFromBaselineExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
@@ -91,7 +91,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
     }
 
-    private int addBioentityIdentifiersFromProteomicsBaselineExperiments(HashSet<String> bioentityIdentifiers) {
+    private int addBioentityIdentifiersFromProteomicsBaselineExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
@@ -115,7 +115,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
     }
 
-    private int addBioentityIdentifiersFromMicroarrayExperiments(HashSet<String> bioentityIdentifiers) {
+    private int addBioentityIdentifiersFromMicroarrayExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
@@ -141,7 +141,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
     }
 
-    private int addBioentityIdentifiersFromRnaSeqDifferentialExperiments(HashSet<String> bioentityIdentifiers) {
+    private int addBioentityIdentifiersFromRnaSeqDifferentialExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
@@ -164,7 +164,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
     }
 
     @Override
-    public HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) {
+    public HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) throws IOException {
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
 
         HashSet<String> bioentityIdentifiers = new HashSet<>();

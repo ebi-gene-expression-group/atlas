@@ -34,8 +34,6 @@ import static org.mockito.Mockito.*;
 
 public class ExperimentOpsTest {
 
-    ExperimentOps experimentOps;
-
     @Mock
     ExperimentCRUD experimentCRUD;
     @Mock
@@ -49,13 +47,15 @@ public class ExperimentOpsTest {
 
     final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
 
-   private String accession = "E-EXAMPLE-1";
+    private String accession = "E-EXAMPLE-1";
+
+    private ExperimentOps subject;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        experimentOps = new ExperimentOps(experimentCRUD, experimentMetadataCRUD, experimentOpLogWriter,
+        subject = new ExperimentOps(experimentCRUD, experimentMetadataCRUD, experimentOpLogWriter,
                 baselineCoexpressionProfileLoader, analyticsIndexerManager);
 
         when(experimentCRUD.serializeExpressionData(Matchers.anyString())).thenReturn("skipped");
@@ -111,7 +111,7 @@ public class ExperimentOpsTest {
                 accessions.add("E-DUMMY-" + rand.nextInt(10000));
             }
 
-            Iterator<JsonElement> result = experimentOps.perform(Optional.of(accessions), Collections.singleton(op))
+            Iterator<JsonElement> result = subject.perform(Optional.of(accessions), Collections.singleton(op))
                     .iterator();
 
             int i = 0;
@@ -138,7 +138,7 @@ public class ExperimentOpsTest {
         ops.add(Op.COEXPRESSION_IMPORT); // should not be started
 
 
-        JsonArray result = experimentOps.perform(Optional.of(Collections.singletonList(accession)),ops);
+        JsonArray result = subject.perform(Optional.of(Collections.singletonList(accession)),ops);
 
         assertTrue(result.toString(), result.get(0).getAsJsonObject().has("accession"));
         assertThat(result.get(0).getAsJsonObject().get("accession").getAsJsonPrimitive()
@@ -177,7 +177,7 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
-                experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList
+                subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList
                         (op));
             }
         }
@@ -192,7 +192,7 @@ public class ExperimentOpsTest {
     public void timestampsLookRight() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
-            experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
+            subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
         }
         for (Pair<String, Pair<Long, Long>> p : fileSystem.get(accession)) {
             Long start = p.getRight().getLeft();
@@ -208,7 +208,7 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         Mockito.when(experimentCRUD.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
 
-        JsonObject result = experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
+        JsonObject result = subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
                 .DELETE))
                 .iterator().next().getAsJsonObject();
 
@@ -227,7 +227,7 @@ public class ExperimentOpsTest {
         assertEquals(Op.opsForParameter("LOAD_PUBLIC"), ImmutableList.of(Op.IMPORT_PUBLIC,Op.COEXPRESSION_UPDATE,
                 Op.SERIALIZE,Op.ANALYTICS_IMPORT) );
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCRUD).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -244,7 +244,7 @@ public class ExperimentOpsTest {
                 .when(experimentCRUD)
                 .importExperiment(accession,false);
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCRUD).importExperiment(accession, false);
 
@@ -257,7 +257,7 @@ public class ExperimentOpsTest {
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
-        new ExperimentAdminController(experimentOps,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject,experimentMetadataCRUD).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCRUD).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -273,7 +273,7 @@ public class ExperimentOpsTest {
                 .serializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps,experimentMetadataCRUD)
+                new ExperimentAdminController(subject,experimentMetadataCRUD)
                         .doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCRUD).importExperiment(accession, false);
@@ -294,7 +294,7 @@ public class ExperimentOpsTest {
                 .serializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps,experimentMetadataCRUD)
+                new ExperimentAdminController(subject,experimentMetadataCRUD)
                         .doOp(accession, "LOAD_PUBLIC");
 
         assertThat(response, containsString("error"));

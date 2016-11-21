@@ -134,7 +134,7 @@ public class RnaSeqProfilesWriterIT {
         requestPreferences = new DifferentialRequestPreferences();
     }
 
-    public void defaultParametersHeader(String accession)  {
+    public void defaultParametersHeader(String accession) throws Exception {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         subject.write(printWriterMock, requestContext);
 
@@ -151,7 +151,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(columnHeaders.length, greaterThan(2));
                     }
 
-    public void weHaveSomeResults(String accession){
+    public void weHaveSomeResults(String accession) throws Exception {
         requestPreferences.setCutoff(1D);
         requestPreferences.setFoldChangeCutOff(0D);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
@@ -168,12 +168,12 @@ public class RnaSeqProfilesWriterIT {
     }
 
 
-    public void notSpecific(String accession) {
+    public void notSpecific(String accession) throws Exception {
         requestPreferences.setSpecific(false);
         weHaveSomeResults(accession);
     }
     
-    public void upDownRegulationWorks(String accession) {
+    public void upDownRegulationWorks(String accession) throws Exception {
         requestPreferences.setRegulation(Regulation.UP);
 
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
@@ -209,7 +209,7 @@ public class RnaSeqProfilesWriterIT {
          }
 
     
-    public void noDataWithVeryStrictPValueCutoff(String accession) {
+    public void noDataWithVeryStrictPValueCutoff(String accession) throws Exception {
         requestPreferences.setCutoff(1e-100);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);
@@ -218,7 +218,7 @@ public class RnaSeqProfilesWriterIT {
 
 
     
-    public void noDataWithVeryLargeFoldChangeCutoff(String accession) {
+    public void noDataWithVeryLargeFoldChangeCutoff(String accession) throws Exception {
         requestPreferences.setFoldChangeCutOff(50000D);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         long genesCount = subject.write(printWriterMock, requestContext);

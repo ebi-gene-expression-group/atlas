@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -31,11 +32,14 @@ public class ExperimentSorterIT {
     @Inject
     ExperimentTrader experimentTrader;
 
+    @Inject
+    ConfigurationTrader configurationTrader;
+
     ExperimentSorter subject;
 
     @Before
     public void setUp(){
-        subject = new ExperimentSorter(dataFileHub,experimentTrader);
+        subject = new ExperimentSorter(dataFileHub,experimentTrader, configurationTrader);
     }
 
     @Test

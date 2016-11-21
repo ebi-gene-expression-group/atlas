@@ -60,7 +60,7 @@ public class ExpressionSerializerServiceIT {
 
     @Test
     public void weCanSerializeTheFile() {
-        assertThat(dataFileHub.getExperimentFiles(accession).main.exists(), is(true));
+        assertThat(dataFileHub.getBaselineExperimentFiles(accession).main.exists(), is(true));
         assertThat(fileExists(serializedExpressionsFileTemplate, accession), is(false));
 
         subject.kryoSerializeExpressionData(accession);

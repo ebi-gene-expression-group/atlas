@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Observable;
@@ -22,17 +23,17 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AnalyticsIndexerManager extends Observable {
-    public static final String DEFAULT_THREADS_8 = "8";
-    public static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
-    public static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
+    protected static final String DEFAULT_THREADS_8 = "8";
+    protected static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
+    protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
     private static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
-    protected final AnalyticsIndexerMonitor analyticsIndexerMonitor;
+    private final AnalyticsIndexerMonitor analyticsIndexerMonitor;
+    private final BioentityIdentifiersReader bioentityIdentifiersReader;
+    private final BioentityPropertiesDao bioentityPropertiesDao;
+    private final ExperimentSorter experimentSorter;
+    private AnalyticsIndexerService analyticsIndexerService;
     protected final ExperimentTrader experimentTrader;
-    protected final BioentityIdentifiersReader bioentityIdentifiersReader;
-    protected final BioentityPropertiesDao bioentityPropertiesDao;
-    protected final ExperimentSorter experimentSorter;
-    protected AnalyticsIndexerService analyticsIndexerService;
 
     public AnalyticsIndexerManager(ExperimentSorter experimentSorter, AnalyticsIndexerMonitor analyticsIndexerMonitor, BioentityIdentifiersReader bioentityIdentifiersReader, AnalyticsIndexerService analyticsIndexerService, ExperimentTrader experimentTrader, BioentityPropertiesDao bioentityPropertiesDao) {
         this.experimentSorter = experimentSorter;
@@ -44,15 +45,19 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
     public int addToAnalyticsIndex(String experimentAccession) {
-        return addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
-                (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
+        try {
+            return addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
+                    (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteFromAnalyticsIndex(String experimentAccession) {
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
     }
 
-    public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
+    public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException, IOException {
         addObserver(analyticsIndexerMonitor);
 
         setChangedAndNotifyObservers("Deleting all documents from analytics index...");
@@ -79,7 +84,7 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
     public void indexPublicExperiments(ExperimentType experimentType, int threads, int batchSize, int timeout) throws
-            InterruptedException {
+            InterruptedException, IOException {
         addObserver(analyticsIndexerMonitor);
 
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);

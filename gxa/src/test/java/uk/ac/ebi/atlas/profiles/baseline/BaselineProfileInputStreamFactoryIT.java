@@ -48,7 +48,7 @@ public class BaselineProfileInputStreamFactoryIT {
     }
 
     @Test
-    public void experimentWithoutSerializedFileIsReadFromTsvFile() {
+    public void experimentWithoutSerializedFileIsReadFromTsvFile() throws Exception {
         String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, E_MTAB_513);
         String temporaryFileURL = serializedFileURL + ".bak";
 
@@ -73,7 +73,7 @@ public class BaselineProfileInputStreamFactoryIT {
     class ThreadSafeTester extends ObjectInputStreamer {
 
         @Override
-        protected ObjectInputStream<?> createStream(String experimentAccession) {
+        protected ObjectInputStream<?> createStream(String experimentAccession) throws Exception {
             return subject.createBaselineProfileInputStream(experimentAccession, DEFAULT_QUERY_FACTOR, 0.1, new HashSet<Factor>());
         }
 
