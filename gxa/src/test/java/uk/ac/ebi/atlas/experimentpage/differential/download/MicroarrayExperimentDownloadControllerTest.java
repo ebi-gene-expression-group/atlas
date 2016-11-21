@@ -1,24 +1,26 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.Set;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anySet;
@@ -28,9 +30,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExperimentDownloadControllerTest {
 
-    public static final String EXPERIMENT_ACCESSION = "experimentAccession";
-    public static final String ARRAY_DESIGN = "arrayDesign";
-    public static final String ACCESS_KEY = "hunter2";
+    private static final String EXPERIMENT_ACCESSION = "experimentAccession";
+    private static final String ARRAY_DESIGN = "arrayDesign";
+    private static final String ACCESS_KEY = "hunter2";
 
     @Mock
     private MicroarrayRequestContextBuilder requestContextBuilderMock;
@@ -40,9 +42,6 @@ public class MicroarrayExperimentDownloadControllerTest {
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;
-
-    @Mock
-    private HttpServletRequest requestMock;
 
     @Mock
     private MicroarrayExperiment experimentMock;
@@ -78,8 +77,8 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(profilesWriter.write(any(PrintWriter.class), any(ObjectInputStream.class), any
-                (DifferentialProfileStreamOptions.class), anySet(), any(GeneQueryResponse.class)))
+        when(profilesWriter.write(any(PrintWriter.class), Matchers.<ObjectInputStream<MicroarrayProfile>>any(),
+                any(DifferentialProfileStreamOptions.class), Matchers.<Set<Contrast>>any(), any(GeneQueryResponse.class)))
                 .thenReturn(0L);
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
@@ -87,7 +86,7 @@ public class MicroarrayExperimentDownloadControllerTest {
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
-        subject.downloadGeneProfiles(requestMock, EXPERIMENT_ACCESSION,ACCESS_KEY, preferencesMock, responseMock);
+        subject.downloadGeneProfiles(EXPERIMENT_ACCESSION,ACCESS_KEY, preferencesMock, responseMock);
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
@@ -100,7 +99,7 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(expressionsWriterMock.write()).thenReturn(0L);
         when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
-        subject.downloadNormalizedData(requestMock,EXPERIMENT_ACCESSION, ACCESS_KEY,preferencesMock, responseMock);
+        subject.downloadNormalizedData(EXPERIMENT_ACCESSION, ACCESS_KEY,preferencesMock, responseMock);
 
         verify(expressionsWriterMock).write();
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-normalized-expressions.tsv\"");
@@ -112,7 +111,7 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(expressionsWriterMock.write()).thenReturn(0L);
         when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
-        subject.downloadLogFoldData(requestMock,EXPERIMENT_ACCESSION,ACCESS_KEY, preferencesMock, responseMock);
+        subject.downloadLogFoldData(EXPERIMENT_ACCESSION,ACCESS_KEY, preferencesMock, responseMock);
 
         verify(expressionsWriterMock).write();
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-log-fold-changes.tsv\"");
@@ -124,7 +123,7 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(expressionsWriterMock.write()).thenReturn(0L);
         when(dataWriterFactoryMock.getMicroarrayAnalyticsDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
-        subject.downloadAllAnalytics(requestMock, EXPERIMENT_ACCESSION,ACCESS_KEY, preferencesMock, responseMock);
+        subject.downloadAllAnalytics(EXPERIMENT_ACCESSION,ACCESS_KEY, preferencesMock, responseMock);
 
         verify(expressionsWriterMock).write();
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-analytics.tsv\"");
