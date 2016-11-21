@@ -3,29 +3,19 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Named
 public class DataWriterFactory {
-
-    // TODO replace with AtlasResource
-    @Value("#{configuration['microarray.experiment.data.path.template']}")
-    private String microarrayExperimentAnalyticsFileUrlTemplate;
-
-    @Value("#{configuration['microarray.normalized.data.path.template']}")
-    private String microarrayExperimentNormalizedFileUrlTemplate;
-
-    @Value("#{configuration['microarray.log-fold-changes.data.path.template']}")
-    private String microarrayExperimentLogFoldFileUrlTemplate;
 
     private final DataFileHub dataFileHub;
 
@@ -53,50 +43,52 @@ public class DataWriterFactory {
     }
 
 
-    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
-
+    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment,
+                                                              PrintWriter responseWriter,
+                                                              String arrayDesignAccession)
+    throws IOException {
         final MicroarrayDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder(experiment);
 
         ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl();
-        microarrayDataWriter.setFileUrlTemplate(microarrayExperimentAnalyticsFileUrlTemplate);
-        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        microarrayDataWriter.setReader(
+                dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession)
+                .analytics.getReader());
         microarrayDataWriter.setHeaderBuilder(headerBuilder);
 
-        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter);
-
+        initWriter(microarrayDataWriter, responseWriter);
         return microarrayDataWriter;
-
     }
 
-    public ExpressionsWriter getMicroarrayRawDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
-
+    public ExpressionsWriter getMicroarrayRawDataWriter(DifferentialExperiment experiment,
+                                                        PrintWriter responseWriter,
+                                                        String arrayDesignAccession)
+    throws IOException {
         ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl();
-        microarrayDataWriter.setFileUrlTemplate(microarrayExperimentNormalizedFileUrlTemplate);
-        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        microarrayDataWriter.setReader(
+                dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession)
+                .normalizedExpressions.getReader());
 
-        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter);
-
+        initWriter(microarrayDataWriter, responseWriter);
         return microarrayDataWriter;
     }
 
-    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
-
+    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment,
+                                                            PrintWriter responseWriter,
+                                                            String arrayDesignAccession)
+    throws IOException {
         ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl();
-        microarrayDataWriter.setFileUrlTemplate(microarrayExperimentLogFoldFileUrlTemplate);
-        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        microarrayDataWriter.setReader(
+                dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession)
+                .logFoldChanges.getReader());
 
-
-        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter);
-
+        initWriter(microarrayDataWriter, responseWriter);
         return microarrayDataWriter;
     }
 
 
-    private void initWriter(ExpressionsWriterImpl expressionsWriter, String experimentAccession,
+    private void initWriter(ExpressionsWriterImpl expressionsWriter,
                             PrintWriter responseWriter) {
-
         expressionsWriter.setResponseWriter(new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER));
-        expressionsWriter.setExperimentAccession(experimentAccession);
     }
 
 

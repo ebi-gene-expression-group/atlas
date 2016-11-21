@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -57,29 +56,26 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadGeneProfiles(
-            HttpServletRequest request, @PathVariable String experimentAccession,
-            @RequestParam(value = "accessKey", required = false) String accessKey,
-            @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences, HttpServletResponse response) throws IOException {
+    public void downloadGeneProfiles(@PathVariable String experimentAccession,
+                                     @RequestParam(value = "accessKey", required = false) String accessKey,
+                                     @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES)
+                                         @Valid MicroarrayRequestPreferences preferences,
+                                     HttpServletResponse response)
+    throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment)
-                experimentTrader.getExperiment(experimentAccession,accessKey);
-
+        MicroarrayExperiment experiment =
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession,accessKey);
 
         LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: {}", preferences);
 
         prepareResponse(response, experimentAccession, experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
-
-        MicroarrayRequestContext requestContext = requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+        MicroarrayRequestContext requestContext =
+                requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
-
             String arrayDesign = experiment.getArrayDesignAccessions().first();
-
             writeMicroarrayGeneProfiles(response.getWriter(), experimentAccession, requestContext, arrayDesign);
-
         } else {
-
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
@@ -97,77 +93,67 @@ public class MicroarrayExperimentDownloadController {
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_MICROARRAY)
-    public String downloadRdataURL(@PathVariable String experimentAccession) throws
-            IOException {
-
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata",
+                    params = PARAMS_TYPE_MICROARRAY)
+    public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
         String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
-
         return "forward:" + path;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_MICROARRAY)
     public String downloadPdf(@PathVariable String experimentAccession) throws IOException {
-
         String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
-
         return "forward:" + path;
     }
 
 
-    private void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession, MicroarrayRequestContext
-            requestContext, String arrayDesign) throws IOException {
+    private void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession,
+                                             MicroarrayRequestContext requestContext, String arrayDesign)
+    throws IOException {
         try {
-
             long genesCount = profilesWriter.write(writer, requestContext, arrayDesign);
             LOGGER.info("<writeMicroarrayGeneProfiles> wrote {} genes for experiment {}", genesCount, experimentAccession);
-
         } catch (GenesNotFoundException e) {
             LOGGER.info("<writeMicroarrayGeneProfiles> no genes found");
         }
-
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadNormalizedData(HttpServletRequest request, @PathVariable String experimentAccession
-            , @RequestParam(value = "accessKey",required = false) String accessKey,
-              @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+    public void downloadNormalizedData(@PathVariable String experimentAccession,
+                                       @RequestParam(value = "accessKey",required = false) String accessKey,
+                                       @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES)
+                                           @Valid MicroarrayRequestPreferences preferences,
+                                       HttpServletResponse response)
+    throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment)
-                experimentTrader.getExperiment(experimentAccession,accessKey);
+        MicroarrayExperiment experiment =
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession,accessKey);
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), NORMALIZED_EXPRESSIONS_TSV);
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
 
-            ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
-                    response.getWriter(), experiment.getArrayDesignAccessions().first());
+            ExpressionsWriter writer =
+                    dataWriterFactory.getMicroarrayRawDataWriter(
+                            experiment, response.getWriter(), experiment.getArrayDesignAccessions().first());
 
             long genesCount = writer.write();
-
             LOGGER.info("<download{}> streamed {} gene expression profiles", NORMALIZED_EXPRESSIONS_TSV, genesCount);
-
             writer.close();
-
         } else {
-
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
-
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + NORMALIZED_EXPRESSIONS_TSV;
-
                 ZipEntry ze = new ZipEntry(filename);
 
                 zipOutputStream.putNextEntry(ze);
 
-                ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
-                        new PrintWriter(zipOutputStream),selectedArrayDesign);
+                ExpressionsWriter writer =
+                        dataWriterFactory.getMicroarrayRawDataWriter(
+                                experiment, new PrintWriter(zipOutputStream),selectedArrayDesign);
 
                 long genesCount = writer.write();
-
                 LOGGER.info("<download{}> zipped {} in {}", NORMALIZED_EXPRESSIONS_TSV, genesCount, filename);
-
                 zipOutputStream.closeEntry();
             }
 
@@ -176,34 +162,32 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/logFold.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadLogFoldData(HttpServletRequest request, @PathVariable String experimentAccession
-            , @RequestParam(value = "accessKey",required = false) String accessKey,@ModelAttribute
-                                                (MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+    public void downloadLogFoldData(@PathVariable String experimentAccession,
+                                    @RequestParam(value = "accessKey",required = false) String accessKey,
+                                    @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES)
+                                        @Valid MicroarrayRequestPreferences preferences,
+                                    HttpServletResponse response)
+    throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment)
-                experimentTrader.getExperiment(experimentAccession,accessKey);
-        prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), LOG_FOLD_CHANGES_TSV);
+        MicroarrayExperiment experiment =
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession,accessKey);
+
+        prepareResponse(
+                response, experiment.getAccession(), experiment.getArrayDesignAccessions(), LOG_FOLD_CHANGES_TSV);
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
-
-            ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
-                    response.getWriter(), experiment.getArrayDesignAccessions().first());
+            ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(
+                    experiment, response.getWriter(), experiment.getArrayDesignAccessions().first());
 
             long genesCount = writer.write();
-
             LOGGER.info("<download{}> streamed {} gene expression profiles", LOG_FOLD_CHANGES_TSV, genesCount);
-
             writer.close();
-
         } else {
 
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
-
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + LOG_FOLD_CHANGES_TSV;
-
                 ZipEntry ze = new ZipEntry(filename);
 
                 zipOutputStream.putNextEntry(ze);
@@ -212,9 +196,7 @@ public class MicroarrayExperimentDownloadController {
                         new PrintWriter(zipOutputStream), selectedArrayDesign);
 
                 long genesCount = writer.write();
-
                 LOGGER.info("<download{}> zipped {} in {}", LOG_FOLD_CHANGES_TSV, genesCount, filename);
-
                 zipOutputStream.closeEntry();
             }
 
@@ -223,10 +205,12 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_MICROARRAY)
-    public void downloadAllAnalytics(HttpServletRequest request, @PathVariable String experimentAccession
-            , @RequestParam(value = "accessKey",required = false) String accessKey,@ModelAttribute
-                                                 (MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+    public void downloadAllAnalytics(@PathVariable String experimentAccession,
+                                     @RequestParam(value = "accessKey",required = false) String accessKey,
+                                     @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES)
+                                         @Valid MicroarrayRequestPreferences preferences,
+                                     HttpServletResponse response)
+    throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment)
                 experimentTrader.getExperiment(experimentAccession, accessKey);
@@ -234,24 +218,17 @@ public class MicroarrayExperimentDownloadController {
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), ANALYTICS_TSV);
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
-
             ExpressionsWriter writer = dataWriterFactory
                     .getMicroarrayAnalyticsDataWriter(experiment, response.getWriter(), experiment.getArrayDesignAccessions().first());
 
             long genesCount = writer.write();
-
             LOGGER.info("<download{}> streamed gene expression profiles", ANALYTICS_TSV, genesCount);
-
             writer.close();
-
         } else {
-
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
             for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
-
                 String filename = experiment.getAccession() + "_" + selectedArrayDesign + ANALYTICS_TSV;
-
                 ZipEntry ze = new ZipEntry(filename);
 
                 zipOutputStream.putNextEntry(ze);
@@ -260,9 +237,7 @@ public class MicroarrayExperimentDownloadController {
                         new PrintWriter(zipOutputStream),selectedArrayDesign);
 
                 long genesCount = writer.write();
-
                 LOGGER.info("<download{}> zipped {} in {}", ANALYTICS_TSV, genesCount, filename);
-
                 zipOutputStream.closeEntry();
             }
 
@@ -272,18 +247,13 @@ public class MicroarrayExperimentDownloadController {
     }
 
     private void prepareResponse(HttpServletResponse response, String experimentAccession, Set<String> arrayDesignAccessions, String fileExtension) {
-
         if (arrayDesignAccessions.size() > 1) {
-
             response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + ".zip\"");
             response.setContentType("application/octet-stream");
-
         } else {
-
             String arrayDesignAccession = arrayDesignAccessions.iterator().next();
             response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "_" + arrayDesignAccession + fileExtension + "\"");
             response.setContentType("text/plain; charset=utf-8");
-
         }
     }
 

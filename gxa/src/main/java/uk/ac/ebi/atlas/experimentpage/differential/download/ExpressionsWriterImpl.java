@@ -1,33 +1,25 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
-import java.text.MessageFormat;
+import java.io.Reader;
 
 class ExpressionsWriterImpl implements ExpressionsWriter {
 
     private CSVWriter csvWriter;
 
-    private String fileUrlTemplate;
+    private Reader reader;
 
-    private String experimentAccession;
     private AnalyticsDataHeaderBuilder headerBuilder;
-    private String arrayDesignAccession;
 
     public void setResponseWriter(CSVWriter csvWriter) {
         this.csvWriter = csvWriter;
     }
 
-    public void setExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
-    }
-
-    public void setFileUrlTemplate(String fileUrlTemplate) {
-        this.fileUrlTemplate = fileUrlTemplate;
+    public void setReader(Reader reader) {
+        this.reader = reader;
     }
 
     @Override
@@ -35,7 +27,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
 
         long lineCount = 0;
 
-        try (CSVReader csvReader = getCsvReader()) {
+        try (CSVReader csvReader = new CSVReader(reader, '\t')) {
             String[] headers = buildHeader(csvReader.readNext());
 
             csvWriter.writeNext(headers);
@@ -67,23 +59,8 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         csvWriter.close();
     }
 
-    private CSVReader getCsvReader() {
-        String tsvFileURL = formatUrl(fileUrlTemplate);
-        return CsvReaderFactory.createForTsv(tsvFileURL);
-    }
-
-    private String formatUrl(String fileUrlTemplate) {
-        if (StringUtils.isNotBlank(arrayDesignAccession)){
-            return MessageFormat.format(fileUrlTemplate, experimentAccession, arrayDesignAccession);
-        }
-        return MessageFormat.format(fileUrlTemplate, experimentAccession);
-    }
-
     public void setHeaderBuilder(AnalyticsDataHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
 
-    public void setArrayDesignAccession(String arrayDesignAccession) {
-        this.arrayDesignAccession = arrayDesignAccession;
-    }
 }
