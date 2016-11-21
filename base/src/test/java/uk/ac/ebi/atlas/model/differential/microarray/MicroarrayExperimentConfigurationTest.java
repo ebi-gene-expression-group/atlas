@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import org.apache.commons.configuration2.XMLConfiguration;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.List;
+import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -20,16 +18,14 @@ public class MicroarrayExperimentConfigurationTest {
     private static final String ARRAYDESIGN = "ARRAYDESIGN";
 
     @Mock
-    private XMLConfiguration xmlConfigurationMock;
+    private XmlReader xmlReaderMock;
 
     private MicroarrayExperimentConfiguration subject;
 
     @Before
     public void setUp() throws Exception {
-        List<String> list = new ArrayList<>();
-        list.add(ARRAYDESIGN);
-        when(xmlConfigurationMock.getList(String.class, "analytics/array_design")).thenReturn(list);
-        subject = new MicroarrayExperimentConfiguration(xmlConfigurationMock, null, null);
+        when(xmlReaderMock.getList("analytics/array_design")).thenReturn(Lists.newArrayList(ARRAYDESIGN));
+        subject = new MicroarrayExperimentConfiguration(xmlReaderMock);
     }
 
     @Test
