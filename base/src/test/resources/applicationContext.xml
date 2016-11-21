@@ -20,7 +20,7 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
-    <util:properties id="configuration" location="classpath:/test-configuration.properties"/>
+    <util:properties id="configuration" location="classpath:/configuration.properties"/>
 
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
@@ -37,7 +37,7 @@
     </bean>
 
     <!-- enables transactions where @Transaction annotations encountered -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSourceOracle"/>
     </bean>

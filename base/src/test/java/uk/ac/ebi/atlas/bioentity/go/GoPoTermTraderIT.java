@@ -13,8 +13,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
-public class GoPoTermTraderIT {
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
+public class    GoPoTermTraderIT {
 
     private static final String GO_0000001 = "GO:0000001";
     private static final OntologyTerm GO_0000001_TERM = OntologyTerm.create(GO_0000001, "mitochondrion inheritance", "", 6);
