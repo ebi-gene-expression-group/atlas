@@ -28,7 +28,9 @@ public enum Op {
     ANALYTICS_IMPORT("Fetch file content, extract bioentity identifiers to serve as keywords, " +
             "and upload to Solr analytics index. If you skip this op, searching on the main page will not reach " +
             "the identifiers from the experiment, but searching on the main page will still work."),
-    ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession");
+    ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession"),
+    CACHE_READ("Read the attributes of the experiment from cache, trying to load it if it is absent"),
+    CACHE_REMOVE("Delete from cache if present");
 
     static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(
             "UPDATE_DESIGN",ImmutableList.of(UPDATE_DESIGN_ONLY,SERIALIZE),

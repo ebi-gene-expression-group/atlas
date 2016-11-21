@@ -45,4 +45,12 @@
         <property name="connectionManager" ref="httpClientConnectionManager"/>
     </bean>
     <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
+                  p:readTimeout="120000"
+                  p:connectTimeout="120000" />
+        </constructor-arg>
+    </bean>
 </beans>

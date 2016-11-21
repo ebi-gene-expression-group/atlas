@@ -15,7 +15,7 @@ public abstract class XmlFile<T> extends AtlasResource<T>{
 
     public static class ReadOnly extends XmlFile<XmlReader> {
 
-        private boolean splitOnComma = false;
+        private final boolean splitOnComma;
 
         public ReadOnly(String dataFilesLocation, String template, boolean splitOnComma, String... args) {
             super(dataFilesLocation, template, args);

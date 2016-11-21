@@ -13,7 +13,7 @@ public final class SpeciesUtils {
 
     public static String convertToEnsemblSpecies(Map<String, String> organismToEnsemblSpeciesMapping, String organism) {
         String ensemblSpecies = organismToEnsemblSpeciesMapping.get(organism);
-        return ensemblSpecies == null ? SpeciesUtils.convertToEnsemblSpecies(organism) : ensemblSpecies;
+        return ensemblSpecies == null ? SpeciesUtils.convertToEnsemblSpecies(organism) : ensemblSpecies.toLowerCase();
     }
 
     public static String convertToEnsemblSpecies(String species) {

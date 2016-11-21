@@ -1,17 +1,10 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BaselineExperimentConfiguration {
 
@@ -36,11 +29,9 @@ public class BaselineExperimentConfiguration {
     public Set<Factor> getDefaultFilterFactors() {
 
         Set<Factor> defaultFilterFactors = new HashSet<>();
-        List<HierarchicalConfiguration<ImmutableNode>> fields = xmlReader.configurationsAt("defaultFilterFactors.filterFactor");
-        for (HierarchicalConfiguration sub : fields) {
-            String factorType = sub.getString("type");
-            String factorValue = sub.getString("value");
-            defaultFilterFactors.add(new Factor(factorType, factorValue));
+
+        for (Map.Entry<String, String> e: xmlReader.getMap("defaultFilterFactors", "type", "value").entrySet()) {
+            defaultFilterFactors.add(new Factor(e.getKey(), e.getValue()));
         }
 
         return defaultFilterFactors;
@@ -65,16 +56,7 @@ public class BaselineExperimentConfiguration {
     }
 
     public Map<String, String> getSpeciesMapping() {
-
-        Map<String, String> mapping = new HashMap<>();
-        List<HierarchicalConfiguration<ImmutableNode>> fields = xmlReader.configurationsAt("speciesMapping.mapping");
-        for (HierarchicalConfiguration sub : fields) {
-            String samples = sub.getString("samples").toLowerCase();
-            String genes = sub.getString("genes").toLowerCase();
-            mapping.put(samples, genes);
-        }
-
-        return mapping;
+        return xmlReader.getMap("speciesMapping", "samples", "genes");
     }
 
     public List<String> getAlternativeViews() {

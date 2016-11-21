@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
@@ -30,6 +31,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     private final AnalyticsIndexerManager analyticsIndexerManager;
     private final ExpressionSerializerService expressionSerializerService;
     private final ExperimentTrader experimentTrader;
+    private final Gson gson = new Gson();
 
     public ExpressionAtlasExperimentOpsExecutionService(ExperimentCrud experimentCrud,
                                                         BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader,
@@ -60,6 +62,9 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         switch (op) {
             case LIST:
                 return Optional.of((JsonElement) experimentCrud.findExperiment(accession).toJson());
+            case CACHE_READ:
+                return Optional.of(gson.toJsonTree(experimentTrader.getExperiment(accession,
+                                experimentCrud.findExperiment(accession).getAccessKey()).getAttributes()));
             default:
                 return Optional.absent();
         }
@@ -150,6 +155,8 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case ANALYTICS_DELETE:
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 break;
+            case CACHE_REMOVE:
+                experimentTrader.removeExperimentFromCache(accession);
             default:
                 break;
         }

@@ -66,6 +66,14 @@ public class XmlReaderTest {
     }
 
     @Test
+    public void readDefaultFilterFactors(){
+        subject = dataFileHub.getBaselineExperimentFiles(E_MTAB_2812).factors.get();
+        assertThat(subject.getMap("defaultFilterFactors", "type", "value").size(), is(2));
+    }
+
+
+
+    @Test
     public void readConfiguration() {
 //        subject = dataFileHub.getBaselineExperimentFiles(E_MTAB_2812).factors.get();
 //        assertThat(subject.read().get("menuFilterFactorTypes").size(), is(3));

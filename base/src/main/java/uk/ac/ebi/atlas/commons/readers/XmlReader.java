@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commons.readers;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.configuration2.Configuration;
@@ -7,10 +8,9 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.w3c.dom.Document;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class XmlReader {
 
@@ -44,6 +44,16 @@ public class XmlReader {
 
     public List<HierarchicalConfiguration<ImmutableNode>> configurationsAt(String key) {
         return xmlConfiguration.configurationsAt(key);
+    }
+
+    public ImmutableMap<String, String> getMap(String xpathToRoot, String keyAttributeName, String valueAttributeName){
+        ImmutableMap.Builder<String,String> b = ImmutableMap.builder();
+        List<HierarchicalConfiguration<ImmutableNode>> fields = xmlConfiguration.childConfigurationsAt(xpathToRoot);
+        for (HierarchicalConfiguration sub : fields) {
+            b.put(sub.getString(keyAttributeName),sub.getString(valueAttributeName));
+        }
+
+        return b.build();
     }
 
     public String[] getStringArray(String query) {
