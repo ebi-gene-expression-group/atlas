@@ -11,6 +11,8 @@ import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfile
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
@@ -46,5 +48,18 @@ public class ExperimentOpsExecutionServiceTest {
         subject.attemptExecuteStatefulOp(accession, Op.UPDATE_DESIGN_ONLY);
         verify(experimentTrader).removeExperimentFromCache(accession);
     }
+
+    @Test
+    public void updateExperimentToPrivateShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
+        subject.attemptExecuteStatefulOp(accession, Op.UPDATE_PRIVATE);
+        verify(analyticsIndexerManager).deleteFromAnalyticsIndex(accession);
+    }
+
+    @Test
+    public void deleteExperimentShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
+        subject.attemptExecuteStatefulOp(accession, Op.DELETE);
+        verify(analyticsIndexerManager).deleteFromAnalyticsIndex(accession);
+    }
+
 
 }

@@ -91,7 +91,7 @@ public class ExperimentCrudIT {
 
         experimentCrud = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
                 conditionsIndexingService,
-                experimentDAO, analyticsIndexerManager, experimentCheckerSpy,
+                experimentDAO, experimentCheckerSpy,
                 analyticsLoaderFactory, configurationTrader);
 
     }

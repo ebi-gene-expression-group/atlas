@@ -139,7 +139,7 @@ public class ExperimentCrudTest {
 
         subject = new ExperimentCrud(condensedSdrfParserMock,
                 experimentDesignFileWriterService,
-                conditionsIndexingService,experimentDAOMock, analyticsIndexerManagerMock,
+                conditionsIndexingService,experimentDAOMock,
                 experimentChecker,
                 analyticsLoaderFactory,configurationTrader );
     }
@@ -173,22 +173,6 @@ public class ExperimentCrudTest {
     public void updateExperimentIndexesConditions() throws Exception {
         subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
-    }
-
-    @Test
-    public void deleteExperimentShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
-        subject.deleteExperiment(EXPERIMENT_ACCESSION);
-        verify(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(experimentAccessionCaptor.capture());
-
-        assertThat(experimentAccessionCaptor.getValue(), is(EXPERIMENT_ACCESSION));
-    }
-
-    @Test
-    public void updateExperimentToPrivateShouldRemoveExperimentFromAnalyticsIndex() throws Exception {
-        subject.makeExperimentPrivate(EXPERIMENT_ACCESSION);
-        verify(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(experimentAccessionCaptor.capture());
-
-        assertThat(experimentAccessionCaptor.getValue(), is(EXPERIMENT_ACCESSION));
     }
 
 }

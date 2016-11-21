@@ -15,27 +15,24 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
+/*
+Responsible for:
+- the database (the experiments table, and the deprecated expression values tables)
+- conditions index
+- design files on disk
+ */
 public class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
     private ExperimentDAO experimentDAO;
     private final ConditionsIndexingService conditionsIndexingService;
-    private AnalyticsIndexerManager analyticsIndexerManager;
-    /*
-    TODO analyticsIndexerManager is funny because he only deletes things here, and imports them elsewhere.
-    How to share the two classes:
-    take out
-    conditionsIndexingService and analyticsIndexerManager?
-     */
     private final ExperimentChecker experimentChecker;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ConfigurationTrader configurationTrader;
@@ -44,7 +41,6 @@ public class ExperimentCrud {
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
                           ConditionsIndexingService conditionsIndexingService,
                           ExperimentDAO experimentDAO,
-                          AnalyticsIndexerManager analyticsIndexerManager,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
                           ConfigurationTrader configurationTrader) {
@@ -52,7 +48,6 @@ public class ExperimentCrud {
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.conditionsIndexingService = conditionsIndexingService;
         this.experimentDAO = experimentDAO;
-        this.analyticsIndexerManager = analyticsIndexerManager;
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.configurationTrader = configurationTrader;
@@ -103,7 +98,6 @@ public class ExperimentCrud {
 
         if (!experimentDTO.isPrivate()) {
             conditionsIndexingService.removeConditions(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
-            analyticsIndexerManager.deleteFromAnalyticsIndex(experimentDTO.getExperimentAccession());
         }
 
         experimentDAO.deleteExperiment(experimentDTO.getExperimentAccession());
@@ -121,7 +115,6 @@ public class ExperimentCrud {
 
     public void makeExperimentPrivate(String experimentAccession) throws IOException {
         experimentDAO.updateExperiment(experimentAccession, true);
-        analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
         updateExperimentDesign(experimentAccession);
     }
 

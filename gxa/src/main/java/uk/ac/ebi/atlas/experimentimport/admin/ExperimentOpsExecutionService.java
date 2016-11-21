@@ -99,6 +99,7 @@ public class ExperimentOpsExecutionService {
         int loadCount;
         switch (op) {
             case UPDATE_PRIVATE:
+                analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 experimentCrud.makeExperimentPrivate(accession);
                 break;
             case UPDATE_PUBLIC:
@@ -120,6 +121,7 @@ public class ExperimentOpsExecutionService {
                 break;
             case DELETE:
                 experimentTrader.removeExperimentFromCache(accession);
+                analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 experimentCrud.deleteExperiment(accession);
                 expressionSerializerService.removeKryoFile(accession);
                 break;
