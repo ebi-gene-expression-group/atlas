@@ -1,9 +1,10 @@
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.StringUtils;
+import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,44 +13,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 public class BaselineExperimentConfiguration {
 
-    private XMLConfiguration config;
+    private XmlReader xmlReader;
 
-    public BaselineExperimentConfiguration(XMLConfiguration config) {
-        this.config = config;
+    public BaselineExperimentConfiguration(XmlReader xmlReader) {
+        this.xmlReader = xmlReader;
     }
 
     public String getExperimentDisplayName() {
-        return config.getString("landingPageDisplayName");
-    }
-
-    private List<String> getListOfStrings(List<String> objects) {
-        List<String> result = newArrayList();
-
-        if (objects != null) {
-            for (Object object : objects) {
-                result.add(object != null ? object.toString() : null);
-            }
-        }
-
-        return result;
+        return xmlReader.getString("landingPageDisplayName");
     }
 
     public List<String> getDataProviderURL() {
-        return getListOfStrings(config.getList(String.class, "dataProviderURL"));
+        return xmlReader.getList("dataProviderURL");
     }
 
     public List<String> getDataProviderDescription() {
-        return getListOfStrings(config.getList(String.class, "dataProviderDescription"));
+        return xmlReader.getList("dataProviderDescription");
     }
 
     public Set<Factor> getDefaultFilterFactors() {
 
         Set<Factor> defaultFilterFactors = new HashSet<>();
-        List<HierarchicalConfiguration<ImmutableNode>> fields = config.configurationsAt("defaultFilterFactors.filterFactor");
+        List<HierarchicalConfiguration<ImmutableNode>> fields = xmlReader.configurationsAt("defaultFilterFactors.filterFactor");
         for (HierarchicalConfiguration sub : fields) {
             String factorType = sub.getString("type");
             String factorValue = sub.getString("value");
@@ -61,7 +48,7 @@ public class BaselineExperimentConfiguration {
 
     public String getDefaultQueryFactorType() {
 
-        String defaultQueryFactorType = config.getString("defaultQueryFactorType");
+        String defaultQueryFactorType = xmlReader.getString("defaultQueryFactorType");
         if (defaultQueryFactorType == null || defaultQueryFactorType.trim().length() == 0) {
             throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
         }
@@ -70,27 +57,17 @@ public class BaselineExperimentConfiguration {
     }
 
     public boolean orderCurated() {
-        return "curated".equals(config.getString("orderFactor"));
+        return "curated".equals(xmlReader.getString("orderFactor"));
     }
 
     public Set<String> getMenuFilterFactorTypes() {
-
-        Set<String> results = new HashSet<>();
-        List<Object> menuFilterFactorTypes = config.getList("menuFilterFactorTypes");
-        for (Object o : menuFilterFactorTypes) {
-            String filterFactorType = (String) o;
-            if (filterFactorType.trim().length() > 0) {
-                results.add(filterFactorType);
-            }
-        }
-
-        return results;
+        return Sets.newHashSet(xmlReader.getList("menuFilterFactorTypes"));
     }
 
     public Map<String, String> getSpeciesMapping() {
 
         Map<String, String> mapping = new HashMap<>();
-        List<HierarchicalConfiguration<ImmutableNode>> fields = config.configurationsAt("speciesMapping.mapping");
+        List<HierarchicalConfiguration<ImmutableNode>> fields = xmlReader.configurationsAt("speciesMapping.mapping");
         for (HierarchicalConfiguration sub : fields) {
             String samples = sub.getString("samples").toLowerCase();
             String genes = sub.getString("genes").toLowerCase();
@@ -102,7 +79,7 @@ public class BaselineExperimentConfiguration {
 
     public List<String> getAlternativeViews() {
         List<String> result = new ArrayList<>();
-        for(Object o:  config.getList("alternativeView")){
+        for(Object o:  xmlReader.getList("alternativeView")){
             if(o.toString().matches("E-\\w+-\\d+")){
                 result.add(o.toString());
             }
@@ -111,16 +88,16 @@ public class BaselineExperimentConfiguration {
         return result;
     }
     public String disclaimer(){
-        if("true".equals(config.getString("fortLauderdale"))){
+        if("true".equals(xmlReader.getString("fortLauderdale"))){
             return "fortLauderdale";
-        } else if (StringUtils.isNotEmpty(config.getString("disclaimer"))){
-            return config.getString("disclaimer");
+        } else if (StringUtils.isNotEmpty(xmlReader.getString("disclaimer"))){
+            return xmlReader.getString("disclaimer");
         } else {
             return "";
         }
     }
 
     public boolean isFortLauderdale() {
-        return "true".equals(config.getString("fortLauderdale"));
+        return "true".equals(xmlReader.getString("fortLauderdale"));
     }
 }

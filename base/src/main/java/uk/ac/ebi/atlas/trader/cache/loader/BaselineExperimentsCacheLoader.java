@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.trader.cache.loader;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.commons.readers.impl.TsvReaderImpl;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
@@ -100,9 +99,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         return Pair.of(accessions, descriptions);
     }
 
-    String[] readOrderedAssayGroupIds(String experimentAccession , ExperimentType experimentType){
-        return readOrderedAssayGroupIds(TsvReaderImpl.readLine(
-                dataFileHub.getExperimentFiles(experimentAccession).main.get(), 0), experimentType);
+    private String[] readOrderedAssayGroupIds(String experimentAccession , ExperimentType experimentType){
+        return readOrderedAssayGroupIds(dataFileHub.getBaselineExperimentFiles(experimentAccession).main.get().readLine(0), experimentType);
     }
 
     String[] readOrderedAssayGroupIds(String[] experimentRunHeaders, ExperimentType experimentType){

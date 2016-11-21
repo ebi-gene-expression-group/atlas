@@ -1,21 +1,14 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.Properties;
+
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -24,25 +17,22 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class ExperimentChecker {
 
-    private Properties configurationProperties;
-
     private final DataFileHub dataFileHub;
-
-    private ConfigurationTrader configurationTrader;
+    private final ConfigurationTrader configurationTrader;
 
     @Inject
-    public ExperimentChecker(@Named("configuration") Properties configurationProperties,
-                             DataFileHub dataFileHub,
+    public ExperimentChecker(DataFileHub dataFileHub,
                              ConfigurationTrader configurationTrader) {
-        this.configurationProperties = configurationProperties;
         this.dataFileHub = dataFileHub;
         this.configurationTrader = configurationTrader;
     }
 
     public void checkAllFiles(String experimentAccession, ExperimentType experimentType) {
 
-        // every experiment should have analysis methods file
-        checkFileExistsAndIsReadable("experiment.analysis-method.path.template", experimentAccession);
+        // every experiment should have configuration, condensed SDRF and analysis methods file
+        checkConfigurationFile(experimentAccession);
+        checkResourceExistsAndIsReadable(dataFileHub.getExperimentFiles(experimentAccession).analysisMethods);
+        checkResourceExistsAndIsReadable(dataFileHub.getExperimentFiles(experimentAccession).condensedSdrf);
 
         switch (experimentType) {
             case RNASEQ_MRNA_BASELINE:
@@ -54,10 +44,14 @@ public class ExperimentChecker {
                 break;
             case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
             case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
-                checkMicroarrayFiles(experimentAccession);
+                checkMicroarray1ColourFiles(experimentAccession,
+                        configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession)
+                                .getArrayDesignAccessions());
                 break;
             case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
-                checkTwoColourFiles(experimentAccession);
+                checkMicroarray2ColourFiles(experimentAccession,
+                        configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession)
+                                .getArrayDesignAccessions());
                 break;
             default:
                 throw new IllegalStateException("The specified experiment type is not supported.");
@@ -66,67 +60,46 @@ public class ExperimentChecker {
 
 
     void checkBaselineFiles(String experimentAccession) {
-        Set<String> baselineExperimentPathTemplates =
-                Sets.newHashSet("experiment.factors.path.template");
-
-        checkFilesAreAllPresentAndWeCanReadThem(baselineExperimentPathTemplates, experimentAccession);
-
-        experimentFilesFromDataHubExist(experimentAccession);
+        DataFileHub.BaselineExperimentFiles experimentFiles = dataFileHub.getBaselineExperimentFiles(experimentAccession);
+        checkResourceExistsAndIsReadable(experimentFiles.main);
+        checkResourceExistsAndIsReadable(experimentFiles.factors);
     }
 
     void checkDifferentialFiles(String experimentAccession) {
-        DataFileHub.DifferentialExperimentFiles differentialExperimentFiles = dataFileHub
-                .getDifferentialExperimentFiles(experimentAccession);
-        checkFileExistsAndIsReadable(differentialExperimentFiles.analysisMethods);
-        checkFileExistsAndIsReadable(differentialExperimentFiles.rawCounts);
+        DataFileHub.DifferentialExperimentFiles experimentFiles =
+                dataFileHub.getDifferentialExperimentFiles(experimentAccession);
+        checkResourceExistsAndIsReadable(experimentFiles.analytics);
+        checkResourceExistsAndIsReadable(experimentFiles.rawCounts);
     }
 
-    void checkMicroarrayFiles(String experimentAccession) {
-        MicroarrayExperimentConfiguration microarrayConfiguration =
-                        configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
-        for (String arrayDesign : microarrayConfiguration.getArrayDesignAccessions()) {
-            Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.normalized.data.path.template");
-            checkFilesAreAllPresentAndWeCanReadThem(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
+    void checkMicroarray1ColourFiles(String experimentAccession, Set<String> arrayDesigns) {
+
+        for (String arrayDesign : arrayDesigns) {
+            DataFileHub.MicroarrayExperimentFiles experimentFiles =
+                    dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign);
+
+            checkResourceExistsAndIsReadable(experimentFiles.analytics);
+            checkResourceExistsAndIsReadable(experimentFiles.normalizedExpressions);
         }
     }
 
-    void checkTwoColourFiles(String experimentAccession) {
-        MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
-                configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
+    void checkMicroarray2ColourFiles(String experimentAccession, Set<String> arrayDesigns) {
 
-        Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.log-fold-changes.data.path.template");
-        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignAccessions()) {
-            checkFilesAreAllPresentAndWeCanReadThem(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
+        for (String arrayDesign : arrayDesigns) {
+            DataFileHub.MicroarrayExperimentFiles experimentFiles =
+                    dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign);
+
+            checkResourceExistsAndIsReadable(experimentFiles.analytics);
+            checkResourceExistsAndIsReadable(experimentFiles.logFoldChanges);
         }
     }
 
-    private void checkFilesAreAllPresentAndWeCanReadThem(Collection<String> pathTemplatePropertyKeys, String... pathArguments) {
-        for (String pathTemplatePropertyKey : pathTemplatePropertyKeys) {
-            checkFileExistsAndIsReadable(pathTemplatePropertyKey, pathArguments);
-        }
+    void checkConfigurationFile(String accession) {
+        checkResourceExistsAndIsReadable(dataFileHub.getExperimentFiles(accession).configuration);
     }
 
-    void checkFileExistsAndIsReadable(String pathTemplatePropertyKey, String... pathArguments) {
-        String pathTemplate = configurationProperties.getProperty(pathTemplatePropertyKey);
-        Path path = Paths.get(MessageFormat.format(pathTemplate, (Object[])pathArguments));
-        checkState(Files.isReadable(path), "Required file can not be read: " + path.toAbsolutePath().toString());
-    }
-
-    public void checkConfigurationFile(String accession) {
-        checkFileExistsAndIsReadable("experiment.configuration.path.template", accession);
-    }
-
-    void experimentFilesFromDataHubExist(String accession){
-        DataFileHub.ExperimentFiles experimentFiles = dataFileHub.getExperimentFiles(accession);
-        checkFileExistsAndIsReadable(experimentFiles.condensedSdrf);
-        checkFileExistsAndIsReadable(experimentFiles.main);
-    }
-
-    void checkFileExistsAndIsReadable(AtlasResource<?> resource){
+    private void checkResourceExistsAndIsReadable(AtlasResource<?> resource){
         checkState(resource.exists(), "Required file does not exist: " + resource.toString());
         checkState(resource.isReadable(), "Required file can not be read: " + resource.toString());
     }
-
-
-
 }
