@@ -1,18 +1,19 @@
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
+import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 @Named
 @Scope("prototype")
@@ -30,7 +31,7 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
         this.expressionsRowDeserializerRnaSeqBuilder = expressionsRowDeserializerRnaSeqBuilder;
     }
 
-    public ObjectInputStream<RnaSeqProfile> create(DifferentialProfileStreamOptions options) {
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialProfileStreamOptions options) throws IOException {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();
@@ -39,7 +40,7 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
         return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation);
     }
 
-    public RnaSeqProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) {
+    public RnaSeqProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) throws IOException {
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
         expressionFilter.setPValueCutoff(pValueCutOff);
@@ -49,7 +50,7 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
 
         return new RnaSeqProfilesTsvInputStream(
-                dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.get(),
+                dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.getReader(),
                 experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
     }
 

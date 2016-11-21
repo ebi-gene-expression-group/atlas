@@ -2,13 +2,14 @@ package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
-import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+
+import java.io.Reader;
 
 public class BaselineExpressionsTsvInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsTsvInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
-        super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
+    public BaselineExpressionsTsvInputStream(Reader reader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
+        super(reader, experimentAccession, baselineExpressionsQueueBuilder);
     }
 
     @Override
@@ -21,7 +22,6 @@ public class BaselineExpressionsTsvInputStream extends TsvInputStream<BaselineEx
         BaselineExpression expression;
 
         while ((expression = getExpressionsRowTsvDeserializer().next()) != null) {
-
             baselineExpressions.addExpression(expression);
         }
 

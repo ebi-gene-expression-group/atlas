@@ -7,18 +7,19 @@ import uk.ac.ebi.atlas.profiles.TsvInputStream;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.Reader;
 import java.util.List;
 
 public class MicroarrayProfilesTsvInputStream extends TsvInputStream<MicroarrayProfile, MicroarrayExpression> {
 
     private MicroarrayProfileReusableBuilder microarrayProfileBuilder;
 
-    public MicroarrayProfilesTsvInputStream(CSVReader csvReader,
+    public MicroarrayProfilesTsvInputStream(Reader reader,
                                             String experimentAccession,
                                             ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
                                             MicroarrayProfileReusableBuilder microarrayProfileBuilder) {
 
-        super(csvReader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder);
+        super(reader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder);
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 

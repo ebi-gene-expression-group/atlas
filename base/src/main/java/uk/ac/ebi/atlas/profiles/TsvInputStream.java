@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
+import java.io.Reader;
 
 public abstract class TsvInputStream<T, K extends Expression> implements ExpressionProfileInputStream<T, K> {
 
@@ -16,8 +17,8 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
 
     private ExpressionsRowDeserializer<String, K> expressionsRowTsvDeserializer;
 
-    protected TsvInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBuilder<String, K> expressionsRowDeserializerBuilder) {
-        this.csvReader = csvReader;
+    protected TsvInputStream(Reader reader, String experimentAccession, ExpressionsRowDeserializerBuilder<String, K> expressionsRowDeserializerBuilder) {
+        this.csvReader = new CSVReader(reader, '\t');
 
         String[] firstCsvLine = readCsvLine();
         String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
@@ -44,7 +45,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
     private String[] readCsvLine() {
         try {
             return csvReader.readNext();
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception thrown while reading next csv line.", e);
         }
@@ -75,7 +76,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
     }
 
     protected String[] removeGeneIDAndNameColumns(String[] columns) {
-        return (String[]) ArrayUtils.subarray(columns, 2, columns.length);
+        return ArrayUtils.subarray(columns, 2, columns.length);
     }
 
 }

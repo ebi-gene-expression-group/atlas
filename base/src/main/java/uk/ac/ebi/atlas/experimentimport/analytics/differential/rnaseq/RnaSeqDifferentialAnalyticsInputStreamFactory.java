@@ -1,13 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
-import au.com.bytecode.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 @Named
 public class RnaSeqDifferentialAnalyticsInputStreamFactory {
@@ -19,8 +18,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
-    public RnaSeqDifferentialAnalyticsInputStream create(String experimentAccession) {
-        AtlasResource<CSVReader> r = dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics;
-        return new RnaSeqDifferentialAnalyticsInputStream(r.get(), r.toString());
+    public RnaSeqDifferentialAnalyticsInputStream create(String experimentAccession) throws IOException {
+        AtlasResource<TsvReader> resource = dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics;
+        return new RnaSeqDifferentialAnalyticsInputStream(resource.getReader(), resource.toString());
     }
 }

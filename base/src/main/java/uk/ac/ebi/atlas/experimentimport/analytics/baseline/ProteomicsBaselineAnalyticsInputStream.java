@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -45,14 +46,14 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
     private final String name;
     private int lineNumber = 0;
 
-    public ProteomicsBaselineAnalyticsInputStream(CSVReader csvReader, String name) {
+    public ProteomicsBaselineAnalyticsInputStream(Reader reader, String name) throws IOException {
         this.name = name;
-        this.csvReader = csvReader;
+        this.csvReader = new CSVReader(reader, '\t');
         String[] headers = readCsvLine();
 
         sampleAbundanceAssayGroupIds = new HashMap<>();
 
-        String[] assayGroupIds = (String[]) ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
+        String[] assayGroupIds = ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
 
         int[] sampleAbundanceIndices = StringArrayUtil.indicesOf(assayGroupIds, SAMPLE_ABUNDANCE_QUALIFIER);
         for (int sampleAbundanceIndex : sampleAbundanceIndices) {
@@ -100,7 +101,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
         }
 
         String geneId = line[GENE_ID_COLUMN_INDEX];
-        String[] expressionLevels = (String[]) ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
+        String[] expressionLevels = ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
         ImmutableList<BaselineAnalytics> baselineAnalytics = createList(geneId, sampleAbundanceAssayGroupIds, expressionLevels);
 
         if (baselineAnalytics.isEmpty()) {

@@ -1,30 +1,27 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
-import au.com.bytecode.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.MessageFormat;
+import java.io.IOException;
 
 @Named
 public class MicroarrayDifferentialAnalyticsInputStreamFactory {
 
-    private final CsvReaderFactory csvReaderFactory;
-    private final String fileTemplate;
+    private DataFileHub dataFileHub;
 
     @Inject
-    public MicroarrayDifferentialAnalyticsInputStreamFactory(@Value("#{configuration['microarray.experiment.data.path.template']}")
-                                                             String fileTemplate,
-                                                             CsvReaderFactory csvReaderFactory) {
-        this.fileTemplate = fileTemplate;
-        this.csvReaderFactory = csvReaderFactory;
+    public MicroarrayDifferentialAnalyticsInputStreamFactory(DataFileHub dataFileHub) {
+        this.dataFileHub = dataFileHub;
     }
 
-    public MicroarrayDifferentialAnalyticsInputStream create(String experimentAccession, String arrayDesignAccession) {
-        String tsvFilePath = MessageFormat.format(fileTemplate, experimentAccession, arrayDesignAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFilePath);
-        return new MicroarrayDifferentialAnalyticsInputStream(csvReader, tsvFilePath);
+    public MicroarrayDifferentialAnalyticsInputStream create(String experimentAccession, String arrayDesign)
+    throws IOException {
+        AtlasResource<TsvReader> analyticsResource =
+                dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign).analytics;
+        return new MicroarrayDifferentialAnalyticsInputStream(analyticsResource.getReader(), experimentAccession);
     }
 }

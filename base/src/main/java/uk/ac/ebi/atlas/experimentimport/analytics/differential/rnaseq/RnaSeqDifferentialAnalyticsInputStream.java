@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialTsvFileParsingUtil;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -44,11 +45,11 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
     private final String name;
     private int lineNumber = 0;
 
-    public RnaSeqDifferentialAnalyticsInputStream(CSVReader csvReader, String name) {
+    public RnaSeqDifferentialAnalyticsInputStream(Reader reader, String name) throws IOException {
         this.name = name;
-        this.csvReader = csvReader;
+        this.csvReader = new CSVReader(reader, '\t');
         String[] headers = readCsvLine();
-        String[] contrastHeaders = (String[]) ArrayUtils.subarray(headers, FIRST_CONTRAST_INDEX, headers.length);
+        String[] contrastHeaders = ArrayUtils.subarray(headers, FIRST_CONTRAST_INDEX, headers.length);
         this.contrastIds = DifferentialTsvFileParsingUtil.parseHeaderIntoContrastIds(contrastHeaders);
     }
 
@@ -93,7 +94,7 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
             }
 
             String geneId = line[GENE_ID_INDEX];
-            String[] contrastAnalyticsArray = (String[]) ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
+            String[] contrastAnalyticsArray = ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
             ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
             UnmodifiableIterator<String> contrastAnalytics = contrastAnalyticsList.iterator();
 

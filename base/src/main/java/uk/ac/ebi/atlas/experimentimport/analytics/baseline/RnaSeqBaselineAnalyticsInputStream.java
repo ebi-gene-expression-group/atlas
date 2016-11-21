@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -45,11 +46,11 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
     private int lineNumber = 0;
 
 
-    public RnaSeqBaselineAnalyticsInputStream(CSVReader csvReader, String name) {
+    public RnaSeqBaselineAnalyticsInputStream(Reader reader, String name) throws IOException {
         this.name = name;
-        this.csvReader = csvReader;
+        this.csvReader = new CSVReader(reader, '\t');
         String[] headers = readCsvLine();
-        this.assayGroupIds = (String[]) ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
+        this.assayGroupIds = ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
     }
 
 
@@ -96,7 +97,7 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         }
 
         String geneId = line[GENE_ID_COLUMN_INDEX];
-        String[] expressionLevels = (String[]) ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
+        String[] expressionLevels = ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
         ImmutableList<BaselineAnalytics> baselineAnalytics = createList(geneId, assayGroupIds, expressionLevels);
 
         if (baselineAnalytics.isEmpty()) {
