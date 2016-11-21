@@ -22,10 +22,10 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
 
-    public static final String CONTRAST_ID_1 = "g2_g3";
-    public static final String CONTRAST_ID_2 = "g2_g1";
-    public static final String GENE_ID_1 = "GENE_ID_1";
-    public static final String GENE_ID_2 = "GENE_ID_2";
+    private static final String CONTRAST_ID_1 = "g2_g3";
+    private static final String CONTRAST_ID_2 = "g2_g1";
+    private static final String GENE_ID_1 = "GENE_ID_1";
+    private static final String GENE_ID_2 = "GENE_ID_2";
     private static final String GENE_NAME_1 = "GENE_NAME_1";
     private static final String GENE_NAME_2 = "GENE_NAME_2";
     private static final String NA = "NA";
@@ -76,9 +76,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readOneContrastTsv() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1Contrast);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1Contrast);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test");
 
         RnaSeqDifferentialAnalytics dto1 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1);
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
@@ -90,9 +89,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readTwoContrastTsv() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents2Contrasts);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents2Contrasts);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test");
 
         RnaSeqDifferentialAnalytics dto1 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1);
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2);
@@ -104,9 +102,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastContainingNA() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastNA);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1ContrastNA);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test");
 
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
 
@@ -116,9 +113,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastWithZeroFoldChange() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastZero);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1ContrastZero);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test");
 
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
 
@@ -128,9 +124,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastContainingManyNAsWithoutStackOverflow() throws IOException {
-        Reader tsvSource = new StringReader(TSV_CONTENTS_MANY_NAS);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(TSV_CONTENTS_MANY_NAS);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test");
 
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
 
@@ -140,9 +135,8 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastWithInf() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastINF);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1ContrastINF);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test");
 
         RnaSeqDifferentialAnalytics dto1 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_1, Double.POSITIVE_INFINITY, FOLD_CHANGE_1);
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, Double.NEGATIVE_INFINITY, FOLD_CHANGE_2);
@@ -155,29 +149,27 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
-        Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        Reader reader = spy(new StringReader(tsvContents1Contrast));
 
-        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test")) {
+        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
         }
 
-        verify(tsvSource).close();
+        verify(reader).close();
     }
 
     @Test
     public void tryResourcesAutoClosesUnderlyingReaderOnException() throws IOException {
-        Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        Reader reader = spy(new StringReader(tsvContents1Contrast));
 
-        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test")) {
+        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {
             // ignore
         }
 
-        verify(tsvSource).close();
+        verify(reader).close();
     }
 
 }

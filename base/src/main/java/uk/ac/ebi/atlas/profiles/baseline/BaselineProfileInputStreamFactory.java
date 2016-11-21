@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +14,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Set;
 
@@ -44,7 +44,8 @@ implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, F
         this.kryoReaderFactory = kryoReaderFactory;
     }
 
-    public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
+    public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors)
+    throws IOException {
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(cutOff);
         baselineExpressionFilter.setFilterFactors(filterFactors);
@@ -57,13 +58,13 @@ implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, F
             return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
-            return new BaselineProfilesTsvInputStream(dataFileHub.getExperimentFiles(experimentAccession).main.get(),
-                    experimentAccession,
-                    expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+            return new BaselineProfilesTsvInputStream(
+                    dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
+                    experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }
 
-    public ObjectInputStream<BaselineProfile> create(BaselineProfileStreamOptions options) {
+    public ObjectInputStream<BaselineProfile> create(BaselineProfileStreamOptions options) throws IOException {
         String experimentAccession = options.getExperimentAccession();
 
         double cutOff = options.getCutoff();

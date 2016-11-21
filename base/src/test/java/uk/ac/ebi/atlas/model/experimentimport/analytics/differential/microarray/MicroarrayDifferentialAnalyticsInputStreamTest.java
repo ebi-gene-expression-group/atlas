@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.model.experimentimport.analytics.differential.microarray;
 
-import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsInputStream;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -20,12 +18,10 @@ import static org.mockito.Mockito.verify;
 
 public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
-    private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
-
-    public static final String CONTRAST_ID_1 = "g2_g3";
-    public static final String CONTRAST_ID_2 = "g2_g1";
-    public static final String GENE_ID_1 = "GENE_ID_1";
-    public static final String GENE_ID_2 = "GENE_ID_2";
+    private static final String CONTRAST_ID_1 = "g2_g3";
+    private static final String CONTRAST_ID_2 = "g2_g1";
+    private static final String GENE_ID_1 = "GENE_ID_1";
+    private static final String GENE_ID_2 = "GENE_ID_2";
     private static final String GENE_NAME_1 = "GENE_NAME_1";
     private static final String GENE_NAME_2 = "GENE_NAME_2";
     private static final String DESIGN_ELEMENT_1 = "DESIGN_ELEMENT_1";
@@ -79,9 +75,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readOneContrastTsv() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1Contrast);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1Contrast);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test");
 
         MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
         MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
@@ -93,9 +88,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readTwoContrastTsv() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents2Contrasts);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents2Contrasts);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test");
 
         MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
         MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
@@ -107,9 +101,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastContainingNA() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastNA);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1ContrastNA);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test");
 
         MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
@@ -119,9 +112,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastWithZeroFoldChange() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastZero);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1ContrastZero);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test");
 
         MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
@@ -131,9 +123,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastContainingManyNAsWithoutStackOverflow() throws IOException {
-        Reader tsvSource = new StringReader(TSV_CONTENTS_MANY_NAS);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(TSV_CONTENTS_MANY_NAS);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test");
 
         MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
@@ -143,9 +134,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastWithInf() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastINF);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents1ContrastINF);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test");
 
         MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, Double.POSITIVE_INFINITY);
         MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, Double.NEGATIVE_INFINITY);
@@ -157,29 +147,27 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
-        Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        Reader reader = spy(new StringReader(tsvContents1Contrast));
 
-        try (MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test")) {
+        try (MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
         }
 
-        verify(tsvSource).close();
+        verify(reader).close();
     }
 
     @Test
     public void tryResourcesAutoClosesUnderlyingReaderOnException() throws IOException {
-        Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        Reader reader = spy(new StringReader(tsvContents1Contrast));
 
-        try (MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test")) {
+        try (MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {
             // ignore
         }
 
-        verify(tsvSource).close();
+        verify(reader).close();
     }
 
 }

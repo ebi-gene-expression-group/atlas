@@ -28,10 +28,4 @@
         <constructor-arg value="http://${solr.host}:8983/solr/analytics/"/>
     </bean>
 
-    <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory">
-    </bean>
-
-    <bean id="embeddedSolrServer"
-          factory-bean="embeddedSolrServerFactory" factory-method="createEmbeddedSolrServerInstance">
-    </bean>
 </beans>

@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Joiner;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -13,14 +15,21 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.inOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfilesTsvInputStreamTest {
@@ -30,22 +39,29 @@ public class BaselineProfilesTsvInputStreamTest {
     private static final BaselineProfile EMPTY_BASELINE_PROFILE = new BaselineProfile("gene_id", "gene_name");
 
     @Mock
-    private CSVReader csvReaderMock;
-
-    @Mock
     private ExpressionsRowDeserializerBaselineBuilder expressionsBufferBuilderMock;
 
     @Mock
     private ExpressionsRowTsvDeserializerBaseline expressionsBufferMock;
 
-    private String[] expressionLevels = new String[]{"A GENE ID", "A GENE NAME", "2.22222", "0.11111"};
-    private String[] expressionLevelsWithoutGeneIdColumn = new String[]{"2.22222", "0.11111"};
+    @Mock
+    private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
+
+    private String[] expressionLevels = {"A GENE ID", "A GENE NAME", "2.22222", "0.11111"};
+
+    @Spy
+    private StringReader blah = new StringReader(
+            Joiner.on('\t').join("A Gene Id", "A Gene Name", RUN_ACCESSION_1, RUN_ACCESSION_2) + "\n" +
+            Joiner.on('\t').join(expressionLevels));
+
+    @Mock
+    private Reader readerMock;
 
     private BaselineProfilesTsvInputStream subject;
 
 
     @Before
-    public void initSubject() throws Exception {
+    public void setUp() throws Exception {
 
         ExperimentRun experimentRuns1Mock = mock(ExperimentRun.class);
         ExperimentRun experimentRuns2Mock = mock(ExperimentRun.class);
@@ -53,23 +69,16 @@ public class BaselineProfilesTsvInputStreamTest {
         given(experimentRuns1Mock.getAccession()).willReturn(RUN_ACCESSION_1);
         given(experimentRuns2Mock.getAccession()).willReturn(RUN_ACCESSION_2);
 
-        String[] headers = new String[]{"A Gene ID", "A Gene Name", RUN_ACCESSION_1, RUN_ACCESSION_2};
         String[] headersWithoutGeneIdColumn = new String[]{RUN_ACCESSION_1, RUN_ACCESSION_2};
-
-        given(csvReaderMock.readNext())
-                .willReturn(headers)
-                .willReturn(expressionLevels)
-                .willReturn(null);
 
         given(expressionsBufferBuilderMock.forExperiment(anyString())).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
 
-        BaselineProfileReusableBuilder baselineProfileReusableBuilder = mock(BaselineProfileReusableBuilder.class);
         when(baselineProfileReusableBuilder.addExpression(any(BaselineExpression.class))).thenReturn(baselineProfileReusableBuilder);
         when(baselineProfileReusableBuilder.create()).thenReturn(EMPTY_BASELINE_PROFILE);
 
-        subject = new BaselineProfilesTsvInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
+        subject = new BaselineProfilesTsvInputStream(blah, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
 
     }
 
@@ -102,9 +111,7 @@ public class BaselineProfilesTsvInputStreamTest {
         //when
         subject.readNext();
         //then
-        verify(csvReaderMock, times(3)).readNext();
-        //and
-        inOrder.verify(expressionsBufferMock).reload(expressionLevelsWithoutGeneIdColumn);
+        inOrder.verify(expressionsBufferMock).reload(ArrayUtils.subarray(expressionLevels, 2, 4));
         inOrder.verify(expressionsBufferMock).next();
     }
 
@@ -113,28 +120,17 @@ public class BaselineProfilesTsvInputStreamTest {
     public void givenAllDataHasBeenRead_ReadNextShouldReturnNull() throws Exception {
         //given
         given(expressionsBufferMock.next()).willReturn(null);
-        //and
-        given(csvReaderMock.readNext()).willReturn(null);
         //when
         Profile profile = subject.readNext();
         //then
-        verify(csvReaderMock, times(2)).readNext();
-        //and
         assertThat(profile, is(nullValue()));
-    }
-
-    @Test
-    public void readCsvLineShouldUseCsvReader() throws Exception {
-        //given
-        subject.readNext();
-        //then
-        verify(csvReaderMock, times(3)).readNext();
     }
 
     @Test(expected = IllegalStateException.class)
     public void readCsvLineShouldThrowIllegalStateExceptionWhenThereIsAnIOProblem() throws Exception {
         //given
-        given(csvReaderMock.readNext()).willThrow(new IOException(""));
+        given(readerMock.read(any(char[].class), anyInt(), anyInt())).willThrow(new IOException(""));
+        subject = new BaselineProfilesTsvInputStream(readerMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
         //when
         subject.readNext();
         //then expect IllegalStateException
@@ -146,16 +142,7 @@ public class BaselineProfilesTsvInputStreamTest {
         //given
         subject.close();
         //then
-        verify(csvReaderMock).close();
-    }
-
-    @Test(expected = IOException.class)
-    public void closeShouldThrowIOExceptionWhenNestedResourcesThrowIOException() throws Exception {
-        //given
-        willThrow(new IOException("")).given(csvReaderMock).close();
-        //when
-        subject.close();
-        //then expect exception to be thrown
+        verify(blah).close();
     }
 
 }

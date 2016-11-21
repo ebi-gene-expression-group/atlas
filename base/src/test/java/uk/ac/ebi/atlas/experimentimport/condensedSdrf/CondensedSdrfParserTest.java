@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,6 +15,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -108,12 +110,17 @@ public class CondensedSdrfParserTest {
     @Mock
     IdfParser idfParserMock;
 
-    private MockDataFileHub dataFileHub = MockDataFileHub.get();
+    private static MockDataFileHub dataFileHub;
 
     private CondensedSdrfParser subject;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @BeforeClass
+    public static void setUpClass() throws IOException {
+        dataFileHub = new MockDataFileHub();
+    }
 
     @Before
     public void setUp() {

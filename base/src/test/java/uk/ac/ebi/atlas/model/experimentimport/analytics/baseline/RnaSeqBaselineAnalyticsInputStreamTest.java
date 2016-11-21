@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.model.experimentimport.analytics.baseline;
 
-import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.RnaSeqBaselineAnalyticsInputStream;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -19,10 +17,8 @@ import static org.mockito.Mockito.verify;
 
 public class RnaSeqBaselineAnalyticsInputStreamTest {
 
-    private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
-
-    public static final String GENE_ID_1 = "ENSMUSG00000030105";
-    public static final String GENE_ID_2 = "ENSG00000127720";
+    private static final String GENE_ID_1 = "ENSMUSG00000030105";
+    private static final String GENE_ID_2 = "ENSG00000127720";
     private static final String GENE_NAME_1 = "Arl8b";
     private static final String GENE_NAME_2 = "METTL25";
 
@@ -40,9 +36,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
 
     @Test
     public void readTwoTsvLines() throws IOException {
-        Reader tsvSource = new StringReader(TSV_CONTENTS);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(TSV_CONTENTS);
+        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
 
         BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
@@ -68,9 +63,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     public void readTsvLineWithNoExpression() throws IOException {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NO_EXPRESSION});
 
-        Reader tsvSource = new StringReader(tsvContents);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents);
+        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
 
         assertThat(subject.readNext(), is(nullValue()));
     }
@@ -79,9 +73,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     public void readTsvLineWithLowData() throws IOException {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_LOWDATA});
 
-        Reader tsvSource = new StringReader(tsvContents);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents);
+        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
 
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 1.0);
         assertThat(subject.readNext(), is(line1g2));
@@ -92,9 +85,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     public void readTsvLineWithNA() throws IOException {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NA});
 
-        Reader tsvSource = new StringReader(tsvContents);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents);
+        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
 
         BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 1.0);
         assertThat(subject.readNext(), is(line1g4));
@@ -106,9 +98,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     public void readTsvLineWithFail() throws IOException {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_FAIL});
 
-        Reader tsvSource = new StringReader(tsvContents);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents);
+        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
 
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 1.0);
         assertThat(subject.readNext(), is(line1g2));
@@ -119,9 +110,8 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
     public void readTsvLineWithQuartiles() throws IOException {
         String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_QUARTILES});
 
-        Reader tsvSource = new StringReader(tsvContents);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test");
+        Reader reader = new StringReader(tsvContents);
+        RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test");
 
         BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
@@ -141,29 +131,27 @@ public class RnaSeqBaselineAnalyticsInputStreamTest {
 
     @Test
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
-        Reader tsvSource = spy(new StringReader(TSV_CONTENTS));
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        Reader reader = spy(new StringReader(TSV_CONTENTS));
 
-        try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test")) {
+        try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
         }
 
-        verify(tsvSource).close();
+        verify(reader).close();
     }
 
     @Test
     public void tryResourcesAutoClosesUnderlyingReaderOnException() throws IOException {
-        Reader tsvSource = spy(new StringReader(TSV_CONTENTS));
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        Reader reader = spy(new StringReader(TSV_CONTENTS));
 
-        try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(csvReader, "Test")) {
+        try (RnaSeqBaselineAnalyticsInputStream subject = new RnaSeqBaselineAnalyticsInputStream(reader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {
             // ignore
         }
 
-        verify(tsvSource).close();
+        verify(reader).close();
     }
 
 }

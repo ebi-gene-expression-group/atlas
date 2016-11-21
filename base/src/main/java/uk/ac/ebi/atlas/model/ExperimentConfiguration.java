@@ -5,12 +5,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.xpath.XPath;
@@ -18,7 +17,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.nio.file.Path;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -28,22 +26,18 @@ public class ExperimentConfiguration {
     private static final String EXPERIMENT_TYPE = "experimentType";
     private static final String RDATA = "r_data";
 
-    private XMLConfiguration xmlConfiguration;
-    private Document document;
+    private XmlReader xmlReader;
     private XPath xpath = XPathFactory.newInstance().newXPath();
-    private Path pathToFile;
 
-    public ExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document, Path pathToFile) {
-        this.xmlConfiguration = xmlConfiguration;
-        this.document = document;
-        this.pathToFile = pathToFile;
+    public ExperimentConfiguration(XmlReader xmlReader) {
+        this.xmlReader = xmlReader;
     }
 
     public Set<Contrast> getContrasts() {
 
         Set<Contrast> contrasts = Sets.newLinkedHashSet();
 
-        NodeList arrayDesigns = document.getElementsByTagName("array_design");
+        NodeList arrayDesigns = xmlReader.getDocument().getElementsByTagName("array_design");
         for (int i = 0; i < arrayDesigns.getLength(); i++) {
             Node currentArrayDesign = arrayDesigns.item(i);
             String arrayDesignAccession = currentArrayDesign.getFirstChild().getTextContent().trim();
@@ -59,7 +53,7 @@ public class ExperimentConfiguration {
     }
 
     private void parseContrastConfiguration(String query, String arrayDesignAccession, Set<Contrast> contrasts) {
-        String[] ids = xmlConfiguration.getStringArray(query);
+        String[] ids = xmlReader.getStringArray(query);
         for (String id : ids) {
             Contrast contrast = getContrast(id, arrayDesignAccession);
             contrasts.add(contrast);
@@ -67,7 +61,7 @@ public class ExperimentConfiguration {
     }
 
     private Contrast getContrast(String id, String arrayDesignAccession) {
-        Configuration configuration = xmlConfiguration.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
+        Configuration configuration = xmlReader.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
         String test = configuration.getString("test_assay_group");
@@ -78,7 +72,7 @@ public class ExperimentConfiguration {
         try {
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
 
-            NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            NodeList nl = (NodeList) expr.evaluate(xmlReader.getDocument(), XPathConstants.NODESET);
             String[] assayAccessions = new String[nl.getLength()];
 
             ImmutableSet.Builder<String> technicalReplicatesBuilder = ImmutableSet.builder();
@@ -115,7 +109,7 @@ public class ExperimentConfiguration {
 
             Set<String> assayAccessions = Sets.newHashSet();
 
-            NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            NodeList nl = (NodeList) expr.evaluate(xmlReader.getDocument(), XPathConstants.NODESET);
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
                 assayAccessions.add(node.getTextContent());
@@ -131,19 +125,19 @@ public class ExperimentConfiguration {
     public AssayGroups getAssayGroups() {
         List<AssayGroup> assayGroups = Lists.newArrayList();
 
-        for (String assayGoupId : xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id")) {
-            assayGroups.add(getAssayGroup(assayGoupId));
+        for (String assayGroupId : xmlReader.getStringArray("/analytics/assay_groups/assay_group/@id")) {
+            assayGroups.add(getAssayGroup(assayGroupId));
         }
 
         return new AssayGroups(assayGroups);
     }
 
     public ExperimentType getExperimentType() {
-        Element configuration = document.getDocumentElement();
+        Element configuration = xmlReader.getDocument().getDocumentElement();
         String type = configuration.getAttribute(EXPERIMENT_TYPE);
 
         if (StringUtils.isEmpty(type)) {
-            throw new IllegalStateException(String.format("Missing %s attribute on root element of %s", EXPERIMENT_TYPE, pathToFile.toString()));
+            throw new IllegalStateException(String.format("Missing %s attribute on root element", EXPERIMENT_TYPE));
         }
 
         ExperimentType experimentType = ExperimentType.get(type);
@@ -155,6 +149,6 @@ public class ExperimentConfiguration {
     }
 
     public boolean hasRData() {
-        return "1".equals(document.getDocumentElement().getAttribute(RDATA));
+        return "1".equals(xmlReader.getDocument().getDocumentElement().getAttribute(RDATA));
     }
 }

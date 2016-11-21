@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 
 @Named
@@ -43,7 +44,7 @@ public class ExpressionSerializerService {
         }
     }
 
-    public void removeKryoFile(String experimentAccession){
+    public void removeKryoFile(String experimentAccession) {
         File f = new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession));
         if(f.exists()){
             f.delete();

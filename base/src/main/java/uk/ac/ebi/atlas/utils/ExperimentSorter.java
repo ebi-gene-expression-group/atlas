@@ -1,42 +1,27 @@
 package uk.ac.ebi.atlas.utils;
 
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.Collections;
+import java.util.Set;
 
 public class ExperimentSorter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentSorter.class);
-
-    /*
-    I am no longer a bean! :(
-    @Value("#{configuration['diff.experiment.data.path.template']}")
-    private String differentialTsvFileTemplate;
-    */
-
     private final DataFileHub dataFileHub;
-    private ExperimentTrader experimentTrader;
+    private final ExperimentTrader experimentTrader;
+    private final ConfigurationTrader configurationTrader;
 
-    public ExperimentSorter(DataFileHub dataFileHub, ExperimentTrader experimentTrader) {
-        this.dataFileHub =dataFileHub;
+    @Inject
+    public ExperimentSorter(DataFileHub dataFileHub, ExperimentTrader experimentTrader, ConfigurationTrader configurationTrader) {
+        this.dataFileHub = dataFileHub;
         this.experimentTrader = experimentTrader;
+        this.configurationTrader = configurationTrader;
     }
 
     public TreeMultimap<Long, String> reverseSortAllExperimentsPerSize() {
@@ -53,13 +38,8 @@ public class ExperimentSorter {
         TreeMultimap<Long, String> fileSizeToExperimentsMap = TreeMultimap.create(Collections.reverseOrder(), Ordering.natural());
 
         for (ExperimentType experimentType : experimentTypes) {
-
             for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                fileSizeToExperimentsMap.put
-                        (experimentType.isDifferential()
-                                ? estimateSizeOfDifferentialExperiment(experimentAccession)
-                                : estimateSizeOfBaselineExperiment(experimentAccession),
-                                experimentAccession);
+                fileSizeToExperimentsMap.put(estimateSizeOfExperiment(experimentAccession, experimentType), experimentAccession);
             }
 
         }
@@ -67,31 +47,39 @@ public class ExperimentSorter {
         return fileSizeToExperimentsMap;
     }
 
-    private long estimateSizeOfDifferentialExperiment(String experimentAccession){
-        return 1000L;
-        /*
-        I used to look into the directory and count the files but the dataFileHub API isn't rich enough for this yet.
-        Make me more accurate!
-
-        long diffExperimentSize = 0;
-        Path diffExperimentDir = FileSystems.getDefault().getPath(MessageFormat.format(differentialTsvFileTemplate, experimentAccession)).getParent();
-        Path diffExperimentGlobPath = FileSystems.getDefault().getPath(MessageFormat.format(differentialTsvFileTemplate, experimentAccession + "*")).getFileName();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(diffExperimentDir, diffExperimentGlobPath.toString())) {
-            for (Path path : stream) {
-                diffExperimentSize += new File(String.valueOf(path)).length();
-            }
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
-        return diffExperimentSize;
-        */
-    }
-
-    private long estimateSizeOfBaselineExperiment(String experimentAccession){
-        try {
-            return dataFileHub.getExperimentFiles(experimentAccession).main.get().readAll().size();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private long estimateSizeOfExperiment(String experimentAccession, ExperimentType experimentType) {
+        switch (experimentType) {
+            case RNASEQ_MRNA_BASELINE:
+            case PROTEOMICS_BASELINE:
+                return estimateSizeOfBaselineExperiment(experimentAccession);
+            case RNASEQ_MRNA_DIFFERENTIAL:
+                return estimateSizeOfDifferentialExperiment(experimentAccession);
+            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
+            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
+            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
+                return estimateSizeOfMicroarrayExperiment(experimentAccession);
+            default:
+                return 0;
         }
     }
+
+    private long estimateSizeOfMicroarrayExperiment(String experimentAccession) {
+        Set<String> arrayDesigns =
+                configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession).getArrayDesignAccessions();
+
+        long n = 0;
+        for (String arrayDesign : arrayDesigns) {
+            n += dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign).analytics.size();
+        }
+        return n;
+    }
+
+    private long estimateSizeOfDifferentialExperiment(String experimentAccession) {
+        return dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.size();
+    }
+
+    private long estimateSizeOfBaselineExperiment(String experimentAccession) {
+        return dataFileHub.getBaselineExperimentFiles(experimentAccession).main.size();
+    }
+
 }

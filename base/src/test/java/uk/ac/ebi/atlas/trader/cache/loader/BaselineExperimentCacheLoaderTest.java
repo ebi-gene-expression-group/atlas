@@ -3,10 +3,10 @@ package uk.ac.ebi.atlas.trader.cache.loader;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
@@ -21,7 +21,6 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -33,7 +32,11 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
@@ -46,33 +49,37 @@ public class BaselineExperimentCacheLoaderTest {
         }
     }
 
-    String experimentAccession = "E-MOCK-1";
+    private String experimentAccession = "E-MOCK-1";
 
-    ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
+    private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
 
-    ExperimentDTO dto = new ExperimentDTO(experimentAccession, experimentType, "homo_sapiens", Collections
+    private ExperimentDTO dto = new ExperimentDTO(experimentAccession, experimentType, "homo_sapiens", Collections
             .<String>emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
     @Mock
-    ExperimentalFactorsFactory experimentalFactorsFactory;
+    private ExperimentalFactorsFactory experimentalFactorsFactory;
     @Mock
-    ConfigurationTrader configurationTrader ;
+    private ConfigurationTrader configurationTrader ;
     @Mock
-    SpeciesFactory speciesFactory;
+    private SpeciesFactory speciesFactory;
     @Mock
-    ExperimentConfiguration configuration;
+    private ExperimentConfiguration configuration;
     @Mock
-    BaselineExperimentConfiguration baselineConfiguration;
+    private BaselineExperimentConfiguration baselineConfiguration;
     @Mock
-    ExperimentalFactors experimentalFactors;
+    private ExperimentalFactors experimentalFactors;
     @Mock
-    AssayGroups assayGroups;
+    private AssayGroups assayGroups;
     @Mock
-    ExperimentDesign experimentDesign;
+    private ExperimentDesign experimentDesign;
     @Spy
-    MockDataFileHub dataFileHub = MockDataFileHub.get();
+    private static MockDataFileHub dataFileHub;
 
+    private BaselineExperimentsCacheLoader subject;
 
-    BaselineExperimentsCacheLoader subject;
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        dataFileHub = new MockDataFileHub();
+    }
 
     @Before
     public void setUp(){
@@ -100,7 +107,7 @@ public class BaselineExperimentCacheLoaderTest {
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean());
         verify(speciesFactory).create(dto,baselineConfiguration);
         if(!baselineConfiguration.orderCurated()){
-            verify(dataFileHub, atLeastOnce()).getExperimentFiles(experimentAccession);
+            verify(dataFileHub, atLeastOnce()).getBaselineExperimentFiles(experimentAccession);
         }
     }
 
@@ -111,13 +118,13 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Test(expected=IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() throws Exception{
-        when(configuration.getAssayGroups()).thenReturn(Mockito.mock(AssayGroups.class));
-        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
+        when(configuration.getAssayGroups()).thenReturn(mock(AssayGroups.class));
+        subject.load(dto, "description from array express", experimentDesign);
     }
 
     @Test
     public void useAllCollaborators() throws Exception {
-        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
+        subject.load(dto, "description from array express", experimentDesign);
         verifyCollaborators();
         noMoreInteractionsWithCollaborators();
     }

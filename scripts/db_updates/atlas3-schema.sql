@@ -289,4 +289,12 @@ ALTER TABLE RNASEQ_BSLN_CE_PROFILES
     PRIMARY KEY (EXPERIMENT, IDENTIFIER) USING INDEX PK_RNASEQ_BSLN_CE_PROFILES
 ENABLE;
 
+-- Data processing in-progress flag table - used for data production in Atlas - no dependency on it exists in the Web services code
+DROP TABLE ATLAS_JOBS;
+CREATE TABLE ATLAS_JOBS(
+    DATE_STARTED DATE DEFAULT sysdate,
+    JOBTYPE VARCHAR(255) NOT NULL,
+    JOBOBJECT VARCHAR(255) NULL -- Experiment accession or organism
+);
+
 exit;

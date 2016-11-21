@@ -77,7 +77,7 @@ public class ExperimentConfigurationTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        // In Commons Configuration 2 XMLConfiguration needs at least a well-formed XML file:
+        // In Commons Configuration 2, XMLConfiguration needs at least a well-formed XML file:
         // http://stackoverflow.com/questions/39573880/apache-commons-configuration2-how-to-read-data-from-inputstream
         tmpFilePath = Files.createTempFile("dummy", ".xml");
         Files.write(tmpFilePath, ImmutableList.of("<_/>"), Charset.forName("UTF-8"));
@@ -107,7 +107,10 @@ public class ExperimentConfigurationTest {
         inputStream.reset();
         Document document = builder.parse(inputStream);
 
-        subject = new ExperimentConfiguration(xmlConfiguration, document, null);
+        XmlReaderMock xmlReaderMock = new XmlReaderMock(xmlConfiguration);
+        xmlReaderMock.setDocument(document);
+
+        subject = new ExperimentConfiguration(xmlReaderMock);
     }
 
     @Test

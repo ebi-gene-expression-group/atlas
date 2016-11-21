@@ -25,7 +25,7 @@ import static org.junit.Assert.assertThat;
 
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class BioentityIndexIT {
 
     @Value("#{configuration['bioentity.properties']}")

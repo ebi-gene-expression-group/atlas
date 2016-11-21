@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({"/test-applicationContext.xml", "/test-solrContext.xml", "/test-oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class DataFileHubIT {
 
     @Inject
@@ -22,7 +22,7 @@ public class DataFileHubIT {
 
     @Test
     public void testGetExperimentFiles() throws Exception {
-        assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").main);
+        assertAtlasResourceExists(subject.getBaselineExperimentFiles("E-MTAB-513").main);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").analysisMethods);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").condensedSdrf);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").experimentDesign);
@@ -34,7 +34,7 @@ public class DataFileHubIT {
         assertAtlasResourceExists(subject.getDifferentialExperimentFiles("E-GEOD-54705").rawCounts);
     }
 
-    void assertAtlasResourceExists(AtlasResource<?> resource){
+    private void assertAtlasResourceExists(AtlasResource<?> resource){
         assertTrue(resource.toString(), resource.exists());
     }
 }

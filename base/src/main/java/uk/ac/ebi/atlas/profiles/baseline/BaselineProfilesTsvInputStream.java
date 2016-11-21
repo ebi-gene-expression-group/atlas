@@ -2,19 +2,20 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
-import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+
+import java.io.Reader;
 
 public class BaselineProfilesTsvInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
 
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
 
-    public BaselineProfilesTsvInputStream(CSVReader csvReader, String experimentAccession,
+    public BaselineProfilesTsvInputStream(Reader reader, String experimentAccession,
                                           ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                           BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
-        super(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+        super(reader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
         this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 

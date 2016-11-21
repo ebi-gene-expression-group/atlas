@@ -9,21 +9,22 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 public class TsvReaderImpl implements TsvReader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TsvReaderImpl.class);
 
-    private InputStreamReader tsvFileInputStreamReader;
+    private Reader tsvReader;
 
-    public TsvReaderImpl(InputStreamReader tsvFileInputStreamReader) {
-        this.tsvFileInputStreamReader = tsvFileInputStreamReader;
+    public TsvReaderImpl(Reader tsvReader) {
+        this.tsvReader = tsvReader;
     }
 
-    public static String[] readLine(CSVReader csvReader, long lineIndex){
-        try {
+    @Override
+    public String[] readLine(long lineIndex) {
+        try (CSVReader csvReader = new CSVReader(tsvReader, '\t')) {
 
             String[] line = null;
             for (int i = 0; i <= lineIndex; i++) {
@@ -34,18 +35,7 @@ public class TsvReaderImpl implements TsvReader {
         } catch (IOException e) {
             LOGGER.error("Cannot read TSV file: " + e.getMessage(), e);
             throw new RuntimeException(e);
-        } finally {
-            try {
-                csvReader.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
-    }
-
-    @Override
-    public String[] readLine(long lineIndex) {
-        return readLine(new CSVReader(tsvFileInputStreamReader, '\t'), lineIndex);
     }
 
     @Override
@@ -54,7 +44,7 @@ public class TsvReaderImpl implements TsvReader {
     }
 
     private List<String[]> readAndFilter(Predicate<String> acceptanceCriteria) {
-        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')) {
+        try (CSVReader csvReader = new CSVReader(tsvReader, '\t')) {
 
             ImmutableList.Builder<String[]> rowsBuilder = new ImmutableList.Builder<>();
             for (String[] row : csvReader.readAll()) {

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +14,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.text.MessageFormat;
 
 @Named
@@ -50,24 +50,27 @@ public class BaselineExpressionsInputStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
-    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {
+    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) throws IOException {
 
         String accessKey = barChartExperimentAccessKeyTrader.getAccessKey(experimentAccession);
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         if(experiment.getType().isProteomicsBaseline()) {
-            return new BaselineExpressionsTsvInputStream(dataFileHub.getExperimentFiles(experimentAccession).main.get(),
-                    experimentAccession,
-                    expressionsRowDeserializerProteomicsBaselineBuilder);
+            return new BaselineExpressionsTsvInputStream(
+                    dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
+                    experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
         }
         else {
             String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
             try {
                 BaselineExpressionsKryoReader kryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
-                return new BaselineExpressionsKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder);
+                return new BaselineExpressionsKryoInputStream(
+                        kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder);
             } catch (IllegalArgumentException e) {
-                return new BaselineExpressionsTsvInputStream(dataFileHub.getExperimentFiles(experimentAccession).main.get(), experimentAccession, expressionsRowDeserializerBaselineBuilder);
+                return new BaselineExpressionsTsvInputStream(
+                        dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
+                        experimentAccession, expressionsRowDeserializerBaselineBuilder);
             }
         }
     }

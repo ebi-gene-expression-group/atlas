@@ -10,6 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -70,7 +71,7 @@ public class BaselineExperimentConfigurationTest {
         XMLConfiguration xmlConfiguration = fileBuilder.getConfiguration();
         xmlConfiguration.read(inputStream);
 
-        subject = new BaselineExperimentConfiguration(xmlConfiguration);
+        subject = new BaselineExperimentConfiguration(new XmlReader(xmlConfiguration));
     }
 
     @Test

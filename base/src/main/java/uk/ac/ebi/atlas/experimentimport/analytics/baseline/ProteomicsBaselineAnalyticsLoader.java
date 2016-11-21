@@ -5,35 +5,38 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 
+@Named
 public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
 
-    private final BaselineAnalyticsDAO baselineAnalyticsDAO;
-    private final BaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
+    private BaselineAnalyticsDAO analyticsDao;
+    private BaselineAnalyticsInputStreamFactory analyticsInputStreamFactory;
 
-    public ProteomicsBaselineAnalyticsLoader(BaselineAnalyticsDAO baselineAnalyticsDAO,
-                                            BaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory) {
-        this.baselineAnalyticsDAO = baselineAnalyticsDAO;
-        this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
+    @Inject
+    public void setAnalyticsDAO(BaselineAnalyticsDAO analyticsDao) {
+        this.analyticsDao = analyticsDao;
+    }
+
+    @Inject
+    public void setAnalyticsInputStreamFactory(BaselineAnalyticsInputStreamFactory analyticsInputStreamFactory) {
+        this.analyticsInputStreamFactory = analyticsInputStreamFactory;
     }
 
     @Override
     @Transactional
     public void loadAnalytics(String accession) throws IOException {
-        loadBaselineExpressions(accession);
-    }
-
-    private void loadBaselineExpressions(String accession) {
-        ObjectInputStream<BaselineAnalytics> proteomicsBaselineAnalyticsInputStream =
-                proteomicsBaselineAnalyticsInputStreamFactory.create(accession, ExperimentType.PROTEOMICS_BASELINE);
-        baselineAnalyticsDAO.loadAnalytics(accession, proteomicsBaselineAnalyticsInputStream);
+        ObjectInputStream<BaselineAnalytics> analyticsInputStream =
+                analyticsInputStreamFactory.create(accession, ExperimentType.PROTEOMICS_BASELINE);
+        analyticsDao.loadAnalytics(accession, analyticsInputStream);
     }
 
     @Override
     @Transactional
     public void deleteAnalytics(String accession) {
-        baselineAnalyticsDAO.deleteAnalytics(accession);
+        analyticsDao.deleteAnalytics(accession);
     }
 
 }
