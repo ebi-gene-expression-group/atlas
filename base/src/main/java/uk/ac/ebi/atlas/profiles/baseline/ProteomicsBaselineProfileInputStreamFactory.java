@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 import org.springframework.context.annotation.Scope;
 
@@ -13,12 +14,9 @@ public class ProteomicsBaselineProfileInputStreamFactory extends BaselineProfile
 
     @Inject
     public ProteomicsBaselineProfileInputStreamFactory(DataFileHub dataFileHub,
-                                                       ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
-                                                       ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
+                                                       ExperimentTrader experimentTrader,
                                                        KryoReaderFactory kryoReaderFactory) {
-        super(dataFileHub,expressionsRowDeserializerProteomicsBaselineBuilder,
-                expressionsRowRawDeserializerBaselineBuilder,
-                kryoReaderFactory);
+        super(dataFileHub,experimentTrader, kryoReaderFactory);
 
     }
 

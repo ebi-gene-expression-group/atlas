@@ -5,10 +5,12 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,15 +22,15 @@ import java.util.Vector;
 public class MicroarrayProfileStreamFactory
 implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfile, Contrast> {
 
+    private final ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
-    private final ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder;
 
     @Inject
     public MicroarrayProfileStreamFactory(
-            DataFileHub dataFileHub,
-            ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder) {
+            ExperimentTrader experimentTrader,
+            DataFileHub dataFileHub) {
+        this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
-        this.expressionsRowDeserializerMicroarrayBuilder = expressionsRowDeserializerMicroarrayBuilder;
     }
 
 
@@ -77,7 +79,10 @@ implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfil
 
         return new MicroarrayProfilesTsvInputStream(
                 dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesignAccession).analytics.getReader(),
-                expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
+                new ExpressionsRowDeserializerMicroarrayBuilder((MicroarrayExperiment) experimentTrader
+                        .getPublicExperiment
+                        (experimentAccession)),
+                profileBuilder);
     }
 
     private MicroarrayProfileReusableBuilder createProfileBuilder(double pValueCutOff, double foldChangeCutOff, Regulation regulation) {

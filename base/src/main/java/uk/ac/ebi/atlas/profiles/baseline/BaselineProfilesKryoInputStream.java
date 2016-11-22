@@ -10,7 +10,7 @@ public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselinePro
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
 
-    public BaselineProfilesKryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader, String experimentAccession,
+    public BaselineProfilesKryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader,
                                            ExpressionsRowRawDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                            BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 

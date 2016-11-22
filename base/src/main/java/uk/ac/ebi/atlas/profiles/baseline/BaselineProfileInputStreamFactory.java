@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -26,21 +28,16 @@ implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, F
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     protected String baselineExperimentSerializedDataFileUrlTemplate;
 
-    private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
-    private ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder;
-
+    private final ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
     private KryoReaderFactory kryoReaderFactory;
 
     @Inject
     public BaselineProfileInputStreamFactory(DataFileHub dataFileHub,
-                                             ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
-                                             ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
+                                             ExperimentTrader experimentTrader,
                                              KryoReaderFactory kryoReaderFactory) {
         this.dataFileHub = dataFileHub;
-        this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
-        this.expressionsRowRawDeserializerBaselineBuilder = expressionsRowRawDeserializerBaselineBuilder;
-
+        this.experimentTrader = experimentTrader;
         this.kryoReaderFactory = kryoReaderFactory;
     }
 
@@ -55,12 +52,17 @@ implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, F
         String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
         try {
             BaselineExpressionsKryoReader baselineExpressionsKryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
-            return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+            return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, new
+                    ExpressionsRowRawDeserializerBaselineBuilder((BaselineExperiment) experimentTrader
+                    .getPublicExperiment
+                    (experimentAccession)),
+                    baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
             return new BaselineProfilesTsvInputStream(
                     dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
-                    expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+                    new ExpressionsRowDeserializerBaselineBuilder((BaselineExperiment) experimentTrader
+                            .getPublicExperiment(experimentAccession)), baselineProfileReusableBuilder);
         }
     }
 

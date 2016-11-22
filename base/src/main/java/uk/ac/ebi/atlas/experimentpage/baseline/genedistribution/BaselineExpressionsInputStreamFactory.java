@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,45 +24,36 @@ public class BaselineExpressionsInputStreamFactory {
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     private String baselineExperimentSerializedDataFileUrlTemplate;
 
-    private ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder;
-    private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
-    private ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder;
     private KryoReaderFactory kryoReaderFactory;
     private final DataFileHub dataFileHub;
 
     @Inject
-    public BaselineExpressionsInputStreamFactory(ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
-                                                 ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
-                                                 ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
-                                                 KryoReaderFactory kryoReaderFactory,
-                                                 BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader,
+    public BaselineExpressionsInputStreamFactory(KryoReaderFactory kryoReaderFactory,
                                                  DataFileHub dataFileHub) {
-        this.expressionsRowRawDeserializerBaselineBuilder = expressionsRowRawDeserializerBaselineBuilder;
-        this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
-        this.expressionsRowDeserializerProteomicsBaselineBuilder = expressionsRowDeserializerProteomicsBaselineBuilder;
         this.kryoReaderFactory = kryoReaderFactory;
         this.dataFileHub = dataFileHub;
     }
 
-    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(Experiment experiment) throws IOException {
+    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(BaselineExperiment experiment)
+            throws IOException {
 
         String experimentAccession = experiment.getAccession();
 
         if(experiment.getType().isProteomicsBaseline()) {
             return new BaselineExpressionsTsvInputStream(
                     dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
-                    expressionsRowDeserializerProteomicsBaselineBuilder);
+                    new ExpressionsRowDeserializerProteomicsBaselineBuilder(experiment));
         }
         else {
             String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
             try {
                 BaselineExpressionsKryoReader kryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
                 return new BaselineExpressionsKryoInputStream(
-                        kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder);
+                        kryoReader,  new ExpressionsRowRawDeserializerBaselineBuilder(experiment));
             } catch (IllegalArgumentException e) {
                 return new BaselineExpressionsTsvInputStream(
                         dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
-                        expressionsRowDeserializerBaselineBuilder);
+                        new ExpressionsRowDeserializerBaselineBuilder(experiment));
             }
         }
     }
