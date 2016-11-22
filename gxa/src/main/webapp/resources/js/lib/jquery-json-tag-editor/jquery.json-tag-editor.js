@@ -166,7 +166,7 @@
                 .on('focus.json-tag-editor', function() { ed.click(); }); // Simulate tabindex
 
             // Add dummy item for min-height on empty editor
-            ed.append('<li style="width:0px">&nbsp;</li>');
+            ed.append('<li style="width:1px">&nbsp;</li>');
 
             // Markup for new tag
             var newTag =
@@ -194,7 +194,7 @@
                         tag.value = $(this).find('input').val();
                     }
                     else {
-                        Object.assign(tag, $(e).get(0).dataset)
+                        Object.assign(tag, $(e).get(0).dataset, {value: $(e).get(0).dataset.value})
                     }
 
                     if (tag.value) {
@@ -351,15 +351,9 @@
                                 ed.trigger('click', [$('.active', ed).find('input').closest('li').next('li').find('.json-tag-editor-tag')]);
                             }, 20);
                         };
-
-                        // Inject ArrayExpress plugin
-                        if (aco.plugin) {
-                            input[aco.plugin](aco);
-                        } else {
-                            input.autocomplete(aco);
-                            if (aco._renderItem) {
-                                input.autocomplete( "instance" )._renderItem = aco._renderItem;
-                            }
+                        input.autocomplete(aco);
+                        if (aco._renderItem) {
+                            input.autocomplete('instance')._renderItem = aco._renderItem;
                         }
                     }
                 }
@@ -420,15 +414,6 @@
                 updateGlobals();
             }
 
-            // Events emitted by ArrayExpress autocomplete plugin navigation
-            var isTreeExpansionHit = false;
-            ed.on('onTreeExpansionHit', function (e) {
-                isTreeExpansionHit = true;
-            });
-            ed.on('onTreeNoExpansionHit', function (e) {
-                isTreeExpansionHit = false;
-            });
-
             ed.on('blur', 'input', function(e) {
                 e.stopPropagation();
 
@@ -479,7 +464,7 @@
                 var $tagEditorTag = input.parent(),
                     tagObject = validate(tag);
 
-                if (tagObject && !isTreeExpansionHit) {
+                if (tagObject) {
                     var tagProperties = Object.keys(tagObject);
                     for (var i = 0 ; i < tagProperties.length ; i++) {
                         $tagEditorTag.get(0).dataset[tagProperties[i]] = tagObject[tagProperties[i]];
@@ -546,7 +531,7 @@
                     if (nextTag.length) {
                         nextTag.click().find('input').caret(0);
                     }
-                    else if ($this.val() && !isTreeExpansionHit) {
+                    else if ($this.val()) {
                         ed.click();
                     }
 
