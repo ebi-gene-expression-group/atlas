@@ -1,16 +1,11 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import org.springframework.context.annotation.Scope;
-
-import javax.inject.Named;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-@Named("cutoffScale")
-@Scope("singleton")
 public class CutoffScale {
 
     private static final int DEFAULT_NUMBER_OF_FRACTIONAL_DIGITS = 1;

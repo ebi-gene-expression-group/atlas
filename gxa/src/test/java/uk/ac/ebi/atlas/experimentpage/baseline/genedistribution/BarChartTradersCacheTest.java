@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.cache.LoadingCache;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,11 +40,12 @@ import static org.mockito.Mockito.when;
 public class BarChartTradersCacheTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
+    public static final String ACCESS_KEY = "";
 
     private BarChartTradersCache subject;
 
     @Mock
-    private LoadingCache<String, BarChartTrader> barChartTradersMock;
+    private LoadingCache<Pair<String,String>, BarChartTrader> barChartTradersMock;
 
     @Mock
     private BarChartTrader barChartTraderMock;
@@ -55,15 +57,17 @@ public class BarChartTradersCacheTest {
 
     @Test
     public void testGetBarchartTrader() throws Exception {
-        when(barChartTradersMock.get(EXPERIMENT_ACCESSION)).thenReturn(barChartTraderMock);
+        when(barChartTradersMock.get(Pair.of(EXPERIMENT_ACCESSION,ACCESS_KEY))).thenReturn(barChartTraderMock);
 
-        assertThat(subject.getBarchartTrader(EXPERIMENT_ACCESSION), is(barChartTraderMock));
+        assertThat(subject.getBarchartTrader(EXPERIMENT_ACCESSION,ACCESS_KEY), is(barChartTraderMock));
     }
 
     @Test(expected = IllegalStateException.class)
     public void throwException() throws Exception {
-        when(barChartTradersMock.get(EXPERIMENT_ACCESSION)).thenThrow(new ExecutionException(new Throwable("Testing error handling")));
+        when(barChartTradersMock.get(Pair.of(EXPERIMENT_ACCESSION,ACCESS_KEY))).thenThrow(new ExecutionException(new
+                Throwable("Testing " +
+                "error handling")));
 
-        subject.getBarchartTrader(EXPERIMENT_ACCESSION);
+        subject.getBarchartTrader(EXPERIMENT_ACCESSION,ACCESS_KEY);
     }
 }

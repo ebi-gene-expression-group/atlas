@@ -1,7 +1,6 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -22,13 +21,9 @@ public class BaselineBarChartController {
 
     private BarChartTradersCache barChartTradersCache;
 
-    private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
-
     @Inject
-    public BaselineBarChartController(BarChartTradersCache barChartTradersCache,
-                                      BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
+    public BaselineBarChartController(BarChartTradersCache barChartTradersCache) {
         this.barChartTradersCache = barChartTradersCache;
-        this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
     }
 
     @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -39,11 +34,7 @@ public class BaselineBarChartController {
                          @RequestParam String queryFactorType, @RequestParam(required = false) String serializedFilterFactors,
                          @RequestParam(required = false) String accesskey) {
 
-        Map<String, String> experimentAccessKeyMap = Maps.newHashMap();
-        experimentAccessKeyMap.put(experimentAccession, accesskey);
-        barChartExperimentAccessKeyTrader.setExperimentAccessKeyMap(experimentAccessKeyMap);
-
-        BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
+        BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession, accesskey);
 
         Set<Factor> queryFactors = new HashSet<>();
         if (queryFactorValues != null) {

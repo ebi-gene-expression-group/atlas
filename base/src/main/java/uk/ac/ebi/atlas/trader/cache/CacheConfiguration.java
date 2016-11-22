@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.trader.cache;
 
+import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -56,7 +57,8 @@ public class CacheConfiguration {
 
     @Bean(name="barChartTradersLoadingCache")
     @Inject
-    public LoadingCache<String, BarChartTrader> barChartTradersCache(BarChartTradersCacheLoader barChartTradersCacheLoader) {
+    public LoadingCache<Pair<String,String>, BarChartTrader> barChartTradersCache(BarChartTradersCacheLoader
+                                                                             barChartTradersCacheLoader) {
 
         return CacheBuilder.newBuilder().build(barChartTradersCacheLoader);
 

@@ -1,20 +1,105 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.cache.CacheLoader;
+import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.IOException;
+import java.util.*;
 
-// Be aware that this is a Spring-managed singleton object and uses the lookup-method injection to get a new instance
-// of BarChartTraderBuilder every time the load method is invoked
-// The reason to do so is that Guava CacheBuilder, that is the one using this class, is not Spring-managed.
-public abstract class BarChartTradersCacheLoader extends CacheLoader<String, BarChartTrader> {
+@Named
+public class BarChartTradersCacheLoader extends CacheLoader<Pair<String,String>, BarChartTrader> {
+
+    private final CutoffScale cutoffScale;
+
+    private final BaselineExpressionsInputStreamFactory inputStreamFactory;
+
+    private final ExperimentTrader experimentTrader;
+
+    @Inject
+    public BarChartTradersCacheLoader(ExperimentTrader experimentTrader, BaselineExpressionsInputStreamFactory inputStreamFactory) {
+        this(experimentTrader, inputStreamFactory, new CutoffScale());
+    }
+
+    BarChartTradersCacheLoader(ExperimentTrader experimentTrader, BaselineExpressionsInputStreamFactory
+            inputStreamFactory, CutoffScale
+            cutoffScale){
+        this.experimentTrader = experimentTrader;
+        this.inputStreamFactory = inputStreamFactory;
+        this.cutoffScale = cutoffScale;
+
+    }
+
 
     @Override
     @ParametersAreNonnullByDefault
-    public BarChartTrader load(String experimentAccession) {
-        return createBarChartTraderBuilder().forExperiment(experimentAccession).create();
+    public BarChartTrader load(Pair<String,String> experimentAccessionAndAccessKey) {
+
+
+        try {
+            BarChartTrader barChartTrader = new BarChartTrader(
+                    populateGeneExpressionIndexes(
+                            inputStreamFactory.createGeneExpressionsInputStream(experimentTrader.getExperiment
+                                    (experimentAccessionAndAccessKey.getLeft(), experimentAccessionAndAccessKey.getRight()))
+                    )
+            );
+            barChartTrader.trimIndexes();
+            return barChartTrader;
+
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
-    public abstract BarChartTraderBuilder createBarChartTraderBuilder();
+    NavigableMap<Double, Map<FactorGroup, BitSet>>populateGeneExpressionIndexes(ObjectInputStream<BaselineExpressions> inputStream) {
+        NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
+        int geneIndexPosition = 0;
 
+        BaselineExpressions baselineExpressions;
+
+        while ((baselineExpressions = inputStream.readNext()) != null) {
+            addGeneToIndexes(baselineExpressions, geneIndexPosition++, factorGroupGeneExpressionIndexes);
+        }
+        return factorGroupGeneExpressionIndexes;
+    }
+
+    protected void addGeneToIndexes(BaselineExpressions baselineExpressions, int geneIndexPosition, NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes) {
+
+        for (BaselineExpression expression : baselineExpressions) {
+
+            if(expression.isKnown()) {
+                SortedSet<Double> cutoffsSmallerThanExpression = cutoffScale.getValuesSmallerThan(expression.getLevel());
+
+                for (Double cutoff : cutoffsSmallerThanExpression) {
+
+                    Map<FactorGroup, BitSet> geneBitSets = factorGroupGeneExpressionIndexes.get(cutoff);
+
+                    if (geneBitSets == null) {
+                        geneBitSets = new HashMap<>();
+                        factorGroupGeneExpressionIndexes.put(cutoff, geneBitSets);
+
+                    }
+
+                    FactorGroup factorGroup = expression.getFactorGroup();
+                    BitSet bitSet = geneBitSets.get(factorGroup);
+                    if (bitSet == null) {
+                        bitSet = new BitSet(BarChartTrader.AVERAGE_GENES_IN_EXPERIMENT);
+                        geneBitSets.put(factorGroup, bitSet);
+                    }
+
+                    bitSet.set(geneIndexPosition);
+
+                }
+            }
+        }
+
+    }
 }

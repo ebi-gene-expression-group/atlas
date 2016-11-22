@@ -14,6 +14,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
+@Deprecated
 public class ExpressionsRowDeserializerBaselineBuilder implements ExpressionsRowDeserializerBuilder<String, BaselineExpression> {
 
     private String experimentAccession;

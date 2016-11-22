@@ -16,7 +16,7 @@ public class BarChartTrader {
     private int minimumSetSize = MINIMUM_SET_SIZE;
 
     // for each cutoff, there is a map of genes expressed (in a BitSet) by factor group
-    private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
+    private final NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes;
 
     public BarChartTrader(NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes) {
         this.factorGroupGeneExpressionIndexes = factorGroupGeneExpressionIndexes;

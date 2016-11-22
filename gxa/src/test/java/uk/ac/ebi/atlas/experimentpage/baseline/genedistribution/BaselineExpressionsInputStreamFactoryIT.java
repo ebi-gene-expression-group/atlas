@@ -6,6 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -18,9 +19,12 @@ public class BaselineExpressionsInputStreamFactoryIT extends ObjectInputStreamer
     @Inject
     BaselineExpressionsInputStreamFactory subject;
 
+    @Inject
+    ExperimentTrader experimentTrader;
+
     @Override
     protected ObjectInputStream<?> createStream(String experimentAccession) throws IOException {
-        return subject.createGeneExpressionsInputStream(experimentAccession);
+        return subject.createGeneExpressionsInputStream(experimentTrader.getPublicExperiment(experimentAccession));
     }
 
     @Test

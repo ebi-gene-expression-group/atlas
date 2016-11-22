@@ -19,10 +19,6 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
-        <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
-    </bean>
-
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>
             <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"

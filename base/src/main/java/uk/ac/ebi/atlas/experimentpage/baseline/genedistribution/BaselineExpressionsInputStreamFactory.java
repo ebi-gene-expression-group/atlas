@@ -28,33 +28,25 @@ public class BaselineExpressionsInputStreamFactory {
     private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
     private ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder;
     private KryoReaderFactory kryoReaderFactory;
-    private ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
-
-    private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
 
     @Inject
     public BaselineExpressionsInputStreamFactory(ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
                                                  ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                                  ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
                                                  KryoReaderFactory kryoReaderFactory,
-                                                 ExperimentTrader experimentTrader,
                                                  BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader,
                                                  DataFileHub dataFileHub) {
         this.expressionsRowRawDeserializerBaselineBuilder = expressionsRowRawDeserializerBaselineBuilder;
         this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
         this.expressionsRowDeserializerProteomicsBaselineBuilder = expressionsRowDeserializerProteomicsBaselineBuilder;
         this.kryoReaderFactory = kryoReaderFactory;
-        this.experimentTrader = experimentTrader;
-        this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
         this.dataFileHub = dataFileHub;
     }
 
-    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) throws IOException {
+    public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(Experiment experiment) throws IOException {
 
-        String accessKey = barChartExperimentAccessKeyTrader.getAccessKey(experimentAccession);
-
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        String experimentAccession = experiment.getAccession();
 
         if(experiment.getType().isProteomicsBaseline()) {
             return new BaselineExpressionsTsvInputStream(
