@@ -49,8 +49,6 @@
     </properties>
 
     <build>
-        <defaultGoal>package</defaultGoal>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -62,40 +60,6 @@
                     <target>${java-version}</target>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.19.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--<systemProperties>-->
-                        <!--<property>-->
-                            <!--<name>selenium.test.host</name>-->
-                            <!--<value>lime</value>-->
-                        <!--</property>-->
-                        <!--<property>-->
-                            <!--<name>selenium.test.portnumber</name>-->
-                            <!--<value>14092</value>-->
-                        <!--</property>-->
-                    <!--</systemProperties>-->
-                    <excludes>
-                        <!--<exclude>${failsafe.excludes}</exclude> &lt;!&ndash; Defined externally as a param in mvn &ndash;&gt;-->
-                        <exclude>**/*SIT.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
@@ -233,6 +197,12 @@
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
             <version>${solr.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.orbit</groupId>
+                    <artifactId>javax.servlet</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>
@@ -287,14 +257,12 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.3</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ucp</artifactId>
             <version>11.2.0.3</version>
-            <scope>provided</scope>
         </dependency>
 
 
