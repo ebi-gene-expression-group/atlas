@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.jdbc;
 
 import oracle.ucp.UniversalConnectionPoolException;
 import oracle.ucp.admin.UniversalConnectionPoolManager;
@@ -21,7 +21,7 @@ public class UCPDestroyPoolListener implements ServletContextListener {
     /**
      * Destroy UCP pools
      */
-    void destroyPool() {
+    private void destroyPool() {
         // Shutdown UCP if present, to avoid warnings about thread leaks
         UniversalConnectionPoolManager ucpManager = null;
         try {

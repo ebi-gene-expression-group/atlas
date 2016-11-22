@@ -1,6 +1,4 @@
-
-package uk.ac.ebi.atlas.web;
-
+package uk.ac.ebi.atlas.jdbc;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -8,7 +6,6 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
-
 
 public class JdbcDriverUnregisteringListener implements ServletContextListener {
 

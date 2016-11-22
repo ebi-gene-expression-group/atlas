@@ -59,12 +59,11 @@
         <url-pattern>/search/differential/json</url-pattern>
     </filter-mapping>
 
-    <listener>
-        <listener-class>uk.ac.ebi.atlas.web.UCPDestroyPoolListener</listener-class>
+    <listener><listener-class>uk.ac.ebi.atlas.jdbc.UCPDestroyPoolListener</listener-class>
     </listener>
 
     <listener>
-        <listener-class>uk.ac.ebi.atlas.web.JdbcDriverUnregisteringListener</listener-class>
+        <listener-class>uk.ac.ebi.atlas.jdbc.JdbcDriverUnregisteringListener</listener-class>
     </listener>
 
     <listener>
