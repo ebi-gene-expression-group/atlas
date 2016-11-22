@@ -43,11 +43,77 @@
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>keystore</exclude>
+                    <exclude>tomcat-users.xml</exclude>
                 </excludes>
             </testResource>
         </testResources>
 
         <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>selenium.test.host</name>
+                            <value>lime</value>
+                        </property>
+                        <property>
+                            <name>selenium.test.portnumber</name>
+                            <value>14092</value>
+                        </property>
+                    </systemProperties>
+                    <excludes>
+                        <exclude>**/*SIT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Run ITs on an embedded Tomcat server -->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.tomcat.maven</groupId>-->
+                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+                <!--<version>2.1</version>-->
+                <!--<configuration>-->
+                    <!--<path>/gxa</path>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>start-tomcat</id>-->
+                        <!--<phase>pre-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<fork>true</fork>-->
+                            <!--<port>8080</port>-->
+                            <!--<tomcatUsers>src/test/resources/tomcat-users.xml</tomcatUsers>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>stop-tomcat</id>-->
+                        <!--<phase>post-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>shutdown</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+            <!-- Run ITs in the server/port selenium.test.host/selenium.test.portnumber, usually lime -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -57,7 +123,6 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>tomcat-deploy</id>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
