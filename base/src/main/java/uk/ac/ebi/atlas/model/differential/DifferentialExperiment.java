@@ -76,7 +76,7 @@ public class DifferentialExperiment extends Experiment {
     }
 
     @Override
-    public Map<String, ?> getAttributes(){
+    public Map<String, Object> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
         result.put("regulationValues", Regulation.values());

@@ -36,7 +36,7 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
 
     @Override
-    public Map<String, ?> getAttributes(){
+    public Map<String, Object> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
         //For showing the QC REPORTS button in the header
