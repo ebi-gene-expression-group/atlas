@@ -13,6 +13,7 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
+        <property name="connectionPoolName" value="gxa"/>
         <property name="URL" value="${filtered.oracle.jdbc.url}"/>
         <property name="user" value="${filtered.oracle.jdbc.username}"/>
         <property name="password" value="${filtered.oracle.jdbc.password}"/>
