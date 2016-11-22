@@ -203,7 +203,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <!-- For URL rewrite, because of possible / suffix -->
         <dependency>
             <groupId>org.tuckey</groupId>
