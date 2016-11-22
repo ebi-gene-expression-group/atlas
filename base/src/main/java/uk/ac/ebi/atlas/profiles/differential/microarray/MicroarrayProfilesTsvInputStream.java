@@ -4,7 +4,6 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
-import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Reader;
@@ -15,11 +14,10 @@ public class MicroarrayProfilesTsvInputStream extends TsvInputStream<MicroarrayP
     private MicroarrayProfileReusableBuilder microarrayProfileBuilder;
 
     public MicroarrayProfilesTsvInputStream(Reader reader,
-                                            String experimentAccession,
                                             ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
                                             MicroarrayProfileReusableBuilder microarrayProfileBuilder) {
 
-        super(reader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder);
+        super(reader, expressionsRowDeserializerMicroarrayBuilder);
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
@@ -45,6 +43,6 @@ public class MicroarrayProfilesTsvInputStream extends TsvInputStream<MicroarrayP
     }
 
     protected String[] removeGeneIDAndNameColumns(String[] columns) {
-        return (String[]) ArrayUtils.subarray(columns, 3, columns.length);
+        return ArrayUtils.subarray(columns, 3, columns.length);
     }
 }

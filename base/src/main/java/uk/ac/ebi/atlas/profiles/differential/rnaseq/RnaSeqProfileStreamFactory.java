@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
-import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
@@ -51,7 +50,7 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
 
         return new RnaSeqProfilesTsvInputStream(
                 dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.getReader(),
-                experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
+                expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
     }
 
 }

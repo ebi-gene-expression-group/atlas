@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
-import au.com.bytecode.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
@@ -11,12 +9,10 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Vector;
 
 @Named
@@ -81,7 +77,7 @@ implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfil
 
         return new MicroarrayProfilesTsvInputStream(
                 dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesignAccession).analytics.getReader(),
-                experimentAccession, expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
+                expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
     }
 
     private MicroarrayProfileReusableBuilder createProfileBuilder(double pValueCutOff, double foldChangeCutOff, Regulation regulation) {

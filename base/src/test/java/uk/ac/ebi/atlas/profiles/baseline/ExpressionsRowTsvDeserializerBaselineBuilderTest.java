@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import java.util.concurrent.ExecutionException;
 
@@ -24,9 +23,6 @@ import static org.mockito.Mockito.when;
 public class ExpressionsRowTsvDeserializerBaselineBuilderTest {
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
-
-    @Mock
-    private RnaSeqBaselineExperimentsCache experimentsCacheMock;
 
     @Mock
     private Factor factorMock1;
@@ -62,31 +58,17 @@ public class ExpressionsRowTsvDeserializerBaselineBuilderTest {
         when(factorMock3.getType()).thenReturn("ORGANISM_PART");
         when(factorMock3.getValue()).thenReturn("lung");
 
-        when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(experimentalFactorsMock.getFactorGroupsInOrder()).thenReturn(ImmutableList.of(factorGroup));
 
-        subject = new ExpressionsRowDeserializerBaselineBuilder(experimentsCacheMock);
+        subject = new ExpressionsRowDeserializerBaselineBuilder(experimentMock);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void createThrowsExceptionGivenThatExperimentAccessionHasNotBeenProvided() {
-        //when
-        subject.build();
-    }
 
     @Test(expected = IllegalStateException.class)
     public void createThrowsExceptionGivenThatOrderedHeadersHaveNotBeenProvided() {
         //when
         subject.build();
-    }
-
-    @Test
-    public void createShouldSucceedWhenSpecificationHasBeenSet() {
-        //when
-        subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
-        //then
-        assertThat(subject.build(), is(notNullValue()));
     }
 
 }

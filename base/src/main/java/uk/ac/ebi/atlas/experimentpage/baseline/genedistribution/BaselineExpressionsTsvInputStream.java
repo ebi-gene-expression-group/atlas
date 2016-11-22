@@ -8,8 +8,8 @@ import java.io.Reader;
 
 public class BaselineExpressionsTsvInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsTsvInputStream(Reader reader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
-        super(reader, experimentAccession, baselineExpressionsQueueBuilder);
+    public BaselineExpressionsTsvInputStream(Reader reader, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
+        super(reader, baselineExpressionsQueueBuilder);
     }
 
     @Override

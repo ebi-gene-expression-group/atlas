@@ -11,11 +11,11 @@ public class BaselineProfilesTsvInputStream extends TsvInputStream<BaselineProfi
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
 
-    public BaselineProfilesTsvInputStream(Reader reader, String experimentAccession,
+    public BaselineProfilesTsvInputStream(Reader reader,
                                           ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                           BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
-        super(reader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+        super(reader, expressionsRowDeserializerBaselineBuilder);
         this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 

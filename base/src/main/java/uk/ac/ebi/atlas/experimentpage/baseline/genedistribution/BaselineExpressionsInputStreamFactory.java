@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerProteomicsBaselineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowRawDeserializerBaselineBuilder;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -51,7 +50,7 @@ public class BaselineExpressionsInputStreamFactory {
         if(experiment.getType().isProteomicsBaseline()) {
             return new BaselineExpressionsTsvInputStream(
                     dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
-                    experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
+                    expressionsRowDeserializerProteomicsBaselineBuilder);
         }
         else {
             String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
@@ -62,7 +61,7 @@ public class BaselineExpressionsInputStreamFactory {
             } catch (IllegalArgumentException e) {
                 return new BaselineExpressionsTsvInputStream(
                         dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
-                        experimentAccession, expressionsRowDeserializerBaselineBuilder);
+                        expressionsRowDeserializerBaselineBuilder);
             }
         }
     }

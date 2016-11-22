@@ -60,7 +60,7 @@ implements ProfileStreamFactory<BaselineProfileStreamOptions, BaselineProfile, F
         catch (IllegalArgumentException e) {
             return new BaselineProfilesTsvInputStream(
                     dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(),
-                    experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+                    expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }
 

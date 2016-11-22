@@ -12,14 +12,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-@Named
-@Scope("prototype")
 public class ExpressionsRowDeserializerRnaSeqBuilder extends ExpressionsRowDeserializerDifferentialBuilder<DifferentialExpression, DifferentialExperiment> {
 
-    @Inject
-    public ExpressionsRowDeserializerRnaSeqBuilder(RnaSeqDiffExperimentsCache experimentsCache) {
-        super(experimentsCache);
-
+    public ExpressionsRowDeserializerRnaSeqBuilder(DifferentialExperiment experiment) {
+        super(experiment);
     }
 
     @Override

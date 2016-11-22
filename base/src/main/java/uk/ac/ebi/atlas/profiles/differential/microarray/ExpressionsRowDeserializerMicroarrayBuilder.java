@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
-import uk.ac.ebi.atlas.profiles.differential.ExpressionsRowDeserializerDifferentialBuilder;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.profiles.differential.ExpressionsRowDeserializerDifferentialBuilder;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
@@ -16,9 +14,9 @@ import java.util.List;
 @Scope("prototype")
 public class ExpressionsRowDeserializerMicroarrayBuilder extends ExpressionsRowDeserializerDifferentialBuilder<MicroarrayExpression, MicroarrayExperiment> {
 
-    @Inject
-    public ExpressionsRowDeserializerMicroarrayBuilder(MicroarrayExperimentsCache experimentsCache) {
-        super(experimentsCache);
+
+    public ExpressionsRowDeserializerMicroarrayBuilder(MicroarrayExperiment experiment) {
+        super(experiment);
     }
 
     @Override

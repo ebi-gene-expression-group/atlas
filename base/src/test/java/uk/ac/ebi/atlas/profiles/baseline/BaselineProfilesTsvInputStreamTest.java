@@ -71,14 +71,12 @@ public class BaselineProfilesTsvInputStreamTest {
 
         String[] headersWithoutGeneIdColumn = new String[]{RUN_ACCESSION_1, RUN_ACCESSION_2};
 
-        given(expressionsBufferBuilderMock.forExperiment(anyString())).willReturn(expressionsBufferBuilderMock);
-        given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
-        given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
+        given(expressionsBufferBuilderMock.build(headersWithoutGeneIdColumn)).willReturn(expressionsBufferMock);
 
         when(baselineProfileReusableBuilder.addExpression(any(BaselineExpression.class))).thenReturn(baselineProfileReusableBuilder);
         when(baselineProfileReusableBuilder.create()).thenReturn(EMPTY_BASELINE_PROFILE);
 
-        subject = new BaselineProfilesTsvInputStream(blah, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
+        subject = new BaselineProfilesTsvInputStream(blah, expressionsBufferBuilderMock, baselineProfileReusableBuilder);
 
     }
 
@@ -130,7 +128,7 @@ public class BaselineProfilesTsvInputStreamTest {
     public void readCsvLineShouldThrowIllegalStateExceptionWhenThereIsAnIOProblem() throws Exception {
         //given
         given(readerMock.read(any(char[].class), anyInt(), anyInt())).willThrow(new IOException(""));
-        subject = new BaselineProfilesTsvInputStream(readerMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
+        subject = new BaselineProfilesTsvInputStream(readerMock, expressionsBufferBuilderMock, baselineProfileReusableBuilder);
         //when
         subject.readNext();
         //then expect IllegalStateException

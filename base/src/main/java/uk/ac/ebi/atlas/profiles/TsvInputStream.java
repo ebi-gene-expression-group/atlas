@@ -17,12 +17,12 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
 
     private ExpressionsRowDeserializer<String, K> expressionsRowTsvDeserializer;
 
-    protected TsvInputStream(Reader reader, String experimentAccession, ExpressionsRowDeserializerBuilder<String, K> expressionsRowDeserializerBuilder) {
+    protected TsvInputStream(Reader reader, ExpressionsRowDeserializerBuilder<String, K> expressionsRowDeserializerBuilder) {
         this.csvReader = new CSVReader(reader, '\t');
 
         String[] firstCsvLine = readCsvLine();
         String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
-        expressionsRowTsvDeserializer = expressionsRowDeserializerBuilder.forExperiment(experimentAccession).withHeaders(headersWithoutGeneIdColumn).build();
+        expressionsRowTsvDeserializer = expressionsRowDeserializerBuilder.build(headersWithoutGeneIdColumn);
     }
 
     @Override

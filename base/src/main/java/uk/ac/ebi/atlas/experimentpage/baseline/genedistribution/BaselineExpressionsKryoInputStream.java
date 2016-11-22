@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.profiles.KryoInputStream;
 public class BaselineExpressionsKryoInputStream extends KryoInputStream<BaselineExpressions, BaselineExpression> {
 
     public BaselineExpressionsKryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader, String experimentAccession, ExpressionsRowRawDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
-        super(baselineExpressionsKryoReader, experimentAccession, baselineExpressionsQueueBuilder);
+        super(baselineExpressionsKryoReader, baselineExpressionsQueueBuilder);
     }
 
     @Override

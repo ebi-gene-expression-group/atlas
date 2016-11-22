@@ -14,7 +14,7 @@ public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselinePro
                                            ExpressionsRowRawDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                            BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
-        super(baselineExpressionsKryoReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+        super(baselineExpressionsKryoReader, expressionsRowDeserializerBaselineBuilder);
         this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 
