@@ -31,6 +31,8 @@
     </properties>
 
     <build>
+        <finalName>gxa</finalName>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
