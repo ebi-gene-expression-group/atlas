@@ -19,19 +19,10 @@
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <import resource="oracleContext.xml" />
-
-
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-        <constructor-arg>
-            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
-                  p:readTimeout="120000"
-                  p:connectTimeout="120000" />
-        </constructor-arg>
     </bean>
-
 </beans>
