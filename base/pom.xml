@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>atlas-base</artifactId>
-    <version>1.1</version>
+    <version>3.1</version>
     <packaging>jar</packaging>
 
     <name>Atlas base</name>
