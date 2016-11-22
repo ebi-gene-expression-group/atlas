@@ -36,6 +36,9 @@
         <log.level.atlas>info</log.level.atlas>
         <log.prudent>true</log.prudent>
 
+        <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
+        <europepmc.base.url>/europepmc</europepmc.base.url>
+
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
         <mail.smtp.host>mailtrap.io</mail.smtp.host>
@@ -367,7 +370,6 @@
     </developers>
 
     <profiles>
-        <!-- Development profiles -->
         <profile>
             <id>dev</id>
             <properties>
@@ -418,24 +420,16 @@
             <build>
                 <resources>
                     <resource>
-                        <directory>gxa/src/main/resources</directory>
+                        <directory>src/main/resources</directory>
                         <excludes>
-                            <exclude>oracleContext.xml</exclude>
-                        </excludes>
-                    </resource>
-                    <resource>
-                        <directory>base/src/main/resources</directory>
-                        <excludes>
-                            <exclude>oracleContext.xml</exclude>
+                            <exclude>jdbc.properties</exclude>
                         </excludes>
                     </resource>
                 </resources>
             </build>
-            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
-                <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
-                <europepmc.base.url>/europepmc</europepmc.base.url>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
@@ -446,94 +440,8 @@
         <profile>
             <!-- Used for build that is deployed to ves-hx-77 -->
             <id>test</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>**/resources</directory>
-                        <excludes>
-                            <exclude>oracleContext.xml</exclude>
-                        </excludes>
-                    </resource>
-                </resources>
-            </build>
-            <!-- oracleContext.xml is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-
-        <profile>
-            <!-- for debugging failing database tests -->
-            <id>dev.using.atlas.it</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>oracleContext.xml</include>
-                            <include>solrContext.xml</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-
-        <profile>
-            <!-- For debugging database performance -->
-            <id>dev.using.atlas.acceptance</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>oracleContext.xml</include>
-                            <include>solrContext.xml</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-dlvm-039.ebi.ac.uk:1521:VATLASTST</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3</oracle.jdbc.password>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-        </profile>
-
-        <profile>
-            <!-- Access Oracle via localhost ssh tunnel -->
-            <id>dev.via.tunnel</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>oracleContext.xml</include>
-                            <include>solrContext.xml</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@localhost:5205:ATLASDEV</oracle.jdbc.url>
-                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
@@ -577,6 +485,5 @@
                 </plugins>
             </build>
         </profile>
-
     </profiles>
 </project>
