@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,11 +8,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
@@ -23,43 +23,55 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ExperimentOpsTest {
 
-    ExperimentOps experimentOps;
+    @Mock
+    private ExperimentCrud experimentCrud;
+    @Mock
+    private ExperimentOpLogWriter experimentOpLogWriter;
+    @Mock
+    private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
+    @Mock
+    private AnalyticsIndexerManager analyticsIndexerManager;
+    @Mock
+    private ExpressionSerializerService expressionSerializerService;
+    @Mock
+    private ExperimentTrader experimentTrader;
 
-    @Mock
-    ExperimentCrud experimentCrud;
-    @Mock
-    ExperimentOpLogWriter experimentOpLogWriter;
-    @Mock
-    BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
-    @Mock
-    AnalyticsIndexerManager analyticsIndexerManager;
-    @Mock
-    ExpressionSerializerService expressionSerializerService;
-    @Mock
-    ExperimentTrader experimentTrader;
+    private final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
 
-    final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
+    private String accession = "E-EXAMPLE-1";
 
-   private String accession = "E-EXAMPLE-1";
-
-    
+    private ExperimentOps subject;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-
-
-        experimentOps = new ExperimentOps(experimentOpLogWriter,
+        subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
                         experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
                         expressionSerializerService,experimentTrader));
@@ -98,13 +110,13 @@ public class ExperimentOpsTest {
             public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
                 String accession = (String)
                         invocationOnMock.getArguments()[0];
-                List<Pair<String, Pair<Long, Long>>> opLog = (List<Pair<String, Pair<Long, Long>>>)
-                        invocationOnMock.getArguments()[1];
+                List<Pair<String, Pair<Long, Long>>> opLog =
+                        (List<Pair<String, Pair<Long, Long>>>) invocationOnMock.getArguments()[1];
                 fileSystem.put(accession, opLog);
                 return null;
             }
-        }).when(experimentOpLogWriter).persistOpLog(Matchers.anyString(), Matchers.any(List.class));
-
+        }).when(experimentOpLogWriter)
+                .persistOpLog(Matchers.anyString(), Matchers.<List<Pair<String, Pair<Long, Long>>>>any());
     }
 
     @Test
@@ -117,13 +129,13 @@ public class ExperimentOpsTest {
                 accessions.add("E-DUMMY-" + rand.nextInt(10000));
             }
 
-            Iterator<JsonElement> result = experimentOps.perform(Optional.of(accessions), Collections.singleton(op))
+            Iterator<JsonElement> result = subject.perform(Optional.of(accessions), Collections.singleton(op))
                     .iterator();
 
             int i = 0;
             while (result.hasNext()) {
                 JsonObject o = result.next().getAsJsonObject();
-                assertEquals(accessions.get(i), o.get("accession").getAsString());
+                assertThat(accessions.get(i), is(o.get("accession").getAsString()));
                 Assert.assertNotNull(o.get("result"));
                 Assert.assertNull(o.get("error"));
                 i++;
@@ -134,7 +146,7 @@ public class ExperimentOpsTest {
     @Test
     public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        Mockito.when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
         List<Op> ops= new ArrayList<>();
         ops.add(Op.UPDATE_DESIGN_ONLY); // says "success!"
         ops.add(Op.CLEAR_LOG); // says "success!"
@@ -143,10 +155,9 @@ public class ExperimentOpsTest {
         ops.add(Op.COEXPRESSION_DELETE); // should not be started
         ops.add(Op.COEXPRESSION_IMPORT); // should not be started
 
+        JsonArray result = subject.perform(Optional.of(Collections.singletonList(accession)),ops);
 
-        JsonArray result = experimentOps.perform(Optional.of(Collections.singletonList(accession)),ops);
-
-        assertTrue(result.toString(), result.get(0).getAsJsonObject().has("accession"));
+        assertThat(result.get(0).getAsJsonObject().has("accession"), is(true));
         assertThat(result.get(0).getAsJsonObject().get("accession").getAsJsonPrimitive()
                 .getAsString(), is(accession));
         JsonArray successes = result.get(0).getAsJsonObject().get("result").getAsJsonArray();
@@ -163,11 +174,11 @@ public class ExperimentOpsTest {
 
         Set<Map.Entry<String, JsonElement>> secondSuccess = successes.get(1).getAsJsonObject().entrySet();
         assertThat(secondSuccess.size(), is(1));
-        assertEquals(Op.LIST.name(), secondSuccess.iterator().next().getKey());
+        assertThat(Op.LIST.name(), is(secondSuccess.iterator().next().getKey()));
 
         Set<Map.Entry<String, JsonElement>> firstFailure = failures.get(0).getAsJsonObject().entrySet();
         assertThat(firstFailure.size(), is(1));
-        assertEquals(Op.DELETE.name(), firstFailure.iterator().next().getKey());
+        assertThat(Op.DELETE.name(), is(firstFailure.iterator().next().getKey()));
 
 
         Set<Map.Entry<String, JsonElement>> secondFailure = failures.get(1).getAsJsonObject().entrySet();
@@ -175,7 +186,6 @@ public class ExperimentOpsTest {
         String key3 = secondFailure.iterator().next().getKey();
         assertThat(key3, containsString(Op.COEXPRESSION_DELETE.name()));
         assertThat(key3, containsString(Op.COEXPRESSION_IMPORT.name()));
-
     }
 
     @Test
@@ -183,27 +193,24 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
-                experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList
-                        (op));
+                subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
             }
         }
-        assertEquals(
-                Op.values().length
-                        - Arrays.asList(Op.LIST, Op.LOG, Op.STATUS,
-                        Op.CLEAR_LOG).size()
-                , fileSystem.get(accession).size());
+        assertThat(
+                Op.values().length - Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG).size(),
+                is(fileSystem.get(accession).size()));
     }
 
     @Test
     public void timestampsLookRight() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
-            experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
+            subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
         }
         for (Pair<String, Pair<Long, Long>> p : fileSystem.get(accession)) {
             Long start = p.getRight().getLeft();
             Long finish = p.getRight().getRight();
-            assertTrue("Starting time before finish", finish - start >= 0);
+            assertThat(finish - start >= 0, is (true));
             Assert.assertNotEquals(ExperimentOps.UNFINISHED, start);
             Assert.assertNotEquals(ExperimentOps.UNFINISHED, finish);
         }
@@ -212,28 +219,28 @@ public class ExperimentOpsTest {
     @Test
     public void errorLeavesLogDirty() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        Mockito.when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
 
-        JsonObject result = experimentOps.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
+        JsonObject result = subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
                 .DELETE))
                 .iterator().next().getAsJsonObject();
 
-        assertEquals(accession, result.get("accession").getAsString());
-        Assert.assertNull(result.get("result"));
-        Assert.assertNotNull(result.get("error"));
+        assertThat(accession, is(result.get("accession").getAsString()));
+        assertThat(result.get("result"), is(nullValue()));
+        assertThat(result.get("error"), is(not(nullValue())));
 
-        assertTrue("Log failure in op name", Pattern.matches("^FAILED.*",
-                fileSystem.get(accession).iterator().next().getLeft()));
+        assertThat(Pattern.matches("^FAILED.*", fileSystem.get(accession).iterator().next().getLeft()), is(true));
 
     }
 
     @Test
     public void loadingExperimentsWorksAsExpectedWhenEverythingIsGood() throws Exception {
         //if not you should update the tests
-        assertEquals(Op.opsForParameter("LOAD_PUBLIC"), ImmutableList.of(Op.IMPORT_PUBLIC,Op.COEXPRESSION_UPDATE,
-                Op.SERIALIZE,Op.ANALYTICS_IMPORT) );
+        assertThat(
+                Op.opsForParameter("LOAD_PUBLIC"),
+                contains(Op.IMPORT_PUBLIC, Op.COEXPRESSION_UPDATE, Op.SERIALIZE, Op.ANALYTICS_IMPORT));
 
-        new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -250,7 +257,7 @@ public class ExperimentOpsTest {
                 .when(experimentCrud)
                 .importExperiment(accession,false);
 
-        new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
 
@@ -263,7 +270,7 @@ public class ExperimentOpsTest {
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
-        new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -279,7 +286,7 @@ public class ExperimentOpsTest {
                 .kryoSerializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
+                new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -299,7 +306,7 @@ public class ExperimentOpsTest {
                 .kryoSerializeExpressionData(accession);
 
         String response =
-                new ExperimentAdminController(experimentOps).doOp(accession, "LOAD_PUBLIC");
+                new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
 
         assertThat(response, containsString("error"));
     }
