@@ -14,7 +14,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,7 +42,7 @@ public class DifferentialProfilesViewModelBuilderTest {
     private static final MicroarrayProfile CG31624 = MicroarrayProfile.create("FBgn0051624", "CG31624", "1630811_at").add(CG31624_G2_G3).add(CG31624_G2_G1);
     private static final MicroarrayProfile CG33459 = MicroarrayProfile.create("FBgn0053459", "CG33459", "1640410_at").add(CG33459_G2_G3);
 
-    private static final DifferentialProfilesList<MicroarrayProfile> diffProfiles = new DifferentialProfilesList(ImmutableList.of(CG31624, CG33459));
+    private static final DifferentialProfilesList<MicroarrayProfile> diffProfiles = new DifferentialProfilesList<>(ImmutableList.of(CG31624, CG33459));
 
     private Color startColour = Color.LIGHT_GRAY;
     private Color endColour = Color.BLUE;

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import org.junit.Before;
@@ -12,9 +11,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -22,9 +18,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqProfileBuilderTest {
 
-    public static final String CONTRAST_NAME1 = "a";
-    public static final String CONTRAST_NAME2 = "b";
-    public static final String GENE_ID = "geneId";
+    private static final String CONTRAST_NAME1 = "a";
+    private static final String CONTRAST_NAME2 = "b";
+    private static final String GENE_ID = "geneId";
     private static final String GENE_NAME = "aGeneName";
 
     @Mock
@@ -36,16 +32,12 @@ public class RnaSeqProfileBuilderTest {
     @Mock
     DifferentialExpression expressionMock;
 
-    RnaSeqProfileReusableBuilder subject;
+    private RnaSeqProfileReusableBuilder subject;
 
     @Before
     public void setUp() throws Exception {
         when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_NAME1);
         when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_NAME2);
-        SortedSet<Contrast> sortedSet = new TreeSet();
-        sortedSet.add(contrastMock1);
-        sortedSet.add(contrastMock2);
-
         when(expressionMock.isUnderExpressed()).thenReturn(true);
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();

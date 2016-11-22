@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Sets;
@@ -16,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.Matchers.anySet;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,8 +42,6 @@ public class BaselineProfileComparatorTest {
 
     private Factor factor1 = new Factor(QUERY_FACTOR_TYPE, "nose");
     private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
-    private Factor factor3 = new Factor(QUERY_FACTOR_TYPE, "head");
-
 
     private Set<Factor> selectedOrganismParts = Sets.newHashSet(factor1);
 
@@ -66,8 +63,8 @@ public class BaselineProfileComparatorTest {
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
 
-        when(geneWithAverageExpression3.getAverageExpressionLevelOn(anySet())).thenReturn(3D);
-        when(geneWithAverageExpression8.getAverageExpressionLevelOn(anySet())).thenReturn(8D);
+        when(geneWithAverageExpression3.getAverageExpressionLevelOn(anySetOf(Factor.class))).thenReturn(3D);
+        when(geneWithAverageExpression8.getAverageExpressionLevelOn(anySetOf(Factor.class))).thenReturn(8D);
     }
 
 

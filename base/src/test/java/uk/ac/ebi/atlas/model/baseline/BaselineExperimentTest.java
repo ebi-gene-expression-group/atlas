@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Sets;
@@ -8,15 +7,20 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -67,7 +71,6 @@ public class BaselineExperimentTest {
         subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroupsMock);
 
     }
-
 
     public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
             experimentDesign, AssayGroups assayGroups){

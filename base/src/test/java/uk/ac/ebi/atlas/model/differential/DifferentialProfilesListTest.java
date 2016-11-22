@@ -30,7 +30,7 @@ public class DifferentialProfilesListTest {
 
         Collection<DifferentialProfile> differentialProfiles = Lists.newArrayList(differentialProfileMock1, differentialProfileMock2, differentialProfileMock3);
 
-        subject = new DifferentialProfilesList(differentialProfiles);
+        subject = new DifferentialProfilesList<>(differentialProfiles);
     }
 
     @Test
