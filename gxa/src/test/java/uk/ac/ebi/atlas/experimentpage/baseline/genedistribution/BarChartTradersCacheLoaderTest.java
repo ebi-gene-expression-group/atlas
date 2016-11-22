@@ -6,9 +6,11 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -105,7 +107,8 @@ public class BarChartTradersCacheLoaderTest {
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder
-        when(baselineExpressionsInputStreamFactory.createGeneExpressionsInputStream((Experiment) any(Experiment.class))).thenReturn(inputStream);
+        when(baselineExpressionsInputStreamFactory.createGeneExpressionsInputStream((BaselineExperiment) Matchers.any()))
+                .thenReturn(inputStream);
 
         subject = new BarChartTradersCacheLoader(experimentTrader,baselineExpressionsInputStreamFactory, cutoffScale);
 

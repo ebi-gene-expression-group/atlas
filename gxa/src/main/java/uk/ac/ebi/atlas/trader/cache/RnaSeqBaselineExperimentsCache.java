@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ExecutionException;
 
 @Named
 public class RnaSeqBaselineExperimentsCache extends ExperimentsCache<BaselineExperiment> {

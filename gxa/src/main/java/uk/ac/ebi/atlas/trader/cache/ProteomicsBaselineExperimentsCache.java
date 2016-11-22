@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ExecutionException;
 
 @Named
 public class ProteomicsBaselineExperimentsCache extends ExperimentsCache<BaselineExperiment> {

@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -14,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

@@ -3,13 +3,11 @@ package uk.ac.ebi.atlas.experimentpage.analysismethods;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 
@@ -17,8 +15,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;

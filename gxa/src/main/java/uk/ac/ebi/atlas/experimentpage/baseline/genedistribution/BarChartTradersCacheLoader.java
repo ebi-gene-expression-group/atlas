@@ -5,6 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -47,7 +48,8 @@ public class BarChartTradersCacheLoader extends CacheLoader<Pair<String,String>,
         try {
             BarChartTrader barChartTrader = new BarChartTrader(
                     populateGeneExpressionIndexes(
-                            inputStreamFactory.createGeneExpressionsInputStream(experimentTrader.getExperiment
+                            inputStreamFactory.createGeneExpressionsInputStream((BaselineExperiment) experimentTrader
+                                    .getExperiment
                                     (experimentAccessionAndAccessKey.getLeft(), experimentAccessionAndAccessKey.getRight()))
                     )
             );

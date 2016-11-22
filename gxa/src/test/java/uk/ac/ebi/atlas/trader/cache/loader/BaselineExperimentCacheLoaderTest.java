@@ -78,7 +78,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        dataFileHub = new MockDataFileHub();
+        dataFileHub = MockDataFileHub.get();
     }
 
     @Before

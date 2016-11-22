@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ExecutionException;
 
 @Named
 public class RnaSeqDiffExperimentsCache extends ExperimentsCache<DifferentialExperiment> {
