@@ -20,6 +20,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -43,6 +44,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -62,6 +64,8 @@ public class ExperimentOpsTest {
     private ExpressionSerializerService expressionSerializerService;
     @Mock
     private ExperimentTrader experimentTrader;
+    @Mock
+    private Experiment experimentMock;
 
     private final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
 
@@ -77,6 +81,9 @@ public class ExperimentOpsTest {
                         expressionSerializerService,experimentTrader));
 
         when(expressionSerializerService.kryoSerializeExpressionData(Matchers.anyString())).thenReturn("skipped");
+
+        when(experimentMock.getAttributes()).thenReturn(new HashMap<String, Object>());
+        when(experimentTrader.getExperiment(anyString(), anyString())).thenReturn(experimentMock);
 
         Mockito.doAnswer(new Answer<ExperimentDTO>() {
             @Override
@@ -197,7 +204,7 @@ public class ExperimentOpsTest {
             }
         }
         assertThat(
-                Op.values().length - Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG).size(),
+                Op.values().length - Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ).size(),
                 is(fileSystem.get(accession).size()));
     }
 
