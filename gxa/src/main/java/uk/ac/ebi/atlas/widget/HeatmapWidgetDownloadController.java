@@ -98,7 +98,8 @@ public final class HeatmapWidgetDownloadController {
 
     private String formatFileHeader(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, SearchDescription.get(geneQuery, conditionQuery, species), timeStamp) + "\n";
+        return MessageFormat.format(tsvFileMastheadTemplate, SearchDescription.get(geneQuery, conditionQuery,
+                species), timeStamp) + "\n";
     }
 
     private void writeTsv(BaselineExperimentSearchResult searchResult, PrintWriter writer)  {

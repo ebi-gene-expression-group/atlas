@@ -53,7 +53,7 @@ public class BaselineRequestContextBuilder {
 
         requestContext.setExperiment(experiment);
         requestContext.setRequestPreferences(preferences);
-        requestContext.setQueryDescription(queryDescription.or(SearchDescription.getSimple(preferences.getGeneQuery())));
+        requestContext.setQueryDescription(queryDescription.or(SearchDescription.get(preferences.getGeneQuery())));
 
         SortedSet<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);

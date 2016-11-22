@@ -123,11 +123,11 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable {
     }
 
     public String getTsvFileMasthead(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        String geneQueryHeader = geneQuery.isNotEmpty() ? "Genes matching: '" + SearchDescription.getSimple(geneQuery) + "'" : "";
+        String geneQueryHeader = geneQuery.isNotEmpty() ? "Genes matching: '" + SearchDescription.get(geneQuery) + "'" : "";
         String comma = geneQuery.isNotEmpty() ? ", " : "";
 
         boolean hasCondition = conditionQuery.isNotEmpty();
-        String condition = hasCondition ? " in condition matching '" + SearchDescription.getSimple(conditionQuery) + "'": "";
+        String condition = hasCondition ? " in condition matching '" + SearchDescription.get(conditionQuery) + "'": "";
         String organism = StringUtils.isNotEmpty(species) ? (hasCondition ? " and" : "")  + " in organism '" + species + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(tsvFileMastheadTemplate, geneQueryHeader, comma, condition, organism, timeStamp);

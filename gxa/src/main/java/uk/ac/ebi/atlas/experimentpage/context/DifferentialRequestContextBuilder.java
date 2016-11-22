@@ -37,7 +37,7 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         requestContext.setRequestPreferences(getRequestPreferences());
 
-        requestContext.setQueryDescription(SearchDescription.getSimple(getRequestPreferences().getGeneQuery()));
+        requestContext.setQueryDescription(SearchDescription.get(getRequestPreferences().getGeneQuery()));
 
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
