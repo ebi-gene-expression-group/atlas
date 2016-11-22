@@ -16,15 +16,12 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentOpsExecutionService {
-
 
     private final ExperimentCrud experimentCrud;
     private final BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
@@ -51,7 +48,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 () {
             @Nullable
             @Override
-            public String apply(@Nullable ExperimentDTO experimentDTO) {
+            public String apply(ExperimentDTO experimentDTO) {
                 return experimentDTO.getExperimentAccession();
             }
         }).toList();
@@ -93,7 +90,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 Pair<String,? extends JsonElement>>() {
             @Nullable
             @Override
-            public Pair<String,? extends JsonElement> apply(@Nullable ExperimentDTO experimentDTO) {
+            public Pair<String,? extends JsonElement> apply(ExperimentDTO experimentDTO) {
                 return Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson());
             }
         }).toList();
