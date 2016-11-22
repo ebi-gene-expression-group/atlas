@@ -13,14 +13,6 @@
 
     <!-- NB: see also the WebConfig class for further configuration options -->
 
-    <!--
-    mvc: annotation-driven will set some sensible defaults, like instantiating default formatter and converter that can
-    be used with @NumberFormat, @DataFormat (requires Joda Time in the classpath), @Valid (to validate @Controller inputs),
-    reading and writing XML (if JAXB is in the classpath), reading and writing JSON (if Jackson is in the classpath).
-    Can be further configured using nested tag properties.
-    -->
-    <mvc:annotation-driven/>
-
     <context:component-scan base-package="uk.ac.ebi.atlas.common">
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
