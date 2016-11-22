@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class SingleCellExperimentPageController extends ExperimentPageController
     private final ExperimentTrader experimentTrader;
 
     @Inject
-    public SingleCellExperimentPageController(ExperimentTrader experimentTrader){
+    public SingleCellExperimentPageController(SingleCellExperimentTrader experimentTrader){
         this.experimentTrader = experimentTrader;
     }
 

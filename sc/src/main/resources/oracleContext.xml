@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
-        <property name="URL" value="${oracle.jdbc.url}"/>
-        <property name="user" value="${oracle.jdbc.username}"/>
-        <property name="password" value="${oracle.jdbc.password}"/>
+        <property name="URL" value="${filtered.oracle.jdbc.url}"/>
+        <property name="user" value="${filtered.oracle.jdbc.username}"/>
+        <property name="password" value="${filtered.oracle.jdbc.password}"/>
         <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
         <property name="initialPoolSize" value="3"/>
         <property name="minPoolSize" value="3"/>
         <property name="maxPoolSize" value="20"/>
         <property name="maxIdleTime" value="1800"/>
+    </bean>
+
+    <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSourceOracle"/>
+    </bean>
+    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSourceOracle"/>
+    </bean>
+
+    <!-- Enables @Transactional -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceOracle"/>
     </bean>
 
 </beans>

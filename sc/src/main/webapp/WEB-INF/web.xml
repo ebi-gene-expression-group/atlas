@@ -22,6 +22,15 @@
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
+
+    <listener>
+        <listener-class>uk.ac.ebi.atlas.jdbc.UCPDestroyPoolListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>uk.ac.ebi.atlas.jdbc.JdbcDriverUnregisteringListener</listener-class>
+    </listener>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

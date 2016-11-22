@@ -19,7 +19,7 @@
     reading and writing XML (if JAXB is in the classpath), reading and writing JSON (if Jackson is in the classpath).
     Can be further configured using nested tag properties.
     -->
-    <mvc:annotation-driven/>
+    <!--<mvc:annotation-driven/>-->
 
     <context:component-scan base-package="uk.ac.ebi.atlas">
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
@@ -38,8 +38,8 @@
         </property>
     </bean>
 
-    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
-        <property name="basename" value="bundles.messages"/>
-    </bean>
+    <!--<bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">-->
+        <!--<property name="basename" value="bundles.messages"/>-->
+    <!--</bean>-->
 
 </beans>
