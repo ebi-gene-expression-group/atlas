@@ -134,7 +134,7 @@
     <tiles:insertAttribute name="top-menu"/>
 
     <div id="content" class="grid_24 clearfix" role="main">
-        <tiles:insertAttribute name="header" ignore="true"/>
+        <tiles:insertAttribute name="header"/>
         <tiles:insertAttribute name="body"/>
     </div>
 
