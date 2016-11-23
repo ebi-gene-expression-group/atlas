@@ -37,7 +37,7 @@ public enum ExperimentType {
     }
 
     public boolean isBaseline() {
-        return equals(RNASEQ_MRNA_BASELINE) || equals(PROTEOMICS_BASELINE);
+        return equals(RNASEQ_MRNA_BASELINE) || equals(PROTEOMICS_BASELINE) || equals(SINGLE_CELL_RNASEQ_MRNA_BASELINE);
     }
 
     public boolean isProteomicsBaseline() {

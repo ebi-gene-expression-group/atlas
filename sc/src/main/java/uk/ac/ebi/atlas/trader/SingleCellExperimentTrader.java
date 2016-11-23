@@ -1,23 +1,41 @@
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.cache.loader.SingleCellRnaSeqBaselineExperimentFactory;
+import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 @Named
 public class SingleCellExperimentTrader extends ExperimentTrader{
 
+    private final LoadingCache<String, BaselineExperiment> baselineExperimentsCache;
     @Inject
-    public SingleCellExperimentTrader(ExperimentDAO experimentDAO) {
+    public SingleCellExperimentTrader(ExperimentDAO experimentDAO,
+                                      SingleCellRnaSeqBaselineExperimentFactory
+                                              experimentFactory,
+                                      ArrayExpressClient arrayExpressClient,
+                                      ExperimentDesignParser experimentDesignParser) {
         super(experimentDAO);
+        baselineExperimentsCache = CacheBuilder.newBuilder().build(new ExperimentsCacheLoader<>(arrayExpressClient,
+                experimentDesignParser, experimentDAO, experimentFactory));
     }
 
     public Experiment getPublicExperiment(String experimentAccession){
-        return null;
+        try {
+            return baselineExperimentsCache.get(experimentAccession);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Experiment getExperiment(String experimentAccession, String accessKey){
@@ -25,11 +43,11 @@ public class SingleCellExperimentTrader extends ExperimentTrader{
     }
 
     public void removeExperimentFromCache(String experimentAccession){
-
+        baselineExperimentsCache.invalidate(experimentAccession);
     }
 
     public void removeAllExperimentsFromCache(){
-
+        baselineExperimentsCache.invalidateAll();
     }
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType){
@@ -38,9 +56,5 @@ public class SingleCellExperimentTrader extends ExperimentTrader{
         } else {
             return null;
         }
-    }
-
-    public Set<String> getPublicExperimentAccessions(ExperimentType experimentType) {
-        return experimentDAO.findPublicExperimentAccessions(experimentType);
     }
 }
