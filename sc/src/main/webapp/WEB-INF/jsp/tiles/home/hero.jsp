@@ -6,9 +6,9 @@
     </div>
 
     <div class="columns small-10">
-        <h3>Analysing single-cell human gene expression under different biological conditions</h3>
+        <h3>Analysing single-cell gene expression under different biological conditions</h3>
         <p>
-            The Human Single-Cell Atlas provides information on single-cell gene expression patterns under different
+            The Single-Cell Expression Atlas provides information on single-cell gene expression patterns under different
             biological conditions. Gene expression data is re-analysed in-house to detect genes showing interesting
             baseline expression patterns.
         </p>
