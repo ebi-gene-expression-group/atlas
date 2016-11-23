@@ -5,6 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummary;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
 
@@ -31,25 +36,32 @@ public class SingleCellExperimentPageController extends ExperimentPageController
         return gson.toJson(experimentTrader.getPublicExperiment(experimentAccession).getAttributes());
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/assay_group/{assayGroupId}")
+    @RequestMapping(value = "/experiments/{experimentAccession}/cell_types")
+    @ResponseBody
+    public String baselineExperimentAssays(@PathVariable String experimentAccession,
+                                          HttpServletResponse response) {
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+
+        return gson.toJson(experiment.getAssayGroups());
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/cell_types/{assayGroupId}")
     @ResponseBody
     public String baselineExperimentAssay(@PathVariable String experimentAccession,
                                           @PathVariable String assayGroupId,
                                          HttpServletResponse response) {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-/*
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        AssayGroup assayGroup = experiment.getAssayGroups().getAssayGroup(assayGroupId);
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
-        ExperimentDesign experimentDesign = experiment.getExperimentDesign();
+        return gson.toJson(new AssayGroupSummaryBuilder()
+                .withExperimentDesign(experiment.getExperimentDesign())
+                .forAssayGroup(experiment.getAssayGroups().getAssayGroup(assayGroupId))
+                .build());
 
-        AssayGroupSummary assayGroupSummary = new AssayGroupSummaryBuilder().withExperimentDesign(experimentDesign).forAssayGroup(assayGroup)
-                .build();
-
-        return new Gson().toJson(assayGroupSummary);*/
-
-        return "";
     }
 }
