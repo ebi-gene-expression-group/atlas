@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 

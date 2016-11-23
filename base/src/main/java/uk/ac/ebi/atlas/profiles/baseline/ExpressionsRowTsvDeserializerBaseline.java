@@ -3,9 +3,9 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;

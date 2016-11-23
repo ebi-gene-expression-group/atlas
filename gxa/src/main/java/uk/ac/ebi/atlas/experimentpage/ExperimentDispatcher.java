@@ -1,7 +1,7 @@
 
 package uk.ac.ebi.atlas.experimentpage;
 
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

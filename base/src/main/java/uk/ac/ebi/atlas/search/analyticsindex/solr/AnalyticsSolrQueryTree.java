@@ -6,7 +6,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import com.google.common.base.Function;

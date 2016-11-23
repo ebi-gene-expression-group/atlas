@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import javax.inject.Named;

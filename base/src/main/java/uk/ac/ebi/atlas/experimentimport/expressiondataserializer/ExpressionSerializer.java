@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-
-import java.io.IOException;
+import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 
 public interface ExpressionSerializer {
     String serializeExpressionData(String experimentAccession, ExperimentalFactors experimentalFactors);

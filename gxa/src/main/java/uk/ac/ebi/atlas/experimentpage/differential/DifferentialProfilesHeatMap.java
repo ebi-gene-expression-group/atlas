@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;

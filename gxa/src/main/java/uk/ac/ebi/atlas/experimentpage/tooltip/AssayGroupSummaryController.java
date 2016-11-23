@@ -2,8 +2,8 @@
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;

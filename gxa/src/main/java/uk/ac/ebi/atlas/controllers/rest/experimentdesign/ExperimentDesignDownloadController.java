@@ -1,7 +1,7 @@
 
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 

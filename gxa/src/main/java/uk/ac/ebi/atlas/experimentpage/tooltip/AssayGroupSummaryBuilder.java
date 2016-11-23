@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
-import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;

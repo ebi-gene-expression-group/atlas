@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.widget;
 
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;

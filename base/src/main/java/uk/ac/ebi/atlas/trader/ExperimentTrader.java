@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.trader;
 
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.Set;
 

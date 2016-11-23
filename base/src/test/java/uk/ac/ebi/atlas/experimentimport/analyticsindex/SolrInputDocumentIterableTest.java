@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentIterable;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Iterator;
@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.GO;
-import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.GOTERM;
-import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.ORTHOLOG;
+import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GO;
+import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.GOTERM;
+import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.ORTHOLOG;
 
 public class SolrInputDocumentIterableTest {
 

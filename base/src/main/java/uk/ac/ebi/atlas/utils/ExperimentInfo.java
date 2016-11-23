@@ -2,7 +2,7 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.Sets;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.Set;
 import java.util.SortedSet;

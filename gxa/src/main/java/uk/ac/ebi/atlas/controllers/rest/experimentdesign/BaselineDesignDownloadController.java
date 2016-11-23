@@ -1,7 +1,7 @@
 
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import org.springframework.context.annotation.Scope;

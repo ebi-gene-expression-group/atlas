@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.MoreObjects;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 import javax.inject.Named;
 

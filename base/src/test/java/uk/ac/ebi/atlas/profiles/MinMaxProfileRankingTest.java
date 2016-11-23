@@ -5,12 +5,12 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 
 import java.util.ArrayList;

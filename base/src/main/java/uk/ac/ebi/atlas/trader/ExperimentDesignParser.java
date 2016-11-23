@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.trader;
 
-import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import com.google.common.collect.ImmutableList;

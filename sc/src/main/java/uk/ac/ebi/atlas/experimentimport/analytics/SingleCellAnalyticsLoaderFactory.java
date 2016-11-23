@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Named;
 import java.io.IOException;

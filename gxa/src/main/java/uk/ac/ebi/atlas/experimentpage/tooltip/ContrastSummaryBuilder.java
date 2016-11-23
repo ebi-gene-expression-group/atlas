@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage.tooltip;
 
-import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import java.util.*;
 

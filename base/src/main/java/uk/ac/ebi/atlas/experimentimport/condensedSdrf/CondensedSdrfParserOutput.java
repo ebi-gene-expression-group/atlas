@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 public class CondensedSdrfParserOutput {
 

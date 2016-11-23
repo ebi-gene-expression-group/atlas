@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import org.springframework.context.annotation.Scope;
 

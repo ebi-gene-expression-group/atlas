@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.mockito.Mockito;
-import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentRun;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

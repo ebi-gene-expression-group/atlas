@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
-import java.io.IOException;
 import java.text.MessageFormat;
 
 @Named

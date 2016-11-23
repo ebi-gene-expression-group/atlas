@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.model.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import java.util.HashMap;
 import java.util.Map;

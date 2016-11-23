@@ -8,7 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
+import uk.ac.ebi.atlas.model.experiment.baseline.QuartilesArrayBuilder;
 
 import java.io.IOException;
 import java.io.Reader;

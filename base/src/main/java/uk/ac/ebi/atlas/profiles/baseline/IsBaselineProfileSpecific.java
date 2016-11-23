@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.io.Serializable;
 import java.util.Set;

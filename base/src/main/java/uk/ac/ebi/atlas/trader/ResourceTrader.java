@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.trader;
 
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 import javax.inject.Named;
 

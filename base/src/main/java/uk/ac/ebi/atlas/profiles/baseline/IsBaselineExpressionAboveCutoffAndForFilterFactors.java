@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;

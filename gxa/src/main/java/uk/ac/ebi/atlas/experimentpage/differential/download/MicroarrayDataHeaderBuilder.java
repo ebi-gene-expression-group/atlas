@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 public class MicroarrayDataHeaderBuilder extends AnalyticsDataHeaderBuilder {
     public MicroarrayDataHeaderBuilder(DifferentialExperiment experiment) {

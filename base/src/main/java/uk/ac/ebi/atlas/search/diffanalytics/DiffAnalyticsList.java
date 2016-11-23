@@ -3,9 +3,9 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpressionLimits;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import java.util.ArrayList;
 import java.util.List;

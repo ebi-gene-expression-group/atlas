@@ -2,7 +2,7 @@
 package uk.ac.ebi.atlas.web;
 
 
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import javax.validation.constraints.Min;
 

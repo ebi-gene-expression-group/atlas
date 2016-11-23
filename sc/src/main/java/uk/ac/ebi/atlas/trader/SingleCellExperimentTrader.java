@@ -3,16 +3,15 @@ package uk.ac.ebi.atlas.trader;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.loader.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.trader.cache.loader.SingleCellRnaSeqBaselineExperimentFactory;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 @Named

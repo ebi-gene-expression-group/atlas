@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
+import uk.ac.ebi.atlas.model.experiment.baseline.Quartiles;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import javax.inject.Inject;
 import javax.inject.Named;

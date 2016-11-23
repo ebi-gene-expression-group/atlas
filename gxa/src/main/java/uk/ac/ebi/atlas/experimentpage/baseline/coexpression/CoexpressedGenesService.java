@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import com.google.common.base.Optional;
 import org.apache.commons.lang3.tuple.Pair;

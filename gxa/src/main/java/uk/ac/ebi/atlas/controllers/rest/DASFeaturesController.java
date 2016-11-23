@@ -2,7 +2,7 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
 
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -16,8 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import javax.inject.Inject;
 import java.util.List;

@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 public class BaselineExperimentProfile extends BaselineProfile implements Comparable<BaselineExperimentProfile> {

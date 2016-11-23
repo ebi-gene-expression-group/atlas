@@ -1,14 +1,14 @@
 package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,8 +1,8 @@
 
 package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;

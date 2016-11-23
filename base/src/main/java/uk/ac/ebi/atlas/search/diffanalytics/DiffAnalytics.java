@@ -4,7 +4,7 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 
 public class DiffAnalytics {
 

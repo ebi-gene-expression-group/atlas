@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;

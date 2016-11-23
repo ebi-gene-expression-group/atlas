@@ -2,7 +2,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 
-import uk.ac.ebi.atlas.model.baseline.GenericBaselineProfilesList;
+import uk.ac.ebi.atlas.model.experiment.baseline.GenericBaselineProfilesList;
 
 import java.util.Collection;
 

@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.trader;
 
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
-import uk.ac.ebi.atlas.model.ExperimentConfiguration;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;

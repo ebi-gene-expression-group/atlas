@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
-import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
 import com.google.common.collect.ImmutableList;
 
 public class AssayGroupFactorViewModel {

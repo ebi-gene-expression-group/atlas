@@ -1,7 +1,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.util.HashSet;
 import java.util.Iterator;

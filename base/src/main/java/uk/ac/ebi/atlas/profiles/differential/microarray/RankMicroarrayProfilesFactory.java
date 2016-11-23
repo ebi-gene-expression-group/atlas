@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfileComparatorFactory;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 

@@ -1,7 +1,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;

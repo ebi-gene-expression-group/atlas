@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -19,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -32,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static uk.ac.ebi.atlas.model.baseline.BioentityPropertyName.*;
+import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
 
 @Controller
 @Scope("request")

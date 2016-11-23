@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 
 import java.util.*;
 

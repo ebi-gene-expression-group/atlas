@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.search.baseline;
 
 
 import com.google.common.collect.ImmutableSortedSet;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.SortedSet;
 

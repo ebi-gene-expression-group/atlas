@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import com.google.common.collect.Iterables;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;

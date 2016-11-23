@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import java.util.Iterator;
 

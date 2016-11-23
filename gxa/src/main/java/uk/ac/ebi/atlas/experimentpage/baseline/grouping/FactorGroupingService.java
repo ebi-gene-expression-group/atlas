@@ -7,8 +7,8 @@ import com.google.common.collect.Collections2;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;

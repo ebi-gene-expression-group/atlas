@@ -6,8 +6,8 @@ import com.google.gson.Gson;
 import org.junit.Test;
 import org.springframework.util.StringUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

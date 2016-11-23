@@ -1,9 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
-import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RankRnaSeqProfilesFactory;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;

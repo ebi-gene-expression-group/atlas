@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

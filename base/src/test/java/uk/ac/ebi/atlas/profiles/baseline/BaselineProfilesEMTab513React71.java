@@ -4,8 +4,8 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.OrderedFactorGroups;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OrderedFactorGroups;
 
 import java.util.Iterator;
 

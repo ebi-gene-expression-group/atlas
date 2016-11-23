@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Qualifier;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;

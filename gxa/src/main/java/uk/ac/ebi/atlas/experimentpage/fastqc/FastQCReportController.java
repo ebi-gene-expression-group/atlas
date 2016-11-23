@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.fastqc;
 
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;

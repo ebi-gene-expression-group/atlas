@@ -1,7 +1,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.SortedSet;
 

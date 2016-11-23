@@ -5,8 +5,7 @@ import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.query.builders.FacetedPropertyValueQueryBuilder;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilder;
 

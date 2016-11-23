@@ -8,7 +8,6 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.w3c.dom.Document;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.*;
 

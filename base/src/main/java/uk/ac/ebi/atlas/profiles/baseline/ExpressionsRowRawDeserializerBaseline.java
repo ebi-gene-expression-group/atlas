@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowRawDeserializer;
 
 import java.util.Iterator;

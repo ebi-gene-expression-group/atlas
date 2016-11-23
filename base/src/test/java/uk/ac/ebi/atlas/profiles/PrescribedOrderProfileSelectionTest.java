@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 
 import java.util.ArrayList;

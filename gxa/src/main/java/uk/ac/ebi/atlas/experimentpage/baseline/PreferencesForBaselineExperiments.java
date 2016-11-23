@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import org.apache.commons.lang3.StringUtils;

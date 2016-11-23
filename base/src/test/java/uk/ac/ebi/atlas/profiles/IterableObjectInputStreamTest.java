@@ -3,9 +3,6 @@ package uk.ac.ebi.atlas.profiles;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 
 import java.io.IOException;
 

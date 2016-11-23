@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import javax.inject.Named;
 

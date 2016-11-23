@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import org.springframework.context.annotation.Scope;

@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.GeneSet;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.GeneSet;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

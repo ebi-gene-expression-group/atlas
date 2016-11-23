@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.io.IOException;
 import java.util.HashSet;

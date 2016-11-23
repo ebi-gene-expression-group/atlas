@@ -2,8 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;

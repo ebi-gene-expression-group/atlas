@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.Collections;
 import java.util.Set;

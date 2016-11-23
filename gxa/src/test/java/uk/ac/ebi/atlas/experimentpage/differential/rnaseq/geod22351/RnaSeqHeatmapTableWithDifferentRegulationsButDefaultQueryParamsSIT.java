@@ -4,7 +4,7 @@ package uk.ac.ebi.atlas.experimentpage.differential.rnaseq.geod22351;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;

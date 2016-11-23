@@ -6,7 +6,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.model.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
