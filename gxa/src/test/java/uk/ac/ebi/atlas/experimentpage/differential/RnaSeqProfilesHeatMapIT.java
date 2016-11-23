@@ -8,9 +8,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -107,7 +110,7 @@ public class RnaSeqProfilesHeatMapIT {
     private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
 
-        DifferentialProfilesList profilesAll = subject.fetch(requestContext);
+        DifferentialProfilesList<RnaSeqProfile> profilesAll = subject.fetch(requestContext);
 
         requestPreferences.setRegulation(Regulation.UP);
         requestContext = populateRequestContext(accession);

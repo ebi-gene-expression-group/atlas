@@ -8,8 +8,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.model.differential.*;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
@@ -21,8 +24,9 @@ import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.junit.Assert.*;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -107,35 +111,36 @@ public class MicroarrayProfilesHeatMapIT {
     private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
-        DifferentialProfilesList profilesAll = subject.fetch(requestContext);
+        DifferentialProfilesList<MicroarrayProfile> profilesAll = subject.fetch(requestContext);
 
         requestPreferences.setRegulation(Regulation.UP);
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesUp = subject.fetch(requestContext);
 
-        assertTrue(profilesAll.size()==50 || profilesAll.extractGeneNames().containsAll(profilesUp
-                .extractGeneNames()));
+        assertThat(profilesAll.size()==50 || profilesAll.extractGeneNames().containsAll(profilesUp.extractGeneNames()),
+                is(true));
+
         for(Object o: profilesUp) {
             MicroarrayProfile profile = (MicroarrayProfile) o;
             for(Contrast contrast: profile.getConditions()){
-                assertEquals(true, profile.getExpression(contrast).isOverExpressed());
-                assertEquals(false, profile.getExpression(contrast).isUnderExpressed());
+                assertThat(profile.getExpression(contrast).isOverExpressed(), is(true));
+                assertThat(profile.getExpression(contrast).isUnderExpressed(), is(false));
             }
         }
-
 
         requestPreferences.setRegulation(Regulation.DOWN);
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesDown = subject.fetch(requestContext);
-        assertTrue(profilesAll.size()==50 || profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames
-                ()));
+        assertThat(profilesAll.size()==50 ||
+                        profilesAll.extractGeneNames().containsAll(profilesDown.extractGeneNames()),
+                is(true));
         for(Object o: profilesDown) {
             MicroarrayProfile profile = (MicroarrayProfile) o;
             for(Contrast contrast: profile.getConditions()){
-                assertEquals(false, profile.getExpression(contrast).isOverExpressed());
-                assertEquals(true, profile.getExpression(contrast).isUnderExpressed());
+                assertThat(profile.getExpression(contrast).isOverExpressed(), is(false));
+                assertThat(profile.getExpression(contrast).isUnderExpressed(), is(true));
             }
         }
 
@@ -144,11 +149,10 @@ public class MicroarrayProfilesHeatMapIT {
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
-        assertTrue(profilesAll.size() ==50 || profilesAll.extractGeneNames().containsAll
-                (profilesQueryFactorValues
-                        .extractGeneNames()));
+        assertThat(profilesAll.size() ==50 ||
+                        profilesAll.extractGeneNames().containsAll(profilesQueryFactorValues.extractGeneNames()),
+                is(true));
         assertAbout(requestContext.getExperiment(), profilesQueryFactorValues);
-
     }
 
 
@@ -157,7 +161,7 @@ public class MicroarrayProfilesHeatMapIT {
 
         DifferentialProfilesList profiles = subject.fetch(requestContext);
 
-        assertTrue( profiles.extractGeneNames().isEmpty());
+        assertThat(profiles.extractGeneNames().isEmpty(), is(true));
     }
 
 
@@ -172,35 +176,34 @@ public class MicroarrayProfilesHeatMapIT {
             MicroarrayProfile profile = (MicroarrayProfile) o;
             double maxUpHere = profile.getMaxUpRegulatedExpressionLevel();
             double maxDownHere = profile.getMaxDownRegulatedExpressionLevel();
-            assertTrue(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
-                    Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere );
+            assertThat(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
+                    Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere, is(true) );
 
-            assertTrue(experiment.getContrasts().containsAll(profile.getConditions()));
+            assertThat(experiment.getContrasts().containsAll(profile.getConditions()), is(true));
             for(Contrast contrast: profile.getConditions()){
-                assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
+                assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
 
                 double expressionLevel = profile.getKnownExpressionLevel(contrast);
                 if(! Double.isNaN(expressionLevel)) {
-                    assertTrue(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp);
-                    assertTrue(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown);
-                    assertTrue(Double.isNaN(minUp) || Double.isNaN(minDown) ||
-                            expressionLevel >= minUp ||
-                            expressionLevel <=  minDown);
+                    assertThat(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp, is(true));
+                    assertThat(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown, is(true));
+                    assertThat(Double.isNaN(minUp) || Double.isNaN(minDown) ||
+                            expressionLevel >= minUp || expressionLevel <=  minDown, is(true));
                 }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
-                assertEquals(contrast, expression.getContrast());
+                assertThat(contrast, is(expression.getContrast()));
                 assertThat(expression.getPValue(), greaterThan(0d));
                 assertThat(expression.getPValue(), lessThanOrEqualTo(1d));
                 assertThat(expression.getAbsoluteFoldChange(), greaterThan(0d));
             }
 
-            assertFalse(profile.getId().isEmpty());
-            assertFalse(profile.getName().isEmpty());
+            assertThat(profile.getId().isEmpty(), is(false));
+            assertThat(profile.getName().isEmpty(), is(false));
         }
 
         assertThat(experiment.getAccession(), profiles.getTotalResultCount(), greaterThan(0));
-        assertEquals(profiles.size(), profiles.extractGeneNames().size());
+        assertThat(profiles.size(), is(profiles.extractGeneNames().size()));
     }
 
 
