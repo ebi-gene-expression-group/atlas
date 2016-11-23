@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 
 @Named
 public class DifferentialExperimentFactory implements ExperimentFactory<DifferentialExperiment>{

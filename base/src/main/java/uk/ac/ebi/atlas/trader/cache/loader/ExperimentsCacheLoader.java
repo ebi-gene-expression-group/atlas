@@ -11,8 +11,6 @@ import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import java.io.IOException;
 
 public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<String, T> {
 

@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.util.Set;
 import java.util.SortedSet;
 
