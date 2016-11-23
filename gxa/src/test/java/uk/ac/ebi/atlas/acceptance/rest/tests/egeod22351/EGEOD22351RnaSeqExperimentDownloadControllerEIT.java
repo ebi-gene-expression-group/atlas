@@ -8,12 +8,7 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 
 public class EGEOD22351RnaSeqExperimentDownloadControllerEIT {
 
@@ -38,8 +33,8 @@ public class EGEOD22351RnaSeqExperimentDownloadControllerEIT {
 
         List<String> firstLine = subject.getRowValues(0);
 
-        assertThat(firstLine,
-                contains("# Expression Atlas version:")
+        assertThat(firstLine.get(0),
+                containsString("# Expression Atlas version:")
         );
 
     }
