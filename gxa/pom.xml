@@ -103,6 +103,19 @@
                             <!--<fork>true</fork>-->
                             <!--<port>8080</port>-->
                             <!--<tomcatUsers>src/test/resources/tomcat-users.xml</tomcatUsers>-->
+                            <!-- extra dependencies to add jdbc driver, mail jars, etc. -->
+                            <!--<extraDependencies>-->
+                                <!--<extraDependency>-->
+                                    <!--<groupId>com.oracle</groupId>-->
+                                    <!--<artifactId>ojdbc6</artifactId>-->
+                                    <!--<version>11.2.0.3</version>-->
+                                <!--</extraDependency>-->
+                                <!--<extraDependency>-->
+                                    <!--<groupId>com.oracle</groupId>-->
+                                    <!--<artifactId>ucp</artifactId>-->
+                                    <!--<version>12.2.0.3</version>-->
+                                <!--</extraDependency>-->
+                            <!--</extraDependencies>-->
                         <!--</configuration>-->
                     <!--</execution>-->
                     <!--<execution>-->
@@ -119,25 +132,20 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <path>/gxa</path>
-                </configuration>
+                <version>2.2</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
                         <phase>pre-integration-test</phase>
-                        <configuration>
-                            <url>http://lime:14092/manager/html</url>
-                            <username>tomcat</username>
-                            <password>tomcat</password>
-                            <path>/gxa</path>
-                            <update>true</update>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <url>http://lime:14092/manager/text</url>-->
+                    <path>/${project.build.finalName}</path>
+                    <update>true</update>-->
+                </configuration>
             </plugin>
 
             <plugin>
@@ -155,8 +163,6 @@
     </build>
 
     <dependencies>
-
-
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-base</artifactId>
