@@ -87,6 +87,21 @@
     </pluginRepositories>
 
     <dependencies>
+        <!-- Oracle driver and pooling -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ucp</artifactId>
+            <version>11.2.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -270,6 +285,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -299,18 +321,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Oracle driver and pooling -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ucp</artifactId>
-            <version>11.2.0.3</version>
-        </dependency>
 
 
         <!-- Logging -->
