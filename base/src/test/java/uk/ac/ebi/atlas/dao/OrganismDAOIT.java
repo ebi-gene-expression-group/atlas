@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.dao;
 
-import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +42,7 @@ public class OrganismDAOIT {
     @Test
     public void testGetOrganismsSize() throws Exception {
         List<String> organisms = subject.getOrganisms();
-        assertThat(organisms.size(), Matchers.is(NumberOfExperiments.DISTINCT_ORGANISMS));
+        assertThat(organisms.size(), Matchers.greaterThan(10));
     }
 
 }
