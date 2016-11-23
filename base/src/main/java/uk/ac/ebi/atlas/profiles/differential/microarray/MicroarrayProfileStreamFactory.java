@@ -20,42 +20,39 @@ import java.util.Vector;
 @Named
 @Scope("prototype")
 public class MicroarrayProfileStreamFactory
-implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfile, Contrast> {
+implements ProfileStreamFactory<MicroarrayExperiment, MicroarrayProfileStreamOptions, MicroarrayProfile, Contrast> {
 
-    private final ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
 
     @Inject
     public MicroarrayProfileStreamFactory(
-            ExperimentTrader experimentTrader,
             DataFileHub dataFileHub) {
-        this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
     }
 
-
-    public ObjectInputStream<MicroarrayProfile> create(MicroarrayProfileStreamOptions options)
+    @Override
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayProfileStreamOptions
+            options)
     throws IOException {
-        String experimentAccession = options.getExperimentAccession();
-        double pValueCutOff = options.getPValueCutOff();
-        double foldChangeCutOff = options.getFoldChangeCutOff();
-        Regulation regulation = options.getRegulation();
-        Iterable<String> arrayDesignAccessions = options.getArrayDesignAccessions();
-
-        return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation, arrayDesignAccessions);
+        return create(experiment,
+                options.getPValueCutOff(),
+                options.getFoldChangeCutOff(),
+                options.getRegulation(),
+                options.getArrayDesignAccessions());
     }
 
-    public MicroarrayProfilesTsvInputStream create(MicroarrayProfileStreamOptions options, String arrayDesign)
-    throws IOException {
-        String experimentAccession = options.getExperimentAccession();
-        double pValueCutOff = options.getPValueCutOff();
-        double foldChangeCutOff = options.getFoldChangeCutOff();
-        Regulation regulation = options.getRegulation();
 
-        return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation, arrayDesign);
+    public MicroarrayProfilesTsvInputStream create(MicroarrayExperiment experiment, MicroarrayProfileStreamOptions
+            options, String arrayDesign)
+    throws IOException {
+        return create(experiment,
+                options.getPValueCutOff(),
+                options.getFoldChangeCutOff(),
+                options.getRegulation(),
+                arrayDesign);
     }
 
-    public ObjectInputStream<MicroarrayProfile> create(String experimentAccession,
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment,
                                                        double pValueCutOff,
                                                        double foldChangeCutOff,
                                                        Regulation regulation,
@@ -63,14 +60,14 @@ implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfil
         Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
         for (String arrayDesignAccession : arrayDesignAccessions) {
             ObjectInputStream<MicroarrayProfile> stream =
-                    create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation, arrayDesignAccession);
+                    create(experiment, pValueCutOff, foldChangeCutOff, regulation, arrayDesignAccession);
             inputStreams.add(stream);
         }
 
         return new SequenceObjectInputStream<>(inputStreams.elements());
     }
 
-    public MicroarrayProfilesTsvInputStream create(String experimentAccession,
+    public MicroarrayProfilesTsvInputStream create(MicroarrayExperiment experiment,
                                                    double pValueCutOff,
                                                    double foldChangeCutOff,
                                                    Regulation regulation,
@@ -78,10 +75,8 @@ implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfil
         MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(pValueCutOff, foldChangeCutOff, regulation);
 
         return new MicroarrayProfilesTsvInputStream(
-                dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesignAccession).analytics.getReader(),
-                new ExpressionsRowDeserializerMicroarrayBuilder((MicroarrayExperiment) experimentTrader
-                        .getPublicExperiment
-                        (experimentAccession)),
+                dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession).analytics.getReader(),
+                new ExpressionsRowDeserializerMicroarrayBuilder(experiment),
                 profileBuilder);
     }
 

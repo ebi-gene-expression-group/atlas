@@ -8,15 +8,16 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/*
+TODO remove me and use superclass
+ */
 @Named
-@Scope("prototype")
 public class ProteomicsBaselineProfileInputStreamFactory extends BaselineProfileInputStreamFactory {
 
     @Inject
     public ProteomicsBaselineProfileInputStreamFactory(DataFileHub dataFileHub,
-                                                       ExperimentTrader experimentTrader,
                                                        KryoReaderFactory kryoReaderFactory) {
-        super(dataFileHub,experimentTrader, kryoReaderFactory);
+        super(dataFileHub, kryoReaderFactory);
 
     }
 

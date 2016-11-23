@@ -11,10 +11,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.ObjectInputStreamer;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -34,6 +36,9 @@ public class BaselineProfileInputStreamFactoryIT {
 
     @Inject
     private ExpressionSerializerService expressionSerializerService;
+
+    @Inject
+    ExperimentTrader experimentTrader;
 
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     private String baselineExperimentSerializedDataFileUrlTemplate;
@@ -57,7 +62,10 @@ public class BaselineProfileInputStreamFactoryIT {
 
         serializedFile.renameTo(temporaryFile);
 
-        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = subject.createBaselineProfileInputStream(E_MTAB_513, DEFAULT_QUERY_FACTOR, 0.1, new HashSet<Factor>());
+        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = subject
+                .createBaselineProfileInputStream((BaselineExperiment) experimentTrader.getPublicExperiment(E_MTAB_513),
+                        DEFAULT_QUERY_FACTOR, 0.1, new
+                        HashSet<Factor>());
         assertThat(inputStream, instanceOf(BaselineProfilesTsvInputStream.class));
 
         temporaryFile.renameTo(serializedFile);
@@ -74,7 +82,7 @@ public class BaselineProfileInputStreamFactoryIT {
 
         @Override
         protected ObjectInputStream<?> createStream(String experimentAccession) throws Exception {
-            return subject.createBaselineProfileInputStream(experimentAccession, DEFAULT_QUERY_FACTOR, 0.1, new HashSet<Factor>());
+            return subject.createBaselineProfileInputStream((BaselineExperiment) experimentTrader.getPublicExperiment(E_MTAB_513), DEFAULT_QUERY_FACTOR, 0.1, new HashSet<Factor>());
         }
 
 

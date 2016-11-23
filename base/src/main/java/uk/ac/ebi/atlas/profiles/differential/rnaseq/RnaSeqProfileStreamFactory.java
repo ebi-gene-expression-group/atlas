@@ -17,31 +17,26 @@ import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-@Scope("prototype")
 public class RnaSeqProfileStreamFactory
-implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile, Contrast> {
+implements ProfileStreamFactory<DifferentialExperiment, DifferentialProfileStreamOptions, RnaSeqProfile, Contrast> {
 
     private final DataFileHub dataFileHub;
 
-    private ExperimentTrader experimentTrader;
-
     @Inject
-    public RnaSeqProfileStreamFactory(DataFileHub dataFileHub,
-                                      ExperimentTrader experimentTrader) {
+    public RnaSeqProfileStreamFactory(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
-        this.experimentTrader = experimentTrader;
     }
 
-    public ObjectInputStream<RnaSeqProfile> create(DifferentialProfileStreamOptions options) throws IOException {
-        String experimentAccession = options.getExperimentAccession();
-        double pValueCutOff = options.getPValueCutOff();
-        double foldChangeCutOff = options.getFoldChangeCutOff();
-        Regulation regulation = options.getRegulation();
-
-        return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation);
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, DifferentialProfileStreamOptions
+            options)
+            throws IOException {
+        return create(experiment,
+                options.getPValueCutOff(),
+                options.getFoldChangeCutOff(),
+                options.getRegulation());
     }
 
-    public RnaSeqProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) throws IOException {
+    public RnaSeqProfilesTsvInputStream create(DifferentialExperiment experiment, double pValueCutOff, double foldChangeCutOff, Regulation regulation) throws IOException {
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
         expressionFilter.setPValueCutoff(pValueCutOff);
@@ -51,9 +46,8 @@ implements ProfileStreamFactory<DifferentialProfileStreamOptions, RnaSeqProfile,
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
 
         return new RnaSeqProfilesTsvInputStream(
-                dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.getReader(),
-                new ExpressionsRowDeserializerRnaSeqBuilder((DifferentialExperiment) experimentTrader
-                        .getPublicExperiment(experimentAccession)),
+                dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).analytics.getReader(),
+                new ExpressionsRowDeserializerRnaSeqBuilder(experiment),
                 rnaSeqProfileReusableBuilder);
     }
 

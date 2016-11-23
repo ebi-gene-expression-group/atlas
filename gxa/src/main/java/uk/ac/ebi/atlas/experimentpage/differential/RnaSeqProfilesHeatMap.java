@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RankRnaSeqProfilesFactory;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
@@ -11,8 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("prototype")
-public class RnaSeqProfilesHeatMap extends DifferentialProfilesHeatMap<RnaSeqProfile, DifferentialRequestContext<?>> {
+public class RnaSeqProfilesHeatMap extends DifferentialProfilesHeatMap<DifferentialExperiment,RnaSeqProfile,
+        DifferentialRequestContext<DifferentialExperiment>> {
 
     @Inject
     public RnaSeqProfilesHeatMap(RankRnaSeqProfilesFactory rankProfilesFactory,

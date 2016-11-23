@@ -74,7 +74,8 @@ public class BaselineProfilesHeatMapIT {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
                 (baselineRequestContext.getGeneQuery(),baselineRequestContext.getFilteredBySpecies());
 
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext,geneQueryResponse, true);
+        BaselineProfilesList profiles = subject.fetch(baselineRequestContext.getExperiment(), baselineRequestContext,
+                geneQueryResponse, true);
 
         assertThat(profiles.size(), greaterThan(0));
     }

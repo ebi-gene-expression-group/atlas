@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
@@ -11,25 +12,27 @@ import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
 
-public class ProfilesHeatMapSource<P extends Profile<T, ? extends Expression>, L extends GeneProfilesList<P>, O extends
+public class ProfilesHeatMapSource<E extends Experiment, P extends Profile<T, ? extends Expression>, L extends
+        GeneProfilesList<P>, O extends
         ProfileStreamOptions<T>, T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfilesHeatMapSource.class);
 
-    private ProfileStreamFactory<O, P, T> profileStreamFactory;
+    private ProfileStreamFactory<E, O, P, T> profileStreamFactory;
     private ProfileStreamPipelineBuilder<P, O, T> profileStreamPipelineBuilder;
 
-    public ProfilesHeatMapSource(ProfileStreamFactory<O, P, T>
+    public ProfilesHeatMapSource(ProfileStreamFactory<E, O, P, T>
                                          profileStreamFactory, ProfileStreamFilters<P, T> profileStreamFilters) {
         this.profileStreamFactory = profileStreamFactory;
         this.profileStreamPipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamFilters);
     }
 
-    public L fetch(O options, SelectProfiles<P, L> selectProfiles, GeneQueryResponse geneQueryResponse, boolean
+    public L fetch(E experiment, O options, SelectProfiles<P, L> selectProfiles, GeneQueryResponse geneQueryResponse,
+                   boolean
             shouldAverageIntoGeneSets)  {
         int maxSize = options.getHeatmapMatrixSize();
 
-        try (ObjectInputStream<P> source = profileStreamFactory.create(options)) {
+        try (ObjectInputStream<P> source = profileStreamFactory.create(experiment, options)) {
 
             Iterable<P> profiles = new IterableObjectInputStream<>(source);
 

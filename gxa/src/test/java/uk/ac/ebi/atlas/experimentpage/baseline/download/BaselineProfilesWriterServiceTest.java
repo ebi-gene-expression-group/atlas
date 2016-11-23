@@ -154,7 +154,8 @@ public class BaselineProfilesWriterServiceTest {
                 baselineExperimentMock, response, coexpressions)).thenReturn(extendedResponse);
 
         ObjectInputStream<BaselineProfile> inputStream = objectInputStreamMock;
-        when(inputStreamFactory.create(any(BaselineProfileStreamOptions.class))).thenReturn(inputStream);
+        when(inputStreamFactory.create(any(BaselineExperiment.class), any(BaselineProfileStreamOptions.class)))
+                .thenReturn(inputStream);
 
         when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString())).thenReturn(response);
 
@@ -162,7 +163,7 @@ public class BaselineProfilesWriterServiceTest {
 
         //query solr, create a stream, pass the results on
         //TODO Mockito.verify(solrQueryService)
-        Mockito.verify(inputStreamFactory).create(any(BaselineProfileStreamOptions.class));
+        Mockito.verify(inputStreamFactory).create(any(BaselineExperiment.class),any(BaselineProfileStreamOptions.class));
         Mockito.verify(profilesWriter).write(eq(writer), eq(inputStream), any(BaselineRequestContext.class),
                 anySetOf(Factor.class), any(GeneQueryResponse.class));
         Mockito.verifyNoMoreInteractions(/*solrQueryService,*/ inputStreamFactory, profilesWriter);

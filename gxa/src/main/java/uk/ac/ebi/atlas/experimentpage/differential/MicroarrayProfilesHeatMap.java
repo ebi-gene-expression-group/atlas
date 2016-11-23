@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
@@ -11,9 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("prototype")
-public class MicroarrayProfilesHeatMap extends DifferentialProfilesHeatMap<MicroarrayProfile,
-        DifferentialRequestContext<?>> {
+public class MicroarrayProfilesHeatMap extends DifferentialProfilesHeatMap<MicroarrayExperiment, MicroarrayProfile,
+        DifferentialRequestContext<MicroarrayExperiment>> {
 
     @Inject
     public MicroarrayProfilesHeatMap(RankMicroarrayProfilesFactory rankProfilesFactory,

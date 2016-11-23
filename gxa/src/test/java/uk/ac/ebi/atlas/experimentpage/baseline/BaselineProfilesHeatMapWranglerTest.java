@@ -92,7 +92,8 @@ public class BaselineProfilesHeatMapWranglerTest {
         subject.getJsonProfiles();
 
         verify(solrQueryService).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
-        verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.eq(response),
+        verify(baselineProfilesHeatMap).fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
+                .any(), Matchers.eq(response),
                 Matchers.eq(false));
     }
 
@@ -108,13 +109,15 @@ public class BaselineProfilesHeatMapWranglerTest {
         subject.getJsonProfilesAsGeneSets();
 
         verify(solrQueryService).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
-        verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.eq(response),
+        verify(baselineProfilesHeatMap).fetch(any(BaselineExperiment.class), (BaselineProfileStreamOptions) Mockito
+                .any(), Matchers.eq(response),
                 Matchers.eq(true));
     }
 
     @Test
     public void cachingWorks() throws Exception{
-        when(baselineProfilesHeatMap.fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
+        when(baselineProfilesHeatMap.fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito.any()
+                , Matchers.any
                         (GeneQueryResponse.class),
                 Matchers.eq(false))).thenReturn(new BaselineProfilesList());
 
@@ -123,7 +126,8 @@ public class BaselineProfilesHeatMapWranglerTest {
         }
 
         verify(solrQueryService).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
-        verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
+        verify(baselineProfilesHeatMap).fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
+                .any(), Matchers.any
                 (GeneQueryResponse.class),
                 Matchers.eq(false));
     }
@@ -142,15 +146,15 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     private void jsonCoexpressionsNotReturnedForTheseResultsBack(BaselineProfilesList list) throws Exception {
         Mockito.reset(baselineProfilesHeatMap);
-        when(baselineProfilesHeatMap.fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
+        when(baselineProfilesHeatMap.fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito.any()
+                , Matchers.any
                         (GeneQueryResponse.class),
                 Matchers.eq(false))).thenReturn(list);
         BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment);
         subjectHere.getJsonProfiles();
 
-        verify(baselineProfilesHeatMap).fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
-                        (GeneQueryResponse.class),
-                Matchers.eq(false));
+        verify(baselineProfilesHeatMap).fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
+                .any(), Matchers.any(GeneQueryResponse.class), Matchers.eq(false));
 
         subjectHere.getJsonCoexpressions();
 
@@ -167,9 +171,8 @@ public class BaselineProfilesHeatMapWranglerTest {
         when(profile.getId()).thenReturn(GENE_WE_ASK_FOR);
         rightList.add(profile);
 
-        when(baselineProfilesHeatMap.fetch((BaselineProfileStreamOptions) Mockito.any(), Matchers.any
-                        (GeneQueryResponse.class),
-                Matchers.eq(false))).thenReturn(rightList);
+        when(baselineProfilesHeatMap.fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito.any()
+                , Matchers.any(GeneQueryResponse.class), Matchers.eq(false))).thenReturn(rightList);
 
         when(coexpressedGenesDao.coexpressedGenesFor(ACCESSION, GENE_WE_ASK_FOR)).thenReturn(ImmutableList.of("C1", "C2","C3"));
 

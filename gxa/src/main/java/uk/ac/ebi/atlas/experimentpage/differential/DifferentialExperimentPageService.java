@@ -33,20 +33,21 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Set;
 
-public class DifferentialExperimentPageService<T extends DifferentialExperiment, K extends
+public class DifferentialExperimentPageService<E extends DifferentialExperiment, K extends
         DifferentialRequestPreferences, P extends DifferentialProfile<?>> extends ExperimentPageService {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final AtlasResourceHub atlasResourceHub;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap;
+    private DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>> profilesHeatMap;
     private TracksUtil tracksUtil;
     private final ApplicationProperties applicationProperties;
 
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageService(DifferentialRequestContextBuilder
                                                            differentialRequestContextBuilder,
-                                                DifferentialProfilesHeatMap<P, DifferentialRequestContext<?>> profilesHeatMap,
+                                                DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>>
+                                                        profilesHeatMap,
                                                 DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                 TracksUtil tracksUtil,
                                                 AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
@@ -61,7 +62,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
 
 
     // called from sub classes
-    public void prepareRequestPreferencesAndHeaderData(T experiment, K preferences, Model model,HttpServletRequest request) {
+    public void prepareRequestPreferencesAndHeaderData(E experiment, K preferences, Model model, HttpServletRequest request) {
 
         initRequestPreferences(preferences, experiment);
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
@@ -73,7 +74,7 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
         model.addAllAttributes(headerAttributes(experiment, preferences));
     }
 
-    public JsonObject populateModelWithHeatmapData(HttpServletRequest request,T experiment, K preferences,
+    public JsonObject populateModelWithHeatmapData(HttpServletRequest request, E experiment, K preferences,
                                                    BindingResult bindingResult, Model model) {
         JsonObject result = new JsonObject();
         DifferentialRequestContext requestContext = initRequestContext(experiment, preferences);
@@ -148,14 +149,14 @@ public class DifferentialExperimentPageService<T extends DifferentialExperiment,
         return result;
     }
 
-    private void initRequestPreferences(K requestPreferences, T experiment) {
+    private void initRequestPreferences(K requestPreferences, E experiment) {
         //if there is only one contrast we want to preselect it... from Robert feedback
         if (experiment.getContrasts().size() == 1) {
             requestPreferences.setQueryFactorValues(experiment.getContrastIds());
         }
     }
 
-    private DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences) {
+    private DifferentialRequestContext initRequestContext(E experiment, DifferentialRequestPreferences requestPreferences) {
         return differentialRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences).build();
 

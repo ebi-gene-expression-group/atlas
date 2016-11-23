@@ -68,7 +68,8 @@ public class BaselineProfilesWriterService {
                     );
 
         }
-        return profilesWriter.write(writer, inputStreamFactory.create(requestContext), requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
+        return profilesWriter.write(writer, inputStreamFactory.create(requestContext.getExperiment(),requestContext),
+                requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
     }
 
     private String describe(SemanticQuery geneQuery, int coexpressedGenes) {

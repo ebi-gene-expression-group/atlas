@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.SelectProfiles;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
@@ -29,7 +30,7 @@ public class BaselineProfilesHeatMap {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
     private final RankBaselineProfilesFactory rankProfilesFactory;
-    private ProfilesHeatMapSource<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
+    private ProfilesHeatMapSource<BaselineExperiment, BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
             profilesHeatmapSource;
 
     public BaselineProfilesHeatMap(RankBaselineProfilesFactory rankProfilesFactory,
@@ -38,13 +39,14 @@ public class BaselineProfilesHeatMap {
         profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new BaselineProfileStreamFilters());
     }
 
-    public BaselineProfilesList fetch(BaselineProfileStreamOptions options,
+    public BaselineProfilesList fetch(BaselineExperiment experiment, BaselineProfileStreamOptions options,
                                       GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         BaselineProfilesList profiles =
-                profilesHeatmapSource.fetch(options, rankProfilesFactory.create(options), geneQueryResponse, asGeneSets);
+                profilesHeatmapSource.fetch(experiment,options, rankProfilesFactory.create(options), geneQueryResponse,
+                        asGeneSets);
 
         stopwatch.stop();
 
@@ -55,13 +57,13 @@ public class BaselineProfilesHeatMap {
         return profiles;
     }
 
-    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder, BaselineProfileStreamOptions options,
+    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder,BaselineExperiment experiment, BaselineProfileStreamOptions options,
                                                         GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
         SelectProfiles<BaselineProfile, BaselineProfilesList> s =
                 new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder());
 
-        return profilesHeatmapSource.fetch(options, s,geneQueryResponse, asGeneSets);
+        return profilesHeatmapSource.fetch(experiment,options, s,geneQueryResponse, asGeneSets);
     }
 
 }

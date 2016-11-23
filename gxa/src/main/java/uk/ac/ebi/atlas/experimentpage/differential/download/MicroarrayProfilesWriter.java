@@ -38,7 +38,8 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
 
     public long write(PrintWriter outputWriter, MicroarrayRequestContext requestContext, String arrayDesign) throws IOException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(),"");
-        MicroarrayProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext, arrayDesign);
+        MicroarrayProfilesTsvInputStream inputStream =
+                inputStreamFactory.create(requestContext.getExperiment(),requestContext, arrayDesign);
         Set<Contrast> contrasts = Sets.newHashSet(inputStream.getOrderedContrastsPresentInStream());
         return super.write(outputWriter, inputStream, requestContext, contrasts,geneQueryResponse);
     }

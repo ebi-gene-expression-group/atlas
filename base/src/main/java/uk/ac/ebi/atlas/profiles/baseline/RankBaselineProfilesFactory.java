@@ -1,16 +1,18 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class RankBaselineProfilesFactory implements RankProfilesFactory<BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions> {
+public class RankBaselineProfilesFactory implements RankProfilesFactory< BaselineProfile,
+        BaselineProfilesList,
+        BaselineProfileStreamOptions> {
 
     private BaselineProfilesListBuilder geneProfilesListBuilder;
 

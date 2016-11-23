@@ -5,11 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -17,14 +21,16 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class ProteomicsBaselineProfilesInputStreamIT {
 
-    public static final String EXPERIMENT_ACCESSION = "E-PROT-1";
-
     @Resource(name = "proteomicsBaselineProfileInputStreamFactory")
     private ProteomicsBaselineProfileInputStreamFactory inputStreamFactory;
+
+    @Inject
+    ExperimentTrader experimentTrader;
 
     private ObjectInputStream<BaselineProfile> subject;
 
@@ -38,7 +44,8 @@ public class ProteomicsBaselineProfilesInputStreamIT {
     }
 
     private void setUp(Factor factor, double cutoff) throws Exception {
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, ORGANISM_PART, cutoff,
+        subject = inputStreamFactory.createBaselineProfileInputStream((BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1"),
+                ORGANISM_PART, cutoff,
                 ImmutableSet.of(factor));
     }
 

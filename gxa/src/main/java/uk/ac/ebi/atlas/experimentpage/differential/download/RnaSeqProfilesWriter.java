@@ -37,7 +37,8 @@ public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast
     public long write(PrintWriter outputWriter, RnaSeqRequestContext requestContext) throws IOException {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext
                 .getFilteredBySpecies());
-        ObjectInputStream<RnaSeqProfile> inputStream = inputStreamFactory.create(requestContext);
+        ObjectInputStream<RnaSeqProfile> inputStream = inputStreamFactory.create(
+                requestContext.getExperiment(), requestContext);
         return super.write(outputWriter, inputStream, requestContext, requestContext.getExperiment().getContrasts(),
                 geneQueryResponse);
     }
