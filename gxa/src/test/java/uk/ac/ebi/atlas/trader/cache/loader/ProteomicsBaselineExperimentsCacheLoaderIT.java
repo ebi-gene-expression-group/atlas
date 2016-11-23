@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
@@ -24,10 +25,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.when;
 
@@ -42,13 +40,19 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     private static final String ORGANISM = "organism";
 
     @Inject
-    private ProteomicsBaselineExperimentsCacheLoader subject;
+    private ProteomicsBaselineExperimentFactory proteomicsBaselineExperimentFactory;
+
+    ExperimentsCacheLoader<BaselineExperiment> subject;
+
 
     @Mock
     private ExperimentDAO experimentDao;
 
     @Mock
     private ArrayExpressClient arrayExpressClient;
+
+    @Inject
+    private ExperimentDesignParser experimentDesignParser;
 
     @Before
     public void mockOutDatabaseAndArrayExpress() {
@@ -62,8 +66,9 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
 
         when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");
 
-        subject.setExperimentDAO(experimentDao);
-        subject.setArrayExpressClient(arrayExpressClient);
+        subject = new ExperimentsCacheLoader<>(arrayExpressClient,experimentDesignParser,experimentDao,
+                proteomicsBaselineExperimentFactory );
+
     }
 
     @Test

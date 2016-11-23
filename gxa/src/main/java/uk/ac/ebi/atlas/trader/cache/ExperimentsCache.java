@@ -21,7 +21,7 @@ public abstract class ExperimentsCache<T extends Experiment> {
         try {
             return experiments.get(experimentAccession);
         } catch (ExecutionException e) {
-            throw new RuntimeException("Failed to load experiment from cache: "+experimentAccession);
+            throw new RuntimeException("Failed to create experiment from cache: "+experimentAccession);
         }
     }
 

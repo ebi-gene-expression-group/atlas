@@ -9,11 +9,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class RnaSeqBaselineExperimentsCacheLoader extends BaselineExperimentsCacheLoader {
+public class RnaSeqBaselineExperimentFactory extends BaselineExperimentFactory {
 
     @Inject
-    public RnaSeqBaselineExperimentsCacheLoader(ConfigurationTrader configurationTrader,
-                                                SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
+    public RnaSeqBaselineExperimentFactory(ConfigurationTrader configurationTrader,
+                                           SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
         super(ExperimentType.RNASEQ_MRNA_BASELINE,configurationTrader, speciesFactory, dataFileHub);
     }
 }

@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class ProteomicsBaselineExperimentsCacheLoader extends BaselineExperimentsCacheLoader {
+public class ProteomicsBaselineExperimentFactory extends BaselineExperimentFactory {
 
     @Inject
-    public ProteomicsBaselineExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesFactory
+    public ProteomicsBaselineExperimentFactory(ConfigurationTrader configurationTrader, SpeciesFactory
             speciesFactory, DataFileHub dataFileHub) {
         super(ExperimentType.PROTEOMICS_BASELINE, configurationTrader, speciesFactory, dataFileHub);
     }

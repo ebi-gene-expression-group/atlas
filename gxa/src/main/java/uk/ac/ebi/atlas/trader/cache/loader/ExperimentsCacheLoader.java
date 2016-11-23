@@ -14,36 +14,28 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
 
-public abstract class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<String, T> {
+public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<String, T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentsCacheLoader.class);
 
-    private ArrayExpressClient arrayExpressClient;
+    private final ArrayExpressClient arrayExpressClient;
 
-    private ExperimentDesignParser experimentDesignParser;
+    private final ExperimentDesignParser experimentDesignParser;
 
-    private ExperimentDAO experimentDAO;
+    private final ExperimentDAO experimentDAO;
 
-    protected ExperimentsCacheLoader() {
-    }
+    private final ExperimentFactory<T> experimentFactory;
 
-    @Inject
-    public void setExperimentDAO(ExperimentDAO experimentDAO) {
-        this.experimentDAO = experimentDAO;
-    }
-
-    @Inject
-    public void setArrayExpressClient(ArrayExpressClient arrayExpressClient) {
+    public ExperimentsCacheLoader(ArrayExpressClient arrayExpressClient, ExperimentDesignParser
+            experimentDesignParser, ExperimentDAO experimentDAO,ExperimentFactory<T> experimentFactory ){
         this.arrayExpressClient = arrayExpressClient;
-    }
-
-    @Inject
-    public void setExperimentDesignParser(ExperimentDesignParser experimentDesignParser) {
         this.experimentDesignParser = experimentDesignParser;
+        this.experimentDAO = experimentDAO;
+        this.experimentFactory = experimentFactory;
     }
 
     @Override
-    public T load(@Nonnull String experimentAccession) throws IOException {
+    public T load(@Nonnull String experimentAccession){
 
         LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
@@ -53,12 +45,9 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         String experimentDescription = fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
 
-        return load(experimentDTO, experimentDescription, experimentDesign);
+        return experimentFactory.create(experimentDTO, experimentDescription, experimentDesign);
 
     }
-
-    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
-                              ExperimentDesign experimentDesign) throws IOException;
 
     private String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {

@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.SortedSet;
 
 @Named
-public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<MicroarrayExperiment> {
+public class MicroarrayExperimentFactory implements ExperimentFactory<MicroarrayExperiment> {
 
     private ConfigurationTrader configurationTrader;
 
@@ -25,15 +25,15 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
     private final ArrayDesignTrader arrayDesignTrader;
 
     @Inject
-    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, ArrayDesignTrader arrayDesignTrader) {
+    public MicroarrayExperimentFactory(ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, ArrayDesignTrader arrayDesignTrader) {
         this.configurationTrader = configurationTrader;
         this.speciesFactory = speciesFactory;
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
     @Override
-    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                        ExperimentDesign experimentDesign) throws IOException {
+    public MicroarrayExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
+                                          ExperimentDesign experimentDesign){
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

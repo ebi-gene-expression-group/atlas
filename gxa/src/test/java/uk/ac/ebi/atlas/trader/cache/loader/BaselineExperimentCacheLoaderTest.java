@@ -41,7 +41,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
 
-    class Loader extends BaselineExperimentsCacheLoader {
+    class Loader extends BaselineExperimentFactory {
 
         protected Loader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
                          ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
@@ -74,7 +74,7 @@ public class BaselineExperimentCacheLoaderTest {
     @Spy
     private static MockDataFileHub dataFileHub;
 
-    private BaselineExperimentsCacheLoader subject;
+    private BaselineExperimentFactory subject;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -119,19 +119,19 @@ public class BaselineExperimentCacheLoaderTest {
     @Test(expected=IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() throws Exception{
         when(configuration.getAssayGroups()).thenReturn(mock(AssayGroups.class));
-        subject.load(dto, "description from array express", experimentDesign);
+        subject.create(dto, "description from array express", experimentDesign);
     }
 
     @Test
     public void useAllCollaborators() throws Exception {
-        subject.load(dto, "description from array express", experimentDesign);
+        subject.create(dto, "description from array express", experimentDesign);
         verifyCollaborators();
         noMoreInteractionsWithCollaborators();
     }
 
     @Test
     public void noAlternativeViewsForTypicalExperiment() throws Exception {
-        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
+        BaselineExperiment e = subject.create(dto, "description from array express", experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(0));
         verifyCollaborators();
@@ -149,7 +149,7 @@ public class BaselineExperimentCacheLoaderTest {
         String s = "default query factor of other experiment";
         when(alternativeViewBaselineConfiguration.getDefaultQueryFactorType()).thenReturn(s);
 
-        BaselineExperiment e = subject.load(dto, "description from array express", experimentDesign);
+        BaselineExperiment e = subject.create(dto, "description from array express", experimentDesign);
 
         assertThat(e.alternativeViews(), hasSize(1));
         assertThat(e.alternativeViews().get(0).getLeft(), is(alternativeViewAccession));

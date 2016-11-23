@@ -12,21 +12,21 @@ import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<DifferentialExperiment> {
+public class DifferentialExperimentFactory implements ExperimentFactory<DifferentialExperiment>{
 
     private ConfigurationTrader configurationTrader;
 
     private SpeciesFactory speciesFactory;
 
     @Inject
-    public DifferentialExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
+    public DifferentialExperimentFactory(ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
         this.configurationTrader = configurationTrader;
         this.speciesFactory = speciesFactory;
     }
 
     @Override
-    protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                          ExperimentDesign experimentDesign) throws IOException {
+    public DifferentialExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
+                                            ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

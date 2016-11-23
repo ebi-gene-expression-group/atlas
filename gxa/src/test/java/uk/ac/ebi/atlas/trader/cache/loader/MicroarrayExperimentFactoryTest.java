@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MicroarrayExperimentsCacheLoaderTest {
+public class MicroarrayExperimentFactoryTest {
 
     private static final String ACCESSION = "accession";
     private static final String ARRAYDESIGN_ID = "arraydesignId";
@@ -61,11 +61,11 @@ public class MicroarrayExperimentsCacheLoaderTest {
     @Mock
     private ArrayDesignTrader arrayDesignTraderMock;
 
-    private MicroarrayExperimentsCacheLoader subject;
+    private MicroarrayExperimentFactory subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesFactory, arrayDesignTraderMock);
+        subject = new MicroarrayExperimentFactory(configurationTraderMock, speciesFactory, arrayDesignTraderMock);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
@@ -85,7 +85,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description",
+        MicroarrayExperiment microarrayExperiment = subject.create(experimentDTOMock, "description",
                 experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));

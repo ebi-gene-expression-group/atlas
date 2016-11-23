@@ -16,11 +16,10 @@ import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
+public abstract class BaselineExperimentFactory implements ExperimentFactory<BaselineExperiment> {
 
     private final ExperimentType experimentType;
     private final ConfigurationTrader configurationTrader;
@@ -28,14 +27,14 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
     private final SpeciesFactory speciesFactory;
     private final DataFileHub dataFileHub;
 
-    protected BaselineExperimentsCacheLoader(ExperimentType experimentType, ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
+    protected BaselineExperimentFactory(ExperimentType experimentType, ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
         this(new ExperimentalFactorsFactory(), experimentType, configurationTrader,
                 speciesFactory,dataFileHub);
     }
 
-    BaselineExperimentsCacheLoader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
-                                   ConfigurationTrader configurationTrader,
-                                   SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
+    BaselineExperimentFactory(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
+                              ConfigurationTrader configurationTrader,
+                              SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
         this.experimentalFactorsFactory = experimentalFactorsFactory;
         this.experimentType = experimentType;
         this.configurationTrader = configurationTrader;
@@ -45,8 +44,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
 
     @Override
-    public BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                   ExperimentDesign experimentDesign) throws IOException {
+    public BaselineExperiment create(ExperimentDTO experimentDTO, String experimentDescription,
+                                     ExperimentDesign experimentDesign) {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
