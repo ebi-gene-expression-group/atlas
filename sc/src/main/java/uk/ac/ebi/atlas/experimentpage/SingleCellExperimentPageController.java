@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 public class SingleCellExperimentPageController extends ExperimentPageController {
 
     private final ExperimentTrader experimentTrader;
+
+    private Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+
 
     @Inject
     public SingleCellExperimentPageController(SingleCellExperimentTrader experimentTrader){
@@ -62,6 +67,18 @@ public class SingleCellExperimentPageController extends ExperimentPageController
                 .withExperimentDesign(experiment.getExperimentDesign())
                 .forAssayGroup(experiment.getAssayGroups().getAssayGroup(assayGroupId))
                 .build());
+
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/cell_ids/{cellId}")
+    @ResponseBody
+    public String baselineExperimentCell(@PathVariable String experimentAccession,
+                                          @PathVariable String cellId,
+                                          HttpServletResponse response) {
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        return gson.toJson(experimentTrader.getPublicExperiment
+                (experimentAccession).getExperimentDesign().getSampleCharacteristicsValues(cellId));
 
     }
 }
