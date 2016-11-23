@@ -41,15 +41,16 @@ public class ExperimentDesignDownloadService {
 
         List<String[]> newCsvLines = new ArrayList<>(csvLines.size());
 
+
         // modify header by adding new column
-        String[] header = csvLines.remove(0);
+        String[] header = csvLines.get(0);
         String[] newHeader = new String[header.length + 1];
         System.arraycopy(header, 0, newHeader, 0, header.length);
         newHeader[header.length] = "Analysed";
         newCsvLines.add(newHeader);
 
         // copy content and add used field
-        for (String[] array : csvLines) {
+        for (String[] array : csvLines.subList(1, csvLines.size())) {
             String[] newArray = new String[array.length + 1];
             System.arraycopy(array, 0, newArray, 0, array.length);
             boolean isRunAnalysed = analysedRowsAccessions.contains(newArray[0]);
