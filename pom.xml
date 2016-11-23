@@ -408,6 +408,14 @@
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
         </profile>
 
         <profile>
@@ -422,6 +430,14 @@
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
         </profile>
 
         <profile>
@@ -438,11 +454,27 @@
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
         </profile>
 
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
+            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
+            <properties>
+                <data.files.location>/srv/gxa/data</data.files.location>
+                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
+                <mail.smtp.port>25</mail.smtp.port>
+                <mail.smtp.auth>false</mail.smtp.auth>
+            </properties>
             <build>
                 <resources>
                     <resource>
@@ -453,14 +485,6 @@
                     </resource>
                 </resources>
             </build>
-            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
-            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
-            <properties>
-                <data.files.location>/srv/gxa/data</data.files.location>
-                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
-                <mail.smtp.port>25</mail.smtp.port>
-                <mail.smtp.auth>false</mail.smtp.auth>
-            </properties>
         </profile>
 
         <profile>
@@ -472,6 +496,17 @@
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
             </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>jdbc.properties</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
         </profile>
 
         <profile>
