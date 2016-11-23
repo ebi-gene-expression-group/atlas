@@ -3,6 +3,9 @@ package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayProperty;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastProperty;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastPropertyType;
 
 import java.util.SortedSet;
 

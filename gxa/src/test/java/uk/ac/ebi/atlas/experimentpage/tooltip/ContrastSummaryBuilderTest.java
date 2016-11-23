@@ -4,6 +4,10 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastProperty;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastPropertyType;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummary;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 
 import java.util.Iterator;
 
@@ -59,7 +63,7 @@ public class ContrastSummaryBuilderTest {
         ContrastProperty contrastProperty4 = contrastSummaryIterator.next();
         assertThat(contrastSummaryIterator.hasNext(), is(false));
 
-        assertThat(contrastProperty1, is(new ContrastProperty(FACTOR_HEADER, FACTOR_VALUE3, FACTOR_VALUE,ContrastPropertyType.FACTOR)));
+        assertThat(contrastProperty1, is(new ContrastProperty(FACTOR_HEADER, FACTOR_VALUE3, FACTOR_VALUE, ContrastPropertyType.FACTOR)));
         assertThat(contrastProperty2, is(new ContrastProperty(FACTOR_HEADER2, FACTOR_VALUE4, FACTOR_VALUE2,ContrastPropertyType.FACTOR)));
         assertThat(contrastProperty3, is(new ContrastProperty("array design", "", "",ContrastPropertyType.SAMPLE)));
         assertThat(contrastProperty4, is(new ContrastProperty(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_VALUE1,ContrastPropertyType.SAMPLE)));

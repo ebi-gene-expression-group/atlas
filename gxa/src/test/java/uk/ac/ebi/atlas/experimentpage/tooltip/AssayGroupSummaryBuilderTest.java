@@ -3,6 +3,10 @@ package uk.ac.ebi.atlas.experimentpage.tooltip;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummary;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayProperty;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastPropertyType;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;

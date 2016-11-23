@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.tooltip;
+package uk.ac.ebi.atlas.model.experiment.summary;
 
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import com.google.common.base.Joiner;

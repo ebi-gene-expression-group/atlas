@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.tooltip;
+package uk.ac.ebi.atlas.model.experiment.summary;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

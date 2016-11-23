@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummary;
+import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
