@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
@@ -149,7 +148,6 @@ public class ExperimentCrud {
     }
 
     private ExperimentConfiguration loadExperimentConfiguration(String experimentAccession) {
-        experimentChecker.checkConfigurationFile(experimentAccession);
         ExperimentConfiguration configuration = configurationTrader.getExperimentConfiguration(experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
         return configuration;

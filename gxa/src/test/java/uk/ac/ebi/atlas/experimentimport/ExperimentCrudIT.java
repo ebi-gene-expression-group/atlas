@@ -43,7 +43,7 @@ public class ExperimentCrudIT {
 
     @Spy
     @Inject
-    private ExperimentChecker experimentCheckerSpy;
+    private ExpressionAtlasExperimentChecker experimentCheckerSpy;
 
     @Mock
     ConditionsIndexingService conditionsIndexingService;
