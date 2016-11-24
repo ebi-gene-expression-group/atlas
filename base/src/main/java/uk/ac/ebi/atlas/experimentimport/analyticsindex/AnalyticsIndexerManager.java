@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Observable;
@@ -45,19 +44,15 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
     public int addToAnalyticsIndex(String experimentAccession) {
-        try {
-            return addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
-                    (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
+                (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
     }
 
     public void deleteFromAnalyticsIndex(String experimentAccession) {
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
     }
 
-    public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException, IOException {
+    public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
         addObserver(analyticsIndexerMonitor);
 
         setChangedAndNotifyObservers("Deleting all documents from analytics index...");
@@ -84,7 +79,7 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
     public void indexPublicExperiments(ExperimentType experimentType, int threads, int batchSize, int timeout) throws
-            InterruptedException, IOException {
+            InterruptedException {
         addObserver(analyticsIndexerMonitor);
 
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);

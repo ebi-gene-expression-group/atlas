@@ -16,7 +16,7 @@ public abstract class BioentityIdentifiersReader {
         before flattening the set when we call builder.build() and therefore using up much more memory than needed in this case, where the number
         of repeated elements is very high.
          */
-    public HashSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) throws IOException {
+    public HashSet<String> getBioentityIdsFromExperiments(ExperimentType... experimentTypes) {
 
         HashSet<String> bioentityIds = new HashSet<>();
 
@@ -40,7 +40,7 @@ public abstract class BioentityIdentifiersReader {
         return bioentityIds;
     }
 
-    protected abstract int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) throws IOException;
+    protected abstract int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType);
 
-    public abstract HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) throws IOException;
+    public abstract HashSet<String> getBioentityIdsFromExperiment(String experimentAccession);
 }
