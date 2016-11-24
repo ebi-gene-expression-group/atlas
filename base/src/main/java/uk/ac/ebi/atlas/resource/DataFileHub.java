@@ -121,7 +121,7 @@ public class DataFileHub {
     }
 
     public String getExperimentDataLocation() {
-        return Paths.get(dataFilesLocation, "magetab").toString();
+        return Paths.get(dataFilesLocation, "magetab").toString() + "/";
     }
 
 }
