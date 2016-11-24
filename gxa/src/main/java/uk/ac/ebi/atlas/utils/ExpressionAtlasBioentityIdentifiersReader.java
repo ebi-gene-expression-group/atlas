@@ -48,7 +48,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
     }
 
     @Override
-    protected int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) throws IOException {
+    protected int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) {
         if (experimentType.isBaseline()) {
 
             if (experimentType.isProteomicsBaseline()) {
@@ -68,70 +68,61 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         }
     }
 
-    private int addBioentityIdentifiersFromBaselineExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
+    private int addBioentityIdentifiersFromBaselineExperiments(HashSet<String> bioentityIdentifiers) {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
-
             LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
-            ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE);
-            BaselineAnalytics analytics = inputStream.readNext();
-            while (analytics != null) {
-                bioentityIdentifiers.add(analytics.getGeneId());
-                analytics = inputStream.readNext();
-            }
-            try {
-                inputStream.close();
-            } catch (IOException exception) {
-                LOGGER.error(exception.getMessage());
-            }
-        }
-
-        return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
-    }
-
-    private int addBioentityIdentifiersFromProteomicsBaselineExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
-        int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
-
-        for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
-
-            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
-
-            ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
-                    (experimentAccession, ExperimentType.PROTEOMICS_BASELINE);
-            BaselineAnalytics analytics = inputStream.readNext();
-            while (analytics != null) {
-                bioentityIdentifiers.add(analytics.getGeneId());
-                analytics = inputStream.readNext();
-            }
-            try {
-                inputStream.close();
-            } catch (IOException exception) {
-                LOGGER.error(exception.getMessage());
-            }
-        }
-
-        return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
-    }
-
-    private int addBioentityIdentifiersFromMicroarrayExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
-        int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
-
-        for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
-            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
-            MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-
-            for (String arrayDesign : experiment.getArrayDesignAccessions()) {
-                MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign);
-
-                DifferentialAnalytics analytics = inputStream.readNext();
+            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE)) {
+                BaselineAnalytics analytics = inputStream.readNext();
                 while (analytics != null) {
                     bioentityIdentifiers.add(analytics.getGeneId());
                     analytics = inputStream.readNext();
                 }
-                try {
-                    inputStream.close();
+            } catch (IOException exception) {
+                LOGGER.error(exception.getMessage());
+            }
+        }
+
+        return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
+    }
+
+    private int addBioentityIdentifiersFromProteomicsBaselineExperiments(HashSet<String> bioentityIdentifiers) {
+        int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
+
+        for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
+            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
+
+            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
+                    (experimentAccession, ExperimentType.PROTEOMICS_BASELINE)) {
+                BaselineAnalytics analytics = inputStream.readNext();
+                while (analytics != null) {
+                    bioentityIdentifiers.add(analytics.getGeneId());
+                    analytics = inputStream.readNext();
+                }
+            } catch (IOException exception) {
+                LOGGER.error(exception.getMessage());
+            }
+        }
+
+        return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
+    }
+
+    private int addBioentityIdentifiersFromMicroarrayExperiments(HashSet<String> bioentityIdentifiers) {
+        int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
+
+        for (String experimentAccession : experimentTrader.getMicroarrayExperimentAccessions()) {
+            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
+
+            MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+            for (String arrayDesign : experiment.getArrayDesignAccessions()) {
+                try (MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign)) {
+                    DifferentialAnalytics analytics = inputStream.readNext();
+                    while (analytics != null) {
+                        bioentityIdentifiers.add(analytics.getGeneId());
+                        analytics = inputStream.readNext();
+                    }
                 } catch (IOException exception) {
                     LOGGER.error(exception.getMessage());
                 }
@@ -141,20 +132,18 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
     }
 
-    private int addBioentityIdentifiersFromRnaSeqDifferentialExperiments(HashSet<String> bioentityIdentifiers) throws IOException {
+    private int addBioentityIdentifiersFromRnaSeqDifferentialExperiments(HashSet<String> bioentityIdentifiers) {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
         for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
             LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
-            RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
 
-            DifferentialAnalytics analytics = inputStream.readNext();
-            while (analytics != null) {
-                bioentityIdentifiers.add(analytics.getGeneId());
-                analytics = inputStream.readNext();
-            }
-            try {
-                inputStream.close();
+            try (RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession)) {
+                DifferentialAnalytics analytics = inputStream.readNext();
+                while (analytics != null) {
+                    bioentityIdentifiers.add(analytics.getGeneId());
+                    analytics = inputStream.readNext();
+                }
             } catch (IOException exception) {
                 LOGGER.error(exception.getMessage());
             }
@@ -164,21 +153,20 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
     }
 
     @Override
-    public HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) throws IOException {
+    public HashSet<String> getBioentityIdsFromExperiment(String experimentAccession) {
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
 
         HashSet<String> bioentityIdentifiers = new HashSet<>();
 
         if (experiment.getType().isBaseline()) {
-            ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
-                    (experimentAccession, experiment.getType());
-            BaselineAnalytics analytics = inputStream.readNext();
-            while (analytics != null) {
-                bioentityIdentifiers.add(analytics.getGeneId());
-                analytics = inputStream.readNext();
-            }
-            try {
-                inputStream.close();
+
+            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
+                    (experimentAccession, experiment.getType())) {
+                BaselineAnalytics analytics = inputStream.readNext();
+                while (analytics != null) {
+                    bioentityIdentifiers.add(analytics.getGeneId());
+                    analytics = inputStream.readNext();
+                }
             } catch (IOException exception) {
                 LOGGER.error(exception.getMessage());
             }
@@ -187,30 +175,26 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
 
             if (experiment.getType().isMicroarray()) {
                 for (String arrayDesign : ((MicroarrayExperiment) experiment).getArrayDesignAccessions()) {
-                    MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign);
 
-                    DifferentialAnalytics analytics = inputStream.readNext();
-                    while (analytics != null) {
-                        bioentityIdentifiers.add(analytics.getGeneId());
-                        analytics = inputStream.readNext();
-                    }
-                    try {
-                        inputStream.close();
+                    try (MicroarrayDifferentialAnalyticsInputStream inputStream = microarrayDifferentialAnalyticsInputStreamFactory.create(experimentAccession, arrayDesign)) {
+                        DifferentialAnalytics analytics = inputStream.readNext();
+                        while (analytics != null) {
+                            bioentityIdentifiers.add(analytics.getGeneId());
+                            analytics = inputStream.readNext();
+                        }
                     } catch (IOException exception) {
                         LOGGER.error(exception.getMessage());
                     }
                 }
 
             } else {
-                RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession);
 
-                DifferentialAnalytics analytics = inputStream.readNext();
-                while (analytics != null) {
-                    bioentityIdentifiers.add(analytics.getGeneId());
-                    analytics = inputStream.readNext();
-                }
-                try {
-                    inputStream.close();
+                try (RnaSeqDifferentialAnalyticsInputStream inputStream = rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession)) {
+                    DifferentialAnalytics analytics = inputStream.readNext();
+                    while (analytics != null) {
+                        bioentityIdentifiers.add(analytics.getGeneId());
+                        analytics = inputStream.readNext();
+                    }
                 } catch (IOException exception) {
                     LOGGER.error(exception.getMessage());
                 }
