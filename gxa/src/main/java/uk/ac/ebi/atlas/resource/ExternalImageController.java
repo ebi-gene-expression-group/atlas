@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.resource;
 
 
+import com.google.common.base.Function;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 import uk.ac.ebi.atlas.utils.ImageIOUtils;
 import com.google.common.base.Optional;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 @Controller
@@ -28,39 +27,30 @@ public class ExternalImageController {
 
     private ExtraInfoFactory extraInfoFactory;
 
-    private ImageIOUtils imageIOUtils;
-
     @Inject
-    public ExternalImageController(ImageIOUtils imageIOUtils,
-                                   ExtraInfoFactory extraInfoFactory,
+    public ExternalImageController(ExtraInfoFactory extraInfoFactory,
                                    ContrastImageFactory contrastImageFactory) {
-        this.imageIOUtils = imageIOUtils;
         this.extraInfoFactory = extraInfoFactory;
         this.contrastImageFactory = contrastImageFactory;
     }
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/extra-info.png")
-    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) throws IOException{
+    public void streamExtraInfoImage(HttpServletResponse response, @PathVariable String experimentAccession) {
 
-
-        InputStream imageInputStream = extraInfoFactory.getExtraInfo(experimentAccession).get();
-
-        streamExternalImage(response, imageInputStream);
+        streamExternalImage(response, extraInfoFactory.getExtraInfo(experimentAccession).get());
 
     }
 
     @ResponseBody
     @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/{fileName}")
     public void streamRnaSeqImage(HttpServletResponse response, @PathVariable String experimentAccession, @PathVariable String
-                                              contrastName, @PathVariable String fileName) throws IOException{
+                                              contrastName, @PathVariable String fileName) {
 
-        InputStream imageInputStream = contrastImageFactory.getContrastImage(
+        streamExternalImage(response, contrastImageFactory.getContrastImage(
                 ResourceType.forFileName(fileName),
                 experimentAccession,
-                contrastName).get();
-
-        streamExternalImage(response, imageInputStream);
+                contrastName).get());
     }
 
 
@@ -68,28 +58,24 @@ public class ExternalImageController {
     @RequestMapping(value = "/external-resources/{experimentAccession}/{arrayDesignAccession}/{contrastName}/{fileName}")
     public void streamMicroarrayImage(HttpServletResponse response, @PathVariable String experimentAccession,
                                             @PathVariable String arrayDesignAccession, @PathVariable String
-                                                        contrastName, @PathVariable String fileName) throws IOException{
+                                                        contrastName, @PathVariable String fileName) {
 
-        InputStream imageInputStream = contrastImageFactory.getContrastImage(
+        streamExternalImage(response, contrastImageFactory.getContrastImage(
                 ResourceType.forFileName(fileName),
                 experimentAccession,
                 Optional.of(arrayDesignAccession),
-                contrastName).get();
-
-        streamExternalImage(response, imageInputStream);
+                contrastName).get());
     }
 
-    void streamExternalImage(HttpServletResponse response, InputStream extraInfoImageInputStream) {
+    void streamExternalImage(HttpServletResponse response, Function<OutputStream, ?> callback) {
         try {
-
-            BufferedImage image = imageIOUtils.read(extraInfoImageInputStream);
 
             response.setContentType("image/png");
             OutputStream out = response.getOutputStream();
-            imageIOUtils.write(image, "png", out);
+            callback.apply(out);
             out.close();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Error loading external image");
         }
