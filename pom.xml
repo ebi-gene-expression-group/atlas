@@ -37,7 +37,7 @@
         <log.prudent>true</log.prudent>
 
         <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
-        <europepmc.base.url>/europepmc</europepmc.base.url>
+        <europepmc.base.url>https://www.ebi.ac.uk/europepmc</europepmc.base.url>
 
         <!-- mailtrap.io user: atlas-developers@ebi.ac.uk -->
         <!-- mailtrap.io password: atlas-ebi-14 -->
