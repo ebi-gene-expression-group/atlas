@@ -115,13 +115,17 @@
                     }
 
                     function replaceGeneQueryWithBioentities(url, bioentities) {
-                        var newGeneQuery = bioentities.join("%09");
+                        var newGeneQuery = bioentities.map(function(e){
+                            return ({
+                                value: e
+                            });
+                        });
 
                         if (url.indexOf("geneQuery") > -1) {
-                            return url.replace(/geneQuery=[^&]*/, "geneQuery="+newGeneQuery);
+                            return url.replace(/geneQuery=[^&]*/, "geneQuery=" + JSON.stringify(newGeneQuery));
                         }
 
-                        return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery="+newGeneQuery;
+                        return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery=" + JSON.stringify(newGeneQuery);
                     }
 
                     var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);

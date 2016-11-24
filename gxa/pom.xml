@@ -27,7 +27,6 @@
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
-        <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
     </properties>
 
     <build>
