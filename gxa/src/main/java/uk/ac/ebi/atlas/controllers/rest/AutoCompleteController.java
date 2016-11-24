@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
-
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
 import com.google.gson.Gson;
@@ -24,18 +23,21 @@ public class AutoCompleteController {
         this.suggestionService = suggestionService;
     }
 
-    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET,
+                    produces = "application/json;charset=UTF-8")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String fetchTopSuggestions(@RequestParam(value = "query") String query,
-                                      @RequestParam(value = "species", required = false, defaultValue="") String species) {
+    public String fetchTopSuggestions(
+            @RequestParam(value = "query") String query,
+            @RequestParam(value = "species", required = false, defaultValue="") String species) {
+
         if (StringUtils.isBlank(query)) {
             return StringUtils.EMPTY;
         }
 
         List<SemanticQueryTerm> suggestions = suggestionService.fetchTopSuggestions(query, species);
-
         return new Gson().toJson(suggestions);
+
     }
 
 }

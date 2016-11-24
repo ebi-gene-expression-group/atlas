@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
@@ -11,9 +10,7 @@ public class BioentityIndexControllerEIT extends RestAssuredAuthenticatedFixture
 
     @Test
     public void statusShouldBeInitialized() {
-
         expect().statusCode(200).and().body(is("INITIALIZED")).when().get("buildIndex/status");
-
     }
 
 }
