@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -25,7 +24,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConditionsLookupServiceTest {
@@ -74,7 +72,7 @@ public class ConditionsLookupServiceTest {
         subject = new ConditionsLookupService(efoLookupService);
     }
 
-    @Ignore
+    @Test
     public void buildDifferentialConditionProperties() throws Exception {
         when(efoLookupService.expandOntologyTerms(Matchers.<ImmutableSetMultimap<String, String>>any())).thenReturn(
                 ImmutableSetMultimap.<String, String>of()

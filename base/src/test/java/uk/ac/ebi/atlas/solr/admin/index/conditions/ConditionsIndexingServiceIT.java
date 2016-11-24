@@ -27,20 +27,20 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class ConditionsIndexingServiceIT {
 
-    SolrClient baselineConditionsCore;
+    private SolrClient baselineConditionsCore;
 
-    SolrClient differentialConditionsCore;
-
-    @Inject
-    ConditionsLookupService conditionsLookupService;
+    private SolrClient differentialConditionsCore;
 
     @Inject
-    ConfigurationTrader configurationTrader;
+    private ConditionsLookupService conditionsLookupService;
 
     @Inject
-    CondensedSdrfParser condensedSdrfParser;
+    private ConfigurationTrader configurationTrader;
 
-    ConditionsIndexingService subject;
+    @Inject
+    private CondensedSdrfParser condensedSdrfParser;
+
+    private ConditionsIndexingService subject;
 
     @Before
     public void setUp(){
