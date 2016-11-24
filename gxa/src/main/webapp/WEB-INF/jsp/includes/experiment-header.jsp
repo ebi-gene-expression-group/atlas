@@ -7,10 +7,6 @@
 <%--@elvariable id="qcArrayDesigns" type="java.util.SortedSet"--%>
 <%--@elvariable id="experiment" type="atlas.model.Experiment"--%>
 
-<%@ page import="java.nio.file.Path" %>
-<%@ page import="org.apache.commons.io.IOUtils" %>
-<%@ page import="java.nio.file.Files" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
