@@ -1,3 +1,5 @@
+// The algorithm is described here: https://www.pivotaltracker.com/story/show/133523275/comments/154718111
+
 const validateDataSeries = require('../PropTypes.js').validateDataSeries;
 const Colour = require("color");
 
@@ -79,15 +81,11 @@ const dataClassesFromSeries = dataSeries => {
         L = xs.length;
     }
 
-    return (
-        xs.map(x => {
-            return {
-                from: x.min,
-                to: x.max,
-                color: x.medianColour.hexString()
-            };
-        })
-    );
+    return xs.map(x => ({
+        from: x.min,
+        to: x.max,
+        color: x.medianColour.hexString()
+    }))
 };
 
 const getColorAxisFromDataSeries = (config, dataSeries) =>
