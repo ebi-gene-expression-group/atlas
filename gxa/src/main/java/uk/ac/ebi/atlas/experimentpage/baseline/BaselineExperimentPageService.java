@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
@@ -12,8 +11,6 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
@@ -94,7 +91,11 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         result.add("columnGroupings",factorGroupingService.group(filteredAssayGroupFactors));
 
         try {
-            result.add("profiles", viewModelAsJson(heatMapResults.getJsonProfiles()));
+            result.add("profiles", heatMapResults.getJsonProfiles());
+            //TODO remove me after old heatmap goes away, the new heatmap handles no data gracefully
+            if(heatMapResults.getJsonProfiles().get("rows").getAsJsonArray().size() == 0 ){
+                return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+            }
 
             result.add("jsonCoexpressions", heatMapResults.getJsonCoexpressions());
 
@@ -130,15 +131,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         return result;
     }
 
-    // heatmap-data.jsp will understand "" as empty
-    private JsonElement viewModelAsJson(JsonObject viewModel){
-        return viewModel.has("rows")
-                && viewModel.get("rows").isJsonArray()
-                && viewModel.get("rows").getAsJsonArray().size() >0
-                ? viewModel
-                : new JsonPrimitive("");
-    }
-    
     private JsonArray constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors, BaselineExperiment experiment){
         JsonArray result = new JsonArray();
 

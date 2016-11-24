@@ -103,6 +103,12 @@ public class DifferentialExperimentPageService<E extends DifferentialExperiment,
                     result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
                     result.add("profiles",differentialProfilesViewModelBuilder.build
                             (differentialProfiles, contrasts));
+
+                    //TODO remove me after old heatmap goes away, the new heatmap handles no data gracefully
+                    if(differentialProfilesViewModelBuilder.build(differentialProfiles, contrasts)
+                            .get("rows").getAsJsonArray().size() == 0 ){
+                        return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+                    }
                     result.add("geneSetProfiles", JsonNull.INSTANCE);
                     result.add("jsonCoexpressions", new JsonArray());
                     result.add("config",heatmapDataToJsonService.configAsJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create
