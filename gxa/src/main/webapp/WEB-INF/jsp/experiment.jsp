@@ -116,17 +116,10 @@
             $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
         });
 
-        var geneQueryStr = '${preferences.geneQuery.json}';
-        if (geneQueryStr) {
-            try {
-                geneQueryTags = JSON.parse(geneQueryStr);
-            } catch (SyntaxError){
-                geneQueryTags = [{value:geneQueryStr}];
-            }
-            geneQueryTags.forEach(function(geneQueryTag) {
-                $geneQuery.jsonTagEditor('addTag', JSON.stringify(geneQueryTag));
-            });
-        }
+        var geneQueryTagsPopulatedInTemplate = ${preferences.geneQuery.json};
+        geneQueryTagsPopulatedInTemplate.forEach(function(geneQueryTag) {
+            $geneQuery.jsonTagEditor('addTag', JSON.stringify(geneQueryTag));
+        });
     });
 
 </script>

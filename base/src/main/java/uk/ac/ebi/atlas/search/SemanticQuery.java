@@ -70,7 +70,7 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return terms().size();
     }
 
-    //Don't rename me. experiment.jsp: var geneQueryStr = '${preferences.geneQuery.json}';
+    //Don't rename me. experiment.jsp: var geneQueryTagsPopulatedInTemplate = ${preferences.geneQuery.json};
     public String getJson(){
         return toJson();
     }
