@@ -1,1 +1,1 @@
-module.exports = require(`./src/highchartsHeatmapRenderer.js`);
+module.exports = require(`expression-atlas-heatmap-highcharts`);
