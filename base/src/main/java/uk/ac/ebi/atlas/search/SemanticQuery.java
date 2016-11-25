@@ -70,15 +70,19 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return terms().size();
     }
 
+    //Don't rename me. experiment.jsp: var geneQueryStr = '${preferences.geneQuery.json}';
+    public String getJson(){
+        return toJson();
+    }
+
     public String toJson() {
         Gson gson = new Gson();
         return gson.toJson(terms());
     }
 
     public String toUrlEncodedJson(){
-        Gson gson = new Gson();
         try {
-            return URLEncoder.encode(gson.toJson(terms()), "UTF-8");
+            return URLEncoder.encode(toJson(), "UTF-8");
         } catch(UnsupportedEncodingException e){
             throw new RuntimeException(e);
         }

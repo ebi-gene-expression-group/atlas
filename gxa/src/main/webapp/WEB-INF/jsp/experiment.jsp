@@ -116,7 +116,7 @@
             $geneQuery.jsonTagEditor('removeTag', geneQueryTag.value);
         });
 
-        var geneQueryStr = '${preferences.geneQuery}';
+        var geneQueryStr = '${preferences.geneQuery.json}';
         if (geneQueryStr) {
             try {
                 geneQueryTags = JSON.parse(geneQueryStr);
