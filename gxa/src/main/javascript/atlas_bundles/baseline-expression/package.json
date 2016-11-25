@@ -12,7 +12,7 @@
   "private": true,
   "dependencies": {
     "expression-atlas-feedback": "file:../../atlas_modules/feedback",
-    "expression-atlas-heatmap-highcharts": "file:../heatmap-highcharts",
+    "expression-atlas-heatmap-highcharts": "latest",
     "jquery": "^2.2.1",
     "jquery.browser": "^0.1.0",
     "react": "^0.14.7",

@@ -36,6 +36,7 @@
     "expression-atlas-cell-differential": "file:./atlas_modules/cell-differential",
     "expression-atlas-contrast-tooltips": "file:./atlas_modules/contrast-tooltips",
     "expression-atlas-display-levels-button": "file:./atlas_modules/display-levels-button",
+    "expression-atlas-heatmap-highcharts": "latest",
     "expression-atlas-legend": "file:./atlas_modules/legend",
     "fancybox": "^3.0.0",
     "he": "^1.1.0",
