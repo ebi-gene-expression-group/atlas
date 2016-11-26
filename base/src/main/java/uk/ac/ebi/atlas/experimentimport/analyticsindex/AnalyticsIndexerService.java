@@ -49,15 +49,20 @@ public class AnalyticsIndexerService {
             Iterator<SolrInputDocument> it = solrInputDocuments(experiment, bioentityIdToIdentifierSearch).iterator();
             while (it.hasNext()) {
                 while (addedIntoThisBatch < batchSize && it.hasNext()) {
-                    toLoad.add(it.next());
-                    addedIntoThisBatch++;
+                    SolrInputDocument analyticsInputDocument = it.next();
+                    if (AnalyticsIndexDocumentValidator.validate(analyticsInputDocument)) {
+                        toLoad.add(analyticsInputDocument);
+                        addedIntoThisBatch++;
+                    }
                 }
-                UpdateResponse r = solrClient.add(toLoad);
-                LOGGER.info("Sent {} documents for {}, qTime:{} ",
-                        addedIntoThisBatch,experiment.getAccession(), r.getQTime());
-                addedInTotal += addedIntoThisBatch;
-                addedIntoThisBatch = 0;
-                toLoad = new ArrayList<>(batchSize);
+                if (addedIntoThisBatch > 0) {
+                    UpdateResponse r = solrClient.add(toLoad);
+                    LOGGER.info("Sent {} documents for {}, qTime:{} ",
+                            addedIntoThisBatch,experiment.getAccession(), r.getQTime());
+                    addedInTotal += addedIntoThisBatch;
+                    addedIntoThisBatch = 0;
+                    toLoad = new ArrayList<>(batchSize);
+                }
             }
         } catch (IOException| SolrServerException e) {
             LOGGER.error(e.getMessage(), e);

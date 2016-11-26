@@ -64,7 +64,8 @@ public class AnalyticsIndexerManager extends Observable {
         setChangedAndNotifyObservers(descendingFileSizeToExperimentAccessions);
 
         ImmutableMap<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch =
-        bioentityPropertiesDao.getMap(bioentityIdentifiersReader.getBioentityIdsFromExperiments(ExperimentType.values()));
+                bioentityPropertiesDao.getMap(bioentityIdentifiersReader
+                        .getBioentityIdsFromExperiments(ExperimentType.values()));
         setChangedAndNotifyObservers("Extracted "+bioentityIdToIdentifierSearch.size()+" bioentityIds from experiments");
 
         indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(),

@@ -16,8 +16,9 @@ public class SolrInputDocumentIterable implements Iterable<SolrInputDocument> {
 
     private final Iterator<? extends ExperimentDataPoint> experimentDataPointIterator;
     private final Map<String,Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier;
-    public SolrInputDocumentIterable(Iterator<? extends ExperimentDataPoint> experimentDataPointIterator, Map<String,
-            Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier){
+
+    public SolrInputDocumentIterable(Iterator<? extends ExperimentDataPoint> experimentDataPointIterator,
+                                     Map<String, Map<BioentityPropertyName, Set<String>>> propertiesPerBioentityIdentifier){
         this.experimentDataPointIterator = experimentDataPointIterator;
         this.propertiesPerBioentityIdentifier = propertiesPerBioentityIdentifier;
     }
@@ -31,7 +32,7 @@ public class SolrInputDocumentIterable implements Iterable<SolrInputDocument> {
     }
 
 
-    static SolrInputDocument create(ExperimentDataPoint experimentDataPoint,Map<BioentityPropertyName, Set<String>>
+    private static SolrInputDocument create(ExperimentDataPoint experimentDataPoint,Map<BioentityPropertyName, Set<String>>
             bioentityProperties){
 
         SolrInputDocument solrInputDocument = new SolrInputDocument();
