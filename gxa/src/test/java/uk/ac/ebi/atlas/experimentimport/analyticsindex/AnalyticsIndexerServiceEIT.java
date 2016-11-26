@@ -58,11 +58,13 @@ public class AnalyticsIndexerServiceEIT {
     @Inject
     private AnalyticsQueryClient analyticsQueryClient;
 
-    private AnalyticsIndexerService subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
+    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator = new AnalyticsIndexDocumentValidator();
+
+    private AnalyticsIndexerService subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
 
     @Before
     public void setUp() {
-        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
+        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
     }
 
     @Test
@@ -121,8 +123,10 @@ public class AnalyticsIndexerServiceEIT {
         assertThat(identifiersForThatExperiment, not(empty()));
 
         for(SolrInputDocument solrInputDocument: results) {
-            String bioentityIdentifier = solrInputDocument.getField("bioentityIdentifier").getValue().toString();
-            assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
+            if (analyticsIndexDocumentValidator.validate(solrInputDocument)) {
+                String bioentityIdentifier = solrInputDocument.getField("bioentityIdentifier").getValue().toString();
+                assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
+            }
          }
 
     }

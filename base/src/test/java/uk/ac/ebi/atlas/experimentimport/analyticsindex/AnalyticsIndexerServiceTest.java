@@ -13,9 +13,8 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import java.io.IOException;
@@ -28,26 +27,31 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnalyticsIndexerServiceTest {
 
     @Mock
-    SolrClient solrClient;
+    private SolrClient solrClient;
     @Mock
-    ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
+    private ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
+    @Mock
+    private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator;
 
     private AnalyticsIndexerService subject;
 
-    private Experiment experiment = BaselineExperimentTest.mockExperiment();
+    @Mock
+    private BaselineExperiment experiment;
 
     @Before
     public void setUp() throws Exception {
         UpdateResponse r = Mockito.mock(UpdateResponse.class);
         when(r.getQTime()).thenReturn(10);
         when(solrClient.add(Matchers.anyCollectionOf(SolrInputDocument.class))).thenReturn(r);
+        when(analyticsIndexDocumentValidator.validate(any(SolrInputDocument.class))).thenReturn(true);
 
-        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory);
+        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
     }
 
     @Test
@@ -61,7 +65,6 @@ public class AnalyticsIndexerServiceTest {
 
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
         int batchSize = 8000;
-
 
         int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
 
@@ -129,6 +132,7 @@ public class AnalyticsIndexerServiceTest {
                 return ImmutableList.of(experimentDataPoint);
             }
         }).when(experimentDataPointStreamFactory).stream(experiment);
+
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
         int batchSize = 1;
 

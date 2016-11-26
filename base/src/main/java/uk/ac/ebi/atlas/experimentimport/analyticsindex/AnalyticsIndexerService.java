@@ -22,14 +22,16 @@ public class AnalyticsIndexerService {
 
     private final SolrClient solrClient;
     private final ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
+    private final AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator;
 
     @Inject
     public AnalyticsIndexerService(@Qualifier("solrClientAnalytics") SolrClient solrClient,
-                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory) {
+                                   ExperimentDataPointStreamFactory experimentDataPointStreamFactory,
+                                   AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator) {
         this.solrClient = solrClient;
         this.experimentDataPointStreamFactory = experimentDataPointStreamFactory;
+        this.analyticsIndexDocumentValidator = analyticsIndexDocumentValidator;
     }
-
 
     Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment,
                                                    Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch)
@@ -50,7 +52,7 @@ public class AnalyticsIndexerService {
             while (it.hasNext()) {
                 while (addedIntoThisBatch < batchSize && it.hasNext()) {
                     SolrInputDocument analyticsInputDocument = it.next();
-                    if (AnalyticsIndexDocumentValidator.validate(analyticsInputDocument)) {
+                    if (analyticsIndexDocumentValidator.validate(analyticsInputDocument)) {
                         toLoad.add(analyticsInputDocument);
                         addedIntoThisBatch++;
                     }
