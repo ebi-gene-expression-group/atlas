@@ -73,9 +73,9 @@ public class BaselineAnalyticsFacetsReader {
         public int compare(String o1, String o2) {
             if (o1.equals(o2)) {
                 return 0;
-            } else  if (o1.equals("homo sapiens")) {
+            } else  if ("homo sapiens".equalsIgnoreCase(o1)) {
                 return -1;
-            } else if (o2.equals("homo sapiens")) {
+            } else if ("homo sapiens".equalsIgnoreCase(o2)) {
                 return 1;
             }
             else {
@@ -89,9 +89,9 @@ public class BaselineAnalyticsFacetsReader {
         public int compare(FacetTreeItem o1, FacetTreeItem o2) {
             if (o1.name().equals(o2.name())) {
                 return 0;
-            } else if (o1.name().equals("ORGANISM_PART")) {
+            } else if ("organism_part".equalsIgnoreCase(o1.name())) {
                 return -1;
-            } else if (o2.name().equals("ORGANISM_PART")) {
+            } else if ("organism_part".equalsIgnoreCase(o2.name())) {
                 return 1;
             } else {
                 return o1.name().compareTo(o2.name());
