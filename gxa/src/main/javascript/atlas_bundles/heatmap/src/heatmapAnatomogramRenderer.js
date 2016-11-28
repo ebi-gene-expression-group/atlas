@@ -53,7 +53,7 @@ exports.render = function(options) {
             {   key: JSON.stringify(options.params),
                 sourceURL: sourceURL,
                 atlasBaseURL: atlasBaseURL,
-                pathToFolderWithBundledResources:linksAtlasBaseURL+"/resources/js-bundles",
+                pathToFolderWithBundledResources:linksAtlasBaseURL+"/resources/js-bundles/",
                 linksAtlasBaseURL: linksAtlasBaseURL,
                 type: options.isMultiExperiment ? ExperimentTypes.MULTIEXPERIMENT : ExperimentTypes.BASELINE,
                 showAnatomogram: options.showAnatomogram === undefined ? true : options.showAnatomogram,

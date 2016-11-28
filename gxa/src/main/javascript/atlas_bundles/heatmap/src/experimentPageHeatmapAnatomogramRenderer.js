@@ -45,7 +45,7 @@ exports.render = function(options) {
                 type: type,
                 sourceURL: options.sourceURL,
                 atlasBaseURL: atlasBaseURL,
-                pathToFolderWithBundledResources:linksAtlasBaseURL+"/resources/js-bundles",
+                pathToFolderWithBundledResources:linksAtlasBaseURL+"/resources/js-bundles/",
                 linksAtlasBaseURL: linksAtlasBaseURL
             }
         ),
