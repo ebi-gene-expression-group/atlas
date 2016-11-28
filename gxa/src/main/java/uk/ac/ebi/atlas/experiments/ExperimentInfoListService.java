@@ -20,8 +20,7 @@ import javax.inject.Named;
 import java.util.List;
 
 @Named
-@Scope("prototype")
-public class ExperimentInfoListBuilder {
+public class ExperimentInfoListService {
 
     private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
 
@@ -39,7 +38,7 @@ public class ExperimentInfoListBuilder {
 
 
     @Inject
-    public ExperimentInfoListBuilder(ExpressionAtlasExperimentTrader experimentTrader,
+    public ExperimentInfoListService(ExpressionAtlasExperimentTrader experimentTrader,
                                      RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache,
                                      ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
@@ -55,7 +54,7 @@ public class ExperimentInfoListBuilder {
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
-    public List<ExperimentInfo> build() {
+    public List<ExperimentInfo> listPublicExperiments() {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
         experimentInfos.addAll(extractBaselineExperiments());
@@ -63,6 +62,7 @@ public class ExperimentInfoListBuilder {
         experimentInfos.addAll(extractRnaSeqDiffExperiments());
         experimentInfos.addAll(extractMicroarrayExperiments());
 
+        //TODO This looks insane - possibly desired because we're using the experiments page to warm the caches? Wojtek
         for (ExperimentInfo experimentInfo : experimentInfos) {
             publicExperimentTypesCache.getExperimentType(experimentInfo.getExperimentAccession());
         }

@@ -41,7 +41,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExperimentInfoListBuilderTest {
+public class ExperimentInfoListServiceTest {
 
     private static final String FACTOR_NAME = "FACTOR_NAME";
     private static final String SPECIES = "SPECIES";
@@ -86,7 +86,7 @@ public class ExperimentInfoListBuilderTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
-    private ExperimentInfoListBuilder subject;
+    private ExperimentInfoListService subject;
 
 
     @Before
@@ -137,7 +137,7 @@ public class ExperimentInfoListBuilderTest {
         when(rnaSeqDiffExperimentsCacheMock.getExperiment(DIFFERENTIAL_ACCESSION)).thenReturn(differentialExperimentMock);
         when(microarrayExperimentsCacheMock.getExperiment(MICROARRAY_ACCESSION)).thenReturn(microarrayExperimentMock);
 
-        subject = new ExperimentInfoListBuilder(experimentTraderMock,
+        subject = new ExperimentInfoListService(experimentTraderMock,
                 rnaSeqBaselineExperimentsCacheMock,
                 proteomicsBaselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock,
                 microarrayExperimentsCacheMock,
@@ -147,7 +147,7 @@ public class ExperimentInfoListBuilderTest {
 
     @Test
     public void testBuild()  {
-        List<ExperimentInfo> experimentInfos = subject.build();
+        List<ExperimentInfo> experimentInfos = subject.listPublicExperiments();
         assertThat(experimentInfos.size(), is(3));
         assertThat(experimentInfos.get(0).getExperimentAccession(), is(BASELINE_ACCESSION));
         assertThat(experimentInfos.get(1).getExperimentAccession(), is(DIFFERENTIAL_ACCESSION));

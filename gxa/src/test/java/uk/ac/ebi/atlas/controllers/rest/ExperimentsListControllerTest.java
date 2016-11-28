@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experiments.ExperimentsListController;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
-import uk.ac.ebi.atlas.experiments.ExperimentInfoListBuilder;
+import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -23,7 +23,7 @@ public class ExperimentsListControllerTest {
             "\",\"numberOfAssays\":0,\"numberOfContrasts\":0,\"experimentalFactors\":[],\"arrayDesigns\":[],\"arrayDesignNames\":[]}]}";
 
     @Mock
-    private ExperimentInfoListBuilder experimentInfoListBuilderMock;
+    private ExperimentInfoListService experimentInfoListServiceMock;
 
     private ExperimentInfo experimentInfo = new ExperimentInfo();
 
@@ -34,9 +34,9 @@ public class ExperimentsListControllerTest {
 
         experimentInfo.setExperimentAccession(EXPERIMENT_ACCESSION);
 
-        when(experimentInfoListBuilderMock.build()).thenReturn(Lists.newArrayList(experimentInfo));
+        when(experimentInfoListServiceMock.listPublicExperiments()).thenReturn(Lists.newArrayList(experimentInfo));
 
-        subject = new ExperimentsListController(experimentInfoListBuilderMock);
+        subject = new ExperimentsListController(experimentInfoListServiceMock);
     }
 
     @Test

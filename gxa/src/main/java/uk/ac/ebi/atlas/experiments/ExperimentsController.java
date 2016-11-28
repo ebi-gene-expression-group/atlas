@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Scope("request")
 public class ExperimentsController {
 
-    @RequestMapping(value = "/experiments", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/experiments", method = RequestMethod.GET)
     public String getExperimentsListParameters(
             @RequestParam(value = "experimentType", required = false) String experimentType,
             @RequestParam(value = "kingdom", required = false) String kingdom,

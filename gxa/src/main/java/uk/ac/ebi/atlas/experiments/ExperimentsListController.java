@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
-import uk.ac.ebi.atlas.experiments.ExperimentInfoListBuilder;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -21,11 +20,11 @@ import java.util.List;
 public class ExperimentsListController {
 
     private Gson gson = new Gson();
-    private ExperimentInfoListBuilder experimentInfoListBuilder;
+    private ExperimentInfoListService experimentInfoListService;
 
     @Inject
-    public ExperimentsListController(ExperimentInfoListBuilder experimentInfoListBuilder) {
-        this.experimentInfoListBuilder = experimentInfoListBuilder;
+    public ExperimentsListController(ExperimentInfoListService experimentInfoListService) {
+        this.experimentInfoListService = experimentInfoListService;
     }
 
     /**
@@ -36,7 +35,7 @@ public class ExperimentsListController {
     @ResponseBody
     public String getExperimentsList() {
 
-        List<ExperimentInfo> experimentInfos = experimentInfoListBuilder.build();
+        List<ExperimentInfo> experimentInfos = experimentInfoListService.listPublicExperiments();
         Collections.sort(experimentInfos);
 
         return gson.toJson(new ExperimentInfoWrapper(experimentInfos));
