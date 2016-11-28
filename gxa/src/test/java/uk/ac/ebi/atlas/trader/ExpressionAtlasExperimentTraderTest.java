@@ -58,6 +58,7 @@ public class ExpressionAtlasExperimentTraderTest {
 
     @Before
     public void initSubject(){
+
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
@@ -69,6 +70,9 @@ public class ExpressionAtlasExperimentTraderTest {
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_TABM_713));
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets.newHashSet(E_PROT_1));
+
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE,ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets
+                .newHashSet(E_MTAB_513, E_MTAB_599, E_PROT_1));
 
         subject = new ExpressionAtlasExperimentTrader(experimentDAOMock,
                 rnaSeqBaselineExperimentsCacheMock,
