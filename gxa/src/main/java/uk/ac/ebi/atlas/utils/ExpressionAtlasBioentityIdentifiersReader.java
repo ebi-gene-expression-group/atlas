@@ -50,13 +50,7 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
     @Override
     protected int addBioentityIdentifiers(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) {
         if (experimentType.isBaseline()) {
-
-            if (experimentType.isProteomicsBaseline()) {
-                return addBioentityIdentifiersFromProteomicsBaselineExperiments(bioentityIdentifiers);
-            } else {
-                return addBioentityIdentifiersFromBaselineExperiments(bioentityIdentifiers);
-            }
-
+            return addBioentityIdentifiersFromBaselineExperiments(bioentityIdentifiers, experimentType);
         } else {  //if (experimentType.isDifferential()) {
 
             if (experimentType.isMicroarray()) {
@@ -68,34 +62,13 @@ public class ExpressionAtlasBioentityIdentifiersReader extends BioentityIdentifi
         }
     }
 
-    private int addBioentityIdentifiersFromBaselineExperiments(HashSet<String> bioentityIdentifiers) {
+    private int addBioentityIdentifiersFromBaselineExperiments(HashSet<String> bioentityIdentifiers, ExperimentType experimentType) {
         int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+        for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
 
-            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE)) {
-                BaselineAnalytics analytics = inputStream.readNext();
-                while (analytics != null) {
-                    bioentityIdentifiers.add(analytics.getGeneId());
-                    analytics = inputStream.readNext();
-                }
-            } catch (IOException exception) {
-                LOGGER.error(exception.getMessage());
-            }
-        }
-
-        return bioentityIdentifiers.size() - bioentityIdentifiersSizeWithoutNewElements;
-    }
-
-    private int addBioentityIdentifiersFromProteomicsBaselineExperiments(HashSet<String> bioentityIdentifiers) {
-        int bioentityIdentifiersSizeWithoutNewElements = bioentityIdentifiers.size();
-
-        for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
-            LOGGER.debug("Reading bioentity identifiers in {}", experimentAccession);
-
-            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create
-                    (experimentAccession, ExperimentType.PROTEOMICS_BASELINE)) {
+            try (ObjectInputStream<BaselineAnalytics> inputStream = baselineAnalyticsInputStreamFactory.create(experimentAccession, experimentType)) {
                 BaselineAnalytics analytics = inputStream.readNext();
                 while (analytics != null) {
                     bioentityIdentifiers.add(analytics.getGeneId());

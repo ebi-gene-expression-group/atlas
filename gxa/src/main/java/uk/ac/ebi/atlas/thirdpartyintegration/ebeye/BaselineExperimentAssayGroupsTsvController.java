@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
@@ -18,12 +20,7 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 
 /**
- * Created with IntelliJ IDEA.
- * User: barrera
- * Date: 09/01/2014
- *
  * Generates a tsv url with a List of all assayGroups_id details for all baseline experiments
- *
  */
 @Controller
 @Scope("request")
@@ -44,21 +41,21 @@ public class BaselineExperimentAssayGroupsTsvController {
     }
 
     private void getAllBaselineExperimentsAssayGroups(HttpServletResponse response) throws IOException {
-        BaselineExperiment baselineExperiment;
         BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines;
         response.setContentType("text/tab-separated-values");
         PrintWriter writer = response.getWriter();
 
 
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+        for (Experiment experiment : experimentTrader.getPublicExperiments(
+                ExperimentType.RNASEQ_MRNA_BASELINE, ExperimentType.PROTEOMICS_BASELINE)) {
             try {
-                baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-                baselineExperimentAssayGroupsLines = new BaselineExperimentAssayGroupsLines(baselineExperiment);
+                baselineExperimentAssayGroupsLines = new BaselineExperimentAssayGroupsLines(
+                        (BaselineExperiment) experiment);
                 extractLinesToTSVFormat(baselineExperimentAssayGroupsLines, writer);
             } catch (RuntimeException e){
-                LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experimentAccession, e));
-                writer.write("Error while attempting to write "+experimentAccession+", file incomplete!!!");
+                LOGGER.error(MessageFormat.format("Failed when loading {0}, error: {1}", experiment.getAccession(), e));
+                writer.write("Error while attempting to write "+experiment.getAccession()+", file incomplete!!!");
                 break;
             }
         }

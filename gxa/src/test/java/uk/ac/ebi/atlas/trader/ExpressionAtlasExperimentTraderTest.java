@@ -87,12 +87,13 @@ public class ExpressionAtlasExperimentTraderTest {
 
     @Test
     public void testGetBaselineExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getBaselineExperimentAccessions(), containsInAnyOrder(E_MTAB_513, E_MTAB_599));
+        assertThat(subject.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE), containsInAnyOrder(E_MTAB_513, E_MTAB_599));
     }
 
     @Test
     public void testGetDifferentialExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getRnaSeqDifferentialExperimentAccessions(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+        assertThat(subject.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400,
+                E_GEOD_21860));
     }
 
     @Test

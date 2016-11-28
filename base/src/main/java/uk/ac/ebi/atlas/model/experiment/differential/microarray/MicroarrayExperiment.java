@@ -5,6 +5,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -44,5 +45,13 @@ public class MicroarrayExperiment extends DifferentialExperiment {
         result.put("allArrayDesigns",getArrayDesignNames());
         return result;
 
+    }
+
+    @Override
+    public ExperimentInfo getExperimentInfo(){
+        ExperimentInfo experimentInfo = super.getExperimentInfo();
+        experimentInfo.setArrayDesigns(arrayDesignAccessions);
+        experimentInfo.setArrayDesignNames(arrayDesignNames);
+        return experimentInfo;
     }
 }

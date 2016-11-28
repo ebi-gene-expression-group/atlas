@@ -1,15 +1,20 @@
 package uk.ac.ebi.atlas.experiments;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
@@ -28,15 +33,12 @@ import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -126,23 +128,27 @@ public class ExperimentInfoListServiceTest {
                 "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
                 Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
 
+        final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment>> experimentAccessionsPerType = ImmutableMap.of(
+                baselineExperiment.getType(), ImmutableSet.of(baselineExperiment),
+                differentialExperimentMock.getType(), ImmutableSet.of(differentialExperimentMock),
+                microarrayExperimentMock.getType(), ImmutableSet.of(microarrayExperimentMock)
+        );
 
+
+        doAnswer(new Answer() {
+            @Override
+            public Set<?> answer(InvocationOnMock invocationOnMock) throws Throwable {
+                ExperimentType experimentType = (ExperimentType) invocationOnMock.getArguments()[0];
+                return experimentAccessionsPerType.containsKey(experimentType) ? experimentAccessionsPerType.get
+                        (experimentType) : ImmutableSet.of();
+            }
+        }).when(experimentTraderMock).getPublicExperiments(Mockito.<ExperimentType[]>anyVararg());
+
+        //call real method on big method, small one takes from this map
         when(experimentDesignMock.getFactorHeaders()).thenReturn(Sets.newTreeSet(Sets.newHashSet(FACTOR_NAME)));
 
-        when(experimentTraderMock.getBaselineExperimentAccessions()).thenReturn(Sets.newHashSet(BASELINE_ACCESSION));
-        when(experimentTraderMock.getRnaSeqDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(DIFFERENTIAL_ACCESSION));
-        when(experimentTraderMock.getMicroarrayExperimentAccessions()).thenReturn(Sets.newHashSet(MICROARRAY_ACCESSION));
-
-        when(rnaSeqBaselineExperimentsCacheMock.getExperiment(BASELINE_ACCESSION)).thenReturn(baselineExperiment);
-        when(rnaSeqDiffExperimentsCacheMock.getExperiment(DIFFERENTIAL_ACCESSION)).thenReturn(differentialExperimentMock);
-        when(microarrayExperimentsCacheMock.getExperiment(MICROARRAY_ACCESSION)).thenReturn(microarrayExperimentMock);
-
-        subject = new ExperimentInfoListService(experimentTraderMock,
-                rnaSeqBaselineExperimentsCacheMock,
-                proteomicsBaselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock,
-                microarrayExperimentsCacheMock,
-                publicExperimentTypesCacheMock,
-                arrayDesignTraderMock);
+        subject = new ExperimentInfoListService(experimentTraderMock
+        );
     }
 
     @Test
@@ -152,33 +158,6 @@ public class ExperimentInfoListServiceTest {
         assertThat(experimentInfos.get(0).getExperimentAccession(), is(BASELINE_ACCESSION));
         assertThat(experimentInfos.get(1).getExperimentAccession(), is(DIFFERENTIAL_ACCESSION));
         assertThat(experimentInfos.get(2).getExperimentAccession(), is(MICROARRAY_ACCESSION));
-    }
-
-    @Test
-    public void testExtractMicroarrayExperiments()  {
-        List<ExperimentInfo> experimentInfos = subject.extractMicroarrayExperiments();
-        assertThat(experimentInfos.size(), is(1));
-        ExperimentInfo experimentInfo = experimentInfos.get(0);
-        assertThat(experimentInfo.getNumberOfAssays(), is(2));
-        assertThat(experimentInfo.getNumberOfContrasts(), is(1));
-        assertThat(experimentInfo.getArrayDesigns(), contains(ARRAY));
-    }
-
-    @Test
-    public void testExtractRnaSeqDiffExperiments()  {
-        List<ExperimentInfo> experimentInfos = subject.extractRnaSeqDiffExperiments();
-        assertThat(experimentInfos.size(), is(1));
-        ExperimentInfo experimentInfo = experimentInfos.get(0);
-        assertThat(experimentInfo.getNumberOfAssays(), is(2));
-        assertThat(experimentInfo.getNumberOfContrasts(), is(1));
-    }
-
-    @Test
-    public void testExtractBaselineExperiments() {
-        List<ExperimentInfo> experimentInfos = subject.extractBaselineExperiments();
-        assertThat(experimentInfos.size(), is(1));
-        ExperimentInfo experimentInfo = experimentInfos.get(0);
-        assertThat(experimentInfo.getExperimentalFactors(), contains(FACTOR_NAME));
     }
 
     @Test

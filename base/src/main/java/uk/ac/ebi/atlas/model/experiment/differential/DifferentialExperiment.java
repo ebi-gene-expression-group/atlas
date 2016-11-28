@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -103,6 +104,13 @@ public class DifferentialExperiment extends Experiment {
 
         return result;
 
+    }
+    @Override
+    public ExperimentInfo getExperimentInfo() {
+        ExperimentInfo experimentInfo = super.getExperimentInfo();
+        experimentInfo.setNumberOfAssays(getAssayAccessions().size());
+        experimentInfo.setNumberOfContrasts(getContrastIds().size());
+        return  experimentInfo;
     }
 
 }

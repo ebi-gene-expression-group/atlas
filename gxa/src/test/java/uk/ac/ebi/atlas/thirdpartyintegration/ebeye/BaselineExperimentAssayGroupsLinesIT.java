@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
@@ -31,7 +32,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
 
     @Test
     public void testSomeRnaSeqExperiments() throws Exception{
-        Object[] a = experimentTrader.getBaselineExperimentAccessions().toArray();
+        Object[] a = experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE).toArray();
         for(int i = 0 ; i <10 && i < a.length ; i++) {
             testExtractExperimentDesignFromRnaSeqExperiment((String) a[i]);
         }
@@ -66,7 +67,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
     }
     @Test
     public void testSomeProteomicsExperiments() throws Exception{
-        for(String accession : experimentTrader.getProteomicsBaselineExperimentAccessions()){
+        for(String accession : experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)){
             testExtractExperimentDesignFromProteomicsExperiment(accession);
         }
     }
