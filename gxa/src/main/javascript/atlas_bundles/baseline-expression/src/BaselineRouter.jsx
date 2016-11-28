@@ -39,8 +39,11 @@ const BaselineRouter = React.createClass({
 
         if (Object.keys(newQuerySelect).length === 0) {
             Object.keys(this.props.facetsTreeData).forEach(species => {
-                if (this.props.facetsTreeData[species].some(factor => factor.name === 'ORGANISM_PART')) {
-                    this._addElementToObjectOfArrays(newQuerySelect, species, 'ORGANISM_PART');
+                let factorToPreselect =
+                    this.props.facetsTreeData[species]
+                    .find(factor => factor.name.toLowerCase() === 'organism_part');
+                if (factorToPreselect) {
+                    this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name);
                     newShowAnatomograms = true;
                 } else if (this.props.facetsTreeData[species].length) {
                     this._addElementToObjectOfArrays(newQuerySelect, species, this.props.facetsTreeData[species][0].name);
