@@ -104,16 +104,17 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
     }
 
+    @Deprecated
     public Set<String> getBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
-
+    @Deprecated
     public Set<String> getProteomicsBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
     }
 
-
+    @Deprecated
     public Set<String> getAllBaselineExperimentAccessions() {
         return ImmutableSet.<String>builder().
                 addAll(getBaselineExperimentAccessions()).
@@ -122,12 +123,12 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
 
     }
 
-
+    @Deprecated
     public Set<String> getRnaSeqDifferentialExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
     }
 
-
+    @Deprecated
     public Set<String> getMicroarrayExperimentAccessions() {
         Set<String> identifiers = Sets.newHashSet();
         identifiers.addAll(getPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
