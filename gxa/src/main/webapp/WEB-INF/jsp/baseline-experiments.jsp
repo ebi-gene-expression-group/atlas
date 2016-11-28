@@ -163,7 +163,7 @@
             <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
             <ul class="show_more" style="list-style:none;padding-left:0; margin-left:0;">
                 <c:set var="total" value="${fn:length(experimentAccessionsBySpecies.get(species))}"/>
-                <c:forEach items="${experimentAccessionsBySpecies.get(species)}" begin="0" end="20" var="experimentAccession">
+                <c:forEach items="${experimentAccessionsBySpecies.get(species)}" begin="0" var="experimentAccession">
                     <c:set var="key" value="${experimentAccession}${species}"/>
 
                     <li>
