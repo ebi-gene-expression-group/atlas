@@ -27,7 +27,7 @@ public enum Op {
     COEXPRESSION_DELETE("Delete coexpressions from database"),
     ANALYTICS_IMPORT("Fetch file content, extract bioentity identifiers to serve as keywords, " +
             "and upload to Solr analytics index. If you skip this op, searching on the main page will not reach " +
-            "the identifiers from the experiment, but searching on the main page will still work."),
+            "the identifiers from the experiment, but searching on the experiment page will still work."),
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession"),
     CACHE_READ("Read the attributes of the experiment from cache, trying to load it if it is absent"),
     CACHE_REMOVE("Delete from cache if present");
