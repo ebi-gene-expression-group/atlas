@@ -449,7 +449,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
-                <solr.host>lime</solr.host>
+                <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
                 <log.prudent>false</log.prudent>
