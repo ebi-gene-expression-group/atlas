@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import java.util.Iterator;
 
 // Used to make ObjectInputStream iterable
-// TODO: implement iterator() on all ObjectInputStream classes then this adapter won't be needed
 public class IterableObjectInputStream<T> implements Iterable<T> {
 
     private final ObjectInputStream<T> inputStream;
@@ -19,8 +18,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
         return new ObjectInputStreamIterator();
     }
 
-    // buffers next object input stream result so we can
-    // provide a hasNext method
+    // buffers next object input stream result so we can provide a hasNext method
     private final class ObjectInputStreamIterator implements Iterator<T> {
 
         private T next;
@@ -50,4 +48,5 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
             throw new UnsupportedOperationException();
         }
     }
+
 }
