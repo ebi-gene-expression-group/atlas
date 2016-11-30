@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentIterable;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -10,6 +10,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,22 +34,18 @@ public class AnalyticsIndexerService {
         this.analyticsIndexDocumentValidator = analyticsIndexDocumentValidator;
     }
 
-    Iterable<SolrInputDocument> solrInputDocuments(Experiment experiment,
-                                                   Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch)
-    throws IOException {
-        return new SolrInputDocumentIterable(
-                experimentDataPointStreamFactory.stream(experiment).iterator(), bioentityIdToIdentifierSearch);
-
-    }
-
     public int index(Experiment experiment, Map<String,
-            Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch, int batchSize) {
+            Map<BioentityPropertyName, Set<String>>> bioentityIdToProperties, int batchSize) {
 
         List<SolrInputDocument> toLoad = new ArrayList<>(batchSize);
         int addedIntoThisBatch = 0;
         int addedInTotal = 0;
-        try {
-            Iterator<SolrInputDocument> it = solrInputDocuments(experiment, bioentityIdToIdentifierSearch).iterator();
+
+        try (SolrInputDocumentInputStream solrInputDocumentInputStream =
+                     new SolrInputDocumentInputStream(
+                             experimentDataPointStreamFactory.stream(experiment),
+                             bioentityIdToProperties)) {
+            Iterator<SolrInputDocument> it = new IterableObjectInputStream<>(solrInputDocumentInputStream).iterator();
             while (it.hasNext()) {
                 while (addedIntoThisBatch < batchSize && it.hasNext()) {
                     SolrInputDocument analyticsInputDocument = it.next();
@@ -59,8 +56,8 @@ public class AnalyticsIndexerService {
                 }
                 if (addedIntoThisBatch > 0) {
                     UpdateResponse r = solrClient.add(toLoad);
-                    LOGGER.info("Sent {} documents for {}, qTime:{} ",
-                            addedIntoThisBatch,experiment.getAccession(), r.getQTime());
+                    LOGGER.info("Sent {} documents for {}, qTime:{}",
+                            addedIntoThisBatch, experiment.getAccession(), r.getQTime());
                     addedInTotal += addedIntoThisBatch;
                     addedIntoThisBatch = 0;
                     toLoad = new ArrayList<>(batchSize);
@@ -71,7 +68,6 @@ public class AnalyticsIndexerService {
         }
         LOGGER.info("Finished: " + experiment.getAccession());
         return addedInTotal;
-
     }
 
 
