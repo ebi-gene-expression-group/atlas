@@ -1,23 +1,23 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.solr.client.solrj.SolrClient;
+import com.google.common.collect.ImmutableMap;
 import org.apache.solr.common.SolrInputDocument;
 import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.analyticsindex.SolrInputDocumentInputStream;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.utils.ExpressionAtlasBioentityIdentifiersReader;
 
 import javax.inject.Inject;
 
@@ -38,53 +38,42 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
-public class AnalyticsIndexerServiceEIT {
-
-    @Mock
-    private SolrClient solrClient;
+public class SolrInputDocumentInputStreamIT {
 
     @Inject
     private ExperimentTrader experimentTrader;
 
     @Inject
-    private BioentityPropertiesDao bioentityPropertiesDao;
-
-    @Inject
     private ExperimentDataPointStreamFactory experimentDataPointStreamFactory;
-
-    @Inject
-    private ExpressionAtlasBioentityIdentifiersReader bioentityIdentifiersReader;
 
     @Inject
     private AnalyticsQueryClient analyticsQueryClient;
 
     private AnalyticsIndexDocumentValidator analyticsIndexDocumentValidator = new AnalyticsIndexDocumentValidator();
 
-    private AnalyticsIndexerService subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
+    // TODO The lack of a subject is “code smell” that this class is testing stuff from here and there
+    // TODO Split this into isolated tests for ExperimentDataPoint, SolrInputDocumentInputStream, etc.
 
-    @Before
-    public void setUp() {
-        subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
+    private Iterable<SolrInputDocument> getResults(Experiment experiment) throws Exception {
+        Map<String, Map<BioentityPropertyName, Set<String>>> bioentityPropertyNames = ImmutableMap.of();
+
+        SolrInputDocumentInputStream solrInputDocumentInputStream =
+                new SolrInputDocumentInputStream(
+                        experimentDataPointStreamFactory.stream(experiment),
+                        bioentityPropertyNames);
+
+        return new IterableObjectInputStream<>(solrInputDocumentInputStream);
     }
 
     @Test
     public void testSomeExperiments() throws Exception {
-        experimentInformationEndsUpInTheIndex("E-MTAB-513");
-        experimentInformationEndsUpInTheIndex("E-PROT-1");
-        experimentInformationEndsUpInTheIndex("E-GEOD-48549");
-        experimentInformationEndsUpInTheIndex("E-GEOD-22351");
+        assertThatExperimentInformationIsTransformedIntoSolrInputDocuments("E-MTAB-513");
+        assertThatExperimentInformationIsTransformedIntoSolrInputDocuments("E-PROT-1");
+        assertThatExperimentInformationIsTransformedIntoSolrInputDocuments("E-GEOD-48549");
+        assertThatExperimentInformationIsTransformedIntoSolrInputDocuments("E-GEOD-22351");
     }
 
-    private Iterable<SolrInputDocument> getResults(Experiment experiment) throws Exception {
-
-        return subject.solrInputDocuments(
-                experiment,
-                bioentityPropertiesDao.getMap(
-                        bioentityIdentifiersReader.getBioentityIdsFromExperiment(experiment.getAccession())));
-
-    }
-
-    private void experimentInformationEndsUpInTheIndex(String accession) throws Exception {
+    private void assertThatExperimentInformationIsTransformedIntoSolrInputDocuments(String accession) throws Exception {
         Experiment experiment = experimentTrader.getPublicExperiment(accession);
         Iterable<SolrInputDocument> result = getResults(experiment);
 
@@ -92,7 +81,7 @@ public class AnalyticsIndexerServiceEIT {
         for(SolrInputDocument solrInputDocument : result) {
             count++;
 
-            assertThat(solrInputDocument.size(), greaterThan(10));
+            assertThat(solrInputDocument.size(), greaterThan(6));
             assertThat(experiment.getType().name().toUpperCase(),
                     is(solrInputDocument.getField("experimentType").getValue()));
             assertThat(experiment.getSpecies().mappedName, is(solrInputDocument.getField("species").getValue()));
@@ -101,20 +90,16 @@ public class AnalyticsIndexerServiceEIT {
     }
 
     @Test
-    public void weGenerateDocumentsCompatibleWithIndexContent() throws Exception {
-        weGenerateDocumentsCompatibleWithIndexContent("E-MTAB-513");
-    }
-
-    private void weGenerateDocumentsCompatibleWithIndexContent(String accession) throws Exception {
+    public void generatedDocumentsAreCompatibleWithIndexContent() throws Exception {
         Collection<SolrInputDocument> results =
-                ImmutableList.copyOf(getResults(experimentTrader.getPublicExperiment(accession)));
+                ImmutableList.copyOf(getResults(experimentTrader.getPublicExperiment("E-MTAB-513")));
 
-        weGenerateDocumentsWithTheSameIdentifiersAsCurrentIndexContent(accession,results);
-        weGenerateDocumentsWhoseContentWeCanThenRetrieve(accession,results);
-        theSpeciesFieldIsTheEnsemblName(accession, results);
+        assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent("E-MTAB-513", results);
+        assertThatDocumentsReturnContent("E-MTAB-513",results);
+        assertThatSpeciesFieldIsEnsemblName("E-MTAB-513", results);
     }
 
-    private void weGenerateDocumentsWithTheSameIdentifiersAsCurrentIndexContent(String accession, Collection<SolrInputDocument> results){
+    private void assertThatIdentifiersInGeneratedDocumentsMatchCurrentIndexContent(String accession, Collection<SolrInputDocument> results){
         Collection<String> identifiersForThatExperiment = AnalyticsSearchService.readBuckets(analyticsQueryClient
                 .queryBuilder().bioentityIdentifierFacets(-1)
                 .inExperiment
@@ -131,7 +116,7 @@ public class AnalyticsIndexerServiceEIT {
 
     }
 
-    private void weGenerateDocumentsWhoseContentWeCanThenRetrieve(String accession,Collection<SolrInputDocument> results){
+    private void assertThatDocumentsReturnContent(String accession, Collection<SolrInputDocument> results){
         Map<String,String> keywordFieldsPresent = new HashMap<>();
         for(SolrInputDocument solrInputDocument: results) {
             for(String fieldName: solrInputDocument.getFieldNames()) {
@@ -145,17 +130,17 @@ public class AnalyticsIndexerServiceEIT {
 
         //category searches e.g. symbol:PIM1
         for(Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
-            indexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue(), e.getKey())));
+            assertThatIndexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue(), e.getKey())));
         }
 
         //identifier search searches e.g. symbol:PIM
         for(Map.Entry<String, String> e: keywordFieldsPresent.entrySet()) {
-            indexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue())));
+            assertThatIndexReturnsDataFor(accession, SemanticQuery.create(SemanticQueryTerm.create(e.getValue())));
         }
 
     }
 
-    private void theSpeciesFieldIsTheEnsemblName(String accession,Collection<SolrInputDocument> results) {
+    private void assertThatSpeciesFieldIsEnsemblName(String accession, Collection<SolrInputDocument> results) {
         Set<String> species = new HashSet<>();
         for(SolrInputDocument solrInputDocument: results) {
             species.add(solrInputDocument.getField("species").getValue().toString());
@@ -165,10 +150,9 @@ public class AnalyticsIndexerServiceEIT {
 
         assertThat(species.iterator().next(),
                 is(experimentTrader.getPublicExperiment(accession).getSpecies().mappedName));
-
     }
 
-    private void indexReturnsDataFor(String accession, SemanticQuery identifierSearch) {
+    private void assertThatIndexReturnsDataFor(String accession, SemanticQuery identifierSearch) {
         Collection<String> identifiersForThatExperiment = AnalyticsSearchService.readBuckets(
                 analyticsQueryClient.queryBuilder()
                         .bioentityIdentifierFacets(-1)
