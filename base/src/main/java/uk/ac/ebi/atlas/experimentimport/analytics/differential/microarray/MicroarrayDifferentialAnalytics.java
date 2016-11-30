@@ -16,16 +16,16 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
 
     private double foldChange;
 
-    private double tstatistic;
+    private double tStatistic;
 
     public MicroarrayDifferentialAnalytics(String geneId, String designElement, String contrastId,
-                                           double pValue, double foldChange, double tstatistic) {
+                                           double pValue, double foldChange, double tStatistic) {
         this.geneId = geneId;
         this.designElement = designElement;
         this.contrastId = contrastId;
         this.pValue = pValue;
         this.foldChange = foldChange;
-        this.tstatistic = tstatistic;
+        this.tStatistic = tStatistic;
     }
 
     public String getGeneId() {
@@ -50,7 +50,7 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
 
     @Override
     public double getTStatistic() {
-        return tstatistic;
+        return tStatistic;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
 
         return Double.compare(that.foldChange, foldChange) == 0 &&
                 Double.compare(that.pValue, pValue) == 0 &&
-                Double.compare(that.tstatistic, tstatistic) == 0 &&
+                Double.compare(that.tStatistic, tStatistic) == 0 &&
                 contrastId.equals(that.contrastId) &&
                 designElement.equals(that.designElement);
 
@@ -74,7 +74,7 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(designElement, contrastId, pValue, foldChange, tstatistic);
+        return Objects.hashCode(designElement, contrastId, pValue, foldChange, tStatistic);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
                 .add("contrastId", contrastId)
                 .add("pValue", pValue)
                 .add("foldChange", foldChange)
-                .add("tstatistic", tstatistic)
+                .add("tStatistic", tStatistic)
                 .toString();
     }
 }
