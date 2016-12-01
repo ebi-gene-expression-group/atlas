@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
-import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -38,16 +37,13 @@ public class MicroarrayExperimentFactoryTest {
     private ConfigurationTrader configurationTraderMock;
 
     @Mock
-    private SpeciesKingdomTrader speciesKingdomTraderMock;
-
-    @Mock
     private SpeciesFactory speciesFactory;
 
     @Mock
     private MicroarrayExperimentConfiguration experimentConfigurationMock;
 
     @Mock
-    ExperimentDTO experimentDTOMock;
+    private ExperimentDTO experimentDTOMock;
 
     @Mock
     private Contrast contrastMock;
