@@ -18,19 +18,15 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.anyVararg;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MultiTermSuggestionServiceTest {
 
     @Mock
     private RestTemplate restTemplateMock;
-
-    @Mock
-    private SolrQueryService solrQueryServiceMock;
-
-    @Mock
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
     private MultiTermSuggestionService subject;
 
