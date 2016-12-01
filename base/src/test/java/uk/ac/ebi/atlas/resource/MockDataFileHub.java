@@ -20,6 +20,7 @@ public class MockDataFileHub extends DataFileHub {
         new File(dataFilesLocation, "admin").mkdir();
         new File(dataFilesLocation, "magetab").mkdir();
         new File(dataFilesLocation, "expdesign").mkdir();
+        new File(dataFilesLocation, "species").mkdir();
         new File(dataFilesLocation).deleteOnExit();
     }
 
@@ -72,5 +73,9 @@ public class MockDataFileHub extends DataFileHub {
 
     public String getFactorsFilePathTemplate() {
         return FileSystems.getDefault().getPath(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE).toString();
+    }
+
+    public void addSpeciesJsonFile(Collection<String> lines) {
+        addTemporaryFile(SPECIES_FILE_PATH, lines);
     }
 }
