@@ -1,22 +1,27 @@
 package uk.ac.ebi.atlas.resource;
 
+import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.model.resource.JsonFile;
 import uk.ac.ebi.atlas.model.resource.TsvFile;
 import uk.ac.ebi.atlas.model.resource.XmlFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
 import java.nio.file.Paths;
 
 @Named
 public class DataFileHub {
 
     final String dataFilesLocation;
+
+    final static String SPECIES_FILE_PATH = "/species/species.json";
 
     final static String CONFIGURATION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-configuration.xml";
     final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analysis-methods.tsv";
@@ -39,6 +44,10 @@ public class DataFileHub {
         this.dataFilesLocation = dataFilesLocation;
     }
 
+    public SpeciesFiles getSpeciesFiles() {
+        return new SpeciesFiles();
+    }
+
     public ExperimentFiles getExperimentFiles(String experimentAccession) {
         return new ExperimentFiles(experimentAccession);
     }
@@ -53,6 +62,10 @@ public class DataFileHub {
 
     public MicroarrayExperimentFiles getMicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
+    }
+
+    public class SpeciesFiles {
+        public final AtlasResource<JsonReader> all = new JsonFile.ReadOnly(dataFilesLocation, SPECIES_FILE_PATH);
     }
 
     public class ExperimentFiles {
