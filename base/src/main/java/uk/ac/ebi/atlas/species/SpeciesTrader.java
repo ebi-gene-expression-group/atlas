@@ -63,7 +63,7 @@ public class SpeciesTrader {
             nameToSpecies = nameToSpeciesBuilder.build();
             kingdomToSpecies = kingdomToSpeciesBuilder.build();
 
-            LOGGER.info("Read {} species in {} kingdoms", nameToSpecies.size(), kingdomToSpecies.size());
+            LOGGER.info("Read {} species in {} kingdoms", nameToSpecies.size(), kingdomToSpecies.keySet().size());
         } catch (IOException e) {
             LOGGER.error("Error reading species.json");
         }
