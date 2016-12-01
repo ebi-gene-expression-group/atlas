@@ -9,7 +9,7 @@ import java.text.MessageFormat;
 public abstract class XmlFile<T> extends AtlasResource<T>{
 
     public XmlFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation+MessageFormat.format(template, args)));
+        super(Paths.get(dataFilesLocation, MessageFormat.format(template, args)));
     }
 
 
