@@ -6,8 +6,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.species.SpeciesTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,17 +17,13 @@ public class SpeciesFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesFactory.class);
 
-    private final SpeciesKingdomTrader speciesKingdomTrader;
+    private final SpeciesTrader speciesTrader;
 
     public final static Species NULL = new AnySpecies();
 
     @Inject
-    public SpeciesFactory(JdbcTemplate jdbcTemplate){
-        this(new SpeciesKingdomTrader(jdbcTemplate));
-    }
-
-    SpeciesFactory(SpeciesKingdomTrader speciesKingdomTrader){
-        this.speciesKingdomTrader = speciesKingdomTrader;
+    public SpeciesFactory(SpeciesTrader speciesTrader){
+        this.speciesTrader = speciesTrader;
     }
 
     public Species create(ExperimentDTO experimentDTO, BaselineExperimentConfiguration factorsConfig){
@@ -46,12 +42,12 @@ public class SpeciesFactory {
     }
 
     private Species create(String inputName, String canonicalName){
-        String ensemblDb = speciesKingdomTrader.getEnsemblDB(canonicalName);
+        String ensemblDb = speciesTrader.getByName(inputName).name();
         if(ensemblDb == null){
             LOGGER.warn(String.format("Could not look up ensemblDb for %s -> %s",inputName,canonicalName));
             ensemblDb = "";
         }
-        String kingdom = speciesKingdomTrader.getKingdom(canonicalName);
+        String kingdom = speciesTrader.getByName(inputName).kingdom();
         if(kingdom == null){
             LOGGER.warn(String.format("Could not look up kingdom for %s -> %s",inputName,canonicalName));
             kingdom = "";
