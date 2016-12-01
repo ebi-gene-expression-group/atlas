@@ -6,10 +6,6 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
@@ -24,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ExperimentDesignParserWithOntologyTermsTest {
 
     private static final String EXPERIMENT_ACCESSION = "ACCESSION";
@@ -69,9 +64,6 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String ORGANISM = "Organism";
     private static final SampleCharacteristic SC_RABBIT = SampleCharacteristic.create(ORGANISM, SPECIES_2);
     private static final Factor FACTOR_GENOTYPE = new Factor(GENOTYPE, CYC);
-
-    @Mock
-    private TsvReader tsvReaderMock;
 
     private static MockDataFileHub dataFileHub;
 
