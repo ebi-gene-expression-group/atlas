@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.model.resource.XmlFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
 import java.nio.file.Paths;
 
 @Named
