@@ -17,10 +17,10 @@ import java.util.Map;
 @Named
 public class SpeciesDao {
 
-    private final DataFileHub dataFileHub;
+    private DataFileHub dataFileHub;
 
     @Inject
-    public SpeciesDao(DataFileHub dataFileHub) {
+    public void setDataFileHub(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
     }
 

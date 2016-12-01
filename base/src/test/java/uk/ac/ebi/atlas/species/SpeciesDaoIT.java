@@ -40,7 +40,7 @@ public class SpeciesDaoIT {
 
         for (Species species : allSpecies) {
             if (species.isPlant()) {
-                assertThat(species.resources().get("genome browser"), hasSize(2));
+                assertThat(species.resources().get("genome_browser"), hasSize(2));
             }
         }
     }
@@ -50,8 +50,8 @@ public class SpeciesDaoIT {
         Species caenorhabditisElegans = subject.fetchSpecies("caenorhabditis_elegans");
         Species schistosomaMansoni = subject.fetchSpecies("schistosoma_mansoni");
 
-        assertThat(caenorhabditisElegans.resources().get("genome browser").get(0), startsWith("http://parasite"));
-        assertThat(schistosomaMansoni.resources().get("genome browser").get(0), startsWith("http://parasite"));
+        assertThat(caenorhabditisElegans.resources().get("genome_browser").get(0), startsWith("http://parasite"));
+        assertThat(schistosomaMansoni.resources().get("genome_browser").get(0), startsWith("http://parasite"));
         assertThat(caenorhabditisElegans.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
         assertThat(schistosomaMansoni.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
     }
