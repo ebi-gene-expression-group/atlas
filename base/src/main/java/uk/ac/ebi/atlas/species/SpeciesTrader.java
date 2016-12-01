@@ -50,6 +50,7 @@ public class SpeciesTrader {
 
     private void buildMaps() {
         try {
+            LOGGER.info("Reading species.json to retrieve species list...");
 
             ImmutableSortedMap.Builder<String, Species> nameToSpeciesBuilder = ImmutableSortedMap.naturalOrder();
             ImmutableMultimap.Builder<String, Species> kingdomToSpeciesBuilder = ImmutableMultimap.builder();
@@ -62,6 +63,7 @@ public class SpeciesTrader {
             nameToSpecies = nameToSpeciesBuilder.build();
             kingdomToSpecies = kingdomToSpeciesBuilder.build();
 
+            LOGGER.info("Read {} species in {} kingdoms", nameToSpecies.size(), kingdomToSpecies.size());
         } catch (IOException e) {
             LOGGER.error("Error reading species.json");
         }
