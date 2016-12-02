@@ -45,9 +45,9 @@ public final class DBSolrStatusController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DBSolrStatusController.class);
 
     @Inject
-    public DBSolrStatusController(ExperimentDAO experimentDAO, SolrClient solrClient) {
+    public DBSolrStatusController(ExperimentDAO experimentDAO, SolrClient solrClientAnalytics) {
         this.experimentDAO = experimentDAO;
-        this.solrClient = solrClient;
+        this.solrClient = solrClientAnalytics;
     }
 
     @RequestMapping(value = "/json/dbsolr/status", method = RequestMethod.GET, produces = "application/json")
