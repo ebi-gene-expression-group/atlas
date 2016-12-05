@@ -219,18 +219,6 @@ public class AnalyticsQueryClient {
                 solrQueries[i] = c;
             }
 
-            /*
-            TODO here for the "split the identifier search field into multiple fields" story
-            if the query involves identifier search:
-                split the query clauses into how they should be
-                build an array of solrQueries using solrQuery.getCopy()
-                send off!
-            else:
-                just one sweet query
-             */
-
-
-
             return fetchResults(solrQueries);
         }
     }

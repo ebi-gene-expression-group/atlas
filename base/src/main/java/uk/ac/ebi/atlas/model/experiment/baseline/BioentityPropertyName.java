@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 
 public enum BioentityPropertyName {
     UNKNOWN,
+    BIOENTITY_IDENTIFIER("bioentityIdentifier", false),
     IDENTIFIER_SEARCH("identifierSearch", false),
     GENE_BIOTYPE("gene_biotype", true),
     HGNC_SYMBOL("hgnc_symbol", true),

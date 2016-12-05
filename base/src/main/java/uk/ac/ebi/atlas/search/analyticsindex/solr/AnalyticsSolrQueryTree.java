@@ -276,9 +276,10 @@ public class AnalyticsSolrQueryTree {
         ImmutableList.Builder<String> b = ImmutableList.builder();
         for(BioentityPropertyName bioentityPropertyName: ExperimentDataPoint.bioentityPropertyNames){
             if(bioentityPropertyName.isId){
-                b.add("keyword_"+bioentityPropertyName.name);
+                b.add(bioentityPropertyName.asAnalyticsIndexKeyword());
             }
         }
+        b.add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name);
         return b.build();
     }
 }
