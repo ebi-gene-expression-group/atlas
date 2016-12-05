@@ -1,16 +1,15 @@
 package uk.ac.ebi.atlas.bioentity;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
-import uk.ac.ebi.atlas.model.Species;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import java.util.Map;
@@ -24,7 +23,7 @@ public class GenePageController extends BioentityPageController {
     public String showGenePage(@PathVariable String identifier,
                                Model model) {
 
-        Species species = speciesFactory.create(GeneSetUtil.matchesReactomeID(identifier)? speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""): "");
+        Species species = speciesFactory.create(speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""));
         model.addAttribute("species", species.originalName);
 
         Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
