@@ -210,10 +210,10 @@
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4></h4>
+                    <h4>Legal disclaimer</h4>
                 </div>
 
-                <div class="modal-body edit-content" style="max-height: 360px">
+                <div class="modal-body edit-content" style="max-height: 500px; overflow-y: scroll">
 
                 </div>
 
@@ -221,7 +221,7 @@
                     <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
                         <c:if test="${type.baseline && not empty disclaimer}">
                             <button class="btn btn-primary" id="continue-download-expressions"
-                               onclick="location.href='${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1'">
+                               onclick="location.href='${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=0'">
                                 Continue downloading
                             </button>
                         </c:if>
