@@ -1,20 +1,21 @@
 #!/bin/bash
-# description: Starts and stops Solr production
-SOLR_DIST=/nfs/public/rw/fg/atlas/solr_dev/
-SOLR_INDEXES_DIR=/srv/gxa/solr
-SOLR_CONF=/nfs/public/rw/fg/atlas/solr_dev_conf
-SOLR_LOG=/srv/gxa/solr/log/
-SOLR_BIN=${SOLR_DIST}/example
+# description: Starts and stops Solr staging
+SOLR_DIST=/nfs/public/rw/fg/atlas/solr-5.1.0
+SOLR_INDEXES_DIR=/srv/gxa/solr/index
+SOLR_CONF=/srv/gxa/solr/conf
+SOLR_LOG=/srv/gxa/solr/log
+SOLR_BIN=${SOLR_DIST}/server
+
 JAVA="/nfs/public/rw/webadmin/java/jdks/jdk1.7.0_04/bin/java"
-JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx8g -Xms1g"
+JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx22g -Xms22g"
+
+JAVA_OPTIONS_STOP="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx256m"
 
 CONSOLE_LOG=/srv/gxa/solr/log/console.log
-SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )/solr_dev.sh
+SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )/solr_standalone.sh
 
 set -e
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-
-
 case $1 in
 	start)
 		echo "Starting Solr"
@@ -31,7 +32,7 @@ case $1 in
 	stop)
 		echo "Stopping Solr"
 		cd $SOLR_BIN
-		$JAVA $JAVA_OPTIONS -jar start.jar --stop
+		$JAVA $JAVA_OPTIONS_STOP -jar start.jar --stop
     		echo "ok"
 		;;
 	restart)
