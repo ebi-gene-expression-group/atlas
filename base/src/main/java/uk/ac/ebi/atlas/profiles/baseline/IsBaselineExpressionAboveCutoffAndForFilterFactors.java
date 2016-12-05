@@ -32,7 +32,7 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predi
 
     @Override
     public boolean apply(BaselineExpression expression) {
-        return checkFilterFactors(expression) && (!expression.isKnown() || expression.isGreaterThan(cutoff));
+        return checkFilterFactors(expression) && (!expression.isKnown() || expression.isGreaterThanOrEqual(cutoff));
     }
 
     protected boolean checkFilterFactors(BaselineExpression expression) {

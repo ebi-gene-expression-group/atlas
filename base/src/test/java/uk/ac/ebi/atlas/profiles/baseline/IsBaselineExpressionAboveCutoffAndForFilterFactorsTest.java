@@ -87,7 +87,7 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactorsTest {
         subject.setCutoff(1d);
 
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
-        given(expressionMock.isGreaterThan(1d)).willReturn(true);
+        given(expressionMock.isGreaterThanOrEqual(1d)).willReturn(true);
 
         //then
         assertThat(subject.apply(expressionMock), is(true));

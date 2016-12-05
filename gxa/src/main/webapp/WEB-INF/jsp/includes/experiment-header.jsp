@@ -183,7 +183,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <a id="download-expressions" title="Download all expressions for the experiment"
-                                           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">
+                                           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=0">
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/>
                                         </a>
                                     </c:otherwise>

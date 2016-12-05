@@ -23,7 +23,6 @@ import java.text.MessageFormat;
 @Scope("request")
 public class RnaSeqBaselineExperimentDownloadController extends BaselineExperimentPageController {
 
-
     protected static final String PARAMS_TYPE_RNASEQ_BASELINE = "type=RNASEQ_MRNA_BASELINE";
 
     private final BaselineExperimentDownloadService<BaselineRequestPreferences> baselineExperimentDownloadService;
@@ -31,7 +30,8 @@ public class RnaSeqBaselineExperimentDownloadController extends BaselineExperime
     @Inject
     public RnaSeqBaselineExperimentDownloadController(@Qualifier("baselineProfileInputStreamFactory")
                                                       BaselineProfileInputStreamFactory inputStreamFactory,
-                                                      BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
+                                                      BaselineProfilesWriterServiceFactory
+                                                              baselineProfilesWriterServiceFactory,
                                                       ExperimentTrader experimentTrader) {
         this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(inputStreamFactory,
                 baselineProfilesWriterServiceFactory,experimentTrader);
@@ -47,19 +47,18 @@ public class RnaSeqBaselineExperimentDownloadController extends BaselineExperime
         baselineExperimentDownloadService.download(experimentAccession,request, preferences, response, accessKey);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_RNASEQ_BASELINE)
+    @RequestMapping(
+            value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata",
+            params = PARAMS_TYPE_RNASEQ_BASELINE)
     public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
-
         String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
-
         return "forward:" + path;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_RNASEQ_BASELINE)
     public String downloadClusteringPdf(@PathVariable String experimentAccession) throws IOException {
-
         String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
-
         return "forward:" + path;
     }
+
 }

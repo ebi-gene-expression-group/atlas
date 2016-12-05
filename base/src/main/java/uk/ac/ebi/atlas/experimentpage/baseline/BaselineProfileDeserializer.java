@@ -60,7 +60,7 @@ public final class BaselineProfileDeserializer {
     }
 
     private static boolean isAboveCutoff(BaselineExpression expression, double cutOff) {
-        return !expression.isKnown() || expression.isGreaterThan(cutOff);
+        return !expression.isKnown() || expression.isGreaterThanOrEqual(cutOff);
     }
 
     public static OrderedFactorGroups orderedFactorGroupsOfSameFactorType(String factorType, String factorValues) {

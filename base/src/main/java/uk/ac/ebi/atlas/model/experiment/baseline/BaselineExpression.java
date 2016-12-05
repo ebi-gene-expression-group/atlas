@@ -89,8 +89,8 @@ public class BaselineExpression implements Expression, KryoSerializable {
         return levelString;
     }
 
-    public boolean isGreaterThan(double level) {
-        return Double.compare(getLevel(), level) > 0;
+    public boolean isGreaterThanOrEqual(double level) {
+        return Double.compare(getLevel(), level) >= 0;
     }
 
     public void setFactorGroup(FactorGroup factorGroup) {

@@ -35,25 +35,25 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
         this.experimentTrader = experimentTrader;
     };
 
-    public void download(String experimentAccession, HttpServletRequest request,
-                         T preferences, HttpServletResponse response, String accessKey)
+    public void download(String experimentAccession, HttpServletRequest request, T preferences,
+                         HttpServletResponse response, String accessKey)
     throws IOException {
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        BaselineExperiment experiment =
+                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
-
+        response.setHeader(
+                "Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
         response.setContentType("text/plain; charset=utf-8");
 
         try {
-            long genesCount = baselineProfilesWriterService.write(response.getWriter(), preferences, experiment,
-                    readCoexpressionsRequested(request));
+            long genesCount = baselineProfilesWriterService.write(
+                    response.getWriter(), preferences, experiment, readCoexpressionsRequested(request));
 
             LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
-
         } catch (GenesNotFoundException e) {
             LOGGER.info("<downloadGeneProfiles> no genes found");
         }

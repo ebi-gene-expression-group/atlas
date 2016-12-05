@@ -52,11 +52,14 @@ public class BaselineProfilesWriterService {
             geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getFilteredBySpecies());
         } else {
 
-            GeneQueryResponse originalResponse = solrQueryService.fetchResponse(preferences
-                    .getGeneQuery(), BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
+            GeneQueryResponse originalResponse =
+                    solrQueryService.fetchResponse(
+                            preferences.getGeneQuery(),
+                            BaselineRequestContext.createFor(experiment, preferences).getFilteredBySpecies());
 
-            geneQueryResponse = coexpressedGenesService
-                    .extendGeneQueryResponseWithCoexpressions(experiment, originalResponse, coexpressionsRequested);
+            geneQueryResponse =
+                    coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
+                            experiment, originalResponse, coexpressionsRequested);
 
             requestContext =
                     BaselineRequestContext.createWithCustomGeneQueryDescription(
