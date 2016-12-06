@@ -20,7 +20,7 @@ public class DataFileHub {
 
     final String dataFilesLocation;
 
-    final static String SPECIES_FILE_PATH = "/species/species.json";
+    final static String SPECIES_PROPERTIES_FILE_PATH = "/species/species-properties.json";
 
     final static String CONFIGURATION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-configuration.xml";
     final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analysis-methods.tsv";
@@ -43,8 +43,8 @@ public class DataFileHub {
         this.dataFilesLocation = dataFilesLocation;
     }
 
-    public SpeciesFiles getSpeciesFiles() {
-        return new SpeciesFiles();
+    public SpeciesPropertiesFile getSpeciesPropertiesFile() {
+        return new SpeciesPropertiesFile();
     }
 
     public ExperimentFiles getExperimentFiles(String experimentAccession) {
@@ -63,8 +63,8 @@ public class DataFileHub {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
-    public class SpeciesFiles {
-        public final AtlasResource<JsonReader> all = new JsonFile.ReadOnly(dataFilesLocation, SPECIES_FILE_PATH);
+    public class SpeciesPropertiesFile {
+        public final AtlasResource<JsonReader> json = new JsonFile.ReadOnly(dataFilesLocation, SPECIES_PROPERTIES_FILE_PATH);
     }
 
     public class ExperimentFiles {

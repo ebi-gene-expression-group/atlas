@@ -6,10 +6,10 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,13 +28,15 @@ public class GeneIdSuggestionService {
     private String[] identifierPropertyNames;
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
-
-    private GxaSolrClient solrServer;
+    private final GxaSolrClient solrServer;
+    private final SpeciesPropertiesTrader speciesTrader;
 
     @Inject
-    public GeneIdSuggestionService(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrServer) {
+    public GeneIdSuggestionService(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrServer,
+                                   SpeciesPropertiesTrader speciesTrader) {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrServer = solrServer;
+        this.speciesTrader = speciesTrader;
     }
 
     public List<SemanticQueryTerm> fetchGeneIdSuggestionsInName(String geneName, String species) {
@@ -54,7 +56,7 @@ public class GeneIdSuggestionService {
 
     List<SemanticQueryTerm> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleteGroupedPropertyValueQueryBuilder()
-                .withSpecies(SpeciesUtils.convertToEnsemblSpecies(species))
+                .withSpecies(speciesTrader.getByName(species).name().replaceAll("_", " "))
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)
                 .build(queryString);

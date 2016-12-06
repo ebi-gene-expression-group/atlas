@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Named;
 import java.util.Collections;
@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExperimentBuilder {
 
-    private Species species;
+    private String species;
     private String description;
     private String disclaimer;
     private List<String> dataProviderURL;
@@ -39,7 +39,7 @@ public class BaselineExperimentBuilder {
     private List<String> alternativeViews = Collections.emptyList();
     private List<String> alternativeViewDescriptions = Collections.emptyList();
 
-    public BaselineExperimentBuilder forSpecies(Species species){
+    public BaselineExperimentBuilder forSpecies(String species){
         this.species = species;
         return this;
     }
@@ -126,11 +126,13 @@ public class BaselineExperimentBuilder {
                 alternativeViewDescriptions);
     }
 
-    void validate() {
+    private void validate() {
         checkNotNull(experimentType);
         checkState(experimentType.isBaseline());
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
-        checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
+        checkNotNull(species, "Please provide a species name");
+        checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()),
+                "Please provide a non empty set of AssayGroup objects");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");

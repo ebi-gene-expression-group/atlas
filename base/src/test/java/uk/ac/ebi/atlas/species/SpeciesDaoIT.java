@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 public class SpeciesDaoIT {
 
     @Inject
-    private SpeciesDao subject;
+    private SpeciesPropertiesDao subject;
 
     @Test
     public void fetchAllSpecies() throws Exception {

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.trader.cache.OrganismsCache;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -20,13 +20,13 @@ import javax.inject.Inject;
 public final class ExpressionDataController {
 
     private AnalyticsSearchService analyticsSearchService;
-    private OrganismsCache organismsCache;
+    private SpeciesPropertiesTrader speciesTrader;
 
     @Inject
     public ExpressionDataController(AnalyticsSearchService analyticsSearchService,
-                                    OrganismsCache organismsCache) {
+                                    SpeciesPropertiesTrader speciesTrader) {
         this.analyticsSearchService = analyticsSearchService;
-        this.organismsCache = organismsCache;
+        this.speciesTrader = speciesTrader;
     }
 
     @RequestMapping(value = "/json/expressionData", method = RequestMethod.GET, produces = "application/json")
@@ -42,7 +42,7 @@ public final class ExpressionDataController {
     @ResponseStatus(HttpStatus.OK)
     public ModelAndView existSpeciesForGeneIdentifier() {
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());
-        mav.addObject("species", organismsCache.getOrganismsList());
+        mav.addObject("species", speciesTrader.getAll());
         return mav;
     }
 

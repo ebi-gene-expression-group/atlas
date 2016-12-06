@@ -1,12 +1,11 @@
 package uk.ac.ebi.atlas.sitemaps;
 
-import uk.ac.ebi.atlas.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.atlas.model.SpeciesUtils;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,26 +26,24 @@ public class SitemapController {
     private SitemapWriter sitemapWriter = new SitemapWriter();
 
     private final AnalyticsSearchService solr;
-    private final OrganismEnsemblDAO organismEnsemblDAO;
     private final SpeciesFactory speciesFactory;
+    private final SpeciesPropertiesTrader speciesTrader;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, JdbcTemplate jdbcTemplate, SpeciesFactory speciesFactory){
+    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesTrader){
         this.solr = solr;
-        this.organismEnsemblDAO = new OrganismEnsemblDAO(jdbcTemplate);
         this.speciesFactory = speciesFactory;
+        this.speciesTrader = speciesTrader;
     }
 
 
     @RequestMapping(value = "/sitemap.xml")
-    public void mainSitemap(HttpServletResponse response) throws
-            ParserConfigurationException, IOException, XMLStreamException {
-
-
+    public void mainSitemap(HttpServletResponse response)
+    throws ParserConfigurationException, IOException, XMLStreamException {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
 
-        sitemapWriter.writeSitemapIndex(response.getOutputStream(),organismEnsemblDAO.getOrganismEnsemblMap().keySet());
+        sitemapWriter.writeSitemapIndex(response.getOutputStream(), speciesTrader.getAll());
 
     }
 

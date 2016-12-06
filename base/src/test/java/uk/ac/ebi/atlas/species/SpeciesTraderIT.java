@@ -26,9 +26,9 @@ public class SpeciesTraderIT {
 
     private static MockDataFileHub dataFileHub;
 
-    private SpeciesDao speciesDao = new SpeciesDao();
+    private SpeciesPropertiesDao speciesDao = new SpeciesPropertiesDao();
 
-    private SpeciesTrader subject = new SpeciesTrader();
+    private SpeciesPropertiesTrader subject = new SpeciesPropertiesTrader();
 
     @BeforeClass
     public static void setUpClass() throws Exception {

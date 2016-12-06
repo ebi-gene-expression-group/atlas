@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Collection;
@@ -23,24 +22,29 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class DifferentialExperiment extends Experiment {
 
     private static final Gson gson = new Gson();
-
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
     public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description,
-                                  boolean hasRData, Species species, Collection<String>
-                                          pubMedIds,
+                                  boolean hasRData, String species, Collection<String> pubMedIds,
                                   ExperimentDesign experimentDesign) {
-        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasRData, species, pubMedIds, experimentDesign);
+
+        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasRData,
+                species, pubMedIds, experimentDesign);
+
     }
 
-    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast>
-            contrasts, String description, boolean hasRData, Species species, Collection<String>
-                                             pubMedIds, ExperimentDesign experimentDesign) {
-        super(experimentType, accession, lastUpdate,null, description, "", hasRData, species,
-                 pubMedIds, experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
+    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
+                                     Set<Contrast> contrasts, String description, boolean hasRData, String species,
+                                     Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
+
+        super(experimentType, accession, lastUpdate,null, description, "", hasRData, species, pubMedIds,
+                experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
+                Collections.<String>emptyList(), Collections.<String>emptyList());
+
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);
         }
+
     }
 
     public Set<Contrast> getContrasts() {
@@ -49,7 +53,8 @@ public class DifferentialExperiment extends Experiment {
 
     public Contrast getContrast(String contrastId) {
         Contrast contrast = contrastsById.get(contrastId);
-        checkArgument(contrast != null, this.getAccession() + ": cannot find a contrast with contrastId: " + contrastId);
+        checkArgument(contrast != null,
+                this.getAccession() + ": cannot find a contrast with contrastId: " + contrastId);
         return contrast;
     }
 
@@ -58,11 +63,13 @@ public class DifferentialExperiment extends Experiment {
     }
 
     public Set<String> getAssayAccessions() {
+
         Set<String> assayAccessions = Sets.newHashSet();
         for (Contrast contrast : getContrasts()) {
             for (String assayAccession : contrast.getReferenceAssayGroup()) {
                 assayAccessions.add(assayAccession);
             }
+
             for (String assayAccession : contrast.getTestAssayGroup()) {
                 assayAccessions.add(assayAccession);
             }
@@ -77,7 +84,8 @@ public class DifferentialExperiment extends Experiment {
     }
 
     @Override
-    public Map<String, Object> getAttributes(){
+    public Map<String, Object> getAttributes() {
+
         Map<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
         result.put("regulationValues", Regulation.values());
@@ -87,12 +95,13 @@ public class DifferentialExperiment extends Experiment {
         return result;
     }
 
-    public Map<String, ?> getDifferentialAttributes(){
+    public Map<String, ?> getDifferentialAttributes() {
         //you only have a selected contrast when you're on an experiment design page
         return getDifferentialAttributes("");
     }
 
-    public Map<String, ?> getDifferentialAttributes(String selectedContrast){
+    public Map<String, ?> getDifferentialAttributes(String selectedContrast) {
+
         Map<String, Object> result = new HashMap<>();
         if (StringUtils.isBlank(selectedContrast)) {
             selectedContrast = getContrasts().iterator().next().getId();
@@ -105,6 +114,7 @@ public class DifferentialExperiment extends Experiment {
         return result;
 
     }
+
     @Override
     public ExperimentInfo getExperimentInfo() {
         ExperimentInfo experimentInfo = super.getExperimentInfo();

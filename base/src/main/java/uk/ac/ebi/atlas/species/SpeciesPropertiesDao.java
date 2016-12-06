@@ -1,21 +1,22 @@
 package uk.ac.ebi.atlas.species;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Named
-public class SpeciesDao {
+public class SpeciesPropertiesDao {
 
     private DataFileHub dataFileHub;
 
@@ -24,12 +25,12 @@ public class SpeciesDao {
         this.dataFileHub = dataFileHub;
     }
 
-    public Species fetchSpecies(String species) throws IOException {
-        try (JsonReader reader = dataFileHub.getSpeciesFiles().all.get()) {
+    public SpeciesProperties get(String species) throws IOException {
+        try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {
             reader.beginArray();
             while (reader.hasNext()) {
-                Species speciesJson = readSpecies(reader);
-                if (speciesJson.name().equals(species)) {
+                SpeciesProperties speciesJson = readSpeciesProperties(reader);
+                if (speciesJson.canonicalName().equals(species)) {
                     return speciesJson;
                 }
             }
@@ -39,22 +40,22 @@ public class SpeciesDao {
         return null;
     }
 
-    public List<Species> fetchAllSpecies() throws IOException {
-        ArrayList<Species> allSpecies = Lists.newArrayList();
+    public ImmutableList<SpeciesProperties> getAll() throws IOException {
+        ImmutableList.Builder<SpeciesProperties> allSpeciesPropertiesBuilder = ImmutableList.builder();
 
-        try (JsonReader reader = dataFileHub.getSpeciesFiles().all.get()) {
+        try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {
             reader.beginArray();
             while (reader.hasNext()) {
-                allSpecies.add(readSpecies(reader));
+                allSpeciesPropertiesBuilder.add(readSpeciesProperties(reader));
             }
             reader.endArray();
         }
 
-        return allSpecies;
+        return allSpeciesPropertiesBuilder.build();
     }
 
-    private Species readSpecies(JsonReader reader) throws IOException {
-        String speciesName = null;
+    private SpeciesProperties readSpeciesProperties(JsonReader reader) throws IOException {
+        String canonicalName = null;
         String defaultQueryFactorType = null;
         String kingdom = null;
         Map<String, List<String>> resources = null;
@@ -64,7 +65,7 @@ public class SpeciesDao {
             String name = reader.nextName();
 
             if ("name".equals(name)) {
-                speciesName = reader.nextString();
+                canonicalName = reader.nextString();
             } else if ("defaultQueryFactorType".equals(name)) {
                 defaultQueryFactorType = reader.nextString();
             } else if ("kingdom".equals(name)) {
@@ -73,7 +74,7 @@ public class SpeciesDao {
                 resources = Maps.newHashMap();
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    Pair<String, List<String>> resource = readResource(reader);
+                    Pair<String, List<String>> resource = readSpeciesResource(reader);
                     resources.put(resource.getLeft(), resource.getRight());
                 }
                 reader.endArray();
@@ -82,10 +83,11 @@ public class SpeciesDao {
             }
         }
         reader.endObject();
-        return Species.create(speciesName, defaultQueryFactorType, kingdom, resources);
+        return SpeciesProperties.create(
+                StringUtils.capitalize(canonicalName.replace("_", " ")), canonicalName, defaultQueryFactorType, kingdom, resources);
     }
 
-    private Pair<String, List<String>> readResource(JsonReader reader) throws IOException {
+    private Pair<String, List<String>> readSpeciesResource(JsonReader reader) throws IOException {
         String type = null;
         List<String> urls = null;
 

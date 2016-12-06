@@ -20,17 +20,19 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
 /*
-Responsible for:
-- the database (the experiments table, and the deprecated expression values tables)
-- conditions index
-- design files on disk
+ * Responsible for:
+ * - the database (the experiments table, and the deprecated expression values tables)
+ * - conditions index
+ * - design files on disk
  */
+
 public class ExperimentCrud {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentCrud.class);
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
-    private ExperimentDAO experimentDAO;
+    private final ExperimentDAO experimentDAO;
     private final ConditionsIndexingService conditionsIndexingService;
     private final ExperimentChecker experimentChecker;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
@@ -43,6 +45,7 @@ public class ExperimentCrud {
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
                           ConfigurationTrader configurationTrader) {
+
         this.condensedSdrfParser = condensedSdrfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
         this.conditionsIndexingService = conditionsIndexingService;
@@ -50,9 +53,11 @@ public class ExperimentCrud {
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
         this.configurationTrader = configurationTrader;
+
     }
 
     public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+
         checkNotNull(experimentAccession);
         ExperimentConfiguration experimentConfiguration = loadExperimentConfiguration(experimentAccession);
         checkNotNull(experimentConfiguration);
@@ -65,16 +70,18 @@ public class ExperimentCrud {
 
         analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
 
-
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
         CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentType);
         ExperimentDTO experimentDTO = ExperimentDTO.createNew(
                 condensedSdrfParserOutput,
-                condensedSdrfParserOutput.getExperimentDesign().getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate);
+                condensedSdrfParserOutput
+                        .getExperimentDesign()
+                        .getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate);
 
         updateExperimentDesign(experimentDTO);
 
         return experimentDAO.addExperiment(experimentDTO, accessKey);
+
     }
 
     private Optional<String> fetchExperimentAccessKey(String experimentAccession) {
@@ -135,10 +142,12 @@ public class ExperimentCrud {
                 .getExperimentDesign());
     }
 
-    void updateExperimentDesign(String accession, ExperimentType type, boolean isPrivate, ExperimentDesign experimentDesign) {
+    private void updateExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
+                                        ExperimentDesign experimentDesign) {
         try {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
+
             if (!isPrivate) {
                 conditionsIndexingService.indexConditions(accession, type, experimentDesign);
             }
