@@ -9,22 +9,25 @@
         <h3>Analysing single-cell gene expression under different biological conditions</h3>
         <p>
             The Single-Cell Expression Atlas provides information on single-cell gene expression patterns under different
-            biological conditions. Gene expression data is re-analysed in-house to detect genes showing interesting
-            baseline expression patterns.
+            biological conditions.
         </p>
         <!-- SP: customise animation  http://foundation.zurb.com/sites/docs/motion-ui.html-->
         <div id="description-more" data-toggler=".is-visible" style="display:none;">
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean urna orci, porta sit amet luctus
-                non, efficitur eu tortor. Sed faucibus justo lectus, a condimentum tellus posuere dictum. Donec leo
-                odio, luctus a dictum vitae, elementum in dui. Nunc dignissim hendrerit magna ac placerat. Sed
-                mollis erat vitae neque fermentum, varius interdum purus venenatis. Aliquam neque quam, commodo
-                quis posuere at, viverra quis diam. Curabitur quis tempus lorem. Praesent nunc enim, mattis vitae
-                nibh eget, varius fermentum erat. Donec porta tempor ante vitae porttitor. Aliquam eleifend nisi
-                non leo commodo, vel venenatis turpis mollis. In ac lacinia turpis, sit amet egestas leo. Donec eu
-                dolor a lorem efficitur consectetur ac a tortor. Sed maximus, lectus vitae egestas sollicitudin,
-                ligula sapien luctus enim, id tempor libero libero sit amet turpis. Pellentesque maximus, urna et
-                tristique imperdiet, nibh velit aliquet risus, vel tempus dui metus cursus libero.
+                Expression Atlas provides information about gene and protein expression in animal and plant samples of
+                different cell types, organism parts, developmental stages, diseases and other conditions. It consists
+                of selected microarray and RNA-sequencing studies from ArrayExpress, which have been manually curated,
+                annotated with ontology terms, checked for high quality and processed using standardised analysis
+                methods. Since the last update, Atlas has grown seven-fold (1572 studies as of August 2015), and
+                incorporates baseline expression profiles of tissues from Human Protein Atlas, GTEx and FANTOM5, and of
+                cancer cell lines from ENCODE, CCLE and Genentech projects. Plant studies constitute a quarter of Atlas
+                data. For genes of interest, the user can view baseline expression in tissues, and differential
+                expression for biologically meaningful pairwise comparisons—estimated using consistent methodology
+                across all of Atlas. Our first proteomics study in human tissues is now displayed alongside
+                transcriptomics data in the same tissues. Novel analyses and visualisations include: ‘enrichment’ in
+                each differential comparison of GO terms, Reactome, Plant Reactome pathways and InterPro domains;
+                hierarchical clustering (by baseline expression) of most variable genes and experimental conditions;
+                and, for a given gene-condition, distribution of baseline expression across biological replicates.
             </p>
         </div>
 
