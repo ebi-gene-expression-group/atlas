@@ -128,9 +128,15 @@ a.baseline {
 
 .mega-footer a, .mega-footer h5 {
     color: white;
+    border: none;
 }
 
-
+.mega-footer a:hover,
+.mega-footer a.dark-bg:focus,
+.mega-footer a.dark-bg:active {
+    color: white;
+    text-decoration: underline;
+}
 
 
 /*Dynamic magnifying glass search follows... it doesn’t seem very responsive (absolute positioning)*/
