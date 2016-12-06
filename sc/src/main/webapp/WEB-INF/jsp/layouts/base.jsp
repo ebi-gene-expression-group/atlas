@@ -87,7 +87,7 @@
 </div>
 
 <div data-sticky-container>
-    <div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="235">
+    <div id="local-masthead">
         <header>
 
             <tiles:insertAttribute name="top-menu" />
