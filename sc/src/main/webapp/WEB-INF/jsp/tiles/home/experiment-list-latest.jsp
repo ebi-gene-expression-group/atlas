@@ -55,12 +55,6 @@
                 </ul>
             </div>
 
-            <div class="row">
-                <div class="small-6 small-centered columns margin-top-large">
-                    <a href="#" class="button float-center">View all experiments</a>
-                </div>
-            </div>
-
         </div>
 
     </div>

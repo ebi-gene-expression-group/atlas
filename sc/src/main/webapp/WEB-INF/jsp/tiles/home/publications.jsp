@@ -37,9 +37,4 @@
         </div>
     </a>
 
-    <div class="row">
-        <div class="small-6 small-centered columns margin-top-large">
-            <a href="#" class="button float-center">All publications</a>
-        </div>
-    </div>
 </div>
