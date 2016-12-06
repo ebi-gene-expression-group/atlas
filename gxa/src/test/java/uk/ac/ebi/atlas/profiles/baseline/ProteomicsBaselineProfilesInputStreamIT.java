@@ -30,7 +30,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
     private ProteomicsBaselineProfileInputStreamFactory inputStreamFactory;
 
     @Inject
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
     private ObjectInputStream<BaselineProfile> subject;
 
@@ -56,7 +56,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
 
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
-        assertThat(baselineProfile.getSpecificity(), is(5));
+        assertThat(baselineProfile.getSpecificity(), is(23));
         for(String organismPart: "colon ovary pancreas prostate".split(" ")){
             assertNotNull(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, organismPart)));
         }
@@ -64,13 +64,13 @@ public class ProteomicsBaselineProfilesInputStreamIT {
 
         assertThat(baselineProfile2.getId(), is("ENSG00000000419"));
         assertThat(baselineProfile2.getName(), is("DPM1"));
-        assertThat(baselineProfile2.getSpecificity(), is(20));
+        assertThat(baselineProfile2.getSpecificity(), is(23));
 
         BaselineProfile baselineProfile3 = subject.readNext();
 
         assertThat(baselineProfile3.getId(), is("ENSG00000000457"));
         assertThat(baselineProfile3.getName(), is("SCYL3"));
-        assertThat(baselineProfile3.getSpecificity(), is(1));
+        assertThat(baselineProfile3.getSpecificity(), is(23));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
 
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
-        assertThat(baselineProfile.getSpecificity(), is(1));
+        assertThat(baselineProfile.getSpecificity(), is(7));
         assertNotNull(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "ovary")));
 
         BaselineProfile baselineProfile2 = subject.readNext();
@@ -91,8 +91,8 @@ public class ProteomicsBaselineProfilesInputStreamIT {
 
         BaselineProfile baselineProfile3 = subject.readNext();
 
-        assertThat(baselineProfile3.getId(), is("ENSG00000000971"));
-        assertThat(baselineProfile3.getName(), is("CFH"));
+        assertThat(baselineProfile3.getId(), is("ENSG00000000457"));
+        assertThat(baselineProfile3.getName(), is("SCYL3"));
         assertThat(baselineProfile3.getSpecificity(), is(7));
     }
 
