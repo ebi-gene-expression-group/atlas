@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row">
-    <div class="columns small-2" data-tooltip title="This is a Gene Expression Heatmap showing high or low expression of the gene">
+    <div class="columns small-2">
         <img src="${pageContext.request.contextPath}/resources/images/foundation/heatmap-hero.png">
     </div>
 
