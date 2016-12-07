@@ -1,0 +1,15 @@
+{
+  "name": "react-bioweb3d",
+  "version": "1.0.0",
+  "description": "React wrapper around BioWeb3D",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  }
+}
