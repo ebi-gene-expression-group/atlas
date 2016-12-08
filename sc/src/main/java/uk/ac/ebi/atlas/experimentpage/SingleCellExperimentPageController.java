@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummary;
@@ -18,6 +20,7 @@ import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
+import java.text.MessageFormat;
 
 @Controller
 public class SingleCellExperimentPageController extends ExperimentPageController {
@@ -37,7 +40,18 @@ public class SingleCellExperimentPageController extends ExperimentPageController
                                          Model model) {
 
 
-        model.addAllAttributes(experimentTrader.getPublicExperiment(experimentAccession).getAttributes());
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+
+        model.addAllAttributes(experiment.getAttributes());
+
+        String howManySamples = MessageFormat.format("{0} single cells",
+                experiment.getExperimentDesign().getAllRunOrAssay().size());
+
+        String updates = MessageFormat.format("Last updated: {0}",experiment.getExperimentInfo().getLastUpdate());
+
+        model.addAttribute("displayName", experiment.getDisplayName());
+        model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
+
 
         return "experiment";
     }

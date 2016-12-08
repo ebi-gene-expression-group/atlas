@@ -49,3 +49,15 @@
         </c:forEach>
     </div>
 </c:if>
+
+<c:if test="${not empty messagesAboutCells}">
+    <div id="messagesAboutCells">
+        <c:forEach var="message" items="${messagesAboutCells}" varStatus="i">
+            <div>
+                    ${message}
+            </div>
+
+        </c:forEach>
+    </div>
+</c:if>
+
