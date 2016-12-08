@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,17 @@ public class SingleCellExperimentPageController extends ExperimentPageController
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}")
+    public String baselineExperimentData(@PathVariable String experimentAccession,
+                                         Model model) {
+
+
+        model.addAllAttributes(experimentTrader.getPublicExperiment(experimentAccession).getAttributes());
+
+        return "experiment";
+    }
+
+
+    @RequestMapping(value = "/json/experiments/{experimentAccession}")
     @ResponseBody
     public String baselineExperimentData(@PathVariable String experimentAccession,
                                          HttpServletResponse response) {

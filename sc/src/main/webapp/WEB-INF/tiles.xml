@@ -9,8 +9,8 @@
         <put-attribute name="top-menu" value="/WEB-INF/jsp/tiles/top-menu.jsp"/>
         <put-attribute name="header"/>
         <put-attribute name="body"/>
+        <put-attribute name="news"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
-        <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
         <put-attribute name="mega-footer" value="/WEB-INF/jsp/tiles/mega-footer.jsp"/>
     </definition>
 
@@ -26,6 +26,18 @@
                 <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
             </definition>
         </put-attribute>
+        <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
+    </definition>
+
+    <definition name="experiment" extends="base">
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/experiment/header.jsp"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">
+                <put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>
+            </definition>
+        </put-attribute>
+        <put-attribute name="news" value=""/>
+
     </definition>
     
 </tiles-definitions>
