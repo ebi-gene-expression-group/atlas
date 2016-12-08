@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSortedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,8 +19,8 @@ public class SpeciesTrader {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesTrader.class);
 
     private SpeciesDao speciesDao;
-    private ImmutableSortedMap<String, Species> nameToSpecies;
-    private ImmutableMultimap<String, Species> kingdomToSpecies;
+    private ImmutableSortedMap<String, SpeciesConfigurationRecord> nameToSpecies;
+    private ImmutableMultimap<String, SpeciesConfigurationRecord> kingdomToSpecies;
 
     @Inject
     public void setSpeciesDao(SpeciesDao speciesDao) {
@@ -27,8 +28,8 @@ public class SpeciesTrader {
         buildMaps();
     }
 
-    public Species getByName(String speciesName) {
-        return nameToSpecies.get(normalise(speciesName));
+    public SpeciesConfigurationRecord getByName(String speciesName) {
+        return  nameToSpecies.get(normalise(speciesName));
     }
 
     private String normalise(String str) {
@@ -40,7 +41,7 @@ public class SpeciesTrader {
 
     }
 
-    public ImmutableCollection<Species> getByKingdom(String kingdom) {
+    public ImmutableCollection<SpeciesConfigurationRecord> getByKingdom(String kingdom) {
         return kingdomToSpecies.get(kingdom);
     }
 
@@ -52,10 +53,10 @@ public class SpeciesTrader {
         try {
             LOGGER.info("Reading species.json to retrieve species list...");
 
-            ImmutableSortedMap.Builder<String, Species> nameToSpeciesBuilder = ImmutableSortedMap.naturalOrder();
-            ImmutableMultimap.Builder<String, Species> kingdomToSpeciesBuilder = ImmutableMultimap.builder();
+            ImmutableSortedMap.Builder<String, SpeciesConfigurationRecord> nameToSpeciesBuilder = ImmutableSortedMap.naturalOrder();
+            ImmutableMultimap.Builder<String, SpeciesConfigurationRecord> kingdomToSpeciesBuilder = ImmutableMultimap.builder();
 
-            for (Species species : speciesDao.fetchAllSpecies()) {
+            for (SpeciesConfigurationRecord species : speciesDao.fetchAllSpecies()) {
                 nameToSpeciesBuilder.put(species.name(), species);
                 kingdomToSpeciesBuilder.put(species.kingdom(), species);
             }

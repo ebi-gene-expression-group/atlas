@@ -24,12 +24,12 @@ public class SpeciesDao {
         this.dataFileHub = dataFileHub;
     }
 
-    public Species fetchSpecies(String species) throws IOException {
+    public SpeciesConfigurationRecord fetchSpecies(String SpeciesConfigurationRecord) throws IOException {
         try (JsonReader reader = dataFileHub.getSpeciesFiles().all.get()) {
             reader.beginArray();
             while (reader.hasNext()) {
-                Species speciesJson = readSpecies(reader);
-                if (speciesJson.name().equals(species)) {
+                SpeciesConfigurationRecord speciesJson = readSpecies(reader);
+                if (speciesJson.name().equals(SpeciesConfigurationRecord)) {
                     return speciesJson;
                 }
             }
@@ -39,8 +39,8 @@ public class SpeciesDao {
         return null;
     }
 
-    public List<Species> fetchAllSpecies() throws IOException {
-        ArrayList<Species> allSpecies = Lists.newArrayList();
+    public List<SpeciesConfigurationRecord> fetchAllSpecies() throws IOException {
+        ArrayList<SpeciesConfigurationRecord> allSpecies = Lists.newArrayList();
 
         try (JsonReader reader = dataFileHub.getSpeciesFiles().all.get()) {
             reader.beginArray();
@@ -53,7 +53,7 @@ public class SpeciesDao {
         return allSpecies;
     }
 
-    private Species readSpecies(JsonReader reader) throws IOException {
+    private SpeciesConfigurationRecord readSpecies(JsonReader reader) throws IOException {
         String speciesName = null;
         String defaultQueryFactorType = null;
         String kingdom = null;
@@ -82,7 +82,7 @@ public class SpeciesDao {
             }
         }
         reader.endObject();
-        return Species.create(speciesName, defaultQueryFactorType, kingdom, resources);
+        return SpeciesConfigurationRecord.create(speciesName, defaultQueryFactorType, kingdom, resources);
     }
 
     private Pair<String, List<String>> readResource(JsonReader reader) throws IOException {

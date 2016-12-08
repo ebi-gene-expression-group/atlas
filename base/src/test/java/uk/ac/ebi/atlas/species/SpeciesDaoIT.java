@@ -24,21 +24,21 @@ public class SpeciesDaoIT {
 
     @Test
     public void fetchAllSpecies() throws Exception {
-        List<Species> allSpecies = subject.fetchAllSpecies();
+        List<SpeciesConfigurationRecord> allSpecies = subject.fetchAllSpecies();
         assertThat(allSpecies, hasSize(greaterThan(50)));
     }
 
     @Test
     public void fetchHomoSapines() throws Exception {
-        Species species = subject.fetchSpecies("homo_sapiens");
+        SpeciesConfigurationRecord species = subject.fetchSpecies("homo_sapiens");
         assertThat(species.name(), is("homo_sapiens"));
     }
 
     @Test
     public void plantsHaveTwoGenomeBrowsers() throws Exception {
-        List<Species> allSpecies = subject.fetchAllSpecies();
+        List<SpeciesConfigurationRecord> allSpecies = subject.fetchAllSpecies();
 
-        for (Species species : allSpecies) {
+        for (SpeciesConfigurationRecord species : allSpecies) {
             if (species.isPlant()) {
                 assertThat(species.resources().get("genome_browser"), hasSize(2));
             }
@@ -47,8 +47,8 @@ public class SpeciesDaoIT {
 
     @Test
     public void wbpsSpecies() throws Exception {
-        Species caenorhabditisElegans = subject.fetchSpecies("caenorhabditis_elegans");
-        Species schistosomaMansoni = subject.fetchSpecies("schistosoma_mansoni");
+        SpeciesConfigurationRecord caenorhabditisElegans = subject.fetchSpecies("caenorhabditis_elegans");
+        SpeciesConfigurationRecord schistosomaMansoni = subject.fetchSpecies("schistosoma_mansoni");
 
         assertThat(caenorhabditisElegans.resources().get("genome_browser").get(0), startsWith("http://parasite"));
         assertThat(schistosomaMansoni.resources().get("genome_browser").get(0), startsWith("http://parasite"));

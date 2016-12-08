@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.species.SpeciesConfigurationRecord;
 import uk.ac.ebi.atlas.species.SpeciesTrader;
 
 import javax.inject.Inject;
@@ -42,12 +43,16 @@ public class SpeciesFactory {
     }
 
     private Species create(String inputName, String canonicalName){
-        String ensemblDb = speciesTrader.getByName(inputName).name();
+        SpeciesConfigurationRecord speciesConfigurationRecord = speciesTrader.getByName(inputName);
+        if(speciesConfigurationRecord == null){
+            return NULL;
+        }
+        String ensemblDb = speciesConfigurationRecord.name();
         if(ensemblDb == null){
             LOGGER.warn(String.format("Could not look up ensemblDb for %s -> %s",inputName,canonicalName));
             ensemblDb = "";
         }
-        String kingdom = speciesTrader.getByName(inputName).kingdom();
+        String kingdom = speciesConfigurationRecord.kingdom();
         if(kingdom == null){
             LOGGER.warn(String.format("Could not look up kingdom for %s -> %s",inputName,canonicalName));
             kingdom = "";
@@ -55,7 +60,7 @@ public class SpeciesFactory {
         return new Species(inputName,canonicalName,ensemblDb,kingdom);
     }
 
-    static class AnySpecies extends Species {
+    public static class AnySpecies extends Species {
         AnySpecies(){
             super("","","","");
         }

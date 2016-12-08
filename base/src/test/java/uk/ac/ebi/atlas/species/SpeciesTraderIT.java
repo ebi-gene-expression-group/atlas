@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,11 +55,11 @@ public class SpeciesTraderIT {
     public void getSpeciesByKingdom() throws Exception {
         int count = 0;
         for (String kingdom : ImmutableList.of("animals", "plants", "fungi")) {
-            Collection<Species> kingdomSpecies = subject.getByKingdom(kingdom);
+            Collection<SpeciesConfigurationRecord> kingdomSpecies = subject.getByKingdom(kingdom);
 
             count += kingdomSpecies.size();
 
-            for (Species species : kingdomSpecies) {
+            for (SpeciesConfigurationRecord species : kingdomSpecies) {
                 assertThat(species.kingdom(), is(kingdom));
             }
         }
