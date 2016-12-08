@@ -8,14 +8,13 @@
 <section class="margin-top-large">
     <tiles:insertAttribute name="home-search"/>
 </section>
-
 <section class="margin-top-large">
     <div class="row small-up-1 medium-up-1 large-up-2" data-equalizer>
         <div class="columns">
-            <tiles:insertAttribute name="first-box"/>
+            <tiles:insertAttribute name="browse-by-box"/>
         </div>
         <div class="columns">
-            <tiles:insertAttribute name="second-box"/>
+            <tiles:insertAttribute name="experiment-list-latest-box"/>
         </div>
     </div>
 </section>
@@ -23,10 +22,10 @@
 <section class="margin-top-large">
     <div class="row small-up-1 medium-up-1 large-up-2" data-equalizer>
         <div class="columns">
-            <tiles:insertAttribute name="third-box"/>
+            <tiles:insertAttribute name="tools-box"/>
         </div>
         <div class="columns">
-            <tiles:insertAttribute name="fourth-box"/>
+            <tiles:insertAttribute name="publications-box"/>
         </div>
     </div>
 </section>

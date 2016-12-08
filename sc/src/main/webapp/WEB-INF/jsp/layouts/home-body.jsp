@@ -8,10 +8,10 @@
 <section class="margin-top-large">
     <div class="row small-up-1 medium-up-1 large-up-2" data-equalizer>
         <div class="columns">
-            <tiles:insertAttribute name="second-box"/>
+            <tiles:insertAttribute name="experiment-list-latest-box"/>
         </div>
         <div class="columns">
-            <tiles:insertAttribute name="fourth-box"/>
+            <tiles:insertAttribute name="publications-box"/>
         </div>
     </div>
 </section>

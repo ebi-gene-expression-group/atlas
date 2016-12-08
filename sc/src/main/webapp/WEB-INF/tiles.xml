@@ -20,12 +20,12 @@
             <definition template="/WEB-INF/jsp/layouts/home-body.jsp">
                 <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/home/hero.jsp"/>
                 <put-attribute name="home-search" value="/WEB-INF/jsp/tiles/home/search.jsp"/>
-                <put-attribute name="first-box" value="/WEB-INF/jsp/tiles/home/browse-by.jsp"/>
-                <put-attribute name="second-box" value="/WEB-INF/jsp/tiles/home/experiment-list-latest.jsp"/>
-                <put-attribute name="third-box" value="/WEB-INF/jsp/tiles/home/tools.jsp"/>
-                <put-attribute name="fourth-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
+                <put-attribute name="browse-by-box" value="/WEB-INF/jsp/tiles/home/browse-by.jsp"/>
+                <put-attribute name="experiment-list-latest-box" value="/WEB-INF/jsp/tiles/home/experiment-list-latest.jsp"/>
+                <put-attribute name="tools-box" value="/WEB-INF/jsp/tiles/home/tools.jsp"/>
+                <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
             </definition>
         </put-attribute>
     </definition>
-
+    
 </tiles-definitions>
