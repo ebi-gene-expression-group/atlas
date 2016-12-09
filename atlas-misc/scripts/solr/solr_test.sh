@@ -6,7 +6,7 @@ SOLR_CONF=/srv/gxa/solr/conf
 SOLR_LOG=/srv/gxa/solr/log
 SOLR_BIN=${SOLR_DIST}/server
 
-JAVA_OPTIONS="-Dsolr.indexes.dir=/srv/gxa/solr -Dsolr.solr.home=./solr -Djava.util.logging.config.file=solr_test/logging.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx12g -Xms12g"
+JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR.LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx8g -Xms1g"
 JAVA=/nfs/public/rw/webadmin/java/jdks/jdk1.7.0_04/bin/java
 CONSOLE_LOG=$SOLR_LOG/console.log
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )/solr_test.sh
