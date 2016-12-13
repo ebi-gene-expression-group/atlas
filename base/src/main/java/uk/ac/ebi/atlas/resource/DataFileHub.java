@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 @Named
 public class DataFileHub {
 
-    final String dataFilesLocation;
+    protected final String dataFilesLocation;
 
     final static String SPECIES_FILE_PATH = "/species/species.json";
 

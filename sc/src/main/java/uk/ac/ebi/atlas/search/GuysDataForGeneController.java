@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.resource.SingleCellFileHub;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
@@ -22,9 +23,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -41,19 +41,17 @@ public class GuysDataForGeneController { // give me a better class name when I b
     private final Map<String, String> guysIdentifiersPerEnsemblId;
 
     @Inject
-    public GuysDataForGeneController(AnalyticsSearchService analyticsSearchService, SpeciesFactory speciesFactory) throws URISyntaxException, IOException {
+    public GuysDataForGeneController(AnalyticsSearchService analyticsSearchService, SpeciesFactory speciesFactory,
+                                     SingleCellFileHub singleCellFileHub) throws URISyntaxException, IOException {
         this.analyticsSearchService = analyticsSearchService;
         this.SPECIES_IN_GUYS_EXPERIMENT = speciesFactory.create("mus musculus");
         ImmutableMap.Builder<String, String> b = new ImmutableMap.Builder<>();
 
-        for(String line: Files.readAllLines(
-                Paths.get(this.getClass().getClassLoader().getResource("/guyIdToEnsemblId.tsv").toURI()),
-                Charset.defaultCharset())){
-            String[] bits = line.split("\t");
+        for(String[] bits: singleCellFileHub.getGuysIdentifiers().get().readAll()){
             if(bits.length == 2){
                 b.put(bits[1],bits[0]);
             } else {
-                throw new IllegalStateException("Bad line in file: "+line);
+                throw new IllegalStateException("Bad line in file: "+ Arrays.deepToString(bits));
             }
         }
         guysIdentifiersPerEnsemblId = b.build();
@@ -67,7 +65,11 @@ public class GuysDataForGeneController { // give me a better class name when I b
                                          HttpServletResponse response) {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        return gson.toJson(transformGuysData(getGuysData(getGuysIdentifiers(query))));
+        return gson.toJson(baselineExperimentDataAsArray(query));
+    }
+
+    JsonObject baselineExperimentDataAsArray(SemanticQuery query){
+        return transformGuysData(getGuysData(getGuysIdentifiers(query)));
     }
 
     private Set<String> getGuysIdentifiers(SemanticQuery query){
