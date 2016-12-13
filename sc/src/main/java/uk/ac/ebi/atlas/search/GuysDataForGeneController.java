@@ -99,8 +99,10 @@ public class GuysDataForGeneController { // give me a better class name when I b
 
     private JsonArray getGuysData(Collection<String> guysIdentifiers){
         try {
-            return gson.fromJson(IOUtils.toString(buildUrl(guysIdentifiers), Charset.forName("UTF-8")),
-                    JsonArray.class);
+            return guysIdentifiers.size()>0 ?
+                    gson.fromJson(IOUtils.toString(
+                            buildUrl(guysIdentifiers), Charset.forName("UTF-8")), JsonArray.class)
+                    : new JsonArray();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
