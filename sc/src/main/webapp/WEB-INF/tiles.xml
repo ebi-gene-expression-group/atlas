@@ -34,7 +34,7 @@
         <put-attribute name="body">
             <definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">
                 <put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>
-                <put-attribute name="react-container" value="/WEB-INF/jsp/tiles/experiment/react-container.jsp"/>
+                <put-attribute name="react-container" value="/WEB-INF/jsp/tiles/experiment/react-experiment-page.jsp"/>
             </definition>
         </put-attribute>
         <put-attribute name="news" value=""/>

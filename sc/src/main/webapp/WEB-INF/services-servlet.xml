@@ -27,4 +27,13 @@
         </property>
     </bean>
 
+    <!-- Expose Spring beans to Tiles views -->
+    <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
+        <property name="attributes">
+            <map>
+                <entry key="applicationProperties" value-ref="applicationProperties"/>
+            </map>
+        </property>
+    </bean>
+
 </beans>
