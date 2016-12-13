@@ -2,31 +2,25 @@ var main =
 webpackJsonp_name_([1],{
 
 /***/ 0:
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	module.exports = __webpack_require__(/*! ./src/renderer.js */ 656);
+	module.exports = __webpack_require__(656);
 
 /***/ },
 
 /***/ 656:
-/*!*************************!*\
-  !*** ./src/renderer.js ***!
-  \*************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var React = __webpack_require__(/*! react */ 177);
-	var ReactDOM = __webpack_require__(/*! react-dom */ 338);
+	var React = __webpack_require__(177);
+	var ReactDOM = __webpack_require__(338);
 
 	//*------------------------------------------------------------------*
 
-	var ReferencePlotContainer = __webpack_require__(/*! ./ReferencePlotContainer.jsx */ 657);
+	var ReferencePlotContainer = __webpack_require__(657);
 
 	exports.render = function (options) {
 
@@ -36,21 +30,18 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 657:
-/*!****************************************!*\
-  !*** ./src/ReferencePlotContainer.jsx ***!
-  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	//*------------------------------------------------------------------*
 
-	var React = __webpack_require__(/*! react */ 177);
-	var d3 = __webpack_require__(/*! d3 */ 658);
-	var range = __webpack_require__(/*! lodash/range */ 659);
-	var ScatterPlot = __webpack_require__(/*! ./ScatterPlot.jsx */ 679);
-	var fetchExpressionData = __webpack_require__(/*! ./fetchExpressionData.js */ 682);
-	var GeneAutocomplete = __webpack_require__(/*! gene-autocomplete */ 684);
+	var React = __webpack_require__(177);
+	var d3 = __webpack_require__(658);
+	var range = __webpack_require__(659);
+	var ScatterPlot = __webpack_require__(679);
+	var fetchExpressionData = __webpack_require__(682);
+	var GeneAutocomplete = __webpack_require__(684);
 
 	//*------------------------------------------------------------------*
 	var referencePlotOptions = {
@@ -121,7 +112,7 @@ webpackJsonp_name_([1],{
 	};
 
 	var expressionPlotData = function expressionPlotData(chosenGene, expressionData) {
-	  var dataset = adjustDatasetWithFetchedExpressionData(__webpack_require__(/*! ./cannedGraphData.json */ 683), expressionData);
+	  var dataset = adjustDatasetWithFetchedExpressionData(__webpack_require__(683), expressionData);
 
 	  var pointValues = dataset.map(function (series) {
 	    return series.data.map(function (point) {
@@ -203,7 +194,7 @@ webpackJsonp_name_([1],{
 	        { className: 'row' },
 	        React.createElement(
 	          'div',
-	          { className: 'large-10 large-offset-1 columns' },
+	          { className: 'small-12 medium-6 medium-offset-6 columns' },
 	          React.createElement(
 	            'span',
 	            { style: { margin: "2rem" } },
@@ -211,7 +202,7 @@ webpackJsonp_name_([1],{
 	          ),
 	          React.createElement(GeneAutocomplete, {
 	            onGeneChosen: this._fetchExpressionPlotData,
-	            suggesterUrlTemplate: "https://www.ebi.ac.uk/gxa/json/suggestions?query={0}&species=" })
+	            suggesterUrlTemplate: "https://www.ebi.ac.uk/gxa/json/suggestions?query={0}&species=mus_musculus" })
 	        )
 	      ),
 	      React.createElement(
@@ -221,9 +212,9 @@ webpackJsonp_name_([1],{
 	          'div',
 	          { className: 'small-12 medium-6 columns' },
 	          React.createElement(ScatterPlot, {
-	            dataset: __webpack_require__(/*! ./cannedGraphData.json */ 683),
+	            dataset: __webpack_require__(683),
 	            options: referencePlotOptions,
-	            colorRanges: __webpack_require__(/*! ./cannedColorRanges.json */ 696) })
+	            colorRanges: __webpack_require__(696) })
 	        ),
 	        React.createElement(
 	          'div',
@@ -244,9 +235,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 658:
-/*!**************************!*\
-  !*** ./~/d3/build/d3.js ***!
-  \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://d3js.org Version 4.4.0. Copyright 2016 Mike Bostock.
@@ -16647,12 +16635,9 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 659:
-/*!***************************!*\
-  !*** ./~/lodash/range.js ***!
-  \***************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(/*! ./_createRange */ 660);
+	var createRange = __webpack_require__(660);
 
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -16703,14 +16688,11 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 660:
-/*!**********************************!*\
-  !*** ./~/lodash/_createRange.js ***!
-  \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(/*! ./_baseRange */ 661),
-	    isIterateeCall = __webpack_require__(/*! ./_isIterateeCall */ 662),
-	    toFinite = __webpack_require__(/*! ./toFinite */ 675);
+	var baseRange = __webpack_require__(661),
+	    isIterateeCall = __webpack_require__(662),
+	    toFinite = __webpack_require__(675);
 
 	/**
 	 * Creates a `_.range` or `_.rangeRight` function.
@@ -16743,9 +16725,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 661:
-/*!********************************!*\
-  !*** ./~/lodash/_baseRange.js ***!
-  \********************************/
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -16781,15 +16760,12 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 662:
-/*!*************************************!*\
-  !*** ./~/lodash/_isIterateeCall.js ***!
-  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var eq = __webpack_require__(/*! ./eq */ 663),
-	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 664),
-	    isIndex = __webpack_require__(/*! ./_isIndex */ 674),
-	    isObject = __webpack_require__(/*! ./isObject */ 672);
+	var eq = __webpack_require__(663),
+	    isArrayLike = __webpack_require__(664),
+	    isIndex = __webpack_require__(674),
+	    isObject = __webpack_require__(672);
 
 	/**
 	 * Checks if the given arguments are from an iteratee call.
@@ -16821,9 +16797,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 663:
-/*!************************!*\
-  !*** ./~/lodash/eq.js ***!
-  \************************/
 /***/ function(module, exports) {
 
 	/**
@@ -16868,13 +16841,10 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 664:
-/*!*********************************!*\
-  !*** ./~/lodash/isArrayLike.js ***!
-  \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(/*! ./isFunction */ 665),
-	    isLength = __webpack_require__(/*! ./isLength */ 673);
+	var isFunction = __webpack_require__(665),
+	    isLength = __webpack_require__(673);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -16911,13 +16881,10 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 665:
-/*!********************************!*\
-  !*** ./~/lodash/isFunction.js ***!
-  \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 666),
-	    isObject = __webpack_require__(/*! ./isObject */ 672);
+	var baseGetTag = __webpack_require__(666),
+	    isObject = __webpack_require__(672);
 
 	/** `Object#toString` result references. */
 	var asyncTag = '[object AsyncFunction]',
@@ -16958,14 +16925,11 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 666:
-/*!*********************************!*\
-  !*** ./~/lodash/_baseGetTag.js ***!
-  \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(/*! ./_Symbol */ 667),
-	    getRawTag = __webpack_require__(/*! ./_getRawTag */ 670),
-	    objectToString = __webpack_require__(/*! ./_objectToString */ 671);
+	var Symbol = __webpack_require__(667),
+	    getRawTag = __webpack_require__(670),
+	    objectToString = __webpack_require__(671);
 
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -16997,12 +16961,9 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 667:
-/*!*****************************!*\
-  !*** ./~/lodash/_Symbol.js ***!
-  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(/*! ./_root */ 668);
+	var root = __webpack_require__(668);
 
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -17013,12 +16974,9 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 668:
-/*!***************************!*\
-  !*** ./~/lodash/_root.js ***!
-  \***************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 669);
+	var freeGlobal = __webpack_require__(669);
 
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -17032,9 +16990,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 669:
-/*!*********************************!*\
-  !*** ./~/lodash/_freeGlobal.js ***!
-  \*********************************/
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -17047,12 +17002,9 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 670:
-/*!********************************!*\
-  !*** ./~/lodash/_getRawTag.js ***!
-  \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(/*! ./_Symbol */ 667);
+	var Symbol = __webpack_require__(667);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -17103,9 +17055,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 671:
-/*!*************************************!*\
-  !*** ./~/lodash/_objectToString.js ***!
-  \*************************************/
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -17135,9 +17084,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 672:
-/*!******************************!*\
-  !*** ./~/lodash/isObject.js ***!
-  \******************************/
 /***/ function(module, exports) {
 
 	/**
@@ -17176,9 +17122,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 673:
-/*!******************************!*\
-  !*** ./~/lodash/isLength.js ***!
-  \******************************/
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -17221,9 +17164,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 674:
-/*!******************************!*\
-  !*** ./~/lodash/_isIndex.js ***!
-  \******************************/
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -17253,12 +17193,9 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 675:
-/*!******************************!*\
-  !*** ./~/lodash/toFinite.js ***!
-  \******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var toNumber = __webpack_require__(/*! ./toNumber */ 676);
+	var toNumber = __webpack_require__(676);
 
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0,
@@ -17305,13 +17242,10 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 676:
-/*!******************************!*\
-  !*** ./~/lodash/toNumber.js ***!
-  \******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(/*! ./isObject */ 672),
-	    isSymbol = __webpack_require__(/*! ./isSymbol */ 677);
+	var isObject = __webpack_require__(672),
+	    isSymbol = __webpack_require__(677);
 
 	/** Used as references for various `Number` constants. */
 	var NAN = 0 / 0;
@@ -17381,13 +17315,10 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 677:
-/*!******************************!*\
-  !*** ./~/lodash/isSymbol.js ***!
-  \******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 666),
-	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 678);
+	var baseGetTag = __webpack_require__(666),
+	    isObjectLike = __webpack_require__(678);
 
 	/** `Object#toString` result references. */
 	var symbolTag = '[object Symbol]';
@@ -17420,9 +17351,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 678:
-/*!**********************************!*\
-  !*** ./~/lodash/isObjectLike.js ***!
-  \**********************************/
 /***/ function(module, exports) {
 
 	/**
@@ -17459,21 +17387,18 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 679:
-/*!*****************************!*\
-  !*** ./src/ScatterPlot.jsx ***!
-  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	//*------------------------------------------------------------------*
 
-	var React = __webpack_require__(/*! react */ 177);
-	var ReactHighcharts = __webpack_require__(/*! react-highcharts */ 653);
+	var React = __webpack_require__(177);
+	var ReactHighcharts = __webpack_require__(653);
 	var Highcharts = ReactHighcharts.Highcharts;
-	__webpack_require__(/*! highcharts-heatmap */ 16)(Highcharts);
+	__webpack_require__(16)(Highcharts);
 
-	var shallowCompare = __webpack_require__(/*! react-addons-shallow-compare */ 680);
+	var shallowCompare = __webpack_require__(680);
 
 	//*------------------------------------------------------------------*
 
@@ -17553,19 +17478,13 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 680:
-/*!*************************************************!*\
-  !*** ./~/react-addons-shallow-compare/index.js ***!
-  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! react/lib/shallowCompare */ 681);
+	module.exports = __webpack_require__(681);
 
 /***/ },
 
 /***/ 681:
-/*!***************************************!*\
-  !*** ./~/react/lib/shallowCompare.js ***!
-  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17581,7 +17500,7 @@ webpackJsonp_name_([1],{
 
 	'use strict';
 
-	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 292);
+	var shallowEqual = __webpack_require__(292);
 
 	/**
 	 * Does a shallow comparison for props and state.
@@ -17596,14 +17515,11 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 682:
-/*!************************************!*\
-  !*** ./src/fetchExpressionData.js ***!
-  \************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var cannedData = __webpack_require__(/*! ./cannedGraphData.json */ 683);
+	var cannedData = __webpack_require__(683);
 
 	var allNames = [].concat.apply([], cannedData.map(function (series) {
 	  return series.data.map(function (point) {
@@ -17647,9 +17563,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 683:
-/*!**********************************!*\
-  !*** ./src/cannedGraphData.json ***!
-  \**********************************/
 /***/ function(module, exports) {
 
 	module.exports = [
@@ -20539,28 +20452,22 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 684:
-/*!*************************************!*\
-  !*** ../gene-autocomplete/index.js ***!
-  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	module.exports = __webpack_require__(/*! ./src/AutocompleteBox.jsx */ 685);
+	module.exports = __webpack_require__(685);
 
 /***/ },
 
 /***/ 685:
-/*!****************************************************!*\
-  !*** ../gene-autocomplete/src/AutocompleteBox.jsx ***!
-  \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(/*! react */ 177);
-	var Autocomplete = __webpack_require__(/*! react-autocomplete */ 686);
-	__webpack_require__(/*! ./gene-autocomplete.css */ 692);
+	var React = __webpack_require__(177);
+	var Autocomplete = __webpack_require__(686);
+	__webpack_require__(692);
 
 	var AutocompleteBox = React.createClass({
 	  displayName: 'AutocompleteBox',
@@ -20674,34 +20581,28 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 686:
-/*!********************************************************************!*\
-  !*** ../gene-autocomplete/~/react-autocomplete/build/lib/index.js ***!
-  \********************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(/*! ./Autocomplete */ 687);
+	module.exports = __webpack_require__(687);
 
 /***/ },
 
 /***/ 687:
-/*!***************************************************************************!*\
-  !*** ../gene-autocomplete/~/react-autocomplete/build/lib/Autocomplete.js ***!
-  \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(/*! react */ 177);
+	var React = __webpack_require__(177);
 
-	var _require = __webpack_require__(/*! react-dom */ 688);
+	var _require = __webpack_require__(688);
 
 	var findDOMNode = _require.findDOMNode;
 
-	var scrollIntoView = __webpack_require__(/*! dom-scroll-into-view */ 689);
+	var scrollIntoView = __webpack_require__(689);
 
 	var _debugStates = [];
 
@@ -21068,36 +20969,27 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 688:
-/*!*************************************************!*\
-  !*** ../gene-autocomplete/~/react-dom/index.js ***!
-  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(/*! react/lib/ReactDOM */ 179);
+	module.exports = __webpack_require__(179);
 
 
 /***/ },
 
 /***/ 689:
-/*!*********************************************************************************!*\
-  !*** ../gene-autocomplete/~/react-autocomplete/~/dom-scroll-into-view/index.js ***!
-  \*********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/dom-scroll-into-view */ 690);
+	module.exports = __webpack_require__(690);
 
 
 /***/ },
 
 /***/ 690:
-/*!****************************************************************************************************!*\
-  !*** ../gene-autocomplete/~/react-autocomplete/~/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
-  \****************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var util = __webpack_require__(/*! ./util */ 691);
+	var util = __webpack_require__(691);
 
 	function scrollIntoView(elem, container, config) {
 	  config = config || {};
@@ -21224,9 +21116,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 691:
-/*!************************************************************************************!*\
-  !*** ../gene-autocomplete/~/react-autocomplete/~/dom-scroll-into-view/lib/util.js ***!
-  \************************************************************************************/
 /***/ function(module, exports) {
 
 	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
@@ -21665,18 +21554,15 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 692:
-/*!******************************************************!*\
-  !*** ../gene-autocomplete/src/gene-autocomplete.css ***!
-  \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./gene-autocomplete.css */ 693);
+	var content = __webpack_require__(693);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 695)(content, {});
+	var update = __webpack_require__(695)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21695,12 +21581,9 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 693:
-/*!****************************************************************************************!*\
-  !*** ../gene-autocomplete/~/css-loader!../gene-autocomplete/src/gene-autocomplete.css ***!
-  \****************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 694)();
+	exports = module.exports = __webpack_require__(694)();
 	// imports
 
 
@@ -21713,9 +21596,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 694:
-/*!*********************************************************!*\
-  !*** ../gene-autocomplete/~/css-loader/lib/css-base.js ***!
-  \*********************************************************/
 /***/ function(module, exports) {
 
 	/*
@@ -21773,9 +21653,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 695:
-/*!********************************************************!*\
-  !*** ../gene-autocomplete/~/style-loader/addStyles.js ***!
-  \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21801,7 +21678,7 @@ webpackJsonp_name_([1],{
 		styleElementsInsertedAtTop = [];
 
 	module.exports = function(list, options) {
-		if(true) {
+		if(false) {
 			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 		}
 
@@ -22029,9 +21906,6 @@ webpackJsonp_name_([1],{
 /***/ },
 
 /***/ 696:
-/*!************************************!*\
-  !*** ./src/cannedColorRanges.json ***!
-  \************************************/
 /***/ function(module, exports) {
 
 	module.exports = [
