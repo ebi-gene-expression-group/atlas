@@ -3,4 +3,5 @@
 
 <section id="gxaExperimentHeader">
     <tiles:insertAttribute name="description-blurb"/>
+    <tiles:insertAttribute name="react-container"/>
 </section>

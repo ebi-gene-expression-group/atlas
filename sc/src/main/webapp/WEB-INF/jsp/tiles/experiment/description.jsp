@@ -6,6 +6,7 @@
 
 <div id="experimentDescription">
     <h4>${experimentDescription}</h4>
+    <h5>Experiment information</h5>
 </div>
 <div id="experimentOrganisms">Organism:
     <span style="font-style:italic">${species}</span>
@@ -59,4 +60,4 @@
         </c:forEach>
     </div>
 </c:if>
-
+<br>
