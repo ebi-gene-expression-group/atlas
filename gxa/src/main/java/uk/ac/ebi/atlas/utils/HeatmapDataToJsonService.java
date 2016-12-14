@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Strings;
 import com.google.gson.*;
-import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
