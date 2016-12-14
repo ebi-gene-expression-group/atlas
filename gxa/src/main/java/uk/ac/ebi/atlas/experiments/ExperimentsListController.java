@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -46,27 +47,8 @@ public class ExperimentsListController {
     @ResponseBody
     public String getExperimentsList() {
 
-        List<ExperimentInfo> experimentInfos = experimentInfoListService.listPublicExperiments();
-        Collections.sort(experimentInfos);
-
-        return gson.toJson(new ExperimentInfoWrapper(experimentInfos));
+        return gson.toJson(experimentInfoListService.getExperimentsJson());
     }
 
-    /**
-     *  This is a wrapper class used via Gson to produce the right JSON input for DataTables.
-     */
-    public class ExperimentInfoWrapper {
-
-        private List<ExperimentInfo> aaData;
-
-        public ExperimentInfoWrapper(List<ExperimentInfo> list) {
-            this.aaData = list;
-        }
-
-        //DataTables requires table data in the aaData property
-        public List<ExperimentInfo> getAaData() {
-            return aaData;
-        }
-    }
 
 }
