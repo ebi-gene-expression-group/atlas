@@ -9,8 +9,10 @@ import java.util.SortedSet;
 
 /*
 I'm a useful class, just old. I show up as rows on Experiments page, and at latest experiments.
-Find out why I need to be a bean, and if possible unbean me!
-lastUpdate is a String that is later parsed, which you could improve.
+I am a bean so that setting properties is convenient but this could change.
+I could have a toJson method, and then there will be no need for reflection-based serialization that we're currently
+(and confusingly) doing.
+lastUpdate is a String that is later parsed, which, if you implement a toJson method, you could improve. 
  */
 public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
