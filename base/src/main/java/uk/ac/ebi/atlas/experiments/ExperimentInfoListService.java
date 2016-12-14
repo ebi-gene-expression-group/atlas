@@ -5,8 +5,6 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -73,6 +71,10 @@ public class ExperimentInfoListService {
 
 
     private List<ExperimentInfo> cached = null;
+
+    public int getCount() {
+        return listPublicExperiments().size();
+    }
 
     public List<ExperimentInfo> getLatest() {
         if(cached== null){

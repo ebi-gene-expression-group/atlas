@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <div class="callout experiment-list-latest" data-equalizer-watch>
     <ul class="tabs" data-tabs id="experiments-tabs">
@@ -9,49 +11,35 @@
     <div class="tabs-content" data-tabs-content="experiments-tabs">
 
         <div class="tabs-panel is-active" id="latest-experiments">
-            <h5 class="margin-top-medium margin-bottom-xlarge"><small>Total : 2914 experiments</small></h5>
+            <h5 class="margin-top-medium margin-bottom-xlarge"><small>
+                Total : ${experimentCount} experiments</small></h5>
             <div class="list-project-l">
                 <ul>
-                    <li>
-                        <a href="#">
-                            <span data-tooltip aria-haspopup="true" class="float-left baseline button-rd" title="Baseline experiment">B</span>
-                            <small>13-06-2016</small><br/>
-                            Transcription profiling by high throughput sequencing of five different organs of wheat (leaf, shoot, root, spike, and grain) at three developmental stages each...
-                            37 assays &ndash; <em>Triticum aestivum</em>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span  data-tooltip aria-haspopup="true" class="float-left differential button-rd" title="Differential experiment">D</span>
-                            <small>10-06-2016</small><br/>
-                            Transcription profiling of lesional and non-lesional skin from actopic dermititis patients and normal skin...
-                            34 assays &ndash; <em>Homo sapiens</em>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span data-tooltip aria-haspopup="true" class="float-left differential button-rd" title="Differential experiment">D</span>
-                            <small>09-06-2016</small><br/>
-                            Expression data from rice seedlings of wild type and the CHR729 mutant...
-                            6 assays &ndash; <em>Oryza sativa Japonica Group</em>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span  data-tooltip aria-haspopup="true" class="float-left differential button-rd" title="Differential experiment">D</span>
-                            <small>09-06-2016</small><br/>
-                            Transcription profiling of skin from vitiligo patients and healthy volunteers reveals the WNT pathway as a target for re-pigmenting vitiligo lesions ...
-                            40 assays &ndash; <em>Homo sapiens</em>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span  data-tooltip aria-haspopup="true" class="float-left differential button-rd " title="Differential experiment">D</span>
-                            <small>06-06-2016</small><br/>
-                            Re-analysis by microarray using cDNA target of samples from psoriasis patients enrolled in an etanercept trial...
-                            81 assays &ndash; <em>Homo sapiens</em>
-                        </a>
-                    </li>
+                    <c:forEach items="${latestExperiments}" var="experimentInfo">
+                        <li>
+                            <a href="experiments/${experimentInfo.experimentAccession}">
+                                <c:choose>
+                                    <c:when test="${experimentInfo.experimentType.baseline}">
+                                        <span data-tooltip aria-haspopup="true" class="float-left baseline button-rd" title="Baseline experiment">B</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span data-tooltip aria-haspopup="true" class="float-left differential button-rd" title="Differential experiment">D</span>
+                                    </c:otherwise>
+                                </c:choose>
+                                <small>${experimentInfo.lastUpdate}</small><br/>
+                                ${experimentInfo.experimentDescription}
+                                <c:choose>
+                                    <c:when test="${experimentInfo.experimentType.baseline}">
+                                        ${experimentInfo.numberOfAssays} assays &ndash;
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${experimentInfo.numberOfContrasts} contrasts &ndash;
+                                    </c:otherwise>
+                                </c:choose>
+                                 <em>${experimentInfo.species}</em>
+                            </a>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
 

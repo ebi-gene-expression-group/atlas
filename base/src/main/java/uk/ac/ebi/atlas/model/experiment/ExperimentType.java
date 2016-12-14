@@ -36,6 +36,7 @@ public enum ExperimentType {
         return equals(MICROARRAY_ANY) || getParent().equals(MICROARRAY_ANY);
     }
 
+    //used in experiment-list-latest.jsp
     public boolean isBaseline() {
         return equals(RNASEQ_MRNA_BASELINE) || equals(PROTEOMICS_BASELINE) || equals(SINGLE_CELL_RNASEQ_MRNA_BASELINE);
     }

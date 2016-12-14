@@ -8,11 +8,14 @@ import java.util.Set;
 import java.util.SortedSet;
 
 /*
-I'm a useful class, just old. I show up as rows on Experiments page, and at latest experiments.
-I am a bean so that setting properties is convenient but this could change.
+I'm a useful class, just old. I show up as rows on Experiments page, and for latest experiments I am rendered
+server-side through templates.
+For the sake of latest experiments I need to stay a bean, with method names as explained in
+ http://stackoverflow.com/a/8577719
+Also since I am a bean, that setting properties is convenient and constructing me in Experiment is convenient.
 I could have a toJson method, and then there will be no need for reflection-based serialization that we're currently
 (and confusingly) doing.
-lastUpdate is a String that is later parsed, which, if you implement a toJson method, you could improve. 
+lastUpdate is a String that is later parsed, which, if you implement a toJson method, you could improve.
  */
 public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
