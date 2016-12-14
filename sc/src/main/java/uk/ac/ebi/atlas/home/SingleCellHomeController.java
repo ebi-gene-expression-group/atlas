@@ -23,8 +23,7 @@ public class SingleCellHomeController {
 
     @RequestMapping(value = "/home")
     public String getHomePage(Model model) {
-        model.addAttribute("experimentCount", experimentInfoListService.getCount());
-        model.addAttribute("latestExperiments", experimentInfoListService.getLatest());
+        model.addAllAttributes(experimentInfoListService.getLatestExperimentsListAttributes());
         return "home";
     }
 }

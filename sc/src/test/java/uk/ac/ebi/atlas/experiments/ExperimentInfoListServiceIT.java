@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 import java.util.List;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -42,7 +43,7 @@ public class ExperimentInfoListServiceIT {
     }
     @Test
     public void fetchLatest(){
-        List<ExperimentInfo> experiments = subject.getLatest();
+        List<ExperimentInfo> experiments = subject.fetchLatest();
 
         assertThat(experiments.size(), Matchers.greaterThan(0));
         assertThat(experiments.size(), Matchers.lessThan(10));
@@ -52,6 +53,11 @@ public class ExperimentInfoListServiceIT {
                 ExperimentInfoListService.expectedDateFormat);
 
         assertTrue("First element of the list was updated after the last one" , tHead.isAfter(tTail) || tHead.equals(tTail));
+    }
+
+    @Test
+    public void fetchCount(){
+        assertThat(subject.fetchCount(), greaterThanOrEqualTo(subject.fetchLatest().size()));
     }
 
 

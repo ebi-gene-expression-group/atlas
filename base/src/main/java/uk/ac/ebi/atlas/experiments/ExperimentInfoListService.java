@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -70,20 +71,21 @@ public class ExperimentInfoListService {
 
 
 
-    private List<ExperimentInfo> cached = null;
 
-    public int getCount() {
-        return listPublicExperiments().size();
-    }
+    private ImmutableMap<String, Object> cached = null;
 
-    public List<ExperimentInfo> getLatest() {
+    public ImmutableMap<String, Object> getLatestExperimentsListAttributes(){
         if(cached== null){
-            cached = fetchLatest();
+            cached = ImmutableMap.of("experimentCount", fetchCount(), "latestExperiments", fetchLatest());
         }
         return cached;
     }
 
-    private List<ExperimentInfo> fetchLatest(){
+    int fetchCount() {
+        return listPublicExperiments().size();
+    }
+
+    List<ExperimentInfo> fetchLatest(){
         ImmutableList<ExperimentInfo> l = FluentIterable.from(listPublicExperiments()).toSortedList(new Comparator<ExperimentInfo>
                 () {
             @Override
