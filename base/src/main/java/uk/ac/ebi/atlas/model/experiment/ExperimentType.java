@@ -94,4 +94,12 @@ public enum ExperimentType {
         return equals(RNASEQ_MRNA_BASELINE);
     }
 
+    public static ExperimentType[] all(){
+        return new ExperimentType[] {
+                ExperimentType.MICROARRAY_ANY,
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
+                ExperimentType.RNASEQ_MRNA_BASELINE,
+                ExperimentType.PROTEOMICS_BASELINE
+        };
+    }
 }

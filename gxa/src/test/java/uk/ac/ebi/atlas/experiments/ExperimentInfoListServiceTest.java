@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.experiments;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,10 +77,10 @@ public class ExperimentInfoListServiceTest {
     private PublicExperimentTypesCache publicExperimentTypesCacheMock;
 
     @Mock
-    private DifferentialExperiment differentialExperiment;
+    private DifferentialExperiment differentialExperimentMock;
 
     @Mock
-    private MicroarrayExperiment microarrayExperiment;
+    private MicroarrayExperiment microarrayExperimentMock;
 
     @Mock
     private ArrayDesignTrader arrayDesignTraderMock;
@@ -116,13 +116,13 @@ public class ExperimentInfoListServiceTest {
         when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", ASSAY_1,ASSAY_2));
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test",ASSAY_1));
         Set<Contrast> contrasts = Sets.newTreeSet(Sets.newHashSet(contrast));
-        differentialExperiment = Mockito.spy(
+        differentialExperimentMock = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,
                 "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"),
                 new HashSet<String>(),experimentDesignMock));
 
-        microarrayExperiment = Mockito.spy(new MicroarrayExperiment(ExperimentType
+        microarrayExperimentMock = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
                 "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
@@ -130,8 +130,8 @@ public class ExperimentInfoListServiceTest {
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment>> experimentAccessionsPerType = ImmutableMap.of(
                 baselineExperiment.getType(), ImmutableSet.of(baselineExperiment),
-                differentialExperiment.getType(), ImmutableSet.of(differentialExperiment),
-                microarrayExperiment.getType(), ImmutableSet.of(microarrayExperiment)
+                differentialExperimentMock.getType(), ImmutableSet.of(differentialExperimentMock),
+                microarrayExperimentMock.getType(), ImmutableSet.of(microarrayExperimentMock)
         );
 
 
@@ -147,8 +147,8 @@ public class ExperimentInfoListServiceTest {
         //call real method on big method, small one takes from this map
         when(experimentDesignMock.getFactorHeaders()).thenReturn(Sets.newTreeSet(Sets.newHashSet(FACTOR_NAME)));
 
-        subject = new ExperimentInfoListService(experimentTraderMock, ImmutableList.of(baselineExperiment.getType(),
-                differentialExperiment.getType(), microarrayExperiment.getType()));
+        subject = new ExperimentInfoListService(experimentTraderMock
+        );
     }
 
     @Test

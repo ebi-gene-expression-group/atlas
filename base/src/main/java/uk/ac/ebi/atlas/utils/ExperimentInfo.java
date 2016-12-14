@@ -7,11 +7,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import java.util.Set;
 import java.util.SortedSet;
 
-/*
-I'm a useful class, just old. I show up as rows on Experiments page, and at latest experiments.
-Find out why I need to be a bean, and if possible unbean me!
-lastUpdate is a String that is later parsed, which you could improve.
- */
 public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     private ExperimentType experimentType;
