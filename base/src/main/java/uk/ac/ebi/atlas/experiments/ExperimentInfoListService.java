@@ -59,7 +59,7 @@ public class ExperimentInfoListService {
     }
 
 
-    private List<ExperimentInfo> listPublicExperiments() {
+    List<ExperimentInfo> listPublicExperiments() {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
         for(ExperimentType experimentType : experimentTypes){
             for(Experiment experiment: experimentTrader.getPublicExperiments(experimentType)){
