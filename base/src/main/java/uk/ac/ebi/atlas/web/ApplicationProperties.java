@@ -128,6 +128,7 @@ public class ApplicationProperties {
         return sourceURLBuilder.toString();
     }
 
+    @Deprecated //Not used because now we save data from the page. Also it's probably broken.
     public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {
         // get original query string, not the one modified by ExperimentDispatcher
         String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");

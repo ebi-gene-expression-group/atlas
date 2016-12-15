@@ -27,6 +27,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Deprecated // and probably broken. Not used because now we save data from the page.
 @Controller
 @Scope("request")
 public final class HeatmapWidgetDownloadController {

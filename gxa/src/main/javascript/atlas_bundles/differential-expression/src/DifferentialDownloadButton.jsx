@@ -1,5 +1,7 @@
 const $ = require('jquery');
 require('jquery-ui-bundle');
+//TODO: make this button consistently styled, using Bootstrap or Foundation
+//remove this dependency on jquery
 
 const React = require('react');
 const ReactDOM = require('react-dom');
