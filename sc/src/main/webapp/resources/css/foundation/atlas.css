@@ -189,21 +189,5 @@ a.baseline {
 /*}*/
 
 select {
-    -webkit-appearance: none !important;
     -moz-appearance: none !important;
-    background-color: #FAFAFA;
-    border-radius: 0;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+");
-    background-position: 100% center;
-    background-repeat: no-repeat;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #cccccc;
-    color: #444444;
-    font-family: inherit;
-    font-size: 0.77778rem;
-    line-height: normal;
-    padding: 0.44444rem;
-    border-radius: 0;
-    height: 2.05556rem;
 }
