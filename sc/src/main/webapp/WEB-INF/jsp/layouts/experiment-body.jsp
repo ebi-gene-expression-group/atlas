@@ -2,6 +2,16 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
 <section id="gxaExperimentHeader">
-    <tiles:insertAttribute name="description-blurb"/>
-    <tiles:insertAttribute name="react-container"/>
+    <div class="row">
+        <div class="small-12 columns">
+            <tiles:insertAttribute name="description-blurb"/>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="row">
+        <div class="small-12 columns">
+            <tiles:insertAttribute name="react-container"/>
+        </div>
+    </div>
 </section>
