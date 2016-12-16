@@ -1,0 +1,2280 @@
+E-MTAB-2865		ERR592498	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592498	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592498	characteristic	individual	C5x64-1S
+E-MTAB-2865		ERR592498	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592498	characteristic	organism part	episphere
+E-MTAB-2865		ERR592498	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592498	factor	individual	C5x64-1S
+E-MTAB-2865		ERR592498	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592499	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592499	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592499	characteristic	individual	C5x20-1S
+E-MTAB-2865		ERR592499	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592499	characteristic	organism part	episphere
+E-MTAB-2865		ERR592499	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592499	factor	individual	C5x20-1S
+E-MTAB-2865		ERR592499	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592500	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592500	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592500	characteristic	individual	C5x65-nc
+E-MTAB-2865		ERR592500	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592500	characteristic	organism part	episphere
+E-MTAB-2865		ERR592500	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592500	factor	individual	C5x65-nc
+E-MTAB-2865		ERR592500	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592501	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592501	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592501	characteristic	individual	C5x83-2
+E-MTAB-2865		ERR592501	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592501	characteristic	organism part	episphere
+E-MTAB-2865		ERR592501	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592501	factor	individual	C5x83-2
+E-MTAB-2865		ERR592501	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592502	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592502	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592502	characteristic	individual	C5x90-1L
+E-MTAB-2865		ERR592502	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592502	characteristic	organism part	episphere
+E-MTAB-2865		ERR592502	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592502	factor	individual	C5x90-1L
+E-MTAB-2865		ERR592502	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592503	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592503	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592503	characteristic	individual	C4x37-1M
+E-MTAB-2865		ERR592503	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592503	characteristic	organism part	episphere
+E-MTAB-2865		ERR592503	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592503	factor	individual	C4x37-1M
+E-MTAB-2865		ERR592503	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592504	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592504	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592504	characteristic	individual	C5x38-1S
+E-MTAB-2865		ERR592504	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592504	characteristic	organism part	episphere
+E-MTAB-2865		ERR592504	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592504	factor	individual	C5x38-1S
+E-MTAB-2865		ERR592504	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592505	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592505	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592505	characteristic	individual	C5x74-b
+E-MTAB-2865		ERR592505	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592505	characteristic	organism part	episphere
+E-MTAB-2865		ERR592505	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592505	factor	individual	C5x74-b
+E-MTAB-2865		ERR592505	factor	single cell well quality	debris
+E-MTAB-2865		ERR592506	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592506	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592506	characteristic	individual	C5x14-1M
+E-MTAB-2865		ERR592506	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592506	characteristic	organism part	episphere
+E-MTAB-2865		ERR592506	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592506	factor	individual	C5x14-1M
+E-MTAB-2865		ERR592506	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592507	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592507	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592507	characteristic	individual	C5x69-nc
+E-MTAB-2865		ERR592507	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592507	characteristic	organism part	episphere
+E-MTAB-2865		ERR592507	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592507	factor	individual	C5x69-nc
+E-MTAB-2865		ERR592507	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592508	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592508	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592508	characteristic	individual	C5x84-1S
+E-MTAB-2865		ERR592508	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592508	characteristic	organism part	episphere
+E-MTAB-2865		ERR592508	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592508	factor	individual	C5x84-1S
+E-MTAB-2865		ERR592508	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592509	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592509	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592509	characteristic	individual	C5x67-1S
+E-MTAB-2865		ERR592509	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592509	characteristic	organism part	episphere
+E-MTAB-2865		ERR592509	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592509	factor	individual	C5x67-1S
+E-MTAB-2865		ERR592509	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592510	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592510	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592510	characteristic	individual	C4x39-1M
+E-MTAB-2865		ERR592510	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592510	characteristic	organism part	episphere
+E-MTAB-2865		ERR592510	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592510	factor	individual	C4x39-1M
+E-MTAB-2865		ERR592510	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592511	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592511	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592511	characteristic	individual	C5x48-15
+E-MTAB-2865		ERR592511	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592511	characteristic	organism part	episphere
+E-MTAB-2865		ERR592511	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592511	factor	individual	C5x48-15
+E-MTAB-2865		ERR592511	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592512	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592512	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592512	characteristic	individual	C3x03-nc
+E-MTAB-2865		ERR592512	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592512	characteristic	organism part	episphere
+E-MTAB-2865		ERR592512	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592512	factor	individual	C3x03-nc
+E-MTAB-2865		ERR592512	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592513	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592513	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592513	characteristic	individual	C5x37-2S
+E-MTAB-2865		ERR592513	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592513	characteristic	organism part	episphere
+E-MTAB-2865		ERR592513	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592513	factor	individual	C5x37-2S
+E-MTAB-2865		ERR592513	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592514	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592514	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592514	characteristic	individual	C5x01-1M
+E-MTAB-2865		ERR592514	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592514	characteristic	organism part	episphere
+E-MTAB-2865		ERR592514	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592514	factor	individual	C5x01-1M
+E-MTAB-2865		ERR592514	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592515	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592515	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592515	characteristic	individual	C5x45-nc
+E-MTAB-2865		ERR592515	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592515	characteristic	organism part	episphere
+E-MTAB-2865		ERR592515	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592515	factor	individual	C5x45-nc
+E-MTAB-2865		ERR592515	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592516	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592516	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592516	characteristic	individual	C5x44-nc
+E-MTAB-2865		ERR592516	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592516	characteristic	organism part	episphere
+E-MTAB-2865		ERR592516	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592516	factor	individual	C5x44-nc
+E-MTAB-2865		ERR592516	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592517	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592517	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592517	characteristic	individual	C5x50-1Lb
+E-MTAB-2865		ERR592517	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592517	characteristic	organism part	episphere
+E-MTAB-2865		ERR592517	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR592517	factor	individual	C5x50-1Lb
+E-MTAB-2865		ERR592517	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR592518	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592518	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592518	characteristic	individual	C5x27-1M
+E-MTAB-2865		ERR592518	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592518	characteristic	organism part	episphere
+E-MTAB-2865		ERR592518	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592518	factor	individual	C5x27-1M
+E-MTAB-2865		ERR592518	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592519	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592519	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592519	characteristic	individual	C5x93-1S
+E-MTAB-2865		ERR592519	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592519	characteristic	organism part	episphere
+E-MTAB-2865		ERR592519	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592519	factor	individual	C5x93-1S
+E-MTAB-2865		ERR592519	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592520	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592520	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592520	characteristic	individual	C5x18-1S
+E-MTAB-2865		ERR592520	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592520	characteristic	organism part	episphere
+E-MTAB-2865		ERR592520	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592520	factor	individual	C5x18-1S
+E-MTAB-2865		ERR592520	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592521	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592521	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592521	characteristic	individual	C3x65-1L
+E-MTAB-2865		ERR592521	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592521	characteristic	organism part	episphere
+E-MTAB-2865		ERR592521	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592521	factor	individual	C3x65-1L
+E-MTAB-2865		ERR592521	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592522	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592522	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592522	characteristic	individual	C4x25-1M
+E-MTAB-2865		ERR592522	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592522	characteristic	organism part	episphere
+E-MTAB-2865		ERR592522	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592522	factor	individual	C4x25-1M
+E-MTAB-2865		ERR592522	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592523	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592523	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592523	characteristic	individual	C5x85-1S
+E-MTAB-2865		ERR592523	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592523	characteristic	organism part	episphere
+E-MTAB-2865		ERR592523	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592523	factor	individual	C5x85-1S
+E-MTAB-2865		ERR592523	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592524	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592524	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592524	characteristic	individual	C3x58-1L
+E-MTAB-2865		ERR592524	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592524	characteristic	organism part	episphere
+E-MTAB-2865		ERR592524	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592524	factor	individual	C3x58-1L
+E-MTAB-2865		ERR592524	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592525	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592525	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592525	characteristic	individual	C5x61-nc
+E-MTAB-2865		ERR592525	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592525	characteristic	organism part	episphere
+E-MTAB-2865		ERR592525	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592525	factor	individual	C5x61-nc
+E-MTAB-2865		ERR592525	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592526	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592526	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592526	characteristic	individual	C5x25-nc
+E-MTAB-2865		ERR592526	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592526	characteristic	organism part	episphere
+E-MTAB-2865		ERR592526	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592526	factor	individual	C5x25-nc
+E-MTAB-2865		ERR592526	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592527	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592527	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592527	characteristic	individual	C5x94-nc
+E-MTAB-2865		ERR592527	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592527	characteristic	organism part	episphere
+E-MTAB-2865		ERR592527	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592527	factor	individual	C5x94-nc
+E-MTAB-2865		ERR592527	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592528	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592528	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592528	characteristic	individual	C5x17-1M
+E-MTAB-2865		ERR592528	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592528	characteristic	organism part	episphere
+E-MTAB-2865		ERR592528	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592528	factor	individual	C5x17-1M
+E-MTAB-2865		ERR592528	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592529	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592529	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592529	characteristic	individual	C4x45-2S
+E-MTAB-2865		ERR592529	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592529	characteristic	organism part	episphere
+E-MTAB-2865		ERR592529	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592529	factor	individual	C4x45-2S
+E-MTAB-2865		ERR592529	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592530	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592530	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592530	characteristic	individual	C4x72-1S
+E-MTAB-2865		ERR592530	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592530	characteristic	organism part	episphere
+E-MTAB-2865		ERR592530	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592530	factor	individual	C4x72-1S
+E-MTAB-2865		ERR592530	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592531	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592531	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592531	characteristic	individual	C3x82-nc
+E-MTAB-2865		ERR592531	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592531	characteristic	organism part	episphere
+E-MTAB-2865		ERR592531	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592531	factor	individual	C3x82-nc
+E-MTAB-2865		ERR592531	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592532	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592532	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592532	characteristic	individual	C5x16-1S
+E-MTAB-2865		ERR592532	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592532	characteristic	organism part	episphere
+E-MTAB-2865		ERR592532	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592532	factor	individual	C5x16-1S
+E-MTAB-2865		ERR592532	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592533	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592533	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592533	characteristic	individual	C5x06-1M
+E-MTAB-2865		ERR592533	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592533	characteristic	organism part	episphere
+E-MTAB-2865		ERR592533	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592533	factor	individual	C5x06-1M
+E-MTAB-2865		ERR592533	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592534	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592534	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592534	characteristic	individual	C4x65-nc
+E-MTAB-2865		ERR592534	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592534	characteristic	organism part	episphere
+E-MTAB-2865		ERR592534	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592534	factor	individual	C4x65-nc
+E-MTAB-2865		ERR592534	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592535	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592535	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592535	characteristic	individual	C4x54-nc
+E-MTAB-2865		ERR592535	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592535	characteristic	organism part	episphere
+E-MTAB-2865		ERR592535	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592535	factor	individual	C4x54-nc
+E-MTAB-2865		ERR592535	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592536	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592536	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592536	characteristic	individual	C5x41-1L
+E-MTAB-2865		ERR592536	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592536	characteristic	organism part	episphere
+E-MTAB-2865		ERR592536	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592536	factor	individual	C5x41-1L
+E-MTAB-2865		ERR592536	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592537	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592537	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592537	characteristic	individual	C4x24-1S
+E-MTAB-2865		ERR592537	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592537	characteristic	organism part	episphere
+E-MTAB-2865		ERR592537	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592537	factor	individual	C4x24-1S
+E-MTAB-2865		ERR592537	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592538	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592538	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592538	characteristic	individual	C5x72-1Md
+E-MTAB-2865		ERR592538	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592538	characteristic	organism part	episphere
+E-MTAB-2865		ERR592538	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592538	factor	individual	C5x72-1Md
+E-MTAB-2865		ERR592538	factor	single cell well quality	debris
+E-MTAB-2865		ERR592539	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592539	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592539	characteristic	individual	C5x33-1S
+E-MTAB-2865		ERR592539	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592539	characteristic	organism part	episphere
+E-MTAB-2865		ERR592539	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592539	factor	individual	C5x33-1S
+E-MTAB-2865		ERR592539	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592540	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592540	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592540	characteristic	individual	C4x20-1M
+E-MTAB-2865		ERR592540	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592540	characteristic	organism part	episphere
+E-MTAB-2865		ERR592540	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592540	factor	individual	C4x20-1M
+E-MTAB-2865		ERR592540	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592541	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592541	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592541	characteristic	individual	C5x59-1L
+E-MTAB-2865		ERR592541	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592541	characteristic	organism part	episphere
+E-MTAB-2865		ERR592541	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592541	factor	individual	C5x59-1L
+E-MTAB-2865		ERR592541	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592542	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592542	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592542	characteristic	individual	C3x42-1L
+E-MTAB-2865		ERR592542	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592542	characteristic	organism part	episphere
+E-MTAB-2865		ERR592542	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592542	factor	individual	C3x42-1L
+E-MTAB-2865		ERR592542	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592543	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592543	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592543	characteristic	individual	C5x81-nc
+E-MTAB-2865		ERR592543	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592543	characteristic	organism part	episphere
+E-MTAB-2865		ERR592543	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592543	factor	individual	C5x81-nc
+E-MTAB-2865		ERR592543	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592544	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592544	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592544	characteristic	individual	C4x70-1VSb
+E-MTAB-2865		ERR592544	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592544	characteristic	organism part	episphere
+E-MTAB-2865		ERR592544	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR592544	factor	individual	C4x70-1VSb
+E-MTAB-2865		ERR592544	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR592545	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592545	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592545	characteristic	individual	C5x66-1S
+E-MTAB-2865		ERR592545	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592545	characteristic	organism part	episphere
+E-MTAB-2865		ERR592545	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592545	factor	individual	C5x66-1S
+E-MTAB-2865		ERR592545	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592546	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592546	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592546	characteristic	individual	C5x22-1S
+E-MTAB-2865		ERR592546	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592546	characteristic	organism part	episphere
+E-MTAB-2865		ERR592546	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592546	factor	individual	C5x22-1S
+E-MTAB-2865		ERR592546	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592547	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592547	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592547	characteristic	individual	C5x57-1M
+E-MTAB-2865		ERR592547	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592547	characteristic	organism part	episphere
+E-MTAB-2865		ERR592547	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592547	factor	individual	C5x57-1M
+E-MTAB-2865		ERR592547	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592548	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592548	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592548	characteristic	individual	C5x02-1M
+E-MTAB-2865		ERR592548	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592548	characteristic	organism part	episphere
+E-MTAB-2865		ERR592548	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592548	factor	individual	C5x02-1M
+E-MTAB-2865		ERR592548	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592549	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592549	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592549	characteristic	individual	C4x03-nc
+E-MTAB-2865		ERR592549	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592549	characteristic	organism part	episphere
+E-MTAB-2865		ERR592549	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592549	factor	individual	C4x03-nc
+E-MTAB-2865		ERR592549	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592550	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592550	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592550	characteristic	individual	C5x42-1M
+E-MTAB-2865		ERR592550	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592550	characteristic	organism part	episphere
+E-MTAB-2865		ERR592550	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592550	factor	individual	C5x42-1M
+E-MTAB-2865		ERR592550	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592551	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592551	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592551	characteristic	individual	C5x80-1VS
+E-MTAB-2865		ERR592551	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592551	characteristic	organism part	episphere
+E-MTAB-2865		ERR592551	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592551	factor	individual	C5x80-1VS
+E-MTAB-2865		ERR592551	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592552	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592552	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592552	characteristic	individual	C5x30-1S
+E-MTAB-2865		ERR592552	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592552	characteristic	organism part	episphere
+E-MTAB-2865		ERR592552	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592552	factor	individual	C5x30-1S
+E-MTAB-2865		ERR592552	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592553	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592553	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592553	characteristic	individual	C4x56-1M
+E-MTAB-2865		ERR592553	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592553	characteristic	organism part	episphere
+E-MTAB-2865		ERR592553	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592553	factor	individual	C4x56-1M
+E-MTAB-2865		ERR592553	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592554	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592554	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592554	characteristic	individual	C5x21-1M
+E-MTAB-2865		ERR592554	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592554	characteristic	organism part	episphere
+E-MTAB-2865		ERR592554	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592554	factor	individual	C5x21-1M
+E-MTAB-2865		ERR592554	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592555	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592555	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592555	characteristic	individual	C5x70-nc
+E-MTAB-2865		ERR592555	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592555	characteristic	organism part	episphere
+E-MTAB-2865		ERR592555	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592555	factor	individual	C5x70-nc
+E-MTAB-2865		ERR592555	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592556	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592556	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592556	characteristic	individual	C5x29-1L
+E-MTAB-2865		ERR592556	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592556	characteristic	organism part	episphere
+E-MTAB-2865		ERR592556	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592556	factor	individual	C5x29-1L
+E-MTAB-2865		ERR592556	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592557	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592557	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592557	characteristic	individual	C5x08-nc
+E-MTAB-2865		ERR592557	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592557	characteristic	organism part	episphere
+E-MTAB-2865		ERR592557	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592557	factor	individual	C5x08-nc
+E-MTAB-2865		ERR592557	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592558	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592558	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592558	characteristic	individual	C4x26-1M
+E-MTAB-2865		ERR592558	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592558	characteristic	organism part	episphere
+E-MTAB-2865		ERR592558	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592558	factor	individual	C4x26-1M
+E-MTAB-2865		ERR592558	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592559	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592559	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592559	characteristic	individual	C5x35-1M
+E-MTAB-2865		ERR592559	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592559	characteristic	organism part	episphere
+E-MTAB-2865		ERR592559	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592559	factor	individual	C5x35-1M
+E-MTAB-2865		ERR592559	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592560	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592560	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592560	characteristic	individual	C5x68-nc
+E-MTAB-2865		ERR592560	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592560	characteristic	organism part	episphere
+E-MTAB-2865		ERR592560	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592560	factor	individual	C5x68-nc
+E-MTAB-2865		ERR592560	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592561	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592561	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592561	characteristic	individual	C4x52-1VS
+E-MTAB-2865		ERR592561	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592561	characteristic	organism part	episphere
+E-MTAB-2865		ERR592561	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592561	factor	individual	C4x52-1VS
+E-MTAB-2865		ERR592561	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592562	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592562	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592562	characteristic	individual	C5x36-1VS
+E-MTAB-2865		ERR592562	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592562	characteristic	organism part	episphere
+E-MTAB-2865		ERR592562	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592562	factor	individual	C5x36-1VS
+E-MTAB-2865		ERR592562	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592563	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592563	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592563	characteristic	individual	C5x15-nc
+E-MTAB-2865		ERR592563	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592563	characteristic	organism part	episphere
+E-MTAB-2865		ERR592563	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592563	factor	individual	C5x15-nc
+E-MTAB-2865		ERR592563	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592564	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592564	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592564	characteristic	individual	C4x59-1S
+E-MTAB-2865		ERR592564	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592564	characteristic	organism part	episphere
+E-MTAB-2865		ERR592564	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592564	factor	individual	C4x59-1S
+E-MTAB-2865		ERR592564	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592565	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592565	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592565	characteristic	individual	C5x87-d
+E-MTAB-2865		ERR592565	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592565	characteristic	organism part	episphere
+E-MTAB-2865		ERR592565	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592565	factor	individual	C5x87-d
+E-MTAB-2865		ERR592565	factor	single cell well quality	debris
+E-MTAB-2865		ERR592566	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592566	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592566	characteristic	individual	C5x55-1S
+E-MTAB-2865		ERR592566	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592566	characteristic	organism part	episphere
+E-MTAB-2865		ERR592566	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592566	factor	individual	C5x55-1S
+E-MTAB-2865		ERR592566	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592567	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592567	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592567	characteristic	individual	C5x79-1M
+E-MTAB-2865		ERR592567	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592567	characteristic	organism part	episphere
+E-MTAB-2865		ERR592567	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592567	factor	individual	C5x79-1M
+E-MTAB-2865		ERR592567	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592568	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592568	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592568	characteristic	individual	C5x47-1VS
+E-MTAB-2865		ERR592568	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592568	characteristic	organism part	episphere
+E-MTAB-2865		ERR592568	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592568	factor	individual	C5x47-1VS
+E-MTAB-2865		ERR592568	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592569	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592569	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592569	characteristic	individual	C5x12-1VS
+E-MTAB-2865		ERR592569	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592569	characteristic	organism part	episphere
+E-MTAB-2865		ERR592569	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592569	factor	individual	C5x12-1VS
+E-MTAB-2865		ERR592569	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592570	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592570	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592570	characteristic	individual	C5x49-nc
+E-MTAB-2865		ERR592570	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592570	characteristic	organism part	episphere
+E-MTAB-2865		ERR592570	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592570	factor	individual	C5x49-nc
+E-MTAB-2865		ERR592570	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592571	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592571	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592571	characteristic	individual	C5x77-1M
+E-MTAB-2865		ERR592571	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592571	characteristic	organism part	episphere
+E-MTAB-2865		ERR592571	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592571	factor	individual	C5x77-1M
+E-MTAB-2865		ERR592571	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592572	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592572	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592572	characteristic	individual	C5x54-3
+E-MTAB-2865		ERR592572	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592572	characteristic	organism part	episphere
+E-MTAB-2865		ERR592572	characteristic	single cell well quality	3 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR592572	factor	individual	C5x54-3
+E-MTAB-2865		ERR592572	factor	single cell well quality	3 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR592573	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592573	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592573	characteristic	individual	C4x71-1M
+E-MTAB-2865		ERR592573	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592573	characteristic	organism part	episphere
+E-MTAB-2865		ERR592573	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592573	factor	individual	C4x71-1M
+E-MTAB-2865		ERR592573	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592574	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592574	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592574	characteristic	individual	C5x11-2S1VS
+E-MTAB-2865		ERR592574	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592574	characteristic	organism part	episphere
+E-MTAB-2865		ERR592574	characteristic	single cell well quality	3 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR592574	factor	individual	C5x11-2S1VS
+E-MTAB-2865		ERR592574	factor	single cell well quality	3 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR592575	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592575	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592575	characteristic	individual	C5x62-nc
+E-MTAB-2865		ERR592575	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592575	characteristic	organism part	episphere
+E-MTAB-2865		ERR592575	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592575	factor	individual	C5x62-nc
+E-MTAB-2865		ERR592575	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592576	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592576	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592576	characteristic	individual	C3x72-1L
+E-MTAB-2865		ERR592576	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592576	characteristic	organism part	episphere
+E-MTAB-2865		ERR592576	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592576	factor	individual	C3x72-1L
+E-MTAB-2865		ERR592576	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592577	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592577	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592577	characteristic	individual	C5x13-1VS
+E-MTAB-2865		ERR592577	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592577	characteristic	organism part	episphere
+E-MTAB-2865		ERR592577	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592577	factor	individual	C5x13-1VS
+E-MTAB-2865		ERR592577	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592578	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592578	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592578	characteristic	individual	C5x28-1M
+E-MTAB-2865		ERR592578	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592578	characteristic	organism part	episphere
+E-MTAB-2865		ERR592578	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592578	factor	individual	C5x28-1M
+E-MTAB-2865		ERR592578	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592579	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592579	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592579	characteristic	individual	C4x94-1M
+E-MTAB-2865		ERR592579	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592579	characteristic	organism part	episphere
+E-MTAB-2865		ERR592579	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592579	factor	individual	C4x94-1M
+E-MTAB-2865		ERR592579	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592580	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592580	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592580	characteristic	individual	C5x07-1L
+E-MTAB-2865		ERR592580	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592580	characteristic	organism part	episphere
+E-MTAB-2865		ERR592580	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592580	factor	individual	C5x07-1L
+E-MTAB-2865		ERR592580	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592581	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592581	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592581	characteristic	individual	C4x81-nc
+E-MTAB-2865		ERR592581	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592581	characteristic	organism part	episphere
+E-MTAB-2865		ERR592581	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592581	factor	individual	C4x81-nc
+E-MTAB-2865		ERR592581	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592582	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592582	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592582	characteristic	individual	C5x78-1M
+E-MTAB-2865		ERR592582	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592582	characteristic	organism part	episphere
+E-MTAB-2865		ERR592582	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592582	factor	individual	C5x78-1M
+E-MTAB-2865		ERR592582	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592583	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592583	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592583	characteristic	individual	C5x52-2S
+E-MTAB-2865		ERR592583	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592583	characteristic	organism part	episphere
+E-MTAB-2865		ERR592583	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592583	factor	individual	C5x52-2S
+E-MTAB-2865		ERR592583	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592584	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592584	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592584	characteristic	individual	C4x41-1L
+E-MTAB-2865		ERR592584	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592584	characteristic	organism part	episphere
+E-MTAB-2865		ERR592584	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592584	factor	individual	C4x41-1L
+E-MTAB-2865		ERR592584	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592585	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592585	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592585	characteristic	individual	C5x10-1M
+E-MTAB-2865		ERR592585	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592585	characteristic	organism part	episphere
+E-MTAB-2865		ERR592585	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592585	factor	individual	C5x10-1M
+E-MTAB-2865		ERR592585	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592586	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592586	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592586	characteristic	individual	C4x44-1Sd
+E-MTAB-2865		ERR592586	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592586	characteristic	organism part	episphere
+E-MTAB-2865		ERR592586	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592586	factor	individual	C4x44-1Sd
+E-MTAB-2865		ERR592586	factor	single cell well quality	debris
+E-MTAB-2865		ERR592587	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592587	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592587	characteristic	individual	C4x13-1M
+E-MTAB-2865		ERR592587	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592587	characteristic	organism part	episphere
+E-MTAB-2865		ERR592587	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592587	factor	individual	C4x13-1M
+E-MTAB-2865		ERR592587	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592588	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592588	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592588	characteristic	individual	C5x60-nc
+E-MTAB-2865		ERR592588	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592588	characteristic	organism part	episphere
+E-MTAB-2865		ERR592588	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592588	factor	individual	C5x60-nc
+E-MTAB-2865		ERR592588	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592589	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592589	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592589	characteristic	individual	C5x43-1M
+E-MTAB-2865		ERR592589	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592589	characteristic	organism part	episphere
+E-MTAB-2865		ERR592589	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592589	factor	individual	C5x43-1M
+E-MTAB-2865		ERR592589	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592590	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592590	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592590	characteristic	individual	C5x53-1S
+E-MTAB-2865		ERR592590	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592590	characteristic	organism part	episphere
+E-MTAB-2865		ERR592590	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592590	factor	individual	C5x53-1S
+E-MTAB-2865		ERR592590	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592591	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592591	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592591	characteristic	individual	C4x57-1M
+E-MTAB-2865		ERR592591	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592591	characteristic	organism part	episphere
+E-MTAB-2865		ERR592591	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592591	factor	individual	C4x57-1M
+E-MTAB-2865		ERR592591	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592592	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592592	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592592	characteristic	individual	C4x74-2S
+E-MTAB-2865		ERR592592	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592592	characteristic	organism part	episphere
+E-MTAB-2865		ERR592592	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592592	factor	individual	C4x74-2S
+E-MTAB-2865		ERR592592	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592593	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592593	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592593	characteristic	individual	C5x86-nc
+E-MTAB-2865		ERR592593	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592593	characteristic	organism part	episphere
+E-MTAB-2865		ERR592593	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592593	factor	individual	C5x86-nc
+E-MTAB-2865		ERR592593	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592594	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592594	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592594	characteristic	individual	C5x56-1Md
+E-MTAB-2865		ERR592594	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592594	characteristic	organism part	episphere
+E-MTAB-2865		ERR592594	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592594	factor	individual	C5x56-1Md
+E-MTAB-2865		ERR592594	factor	single cell well quality	debris
+E-MTAB-2865		ERR592595	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592595	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592595	characteristic	individual	C4x38-1S
+E-MTAB-2865		ERR592595	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592595	characteristic	organism part	episphere
+E-MTAB-2865		ERR592595	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592595	factor	individual	C4x38-1S
+E-MTAB-2865		ERR592595	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592596	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592596	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592596	characteristic	individual	C5x03-1L
+E-MTAB-2865		ERR592596	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592596	characteristic	organism part	episphere
+E-MTAB-2865		ERR592596	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592596	factor	individual	C5x03-1L
+E-MTAB-2865		ERR592596	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592597	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592597	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592597	characteristic	individual	C5x51-1M
+E-MTAB-2865		ERR592597	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592597	characteristic	organism part	episphere
+E-MTAB-2865		ERR592597	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592597	factor	individual	C5x51-1M
+E-MTAB-2865		ERR592597	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592598	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592598	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592598	characteristic	individual	C5x24-1M
+E-MTAB-2865		ERR592598	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592598	characteristic	organism part	episphere
+E-MTAB-2865		ERR592598	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592598	factor	individual	C5x24-1M
+E-MTAB-2865		ERR592598	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592599	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592599	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592599	characteristic	individual	C4x86-1M
+E-MTAB-2865		ERR592599	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592599	characteristic	organism part	episphere
+E-MTAB-2865		ERR592599	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592599	factor	individual	C4x86-1M
+E-MTAB-2865		ERR592599	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592600	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592600	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592600	characteristic	individual	C4x02-2S
+E-MTAB-2865		ERR592600	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592600	characteristic	organism part	episphere
+E-MTAB-2865		ERR592600	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592600	factor	individual	C4x02-2S
+E-MTAB-2865		ERR592600	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592601	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592601	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592601	characteristic	individual	C5x96-1S
+E-MTAB-2865		ERR592601	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592601	characteristic	organism part	episphere
+E-MTAB-2865		ERR592601	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592601	factor	individual	C5x96-1S
+E-MTAB-2865		ERR592601	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592602	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592602	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592602	characteristic	individual	C5x92-nc
+E-MTAB-2865		ERR592602	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592602	characteristic	organism part	episphere
+E-MTAB-2865		ERR592602	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592602	factor	individual	C5x92-nc
+E-MTAB-2865		ERR592602	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592603	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592603	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592603	characteristic	individual	C4x58-1M
+E-MTAB-2865		ERR592603	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592603	characteristic	organism part	episphere
+E-MTAB-2865		ERR592603	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592603	factor	individual	C4x58-1M
+E-MTAB-2865		ERR592603	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592604	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592604	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592604	characteristic	individual	C5x34-1M
+E-MTAB-2865		ERR592604	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592604	characteristic	organism part	episphere
+E-MTAB-2865		ERR592604	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592604	factor	individual	C5x34-1M
+E-MTAB-2865		ERR592604	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592605	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592605	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592605	characteristic	individual	C5x04-nc
+E-MTAB-2865		ERR592605	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592605	characteristic	organism part	episphere
+E-MTAB-2865		ERR592605	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592605	factor	individual	C5x04-nc
+E-MTAB-2865		ERR592605	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592606	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592606	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592606	characteristic	individual	C5x26-1M
+E-MTAB-2865		ERR592606	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592606	characteristic	organism part	episphere
+E-MTAB-2865		ERR592606	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592606	factor	individual	C5x26-1M
+E-MTAB-2865		ERR592606	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592607	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592607	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592607	characteristic	individual	C4x73-2L1S
+E-MTAB-2865		ERR592607	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592607	characteristic	organism part	episphere
+E-MTAB-2865		ERR592607	characteristic	single cell well quality	3 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR592607	factor	individual	C4x73-2L1S
+E-MTAB-2865		ERR592607	factor	single cell well quality	3 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR592608	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592608	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592608	characteristic	individual	C5x32-1M
+E-MTAB-2865		ERR592608	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592608	characteristic	organism part	episphere
+E-MTAB-2865		ERR592608	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592608	factor	individual	C5x32-1M
+E-MTAB-2865		ERR592608	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592609	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592609	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592609	characteristic	individual	C4x66-1M
+E-MTAB-2865		ERR592609	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592609	characteristic	organism part	episphere
+E-MTAB-2865		ERR592609	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592609	factor	individual	C4x66-1M
+E-MTAB-2865		ERR592609	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592610	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592610	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592610	characteristic	individual	C4x19-1S
+E-MTAB-2865		ERR592610	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592610	characteristic	organism part	episphere
+E-MTAB-2865		ERR592610	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592610	factor	individual	C4x19-1S
+E-MTAB-2865		ERR592610	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592611	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592611	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592611	characteristic	individual	C4x48-1L
+E-MTAB-2865		ERR592611	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592611	characteristic	organism part	episphere
+E-MTAB-2865		ERR592611	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592611	factor	individual	C4x48-1L
+E-MTAB-2865		ERR592611	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592612	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592612	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592612	characteristic	individual	C5x95-1VS
+E-MTAB-2865		ERR592612	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592612	characteristic	organism part	episphere
+E-MTAB-2865		ERR592612	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592612	factor	individual	C5x95-1VS
+E-MTAB-2865		ERR592612	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592613	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592613	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592613	characteristic	individual	C4x64-1M
+E-MTAB-2865		ERR592613	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592613	characteristic	organism part	episphere
+E-MTAB-2865		ERR592613	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592613	factor	individual	C4x64-1M
+E-MTAB-2865		ERR592613	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592614	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592614	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592614	characteristic	individual	C5x82-1M
+E-MTAB-2865		ERR592614	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592614	characteristic	organism part	episphere
+E-MTAB-2865		ERR592614	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592614	factor	individual	C5x82-1M
+E-MTAB-2865		ERR592614	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592615	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592615	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592615	characteristic	individual	C5x91-nc
+E-MTAB-2865		ERR592615	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592615	characteristic	organism part	episphere
+E-MTAB-2865		ERR592615	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592615	factor	individual	C5x91-nc
+E-MTAB-2865		ERR592615	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592616	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592616	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592616	characteristic	individual	C4x67-2S
+E-MTAB-2865		ERR592616	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592616	characteristic	organism part	episphere
+E-MTAB-2865		ERR592616	characteristic	single cell well quality	multiple cells
+E-MTAB-2865		ERR592616	factor	individual	C4x67-2S
+E-MTAB-2865		ERR592616	factor	single cell well quality	multiple cells
+E-MTAB-2865		ERR592617	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592617	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592617	characteristic	individual	C5x31-1M
+E-MTAB-2865		ERR592617	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592617	characteristic	organism part	episphere
+E-MTAB-2865		ERR592617	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592617	factor	individual	C5x31-1M
+E-MTAB-2865		ERR592617	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592618	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592618	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592618	characteristic	individual	C5x58-1S
+E-MTAB-2865		ERR592618	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592618	characteristic	organism part	episphere
+E-MTAB-2865		ERR592618	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592618	factor	individual	C5x58-1S
+E-MTAB-2865		ERR592618	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592619	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592619	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592619	characteristic	individual	C5x75-nc
+E-MTAB-2865		ERR592619	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592619	characteristic	organism part	episphere
+E-MTAB-2865		ERR592619	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592619	factor	individual	C5x75-nc
+E-MTAB-2865		ERR592619	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592620	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592620	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592620	characteristic	individual	C5x23-1L
+E-MTAB-2865		ERR592620	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592620	characteristic	organism part	episphere
+E-MTAB-2865		ERR592620	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592620	factor	individual	C5x23-1L
+E-MTAB-2865		ERR592620	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592621	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592621	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592621	characteristic	individual	C5x63-1M
+E-MTAB-2865		ERR592621	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592621	characteristic	organism part	episphere
+E-MTAB-2865		ERR592621	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592621	factor	individual	C5x63-1M
+E-MTAB-2865		ERR592621	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592622	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592622	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592622	characteristic	individual	C4x40-1L
+E-MTAB-2865		ERR592622	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592622	characteristic	organism part	episphere
+E-MTAB-2865		ERR592622	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592622	factor	individual	C4x40-1L
+E-MTAB-2865		ERR592622	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592623	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592623	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592623	characteristic	individual	C5x39-1M
+E-MTAB-2865		ERR592623	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592623	characteristic	organism part	episphere
+E-MTAB-2865		ERR592623	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592623	factor	individual	C5x39-1M
+E-MTAB-2865		ERR592623	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592624	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592624	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592624	characteristic	individual	C5x71-1Md
+E-MTAB-2865		ERR592624	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592624	characteristic	organism part	episphere
+E-MTAB-2865		ERR592624	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592624	factor	individual	C5x71-1Md
+E-MTAB-2865		ERR592624	factor	single cell well quality	debris
+E-MTAB-2865		ERR592625	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592625	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592625	characteristic	individual	C5x89-nc
+E-MTAB-2865		ERR592625	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592625	characteristic	organism part	episphere
+E-MTAB-2865		ERR592625	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592625	factor	individual	C5x89-nc
+E-MTAB-2865		ERR592625	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592626	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592626	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592626	characteristic	individual	C4x61-1S
+E-MTAB-2865		ERR592626	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592626	characteristic	organism part	episphere
+E-MTAB-2865		ERR592626	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592626	factor	individual	C4x61-1S
+E-MTAB-2865		ERR592626	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592627	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592627	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592627	characteristic	individual	C5x09-1M
+E-MTAB-2865		ERR592627	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592627	characteristic	organism part	episphere
+E-MTAB-2865		ERR592627	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592627	factor	individual	C5x09-1M
+E-MTAB-2865		ERR592627	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592628	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592628	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592628	characteristic	individual	C4x87-1M
+E-MTAB-2865		ERR592628	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592628	characteristic	organism part	episphere
+E-MTAB-2865		ERR592628	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592628	factor	individual	C4x87-1M
+E-MTAB-2865		ERR592628	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592629	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592629	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592629	characteristic	individual	C5x40-1S
+E-MTAB-2865		ERR592629	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592629	characteristic	organism part	episphere
+E-MTAB-2865		ERR592629	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592629	factor	individual	C5x40-1S
+E-MTAB-2865		ERR592629	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592630	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592630	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592630	characteristic	individual	C4x34-1S
+E-MTAB-2865		ERR592630	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592630	characteristic	organism part	episphere
+E-MTAB-2865		ERR592630	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592630	factor	individual	C4x34-1S
+E-MTAB-2865		ERR592630	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592631	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592631	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592631	characteristic	individual	C5x19-1VS
+E-MTAB-2865		ERR592631	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592631	characteristic	organism part	episphere
+E-MTAB-2865		ERR592631	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592631	factor	individual	C5x19-1VS
+E-MTAB-2865		ERR592631	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592632	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592632	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592632	characteristic	individual	C5x05-1L
+E-MTAB-2865		ERR592632	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592632	characteristic	organism part	episphere
+E-MTAB-2865		ERR592632	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592632	factor	individual	C5x05-1L
+E-MTAB-2865		ERR592632	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592633	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592633	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592633	characteristic	individual	C4x30-1b
+E-MTAB-2865		ERR592633	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592633	characteristic	organism part	episphere
+E-MTAB-2865		ERR592633	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR592633	factor	individual	C4x30-1b
+E-MTAB-2865		ERR592633	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR592634	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592634	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592634	characteristic	individual	C5x73-b
+E-MTAB-2865		ERR592634	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592634	characteristic	organism part	episphere
+E-MTAB-2865		ERR592634	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR592634	factor	individual	C5x73-b
+E-MTAB-2865		ERR592634	factor	single cell well quality	debris
+E-MTAB-2865		ERR592635	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592635	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592635	characteristic	individual	C5x46-1M
+E-MTAB-2865		ERR592635	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592635	characteristic	organism part	episphere
+E-MTAB-2865		ERR592635	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592635	factor	individual	C5x46-1M
+E-MTAB-2865		ERR592635	factor	single cell well quality	single cell
+E-MTAB-2865		ERR592636	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592636	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592636	characteristic	individual	C4x35-nc
+E-MTAB-2865		ERR592636	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592636	characteristic	organism part	episphere
+E-MTAB-2865		ERR592636	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592636	factor	individual	C4x35-nc
+E-MTAB-2865		ERR592636	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592637	characteristic	cell type	not applicable
+E-MTAB-2865		ERR592637	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592637	characteristic	individual	C5x88-nc
+E-MTAB-2865		ERR592637	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592637	characteristic	organism part	episphere
+E-MTAB-2865		ERR592637	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR592637	factor	individual	C5x88-nc
+E-MTAB-2865		ERR592637	factor	single cell well quality	no cell
+E-MTAB-2865		ERR592638	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR592638	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR592638	characteristic	individual	C5x76-1S
+E-MTAB-2865		ERR592638	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR592638	characteristic	organism part	episphere
+E-MTAB-2865		ERR592638	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR592638	factor	individual	C5x76-1S
+E-MTAB-2865		ERR592638	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700482	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700482	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700482	characteristic	individual	C2x42_1Md
+E-MTAB-2865		ERR700482	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700482	characteristic	organism part	episphere
+E-MTAB-2865		ERR700482	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700482	factor	individual	C2x42_1Md
+E-MTAB-2865		ERR700482	factor	single cell well quality	debris
+E-MTAB-2865		ERR700483	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700483	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700483	characteristic	individual	C2x94_d
+E-MTAB-2865		ERR700483	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700483	characteristic	organism part	episphere
+E-MTAB-2865		ERR700483	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700483	factor	individual	C2x94_d
+E-MTAB-2865		ERR700483	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700484	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700484	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700484	characteristic	individual	C2x71_2
+E-MTAB-2865		ERR700484	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700484	characteristic	organism part	episphere
+E-MTAB-2865		ERR700484	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700484	factor	individual	C2x71_2
+E-MTAB-2865		ERR700484	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700485	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700485	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700485	characteristic	individual	C2x01_1Sb
+E-MTAB-2865		ERR700485	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700485	characteristic	organism part	episphere
+E-MTAB-2865		ERR700485	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700485	factor	individual	C2x01_1Sb
+E-MTAB-2865		ERR700485	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700486	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700486	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700486	characteristic	individual	C2x35_1L
+E-MTAB-2865		ERR700486	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700486	characteristic	organism part	episphere
+E-MTAB-2865		ERR700486	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700486	factor	individual	C2x35_1L
+E-MTAB-2865		ERR700486	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700487	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700487	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700487	characteristic	individual	C2x28_1M
+E-MTAB-2865		ERR700487	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700487	characteristic	organism part	episphere
+E-MTAB-2865		ERR700487	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700487	factor	individual	C2x28_1M
+E-MTAB-2865		ERR700487	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700488	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700488	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700488	characteristic	individual	C2x46_1L
+E-MTAB-2865		ERR700488	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700488	characteristic	organism part	episphere
+E-MTAB-2865		ERR700488	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700488	factor	individual	C2x46_1L
+E-MTAB-2865		ERR700488	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700489	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700489	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700489	characteristic	individual	C2x44_1M
+E-MTAB-2865		ERR700489	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700489	characteristic	organism part	episphere
+E-MTAB-2865		ERR700489	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700489	factor	individual	C2x44_1M
+E-MTAB-2865		ERR700489	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700490	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700490	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700490	characteristic	individual	C2x29_1S
+E-MTAB-2865		ERR700490	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700490	characteristic	organism part	episphere
+E-MTAB-2865		ERR700490	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700490	factor	individual	C2x29_1S
+E-MTAB-2865		ERR700490	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700491	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700491	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700491	characteristic	individual	C2x50_1Sbd
+E-MTAB-2865		ERR700491	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700491	characteristic	organism part	episphere
+E-MTAB-2865		ERR700491	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700491	factor	individual	C2x50_1Sbd
+E-MTAB-2865		ERR700491	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700492	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700492	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700492	characteristic	individual	C1x41_1L
+E-MTAB-2865		ERR700492	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700492	characteristic	organism part	episphere
+E-MTAB-2865		ERR700492	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700492	factor	individual	C1x41_1L
+E-MTAB-2865		ERR700492	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700493	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700493	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700493	characteristic	individual	C1x50_1M
+E-MTAB-2865		ERR700493	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700493	characteristic	organism part	episphere
+E-MTAB-2865		ERR700493	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700493	factor	individual	C1x50_1M
+E-MTAB-2865		ERR700493	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700494	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700494	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700494	characteristic	individual	C1x41_1L
+E-MTAB-2865		ERR700494	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700494	characteristic	organism part	episphere
+E-MTAB-2865		ERR700494	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700494	factor	individual	C1x41_1L
+E-MTAB-2865		ERR700494	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700495	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700495	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700495	characteristic	individual	C2x92_1Sb
+E-MTAB-2865		ERR700495	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700495	characteristic	organism part	episphere
+E-MTAB-2865		ERR700495	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700495	factor	individual	C2x92_1Sb
+E-MTAB-2865		ERR700495	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700496	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700496	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700496	characteristic	individual	C2x18_1Sb
+E-MTAB-2865		ERR700496	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700496	characteristic	organism part	episphere
+E-MTAB-2865		ERR700496	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700496	factor	individual	C2x18_1Sb
+E-MTAB-2865		ERR700496	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700497	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700497	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700497	characteristic	individual	C1x83_d
+E-MTAB-2865		ERR700497	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700497	characteristic	organism part	episphere
+E-MTAB-2865		ERR700497	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700497	factor	individual	C1x83_d
+E-MTAB-2865		ERR700497	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700498	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700498	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700498	characteristic	individual	C1x50_1M
+E-MTAB-2865		ERR700498	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700498	characteristic	organism part	episphere
+E-MTAB-2865		ERR700498	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700498	factor	individual	C1x50_1M
+E-MTAB-2865		ERR700498	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700499	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700499	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700499	characteristic	individual	C2x51_1Mb
+E-MTAB-2865		ERR700499	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700499	characteristic	organism part	episphere
+E-MTAB-2865		ERR700499	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700499	factor	individual	C2x51_1Mb
+E-MTAB-2865		ERR700499	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700500	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700500	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700500	characteristic	individual	C2x83_1Md
+E-MTAB-2865		ERR700500	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700500	characteristic	organism part	episphere
+E-MTAB-2865		ERR700500	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700500	factor	individual	C2x83_1Md
+E-MTAB-2865		ERR700500	factor	single cell well quality	debris
+E-MTAB-2865		ERR700501	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700501	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700501	characteristic	individual	C2x40_1S
+E-MTAB-2865		ERR700501	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700501	characteristic	organism part	episphere
+E-MTAB-2865		ERR700501	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700501	factor	individual	C2x40_1S
+E-MTAB-2865		ERR700501	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700502	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700502	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700502	characteristic	individual	C2x36_1Ld
+E-MTAB-2865		ERR700502	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700502	characteristic	organism part	episphere
+E-MTAB-2865		ERR700502	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700502	factor	individual	C2x36_1Ld
+E-MTAB-2865		ERR700502	factor	single cell well quality	debris
+E-MTAB-2865		ERR700503	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700503	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700503	characteristic	individual	C2x46_1L
+E-MTAB-2865		ERR700503	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700503	characteristic	organism part	episphere
+E-MTAB-2865		ERR700503	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700503	factor	individual	C2x46_1L
+E-MTAB-2865		ERR700503	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700504	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700504	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700504	characteristic	individual	C2x41_1L
+E-MTAB-2865		ERR700504	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700504	characteristic	organism part	episphere
+E-MTAB-2865		ERR700504	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700504	factor	individual	C2x41_1L
+E-MTAB-2865		ERR700504	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700505	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700505	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700505	characteristic	individual	C2x51_1Mb
+E-MTAB-2865		ERR700505	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700505	characteristic	organism part	episphere
+E-MTAB-2865		ERR700505	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700505	factor	individual	C2x51_1Mb
+E-MTAB-2865		ERR700505	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700506	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700506	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700506	characteristic	individual	C2x22_d
+E-MTAB-2865		ERR700506	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700506	characteristic	organism part	episphere
+E-MTAB-2865		ERR700506	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700506	factor	individual	C2x22_d
+E-MTAB-2865		ERR700506	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700507	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700507	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700507	characteristic	individual	C2x94_d
+E-MTAB-2865		ERR700507	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700507	characteristic	organism part	episphere
+E-MTAB-2865		ERR700507	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700507	factor	individual	C2x94_d
+E-MTAB-2865		ERR700507	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700508	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700508	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700508	characteristic	individual	C2x36_1Ld
+E-MTAB-2865		ERR700508	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700508	characteristic	organism part	episphere
+E-MTAB-2865		ERR700508	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700508	factor	individual	C2x36_1Ld
+E-MTAB-2865		ERR700508	factor	single cell well quality	debris
+E-MTAB-2865		ERR700509	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700509	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700509	characteristic	individual	C2x20_1S
+E-MTAB-2865		ERR700509	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700509	characteristic	organism part	episphere
+E-MTAB-2865		ERR700509	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700509	factor	individual	C2x20_1S
+E-MTAB-2865		ERR700509	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700510	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700510	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700510	characteristic	individual	C2x09_1L
+E-MTAB-2865		ERR700510	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700510	characteristic	organism part	episphere
+E-MTAB-2865		ERR700510	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700510	factor	individual	C2x09_1L
+E-MTAB-2865		ERR700510	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700511	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700511	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700511	characteristic	individual	C2x65_1Sb
+E-MTAB-2865		ERR700511	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700511	characteristic	organism part	episphere
+E-MTAB-2865		ERR700511	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700511	factor	individual	C2x65_1Sb
+E-MTAB-2865		ERR700511	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700512	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700512	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700512	characteristic	individual	C2x21_nc
+E-MTAB-2865		ERR700512	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700512	characteristic	organism part	episphere
+E-MTAB-2865		ERR700512	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700512	factor	individual	C2x21_nc
+E-MTAB-2865		ERR700512	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700513	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700513	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700513	characteristic	individual	C1x22_1L
+E-MTAB-2865		ERR700513	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700513	characteristic	organism part	episphere
+E-MTAB-2865		ERR700513	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700513	factor	individual	C1x22_1L
+E-MTAB-2865		ERR700513	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700514	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700514	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700514	characteristic	individual	C2x35_1L
+E-MTAB-2865		ERR700514	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700514	characteristic	organism part	episphere
+E-MTAB-2865		ERR700514	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700514	factor	individual	C2x35_1L
+E-MTAB-2865		ERR700514	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700515	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700515	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700515	characteristic	individual	C1x47_1L
+E-MTAB-2865		ERR700515	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700515	characteristic	organism part	episphere
+E-MTAB-2865		ERR700515	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700515	factor	individual	C1x47_1L
+E-MTAB-2865		ERR700515	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700516	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700516	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700516	characteristic	individual	C2x44_1M
+E-MTAB-2865		ERR700516	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700516	characteristic	organism part	episphere
+E-MTAB-2865		ERR700516	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700516	factor	individual	C2x44_1M
+E-MTAB-2865		ERR700516	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700517	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700517	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700517	characteristic	individual	C2x90_1L
+E-MTAB-2865		ERR700517	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700517	characteristic	organism part	episphere
+E-MTAB-2865		ERR700517	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700517	factor	individual	C2x90_1L
+E-MTAB-2865		ERR700517	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700518	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700518	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700518	characteristic	individual	C2x38_1L
+E-MTAB-2865		ERR700518	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700518	characteristic	organism part	episphere
+E-MTAB-2865		ERR700518	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700518	factor	individual	C2x38_1L
+E-MTAB-2865		ERR700518	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700519	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700519	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700519	characteristic	individual	C2x15_1Sb
+E-MTAB-2865		ERR700519	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700519	characteristic	organism part	episphere
+E-MTAB-2865		ERR700519	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700519	factor	individual	C2x15_1Sb
+E-MTAB-2865		ERR700519	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700520	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700520	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700520	characteristic	individual	C1x64_d
+E-MTAB-2865		ERR700520	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700520	characteristic	organism part	episphere
+E-MTAB-2865		ERR700520	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700520	factor	individual	C1x64_d
+E-MTAB-2865		ERR700520	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700521	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700521	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700521	characteristic	individual	C2x52_1L
+E-MTAB-2865		ERR700521	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700521	characteristic	organism part	episphere
+E-MTAB-2865		ERR700521	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700521	factor	individual	C2x52_1L
+E-MTAB-2865		ERR700521	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700522	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700522	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700522	characteristic	individual	C1x79_2M
+E-MTAB-2865		ERR700522	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700522	characteristic	organism part	episphere
+E-MTAB-2865		ERR700522	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700522	factor	individual	C1x79_2M
+E-MTAB-2865		ERR700522	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700523	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700523	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700523	characteristic	individual	C2x96_1Sb
+E-MTAB-2865		ERR700523	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700523	characteristic	organism part	episphere
+E-MTAB-2865		ERR700523	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700523	factor	individual	C2x96_1Sb
+E-MTAB-2865		ERR700523	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700524	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700524	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700524	characteristic	individual	C1x83_d
+E-MTAB-2865		ERR700524	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700524	characteristic	organism part	episphere
+E-MTAB-2865		ERR700524	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700524	factor	individual	C1x83_d
+E-MTAB-2865		ERR700524	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700525	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700525	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700525	characteristic	individual	C2x22_d
+E-MTAB-2865		ERR700525	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700525	characteristic	organism part	episphere
+E-MTAB-2865		ERR700525	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700525	factor	individual	C2x22_d
+E-MTAB-2865		ERR700525	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700526	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700526	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700526	characteristic	individual	C2x39_d
+E-MTAB-2865		ERR700526	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700526	characteristic	organism part	episphere
+E-MTAB-2865		ERR700526	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700526	factor	individual	C2x39_d
+E-MTAB-2865		ERR700526	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700527	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700527	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700527	characteristic	individual	C2x55_1L
+E-MTAB-2865		ERR700527	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700527	characteristic	organism part	episphere
+E-MTAB-2865		ERR700527	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700527	factor	individual	C2x55_1L
+E-MTAB-2865		ERR700527	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700528	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700528	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700528	characteristic	individual	C1x22_1L
+E-MTAB-2865		ERR700528	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700528	characteristic	organism part	episphere
+E-MTAB-2865		ERR700528	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700528	factor	individual	C1x22_1L
+E-MTAB-2865		ERR700528	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700529	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700529	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700529	characteristic	individual	C2x58_1S
+E-MTAB-2865		ERR700529	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700529	characteristic	organism part	episphere
+E-MTAB-2865		ERR700529	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700529	factor	individual	C2x58_1S
+E-MTAB-2865		ERR700529	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700530	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700530	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700530	characteristic	individual	C2x61_1Sb
+E-MTAB-2865		ERR700530	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700530	characteristic	organism part	episphere
+E-MTAB-2865		ERR700530	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700530	factor	individual	C2x61_1Sb
+E-MTAB-2865		ERR700530	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700531	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700531	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700531	characteristic	individual	C2x92_1Sb
+E-MTAB-2865		ERR700531	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700531	characteristic	organism part	episphere
+E-MTAB-2865		ERR700531	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700531	factor	individual	C2x92_1Sb
+E-MTAB-2865		ERR700531	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700532	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700532	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700532	characteristic	individual	C2x01_1Sb
+E-MTAB-2865		ERR700532	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700532	characteristic	organism part	episphere
+E-MTAB-2865		ERR700532	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700532	factor	individual	C2x01_1Sb
+E-MTAB-2865		ERR700532	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700533	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700533	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700533	characteristic	individual	C2x30_1L
+E-MTAB-2865		ERR700533	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700533	characteristic	organism part	episphere
+E-MTAB-2865		ERR700533	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700533	factor	individual	C2x30_1L
+E-MTAB-2865		ERR700533	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700534	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700534	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700534	characteristic	individual	C2x02_1S
+E-MTAB-2865		ERR700534	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700534	characteristic	organism part	episphere
+E-MTAB-2865		ERR700534	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700534	factor	individual	C2x02_1S
+E-MTAB-2865		ERR700534	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700535	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700535	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700535	characteristic	individual	C2x13_1M
+E-MTAB-2865		ERR700535	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700535	characteristic	organism part	episphere
+E-MTAB-2865		ERR700535	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700535	factor	individual	C2x13_1M
+E-MTAB-2865		ERR700535	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700536	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700536	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700536	characteristic	individual	C2x67_1S
+E-MTAB-2865		ERR700536	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700536	characteristic	organism part	episphere
+E-MTAB-2865		ERR700536	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700536	factor	individual	C2x67_1S
+E-MTAB-2865		ERR700536	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700537	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700537	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700537	characteristic	individual	C2x61_1Sb
+E-MTAB-2865		ERR700537	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700537	characteristic	organism part	episphere
+E-MTAB-2865		ERR700537	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700537	factor	individual	C2x61_1Sb
+E-MTAB-2865		ERR700537	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700538	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700538	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700538	characteristic	individual	C2x55_1L
+E-MTAB-2865		ERR700538	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700538	characteristic	organism part	episphere
+E-MTAB-2865		ERR700538	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700538	factor	individual	C2x55_1L
+E-MTAB-2865		ERR700538	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700539	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700539	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700539	characteristic	individual	C1x30_1L
+E-MTAB-2865		ERR700539	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700539	characteristic	organism part	episphere
+E-MTAB-2865		ERR700539	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700539	factor	individual	C1x30_1L
+E-MTAB-2865		ERR700539	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700540	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700540	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700540	characteristic	individual	C1x79_2M
+E-MTAB-2865		ERR700540	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700540	characteristic	organism part	episphere
+E-MTAB-2865		ERR700540	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700540	factor	individual	C1x79_2M
+E-MTAB-2865		ERR700540	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700541	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700541	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700541	characteristic	individual	C1x59_1M
+E-MTAB-2865		ERR700541	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700541	characteristic	organism part	episphere
+E-MTAB-2865		ERR700541	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700541	factor	individual	C1x59_1M
+E-MTAB-2865		ERR700541	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700542	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700542	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700542	characteristic	individual	C2x43_5
+E-MTAB-2865		ERR700542	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700542	characteristic	organism part	episphere
+E-MTAB-2865		ERR700542	characteristic	single cell well quality	5 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700542	factor	individual	C2x43_5
+E-MTAB-2865		ERR700542	factor	single cell well quality	5 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700543	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700543	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700543	characteristic	individual	C2x24_1S
+E-MTAB-2865		ERR700543	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700543	characteristic	organism part	episphere
+E-MTAB-2865		ERR700543	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700543	factor	individual	C2x24_1S
+E-MTAB-2865		ERR700543	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700544	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700544	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700544	characteristic	individual	C2x15_1Sb
+E-MTAB-2865		ERR700544	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700544	characteristic	organism part	episphere
+E-MTAB-2865		ERR700544	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700544	factor	individual	C2x15_1Sb
+E-MTAB-2865		ERR700544	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700545	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700545	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700545	characteristic	individual	C2x34_1L
+E-MTAB-2865		ERR700545	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700545	characteristic	organism part	episphere
+E-MTAB-2865		ERR700545	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700545	factor	individual	C2x34_1L
+E-MTAB-2865		ERR700545	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700546	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700546	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700546	characteristic	individual	C2x53_1M
+E-MTAB-2865		ERR700546	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700546	characteristic	organism part	episphere
+E-MTAB-2865		ERR700546	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700546	factor	individual	C2x53_1M
+E-MTAB-2865		ERR700546	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700547	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700547	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700547	characteristic	individual	C2x30_1L
+E-MTAB-2865		ERR700547	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700547	characteristic	organism part	episphere
+E-MTAB-2865		ERR700547	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700547	factor	individual	C2x30_1L
+E-MTAB-2865		ERR700547	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700548	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700548	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700548	characteristic	individual	C2x54_d
+E-MTAB-2865		ERR700548	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700548	characteristic	organism part	episphere
+E-MTAB-2865		ERR700548	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700548	factor	individual	C2x54_d
+E-MTAB-2865		ERR700548	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700549	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700549	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700549	characteristic	individual	C2x43_5
+E-MTAB-2865		ERR700549	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700549	characteristic	organism part	episphere
+E-MTAB-2865		ERR700549	characteristic	single cell well quality	5 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700549	factor	individual	C2x43_5
+E-MTAB-2865		ERR700549	factor	single cell well quality	5 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700550	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700550	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700550	characteristic	individual	C2x24_1S
+E-MTAB-2865		ERR700550	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700550	characteristic	organism part	episphere
+E-MTAB-2865		ERR700550	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700550	factor	individual	C2x24_1S
+E-MTAB-2865		ERR700550	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700551	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700551	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700551	characteristic	individual	C2x41_1L
+E-MTAB-2865		ERR700551	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700551	characteristic	organism part	episphere
+E-MTAB-2865		ERR700551	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700551	factor	individual	C2x41_1L
+E-MTAB-2865		ERR700551	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700552	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700552	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700552	characteristic	individual	C2x10_1Sb
+E-MTAB-2865		ERR700552	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700552	characteristic	organism part	episphere
+E-MTAB-2865		ERR700552	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700552	factor	individual	C2x10_1Sb
+E-MTAB-2865		ERR700552	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700553	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700553	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700553	characteristic	individual	C2x3_1L
+E-MTAB-2865		ERR700553	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700553	characteristic	organism part	episphere
+E-MTAB-2865		ERR700553	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700553	factor	individual	C2x3_1L
+E-MTAB-2865		ERR700553	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700554	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700554	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700554	characteristic	individual	C2x85_1L
+E-MTAB-2865		ERR700554	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700554	characteristic	organism part	episphere
+E-MTAB-2865		ERR700554	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700554	factor	individual	C2x85_1L
+E-MTAB-2865		ERR700554	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700555	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700555	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700555	characteristic	individual	C2x65_1Sb
+E-MTAB-2865		ERR700555	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700555	characteristic	organism part	episphere
+E-MTAB-2865		ERR700555	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700555	factor	individual	C2x65_1Sb
+E-MTAB-2865		ERR700555	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700556	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700556	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700556	characteristic	individual	C2x14_1Sbd
+E-MTAB-2865		ERR700556	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700556	characteristic	organism part	episphere
+E-MTAB-2865		ERR700556	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700556	factor	individual	C2x14_1Sbd
+E-MTAB-2865		ERR700556	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700557	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700557	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700557	characteristic	individual	C2x07_1S
+E-MTAB-2865		ERR700557	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700557	characteristic	organism part	episphere
+E-MTAB-2865		ERR700557	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700557	factor	individual	C2x07_1S
+E-MTAB-2865		ERR700557	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700558	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700558	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700558	characteristic	individual	C2x58_1S
+E-MTAB-2865		ERR700558	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700558	characteristic	organism part	episphere
+E-MTAB-2865		ERR700558	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700558	factor	individual	C2x58_1S
+E-MTAB-2865		ERR700558	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700559	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700559	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700559	characteristic	individual	C2x27_nc
+E-MTAB-2865		ERR700559	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700559	characteristic	organism part	episphere
+E-MTAB-2865		ERR700559	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700559	factor	individual	C2x27_nc
+E-MTAB-2865		ERR700559	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700560	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700560	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700560	characteristic	individual	C2x31_1S
+E-MTAB-2865		ERR700560	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700560	characteristic	organism part	episphere
+E-MTAB-2865		ERR700560	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700560	factor	individual	C2x31_1S
+E-MTAB-2865		ERR700560	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700561	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700561	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700561	characteristic	individual	C2x67_1S
+E-MTAB-2865		ERR700561	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700561	characteristic	organism part	episphere
+E-MTAB-2865		ERR700561	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700561	factor	individual	C2x67_1S
+E-MTAB-2865		ERR700561	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700562	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700562	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700562	characteristic	individual	C2x27_nc
+E-MTAB-2865		ERR700562	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700562	characteristic	organism part	episphere
+E-MTAB-2865		ERR700562	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700562	factor	individual	C2x27_nc
+E-MTAB-2865		ERR700562	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700563	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700563	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700563	characteristic	individual	C2x95_1Sb
+E-MTAB-2865		ERR700563	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700563	characteristic	organism part	episphere
+E-MTAB-2865		ERR700563	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700563	factor	individual	C2x95_1Sb
+E-MTAB-2865		ERR700563	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700564	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700564	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700564	characteristic	individual	C1x34_d
+E-MTAB-2865		ERR700564	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700564	characteristic	organism part	episphere
+E-MTAB-2865		ERR700564	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700564	factor	individual	C1x34_d
+E-MTAB-2865		ERR700564	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700565	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700565	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700565	characteristic	individual	C2x20_1S
+E-MTAB-2865		ERR700565	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700565	characteristic	organism part	episphere
+E-MTAB-2865		ERR700565	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700565	factor	individual	C2x20_1S
+E-MTAB-2865		ERR700565	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700566	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700566	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700566	characteristic	individual	C2x29_1S
+E-MTAB-2865		ERR700566	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700566	characteristic	organism part	episphere
+E-MTAB-2865		ERR700566	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700566	factor	individual	C2x29_1S
+E-MTAB-2865		ERR700566	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700567	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700567	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700567	characteristic	individual	C2x71_2
+E-MTAB-2865		ERR700567	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700567	characteristic	organism part	episphere
+E-MTAB-2865		ERR700567	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700567	factor	individual	C2x71_2
+E-MTAB-2865		ERR700567	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700568	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700568	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700568	characteristic	individual	C2x53_1M
+E-MTAB-2865		ERR700568	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700568	characteristic	organism part	episphere
+E-MTAB-2865		ERR700568	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700568	factor	individual	C2x53_1M
+E-MTAB-2865		ERR700568	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700569	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700569	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700569	characteristic	individual	C2x04_1S
+E-MTAB-2865		ERR700569	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700569	characteristic	organism part	episphere
+E-MTAB-2865		ERR700569	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700569	factor	individual	C2x04_1S
+E-MTAB-2865		ERR700569	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700570	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700570	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700570	characteristic	individual	C2x91_1L
+E-MTAB-2865		ERR700570	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700570	characteristic	organism part	episphere
+E-MTAB-2865		ERR700570	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700570	factor	individual	C2x91_1L
+E-MTAB-2865		ERR700570	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700571	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700571	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700571	characteristic	individual	C1x34_d
+E-MTAB-2865		ERR700571	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700571	characteristic	organism part	episphere
+E-MTAB-2865		ERR700571	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700571	factor	individual	C1x34_d
+E-MTAB-2865		ERR700571	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700572	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700572	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700572	characteristic	individual	C2x34_1L
+E-MTAB-2865		ERR700572	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700572	characteristic	organism part	episphere
+E-MTAB-2865		ERR700572	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700572	factor	individual	C2x34_1L
+E-MTAB-2865		ERR700572	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700573	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700573	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700573	characteristic	individual	C2x80_1Mb
+E-MTAB-2865		ERR700573	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700573	characteristic	organism part	episphere
+E-MTAB-2865		ERR700573	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700573	factor	individual	C2x80_1Mb
+E-MTAB-2865		ERR700573	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700574	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700574	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700574	characteristic	individual	C2x72_1L
+E-MTAB-2865		ERR700574	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700574	characteristic	organism part	episphere
+E-MTAB-2865		ERR700574	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700574	factor	individual	C2x72_1L
+E-MTAB-2865		ERR700574	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700575	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700575	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700575	characteristic	individual	C1x59_1M
+E-MTAB-2865		ERR700575	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700575	characteristic	organism part	episphere
+E-MTAB-2865		ERR700575	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700575	factor	individual	C1x59_1M
+E-MTAB-2865		ERR700575	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700576	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700576	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700576	characteristic	individual	C2x05_2S
+E-MTAB-2865		ERR700576	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700576	characteristic	organism part	episphere
+E-MTAB-2865		ERR700576	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700576	factor	individual	C2x05_2S
+E-MTAB-2865		ERR700576	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700577	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700577	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700577	characteristic	individual	C2x06_1L
+E-MTAB-2865		ERR700577	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700577	characteristic	organism part	episphere
+E-MTAB-2865		ERR700577	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700577	factor	individual	C2x06_1L
+E-MTAB-2865		ERR700577	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700578	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700578	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700578	characteristic	individual	C2x13_1M
+E-MTAB-2865		ERR700578	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700578	characteristic	organism part	episphere
+E-MTAB-2865		ERR700578	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700578	factor	individual	C2x13_1M
+E-MTAB-2865		ERR700578	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700579	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700579	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700579	characteristic	individual	C2x49_1Lb
+E-MTAB-2865		ERR700579	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700579	characteristic	organism part	episphere
+E-MTAB-2865		ERR700579	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700579	factor	individual	C2x49_1Lb
+E-MTAB-2865		ERR700579	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700580	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700580	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700580	characteristic	individual	C1x24_2S
+E-MTAB-2865		ERR700580	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700580	characteristic	organism part	episphere
+E-MTAB-2865		ERR700580	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700580	factor	individual	C1x24_2S
+E-MTAB-2865		ERR700580	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700581	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700581	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700581	characteristic	individual	C2x10_1Sb
+E-MTAB-2865		ERR700581	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700581	characteristic	organism part	episphere
+E-MTAB-2865		ERR700581	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700581	factor	individual	C2x10_1Sb
+E-MTAB-2865		ERR700581	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700582	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700582	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700582	characteristic	individual	C2x54_d
+E-MTAB-2865		ERR700582	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700582	characteristic	organism part	episphere
+E-MTAB-2865		ERR700582	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700582	factor	individual	C2x54_d
+E-MTAB-2865		ERR700582	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700583	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700583	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700583	characteristic	individual	C2x32_1L
+E-MTAB-2865		ERR700583	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700583	characteristic	organism part	episphere
+E-MTAB-2865		ERR700583	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700583	factor	individual	C2x32_1L
+E-MTAB-2865		ERR700583	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700584	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700584	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700584	characteristic	individual	C2x86_1L
+E-MTAB-2865		ERR700584	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700584	characteristic	organism part	episphere
+E-MTAB-2865		ERR700584	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700584	factor	individual	C2x86_1L
+E-MTAB-2865		ERR700584	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700585	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700585	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700585	characteristic	individual	C2x95_1Sb
+E-MTAB-2865		ERR700585	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700585	characteristic	organism part	episphere
+E-MTAB-2865		ERR700585	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700585	factor	individual	C2x95_1Sb
+E-MTAB-2865		ERR700585	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700586	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700586	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700586	characteristic	individual	C2x3_1L
+E-MTAB-2865		ERR700586	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700586	characteristic	organism part	episphere
+E-MTAB-2865		ERR700586	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700586	factor	individual	C2x3_1L
+E-MTAB-2865		ERR700586	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700587	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700587	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700587	characteristic	individual	C2x09_1L
+E-MTAB-2865		ERR700587	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700587	characteristic	organism part	episphere
+E-MTAB-2865		ERR700587	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700587	factor	individual	C2x09_1L
+E-MTAB-2865		ERR700587	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700588	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700588	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700588	characteristic	individual	C2x06_1L
+E-MTAB-2865		ERR700588	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700588	characteristic	organism part	episphere
+E-MTAB-2865		ERR700588	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700588	factor	individual	C2x06_1L
+E-MTAB-2865		ERR700588	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700589	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700589	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700589	characteristic	individual	C2x05_2S
+E-MTAB-2865		ERR700589	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700589	characteristic	organism part	episphere
+E-MTAB-2865		ERR700589	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700589	factor	individual	C2x05_2S
+E-MTAB-2865		ERR700589	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700590	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700590	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700590	characteristic	individual	C2x08_1Sd
+E-MTAB-2865		ERR700590	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700590	characteristic	organism part	episphere
+E-MTAB-2865		ERR700590	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700590	factor	individual	C2x08_1Sd
+E-MTAB-2865		ERR700590	factor	single cell well quality	debris
+E-MTAB-2865		ERR700591	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700591	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700591	characteristic	individual	C2x52_1L
+E-MTAB-2865		ERR700591	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700591	characteristic	organism part	episphere
+E-MTAB-2865		ERR700591	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700591	factor	individual	C2x52_1L
+E-MTAB-2865		ERR700591	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700592	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700592	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700592	characteristic	individual	C2x91_1L
+E-MTAB-2865		ERR700592	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700592	characteristic	organism part	episphere
+E-MTAB-2865		ERR700592	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700592	factor	individual	C2x91_1L
+E-MTAB-2865		ERR700592	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700593	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700593	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700593	characteristic	individual	C1x30_1L
+E-MTAB-2865		ERR700593	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700593	characteristic	organism part	episphere
+E-MTAB-2865		ERR700593	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700593	factor	individual	C1x30_1L
+E-MTAB-2865		ERR700593	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700594	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700594	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700594	characteristic	individual	C2x83_1Md
+E-MTAB-2865		ERR700594	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700594	characteristic	organism part	episphere
+E-MTAB-2865		ERR700594	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700594	factor	individual	C2x83_1Md
+E-MTAB-2865		ERR700594	factor	single cell well quality	debris
+E-MTAB-2865		ERR700595	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700595	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700595	characteristic	individual	C2x85_1L
+E-MTAB-2865		ERR700595	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700595	characteristic	organism part	episphere
+E-MTAB-2865		ERR700595	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700595	factor	individual	C2x85_1L
+E-MTAB-2865		ERR700595	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700596	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700596	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700596	characteristic	individual	C2x08_1Sd
+E-MTAB-2865		ERR700596	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700596	characteristic	organism part	episphere
+E-MTAB-2865		ERR700596	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700596	factor	individual	C2x08_1Sd
+E-MTAB-2865		ERR700596	factor	single cell well quality	debris
+E-MTAB-2865		ERR700597	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700597	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700597	characteristic	individual	C2x42_1Md
+E-MTAB-2865		ERR700597	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700597	characteristic	organism part	episphere
+E-MTAB-2865		ERR700597	characteristic	single cell well quality	debris
+E-MTAB-2865		ERR700597	factor	individual	C2x42_1Md
+E-MTAB-2865		ERR700597	factor	single cell well quality	debris
+E-MTAB-2865		ERR700598	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700598	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700598	characteristic	individual	C2x96_1Sb
+E-MTAB-2865		ERR700598	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700598	characteristic	organism part	episphere
+E-MTAB-2865		ERR700598	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700598	factor	individual	C2x96_1Sb
+E-MTAB-2865		ERR700598	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700599	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700599	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700599	characteristic	individual	C1x24_2S
+E-MTAB-2865		ERR700599	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700599	characteristic	organism part	episphere
+E-MTAB-2865		ERR700599	characteristic	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700599	factor	individual	C1x24_2S
+E-MTAB-2865		ERR700599	factor	single cell well quality	2 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700600	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700600	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700600	characteristic	individual	C2x31_1S
+E-MTAB-2865		ERR700600	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700600	characteristic	organism part	episphere
+E-MTAB-2865		ERR700600	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700600	factor	individual	C2x31_1S
+E-MTAB-2865		ERR700600	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700601	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700601	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700601	characteristic	individual	C2x45_4
+E-MTAB-2865		ERR700601	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700601	characteristic	organism part	episphere
+E-MTAB-2865		ERR700601	characteristic	single cell well quality	4 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700601	factor	individual	C2x45_4
+E-MTAB-2865		ERR700601	factor	single cell well quality	4 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700602	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700602	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700602	characteristic	individual	C2x90_1L
+E-MTAB-2865		ERR700602	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700602	characteristic	organism part	episphere
+E-MTAB-2865		ERR700602	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700602	factor	individual	C2x90_1L
+E-MTAB-2865		ERR700602	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700603	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700603	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700603	characteristic	individual	C2x62_1Sb
+E-MTAB-2865		ERR700603	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700603	characteristic	organism part	episphere
+E-MTAB-2865		ERR700603	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700603	factor	individual	C2x62_1Sb
+E-MTAB-2865		ERR700603	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700604	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700604	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700604	characteristic	individual	C2x04_1S
+E-MTAB-2865		ERR700604	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700604	characteristic	organism part	episphere
+E-MTAB-2865		ERR700604	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700604	factor	individual	C2x04_1S
+E-MTAB-2865		ERR700604	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700605	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700605	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700605	characteristic	individual	C2x62_1Sb
+E-MTAB-2865		ERR700605	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700605	characteristic	organism part	episphere
+E-MTAB-2865		ERR700605	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700605	factor	individual	C2x62_1Sb
+E-MTAB-2865		ERR700605	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700606	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700606	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700606	characteristic	individual	C2x14_1Sbd
+E-MTAB-2865		ERR700606	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700606	characteristic	organism part	episphere
+E-MTAB-2865		ERR700606	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700606	factor	individual	C2x14_1Sbd
+E-MTAB-2865		ERR700606	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700607	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700607	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700607	characteristic	individual	C2x38_1L
+E-MTAB-2865		ERR700607	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700607	characteristic	organism part	episphere
+E-MTAB-2865		ERR700607	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700607	factor	individual	C2x38_1L
+E-MTAB-2865		ERR700607	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700608	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700608	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700608	characteristic	individual	C2x39_d
+E-MTAB-2865		ERR700608	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700608	characteristic	organism part	episphere
+E-MTAB-2865		ERR700608	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700608	factor	individual	C2x39_d
+E-MTAB-2865		ERR700608	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700609	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700609	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700609	characteristic	individual	C2x45_4
+E-MTAB-2865		ERR700609	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700609	characteristic	organism part	episphere
+E-MTAB-2865		ERR700609	characteristic	single cell well quality	4 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700609	factor	individual	C2x45_4
+E-MTAB-2865		ERR700609	factor	single cell well quality	4 cells	http://purl.obolibrary.org/obo/CL_0000084
+E-MTAB-2865		ERR700610	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700610	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700610	characteristic	individual	C2x74_1M
+E-MTAB-2865		ERR700610	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700610	characteristic	organism part	episphere
+E-MTAB-2865		ERR700610	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700610	factor	individual	C2x74_1M
+E-MTAB-2865		ERR700610	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700611	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700611	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700611	characteristic	individual	C2x07_1S
+E-MTAB-2865		ERR700611	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700611	characteristic	organism part	episphere
+E-MTAB-2865		ERR700611	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700611	factor	individual	C2x07_1S
+E-MTAB-2865		ERR700611	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700612	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700612	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700612	characteristic	individual	C2x74_1M
+E-MTAB-2865		ERR700612	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700612	characteristic	organism part	episphere
+E-MTAB-2865		ERR700612	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700612	factor	individual	C2x74_1M
+E-MTAB-2865		ERR700612	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700613	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700613	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700613	characteristic	individual	C2x02_1S
+E-MTAB-2865		ERR700613	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700613	characteristic	organism part	episphere
+E-MTAB-2865		ERR700613	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700613	factor	individual	C2x02_1S
+E-MTAB-2865		ERR700613	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700614	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700614	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700614	characteristic	individual	C2x72_1L
+E-MTAB-2865		ERR700614	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700614	characteristic	organism part	episphere
+E-MTAB-2865		ERR700614	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700614	factor	individual	C2x72_1L
+E-MTAB-2865		ERR700614	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700615	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700615	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700615	characteristic	individual	C2x40_1S
+E-MTAB-2865		ERR700615	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700615	characteristic	organism part	episphere
+E-MTAB-2865		ERR700615	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700615	factor	individual	C2x40_1S
+E-MTAB-2865		ERR700615	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700616	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700616	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700616	characteristic	individual	C2x21_nc
+E-MTAB-2865		ERR700616	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700616	characteristic	organism part	episphere
+E-MTAB-2865		ERR700616	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700616	factor	individual	C2x21_nc
+E-MTAB-2865		ERR700616	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700617	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700617	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700617	characteristic	individual	C2x28_1M
+E-MTAB-2865		ERR700617	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700617	characteristic	organism part	episphere
+E-MTAB-2865		ERR700617	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700617	factor	individual	C2x28_1M
+E-MTAB-2865		ERR700617	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700618	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700618	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700618	characteristic	individual	C2x18_1Sb
+E-MTAB-2865		ERR700618	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700618	characteristic	organism part	episphere
+E-MTAB-2865		ERR700618	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700618	factor	individual	C2x18_1Sb
+E-MTAB-2865		ERR700618	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700619	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700619	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700619	characteristic	individual	C1x47_1L
+E-MTAB-2865		ERR700619	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700619	characteristic	organism part	episphere
+E-MTAB-2865		ERR700619	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700619	factor	individual	C1x47_1L
+E-MTAB-2865		ERR700619	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700620	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700620	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700620	characteristic	individual	C2x50_1Sbd
+E-MTAB-2865		ERR700620	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700620	characteristic	organism part	episphere
+E-MTAB-2865		ERR700620	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700620	factor	individual	C2x50_1Sbd
+E-MTAB-2865		ERR700620	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700621	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700621	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700621	characteristic	individual	C2x80_1Mb
+E-MTAB-2865		ERR700621	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700621	characteristic	organism part	episphere
+E-MTAB-2865		ERR700621	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700621	factor	individual	C2x80_1Mb
+E-MTAB-2865		ERR700621	factor	single cell well quality	dead cell
+E-MTAB-2865		ERR700622	characteristic	cell type	not applicable
+E-MTAB-2865		ERR700622	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700622	characteristic	individual	C1x64_d
+E-MTAB-2865		ERR700622	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700622	characteristic	organism part	episphere
+E-MTAB-2865		ERR700622	characteristic	single cell well quality	no cell
+E-MTAB-2865		ERR700622	factor	individual	C1x64_d
+E-MTAB-2865		ERR700622	factor	single cell well quality	no cell
+E-MTAB-2865		ERR700623	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700623	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700623	characteristic	individual	C2x86_1L
+E-MTAB-2865		ERR700623	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700623	characteristic	organism part	episphere
+E-MTAB-2865		ERR700623	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700623	factor	individual	C2x86_1L
+E-MTAB-2865		ERR700623	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700624	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700624	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700624	characteristic	individual	C2x32_1L
+E-MTAB-2865		ERR700624	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700624	characteristic	organism part	episphere
+E-MTAB-2865		ERR700624	characteristic	single cell well quality	single cell
+E-MTAB-2865		ERR700624	factor	individual	C2x32_1L
+E-MTAB-2865		ERR700624	factor	single cell well quality	single cell
+E-MTAB-2865		ERR700625	characteristic	cell type	nervous system cell
+E-MTAB-2865		ERR700625	characteristic	developmental stage	48 hpf
+E-MTAB-2865		ERR700625	characteristic	individual	C2x49_1Lb
+E-MTAB-2865		ERR700625	characteristic	organism	Platynereis dumerilii
+E-MTAB-2865		ERR700625	characteristic	organism part	episphere
+E-MTAB-2865		ERR700625	characteristic	single cell well quality	dead cell
+E-MTAB-2865		ERR700625	factor	individual	C2x49_1Lb
+E-MTAB-2865		ERR700625	factor	single cell well quality	dead cell

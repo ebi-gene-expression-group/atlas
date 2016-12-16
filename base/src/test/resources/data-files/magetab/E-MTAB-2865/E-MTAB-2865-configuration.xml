@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="scrnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="C1x22_1L; single cell">
+                <assay technical_replicate_id="t177">ERR700513</assay>
+                <assay technical_replicate_id="t177">ERR700528</assay>
+            </assay_group>
+            <assay_group id="g2" label="C1x24_2S; 2 cells">
+                <assay technical_replicate_id="t213">ERR700580</assay>
+                <assay technical_replicate_id="t213">ERR700599</assay>
+            </assay_group>
+            <assay_group id="g3" label="C1x30_1L; single cell">
+                <assay technical_replicate_id="t165">ERR700539</assay>
+                <assay technical_replicate_id="t165">ERR700593</assay>
+            </assay_group>
+            <assay_group id="g4" label="C1x34_d; no cell">
+                <assay technical_replicate_id="t147">ERR700564</assay>
+                <assay technical_replicate_id="t147">ERR700571</assay>
+            </assay_group>
+            <assay_group id="g5" label="C1x41_1L; single cell">
+                <assay technical_replicate_id="t185">ERR700492</assay>
+                <assay technical_replicate_id="t185">ERR700494</assay>
+            </assay_group>
+            <assay_group id="g6" label="C1x47_1L; single cell">
+                <assay technical_replicate_id="t174">ERR700515</assay>
+                <assay technical_replicate_id="t174">ERR700619</assay>
+            </assay_group>
+            <assay_group id="g7" label="C1x50_1M; single cell">
+                <assay technical_replicate_id="t148">ERR700498</assay>
+                <assay technical_replicate_id="t148">ERR700493</assay>
+            </assay_group>
+            <assay_group id="g8" label="C1x59_1M; single cell">
+                <assay technical_replicate_id="t153">ERR700541</assay>
+                <assay technical_replicate_id="t153">ERR700575</assay>
+            </assay_group>
+            <assay_group id="g9" label="C1x64_d; no cell">
+                <assay technical_replicate_id="t145">ERR700520</assay>
+                <assay technical_replicate_id="t145">ERR700622</assay>
+            </assay_group>
+            <assay_group id="g10" label="C1x79_2M; 2 cells">
+                <assay technical_replicate_id="t171">ERR700540</assay>
+                <assay technical_replicate_id="t171">ERR700522</assay>
+            </assay_group>
+            <assay_group id="g11" label="C1x83_d; no cell">
+                <assay technical_replicate_id="t207">ERR700524</assay>
+                <assay technical_replicate_id="t207">ERR700497</assay>
+            </assay_group>
+            <assay_group id="g12" label="C2x01_1Sb; dead cell">
+                <assay technical_replicate_id="t181">ERR700532</assay>
+                <assay technical_replicate_id="t181">ERR700485</assay>
+            </assay_group>
+            <assay_group id="g13" label="C2x02_1S; single cell">
+                <assay technical_replicate_id="t199">ERR700613</assay>
+                <assay technical_replicate_id="t199">ERR700534</assay>
+            </assay_group>
+            <assay_group id="g14" label="C2x04_1S; single cell">
+                <assay technical_replicate_id="t202">ERR700569</assay>
+                <assay technical_replicate_id="t202">ERR700604</assay>
+            </assay_group>
+            <assay_group id="g15" label="C2x05_2S; 2 cells">
+                <assay technical_replicate_id="t186">ERR700576</assay>
+                <assay technical_replicate_id="t186">ERR700589</assay>
+            </assay_group>
+            <assay_group id="g16" label="C2x06_1L; single cell">
+                <assay technical_replicate_id="t189">ERR700577</assay>
+                <assay technical_replicate_id="t189">ERR700588</assay>
+            </assay_group>
+            <assay_group id="g17" label="C2x07_1S; single cell">
+                <assay technical_replicate_id="t170">ERR700611</assay>
+                <assay technical_replicate_id="t170">ERR700557</assay>
+            </assay_group>
+            <assay_group id="g18" label="C2x08_1Sd; debris">
+                <assay technical_replicate_id="t187">ERR700590</assay>
+                <assay technical_replicate_id="t187">ERR700596</assay>
+            </assay_group>
+            <assay_group id="g19" label="C2x09_1L; single cell">
+                <assay technical_replicate_id="t196">ERR700510</assay>
+                <assay technical_replicate_id="t196">ERR700587</assay>
+            </assay_group>
+            <assay_group id="g20" label="C2x10_1Sb; dead cell">
+                <assay technical_replicate_id="t210">ERR700581</assay>
+                <assay technical_replicate_id="t210">ERR700552</assay>
+            </assay_group>
+            <assay_group id="g21" label="C2x13_1M; single cell">
+                <assay technical_replicate_id="t152">ERR700578</assay>
+                <assay technical_replicate_id="t152">ERR700535</assay>
+            </assay_group>
+            <assay_group id="g22" label="C2x14_1Sbd; dead cell">
+                <assay technical_replicate_id="t180">ERR700606</assay>
+                <assay technical_replicate_id="t180">ERR700556</assay>
+            </assay_group>
+            <assay_group id="g23" label="C2x15_1Sb; dead cell">
+                <assay technical_replicate_id="t166">ERR700544</assay>
+                <assay technical_replicate_id="t166">ERR700519</assay>
+            </assay_group>
+            <assay_group id="g24" label="C2x18_1Sb; dead cell">
+                <assay technical_replicate_id="t176">ERR700618</assay>
+                <assay technical_replicate_id="t176">ERR700496</assay>
+            </assay_group>
+            <assay_group id="g25" label="C2x20_1S; single cell">
+                <assay technical_replicate_id="t163">ERR700509</assay>
+                <assay technical_replicate_id="t163">ERR700565</assay>
+            </assay_group>
+            <assay_group id="g26" label="C2x21_nc; no cell">
+                <assay technical_replicate_id="t142">ERR700512</assay>
+                <assay technical_replicate_id="t142">ERR700616</assay>
+            </assay_group>
+            <assay_group id="g27" label="C2x22_d; no cell">
+                <assay technical_replicate_id="t172">ERR700525</assay>
+                <assay technical_replicate_id="t172">ERR700506</assay>
+            </assay_group>
+            <assay_group id="g28" label="C2x24_1S; single cell">
+                <assay technical_replicate_id="t193">ERR700543</assay>
+                <assay technical_replicate_id="t193">ERR700550</assay>
+            </assay_group>
+            <assay_group id="g29" label="C2x27_nc; no cell">
+                <assay technical_replicate_id="t155">ERR700562</assay>
+                <assay technical_replicate_id="t155">ERR700559</assay>
+            </assay_group>
+            <assay_group id="g30" label="C2x28_1M; single cell">
+                <assay technical_replicate_id="t156">ERR700617</assay>
+                <assay technical_replicate_id="t156">ERR700487</assay>
+            </assay_group>
+            <assay_group id="g31" label="C2x29_1S; single cell">
+                <assay technical_replicate_id="t161">ERR700490</assay>
+                <assay technical_replicate_id="t161">ERR700566</assay>
+            </assay_group>
+            <assay_group id="g32" label="C2x30_1L; single cell">
+                <assay technical_replicate_id="t146">ERR700533</assay>
+                <assay technical_replicate_id="t146">ERR700547</assay>
+            </assay_group>
+            <assay_group id="g33" label="C2x31_1S; single cell">
+                <assay technical_replicate_id="t205">ERR700560</assay>
+                <assay technical_replicate_id="t205">ERR700600</assay>
+            </assay_group>
+            <assay_group id="g34" label="C2x32_1L; single cell">
+                <assay technical_replicate_id="t150">ERR700583</assay>
+                <assay technical_replicate_id="t150">ERR700624</assay>
+            </assay_group>
+            <assay_group id="g35" label="C2x34_1L; single cell">
+                <assay technical_replicate_id="t198">ERR700545</assay>
+                <assay technical_replicate_id="t198">ERR700572</assay>
+            </assay_group>
+            <assay_group id="g36" label="C2x35_1L; single cell">
+                <assay technical_replicate_id="t203">ERR700514</assay>
+                <assay technical_replicate_id="t203">ERR700486</assay>
+            </assay_group>
+            <assay_group id="g37" label="C2x36_1Ld; debris">
+                <assay technical_replicate_id="t204">ERR700508</assay>
+                <assay technical_replicate_id="t204">ERR700502</assay>
+            </assay_group>
+            <assay_group id="g38" label="C2x38_1L; single cell">
+                <assay technical_replicate_id="t209">ERR700607</assay>
+                <assay technical_replicate_id="t209">ERR700518</assay>
+            </assay_group>
+            <assay_group id="g39" label="C2x39_d; no cell">
+                <assay technical_replicate_id="t211">ERR700526</assay>
+                <assay technical_replicate_id="t211">ERR700608</assay>
+            </assay_group>
+            <assay_group id="g40" label="C2x3_1L; single cell">
+                <assay technical_replicate_id="t162">ERR700586</assay>
+                <assay technical_replicate_id="t162">ERR700553</assay>
+            </assay_group>
+            <assay_group id="g41" label="C2x40_1S; single cell">
+                <assay technical_replicate_id="t158">ERR700501</assay>
+                <assay technical_replicate_id="t158">ERR700615</assay>
+            </assay_group>
+            <assay_group id="g42" label="C2x41_1L; single cell">
+                <assay technical_replicate_id="t208">ERR700504</assay>
+                <assay technical_replicate_id="t208">ERR700551</assay>
+            </assay_group>
+            <assay_group id="g43" label="C2x42_1Md; debris">
+                <assay technical_replicate_id="t201">ERR700597</assay>
+                <assay technical_replicate_id="t201">ERR700482</assay>
+            </assay_group>
+            <assay_group id="g44" label="C2x43_5; 5 cells">
+                <assay technical_replicate_id="t179">ERR700549</assay>
+                <assay technical_replicate_id="t179">ERR700542</assay>
+            </assay_group>
+            <assay_group id="g45" label="C2x44_1M; single cell">
+                <assay technical_replicate_id="t157">ERR700489</assay>
+                <assay technical_replicate_id="t157">ERR700516</assay>
+            </assay_group>
+            <assay_group id="g46" label="C2x45_4; 4 cells">
+                <assay technical_replicate_id="t178">ERR700609</assay>
+                <assay technical_replicate_id="t178">ERR700601</assay>
+            </assay_group>
+            <assay_group id="g47" label="C2x46_1L; single cell">
+                <assay technical_replicate_id="t190">ERR700488</assay>
+                <assay technical_replicate_id="t190">ERR700503</assay>
+            </assay_group>
+            <assay_group id="g48" label="C2x49_1Lb; dead cell">
+                <assay technical_replicate_id="t192">ERR700579</assay>
+                <assay technical_replicate_id="t192">ERR700625</assay>
+            </assay_group>
+            <assay_group id="g49" label="C2x50_1Sbd; dead cell">
+                <assay technical_replicate_id="t151">ERR700491</assay>
+                <assay technical_replicate_id="t151">ERR700620</assay>
+            </assay_group>
+            <assay_group id="g50" label="C2x51_1Mb; dead cell">
+                <assay technical_replicate_id="t191">ERR700499</assay>
+                <assay technical_replicate_id="t191">ERR700505</assay>
+            </assay_group>
+            <assay_group id="g51" label="C2x52_1L; single cell">
+                <assay technical_replicate_id="t169">ERR700591</assay>
+                <assay technical_replicate_id="t169">ERR700521</assay>
+            </assay_group>
+            <assay_group id="g52" label="C2x53_1M; single cell">
+                <assay technical_replicate_id="t195">ERR700546</assay>
+                <assay technical_replicate_id="t195">ERR700568</assay>
+            </assay_group>
+            <assay_group id="g53" label="C2x54_d; no cell">
+                <assay technical_replicate_id="t188">ERR700582</assay>
+                <assay technical_replicate_id="t188">ERR700548</assay>
+            </assay_group>
+            <assay_group id="g54" label="C2x55_1L; single cell">
+                <assay technical_replicate_id="t206">ERR700538</assay>
+                <assay technical_replicate_id="t206">ERR700527</assay>
+            </assay_group>
+            <assay_group id="g55" label="C2x58_1S; single cell">
+                <assay technical_replicate_id="t183">ERR700529</assay>
+                <assay technical_replicate_id="t183">ERR700558</assay>
+            </assay_group>
+            <assay_group id="g56" label="C2x61_1Sb; dead cell">
+                <assay technical_replicate_id="t194">ERR700530</assay>
+                <assay technical_replicate_id="t194">ERR700537</assay>
+            </assay_group>
+            <assay_group id="g57" label="C2x62_1Sb; dead cell">
+                <assay technical_replicate_id="t197">ERR700605</assay>
+                <assay technical_replicate_id="t197">ERR700603</assay>
+            </assay_group>
+            <assay_group id="g58" label="C2x65_1Sb; dead cell">
+                <assay technical_replicate_id="t175">ERR700511</assay>
+                <assay technical_replicate_id="t175">ERR700555</assay>
+            </assay_group>
+            <assay_group id="g59" label="C2x67_1S; single cell">
+                <assay technical_replicate_id="t173">ERR700561</assay>
+                <assay technical_replicate_id="t173">ERR700536</assay>
+            </assay_group>
+            <assay_group id="g60" label="C2x71_2; 2 cells">
+                <assay technical_replicate_id="t149">ERR700484</assay>
+                <assay technical_replicate_id="t149">ERR700567</assay>
+            </assay_group>
+            <assay_group id="g61" label="C2x72_1L; single cell">
+                <assay technical_replicate_id="t160">ERR700574</assay>
+                <assay technical_replicate_id="t160">ERR700614</assay>
+            </assay_group>
+            <assay_group id="g62" label="C2x74_1M; single cell">
+                <assay technical_replicate_id="t154">ERR700610</assay>
+                <assay technical_replicate_id="t154">ERR700612</assay>
+            </assay_group>
+            <assay_group id="g63" label="C2x80_1Mb; dead cell">
+                <assay technical_replicate_id="t212">ERR700573</assay>
+                <assay technical_replicate_id="t212">ERR700621</assay>
+            </assay_group>
+            <assay_group id="g64" label="C2x83_1Md; debris">
+                <assay technical_replicate_id="t184">ERR700594</assay>
+                <assay technical_replicate_id="t184">ERR700500</assay>
+            </assay_group>
+            <assay_group id="g65" label="C2x85_1L; single cell">
+                <assay technical_replicate_id="t143">ERR700595</assay>
+                <assay technical_replicate_id="t143">ERR700554</assay>
+            </assay_group>
+            <assay_group id="g66" label="C2x86_1L; single cell">
+                <assay technical_replicate_id="t167">ERR700584</assay>
+                <assay technical_replicate_id="t167">ERR700623</assay>
+            </assay_group>
+            <assay_group id="g67" label="C2x90_1L; single cell">
+                <assay technical_replicate_id="t168">ERR700602</assay>
+                <assay technical_replicate_id="t168">ERR700517</assay>
+            </assay_group>
+            <assay_group id="g68" label="C2x91_1L; single cell">
+                <assay technical_replicate_id="t182">ERR700592</assay>
+                <assay technical_replicate_id="t182">ERR700570</assay>
+            </assay_group>
+            <assay_group id="g69" label="C2x92_1Sb; dead cell">
+                <assay technical_replicate_id="t144">ERR700531</assay>
+                <assay technical_replicate_id="t144">ERR700495</assay>
+            </assay_group>
+            <assay_group id="g70" label="C2x94_d; no cell">
+                <assay technical_replicate_id="t200">ERR700483</assay>
+                <assay technical_replicate_id="t200">ERR700507</assay>
+            </assay_group>
+            <assay_group id="g71" label="C2x95_1Sb; dead cell">
+                <assay technical_replicate_id="t159">ERR700563</assay>
+                <assay technical_replicate_id="t159">ERR700585</assay>
+            </assay_group>
+            <assay_group id="g72" label="C2x96_1Sb; dead cell">
+                <assay technical_replicate_id="t164">ERR700523</assay>
+                <assay technical_replicate_id="t164">ERR700598</assay>
+            </assay_group>
+            <assay_group id="g73" label="C3x03-nc; no cell">
+                <assay technical_replicate_id="t108">ERR592512</assay>
+            </assay_group>
+            <assay_group id="g74" label="C3x42-1L; single cell">
+                <assay technical_replicate_id="t69">ERR592542</assay>
+            </assay_group>
+            <assay_group id="g75" label="C3x58-1L; single cell">
+                <assay technical_replicate_id="t43">ERR592524</assay>
+            </assay_group>
+            <assay_group id="g76" label="C3x65-1L; single cell">
+                <assay technical_replicate_id="t62">ERR592521</assay>
+            </assay_group>
+            <assay_group id="g77" label="C3x72-1L; single cell">
+                <assay technical_replicate_id="t26">ERR592576</assay>
+            </assay_group>
+            <assay_group id="g78" label="C3x82-nc; no cell">
+                <assay technical_replicate_id="t126">ERR592531</assay>
+            </assay_group>
+            <assay_group id="g79" label="C4x02-2S; multiple cells">
+                <assay technical_replicate_id="t118">ERR592600</assay>
+            </assay_group>
+            <assay_group id="g80" label="C4x03-nc; no cell">
+                <assay technical_replicate_id="t119">ERR592549</assay>
+            </assay_group>
+            <assay_group id="g81" label="C4x13-1M; single cell">
+                <assay technical_replicate_id="t25">ERR592587</assay>
+            </assay_group>
+            <assay_group id="g82" label="C4x19-1S; single cell">
+                <assay technical_replicate_id="t12">ERR592610</assay>
+            </assay_group>
+            <assay_group id="g83" label="C4x20-1M; single cell">
+                <assay technical_replicate_id="t77">ERR592540</assay>
+            </assay_group>
+            <assay_group id="g84" label="C4x24-1S; single cell">
+                <assay technical_replicate_id="t115">ERR592537</assay>
+            </assay_group>
+            <assay_group id="g85" label="C4x25-1M; single cell">
+                <assay technical_replicate_id="t42">ERR592522</assay>
+            </assay_group>
+            <assay_group id="g86" label="C4x26-1M; single cell">
+                <assay technical_replicate_id="t56">ERR592558</assay>
+            </assay_group>
+            <assay_group id="g87" label="C4x30-1b; dead cell">
+                <assay technical_replicate_id="t85">ERR592633</assay>
+            </assay_group>
+            <assay_group id="g88" label="C4x34-1S; single cell">
+                <assay technical_replicate_id="t134">ERR592630</assay>
+            </assay_group>
+            <assay_group id="g89" label="C4x35-nc; no cell">
+                <assay technical_replicate_id="t32">ERR592636</assay>
+            </assay_group>
+            <assay_group id="g90" label="C4x37-1M; single cell">
+                <assay technical_replicate_id="t7">ERR592503</assay>
+            </assay_group>
+            <assay_group id="g91" label="C4x38-1S; single cell">
+                <assay technical_replicate_id="t6">ERR592595</assay>
+            </assay_group>
+            <assay_group id="g92" label="C4x39-1M; single cell">
+                <assay technical_replicate_id="t117">ERR592510</assay>
+            </assay_group>
+            <assay_group id="g93" label="C4x40-1L; single cell">
+                <assay technical_replicate_id="t9">ERR592622</assay>
+            </assay_group>
+            <assay_group id="g94" label="C4x41-1L; single cell">
+                <assay technical_replicate_id="t39">ERR592584</assay>
+            </assay_group>
+            <assay_group id="g95" label="C4x44-1Sd; debris">
+                <assay technical_replicate_id="t55">ERR592586</assay>
+            </assay_group>
+            <assay_group id="g96" label="C4x45-2S; multiple cells">
+                <assay technical_replicate_id="t75">ERR592529</assay>
+            </assay_group>
+            <assay_group id="g97" label="C4x48-1L; single cell">
+                <assay technical_replicate_id="t63">ERR592611</assay>
+            </assay_group>
+            <assay_group id="g98" label="C4x52-1VS; single cell">
+                <assay technical_replicate_id="t71">ERR592561</assay>
+            </assay_group>
+            <assay_group id="g99" label="C4x54-nc; no cell">
+                <assay technical_replicate_id="t139">ERR592535</assay>
+            </assay_group>
+            <assay_group id="g100" label="C4x56-1M; single cell">
+                <assay technical_replicate_id="t28">ERR592553</assay>
+            </assay_group>
+            <assay_group id="g101" label="C4x57-1M; single cell">
+                <assay technical_replicate_id="t84">ERR592591</assay>
+            </assay_group>
+            <assay_group id="g102" label="C4x58-1M; single cell">
+                <assay technical_replicate_id="t37">ERR592603</assay>
+            </assay_group>
+            <assay_group id="g103" label="C4x59-1S; single cell">
+                <assay technical_replicate_id="t34">ERR592564</assay>
+            </assay_group>
+            <assay_group id="g104" label="C4x61-1S; single cell">
+                <assay technical_replicate_id="t21">ERR592626</assay>
+            </assay_group>
+            <assay_group id="g105" label="C4x64-1M; single cell">
+                <assay technical_replicate_id="t135">ERR592613</assay>
+            </assay_group>
+            <assay_group id="g106" label="C4x65-nc; no cell">
+                <assay technical_replicate_id="t52">ERR592534</assay>
+            </assay_group>
+            <assay_group id="g107" label="C4x66-1M; single cell">
+                <assay technical_replicate_id="t10">ERR592609</assay>
+            </assay_group>
+            <assay_group id="g108" label="C4x67-2S; multiple cells">
+                <assay technical_replicate_id="t13">ERR592616</assay>
+            </assay_group>
+            <assay_group id="g109" label="C4x70-1VSb; dead cell">
+                <assay technical_replicate_id="t65">ERR592544</assay>
+            </assay_group>
+            <assay_group id="g110" label="C4x71-1M; single cell">
+                <assay technical_replicate_id="t113">ERR592573</assay>
+            </assay_group>
+            <assay_group id="g111" label="C4x72-1S; single cell">
+                <assay technical_replicate_id="t58">ERR592530</assay>
+            </assay_group>
+            <assay_group id="g112" label="C4x73-2L1S; 3 cells">
+                <assay technical_replicate_id="t132">ERR592607</assay>
+            </assay_group>
+            <assay_group id="g113" label="C4x74-2S; multiple cells">
+                <assay technical_replicate_id="t114">ERR592592</assay>
+            </assay_group>
+            <assay_group id="g114" label="C4x81-nc; no cell">
+                <assay technical_replicate_id="t14">ERR592581</assay>
+            </assay_group>
+            <assay_group id="g115" label="C4x86-1M; single cell">
+                <assay technical_replicate_id="t121">ERR592599</assay>
+            </assay_group>
+            <assay_group id="g116" label="C4x87-1M; single cell">
+                <assay technical_replicate_id="t76">ERR592628</assay>
+            </assay_group>
+            <assay_group id="g117" label="C4x94-1M; single cell">
+                <assay technical_replicate_id="t122">ERR592579</assay>
+            </assay_group>
+            <assay_group id="g118" label="C5x01-1M; single cell">
+                <assay technical_replicate_id="t99">ERR592514</assay>
+            </assay_group>
+            <assay_group id="g119" label="C5x02-1M; single cell">
+                <assay technical_replicate_id="t107">ERR592548</assay>
+            </assay_group>
+            <assay_group id="g120" label="C5x03-1L; single cell">
+                <assay technical_replicate_id="t102">ERR592596</assay>
+            </assay_group>
+            <assay_group id="g121" label="C5x04-nc; no cell">
+                <assay technical_replicate_id="t128">ERR592605</assay>
+            </assay_group>
+            <assay_group id="g122" label="C5x05-1L; single cell">
+                <assay technical_replicate_id="t90">ERR592632</assay>
+            </assay_group>
+            <assay_group id="g123" label="C5x06-1M; single cell">
+                <assay technical_replicate_id="t141">ERR592533</assay>
+            </assay_group>
+            <assay_group id="g124" label="C5x07-1L; single cell">
+                <assay technical_replicate_id="t127">ERR592580</assay>
+            </assay_group>
+            <assay_group id="g125" label="C5x08-nc; no cell">
+                <assay technical_replicate_id="t93">ERR592557</assay>
+            </assay_group>
+            <assay_group id="g126" label="C5x09-1M; single cell">
+                <assay technical_replicate_id="t4">ERR592627</assay>
+            </assay_group>
+            <assay_group id="g127" label="C5x10-1M; single cell">
+                <assay technical_replicate_id="t131">ERR592585</assay>
+            </assay_group>
+            <assay_group id="g128" label="C5x11-2S1VS; 3 cells">
+                <assay technical_replicate_id="t120">ERR592574</assay>
+            </assay_group>
+            <assay_group id="g129" label="C5x12-1VS; single cell">
+                <assay technical_replicate_id="t140">ERR592569</assay>
+            </assay_group>
+            <assay_group id="g130" label="C5x13-1VS; single cell">
+                <assay technical_replicate_id="t40">ERR592577</assay>
+            </assay_group>
+            <assay_group id="g131" label="C5x14-1M; single cell">
+                <assay technical_replicate_id="t98">ERR592506</assay>
+            </assay_group>
+            <assay_group id="g132" label="C5x15-nc; no cell">
+                <assay technical_replicate_id="t72">ERR592563</assay>
+            </assay_group>
+            <assay_group id="g133" label="C5x16-1S; single cell">
+                <assay technical_replicate_id="t130">ERR592532</assay>
+            </assay_group>
+            <assay_group id="g134" label="C5x17-1M; single cell">
+                <assay technical_replicate_id="t123">ERR592528</assay>
+            </assay_group>
+            <assay_group id="g135" label="C5x18-1S; single cell">
+                <assay technical_replicate_id="t57">ERR592520</assay>
+            </assay_group>
+            <assay_group id="g136" label="C5x19-1VS; single cell">
+                <assay technical_replicate_id="t50">ERR592631</assay>
+            </assay_group>
+            <assay_group id="g137" label="C5x20-1S; single cell">
+                <assay technical_replicate_id="t91">ERR592499</assay>
+            </assay_group>
+            <assay_group id="g138" label="C5x21-1M; single cell">
+                <assay technical_replicate_id="t129">ERR592554</assay>
+            </assay_group>
+            <assay_group id="g139" label="C5x22-1S; single cell">
+                <assay technical_replicate_id="t101">ERR592546</assay>
+            </assay_group>
+            <assay_group id="g140" label="C5x23-1L; single cell">
+                <assay technical_replicate_id="t80">ERR592620</assay>
+            </assay_group>
+            <assay_group id="g141" label="C5x24-1M; single cell">
+                <assay technical_replicate_id="t109">ERR592598</assay>
+            </assay_group>
+            <assay_group id="g142" label="C5x25-nc; no cell">
+                <assay technical_replicate_id="t83">ERR592526</assay>
+            </assay_group>
+            <assay_group id="g143" label="C5x26-1M; single cell">
+                <assay technical_replicate_id="t61">ERR592606</assay>
+            </assay_group>
+            <assay_group id="g144" label="C5x27-1M; single cell">
+                <assay technical_replicate_id="t49">ERR592518</assay>
+            </assay_group>
+            <assay_group id="g145" label="C5x28-1M; single cell">
+                <assay technical_replicate_id="t105">ERR592578</assay>
+            </assay_group>
+            <assay_group id="g146" label="C5x29-1L; single cell">
+                <assay technical_replicate_id="t46">ERR592556</assay>
+            </assay_group>
+            <assay_group id="g147" label="C5x30-1S; single cell">
+                <assay technical_replicate_id="t106">ERR592552</assay>
+            </assay_group>
+            <assay_group id="g148" label="C5x31-1M; single cell">
+                <assay technical_replicate_id="t45">ERR592617</assay>
+            </assay_group>
+            <assay_group id="g149" label="C5x32-1M; single cell">
+                <assay technical_replicate_id="t36">ERR592608</assay>
+            </assay_group>
+            <assay_group id="g150" label="C5x33-1S; single cell">
+                <assay technical_replicate_id="t86">ERR592539</assay>
+            </assay_group>
+            <assay_group id="g151" label="C5x34-1M; single cell">
+                <assay technical_replicate_id="t38">ERR592604</assay>
+            </assay_group>
+            <assay_group id="g152" label="C5x35-1M; single cell">
+                <assay technical_replicate_id="t103">ERR592559</assay>
+            </assay_group>
+            <assay_group id="g153" label="C5x36-1VS; single cell">
+                <assay technical_replicate_id="t79">ERR592562</assay>
+            </assay_group>
+            <assay_group id="g154" label="C5x37-2S; multiple cells">
+                <assay technical_replicate_id="t111">ERR592513</assay>
+            </assay_group>
+            <assay_group id="g155" label="C5x38-1S; single cell">
+                <assay technical_replicate_id="t2">ERR592504</assay>
+            </assay_group>
+            <assay_group id="g156" label="C5x39-1M; single cell">
+                <assay technical_replicate_id="t95">ERR592623</assay>
+            </assay_group>
+            <assay_group id="g157" label="C5x40-1S; single cell">
+                <assay technical_replicate_id="t88">ERR592629</assay>
+            </assay_group>
+            <assay_group id="g158" label="C5x41-1L; single cell">
+                <assay technical_replicate_id="t110">ERR592536</assay>
+            </assay_group>
+            <assay_group id="g159" label="C5x42-1M; single cell">
+                <assay technical_replicate_id="t74">ERR592550</assay>
+            </assay_group>
+            <assay_group id="g160" label="C5x43-1M; single cell">
+                <assay technical_replicate_id="t51">ERR592589</assay>
+            </assay_group>
+            <assay_group id="g161" label="C5x44-nc; no cell">
+                <assay technical_replicate_id="t94">ERR592516</assay>
+            </assay_group>
+            <assay_group id="g162" label="C5x45-nc; no cell">
+                <assay technical_replicate_id="t100">ERR592515</assay>
+            </assay_group>
+            <assay_group id="g163" label="C5x46-1M; single cell">
+                <assay technical_replicate_id="t60">ERR592635</assay>
+            </assay_group>
+            <assay_group id="g164" label="C5x47-1VS; single cell">
+                <assay technical_replicate_id="t116">ERR592568</assay>
+            </assay_group>
+            <assay_group id="g165" label="C5x48-15; multiple cells">
+                <assay technical_replicate_id="t33">ERR592511</assay>
+            </assay_group>
+            <assay_group id="g166" label="C5x49-nc; no cell">
+                <assay technical_replicate_id="t20">ERR592570</assay>
+            </assay_group>
+            <assay_group id="g167" label="C5x50-1Lb; dead cell">
+                <assay technical_replicate_id="t112">ERR592517</assay>
+            </assay_group>
+            <assay_group id="g168" label="C5x51-1M; single cell">
+                <assay technical_replicate_id="t15">ERR592597</assay>
+            </assay_group>
+            <assay_group id="g169" label="C5x52-2S; multiple cells">
+                <assay technical_replicate_id="t17">ERR592583</assay>
+            </assay_group>
+            <assay_group id="g170" label="C5x53-1S; single cell">
+                <assay technical_replicate_id="t133">ERR592590</assay>
+            </assay_group>
+            <assay_group id="g171" label="C5x54-3; 3 cells">
+                <assay technical_replicate_id="t70">ERR592572</assay>
+            </assay_group>
+            <assay_group id="g172" label="C5x55-1S; single cell">
+                <assay technical_replicate_id="t24">ERR592566</assay>
+            </assay_group>
+            <assay_group id="g173" label="C5x56-1Md; debris">
+                <assay technical_replicate_id="t97">ERR592594</assay>
+            </assay_group>
+            <assay_group id="g174" label="C5x57-1M; single cell">
+                <assay technical_replicate_id="t59">ERR592547</assay>
+            </assay_group>
+            <assay_group id="g175" label="C5x58-1S; single cell">
+                <assay technical_replicate_id="t64">ERR592618</assay>
+            </assay_group>
+            <assay_group id="g176" label="C5x59-1L; single cell">
+                <assay technical_replicate_id="t54">ERR592541</assay>
+            </assay_group>
+            <assay_group id="g177" label="C5x60-nc; no cell">
+                <assay technical_replicate_id="t30">ERR592588</assay>
+            </assay_group>
+            <assay_group id="g178" label="C5x61-nc; no cell">
+                <assay technical_replicate_id="t67">ERR592525</assay>
+            </assay_group>
+            <assay_group id="g179" label="C5x62-nc; no cell">
+                <assay technical_replicate_id="t82">ERR592575</assay>
+            </assay_group>
+            <assay_group id="g180" label="C5x63-1M; single cell">
+                <assay technical_replicate_id="t138">ERR592621</assay>
+            </assay_group>
+            <assay_group id="g181" label="C5x64-1S; single cell">
+                <assay technical_replicate_id="t1">ERR592498</assay>
+            </assay_group>
+            <assay_group id="g182" label="C5x65-nc; no cell">
+                <assay technical_replicate_id="t53">ERR592500</assay>
+            </assay_group>
+            <assay_group id="g183" label="C5x66-1S; single cell">
+                <assay technical_replicate_id="t48">ERR592545</assay>
+            </assay_group>
+            <assay_group id="g184" label="C5x67-1S; single cell">
+                <assay technical_replicate_id="t73">ERR592509</assay>
+            </assay_group>
+            <assay_group id="g185" label="C5x68-nc; no cell">
+                <assay technical_replicate_id="t31">ERR592560</assay>
+            </assay_group>
+            <assay_group id="g186" label="C5x69-nc; no cell">
+                <assay technical_replicate_id="t124">ERR592507</assay>
+            </assay_group>
+            <assay_group id="g187" label="C5x70-nc; no cell">
+                <assay technical_replicate_id="t27">ERR592555</assay>
+            </assay_group>
+            <assay_group id="g188" label="C5x71-1Md; debris">
+                <assay technical_replicate_id="t81">ERR592624</assay>
+            </assay_group>
+            <assay_group id="g189" label="C5x72-1Md; debris">
+                <assay technical_replicate_id="t137">ERR592538</assay>
+            </assay_group>
+            <assay_group id="g190" label="C5x73-b; debris">
+                <assay technical_replicate_id="t19">ERR592634</assay>
+            </assay_group>
+            <assay_group id="g191" label="C5x74-b; debris">
+                <assay technical_replicate_id="t29">ERR592505</assay>
+            </assay_group>
+            <assay_group id="g192" label="C5x75-nc; no cell">
+                <assay technical_replicate_id="t22">ERR592619</assay>
+            </assay_group>
+            <assay_group id="g193" label="C5x76-1S; single cell">
+                <assay technical_replicate_id="t92">ERR592638</assay>
+            </assay_group>
+            <assay_group id="g194" label="C5x77-1M; single cell">
+                <assay technical_replicate_id="t89">ERR592571</assay>
+            </assay_group>
+            <assay_group id="g195" label="C5x78-1M; single cell">
+                <assay technical_replicate_id="t78">ERR592582</assay>
+            </assay_group>
+            <assay_group id="g196" label="C5x79-1M; single cell">
+                <assay technical_replicate_id="t96">ERR592567</assay>
+            </assay_group>
+            <assay_group id="g197" label="C5x80-1VS; single cell">
+                <assay technical_replicate_id="t5">ERR592551</assay>
+            </assay_group>
+            <assay_group id="g198" label="C5x81-nc; no cell">
+                <assay technical_replicate_id="t23">ERR592543</assay>
+            </assay_group>
+            <assay_group id="g199" label="C5x82-1M; single cell">
+                <assay technical_replicate_id="t16">ERR592614</assay>
+            </assay_group>
+            <assay_group id="g200" label="C5x83-2; multiple cells">
+                <assay technical_replicate_id="t136">ERR592501</assay>
+            </assay_group>
+            <assay_group id="g201" label="C5x84-1S; single cell">
+                <assay technical_replicate_id="t18">ERR592508</assay>
+            </assay_group>
+            <assay_group id="g202" label="C5x85-1S; single cell">
+                <assay technical_replicate_id="t104">ERR592523</assay>
+            </assay_group>
+            <assay_group id="g203" label="C5x86-nc; no cell">
+                <assay technical_replicate_id="t87">ERR592593</assay>
+            </assay_group>
+            <assay_group id="g204" label="C5x87-d; debris">
+                <assay technical_replicate_id="t125">ERR592565</assay>
+            </assay_group>
+            <assay_group id="g205" label="C5x88-nc; no cell">
+                <assay technical_replicate_id="t8">ERR592637</assay>
+            </assay_group>
+            <assay_group id="g206" label="C5x89-nc; no cell">
+                <assay technical_replicate_id="t44">ERR592625</assay>
+            </assay_group>
+            <assay_group id="g207" label="C5x90-1L; single cell">
+                <assay technical_replicate_id="t41">ERR592502</assay>
+            </assay_group>
+            <assay_group id="g208" label="C5x91-nc; no cell">
+                <assay technical_replicate_id="t66">ERR592615</assay>
+            </assay_group>
+            <assay_group id="g209" label="C5x92-nc; no cell">
+                <assay technical_replicate_id="t3">ERR592602</assay>
+            </assay_group>
+            <assay_group id="g210" label="C5x93-1S; single cell">
+                <assay technical_replicate_id="t11">ERR592519</assay>
+            </assay_group>
+            <assay_group id="g211" label="C5x94-nc; no cell">
+                <assay technical_replicate_id="t68">ERR592527</assay>
+            </assay_group>
+            <assay_group id="g212" label="C5x95-1VS; single cell">
+                <assay technical_replicate_id="t47">ERR592612</assay>
+            </assay_group>
+            <assay_group id="g213" label="C5x96-1S; single cell">
+                <assay technical_replicate_id="t35">ERR592601</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

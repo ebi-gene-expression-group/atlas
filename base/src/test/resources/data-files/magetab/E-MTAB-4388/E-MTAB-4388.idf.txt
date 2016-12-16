@@ -1,0 +1,70 @@
+MAGE-TAB Version	1.1
+Investigation Title	Single-cell RNA-sequencing resolves a CD4+ T cell fate bifurcation
+
+Experimental Design	development or differentiation design
+Experimental Design Term Source REF	EFO
+Experimental Design Term Accession Number	EFO_0001746
+
+Experimental Factor Name	time	individual	cell type	infect
+Experimental Factor Type	time	individual	cell type	infect
+Experimental Factor Term Source REF				
+Experimental Factor Term Accession Number				
+
+Person Last Name	Lonnberg
+Person First Name	Tapio
+Person Mid Initials	
+Person Email	talonnbe@ebi.ac.uk
+Person Phone	
+Person Fax	
+Person Affiliation	EMBL-EBI Wellcome Trust Sanger Institute
+Person Address	EMBL-EBI Wellcome Genome Campus CB10 1SD Hinxton, Cambridge United Kingdom
+Person Roles	submitter
+Person Roles Term Source REF	
+Person Roles Term Accession Number	
+
+Quality Control Type
+Quality Control Term Source REF
+Quality Control Term Accession Number
+
+Replicate Type
+Replicate Term Source REF
+Replicate Term Accession Number
+
+Normalization Type
+Normalization Term Source REF
+Normalization Term Accession Number
+
+Date of Experiment	2014-11-24
+Public Release Date	2017-01-01
+
+PubMed ID
+Publication DOI
+Publication Author List
+Publication Title
+Publication Status
+Publication Status Term Source REF
+Publication Status Term Accession Number
+
+Experiment Description	Single-cell RNA sequencing (scRNA-seq) was used to study the various transcriptional states of individual CD4+ T cells during blood-stage Plasmodium chabaudi infection in mice. This is an experimental model of malaria in which CD4+ T cells are essential for controlling parasite numbers, and which is characterized by concurrent development of Th1 and Tfh cells. We have used Plasmodium-specific TCR transgenic CD4+ T cells to minimise the effects of TCR diversity on Th fate decisions. Activated antigen-specific cells were studied at days 0, 2, 3, 4 and 7. In addition, dendritic cells and monocytes were studied at days 0 and 3. Cell lysis, RT and cDNA preamplification was performed using Fluidigm C1 system.
+
+Protocol Name	P-MTAB-48476	P-MTAB-48475	P-MTAB-48474	P-MTAB-48473
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol	treatment protocol	sample collection protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004184	EFO_0003969	EFO_0005518
+Protocol Description	Pooled samples were sequenced on an Illumina HiSeq 2500 instrument, using paired-end 100-base pair reads.	Single cell capture and processing was performed using the Fluidigm C1 system as in (40). The cell suspension obtained from sorting was loaded on to the Fluidigm C1 platform using small sized capture chips (5-10m cells). 1 l of a 1:4000 dilution of External RNA Control Consortium (ERCC) spike-ins (Ambion, Life Technologies) was included in the lysis buffer. Reverse transcription and preamplification of cDNA were performed using the SMARTer Ultra Low RNA kit (Clontech). The sequencing libraries were prepared using Nextera XT DNA Sample Preparation Kit (Illumina), according to the protocol supplied by Fluidigm (PN 100-5950 B1). Libraries from up to 96 single cells were pooled and purified using AMPure XP beads (Beckman Coulter).	Plasmodium chabaudi chabaudi AS parasites were used after one in vivo passage in WT C57Bl/6 mice. Mice were infected with 105 pRBCs i.v. and blood parasitemia was monitored by Giemsa-stained thin blood smears obtained from tail bleeds.	Single-cell suspensions were prepared by homogenising spleens through 100 m strainers and lysing erythrocytes using RBC lysis buffer (eBioscience). Fc receptors were blocked using anti- CD16/32 antibody (BD Pharmigen or in-house). T cells were stained with the following antibodies (Biolegend): CD4-APC (GK1.5), TCR-APC-Cy7 (H57-597), CD45.1-FITC (A20), V2-FITC (B20.1), V12-eFluor710 (MR11-1) (eBioscience), CD69-PE (H1.2F3), PD-1- APCCy7 (29F.1A12), CXCR5-Biotinylated (2G8) (BD Pharmigen), Streptavidin-PeCy7, CD183 (CXCR3)- PE (CXCR3-173), IFN-BV421 (XMG1.2), Bcl6-PercpCy5.5 (K112-91) (BD Pharmigen), Ki-67-PE (16A8) and Tbet-eFluor660 (4-B10) (eBioscience). Dendritic cells and monocytes were stained with the following antibodies (Biolegend): CD11c-Percp-Cy5.5 (N418), MHCII (1-A/1/E)-APC (M5/114-15.3), B220-AlexaFluor700 (RA3-6B2), TCR-APC-Cy7 (H57-597), Ly6c-FITC (HKJ.4), CD11b-BV421 (M1/70), Ly6g-PE (IA8), CD8-PE-Cy7 (53-6.7) and CXCL9-PE (MIG-2F5.5). Intracellular staining for IFN, Tbet, Bcl6, Ki67 or CXCL9 was performed with the eBioscience FoxP3 intracellular kit. Intracellular staining for p-S6 was performing using a monoclonal antibody (D57.2.2E), or respectively isotype control (Cell      22 Signaling Technology) with Cell Signaling Buffer Set A (Miltenyi Biotech) according to manufacturer's protocol. Cells were sorted using a MoFlo XDP (Beckman Coulter) or a FACSAria II (Becton Dickinson) instrument. Activated PbTII T cells were sorted as CD4+TCR+ and CD69+ and/or divided at least once as measured using the CellTrace Violet proliferation dye. Dendritic cells were sorted as CD11chiMHCIIhiTCR-B220-. Naive dendritic cells were further sorted as CD8+CD11b- or CD8-CD11b+. Inflammatory monocytes were identified as CD11bhiLy6ChiLy6GloTCR-B220-.
+Protocol Parameters				
+Protocol Hardware	Illumina HiSeq 2500	Fluidigm C1 autoprep system		MoFlo XDP (Beckman Coulter) or a FACSAria II (Becton Dickinson)
+Protocol Software				
+Protocol Contact				
+
+Term Source Name	EFO	ArrayExpress
+Term Source File	http://www.ebi.ac.uk/efo/	http://www.ebi.ac.uk/arrayexpress/
+Term Source Version	2.38
+
+SDRF File	E-MTAB-4388.sdrf.txt
+Comment [Submitted Name]	Single-cell RNA-sequencing resolves a CD4+ T cell fate bifurcation
+Comment [SecondaryAccession]	ERP014302
+Comment [SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR1276858-ERR1277609
+Comment [AEExperimentType]	RNA-seq of coding RNA from single cells
+Comment[ArrayExpressAccession]	E-MTAB-4388
+Comment [AEMINSEQEScore]	3

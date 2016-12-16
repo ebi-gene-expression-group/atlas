@@ -1,0 +1,43 @@
+Comment[ArrayExpressAccession]	E-MTAB-2865		
+MAGE-TAB Version	1.1		
+Investigation Title	Single-cell RNA-sequencing of Platynereis dumerilii larval brain cells		
+Comment[Submitted Name]	Single-cell RNA-sequencing of Platynereis dumerilii larval brain cells		
+Experiment Description	Understanding cell type identity in complex tissues or organisms requires integration of each cell's expression profile with its spatial location within the tissue under study. We developed a high-throughput method that combines in vitro single-cell RNA-sequencing with a gene expression atlas to map single cells back to their location within the tissue of interest. We used the developing brain of a marine annelid, Platynereis dumerilii that is an important model system for studying bilaterian brain evolution, to benchmark our approach. To generate the single-cell mRNA-sequencing data, P. dumerilii larval brains were dissociated, followed by cell capture, cDNA synthesis and amplification on the C1 Single-Cell Auto Prep IFC for 10-17 um cells (Fluidigm). Sequencing libraries were produced using Nexera XT DNA kit (Illumina). In total, we sequenced 213 samples, of which 129 correspond to single, alive cells (as judged by visual inspection of the captured cells) with the remainder consisting of a variety of single dead cells (n=18), wells containing extracellular matrix contaminants (n=8) or multiple cells (n=17), as well as a negative controls where no cells were observed (n=41). For this dataset, we achieved ~90% success rate for the spatial mapping of the single-cell RNA-seq data to P. dumerilii brain atlas.  NOTE:  72 additional samples were added on 13th December 2014.		
+Experimental Design	observational design	cell type comparison design	
+Experimental Design Term Source REF	EFO	EFO	
+Experimental Design Term Accession Number	EFO_0000629	EFO_0001745	
+Experimental Factor Name	individual	single cell well quality	
+Experimental Factor Type	individual	single cell well quality	
+Experimental Factor Term Source REF			
+Experimental Factor Term Accession Number			
+Person Last Name	Achim	Marioni	Pettit
+Person First Name	Kaia	John	Jean-Baptiste
+Person Mid Initials		C	
+Person Email	kaia.achim@embl.de	marioni@ebi.ac.uk	jbpettit@ebi.ac.uk
+Person Phone			
+Person Fax			
+Person Address	Meyerhofstrasse 1, 69117 Heidelberg, Germany	Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, United Kingdom	Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, United Kingdom
+Person Affiliation	Developmental Biology Unit, European Molecular Biology Laboratory (EMBL)	European Bioinformatics Institute, European Molecular Biology Laboratory (EMBL-EBI)	European Bioinformatics Institute, European Molecular Biology Laboratory (EMBL-EBI)
+Person Roles	submitter	submitter	investigator
+Date of Experiment	2014-02-21		
+Public Release Date	2014-12-13		
+Protocol Name	P-MTAB-40920	P-MTAB-40921	P-MTAB-40922
+Protocol Type	nucleic acid sequencing protocol	nucleic acid library construction protocol	growth protocol
+Protocol Term Source REF	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004184	EFO_0003789
+Protocol Description	Paired-end 100 bp reads were obtained on Illumina HiSeq2000.	Cell capture, lysis, reverse transcription and cDNA amplification was performed on the C1 IFC for mRNA-seq (10-17 um, Fluidigm cat # 100-5760) on Fluidigm C1 Single-Cell Auto Prep System.  We used SMARTer Ultra Low Input RNA Kit for reverse transcription and the ADVANTAGE-2 PCR kit (Clontech cat # 634832) for PCR. We added 1 ul of 1:4000 dilution of ERCC spike-in RNA (Ambion, cat # 4456740) to the cell lysis mix. Sequencing libraries were prepared using the Nextera XT DNA Sample Preparation kit (Illumina cat # FC-131-1096) ). The samples in this study were derived from altogether 5 IFC-s (termed C1, C2, C3, C4, C5 in the batch information). The samples from IFCs C1 and C2 were pooled into one sequencing library. This library was loaded on 2 lanes on Illumina HiSeq2000, obtaining 2 technical replicates per sample. The samples from IFCs C3 and C4 were pooled into one sequencing library. The samples from IFC C5 were pooled into a separate sequencing library.	Wild-type P. dumerilii adults were spawned and larvae were incubated in filtered natural seawater, at 18oC, for 47 hours, to reach the desired stage. For cell dissociation, ca 100 47hpf P.dumerilii larvae were picked and incubated for 5 minutes in 0.5% Pronase (Roche cat # 10165921001), 1% sodium thioglycolate (Sigma T0632) diluted in calcium- and magnesium-free artificial sea water. After this treatment, the separated brains (epispheres) were picked, rinsed in 1xPBS, and incubated for 1 minute in 150 ug/ml Liberase (Roche, cat # 05401119001) in 1xPBS. Epispheres were rinsed twice in 1xPBS, transferred to a non-stick eppendorf tube and triturated by pipetting. Dissociated cells were washed twice in 200 ul of 1xPBS and concentrated by centrifuging (1 min, 200xg). Cells were resuspended in 20 ul of 1xPBS, of which 5 ul was loaded on the capture chip (C1 IFC for mRNA-seq for 10-17 um cells, Fluidigm cat # 100-5760).
+Protocol Hardware	Illumina HiSeq 2000	C1 Single-Cell Auto Prep System, Fluidigm	
+Protocol Software			
+Term Source Name	EFO		
+Term Source File	http://www.ebi.ac.uk/efo/		
+Term Source Version			
+Comment[AEExperimentType]	RNA-seq of coding RNA from single cells		
+Comment[AdditionalFile:fa]	ERCC92.fa		
+Comment[SecondaryAccession]	ERP006825		
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR592498-ERR592638		
+Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR700482-ERR700625		
+SDRF File	E-MTAB-2865.sdrf.txt		
+Publication DOI	10.1038/nbt.3209		
+Publication Title	High-throughput spatial mapping of single-cell RNA-seq data to tissue of origin		
+Publication Author List	Kaia Achim, Jean-Baptiste Pettit, Luis R Saraiva, Daria Gavriouchkina, Tomas Larsson, Detlev Arendt and John C Marioni		
+PubMed ID	25867922		

@@ -1,0 +1,2264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="scrnaseq_mrna_baseline" r_data="1">
+    <analytics>
+        <assay_groups>
+            <assay_group id="g1" label="CD4+ T cell; 1771-026-187-A4; none; 0 day">
+                <assay>ERR1277050</assay>
+            </assay_group>
+            <assay_group id="g2" label="CD4+ T cell; 1771-026-187-B4; none; 0 day">
+                <assay>ERR1277051</assay>
+            </assay_group>
+            <assay_group id="g3" label="CD4+ T cell; 1771-026-187-B9; none; 0 day">
+                <assay>ERR1277052</assay>
+            </assay_group>
+            <assay_group id="g4" label="CD4+ T cell; 1771-026-187-C11; none; 0 day">
+                <assay>ERR1277053</assay>
+            </assay_group>
+            <assay_group id="g5" label="CD4+ T cell; 1771-026-187-D10; none; 0 day">
+                <assay>ERR1277054</assay>
+            </assay_group>
+            <assay_group id="g6" label="CD4+ T cell; 1771-026-187-D9; none; 0 day">
+                <assay>ERR1277055</assay>
+            </assay_group>
+            <assay_group id="g7" label="CD4+ T cell; 1771-026-187-E6; none; 0 day">
+                <assay>ERR1277056</assay>
+            </assay_group>
+            <assay_group id="g8" label="CD4+ T cell; 1771-026-187-F5; none; 0 day">
+                <assay>ERR1277057</assay>
+            </assay_group>
+            <assay_group id="g9" label="CD4+ T cell; 1771-026-187-F9; none; 0 day">
+                <assay>ERR1277058</assay>
+            </assay_group>
+            <assay_group id="g10" label="CD4+ T cell; 1771-026-187-G12; none; 0 day">
+                <assay>ERR1277060</assay>
+            </assay_group>
+            <assay_group id="g11" label="CD4+ T cell; 1771-026-187-G1; none; 0 day">
+                <assay>ERR1277059</assay>
+            </assay_group>
+            <assay_group id="g12" label="CD4+ T cell; 1771-026-187-G3; none; 0 day">
+                <assay>ERR1277061</assay>
+            </assay_group>
+            <assay_group id="g13" label="CD4+ T cell; 1771-026-187-G5; none; 0 day">
+                <assay>ERR1277062</assay>
+            </assay_group>
+            <assay_group id="g14" label="CD4+ T cell; 1771-026-187-G9; none; 0 day">
+                <assay>ERR1277063</assay>
+            </assay_group>
+            <assay_group id="g15" label="CD4+ T cell; 1771-026-187-H1; none; 0 day">
+                <assay>ERR1277064</assay>
+            </assay_group>
+            <assay_group id="g16" label="CD4+ T cell; 1771-026-187-H7; none; 0 day">
+                <assay>ERR1277065</assay>
+            </assay_group>
+            <assay_group id="g17" label="CD4+ T cell; 1771-026-190-A2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277066</assay>
+            </assay_group>
+            <assay_group id="g18" label="CD4+ T cell; 1771-026-190-A4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277067</assay>
+            </assay_group>
+            <assay_group id="g19" label="CD4+ T cell; 1771-026-190-A6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277068</assay>
+            </assay_group>
+            <assay_group id="g20" label="CD4+ T cell; 1771-026-190-A7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277069</assay>
+            </assay_group>
+            <assay_group id="g21" label="CD4+ T cell; 1771-026-190-A9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277070</assay>
+            </assay_group>
+            <assay_group id="g22" label="CD4+ T cell; 1771-026-190-B10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277072</assay>
+            </assay_group>
+            <assay_group id="g23" label="CD4+ T cell; 1771-026-190-B11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277073</assay>
+            </assay_group>
+            <assay_group id="g24" label="CD4+ T cell; 1771-026-190-B12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277074</assay>
+            </assay_group>
+            <assay_group id="g25" label="CD4+ T cell; 1771-026-190-B1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277071</assay>
+            </assay_group>
+            <assay_group id="g26" label="CD4+ T cell; 1771-026-190-B2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277075</assay>
+            </assay_group>
+            <assay_group id="g27" label="CD4+ T cell; 1771-026-190-B6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277076</assay>
+            </assay_group>
+            <assay_group id="g28" label="CD4+ T cell; 1771-026-190-B7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277077</assay>
+            </assay_group>
+            <assay_group id="g29" label="CD4+ T cell; 1771-026-190-C10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277078</assay>
+            </assay_group>
+            <assay_group id="g30" label="CD4+ T cell; 1771-026-190-C11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277079</assay>
+            </assay_group>
+            <assay_group id="g31" label="CD4+ T cell; 1771-026-190-C12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277080</assay>
+            </assay_group>
+            <assay_group id="g32" label="CD4+ T cell; 1771-026-190-C2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277081</assay>
+            </assay_group>
+            <assay_group id="g33" label="CD4+ T cell; 1771-026-190-C3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277082</assay>
+            </assay_group>
+            <assay_group id="g34" label="CD4+ T cell; 1771-026-190-C5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277083</assay>
+            </assay_group>
+            <assay_group id="g35" label="CD4+ T cell; 1771-026-190-C6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277084</assay>
+            </assay_group>
+            <assay_group id="g36" label="CD4+ T cell; 1771-026-190-C8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277085</assay>
+            </assay_group>
+            <assay_group id="g37" label="CD4+ T cell; 1771-026-190-C9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277086</assay>
+            </assay_group>
+            <assay_group id="g38" label="CD4+ T cell; 1771-026-190-D10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277088</assay>
+            </assay_group>
+            <assay_group id="g39" label="CD4+ T cell; 1771-026-190-D11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277089</assay>
+            </assay_group>
+            <assay_group id="g40" label="CD4+ T cell; 1771-026-190-D12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277090</assay>
+            </assay_group>
+            <assay_group id="g41" label="CD4+ T cell; 1771-026-190-D1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277087</assay>
+            </assay_group>
+            <assay_group id="g42" label="CD4+ T cell; 1771-026-190-D3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277091</assay>
+            </assay_group>
+            <assay_group id="g43" label="CD4+ T cell; 1771-026-190-D5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277092</assay>
+            </assay_group>
+            <assay_group id="g44" label="CD4+ T cell; 1771-026-190-D6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277093</assay>
+            </assay_group>
+            <assay_group id="g45" label="CD4+ T cell; 1771-026-190-D9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277094</assay>
+            </assay_group>
+            <assay_group id="g46" label="CD4+ T cell; 1771-026-190-E10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277096</assay>
+            </assay_group>
+            <assay_group id="g47" label="CD4+ T cell; 1771-026-190-E11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277097</assay>
+            </assay_group>
+            <assay_group id="g48" label="CD4+ T cell; 1771-026-190-E12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277098</assay>
+            </assay_group>
+            <assay_group id="g49" label="CD4+ T cell; 1771-026-190-E1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277095</assay>
+            </assay_group>
+            <assay_group id="g50" label="CD4+ T cell; 1771-026-190-E2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277099</assay>
+            </assay_group>
+            <assay_group id="g51" label="CD4+ T cell; 1771-026-190-E3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277100</assay>
+            </assay_group>
+            <assay_group id="g52" label="CD4+ T cell; 1771-026-190-E4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277101</assay>
+            </assay_group>
+            <assay_group id="g53" label="CD4+ T cell; 1771-026-190-E5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277102</assay>
+            </assay_group>
+            <assay_group id="g54" label="CD4+ T cell; 1771-026-190-E6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277103</assay>
+            </assay_group>
+            <assay_group id="g55" label="CD4+ T cell; 1771-026-190-E7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277104</assay>
+            </assay_group>
+            <assay_group id="g56" label="CD4+ T cell; 1771-026-190-E8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277105</assay>
+            </assay_group>
+            <assay_group id="g57" label="CD4+ T cell; 1771-026-190-E9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277106</assay>
+            </assay_group>
+            <assay_group id="g58" label="CD4+ T cell; 1771-026-190-F10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277108</assay>
+            </assay_group>
+            <assay_group id="g59" label="CD4+ T cell; 1771-026-190-F11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277109</assay>
+            </assay_group>
+            <assay_group id="g60" label="CD4+ T cell; 1771-026-190-F12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277110</assay>
+            </assay_group>
+            <assay_group id="g61" label="CD4+ T cell; 1771-026-190-F1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277107</assay>
+            </assay_group>
+            <assay_group id="g62" label="CD4+ T cell; 1771-026-190-F2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277111</assay>
+            </assay_group>
+            <assay_group id="g63" label="CD4+ T cell; 1771-026-190-F3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277112</assay>
+            </assay_group>
+            <assay_group id="g64" label="CD4+ T cell; 1771-026-190-F4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277113</assay>
+            </assay_group>
+            <assay_group id="g65" label="CD4+ T cell; 1771-026-190-F5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277114</assay>
+            </assay_group>
+            <assay_group id="g66" label="CD4+ T cell; 1771-026-190-F6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277115</assay>
+            </assay_group>
+            <assay_group id="g67" label="CD4+ T cell; 1771-026-190-F7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277116</assay>
+            </assay_group>
+            <assay_group id="g68" label="CD4+ T cell; 1771-026-190-F9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277117</assay>
+            </assay_group>
+            <assay_group id="g69" label="CD4+ T cell; 1771-026-190-G10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277119</assay>
+            </assay_group>
+            <assay_group id="g70" label="CD4+ T cell; 1771-026-190-G11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277120</assay>
+            </assay_group>
+            <assay_group id="g71" label="CD4+ T cell; 1771-026-190-G12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277121</assay>
+            </assay_group>
+            <assay_group id="g72" label="CD4+ T cell; 1771-026-190-G1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277118</assay>
+            </assay_group>
+            <assay_group id="g73" label="CD4+ T cell; 1771-026-190-G2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277122</assay>
+            </assay_group>
+            <assay_group id="g74" label="CD4+ T cell; 1771-026-190-G3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277123</assay>
+            </assay_group>
+            <assay_group id="g75" label="CD4+ T cell; 1771-026-190-G4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277124</assay>
+            </assay_group>
+            <assay_group id="g76" label="CD4+ T cell; 1771-026-190-G5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277125</assay>
+            </assay_group>
+            <assay_group id="g77" label="CD4+ T cell; 1771-026-190-G6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277126</assay>
+            </assay_group>
+            <assay_group id="g78" label="CD4+ T cell; 1771-026-190-G7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277127</assay>
+            </assay_group>
+            <assay_group id="g79" label="CD4+ T cell; 1771-026-190-G8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277128</assay>
+            </assay_group>
+            <assay_group id="g80" label="CD4+ T cell; 1771-026-190-G9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277129</assay>
+            </assay_group>
+            <assay_group id="g81" label="CD4+ T cell; 1771-026-190-H10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277131</assay>
+            </assay_group>
+            <assay_group id="g82" label="CD4+ T cell; 1771-026-190-H12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277132</assay>
+            </assay_group>
+            <assay_group id="g83" label="CD4+ T cell; 1771-026-190-H1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277130</assay>
+            </assay_group>
+            <assay_group id="g84" label="CD4+ T cell; 1771-026-190-H2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277133</assay>
+            </assay_group>
+            <assay_group id="g85" label="CD4+ T cell; 1771-026-190-H3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277134</assay>
+            </assay_group>
+            <assay_group id="g86" label="CD4+ T cell; 1771-026-190-H5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277135</assay>
+            </assay_group>
+            <assay_group id="g87" label="CD4+ T cell; 1771-026-190-H6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277136</assay>
+            </assay_group>
+            <assay_group id="g88" label="CD4+ T cell; 1771-026-190-H7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277137</assay>
+            </assay_group>
+            <assay_group id="g89" label="CD4+ T cell; 1771-026-190-H8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277138</assay>
+            </assay_group>
+            <assay_group id="g90" label="CD4+ T cell; 1771-026-192-B10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277139</assay>
+            </assay_group>
+            <assay_group id="g91" label="CD4+ T cell; 1771-026-192-B7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277140</assay>
+            </assay_group>
+            <assay_group id="g92" label="CD4+ T cell; 1771-026-192-B9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277141</assay>
+            </assay_group>
+            <assay_group id="g93" label="CD4+ T cell; 1771-026-192-C12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277142</assay>
+            </assay_group>
+            <assay_group id="g94" label="CD4+ T cell; 1771-026-192-C5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277143</assay>
+            </assay_group>
+            <assay_group id="g95" label="CD4+ T cell; 1771-026-192-C7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277144</assay>
+            </assay_group>
+            <assay_group id="g96" label="CD4+ T cell; 1771-026-192-C9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277145</assay>
+            </assay_group>
+            <assay_group id="g97" label="CD4+ T cell; 1771-026-192-D4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277146</assay>
+            </assay_group>
+            <assay_group id="g98" label="CD4+ T cell; 1771-026-192-E10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277147</assay>
+            </assay_group>
+            <assay_group id="g99" label="CD4+ T cell; 1771-026-192-E2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277148</assay>
+            </assay_group>
+            <assay_group id="g100" label="CD4+ T cell; 1771-026-192-F2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277149</assay>
+            </assay_group>
+            <assay_group id="g101" label="CD4+ T cell; 1771-026-192-F5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277150</assay>
+            </assay_group>
+            <assay_group id="g102" label="CD4+ T cell; 1771-026-192-F6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277151</assay>
+            </assay_group>
+            <assay_group id="g103" label="CD4+ T cell; 1771-026-192-F7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277152</assay>
+            </assay_group>
+            <assay_group id="g104" label="CD4+ T cell; 1771-026-192-G10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277154</assay>
+            </assay_group>
+            <assay_group id="g105" label="CD4+ T cell; 1771-026-192-G1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277153</assay>
+            </assay_group>
+            <assay_group id="g106" label="CD4+ T cell; 1771-026-192-G3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277155</assay>
+            </assay_group>
+            <assay_group id="g107" label="CD4+ T cell; 1771-026-192-G5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277156</assay>
+            </assay_group>
+            <assay_group id="g108" label="CD4+ T cell; 1771-026-192-H12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277157</assay>
+            </assay_group>
+            <assay_group id="g109" label="CD4+ T cell; 1771-026-192-H4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277158</assay>
+            </assay_group>
+            <assay_group id="g110" label="CD4+ T cell; 1771-026-192-H5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277159</assay>
+            </assay_group>
+            <assay_group id="g111" label="CD4+ T cell; 1771-026-195-A10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277279</assay>
+            </assay_group>
+            <assay_group id="g112" label="CD4+ T cell; 1771-026-195-A11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277280</assay>
+            </assay_group>
+            <assay_group id="g113" label="CD4+ T cell; 1771-026-195-A12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277281</assay>
+            </assay_group>
+            <assay_group id="g114" label="CD4+ T cell; 1771-026-195-A1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277278</assay>
+            </assay_group>
+            <assay_group id="g115" label="CD4+ T cell; 1771-026-195-A3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277282</assay>
+            </assay_group>
+            <assay_group id="g116" label="CD4+ T cell; 1771-026-195-A4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277283</assay>
+            </assay_group>
+            <assay_group id="g117" label="CD4+ T cell; 1771-026-195-A5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277284</assay>
+            </assay_group>
+            <assay_group id="g118" label="CD4+ T cell; 1771-026-195-A6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277285</assay>
+            </assay_group>
+            <assay_group id="g119" label="CD4+ T cell; 1771-026-195-A7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277286</assay>
+            </assay_group>
+            <assay_group id="g120" label="CD4+ T cell; 1771-026-195-A8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277287</assay>
+            </assay_group>
+            <assay_group id="g121" label="CD4+ T cell; 1771-026-195-A9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277288</assay>
+            </assay_group>
+            <assay_group id="g122" label="CD4+ T cell; 1771-026-195-B10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277290</assay>
+            </assay_group>
+            <assay_group id="g123" label="CD4+ T cell; 1771-026-195-B12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277291</assay>
+            </assay_group>
+            <assay_group id="g124" label="CD4+ T cell; 1771-026-195-B1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277289</assay>
+            </assay_group>
+            <assay_group id="g125" label="CD4+ T cell; 1771-026-195-B2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277292</assay>
+            </assay_group>
+            <assay_group id="g126" label="CD4+ T cell; 1771-026-195-B3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277293</assay>
+            </assay_group>
+            <assay_group id="g127" label="CD4+ T cell; 1771-026-195-B5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277294</assay>
+            </assay_group>
+            <assay_group id="g128" label="CD4+ T cell; 1771-026-195-B6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277295</assay>
+            </assay_group>
+            <assay_group id="g129" label="CD4+ T cell; 1771-026-195-B7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277296</assay>
+            </assay_group>
+            <assay_group id="g130" label="CD4+ T cell; 1771-026-195-B8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277297</assay>
+            </assay_group>
+            <assay_group id="g131" label="CD4+ T cell; 1771-026-195-B9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277298</assay>
+            </assay_group>
+            <assay_group id="g132" label="CD4+ T cell; 1771-026-195-C10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277299</assay>
+            </assay_group>
+            <assay_group id="g133" label="CD4+ T cell; 1771-026-195-C11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277300</assay>
+            </assay_group>
+            <assay_group id="g134" label="CD4+ T cell; 1771-026-195-C12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277301</assay>
+            </assay_group>
+            <assay_group id="g135" label="CD4+ T cell; 1771-026-195-C2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277302</assay>
+            </assay_group>
+            <assay_group id="g136" label="CD4+ T cell; 1771-026-195-C3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277303</assay>
+            </assay_group>
+            <assay_group id="g137" label="CD4+ T cell; 1771-026-195-C4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277304</assay>
+            </assay_group>
+            <assay_group id="g138" label="CD4+ T cell; 1771-026-195-C5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277305</assay>
+            </assay_group>
+            <assay_group id="g139" label="CD4+ T cell; 1771-026-195-C6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277306</assay>
+            </assay_group>
+            <assay_group id="g140" label="CD4+ T cell; 1771-026-195-C7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277307</assay>
+            </assay_group>
+            <assay_group id="g141" label="CD4+ T cell; 1771-026-195-C9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277308</assay>
+            </assay_group>
+            <assay_group id="g142" label="CD4+ T cell; 1771-026-195-D11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277310</assay>
+            </assay_group>
+            <assay_group id="g143" label="CD4+ T cell; 1771-026-195-D12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277311</assay>
+            </assay_group>
+            <assay_group id="g144" label="CD4+ T cell; 1771-026-195-D1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277309</assay>
+            </assay_group>
+            <assay_group id="g145" label="CD4+ T cell; 1771-026-195-D2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277312</assay>
+            </assay_group>
+            <assay_group id="g146" label="CD4+ T cell; 1771-026-195-D3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277313</assay>
+            </assay_group>
+            <assay_group id="g147" label="CD4+ T cell; 1771-026-195-D4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277314</assay>
+            </assay_group>
+            <assay_group id="g148" label="CD4+ T cell; 1771-026-195-D5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277315</assay>
+            </assay_group>
+            <assay_group id="g149" label="CD4+ T cell; 1771-026-195-D6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277316</assay>
+            </assay_group>
+            <assay_group id="g150" label="CD4+ T cell; 1771-026-195-D7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277317</assay>
+            </assay_group>
+            <assay_group id="g151" label="CD4+ T cell; 1771-026-195-D9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277318</assay>
+            </assay_group>
+            <assay_group id="g152" label="CD4+ T cell; 1771-026-195-E10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277320</assay>
+            </assay_group>
+            <assay_group id="g153" label="CD4+ T cell; 1771-026-195-E11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277321</assay>
+            </assay_group>
+            <assay_group id="g154" label="CD4+ T cell; 1771-026-195-E12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277322</assay>
+            </assay_group>
+            <assay_group id="g155" label="CD4+ T cell; 1771-026-195-E1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277319</assay>
+            </assay_group>
+            <assay_group id="g156" label="CD4+ T cell; 1771-026-195-E3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277323</assay>
+            </assay_group>
+            <assay_group id="g157" label="CD4+ T cell; 1771-026-195-E4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277324</assay>
+            </assay_group>
+            <assay_group id="g158" label="CD4+ T cell; 1771-026-195-E5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277325</assay>
+            </assay_group>
+            <assay_group id="g159" label="CD4+ T cell; 1771-026-195-E6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277326</assay>
+            </assay_group>
+            <assay_group id="g160" label="CD4+ T cell; 1771-026-195-E7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277327</assay>
+            </assay_group>
+            <assay_group id="g161" label="CD4+ T cell; 1771-026-195-E8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277328</assay>
+            </assay_group>
+            <assay_group id="g162" label="CD4+ T cell; 1771-026-195-F10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277329</assay>
+            </assay_group>
+            <assay_group id="g163" label="CD4+ T cell; 1771-026-195-F12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277330</assay>
+            </assay_group>
+            <assay_group id="g164" label="CD4+ T cell; 1771-026-195-F3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277331</assay>
+            </assay_group>
+            <assay_group id="g165" label="CD4+ T cell; 1771-026-195-F4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277332</assay>
+            </assay_group>
+            <assay_group id="g166" label="CD4+ T cell; 1771-026-195-F5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277333</assay>
+            </assay_group>
+            <assay_group id="g167" label="CD4+ T cell; 1771-026-195-F7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277334</assay>
+            </assay_group>
+            <assay_group id="g168" label="CD4+ T cell; 1771-026-195-F9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277335</assay>
+            </assay_group>
+            <assay_group id="g169" label="CD4+ T cell; 1771-026-195-G10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277337</assay>
+            </assay_group>
+            <assay_group id="g170" label="CD4+ T cell; 1771-026-195-G11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277338</assay>
+            </assay_group>
+            <assay_group id="g171" label="CD4+ T cell; 1771-026-195-G12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277339</assay>
+            </assay_group>
+            <assay_group id="g172" label="CD4+ T cell; 1771-026-195-G1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277336</assay>
+            </assay_group>
+            <assay_group id="g173" label="CD4+ T cell; 1771-026-195-G2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277340</assay>
+            </assay_group>
+            <assay_group id="g174" label="CD4+ T cell; 1771-026-195-G3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277341</assay>
+            </assay_group>
+            <assay_group id="g175" label="CD4+ T cell; 1771-026-195-G4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277342</assay>
+            </assay_group>
+            <assay_group id="g176" label="CD4+ T cell; 1771-026-195-G5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277343</assay>
+            </assay_group>
+            <assay_group id="g177" label="CD4+ T cell; 1771-026-195-G6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277344</assay>
+            </assay_group>
+            <assay_group id="g178" label="CD4+ T cell; 1771-026-195-H12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277345</assay>
+            </assay_group>
+            <assay_group id="g179" label="CD4+ T cell; 1771-026-195-H2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277346</assay>
+            </assay_group>
+            <assay_group id="g180" label="CD4+ T cell; 1771-026-195-H4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277347</assay>
+            </assay_group>
+            <assay_group id="g181" label="CD4+ T cell; 1771-026-195-H6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277348</assay>
+            </assay_group>
+            <assay_group id="g182" label="CD4+ T cell; 1771-026-195-H7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277349</assay>
+            </assay_group>
+            <assay_group id="g183" label="CD4+ T cell; 1771-026-195-H8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277350</assay>
+            </assay_group>
+            <assay_group id="g184" label="CD4+ T cell; 1771-026-196-A11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277352</assay>
+            </assay_group>
+            <assay_group id="g185" label="CD4+ T cell; 1771-026-196-A12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277353</assay>
+            </assay_group>
+            <assay_group id="g186" label="CD4+ T cell; 1771-026-196-A1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277351</assay>
+            </assay_group>
+            <assay_group id="g187" label="CD4+ T cell; 1771-026-196-A2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277354</assay>
+            </assay_group>
+            <assay_group id="g188" label="CD4+ T cell; 1771-026-196-A3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277355</assay>
+            </assay_group>
+            <assay_group id="g189" label="CD4+ T cell; 1771-026-196-A4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277356</assay>
+            </assay_group>
+            <assay_group id="g190" label="CD4+ T cell; 1771-026-196-A7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277357</assay>
+            </assay_group>
+            <assay_group id="g191" label="CD4+ T cell; 1771-026-196-A8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277358</assay>
+            </assay_group>
+            <assay_group id="g192" label="CD4+ T cell; 1771-026-196-A9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277359</assay>
+            </assay_group>
+            <assay_group id="g193" label="CD4+ T cell; 1771-026-196-B10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277361</assay>
+            </assay_group>
+            <assay_group id="g194" label="CD4+ T cell; 1771-026-196-B11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277362</assay>
+            </assay_group>
+            <assay_group id="g195" label="CD4+ T cell; 1771-026-196-B12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277363</assay>
+            </assay_group>
+            <assay_group id="g196" label="CD4+ T cell; 1771-026-196-B1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277360</assay>
+            </assay_group>
+            <assay_group id="g197" label="CD4+ T cell; 1771-026-196-B2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277364</assay>
+            </assay_group>
+            <assay_group id="g198" label="CD4+ T cell; 1771-026-196-B3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277365</assay>
+            </assay_group>
+            <assay_group id="g199" label="CD4+ T cell; 1771-026-196-B4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277366</assay>
+            </assay_group>
+            <assay_group id="g200" label="CD4+ T cell; 1771-026-196-B5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277367</assay>
+            </assay_group>
+            <assay_group id="g201" label="CD4+ T cell; 1771-026-196-B6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277368</assay>
+            </assay_group>
+            <assay_group id="g202" label="CD4+ T cell; 1771-026-196-B8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277369</assay>
+            </assay_group>
+            <assay_group id="g203" label="CD4+ T cell; 1771-026-196-B9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277370</assay>
+            </assay_group>
+            <assay_group id="g204" label="CD4+ T cell; 1771-026-196-C12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277372</assay>
+            </assay_group>
+            <assay_group id="g205" label="CD4+ T cell; 1771-026-196-C1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277371</assay>
+            </assay_group>
+            <assay_group id="g206" label="CD4+ T cell; 1771-026-196-C2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277373</assay>
+            </assay_group>
+            <assay_group id="g207" label="CD4+ T cell; 1771-026-196-C3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277374</assay>
+            </assay_group>
+            <assay_group id="g208" label="CD4+ T cell; 1771-026-196-C4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277375</assay>
+            </assay_group>
+            <assay_group id="g209" label="CD4+ T cell; 1771-026-196-C5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277376</assay>
+            </assay_group>
+            <assay_group id="g210" label="CD4+ T cell; 1771-026-196-C6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277377</assay>
+            </assay_group>
+            <assay_group id="g211" label="CD4+ T cell; 1771-026-196-C7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277378</assay>
+            </assay_group>
+            <assay_group id="g212" label="CD4+ T cell; 1771-026-196-C8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277379</assay>
+            </assay_group>
+            <assay_group id="g213" label="CD4+ T cell; 1771-026-196-C9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277380</assay>
+            </assay_group>
+            <assay_group id="g214" label="CD4+ T cell; 1771-026-196-D11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277382</assay>
+            </assay_group>
+            <assay_group id="g215" label="CD4+ T cell; 1771-026-196-D1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277381</assay>
+            </assay_group>
+            <assay_group id="g216" label="CD4+ T cell; 1771-026-196-D2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277383</assay>
+            </assay_group>
+            <assay_group id="g217" label="CD4+ T cell; 1771-026-196-D3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277384</assay>
+            </assay_group>
+            <assay_group id="g218" label="CD4+ T cell; 1771-026-196-D4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277385</assay>
+            </assay_group>
+            <assay_group id="g219" label="CD4+ T cell; 1771-026-196-D6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277386</assay>
+            </assay_group>
+            <assay_group id="g220" label="CD4+ T cell; 1771-026-196-D7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277387</assay>
+            </assay_group>
+            <assay_group id="g221" label="CD4+ T cell; 1771-026-196-D8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277388</assay>
+            </assay_group>
+            <assay_group id="g222" label="CD4+ T cell; 1771-026-196-D9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277389</assay>
+            </assay_group>
+            <assay_group id="g223" label="CD4+ T cell; 1771-026-196-E12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277391</assay>
+            </assay_group>
+            <assay_group id="g224" label="CD4+ T cell; 1771-026-196-E1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277390</assay>
+            </assay_group>
+            <assay_group id="g225" label="CD4+ T cell; 1771-026-196-E2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277392</assay>
+            </assay_group>
+            <assay_group id="g226" label="CD4+ T cell; 1771-026-196-E3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277393</assay>
+            </assay_group>
+            <assay_group id="g227" label="CD4+ T cell; 1771-026-196-E4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277394</assay>
+            </assay_group>
+            <assay_group id="g228" label="CD4+ T cell; 1771-026-196-E7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277395</assay>
+            </assay_group>
+            <assay_group id="g229" label="CD4+ T cell; 1771-026-196-E8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277396</assay>
+            </assay_group>
+            <assay_group id="g230" label="CD4+ T cell; 1771-026-196-E9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277397</assay>
+            </assay_group>
+            <assay_group id="g231" label="CD4+ T cell; 1771-026-196-F10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277398</assay>
+            </assay_group>
+            <assay_group id="g232" label="CD4+ T cell; 1771-026-196-F11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277399</assay>
+            </assay_group>
+            <assay_group id="g233" label="CD4+ T cell; 1771-026-196-F2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277400</assay>
+            </assay_group>
+            <assay_group id="g234" label="CD4+ T cell; 1771-026-196-F3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277401</assay>
+            </assay_group>
+            <assay_group id="g235" label="CD4+ T cell; 1771-026-196-F8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277402</assay>
+            </assay_group>
+            <assay_group id="g236" label="CD4+ T cell; 1771-026-196-F9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277403</assay>
+            </assay_group>
+            <assay_group id="g237" label="CD4+ T cell; 1771-026-196-G10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277404</assay>
+            </assay_group>
+            <assay_group id="g238" label="CD4+ T cell; 1771-026-196-G2; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277405</assay>
+            </assay_group>
+            <assay_group id="g239" label="CD4+ T cell; 1771-026-196-G3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277406</assay>
+            </assay_group>
+            <assay_group id="g240" label="CD4+ T cell; 1771-026-196-G4; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277407</assay>
+            </assay_group>
+            <assay_group id="g241" label="CD4+ T cell; 1771-026-196-G6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277408</assay>
+            </assay_group>
+            <assay_group id="g242" label="CD4+ T cell; 1771-026-196-G7; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277409</assay>
+            </assay_group>
+            <assay_group id="g243" label="CD4+ T cell; 1771-026-196-G8; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277410</assay>
+            </assay_group>
+            <assay_group id="g244" label="CD4+ T cell; 1771-026-196-G9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277411</assay>
+            </assay_group>
+            <assay_group id="g245" label="CD4+ T cell; 1771-026-196-H10; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277413</assay>
+            </assay_group>
+            <assay_group id="g246" label="CD4+ T cell; 1771-026-196-H11; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277414</assay>
+            </assay_group>
+            <assay_group id="g247" label="CD4+ T cell; 1771-026-196-H12; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277415</assay>
+            </assay_group>
+            <assay_group id="g248" label="CD4+ T cell; 1771-026-196-H1; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277412</assay>
+            </assay_group>
+            <assay_group id="g249" label="CD4+ T cell; 1771-026-196-H3; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277416</assay>
+            </assay_group>
+            <assay_group id="g250" label="CD4+ T cell; 1771-026-196-H5; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277417</assay>
+            </assay_group>
+            <assay_group id="g251" label="CD4+ T cell; 1771-026-196-H6; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277418</assay>
+            </assay_group>
+            <assay_group id="g252" label="CD4+ T cell; 1771-026-196-H9; Plasmodium chabaudi chabaudi; 4 day">
+                <assay>ERR1277419</assay>
+            </assay_group>
+            <assay_group id="g253" label="CD4+ T cell; 1771-026-197-A2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277420</assay>
+            </assay_group>
+            <assay_group id="g254" label="CD4+ T cell; 1771-026-197-A3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277421</assay>
+            </assay_group>
+            <assay_group id="g255" label="CD4+ T cell; 1771-026-197-A4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277422</assay>
+            </assay_group>
+            <assay_group id="g256" label="CD4+ T cell; 1771-026-197-B10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277423</assay>
+            </assay_group>
+            <assay_group id="g257" label="CD4+ T cell; 1771-026-197-B11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277424</assay>
+            </assay_group>
+            <assay_group id="g258" label="CD4+ T cell; 1771-026-197-B8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277425</assay>
+            </assay_group>
+            <assay_group id="g259" label="CD4+ T cell; 1771-026-197-C10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277427</assay>
+            </assay_group>
+            <assay_group id="g260" label="CD4+ T cell; 1771-026-197-C12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277428</assay>
+            </assay_group>
+            <assay_group id="g261" label="CD4+ T cell; 1771-026-197-C1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277426</assay>
+            </assay_group>
+            <assay_group id="g262" label="CD4+ T cell; 1771-026-197-C2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277429</assay>
+            </assay_group>
+            <assay_group id="g263" label="CD4+ T cell; 1771-026-197-C4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277430</assay>
+            </assay_group>
+            <assay_group id="g264" label="CD4+ T cell; 1771-026-197-C5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277431</assay>
+            </assay_group>
+            <assay_group id="g265" label="CD4+ T cell; 1771-026-197-C6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277432</assay>
+            </assay_group>
+            <assay_group id="g266" label="CD4+ T cell; 1771-026-197-C7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277433</assay>
+            </assay_group>
+            <assay_group id="g267" label="CD4+ T cell; 1771-026-197-C8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277434</assay>
+            </assay_group>
+            <assay_group id="g268" label="CD4+ T cell; 1771-026-197-D1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277435</assay>
+            </assay_group>
+            <assay_group id="g269" label="CD4+ T cell; 1771-026-197-D2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277436</assay>
+            </assay_group>
+            <assay_group id="g270" label="CD4+ T cell; 1771-026-197-D3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277437</assay>
+            </assay_group>
+            <assay_group id="g271" label="CD4+ T cell; 1771-026-197-D4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277438</assay>
+            </assay_group>
+            <assay_group id="g272" label="CD4+ T cell; 1771-026-197-D6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277439</assay>
+            </assay_group>
+            <assay_group id="g273" label="CD4+ T cell; 1771-026-197-D8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277440</assay>
+            </assay_group>
+            <assay_group id="g274" label="CD4+ T cell; 1771-026-197-D9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277441</assay>
+            </assay_group>
+            <assay_group id="g275" label="CD4+ T cell; 1771-026-197-E12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277443</assay>
+            </assay_group>
+            <assay_group id="g276" label="CD4+ T cell; 1771-026-197-E1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277442</assay>
+            </assay_group>
+            <assay_group id="g277" label="CD4+ T cell; 1771-026-197-E2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277444</assay>
+            </assay_group>
+            <assay_group id="g278" label="CD4+ T cell; 1771-026-197-E3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277445</assay>
+            </assay_group>
+            <assay_group id="g279" label="CD4+ T cell; 1771-026-197-E7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277446</assay>
+            </assay_group>
+            <assay_group id="g280" label="CD4+ T cell; 1771-026-197-F10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277448</assay>
+            </assay_group>
+            <assay_group id="g281" label="CD4+ T cell; 1771-026-197-F11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277449</assay>
+            </assay_group>
+            <assay_group id="g282" label="CD4+ T cell; 1771-026-197-F1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277447</assay>
+            </assay_group>
+            <assay_group id="g283" label="CD4+ T cell; 1771-026-197-F2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277450</assay>
+            </assay_group>
+            <assay_group id="g284" label="CD4+ T cell; 1771-026-197-F3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277451</assay>
+            </assay_group>
+            <assay_group id="g285" label="CD4+ T cell; 1771-026-197-F4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277452</assay>
+            </assay_group>
+            <assay_group id="g286" label="CD4+ T cell; 1771-026-197-F6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277453</assay>
+            </assay_group>
+            <assay_group id="g287" label="CD4+ T cell; 1771-026-197-F7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277454</assay>
+            </assay_group>
+            <assay_group id="g288" label="CD4+ T cell; 1771-026-197-F8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277455</assay>
+            </assay_group>
+            <assay_group id="g289" label="CD4+ T cell; 1771-026-197-G12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277457</assay>
+            </assay_group>
+            <assay_group id="g290" label="CD4+ T cell; 1771-026-197-G1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277456</assay>
+            </assay_group>
+            <assay_group id="g291" label="CD4+ T cell; 1771-026-197-G2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277458</assay>
+            </assay_group>
+            <assay_group id="g292" label="CD4+ T cell; 1771-026-197-G3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277459</assay>
+            </assay_group>
+            <assay_group id="g293" label="CD4+ T cell; 1771-026-197-G4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277460</assay>
+            </assay_group>
+            <assay_group id="g294" label="CD4+ T cell; 1771-026-197-G5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277461</assay>
+            </assay_group>
+            <assay_group id="g295" label="CD4+ T cell; 1771-026-197-G6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277462</assay>
+            </assay_group>
+            <assay_group id="g296" label="CD4+ T cell; 1771-026-197-G7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277463</assay>
+            </assay_group>
+            <assay_group id="g297" label="CD4+ T cell; 1771-026-197-G9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277464</assay>
+            </assay_group>
+            <assay_group id="g298" label="CD4+ T cell; 1771-026-197-H10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277465</assay>
+            </assay_group>
+            <assay_group id="g299" label="CD4+ T cell; 1771-026-197-H11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277466</assay>
+            </assay_group>
+            <assay_group id="g300" label="CD4+ T cell; 1771-026-197-H12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277467</assay>
+            </assay_group>
+            <assay_group id="g301" label="CD4+ T cell; 1771-026-197-H2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277468</assay>
+            </assay_group>
+            <assay_group id="g302" label="CD4+ T cell; 1771-026-197-H5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277469</assay>
+            </assay_group>
+            <assay_group id="g303" label="CD4+ T cell; 1771-026-197-H6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277470</assay>
+            </assay_group>
+            <assay_group id="g304" label="CD4+ T cell; 1771-026-197-H8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277471</assay>
+            </assay_group>
+            <assay_group id="g305" label="CD4+ T cell; 1771-026-197-H9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277472</assay>
+            </assay_group>
+            <assay_group id="g306" label="CD4+ T cell; 1771-026-198-A10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277474</assay>
+            </assay_group>
+            <assay_group id="g307" label="CD4+ T cell; 1771-026-198-A11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277475</assay>
+            </assay_group>
+            <assay_group id="g308" label="CD4+ T cell; 1771-026-198-A12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277476</assay>
+            </assay_group>
+            <assay_group id="g309" label="CD4+ T cell; 1771-026-198-A1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277473</assay>
+            </assay_group>
+            <assay_group id="g310" label="CD4+ T cell; 1771-026-198-A2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277477</assay>
+            </assay_group>
+            <assay_group id="g311" label="CD4+ T cell; 1771-026-198-A3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277478</assay>
+            </assay_group>
+            <assay_group id="g312" label="CD4+ T cell; 1771-026-198-A4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277479</assay>
+            </assay_group>
+            <assay_group id="g313" label="CD4+ T cell; 1771-026-198-A5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277480</assay>
+            </assay_group>
+            <assay_group id="g314" label="CD4+ T cell; 1771-026-198-A6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277481</assay>
+            </assay_group>
+            <assay_group id="g315" label="CD4+ T cell; 1771-026-198-A7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277482</assay>
+            </assay_group>
+            <assay_group id="g316" label="CD4+ T cell; 1771-026-198-A8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277483</assay>
+            </assay_group>
+            <assay_group id="g317" label="CD4+ T cell; 1771-026-198-A9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277484</assay>
+            </assay_group>
+            <assay_group id="g318" label="CD4+ T cell; 1771-026-198-B10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277485</assay>
+            </assay_group>
+            <assay_group id="g319" label="CD4+ T cell; 1771-026-198-B11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277486</assay>
+            </assay_group>
+            <assay_group id="g320" label="CD4+ T cell; 1771-026-198-B12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277487</assay>
+            </assay_group>
+            <assay_group id="g321" label="CD4+ T cell; 1771-026-198-B2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277488</assay>
+            </assay_group>
+            <assay_group id="g322" label="CD4+ T cell; 1771-026-198-B3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277489</assay>
+            </assay_group>
+            <assay_group id="g323" label="CD4+ T cell; 1771-026-198-B4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277490</assay>
+            </assay_group>
+            <assay_group id="g324" label="CD4+ T cell; 1771-026-198-B5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277491</assay>
+            </assay_group>
+            <assay_group id="g325" label="CD4+ T cell; 1771-026-198-B7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277492</assay>
+            </assay_group>
+            <assay_group id="g326" label="CD4+ T cell; 1771-026-198-B8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277493</assay>
+            </assay_group>
+            <assay_group id="g327" label="CD4+ T cell; 1771-026-198-B9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277494</assay>
+            </assay_group>
+            <assay_group id="g328" label="CD4+ T cell; 1771-026-198-C10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277496</assay>
+            </assay_group>
+            <assay_group id="g329" label="CD4+ T cell; 1771-026-198-C1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277495</assay>
+            </assay_group>
+            <assay_group id="g330" label="CD4+ T cell; 1771-026-198-C4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277497</assay>
+            </assay_group>
+            <assay_group id="g331" label="CD4+ T cell; 1771-026-198-C5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277498</assay>
+            </assay_group>
+            <assay_group id="g332" label="CD4+ T cell; 1771-026-198-C6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277499</assay>
+            </assay_group>
+            <assay_group id="g333" label="CD4+ T cell; 1771-026-198-C7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277500</assay>
+            </assay_group>
+            <assay_group id="g334" label="CD4+ T cell; 1771-026-198-C8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277501</assay>
+            </assay_group>
+            <assay_group id="g335" label="CD4+ T cell; 1771-026-198-C9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277502</assay>
+            </assay_group>
+            <assay_group id="g336" label="CD4+ T cell; 1771-026-198-D10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277503</assay>
+            </assay_group>
+            <assay_group id="g337" label="CD4+ T cell; 1771-026-198-D12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277504</assay>
+            </assay_group>
+            <assay_group id="g338" label="CD4+ T cell; 1771-026-198-D2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277505</assay>
+            </assay_group>
+            <assay_group id="g339" label="CD4+ T cell; 1771-026-198-D3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277506</assay>
+            </assay_group>
+            <assay_group id="g340" label="CD4+ T cell; 1771-026-198-D4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277507</assay>
+            </assay_group>
+            <assay_group id="g341" label="CD4+ T cell; 1771-026-198-D6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277508</assay>
+            </assay_group>
+            <assay_group id="g342" label="CD4+ T cell; 1771-026-198-D7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277509</assay>
+            </assay_group>
+            <assay_group id="g343" label="CD4+ T cell; 1771-026-198-D8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277510</assay>
+            </assay_group>
+            <assay_group id="g344" label="CD4+ T cell; 1771-026-198-D9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277511</assay>
+            </assay_group>
+            <assay_group id="g345" label="CD4+ T cell; 1771-026-198-E11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277513</assay>
+            </assay_group>
+            <assay_group id="g346" label="CD4+ T cell; 1771-026-198-E12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277514</assay>
+            </assay_group>
+            <assay_group id="g347" label="CD4+ T cell; 1771-026-198-E1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277512</assay>
+            </assay_group>
+            <assay_group id="g348" label="CD4+ T cell; 1771-026-198-E2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277515</assay>
+            </assay_group>
+            <assay_group id="g349" label="CD4+ T cell; 1771-026-198-E3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277516</assay>
+            </assay_group>
+            <assay_group id="g350" label="CD4+ T cell; 1771-026-198-E4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277517</assay>
+            </assay_group>
+            <assay_group id="g351" label="CD4+ T cell; 1771-026-198-E5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277518</assay>
+            </assay_group>
+            <assay_group id="g352" label="CD4+ T cell; 1771-026-198-E7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277519</assay>
+            </assay_group>
+            <assay_group id="g353" label="CD4+ T cell; 1771-026-198-E9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277520</assay>
+            </assay_group>
+            <assay_group id="g354" label="CD4+ T cell; 1771-026-198-F10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277522</assay>
+            </assay_group>
+            <assay_group id="g355" label="CD4+ T cell; 1771-026-198-F1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277521</assay>
+            </assay_group>
+            <assay_group id="g356" label="CD4+ T cell; 1771-026-198-F2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277523</assay>
+            </assay_group>
+            <assay_group id="g357" label="CD4+ T cell; 1771-026-198-F3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277524</assay>
+            </assay_group>
+            <assay_group id="g358" label="CD4+ T cell; 1771-026-198-F4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277525</assay>
+            </assay_group>
+            <assay_group id="g359" label="CD4+ T cell; 1771-026-198-F5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277526</assay>
+            </assay_group>
+            <assay_group id="g360" label="CD4+ T cell; 1771-026-198-F6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277527</assay>
+            </assay_group>
+            <assay_group id="g361" label="CD4+ T cell; 1771-026-198-F7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277528</assay>
+            </assay_group>
+            <assay_group id="g362" label="CD4+ T cell; 1771-026-198-F8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277529</assay>
+            </assay_group>
+            <assay_group id="g363" label="CD4+ T cell; 1771-026-198-F9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277530</assay>
+            </assay_group>
+            <assay_group id="g364" label="CD4+ T cell; 1771-026-198-G10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277532</assay>
+            </assay_group>
+            <assay_group id="g365" label="CD4+ T cell; 1771-026-198-G11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277533</assay>
+            </assay_group>
+            <assay_group id="g366" label="CD4+ T cell; 1771-026-198-G12; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277534</assay>
+            </assay_group>
+            <assay_group id="g367" label="CD4+ T cell; 1771-026-198-G1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277531</assay>
+            </assay_group>
+            <assay_group id="g368" label="CD4+ T cell; 1771-026-198-G3; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277535</assay>
+            </assay_group>
+            <assay_group id="g369" label="CD4+ T cell; 1771-026-198-G5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277536</assay>
+            </assay_group>
+            <assay_group id="g370" label="CD4+ T cell; 1771-026-198-G6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277537</assay>
+            </assay_group>
+            <assay_group id="g371" label="CD4+ T cell; 1771-026-198-H10; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277539</assay>
+            </assay_group>
+            <assay_group id="g372" label="CD4+ T cell; 1771-026-198-H11; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277540</assay>
+            </assay_group>
+            <assay_group id="g373" label="CD4+ T cell; 1771-026-198-H1; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277538</assay>
+            </assay_group>
+            <assay_group id="g374" label="CD4+ T cell; 1771-026-198-H2; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277541</assay>
+            </assay_group>
+            <assay_group id="g375" label="CD4+ T cell; 1771-026-198-H4; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277542</assay>
+            </assay_group>
+            <assay_group id="g376" label="CD4+ T cell; 1771-026-198-H5; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277543</assay>
+            </assay_group>
+            <assay_group id="g377" label="CD4+ T cell; 1771-026-198-H6; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277544</assay>
+            </assay_group>
+            <assay_group id="g378" label="CD4+ T cell; 1771-026-198-H7; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277545</assay>
+            </assay_group>
+            <assay_group id="g379" label="CD4+ T cell; 1771-026-198-H8; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277546</assay>
+            </assay_group>
+            <assay_group id="g380" label="CD4+ T cell; 1771-026-198-H9; Plasmodium chabaudi chabaudi; 7 day">
+                <assay>ERR1277547</assay>
+            </assay_group>
+            <assay_group id="g381" label="CD4+ T cell; 1771-030-012-A1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277548</assay>
+            </assay_group>
+            <assay_group id="g382" label="CD4+ T cell; 1771-030-012-A3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277549</assay>
+            </assay_group>
+            <assay_group id="g383" label="CD4+ T cell; 1771-030-012-A7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277550</assay>
+            </assay_group>
+            <assay_group id="g384" label="CD4+ T cell; 1771-030-012-A8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277551</assay>
+            </assay_group>
+            <assay_group id="g385" label="CD4+ T cell; 1771-030-012-A9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277552</assay>
+            </assay_group>
+            <assay_group id="g386" label="CD4+ T cell; 1771-030-012-B12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277553</assay>
+            </assay_group>
+            <assay_group id="g387" label="CD4+ T cell; 1771-030-012-B2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277554</assay>
+            </assay_group>
+            <assay_group id="g388" label="CD4+ T cell; 1771-030-012-B3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277555</assay>
+            </assay_group>
+            <assay_group id="g389" label="CD4+ T cell; 1771-030-012-B6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277556</assay>
+            </assay_group>
+            <assay_group id="g390" label="CD4+ T cell; 1771-030-012-B7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277557</assay>
+            </assay_group>
+            <assay_group id="g391" label="CD4+ T cell; 1771-030-012-B8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277558</assay>
+            </assay_group>
+            <assay_group id="g392" label="CD4+ T cell; 1771-030-012-B9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277559</assay>
+            </assay_group>
+            <assay_group id="g393" label="CD4+ T cell; 1771-030-012-C11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277561</assay>
+            </assay_group>
+            <assay_group id="g394" label="CD4+ T cell; 1771-030-012-C12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277562</assay>
+            </assay_group>
+            <assay_group id="g395" label="CD4+ T cell; 1771-030-012-C1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277560</assay>
+            </assay_group>
+            <assay_group id="g396" label="CD4+ T cell; 1771-030-012-C2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277563</assay>
+            </assay_group>
+            <assay_group id="g397" label="CD4+ T cell; 1771-030-012-C4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277564</assay>
+            </assay_group>
+            <assay_group id="g398" label="CD4+ T cell; 1771-030-012-C6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277565</assay>
+            </assay_group>
+            <assay_group id="g399" label="CD4+ T cell; 1771-030-012-C7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277566</assay>
+            </assay_group>
+            <assay_group id="g400" label="CD4+ T cell; 1771-030-012-C8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277567</assay>
+            </assay_group>
+            <assay_group id="g401" label="CD4+ T cell; 1771-030-012-C9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277568</assay>
+            </assay_group>
+            <assay_group id="g402" label="CD4+ T cell; 1771-030-012-D10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277570</assay>
+            </assay_group>
+            <assay_group id="g403" label="CD4+ T cell; 1771-030-012-D11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277571</assay>
+            </assay_group>
+            <assay_group id="g404" label="CD4+ T cell; 1771-030-012-D1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277569</assay>
+            </assay_group>
+            <assay_group id="g405" label="CD4+ T cell; 1771-030-012-D2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277572</assay>
+            </assay_group>
+            <assay_group id="g406" label="CD4+ T cell; 1771-030-012-D4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277573</assay>
+            </assay_group>
+            <assay_group id="g407" label="CD4+ T cell; 1771-030-012-D5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277574</assay>
+            </assay_group>
+            <assay_group id="g408" label="CD4+ T cell; 1771-030-012-D6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277575</assay>
+            </assay_group>
+            <assay_group id="g409" label="CD4+ T cell; 1771-030-012-D7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277576</assay>
+            </assay_group>
+            <assay_group id="g410" label="CD4+ T cell; 1771-030-012-D9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277577</assay>
+            </assay_group>
+            <assay_group id="g411" label="CD4+ T cell; 1771-030-012-E10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277578</assay>
+            </assay_group>
+            <assay_group id="g412" label="CD4+ T cell; 1771-030-012-E11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277579</assay>
+            </assay_group>
+            <assay_group id="g413" label="CD4+ T cell; 1771-030-012-E12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277580</assay>
+            </assay_group>
+            <assay_group id="g414" label="CD4+ T cell; 1771-030-012-E2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277581</assay>
+            </assay_group>
+            <assay_group id="g415" label="CD4+ T cell; 1771-030-012-E3; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277582</assay>
+            </assay_group>
+            <assay_group id="g416" label="CD4+ T cell; 1771-030-012-E6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277583</assay>
+            </assay_group>
+            <assay_group id="g417" label="CD4+ T cell; 1771-030-012-E7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277584</assay>
+            </assay_group>
+            <assay_group id="g418" label="CD4+ T cell; 1771-030-012-E8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277585</assay>
+            </assay_group>
+            <assay_group id="g419" label="CD4+ T cell; 1771-030-012-E9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277586</assay>
+            </assay_group>
+            <assay_group id="g420" label="CD4+ T cell; 1771-030-012-F11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277588</assay>
+            </assay_group>
+            <assay_group id="g421" label="CD4+ T cell; 1771-030-012-F12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277589</assay>
+            </assay_group>
+            <assay_group id="g422" label="CD4+ T cell; 1771-030-012-F1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277587</assay>
+            </assay_group>
+            <assay_group id="g423" label="CD4+ T cell; 1771-030-012-F2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277590</assay>
+            </assay_group>
+            <assay_group id="g424" label="CD4+ T cell; 1771-030-012-F5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277591</assay>
+            </assay_group>
+            <assay_group id="g425" label="CD4+ T cell; 1771-030-012-F6; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277592</assay>
+            </assay_group>
+            <assay_group id="g426" label="CD4+ T cell; 1771-030-012-F8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277593</assay>
+            </assay_group>
+            <assay_group id="g427" label="CD4+ T cell; 1771-030-012-F9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277594</assay>
+            </assay_group>
+            <assay_group id="g428" label="CD4+ T cell; 1771-030-012-G10; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277596</assay>
+            </assay_group>
+            <assay_group id="g429" label="CD4+ T cell; 1771-030-012-G11; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277597</assay>
+            </assay_group>
+            <assay_group id="g430" label="CD4+ T cell; 1771-030-012-G12; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277598</assay>
+            </assay_group>
+            <assay_group id="g431" label="CD4+ T cell; 1771-030-012-G1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277595</assay>
+            </assay_group>
+            <assay_group id="g432" label="CD4+ T cell; 1771-030-012-G2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277599</assay>
+            </assay_group>
+            <assay_group id="g433" label="CD4+ T cell; 1771-030-012-G4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277600</assay>
+            </assay_group>
+            <assay_group id="g434" label="CD4+ T cell; 1771-030-012-G5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277601</assay>
+            </assay_group>
+            <assay_group id="g435" label="CD4+ T cell; 1771-030-012-G7; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277602</assay>
+            </assay_group>
+            <assay_group id="g436" label="CD4+ T cell; 1771-030-012-G9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277603</assay>
+            </assay_group>
+            <assay_group id="g437" label="CD4+ T cell; 1771-030-012-H1; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277604</assay>
+            </assay_group>
+            <assay_group id="g438" label="CD4+ T cell; 1771-030-012-H2; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277605</assay>
+            </assay_group>
+            <assay_group id="g439" label="CD4+ T cell; 1771-030-012-H4; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277606</assay>
+            </assay_group>
+            <assay_group id="g440" label="CD4+ T cell; 1771-030-012-H5; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277607</assay>
+            </assay_group>
+            <assay_group id="g441" label="CD4+ T cell; 1771-030-012-H8; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277608</assay>
+            </assay_group>
+            <assay_group id="g442" label="CD4+ T cell; 1771-030-012-H9; Plasmodium chabaudi chabaudi; 2 day">
+                <assay>ERR1277609</assay>
+            </assay_group>
+            <assay_group id="g443" label="dendritic cell CD8a-; 1771-019-267-A11; none; 0 day">
+                <assay>ERR1276859</assay>
+            </assay_group>
+            <assay_group id="g444" label="dendritic cell CD8a-; 1771-019-267-A12; none; 0 day">
+                <assay>ERR1276860</assay>
+            </assay_group>
+            <assay_group id="g445" label="dendritic cell CD8a-; 1771-019-267-A1; none; 0 day">
+                <assay>ERR1276858</assay>
+            </assay_group>
+            <assay_group id="g446" label="dendritic cell CD8a-; 1771-019-267-A2; none; 0 day">
+                <assay>ERR1276861</assay>
+            </assay_group>
+            <assay_group id="g447" label="dendritic cell CD8a-; 1771-019-267-A3; none; 0 day">
+                <assay>ERR1276862</assay>
+            </assay_group>
+            <assay_group id="g448" label="dendritic cell CD8a-; 1771-019-267-A5; none; 0 day">
+                <assay>ERR1276863</assay>
+            </assay_group>
+            <assay_group id="g449" label="dendritic cell CD8a-; 1771-019-267-A7; none; 0 day">
+                <assay>ERR1276864</assay>
+            </assay_group>
+            <assay_group id="g450" label="dendritic cell CD8a-; 1771-019-267-B10; none; 0 day">
+                <assay>ERR1276866</assay>
+            </assay_group>
+            <assay_group id="g451" label="dendritic cell CD8a-; 1771-019-267-B11; none; 0 day">
+                <assay>ERR1276867</assay>
+            </assay_group>
+            <assay_group id="g452" label="dendritic cell CD8a-; 1771-019-267-B1; none; 0 day">
+                <assay>ERR1276865</assay>
+            </assay_group>
+            <assay_group id="g453" label="dendritic cell CD8a-; 1771-019-267-B3; none; 0 day">
+                <assay>ERR1276868</assay>
+            </assay_group>
+            <assay_group id="g454" label="dendritic cell CD8a-; 1771-019-267-B4; none; 0 day">
+                <assay>ERR1276869</assay>
+            </assay_group>
+            <assay_group id="g455" label="dendritic cell CD8a-; 1771-019-267-B5; none; 0 day">
+                <assay>ERR1276870</assay>
+            </assay_group>
+            <assay_group id="g456" label="dendritic cell CD8a-; 1771-019-267-B6; none; 0 day">
+                <assay>ERR1276871</assay>
+            </assay_group>
+            <assay_group id="g457" label="dendritic cell CD8a-; 1771-019-267-B7; none; 0 day">
+                <assay>ERR1276872</assay>
+            </assay_group>
+            <assay_group id="g458" label="dendritic cell CD8a-; 1771-019-267-B8; none; 0 day">
+                <assay>ERR1276873</assay>
+            </assay_group>
+            <assay_group id="g459" label="dendritic cell CD8a-; 1771-019-267-B9; none; 0 day">
+                <assay>ERR1276874</assay>
+            </assay_group>
+            <assay_group id="g460" label="dendritic cell CD8a-; 1771-019-267-C10; none; 0 day">
+                <assay>ERR1276876</assay>
+            </assay_group>
+            <assay_group id="g461" label="dendritic cell CD8a-; 1771-019-267-C1; none; 0 day">
+                <assay>ERR1276875</assay>
+            </assay_group>
+            <assay_group id="g462" label="dendritic cell CD8a-; 1771-019-267-C2; none; 0 day">
+                <assay>ERR1276877</assay>
+            </assay_group>
+            <assay_group id="g463" label="dendritic cell CD8a-; 1771-019-267-C4; none; 0 day">
+                <assay>ERR1276878</assay>
+            </assay_group>
+            <assay_group id="g464" label="dendritic cell CD8a-; 1771-019-267-C5; none; 0 day">
+                <assay>ERR1276879</assay>
+            </assay_group>
+            <assay_group id="g465" label="dendritic cell CD8a-; 1771-019-267-C6; none; 0 day">
+                <assay>ERR1276880</assay>
+            </assay_group>
+            <assay_group id="g466" label="dendritic cell CD8a-; 1771-019-267-C8; none; 0 day">
+                <assay>ERR1276881</assay>
+            </assay_group>
+            <assay_group id="g467" label="dendritic cell CD8a-; 1771-019-267-C9; none; 0 day">
+                <assay>ERR1276882</assay>
+            </assay_group>
+            <assay_group id="g468" label="dendritic cell CD8a-; 1771-019-267-D12; none; 0 day">
+                <assay>ERR1276883</assay>
+            </assay_group>
+            <assay_group id="g469" label="dendritic cell CD8a-; 1771-019-267-D2; none; 0 day">
+                <assay>ERR1276884</assay>
+            </assay_group>
+            <assay_group id="g470" label="dendritic cell CD8a-; 1771-019-267-D3; none; 0 day">
+                <assay>ERR1276885</assay>
+            </assay_group>
+            <assay_group id="g471" label="dendritic cell CD8a-; 1771-019-267-D9; none; 0 day">
+                <assay>ERR1276886</assay>
+            </assay_group>
+            <assay_group id="g472" label="dendritic cell CD8a-; 1771-019-267-E10; none; 0 day">
+                <assay>ERR1276888</assay>
+            </assay_group>
+            <assay_group id="g473" label="dendritic cell CD8a-; 1771-019-267-E12; none; 0 day">
+                <assay>ERR1276889</assay>
+            </assay_group>
+            <assay_group id="g474" label="dendritic cell CD8a-; 1771-019-267-E1; none; 0 day">
+                <assay>ERR1276887</assay>
+            </assay_group>
+            <assay_group id="g475" label="dendritic cell CD8a-; 1771-019-267-E2; none; 0 day">
+                <assay>ERR1276890</assay>
+            </assay_group>
+            <assay_group id="g476" label="dendritic cell CD8a-; 1771-019-267-E3; none; 0 day">
+                <assay>ERR1276891</assay>
+            </assay_group>
+            <assay_group id="g477" label="dendritic cell CD8a-; 1771-019-267-E5; none; 0 day">
+                <assay>ERR1276892</assay>
+            </assay_group>
+            <assay_group id="g478" label="dendritic cell CD8a-; 1771-019-267-E6; none; 0 day">
+                <assay>ERR1276893</assay>
+            </assay_group>
+            <assay_group id="g479" label="dendritic cell CD8a-; 1771-019-267-E7; none; 0 day">
+                <assay>ERR1276894</assay>
+            </assay_group>
+            <assay_group id="g480" label="dendritic cell CD8a-; 1771-019-267-E9; none; 0 day">
+                <assay>ERR1276895</assay>
+            </assay_group>
+            <assay_group id="g481" label="dendritic cell CD8a-; 1771-019-267-F11; none; 0 day">
+                <assay>ERR1276896</assay>
+            </assay_group>
+            <assay_group id="g482" label="dendritic cell CD8a-; 1771-019-267-F12; none; 0 day">
+                <assay>ERR1276897</assay>
+            </assay_group>
+            <assay_group id="g483" label="dendritic cell CD8a-; 1771-019-267-F2; none; 0 day">
+                <assay>ERR1276898</assay>
+            </assay_group>
+            <assay_group id="g484" label="dendritic cell CD8a-; 1771-019-267-F4; none; 0 day">
+                <assay>ERR1276899</assay>
+            </assay_group>
+            <assay_group id="g485" label="dendritic cell CD8a-; 1771-019-267-F6; none; 0 day">
+                <assay>ERR1276900</assay>
+            </assay_group>
+            <assay_group id="g486" label="dendritic cell CD8a-; 1771-019-267-F7; none; 0 day">
+                <assay>ERR1276901</assay>
+            </assay_group>
+            <assay_group id="g487" label="dendritic cell CD8a-; 1771-019-267-G11; none; 0 day">
+                <assay>ERR1276902</assay>
+            </assay_group>
+            <assay_group id="g488" label="dendritic cell CD8a-; 1771-019-267-G2; none; 0 day">
+                <assay>ERR1276903</assay>
+            </assay_group>
+            <assay_group id="g489" label="dendritic cell CD8a-; 1771-019-267-G3; none; 0 day">
+                <assay>ERR1276904</assay>
+            </assay_group>
+            <assay_group id="g490" label="dendritic cell CD8a-; 1771-019-267-G4; none; 0 day">
+                <assay>ERR1276905</assay>
+            </assay_group>
+            <assay_group id="g491" label="dendritic cell CD8a-; 1771-019-267-G7; none; 0 day">
+                <assay>ERR1276906</assay>
+            </assay_group>
+            <assay_group id="g492" label="dendritic cell CD8a-; 1771-019-267-G8; none; 0 day">
+                <assay>ERR1276907</assay>
+            </assay_group>
+            <assay_group id="g493" label="dendritic cell CD8a-; 1771-023-119-A1; none; 0 day">
+                <assay>ERR1277004</assay>
+            </assay_group>
+            <assay_group id="g494" label="dendritic cell CD8a-; 1771-023-119-A2; none; 0 day">
+                <assay>ERR1277005</assay>
+            </assay_group>
+            <assay_group id="g495" label="dendritic cell CD8a-; 1771-023-119-A8; none; 0 day">
+                <assay>ERR1277006</assay>
+            </assay_group>
+            <assay_group id="g496" label="dendritic cell CD8a-; 1771-023-119-A9; none; 0 day">
+                <assay>ERR1277007</assay>
+            </assay_group>
+            <assay_group id="g497" label="dendritic cell CD8a-; 1771-023-119-B12; none; 0 day">
+                <assay>ERR1277009</assay>
+            </assay_group>
+            <assay_group id="g498" label="dendritic cell CD8a-; 1771-023-119-B1; none; 0 day">
+                <assay>ERR1277008</assay>
+            </assay_group>
+            <assay_group id="g499" label="dendritic cell CD8a-; 1771-023-119-B2; none; 0 day">
+                <assay>ERR1277010</assay>
+            </assay_group>
+            <assay_group id="g500" label="dendritic cell CD8a-; 1771-023-119-B3; none; 0 day">
+                <assay>ERR1277011</assay>
+            </assay_group>
+            <assay_group id="g501" label="dendritic cell CD8a-; 1771-023-119-B4; none; 0 day">
+                <assay>ERR1277012</assay>
+            </assay_group>
+            <assay_group id="g502" label="dendritic cell CD8a-; 1771-023-119-B7; none; 0 day">
+                <assay>ERR1277013</assay>
+            </assay_group>
+            <assay_group id="g503" label="dendritic cell CD8a-; 1771-023-119-B8; none; 0 day">
+                <assay>ERR1277014</assay>
+            </assay_group>
+            <assay_group id="g504" label="dendritic cell CD8a-; 1771-023-119-B9; none; 0 day">
+                <assay>ERR1277015</assay>
+            </assay_group>
+            <assay_group id="g505" label="dendritic cell CD8a-; 1771-023-119-C12; none; 0 day">
+                <assay>ERR1277017</assay>
+            </assay_group>
+            <assay_group id="g506" label="dendritic cell CD8a-; 1771-023-119-C1; none; 0 day">
+                <assay>ERR1277016</assay>
+            </assay_group>
+            <assay_group id="g507" label="dendritic cell CD8a-; 1771-023-119-C5; none; 0 day">
+                <assay>ERR1277018</assay>
+            </assay_group>
+            <assay_group id="g508" label="dendritic cell CD8a-; 1771-023-119-C6; none; 0 day">
+                <assay>ERR1277019</assay>
+            </assay_group>
+            <assay_group id="g509" label="dendritic cell CD8a-; 1771-023-119-C7; none; 0 day">
+                <assay>ERR1277020</assay>
+            </assay_group>
+            <assay_group id="g510" label="dendritic cell CD8a-; 1771-023-119-C8; none; 0 day">
+                <assay>ERR1277021</assay>
+            </assay_group>
+            <assay_group id="g511" label="dendritic cell CD8a-; 1771-023-119-C9; none; 0 day">
+                <assay>ERR1277022</assay>
+            </assay_group>
+            <assay_group id="g512" label="dendritic cell CD8a-; 1771-023-119-D2; none; 0 day">
+                <assay>ERR1277023</assay>
+            </assay_group>
+            <assay_group id="g513" label="dendritic cell CD8a-; 1771-023-119-D3; none; 0 day">
+                <assay>ERR1277024</assay>
+            </assay_group>
+            <assay_group id="g514" label="dendritic cell CD8a-; 1771-023-119-D4; none; 0 day">
+                <assay>ERR1277025</assay>
+            </assay_group>
+            <assay_group id="g515" label="dendritic cell CD8a-; 1771-023-119-D5; none; 0 day">
+                <assay>ERR1277026</assay>
+            </assay_group>
+            <assay_group id="g516" label="dendritic cell CD8a-; 1771-023-119-D6; none; 0 day">
+                <assay>ERR1277027</assay>
+            </assay_group>
+            <assay_group id="g517" label="dendritic cell CD8a-; 1771-023-119-D9; none; 0 day">
+                <assay>ERR1277028</assay>
+            </assay_group>
+            <assay_group id="g518" label="dendritic cell CD8a-; 1771-023-119-E11; none; 0 day">
+                <assay>ERR1277030</assay>
+            </assay_group>
+            <assay_group id="g519" label="dendritic cell CD8a-; 1771-023-119-E1; none; 0 day">
+                <assay>ERR1277029</assay>
+            </assay_group>
+            <assay_group id="g520" label="dendritic cell CD8a-; 1771-023-119-E7; none; 0 day">
+                <assay>ERR1277031</assay>
+            </assay_group>
+            <assay_group id="g521" label="dendritic cell CD8a-; 1771-023-119-E9; none; 0 day">
+                <assay>ERR1277032</assay>
+            </assay_group>
+            <assay_group id="g522" label="dendritic cell CD8a-; 1771-023-119-F10; none; 0 day">
+                <assay>ERR1277033</assay>
+            </assay_group>
+            <assay_group id="g523" label="dendritic cell CD8a-; 1771-023-119-F12; none; 0 day">
+                <assay>ERR1277034</assay>
+            </assay_group>
+            <assay_group id="g524" label="dendritic cell CD8a-; 1771-023-119-F4; none; 0 day">
+                <assay>ERR1277035</assay>
+            </assay_group>
+            <assay_group id="g525" label="dendritic cell CD8a-; 1771-023-119-F5; none; 0 day">
+                <assay>ERR1277036</assay>
+            </assay_group>
+            <assay_group id="g526" label="dendritic cell CD8a-; 1771-023-119-F6; none; 0 day">
+                <assay>ERR1277037</assay>
+            </assay_group>
+            <assay_group id="g527" label="dendritic cell CD8a-; 1771-023-119-F9; none; 0 day">
+                <assay>ERR1277038</assay>
+            </assay_group>
+            <assay_group id="g528" label="dendritic cell CD8a-; 1771-023-119-G10; none; 0 day">
+                <assay>ERR1277040</assay>
+            </assay_group>
+            <assay_group id="g529" label="dendritic cell CD8a-; 1771-023-119-G11; none; 0 day">
+                <assay>ERR1277041</assay>
+            </assay_group>
+            <assay_group id="g530" label="dendritic cell CD8a-; 1771-023-119-G12; none; 0 day">
+                <assay>ERR1277042</assay>
+            </assay_group>
+            <assay_group id="g531" label="dendritic cell CD8a-; 1771-023-119-G1; none; 0 day">
+                <assay>ERR1277039</assay>
+            </assay_group>
+            <assay_group id="g532" label="dendritic cell CD8a-; 1771-023-119-G2; none; 0 day">
+                <assay>ERR1277043</assay>
+            </assay_group>
+            <assay_group id="g533" label="dendritic cell CD8a-; 1771-023-119-G4; none; 0 day">
+                <assay>ERR1277044</assay>
+            </assay_group>
+            <assay_group id="g534" label="dendritic cell CD8a-; 1771-023-119-G5; none; 0 day">
+                <assay>ERR1277045</assay>
+            </assay_group>
+            <assay_group id="g535" label="dendritic cell CD8a-; 1771-023-119-G7; none; 0 day">
+                <assay>ERR1277046</assay>
+            </assay_group>
+            <assay_group id="g536" label="dendritic cell CD8a-; 1771-023-119-G8; none; 0 day">
+                <assay>ERR1277047</assay>
+            </assay_group>
+            <assay_group id="g537" label="dendritic cell CD8a-; 1771-023-119-G9; none; 0 day">
+                <assay>ERR1277048</assay>
+            </assay_group>
+            <assay_group id="g538" label="dendritic cell CD8a-; 1771-023-119-H11; none; 0 day">
+                <assay>ERR1277049</assay>
+            </assay_group>
+            <assay_group id="g539" label="dendritic cell; 1771-026-194-A12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277239</assay>
+            </assay_group>
+            <assay_group id="g540" label="dendritic cell; 1771-026-194-A5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277240</assay>
+            </assay_group>
+            <assay_group id="g541" label="dendritic cell; 1771-026-194-A8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277241</assay>
+            </assay_group>
+            <assay_group id="g542" label="dendritic cell; 1771-026-194-B10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277242</assay>
+            </assay_group>
+            <assay_group id="g543" label="dendritic cell; 1771-026-194-B11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277243</assay>
+            </assay_group>
+            <assay_group id="g544" label="dendritic cell; 1771-026-194-B3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277244</assay>
+            </assay_group>
+            <assay_group id="g545" label="dendritic cell; 1771-026-194-B6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277245</assay>
+            </assay_group>
+            <assay_group id="g546" label="dendritic cell; 1771-026-194-B7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277246</assay>
+            </assay_group>
+            <assay_group id="g547" label="dendritic cell; 1771-026-194-C10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277248</assay>
+            </assay_group>
+            <assay_group id="g548" label="dendritic cell; 1771-026-194-C1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277247</assay>
+            </assay_group>
+            <assay_group id="g549" label="dendritic cell; 1771-026-194-C2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277249</assay>
+            </assay_group>
+            <assay_group id="g550" label="dendritic cell; 1771-026-194-C3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277250</assay>
+            </assay_group>
+            <assay_group id="g551" label="dendritic cell; 1771-026-194-C5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277251</assay>
+            </assay_group>
+            <assay_group id="g552" label="dendritic cell; 1771-026-194-C6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277252</assay>
+            </assay_group>
+            <assay_group id="g553" label="dendritic cell; 1771-026-194-C7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277253</assay>
+            </assay_group>
+            <assay_group id="g554" label="dendritic cell; 1771-026-194-C8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277254</assay>
+            </assay_group>
+            <assay_group id="g555" label="dendritic cell; 1771-026-194-C9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277255</assay>
+            </assay_group>
+            <assay_group id="g556" label="dendritic cell; 1771-026-194-D10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277256</assay>
+            </assay_group>
+            <assay_group id="g557" label="dendritic cell; 1771-026-194-D12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277257</assay>
+            </assay_group>
+            <assay_group id="g558" label="dendritic cell; 1771-026-194-D4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277258</assay>
+            </assay_group>
+            <assay_group id="g559" label="dendritic cell; 1771-026-194-D5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277259</assay>
+            </assay_group>
+            <assay_group id="g560" label="dendritic cell; 1771-026-194-D6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277260</assay>
+            </assay_group>
+            <assay_group id="g561" label="dendritic cell; 1771-026-194-E3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277261</assay>
+            </assay_group>
+            <assay_group id="g562" label="dendritic cell; 1771-026-194-E5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277262</assay>
+            </assay_group>
+            <assay_group id="g563" label="dendritic cell; 1771-026-194-E7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277263</assay>
+            </assay_group>
+            <assay_group id="g564" label="dendritic cell; 1771-026-194-E9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277264</assay>
+            </assay_group>
+            <assay_group id="g565" label="dendritic cell; 1771-026-194-F1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277265</assay>
+            </assay_group>
+            <assay_group id="g566" label="dendritic cell; 1771-026-194-F3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277266</assay>
+            </assay_group>
+            <assay_group id="g567" label="dendritic cell; 1771-026-194-F5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277267</assay>
+            </assay_group>
+            <assay_group id="g568" label="dendritic cell; 1771-026-194-G1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277268</assay>
+            </assay_group>
+            <assay_group id="g569" label="dendritic cell; 1771-026-194-G3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277269</assay>
+            </assay_group>
+            <assay_group id="g570" label="dendritic cell; 1771-026-194-G6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277270</assay>
+            </assay_group>
+            <assay_group id="g571" label="dendritic cell; 1771-026-194-G7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277271</assay>
+            </assay_group>
+            <assay_group id="g572" label="dendritic cell; 1771-026-194-H11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277273</assay>
+            </assay_group>
+            <assay_group id="g573" label="dendritic cell; 1771-026-194-H12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277274</assay>
+            </assay_group>
+            <assay_group id="g574" label="dendritic cell; 1771-026-194-H1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277272</assay>
+            </assay_group>
+            <assay_group id="g575" label="dendritic cell; 1771-026-194-H3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277275</assay>
+            </assay_group>
+            <assay_group id="g576" label="dendritic cell; 1771-026-194-H7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277276</assay>
+            </assay_group>
+            <assay_group id="g577" label="dendritic cell; 1771-026-194-H9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277277</assay>
+            </assay_group>
+            <assay_group id="g578" label="monocyte; 1771-023-118-A10; none; 0 day">
+                <assay>ERR1276909</assay>
+            </assay_group>
+            <assay_group id="g579" label="monocyte; 1771-023-118-A11; none; 0 day">
+                <assay>ERR1276910</assay>
+            </assay_group>
+            <assay_group id="g580" label="monocyte; 1771-023-118-A12; none; 0 day">
+                <assay>ERR1276911</assay>
+            </assay_group>
+            <assay_group id="g581" label="monocyte; 1771-023-118-A1; none; 0 day">
+                <assay>ERR1276908</assay>
+            </assay_group>
+            <assay_group id="g582" label="monocyte; 1771-023-118-A2; none; 0 day">
+                <assay>ERR1276912</assay>
+            </assay_group>
+            <assay_group id="g583" label="monocyte; 1771-023-118-A3; none; 0 day">
+                <assay>ERR1276913</assay>
+            </assay_group>
+            <assay_group id="g584" label="monocyte; 1771-023-118-A4; none; 0 day">
+                <assay>ERR1276914</assay>
+            </assay_group>
+            <assay_group id="g585" label="monocyte; 1771-023-118-A5; none; 0 day">
+                <assay>ERR1276915</assay>
+            </assay_group>
+            <assay_group id="g586" label="monocyte; 1771-023-118-A6; none; 0 day">
+                <assay>ERR1276916</assay>
+            </assay_group>
+            <assay_group id="g587" label="monocyte; 1771-023-118-A7; none; 0 day">
+                <assay>ERR1276917</assay>
+            </assay_group>
+            <assay_group id="g588" label="monocyte; 1771-023-118-A8; none; 0 day">
+                <assay>ERR1276918</assay>
+            </assay_group>
+            <assay_group id="g589" label="monocyte; 1771-023-118-A9; none; 0 day">
+                <assay>ERR1276919</assay>
+            </assay_group>
+            <assay_group id="g590" label="monocyte; 1771-023-118-B10; none; 0 day">
+                <assay>ERR1276921</assay>
+            </assay_group>
+            <assay_group id="g591" label="monocyte; 1771-023-118-B11; none; 0 day">
+                <assay>ERR1276922</assay>
+            </assay_group>
+            <assay_group id="g592" label="monocyte; 1771-023-118-B12; none; 0 day">
+                <assay>ERR1276923</assay>
+            </assay_group>
+            <assay_group id="g593" label="monocyte; 1771-023-118-B1; none; 0 day">
+                <assay>ERR1276920</assay>
+            </assay_group>
+            <assay_group id="g594" label="monocyte; 1771-023-118-B2; none; 0 day">
+                <assay>ERR1276924</assay>
+            </assay_group>
+            <assay_group id="g595" label="monocyte; 1771-023-118-B3; none; 0 day">
+                <assay>ERR1276925</assay>
+            </assay_group>
+            <assay_group id="g596" label="monocyte; 1771-023-118-B4; none; 0 day">
+                <assay>ERR1276926</assay>
+            </assay_group>
+            <assay_group id="g597" label="monocyte; 1771-023-118-B5; none; 0 day">
+                <assay>ERR1276927</assay>
+            </assay_group>
+            <assay_group id="g598" label="monocyte; 1771-023-118-B6; none; 0 day">
+                <assay>ERR1276928</assay>
+            </assay_group>
+            <assay_group id="g599" label="monocyte; 1771-023-118-B7; none; 0 day">
+                <assay>ERR1276929</assay>
+            </assay_group>
+            <assay_group id="g600" label="monocyte; 1771-023-118-B8; none; 0 day">
+                <assay>ERR1276930</assay>
+            </assay_group>
+            <assay_group id="g601" label="monocyte; 1771-023-118-B9; none; 0 day">
+                <assay>ERR1276931</assay>
+            </assay_group>
+            <assay_group id="g602" label="monocyte; 1771-023-118-C10; none; 0 day">
+                <assay>ERR1276933</assay>
+            </assay_group>
+            <assay_group id="g603" label="monocyte; 1771-023-118-C11; none; 0 day">
+                <assay>ERR1276934</assay>
+            </assay_group>
+            <assay_group id="g604" label="monocyte; 1771-023-118-C12; none; 0 day">
+                <assay>ERR1276935</assay>
+            </assay_group>
+            <assay_group id="g605" label="monocyte; 1771-023-118-C1; none; 0 day">
+                <assay>ERR1276932</assay>
+            </assay_group>
+            <assay_group id="g606" label="monocyte; 1771-023-118-C2; none; 0 day">
+                <assay>ERR1276936</assay>
+            </assay_group>
+            <assay_group id="g607" label="monocyte; 1771-023-118-C3; none; 0 day">
+                <assay>ERR1276937</assay>
+            </assay_group>
+            <assay_group id="g608" label="monocyte; 1771-023-118-C4; none; 0 day">
+                <assay>ERR1276938</assay>
+            </assay_group>
+            <assay_group id="g609" label="monocyte; 1771-023-118-C5; none; 0 day">
+                <assay>ERR1276939</assay>
+            </assay_group>
+            <assay_group id="g610" label="monocyte; 1771-023-118-C6; none; 0 day">
+                <assay>ERR1276940</assay>
+            </assay_group>
+            <assay_group id="g611" label="monocyte; 1771-023-118-C7; none; 0 day">
+                <assay>ERR1276941</assay>
+            </assay_group>
+            <assay_group id="g612" label="monocyte; 1771-023-118-C8; none; 0 day">
+                <assay>ERR1276942</assay>
+            </assay_group>
+            <assay_group id="g613" label="monocyte; 1771-023-118-C9; none; 0 day">
+                <assay>ERR1276943</assay>
+            </assay_group>
+            <assay_group id="g614" label="monocyte; 1771-023-118-D10; none; 0 day">
+                <assay>ERR1276945</assay>
+            </assay_group>
+            <assay_group id="g615" label="monocyte; 1771-023-118-D11; none; 0 day">
+                <assay>ERR1276946</assay>
+            </assay_group>
+            <assay_group id="g616" label="monocyte; 1771-023-118-D12; none; 0 day">
+                <assay>ERR1276947</assay>
+            </assay_group>
+            <assay_group id="g617" label="monocyte; 1771-023-118-D1; none; 0 day">
+                <assay>ERR1276944</assay>
+            </assay_group>
+            <assay_group id="g618" label="monocyte; 1771-023-118-D2; none; 0 day">
+                <assay>ERR1276948</assay>
+            </assay_group>
+            <assay_group id="g619" label="monocyte; 1771-023-118-D3; none; 0 day">
+                <assay>ERR1276949</assay>
+            </assay_group>
+            <assay_group id="g620" label="monocyte; 1771-023-118-D4; none; 0 day">
+                <assay>ERR1276950</assay>
+            </assay_group>
+            <assay_group id="g621" label="monocyte; 1771-023-118-D5; none; 0 day">
+                <assay>ERR1276951</assay>
+            </assay_group>
+            <assay_group id="g622" label="monocyte; 1771-023-118-D6; none; 0 day">
+                <assay>ERR1276952</assay>
+            </assay_group>
+            <assay_group id="g623" label="monocyte; 1771-023-118-D7; none; 0 day">
+                <assay>ERR1276953</assay>
+            </assay_group>
+            <assay_group id="g624" label="monocyte; 1771-023-118-D8; none; 0 day">
+                <assay>ERR1276954</assay>
+            </assay_group>
+            <assay_group id="g625" label="monocyte; 1771-023-118-D9; none; 0 day">
+                <assay>ERR1276955</assay>
+            </assay_group>
+            <assay_group id="g626" label="monocyte; 1771-023-118-E10; none; 0 day">
+                <assay>ERR1276957</assay>
+            </assay_group>
+            <assay_group id="g627" label="monocyte; 1771-023-118-E11; none; 0 day">
+                <assay>ERR1276958</assay>
+            </assay_group>
+            <assay_group id="g628" label="monocyte; 1771-023-118-E12; none; 0 day">
+                <assay>ERR1276959</assay>
+            </assay_group>
+            <assay_group id="g629" label="monocyte; 1771-023-118-E1; none; 0 day">
+                <assay>ERR1276956</assay>
+            </assay_group>
+            <assay_group id="g630" label="monocyte; 1771-023-118-E2; none; 0 day">
+                <assay>ERR1276960</assay>
+            </assay_group>
+            <assay_group id="g631" label="monocyte; 1771-023-118-E3; none; 0 day">
+                <assay>ERR1276961</assay>
+            </assay_group>
+            <assay_group id="g632" label="monocyte; 1771-023-118-E4; none; 0 day">
+                <assay>ERR1276962</assay>
+            </assay_group>
+            <assay_group id="g633" label="monocyte; 1771-023-118-E5; none; 0 day">
+                <assay>ERR1276963</assay>
+            </assay_group>
+            <assay_group id="g634" label="monocyte; 1771-023-118-E6; none; 0 day">
+                <assay>ERR1276964</assay>
+            </assay_group>
+            <assay_group id="g635" label="monocyte; 1771-023-118-E7; none; 0 day">
+                <assay>ERR1276965</assay>
+            </assay_group>
+            <assay_group id="g636" label="monocyte; 1771-023-118-E8; none; 0 day">
+                <assay>ERR1276966</assay>
+            </assay_group>
+            <assay_group id="g637" label="monocyte; 1771-023-118-E9; none; 0 day">
+                <assay>ERR1276967</assay>
+            </assay_group>
+            <assay_group id="g638" label="monocyte; 1771-023-118-F10; none; 0 day">
+                <assay>ERR1276969</assay>
+            </assay_group>
+            <assay_group id="g639" label="monocyte; 1771-023-118-F11; none; 0 day">
+                <assay>ERR1276970</assay>
+            </assay_group>
+            <assay_group id="g640" label="monocyte; 1771-023-118-F12; none; 0 day">
+                <assay>ERR1276971</assay>
+            </assay_group>
+            <assay_group id="g641" label="monocyte; 1771-023-118-F1; none; 0 day">
+                <assay>ERR1276968</assay>
+            </assay_group>
+            <assay_group id="g642" label="monocyte; 1771-023-118-F2; none; 0 day">
+                <assay>ERR1276972</assay>
+            </assay_group>
+            <assay_group id="g643" label="monocyte; 1771-023-118-F3; none; 0 day">
+                <assay>ERR1276973</assay>
+            </assay_group>
+            <assay_group id="g644" label="monocyte; 1771-023-118-F4; none; 0 day">
+                <assay>ERR1276974</assay>
+            </assay_group>
+            <assay_group id="g645" label="monocyte; 1771-023-118-F5; none; 0 day">
+                <assay>ERR1276975</assay>
+            </assay_group>
+            <assay_group id="g646" label="monocyte; 1771-023-118-F6; none; 0 day">
+                <assay>ERR1276976</assay>
+            </assay_group>
+            <assay_group id="g647" label="monocyte; 1771-023-118-F7; none; 0 day">
+                <assay>ERR1276977</assay>
+            </assay_group>
+            <assay_group id="g648" label="monocyte; 1771-023-118-F8; none; 0 day">
+                <assay>ERR1276978</assay>
+            </assay_group>
+            <assay_group id="g649" label="monocyte; 1771-023-118-F9; none; 0 day">
+                <assay>ERR1276979</assay>
+            </assay_group>
+            <assay_group id="g650" label="monocyte; 1771-023-118-G10; none; 0 day">
+                <assay>ERR1276981</assay>
+            </assay_group>
+            <assay_group id="g651" label="monocyte; 1771-023-118-G11; none; 0 day">
+                <assay>ERR1276982</assay>
+            </assay_group>
+            <assay_group id="g652" label="monocyte; 1771-023-118-G12; none; 0 day">
+                <assay>ERR1276983</assay>
+            </assay_group>
+            <assay_group id="g653" label="monocyte; 1771-023-118-G1; none; 0 day">
+                <assay>ERR1276980</assay>
+            </assay_group>
+            <assay_group id="g654" label="monocyte; 1771-023-118-G2; none; 0 day">
+                <assay>ERR1276984</assay>
+            </assay_group>
+            <assay_group id="g655" label="monocyte; 1771-023-118-G3; none; 0 day">
+                <assay>ERR1276985</assay>
+            </assay_group>
+            <assay_group id="g656" label="monocyte; 1771-023-118-G4; none; 0 day">
+                <assay>ERR1276986</assay>
+            </assay_group>
+            <assay_group id="g657" label="monocyte; 1771-023-118-G5; none; 0 day">
+                <assay>ERR1276987</assay>
+            </assay_group>
+            <assay_group id="g658" label="monocyte; 1771-023-118-G6; none; 0 day">
+                <assay>ERR1276988</assay>
+            </assay_group>
+            <assay_group id="g659" label="monocyte; 1771-023-118-G7; none; 0 day">
+                <assay>ERR1276989</assay>
+            </assay_group>
+            <assay_group id="g660" label="monocyte; 1771-023-118-G8; none; 0 day">
+                <assay>ERR1276990</assay>
+            </assay_group>
+            <assay_group id="g661" label="monocyte; 1771-023-118-G9; none; 0 day">
+                <assay>ERR1276991</assay>
+            </assay_group>
+            <assay_group id="g662" label="monocyte; 1771-023-118-H10; none; 0 day">
+                <assay>ERR1276993</assay>
+            </assay_group>
+            <assay_group id="g663" label="monocyte; 1771-023-118-H11; none; 0 day">
+                <assay>ERR1276994</assay>
+            </assay_group>
+            <assay_group id="g664" label="monocyte; 1771-023-118-H12; none; 0 day">
+                <assay>ERR1276995</assay>
+            </assay_group>
+            <assay_group id="g665" label="monocyte; 1771-023-118-H1; none; 0 day">
+                <assay>ERR1276992</assay>
+            </assay_group>
+            <assay_group id="g666" label="monocyte; 1771-023-118-H2; none; 0 day">
+                <assay>ERR1276996</assay>
+            </assay_group>
+            <assay_group id="g667" label="monocyte; 1771-023-118-H3; none; 0 day">
+                <assay>ERR1276997</assay>
+            </assay_group>
+            <assay_group id="g668" label="monocyte; 1771-023-118-H4; none; 0 day">
+                <assay>ERR1276998</assay>
+            </assay_group>
+            <assay_group id="g669" label="monocyte; 1771-023-118-H5; none; 0 day">
+                <assay>ERR1276999</assay>
+            </assay_group>
+            <assay_group id="g670" label="monocyte; 1771-023-118-H6; none; 0 day">
+                <assay>ERR1277000</assay>
+            </assay_group>
+            <assay_group id="g671" label="monocyte; 1771-023-118-H7; none; 0 day">
+                <assay>ERR1277001</assay>
+            </assay_group>
+            <assay_group id="g672" label="monocyte; 1771-023-118-H8; none; 0 day">
+                <assay>ERR1277002</assay>
+            </assay_group>
+            <assay_group id="g673" label="monocyte; 1771-023-118-H9; none; 0 day">
+                <assay>ERR1277003</assay>
+            </assay_group>
+            <assay_group id="g674" label="monocyte; 1771-026-193-A10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277161</assay>
+            </assay_group>
+            <assay_group id="g675" label="monocyte; 1771-026-193-A1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277160</assay>
+            </assay_group>
+            <assay_group id="g676" label="monocyte; 1771-026-193-A2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277162</assay>
+            </assay_group>
+            <assay_group id="g677" label="monocyte; 1771-026-193-A3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277163</assay>
+            </assay_group>
+            <assay_group id="g678" label="monocyte; 1771-026-193-A4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277164</assay>
+            </assay_group>
+            <assay_group id="g679" label="monocyte; 1771-026-193-A6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277165</assay>
+            </assay_group>
+            <assay_group id="g680" label="monocyte; 1771-026-193-A7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277166</assay>
+            </assay_group>
+            <assay_group id="g681" label="monocyte; 1771-026-193-A8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277167</assay>
+            </assay_group>
+            <assay_group id="g682" label="monocyte; 1771-026-193-B10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277169</assay>
+            </assay_group>
+            <assay_group id="g683" label="monocyte; 1771-026-193-B11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277170</assay>
+            </assay_group>
+            <assay_group id="g684" label="monocyte; 1771-026-193-B12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277171</assay>
+            </assay_group>
+            <assay_group id="g685" label="monocyte; 1771-026-193-B1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277168</assay>
+            </assay_group>
+            <assay_group id="g686" label="monocyte; 1771-026-193-B2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277172</assay>
+            </assay_group>
+            <assay_group id="g687" label="monocyte; 1771-026-193-B3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277173</assay>
+            </assay_group>
+            <assay_group id="g688" label="monocyte; 1771-026-193-B4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277174</assay>
+            </assay_group>
+            <assay_group id="g689" label="monocyte; 1771-026-193-B5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277175</assay>
+            </assay_group>
+            <assay_group id="g690" label="monocyte; 1771-026-193-B6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277176</assay>
+            </assay_group>
+            <assay_group id="g691" label="monocyte; 1771-026-193-B7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277177</assay>
+            </assay_group>
+            <assay_group id="g692" label="monocyte; 1771-026-193-B8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277178</assay>
+            </assay_group>
+            <assay_group id="g693" label="monocyte; 1771-026-193-C10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277180</assay>
+            </assay_group>
+            <assay_group id="g694" label="monocyte; 1771-026-193-C11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277181</assay>
+            </assay_group>
+            <assay_group id="g695" label="monocyte; 1771-026-193-C1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277179</assay>
+            </assay_group>
+            <assay_group id="g696" label="monocyte; 1771-026-193-C2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277182</assay>
+            </assay_group>
+            <assay_group id="g697" label="monocyte; 1771-026-193-C3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277183</assay>
+            </assay_group>
+            <assay_group id="g698" label="monocyte; 1771-026-193-C4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277184</assay>
+            </assay_group>
+            <assay_group id="g699" label="monocyte; 1771-026-193-C5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277185</assay>
+            </assay_group>
+            <assay_group id="g700" label="monocyte; 1771-026-193-C6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277186</assay>
+            </assay_group>
+            <assay_group id="g701" label="monocyte; 1771-026-193-C7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277187</assay>
+            </assay_group>
+            <assay_group id="g702" label="monocyte; 1771-026-193-C8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277188</assay>
+            </assay_group>
+            <assay_group id="g703" label="monocyte; 1771-026-193-C9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277189</assay>
+            </assay_group>
+            <assay_group id="g704" label="monocyte; 1771-026-193-D10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277191</assay>
+            </assay_group>
+            <assay_group id="g705" label="monocyte; 1771-026-193-D11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277192</assay>
+            </assay_group>
+            <assay_group id="g706" label="monocyte; 1771-026-193-D12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277193</assay>
+            </assay_group>
+            <assay_group id="g707" label="monocyte; 1771-026-193-D1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277190</assay>
+            </assay_group>
+            <assay_group id="g708" label="monocyte; 1771-026-193-D2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277194</assay>
+            </assay_group>
+            <assay_group id="g709" label="monocyte; 1771-026-193-D5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277195</assay>
+            </assay_group>
+            <assay_group id="g710" label="monocyte; 1771-026-193-D7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277196</assay>
+            </assay_group>
+            <assay_group id="g711" label="monocyte; 1771-026-193-D8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277197</assay>
+            </assay_group>
+            <assay_group id="g712" label="monocyte; 1771-026-193-E10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277198</assay>
+            </assay_group>
+            <assay_group id="g713" label="monocyte; 1771-026-193-E11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277199</assay>
+            </assay_group>
+            <assay_group id="g714" label="monocyte; 1771-026-193-E12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277200</assay>
+            </assay_group>
+            <assay_group id="g715" label="monocyte; 1771-026-193-E3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277201</assay>
+            </assay_group>
+            <assay_group id="g716" label="monocyte; 1771-026-193-E4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277202</assay>
+            </assay_group>
+            <assay_group id="g717" label="monocyte; 1771-026-193-E5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277203</assay>
+            </assay_group>
+            <assay_group id="g718" label="monocyte; 1771-026-193-E6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277204</assay>
+            </assay_group>
+            <assay_group id="g719" label="monocyte; 1771-026-193-E7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277205</assay>
+            </assay_group>
+            <assay_group id="g720" label="monocyte; 1771-026-193-E8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277206</assay>
+            </assay_group>
+            <assay_group id="g721" label="monocyte; 1771-026-193-E9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277207</assay>
+            </assay_group>
+            <assay_group id="g722" label="monocyte; 1771-026-193-F10; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277209</assay>
+            </assay_group>
+            <assay_group id="g723" label="monocyte; 1771-026-193-F11; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277210</assay>
+            </assay_group>
+            <assay_group id="g724" label="monocyte; 1771-026-193-F12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277211</assay>
+            </assay_group>
+            <assay_group id="g725" label="monocyte; 1771-026-193-F1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277208</assay>
+            </assay_group>
+            <assay_group id="g726" label="monocyte; 1771-026-193-F2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277212</assay>
+            </assay_group>
+            <assay_group id="g727" label="monocyte; 1771-026-193-F3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277213</assay>
+            </assay_group>
+            <assay_group id="g728" label="monocyte; 1771-026-193-F4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277214</assay>
+            </assay_group>
+            <assay_group id="g729" label="monocyte; 1771-026-193-F5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277215</assay>
+            </assay_group>
+            <assay_group id="g730" label="monocyte; 1771-026-193-F6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277216</assay>
+            </assay_group>
+            <assay_group id="g731" label="monocyte; 1771-026-193-F7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277217</assay>
+            </assay_group>
+            <assay_group id="g732" label="monocyte; 1771-026-193-F8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277218</assay>
+            </assay_group>
+            <assay_group id="g733" label="monocyte; 1771-026-193-F9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277219</assay>
+            </assay_group>
+            <assay_group id="g734" label="monocyte; 1771-026-193-G12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277221</assay>
+            </assay_group>
+            <assay_group id="g735" label="monocyte; 1771-026-193-G1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277220</assay>
+            </assay_group>
+            <assay_group id="g736" label="monocyte; 1771-026-193-G2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277222</assay>
+            </assay_group>
+            <assay_group id="g737" label="monocyte; 1771-026-193-G3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277223</assay>
+            </assay_group>
+            <assay_group id="g738" label="monocyte; 1771-026-193-G4; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277224</assay>
+            </assay_group>
+            <assay_group id="g739" label="monocyte; 1771-026-193-G5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277225</assay>
+            </assay_group>
+            <assay_group id="g740" label="monocyte; 1771-026-193-G6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277226</assay>
+            </assay_group>
+            <assay_group id="g741" label="monocyte; 1771-026-193-G7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277227</assay>
+            </assay_group>
+            <assay_group id="g742" label="monocyte; 1771-026-193-G8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277228</assay>
+            </assay_group>
+            <assay_group id="g743" label="monocyte; 1771-026-193-G9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277229</assay>
+            </assay_group>
+            <assay_group id="g744" label="monocyte; 1771-026-193-H12; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277231</assay>
+            </assay_group>
+            <assay_group id="g745" label="monocyte; 1771-026-193-H1; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277230</assay>
+            </assay_group>
+            <assay_group id="g746" label="monocyte; 1771-026-193-H2; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277232</assay>
+            </assay_group>
+            <assay_group id="g747" label="monocyte; 1771-026-193-H3; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277233</assay>
+            </assay_group>
+            <assay_group id="g748" label="monocyte; 1771-026-193-H5; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277234</assay>
+            </assay_group>
+            <assay_group id="g749" label="monocyte; 1771-026-193-H6; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277235</assay>
+            </assay_group>
+            <assay_group id="g750" label="monocyte; 1771-026-193-H7; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277236</assay>
+            </assay_group>
+            <assay_group id="g751" label="monocyte; 1771-026-193-H8; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277237</assay>
+            </assay_group>
+            <assay_group id="g752" label="monocyte; 1771-026-193-H9; Plasmodium chabaudi chabaudi; 3 day">
+                <assay>ERR1277238</assay>
+            </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>
