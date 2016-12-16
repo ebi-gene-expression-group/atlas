@@ -33,7 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/versioned-resources-" + props.getProperty("resources.version") + "/**")
                 .addResourceLocations("/versioned-resources/");
-//        registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
+        registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
     }
 
     // equivalent to mvc:interceptors
