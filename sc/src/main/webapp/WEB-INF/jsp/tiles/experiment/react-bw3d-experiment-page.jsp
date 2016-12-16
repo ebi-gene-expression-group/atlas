@@ -1,10 +1,12 @@
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommonsRBW3D.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/reactBioWeb3D.bundle.js"></script>
 
-    <div class="small-2 columns">
+    <div class="small-4 columns">
         <label>Cell type:
             <select id="cell-type-select" name="Cell type" onchange="renderOnSelectChange(this)">
                 <option value="">Raw data</option>
+                <option value="final_clustering">Final tissue clustering</option>
+                <option value="initial_clustering">Initial tissue clustering</option>
                 <option value="C1x30_1L">C1x30_1L</option>
                 <option value="C1x41_1L">C1x41_1L</option>
                 <option value="C1x47_1L">C1x47_1L</option>
@@ -157,23 +159,39 @@
     // This should be also be set in the model attributes from the controller
     reactBioWeb3D.render({
         baseUrl: '${pageContext.request.contextPath}',
-        datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/${datasetVersion}/dataset.json',
+        datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/32203_points/dataset.json',
         mountNode: document.getElementById('react-container-experiment-page')
     });
 
 
     function renderOnSelectChange(obj) {
         if (obj.value) {
-            reactBioWeb3D.render({
-                baseUrl: '${pageContext.request.contextPath}',
-                datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/${datasetVersion}/dataset.json',
-                informationLayerFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/${datasetVersion}/' + obj.value + '.json',
-                mountNode: document.getElementById('react-container-experiment-page')
-            });
+
+            if (obj.value === 'initial_clustering' || obj.value === 'final_clustering') {
+                reactBioWeb3D.render({
+                    baseUrl: '${pageContext.request.contextPath}',
+                    datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/34343_points/dataset.json',
+                    informationLayerFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/34343_points/' + obj.value + '.json',
+                    colourScheme: 'rainbow',
+                    mountNode: document.getElementById('react-container-experiment-page')
+                });
+            } else {
+                reactBioWeb3D.render({
+                    baseUrl: '${pageContext.request.contextPath}',
+                    datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/32203_points/dataset.json',
+                    informationLayerFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/32203_points/' + obj.value + '.json',
+                    colourScheme: 'ranked',
+                    mountNode: document.getElementById('react-container-experiment-page')
+                });
+
+            }
+
         } else {
             reactBioWeb3D.render({
                 baseUrl: '${pageContext.request.contextPath}',
-                datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/${datasetVersion}/dataset.json',
+                datasetFilePath: '/gxa_sc/expdata/${experimentAccession}/spatial/32203_points/dataset.json',
+                informationLayerFilePath: '',
+                colourScheme: 'ranked',
                 mountNode: document.getElementById('react-container-experiment-page')
             });
         }

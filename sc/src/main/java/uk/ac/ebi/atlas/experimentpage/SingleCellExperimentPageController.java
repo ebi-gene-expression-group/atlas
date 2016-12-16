@@ -54,7 +54,6 @@ public class SingleCellExperimentPageController extends ExperimentPageController
         model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
 
         if ("E-MTAB-2865".equalsIgnoreCase(experimentAccession)) {
-            model.addAttribute("datasetVersion", "32203_points");
             return "experiment-spatial";
         } else {
             return "experiment";
