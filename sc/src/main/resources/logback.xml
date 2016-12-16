@@ -8,7 +8,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${catalina.base}/logs/${tomcat.hostname}/atlas.log</file>
+        <file>${catalina.base}/logs/${tomcat.hostname}/sc.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${catalina.base}/logs/${tomcat.hostname}/atlas/sc.%d{yyyy-MM-dd}.log</fileNamePattern>
