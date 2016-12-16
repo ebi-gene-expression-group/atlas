@@ -49,11 +49,16 @@ public class SingleCellExperimentPageController extends ExperimentPageController
 
         String updates = MessageFormat.format("Last updated: {0}",experiment.getExperimentInfo().getLastUpdate());
 
+        model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("displayName", experiment.getDisplayName());
         model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
 
-
-        return "experiment";
+        if ("E-MTAB-2865".equalsIgnoreCase(experimentAccession)) {
+            model.addAttribute("datasetVersion", "32203_points");
+            return "experiment-spatial";
+        } else {
+            return "experiment";
+        }
     }
 
 
@@ -107,4 +112,5 @@ public class SingleCellExperimentPageController extends ExperimentPageController
                 (experimentAccession).getExperimentDesign().getSampleCharacteristicsValues(cellId));
 
     }
+
 }
