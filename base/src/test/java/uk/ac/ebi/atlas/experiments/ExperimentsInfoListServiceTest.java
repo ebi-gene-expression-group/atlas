@@ -29,7 +29,7 @@ public class ExperimentsInfoListServiceTest {
                   "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
                   "      \"experimentAccession\": \"accession\",\n" +
                   "      \"experimentDescription\": \"description\",\n" +
-                  "      \"lastUpdate\": \"14-12-2016\",\n" +
+                  "      \"lastUpdate\": \"16-12-2016\",\n" +
                   "      \"numberOfAssays\": 0,\n" +
                   "      \"numberOfContrasts\": 0,\n" +
                   "      \"species\": \"species\",\n" +
