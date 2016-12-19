@@ -9,11 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummary;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
@@ -53,10 +49,16 @@ public class SingleCellExperimentPageController extends ExperimentPageController
         model.addAttribute("displayName", experiment.getDisplayName());
         model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
 
-        if ("E-MTAB-2865".equalsIgnoreCase(experimentAccession)) {
-            return "experiment-spatial";
-        } else {
-            return "experiment";
+        switch (experimentAccession.toUpperCase()) {
+            case "E-MTAB-2865":
+                model.addAttribute("datasetVersion", "32203_points");
+                return "experiment-spatial";
+            case "E-MTAB-4388":
+                return "experiment-reference-plot";
+            case "E-MTAB-5061":
+                return "experiment-tsne-plot";
+            default:
+                return "experiment-base";
         }
     }
 

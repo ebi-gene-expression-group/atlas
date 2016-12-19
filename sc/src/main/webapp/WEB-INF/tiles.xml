@@ -29,26 +29,38 @@
         <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
     </definition>
 
-    <definition name="experiment" extends="base">
+    <definition name="experiment-base" extends="base">
         <put-attribute name="header"  value="/WEB-INF/jsp/tiles/experiment/header.jsp"/>
-        <put-attribute name="body">
-            <definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">
-                <put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>
-                <put-attribute name="react-container" value="/WEB-INF/jsp/tiles/experiment/react-experiment-page.jsp"/>
-            </definition>
-        </put-attribute>
         <put-attribute name="news" value=""/>
     </definition>
 
-    <definition name="experiment-spatial" extends="base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/experiment/header.jsp"/>
+    <definition name="experiment-reference-plot" extends="experiment-base">
+        <put-attribute name="body">
+            <definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">
+                <put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>
+                <put-attribute name="react-container"
+                               value="/WEB-INF/jsp/tiles/experiment/react-reference-plot-experiment-page.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <definition name="experiment-tsne-plot" extends="experiment-base">
+        <put-attribute name="body">
+            <definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">
+                <put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>
+                <put-attribute name="react-container"
+                               value="/WEB-INF/jsp/tiles/experiment/react-tsne-plot-experiment-page.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <definition name="experiment-spatial" extends="experiment-base">
         <put-attribute name="body">
             <definition template="/WEB-INF/jsp/layouts/experiment-body.jsp">
                 <put-attribute name="description-blurb" value="/WEB-INF/jsp/tiles/experiment/description.jsp"/>
                 <put-attribute name="react-container" value="/WEB-INF/jsp/tiles/experiment/react-bw3d-experiment-page.jsp"/>
             </definition>
         </put-attribute>
-        <put-attribute name="news" value=""/>
     </definition>
     
 </tiles-definitions>

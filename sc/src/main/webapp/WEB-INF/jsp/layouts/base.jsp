@@ -62,6 +62,8 @@
     <!-- also inform ES so we can host your colour palette file -->
     <%--<link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/customized-bootstrap-3.3.5.css">
+
 
     <!-- for production the above can be replaced with -->
     <!--
