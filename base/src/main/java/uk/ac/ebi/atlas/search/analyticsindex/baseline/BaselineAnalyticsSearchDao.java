@@ -34,11 +34,12 @@ public class BaselineAnalyticsSearchDao {
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery geneQuery) {
+    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery query) {
 
         String response =
                 analyticsQueryClient.queryBuilder()
-                        .queryIdentifierSearch(geneQuery)
+                        .baselineFacets()
+                        .queryIdentifierOrConditionsSearch(query)
                         .fetch();
         return JsonPath.read(response, FACET_TREE_PATH);
     }
