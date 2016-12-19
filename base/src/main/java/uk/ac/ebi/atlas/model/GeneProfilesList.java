@@ -41,18 +41,11 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
         this.totalResultCount = totalResultCount;
     }
 
+    //test only
     public ImmutableList<String> extractGeneNames() {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (T profile : this) {
             builder.add(profile.getName());
-        }
-        return builder.build();
-    }
-
-    public ImmutableList<String> extractGeneIds() {
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (T profile : this) {
-            builder.add(profile.getId());
         }
         return builder.build();
     }

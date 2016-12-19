@@ -11,7 +11,11 @@ import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
-
+/*
+I exist because the old heatmap wants colors from the server side.
+The widget code no longer uses this.
+ */
+@Deprecated
 @Named
 public class BaselineExpressionViewModelBuilder {
 

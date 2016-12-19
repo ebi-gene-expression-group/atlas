@@ -99,7 +99,7 @@ public class ApplicationProperties {
         return speciesToExperimentProperties.get(species.toLowerCase().replace(" ", "_"));
     }
 
-    public String buildServerURL(HttpServletRequest request) throws MalformedURLException {
+    public static String buildServerURL(HttpServletRequest request) {
         String spec = request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         if (request.isSecure()) {
             spec = "https://" + spec;
@@ -107,8 +107,11 @@ public class ApplicationProperties {
             spec = "http://" + spec;
         }
 
-        URL url = new URL(spec);
-        return url.toExternalForm();
+        try {
+            return new URL(spec).toExternalForm();
+        } catch (MalformedURLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     public String buildDownloadURL(SemanticQuery geneQuery, HttpServletRequest request) {

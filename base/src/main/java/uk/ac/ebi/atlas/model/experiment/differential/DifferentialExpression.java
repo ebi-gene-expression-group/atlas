@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.base.Objects;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.experiment.baseline.Quartiles;
 
 public class DifferentialExpression implements Expression {
     private static final double SMALLEST_P_VALUE_ALLOWED = 1E-125;
@@ -93,5 +96,16 @@ public class DifferentialExpression implements Expression {
 
     public double getAbsoluteFoldChange() {
         return Math.abs(foldChange);
+    }
+
+    /*
+    see atlas_heatmap:src/load/Data.js for how the properties are read in
+    */
+    @Override
+    public JsonObject toJson() {
+        JsonObject result = new JsonObject();
+        result.addProperty("foldChange", foldChange);
+        result.addProperty("pValue", pValue);
+        return result;
     }
 }

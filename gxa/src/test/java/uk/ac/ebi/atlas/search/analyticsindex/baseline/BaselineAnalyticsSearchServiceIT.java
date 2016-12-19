@@ -115,7 +115,6 @@ public class BaselineAnalyticsSearchServiceIT {
         for (BaselineExperimentProfile profile : baselineProfilesList) {
             assertThat(profile.getId(), not(isEmptyOrNullString()));
             assertThat(profile.getName(), not(isEmptyOrNullString()));
-            assertThat(profile.getShortName(), not(isEmptyOrNullString()));
             assertThat(ExperimentType.get(profile.getExperimentType()).isBaseline(), is(true));
             assertThat(profile.getMinExpressionLevel(), is(lessThanOrEqualTo(profile.getMaxExpressionLevel())));
             assertThat(profile.getConditions().size(), greaterThan(4));

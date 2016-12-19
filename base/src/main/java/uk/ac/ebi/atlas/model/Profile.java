@@ -2,21 +2,22 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-//K is the Condition type (i.e. Factor or Contrast),
+//Condition is the Condition type (i.e. Factor or Contrast),
 //T is the Expression type (Baseline Expression or DifferentialExpression)
-public abstract class Profile<K, T extends Expression> {
-    protected Map<K, T> expressionsByCondition = new HashMap<>();
+public abstract class Profile<Condition, T extends Expression> {
+    protected Map<Condition, T> expressionsByCondition = new HashMap<>();
 
     private String id;
 
@@ -55,7 +56,7 @@ public abstract class Profile<K, T extends Expression> {
     }
 
     @Nullable
-    public Double getKnownExpressionLevel(K condition) {
+    public Double getKnownExpressionLevel(Condition condition) {
         Expression expression = expressionsByCondition.get(condition);
         if (expression != null && expression.isKnown()) {
             return expression.getLevel();
@@ -63,29 +64,29 @@ public abstract class Profile<K, T extends Expression> {
         return null;
     }
 
-    protected boolean isKnownLevel(K condition){
+    protected boolean isKnownLevel(Condition condition){
         Expression expression = expressionsByCondition.get(condition);
         return expression != null && expression.isKnown();
     }
 
     protected abstract void addExpression(T expression);
 
-    public boolean isExpressedOnAnyOf(Set<K> conditions) {
+    public boolean isExpressedOnAnyOf(Set<Condition> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
         return Sets.intersection(expressionsByCondition.keySet(), conditions).size() > 0;
     }
 
-    public Set<K> getConditions() {
+    public Set<Condition> getConditions() {
         return Sets.newHashSet(expressionsByCondition.keySet());
     }
 
-    protected Profile addExpression(K condition, T expression) {
+    protected Profile addExpression(Condition condition, T expression) {
         expressionsByCondition.put(condition, expression);
         addExpression(expression);
         return this;
     }
 
-    public T getExpression(K condition) {
+    public T getExpression(Condition condition) {
         return expressionsByCondition.get(condition);
     }
 
@@ -96,6 +97,7 @@ public abstract class Profile<K, T extends Expression> {
         return name;
     }
 
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -103,5 +105,12 @@ public abstract class Profile<K, T extends Expression> {
                 .add("id", id)
                 .add("name", name)
                 .toString();
+    }
+
+    public Map<String,String> properties(){
+        Map<String,String>  result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        return result;
     }
 }

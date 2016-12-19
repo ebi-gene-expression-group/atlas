@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.GenericBaselineProfilesList;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @Scope("prototype")
@@ -48,14 +49,13 @@ public class BaselineExperimentProfilesViewModelBuilder {
                                             List<Factor> orderedFactors, double minExpressionLevel, double
                                                     maxExpressionLevel) {
         JsonObject result = new JsonObject();
-        result.addProperty("id", profile.getId());
-        result.addProperty("name",profile.getShortName());
-        result.addProperty("experimentType", profile.getExperimentType());
+        for(Map.Entry<String, String> e: profile.properties().entrySet()){
+            result.addProperty(e.getKey(), e.getValue());
+        }
         result.add(
                 "expressions", baselineExpressionViewModelBuilder.buildExpressions(profile, orderedFactors,
                 minExpressionLevel, maxExpressionLevel)
         );
-        result.addProperty("serializedFilterFactors", FilterFactorsConverter.serialize(profile.getFilterFactors()));
         return result;
     }
 

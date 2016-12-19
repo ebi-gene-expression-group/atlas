@@ -6,6 +6,8 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
 
@@ -160,5 +162,19 @@ public class BaselineExpression implements Expression, KryoSerializable {
         known = input.readBoolean();
         boolean hasQuartiles = input.readBoolean();
         quartiles = hasQuartiles ? input.readDoubles(5) : input.readDoubles(0);
+    }
+
+    /*
+    Used to be: BaselineExpressionViewModel which also provides properties the old heatmap requires
+    see atlas_heatmap:src/load/Data.js for how the properties are read in
+     */
+    @Override
+    public JsonObject toJson() {
+        JsonObject result = new JsonObject();
+        result.addProperty("value", level);
+        if(quartiles!=null){
+            result.add("quartiles",Quartiles.create(quartiles).toJson());
+        }
+        return result;
     }
 }

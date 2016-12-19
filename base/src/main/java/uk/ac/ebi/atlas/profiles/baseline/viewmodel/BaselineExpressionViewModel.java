@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import uk.ac.ebi.atlas.model.experiment.baseline.Quartiles;
 
+@Deprecated
 public class BaselineExpressionViewModel {
 
     private final String factorName;

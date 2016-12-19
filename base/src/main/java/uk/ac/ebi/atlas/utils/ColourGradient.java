@@ -10,7 +10,6 @@ import javax.inject.Named;
 import java.awt.*;
 
 @Named
-@Scope("prototype")
 public class ColourGradient {
 
     protected static final double SCALE_LOGARITHMIC = 0.3;

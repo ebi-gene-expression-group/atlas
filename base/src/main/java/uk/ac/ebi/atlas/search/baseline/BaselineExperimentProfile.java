@@ -6,6 +6,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
+import java.util.Map;
+
 public class BaselineExperimentProfile extends BaselineProfile implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
@@ -53,7 +55,7 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
         return sb.toString();
     }
 
-    public String getShortName() {
+    String getShortName() {
         StringBuilder sb = new StringBuilder();
         String name = super.getName();
         if(StringUtils.startsWithAny(name, new String[]{"Tissues - ", "Cell Type - ", "Cell Lines - ", "Individual - ",
@@ -76,5 +78,14 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
 
     public String getExperimentType() {
         return experimentType.toString();
+    }
+
+    @Override
+    public Map<String, String> properties() {
+        Map<String, String> result = super.properties();
+        result.put("name", getShortName());
+        result.put("experimentType", experimentType.toString());
+        result.put("serializedFilterFactors",FilterFactorsConverter.serialize(getFilterFactors()));
+        return result;
     }
 }
