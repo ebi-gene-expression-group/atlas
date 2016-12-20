@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.profiles.json;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.Expression;
@@ -63,7 +64,11 @@ public class ProfilesToJsonConverter<Condition,P extends Profile<Condition, ? ex
         }
         JsonArray expressions = new JsonArray();
         for(Condition c: prescribedOrderOfRows){
-            expressions.add(profile.getExpression(c).toJson());
+            if(profile.isExpressedOnAnyOf(ImmutableSet.of(c))){
+                expressions.add(profile.getExpression(c).toJson());
+            } else {
+                expressions.add(new JsonObject());
+            }
         }
         result.add("expressions", expressions);
         try {

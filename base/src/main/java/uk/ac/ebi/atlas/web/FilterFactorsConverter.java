@@ -2,9 +2,14 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -35,9 +40,15 @@ public class FilterFactorsConverter {
     public static String serialize(Iterable<Factor> factors) {
         List<String> serializedFactors = new ArrayList<>();
         for (Factor factor : factors) {
+            Validate.isTrue(!factor.getType().contains(SEPARATOR), factor+"type should not contain a :");
+            Validate.isTrue(!factor.getValue().contains(SEPARATOR),factor+"value should not contain a :");
             serializedFactors.add(factor.getType() + SEPARATOR + factor.getValue());
         }
-        return StringUtils.join(serializedFactors, ",");
+        try {
+            return URLEncoder.encode(StringUtils.join(serializedFactors, ","), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static SortedSet<Factor> deserialize(String csvSerializedFactors) {
@@ -47,11 +58,17 @@ public class FilterFactorsConverter {
             return factors;
         }
 
-        String[] serializedFactors = csvSerializedFactors.split(",");
+        String[] serializedFactors;
+        try {
+            serializedFactors = URLDecoder.decode(csvSerializedFactors, "UTF-8").split(",");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         for (String serializedFactor : serializedFactors) {
             String[] split = serializedFactor.split(SEPARATOR);
 
-            checkState(split.length == 2, "serialized Factor string should be like TYPE:value");
+            checkState(split.length == 2, "serialized Factor string should be like TYPE:value, is:"
+                    + Arrays.deepToString(split));
 
             factors.add(new Factor(split[0], split[1]));
         }

@@ -2,17 +2,20 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.mock;
 
 public class FilterFactorsConverterTest {
@@ -51,14 +54,41 @@ public class FilterFactorsConverterTest {
         //given
         String serializedFactors = FilterFactorsConverter.serialize(Lists.newArrayList(factor1, factor2));
         //then
-        assertThat(serializedFactors, is(SERIALIZED_FACTORS));
+        assertThat(serializedFactors, containsString(factor1.getType()));
+        assertThat(serializedFactors, containsString(factor2.getValue()));
     }
 
     @Test
     public void testDeserialize() throws Exception {
-        //given
-        Set<Factor> factors = FilterFactorsConverter.deserialize(SERIALIZED_FACTORS);
-        //then
-        assertThat(factors, containsInAnyOrder(factor1, factor2));
+        /*
+        I failed on strings containing a : but we expect not to have them
+         */
+        for(int i = 0 ; i<1000; i++){
+            //given
+            Set<Factor> factors = randomFactors();
+            //then
+
+            Set<Factor> result = FilterFactorsConverter.deserialize(FilterFactorsConverter.serialize(factors));
+            assertThat(result, is(factors));
+        }
+    }
+
+    private Set<Factor> randomFactors() {
+        Random random = new Random();
+
+        Set<Factor> result = new HashSet<>();
+        result.add(randomFactor());
+        result.add(randomFactor());
+
+        while (random.nextBoolean()){
+            result.add(randomFactor());
+        }
+
+        return result;
+    }
+
+    private Factor randomFactor() {
+        return new Factor(RandomStringUtils.randomAlphanumeric(6), RandomStringUtils.randomAlphanumeric(10));
     }
 }
+
