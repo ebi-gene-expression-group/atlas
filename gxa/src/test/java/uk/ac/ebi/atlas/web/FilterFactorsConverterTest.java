@@ -16,6 +16,8 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 public class FilterFactorsConverterTest {
@@ -60,16 +62,19 @@ public class FilterFactorsConverterTest {
 
     @Test
     public void testDeserialize() throws Exception {
-        /*
-        I failed on strings containing a : but we expect not to have them
-         */
-        for(int i = 0 ; i<1000; i++){
+        for(int i = 0 ; i<100000; i++){
             //given
             Set<Factor> factors = randomFactors();
             //then
 
-            Set<Factor> result = FilterFactorsConverter.deserialize(FilterFactorsConverter.serialize(factors));
-            assertThat(result, is(factors));
+            try{
+                Set<Factor> result = FilterFactorsConverter.deserialize(FilterFactorsConverter.serialize(factors));
+                assertEquals(factors.toString(), result, factors);
+            } catch (Exception e){
+                fail("Bad: "+ factors.toString()+" exception:"+e.getMessage() );
+            }
+
+
         }
     }
 
@@ -88,7 +93,7 @@ public class FilterFactorsConverterTest {
     }
 
     private Factor randomFactor() {
-        return new Factor(RandomStringUtils.randomAlphanumeric(6), RandomStringUtils.randomAlphanumeric(10));
+        return new Factor(RandomStringUtils.randomAscii(6), RandomStringUtils.randomAscii(10));
     }
 }
 
