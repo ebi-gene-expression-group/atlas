@@ -49,6 +49,7 @@ public class QuerySearchController {
         this.speciesFactory = speciesFactory;
     }
 
+
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                           @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,

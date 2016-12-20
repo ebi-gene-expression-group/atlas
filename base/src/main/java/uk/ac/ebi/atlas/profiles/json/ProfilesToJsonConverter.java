@@ -7,40 +7,46 @@ import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProfilesToJsonConverter<Condition, Expr extends Expression> {
+public class ProfilesToJsonConverter<Condition,P extends Profile<Condition, ? extends Expression>> {
 
-    private final Function<Profile<Condition, Expr>, URI> provideLinkToProfile;
+    private final Function<P, URI> provideLinkToProfile;
 
-    public ProfilesToJsonConverter createForCrossExperimentResults(final URI experimentsExternalLocation,
-                                                                   final Map<String, String> params){
-        return new ProfilesToJsonConverter(new Function<Profile<?,?>, URI>() {
+    public static ProfilesToJsonConverter<Factor, BaselineExperimentProfile>
+        createForCrossExperimentResults(final URI experimentsExternalLocation, final Map<String, String> params){
+        return new ProfilesToJsonConverter<>(new Function<BaselineExperimentProfile, URI>() {
             @Nullable
             @Override
-            public URI apply(@Nullable Profile profile) {
+            public URI apply(@Nullable BaselineExperimentProfile profile) {
+                Map<String, String> m = new HashMap<>(params);
+                m.put("serializedFilterFactors", FilterFactorsConverter.serialize(profile.getFilterFactors()));
                 return experimentsExternalLocation.resolve(profile.getId()+"?"+ Joiner.on("&").withKeyValueSeparator
-                        ("=").join(params.entrySet()));
+                        ("=").join(m.entrySet()));
             }
         });
     }
 
-    public ProfilesToJsonConverter(Function<Profile<Condition, Expr>, URI> provideLinkToProfile){
+    public ProfilesToJsonConverter(Function<P, URI> provideLinkToProfile){
         this.provideLinkToProfile = provideLinkToProfile;
     }
 
-    public JsonObject convert(GeneProfilesList<? extends Profile<Condition, Expr>> profiles,
+    public JsonObject convert(GeneProfilesList<P> profiles,
                               List<Condition> prescribedOrderOfRows){
         JsonObject result = new JsonObject();
         result.addProperty("searchResultTotal", profiles.getTotalResultCount());
 
         JsonArray rows = new JsonArray();
-        for(Profile<Condition, Expr> profile : profiles){
+        for(P profile : profiles){
             rows.add(convert(profile, prescribedOrderOfRows));
         }
         result.add("rows", rows);
@@ -48,7 +54,7 @@ public class ProfilesToJsonConverter<Condition, Expr extends Expression> {
         return result;
     }
 
-    public JsonObject convert(Profile<Condition, Expr> profile,
+    public JsonObject convert(P profile,
                             List<Condition> prescribedOrderOfRows){
 
         JsonObject result = new JsonObject();

@@ -6,6 +6,7 @@ import com.google.common.collect.Iterables;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -28,7 +29,7 @@ public abstract class Quartiles {
     }
 
     public static Quartiles create(double[] values) {
-        checkArgument(values.length == 5, "expected 5 values for quartiles but got " + values);
+        checkArgument(values.length == 5, "expected 5 values for quartiles but got " + Arrays.toString(values));
         return Quartiles.create(values[0], values[1], values[2], values[3], values[4]);
     }
 

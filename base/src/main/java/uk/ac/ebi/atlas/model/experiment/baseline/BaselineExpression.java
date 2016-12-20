@@ -171,8 +171,10 @@ public class BaselineExpression implements Expression, KryoSerializable {
     @Override
     public JsonObject toJson() {
         JsonObject result = new JsonObject();
-        result.addProperty("value", level);
-        if(quartiles!=null){
+        if(known){
+            result.addProperty("value", level);
+        }
+        if(quartiles!=null && quartiles.length == 5){
             result.add("quartiles",Quartiles.create(quartiles).toJson());
         }
         return result;
