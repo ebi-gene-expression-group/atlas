@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.species;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 @Named
 public class SpeciesPropertiesTrader {
@@ -26,17 +28,14 @@ public class SpeciesPropertiesTrader {
     }
 
     public SpeciesProperties find(String speciesName) {
-        return nameToSpecies.get(normalise(speciesName));
+        return nameToSpecies.containsKey(normalise(speciesName)) ?
+                nameToSpecies.get(normalise(speciesName)) : SpeciesProperties.UNKNOWN;
     }
 
     private String normalise(String str) {
-        if (str.contains(" ")) {
-            return StringUtils.capitalize(Joiner.on(' ').join(Arrays.copyOf(str.toLowerCase().split(" "), 2)))
-                    .replace(" ", "_");
-        } else {
-            return StringUtils.capitalize(str.toLowerCase());
-        }
+        String normalisedString = str.contains("_") ? str.replace("_", " ") : str;
 
+        return Joiner.on(' ').join(Arrays.copyOf(normalisedString.toLowerCase().split(" "), 2));
     }
 
     public void refresh() {
@@ -51,7 +50,7 @@ public class SpeciesPropertiesTrader {
                     ImmutableSortedMap.naturalOrder();
 
             for (SpeciesProperties speciesProperties : speciesPropertiesDao.getAll()) {
-                nameToSpeciesPropertiesBuilder.put(speciesProperties.canonicalName(), speciesProperties);
+                nameToSpeciesPropertiesBuilder.put(speciesProperties.referenceName(), speciesProperties);
             }
 
             nameToSpecies = nameToSpeciesPropertiesBuilder.build();

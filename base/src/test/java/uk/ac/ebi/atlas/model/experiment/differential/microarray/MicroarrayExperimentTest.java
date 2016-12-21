@@ -10,9 +10,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Date;
 import java.util.TreeSet;
@@ -30,8 +30,6 @@ public class MicroarrayExperimentTest {
     private static final String ARRAY_DESIGN_ACCESSIONS = "arrayDesignAccessions";
     private static final String PUBMEDID = "PUBMEDID";
 
-    private Contrast contrast;
-
     @Mock
     private ExperimentDesign experimentDesignMock;
 
@@ -40,14 +38,14 @@ public class MicroarrayExperimentTest {
     @Before
     public void setUp() throws Exception {
 
-        contrast = mock(Contrast.class);
+        Contrast contrast = mock(Contrast.class);
         when(contrast.getId()).thenReturn("contrast");
 
         when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", "assay 1","assay 2"));
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test","assay 1"));
 
         subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrast),
-                "description", true, new Species("species", "species", "kingdom", "ensembl"), Sets.newTreeSet(Sets
+                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets
                 .newHashSet
                 (ARRAY_DESIGN_ACCESSIONS)),
                 new TreeSet<String>(), experimentDesignMock, Sets.newHashSet(PUBMEDID));

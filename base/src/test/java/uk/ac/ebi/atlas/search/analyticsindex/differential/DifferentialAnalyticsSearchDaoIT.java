@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ public class DifferentialAnalyticsSearchDaoIT {
 
     @Test
     public void differentialSearchWithUrlParams() {
-        String json = subject.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(SemanticQuery.create("zinc finger"), SemanticQuery.create(), speciesFactory.create("mus musculus").mappedName);
+        String json = subject.fetchDifferentialResultsAboveDefaultFoldChangeForQuery(SemanticQuery.create("zinc finger"), SemanticQuery.create(), speciesFactory.create("mus musculus").getReferenceName());
 
         ReadContext jsonCtx = JsonPath.parse(json);
 

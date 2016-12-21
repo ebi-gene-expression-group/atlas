@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExperimentBuilder {
 
-    private String species;
+    private Species species;
     private String description;
     private String disclaimer;
     private List<String> dataProviderURL;
@@ -39,7 +39,7 @@ public class BaselineExperimentBuilder {
     private List<String> alternativeViews = Collections.emptyList();
     private List<String> alternativeViewDescriptions = Collections.emptyList();
 
-    public BaselineExperimentBuilder forSpecies(String species){
+    public BaselineExperimentBuilder forSpecies(Species species){
         this.species = species;
         return this;
     }

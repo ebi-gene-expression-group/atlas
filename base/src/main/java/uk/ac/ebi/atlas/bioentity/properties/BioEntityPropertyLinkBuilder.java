@@ -6,7 +6,6 @@ import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
@@ -41,7 +40,7 @@ public class BioEntityPropertyLinkBuilder {
     Optional<PropertyLink> createLink(String identifier, BioentityPropertyName propertyName, String propertyValue,
                                       Species species, int relevance) {
 
-        String linkSpecies = species.getCanonicalName();
+        String linkSpecies = species.getEnsemblName();
         String linkText = fetchLinkText(propertyName, propertyValue);
 
         if (linkText == null) {
@@ -87,7 +86,7 @@ public class BioEntityPropertyLinkBuilder {
             return identifier;
         }
 
-        String speciesToken = " (" + speciesTrader.find(species.get()).humanReadableName() + ")";
+        String speciesToken = " (" + species.get() + ")";
 
         Set<String> propertyValuesForGeneId =
                 bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);

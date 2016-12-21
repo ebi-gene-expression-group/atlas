@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -25,20 +24,20 @@ public class SpeciesPropertiesDao {
         this.dataFileHub = dataFileHub;
     }
 
-    public SpeciesProperties get(String species) throws IOException {
-        try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {
-            reader.beginArray();
-            while (reader.hasNext()) {
-                SpeciesProperties speciesJson = readSpeciesProperties(reader);
-                if (speciesJson.canonicalName().equals(species)) {
-                    return speciesJson;
-                }
-            }
-            reader.endArray();
-        }
-
-        return null;
-    }
+//    public SpeciesProperties get(String species) throws IOException {
+//        try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {
+//            reader.beginArray();
+//            while (reader.hasNext()) {
+//                SpeciesProperties speciesJson = readSpeciesProperties(reader);
+//                if (speciesJson.referenceName().equals(species)) {
+//                    return speciesJson;
+//                }
+//            }
+//            reader.endArray();
+//        }
+//
+//        return null;
+//    }
 
     public ImmutableList<SpeciesProperties> getAll() throws IOException {
         ImmutableList.Builder<SpeciesProperties> allSpeciesPropertiesBuilder = ImmutableList.builder();
@@ -55,7 +54,7 @@ public class SpeciesPropertiesDao {
     }
 
     private SpeciesProperties readSpeciesProperties(JsonReader reader) throws IOException {
-        String canonicalName = null;
+        String ensemblName = null;
         String defaultQueryFactorType = null;
         String kingdom = null;
         Map<String, List<String>> resources = null;
@@ -65,7 +64,7 @@ public class SpeciesPropertiesDao {
             String name = reader.nextName();
 
             if ("name".equals(name)) {
-                canonicalName = reader.nextString();
+                ensemblName = reader.nextString();
             } else if ("defaultQueryFactorType".equals(name)) {
                 defaultQueryFactorType = reader.nextString();
             } else if ("kingdom".equals(name)) {
@@ -83,8 +82,9 @@ public class SpeciesPropertiesDao {
             }
         }
         reader.endObject();
+
         return SpeciesProperties.create(
-                StringUtils.capitalize(canonicalName.replace("_", " ")), canonicalName, defaultQueryFactorType, kingdom, resources);
+                ensemblName.toLowerCase().replace("_", " "), ensemblName, defaultQueryFactorType, kingdom, resources);
     }
 
     private Pair<String, List<String>> readSpeciesResource(JsonReader reader) throws IOException {

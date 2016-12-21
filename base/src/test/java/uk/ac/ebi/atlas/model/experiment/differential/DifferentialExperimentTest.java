@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.collect.Sets;
@@ -9,9 +8,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
-import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Date;
 
@@ -62,7 +60,7 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
         subject = new DifferentialExperiment("accession", new Date(), Sets.newHashSet(contrastMock1, contrastMock2),
-                "description", true, new Species("species","species name", "kingdom", "ensembl"), Sets.newHashSet(PUBMEDID), experimentDesignMock);
+                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID), experimentDesignMock);
     }
 
     @Test

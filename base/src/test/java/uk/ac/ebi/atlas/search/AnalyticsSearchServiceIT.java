@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.SpeciesTest;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -21,11 +21,14 @@ import static org.junit.Assert.assertThat;
 public class AnalyticsSearchServiceIT {
 
     @Inject
-    AnalyticsSearchService subject;
+    private SpeciesFactory speciesFactory;
+
+    @Inject
+    private AnalyticsSearchService subject;
 
     private SemanticQuery query = SemanticQuery.create("zinc finger");
     private SemanticQuery condition = SemanticQuery.create("pish");
-    private Species species = SpeciesTest.RICE;
+    private Species species = speciesFactory.create("oryza sativa");
 
     @Test
     public void fetchExperimentTypes1() {
@@ -42,27 +45,27 @@ public class AnalyticsSearchServiceIT {
 
     @Test
     public void fetchExperimentTypes2() {
-        ImmutableSet<String> result = subject.fetchExperimentTypes(query, species);
+        ImmutableSet<String> result = subject.fetchExperimentTypes(query, species.getReferenceName());
         assertThat(result.size(), greaterThan(0));
     }
 
     @Test
     public void fetchExperimentTypes3() {
-        ImmutableSet<String> result = subject.fetchExperimentTypes(query,condition,species);
+        ImmutableSet<String> result = subject.fetchExperimentTypes(query, condition, species.getReferenceName());
 
         assertThat(result.size(), greaterThan(0));
     }
 
     @Test
     public void searchMoreThanOneBioentityIdentifier() {
-        ImmutableSet<String> result = subject.searchMoreThanOneBioentityIdentifier(query,condition,species);
+        ImmutableSet<String> result = subject.searchMoreThanOneBioentityIdentifier(query, condition, species.getReferenceName());
 
         assertThat(result.size(), greaterThan(0));
     }
 
     @Test
     public void searchBioentityIdentifiers() {
-        ImmutableSet<String> result = subject.searchBioentityIdentifiers(query,condition,species);
+        ImmutableSet<String> result = subject.searchBioentityIdentifiers(query, condition, species.getReferenceName());
 
         assertThat(result.size(), greaterThan(0));
     }
@@ -70,7 +73,7 @@ public class AnalyticsSearchServiceIT {
 
     @Test
     public void getBioentityIdentifiersForSpecies(){
-        Collection<String> result = subject.getBioentityIdentifiersForSpecies(species);
+        Collection<String> result = subject.getBioentityIdentifiersForSpecies(species.getReferenceName());
 
         assertThat(result.size(), greaterThan(100));
     }

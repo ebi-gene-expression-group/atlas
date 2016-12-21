@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
@@ -23,24 +24,23 @@ import java.util.Set;
 public abstract class Experiment implements Serializable {
 
     private static final Gson gson = new Gson();
-
-    private final ExperimentType type;
-    protected final ExperimentDesign experimentDesign;
-    private final String species;
-    private final List<String> pubMedIds;
-    private final String accession;
-    protected final String description;
-    private final String displayName;
-    private final String disclaimer;
-    private final boolean hasRData;
-    private final Date lastUpdate;
-    private final List<String> dataProviderURL;
-    private final List<String> dataProviderDescription;
-    private final List<String> alternativeViews;
-    private final List<String> alternativeViewDescriptions;
+    private ExperimentType type;
+    protected ExperimentDesign experimentDesign;
+    private Species species;
+    private List<String> pubMedIds;
+    private String accession;
+    protected String description;
+    private String displayName;
+    private String disclaimer;
+    private boolean hasRData;
+    private Date lastUpdate;
+    private List<String> dataProviderURL;
+    private List<String> dataProviderDescription;
+    private List<String> alternativeViews;
+    private List<String> alternativeViewDescriptions;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, boolean hasRData, String species, Collection<String> pubMedIds,
+                      String disclaimer, boolean hasRData, Species species, Collection<String> pubMedIds,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
                       List<String> alternativeViewDescriptions) {
@@ -85,16 +85,15 @@ public abstract class Experiment implements Serializable {
         return accession;
     }
 
-    public String getSpecies(){
+    public Species getSpecies(){
         return species;
     }
 
-    public List<Pair<String, String>> alternativeViews() {
-
+    public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
 
-        for (int i = 0; i<alternativeViews.size(); i++){
+        for(int i = 0 ; i < alternativeViews.size() ; i++) {
             result.add(Pair.of(alternativeViews.get(i), alternativeViewDescriptions.get(i)));
         }
         return result;
@@ -102,8 +101,7 @@ public abstract class Experiment implements Serializable {
 
     protected abstract Set<String> getAnalysedRowsAccessions();
 
-    public Map<String, Object> getAttributes() {
-
+    public Map<String, Object> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
         result.put("experimentHasRData", hasRData);
@@ -140,13 +138,14 @@ public abstract class Experiment implements Serializable {
         return result;
     }
 
-    public ExperimentInfo getExperimentInfo() {
+    public ExperimentInfo buildExperimentInfo(){
 
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(accession);
         experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
         experimentInfo.setExperimentDescription(description);
-        experimentInfo.setSpecies(species);
+        experimentInfo.setSpecies(species.getName());
+        experimentInfo.setKingdom(species.getKingdom());
         experimentInfo.setExperimentType(type.getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
 

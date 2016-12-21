@@ -16,8 +16,12 @@ public class Species {
         return name;
     }
 
-    public String getCanonicalName() {
-        return mappedProperties.canonicalName();
+    public String getReferenceName() {
+        return mappedProperties.referenceName();
+    }
+
+    public String getEnsemblName() {
+        return mappedProperties.ensemblName();
     }
 
     public String getKingdom() {
@@ -30,5 +34,13 @@ public class Species {
 
     public Collection<String> getResources(String type) {
         return mappedProperties.resources().get(type);
+    }
+
+    public boolean isPlant() {
+        return "plants".equalsIgnoreCase(mappedProperties.kingdom());
+    }
+
+    public boolean isUnknown() {
+        return mappedProperties == SpeciesProperties.UNKNOWN;
     }
 }

@@ -8,7 +8,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
-import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
@@ -28,33 +28,33 @@ public class SolrQueryService {
 
     static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
-    private GxaSolrClient solrServer;
-    private SolrQueryBuilderFactory solrQueryBuilderFactory;
-    private SpeciesPropertiesTrader speciesTrader;
+    private final GxaSolrClient solrServer;
+    private final SolrQueryBuilderFactory solrQueryBuilderFactory;
+    private final SpeciesFactory speciesFactory;
 
     @Inject
     public SolrQueryService(GxaSolrClient solrServer,
                             SolrQueryBuilderFactory solrQueryBuilderFactory,
-                            SpeciesPropertiesTrader speciesTrader) {
+                            SpeciesFactory speciesFactory) {
         this.solrServer = solrServer;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
-        this.speciesTrader = speciesTrader;
+        this.speciesFactory = speciesFactory;
     }
 
 
-    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(SemanticQuery geneQuery, String species) {
+    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(SemanticQuery geneQuery, String speciesReferenceName) {
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         //associate gene ids with each token in the query string
         for (SemanticQueryTerm queryTerm : geneQuery) {
-            geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, species));
+            geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, speciesReferenceName));
         }
         return geneQueryResponse;
 
     }
 
-    private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String species) {
+    private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String speciesReferenceName) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -62,7 +62,9 @@ public class SolrQueryService {
         // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forTerm(queryTerm)
-                .withSpecies(species).withBioentityTypes(BioentityType.GENE.getSolrAliases()).build();
+                .withSpecies(speciesReferenceName)
+                .withBioentityTypes(BioentityType.GENE.getSolrAliases())
+                .build();
 
         Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
 
@@ -72,7 +74,7 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String species) {
+    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String speciesReferenceName) {
 
         if (geneQuery.isEmpty()) {
             return new GeneQueryResponse();
@@ -80,10 +82,10 @@ public class SolrQueryService {
 
         GeneQueryResponse geneQueryResponse =
                 fetchGeneIdsOrSetsGroupedByGeneQueryToken(
-                        geneQuery, speciesTrader.getByName(species).name().replaceAll("_", " "));
+                        geneQuery, speciesFactory.create(speciesReferenceName).getReferenceName());
 
         if (geneQueryResponse.isEmpty()) {
-            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery.toJson() + ", species = " + species);
+            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery.toJson() + ", species = " + speciesReferenceName);
         }
 
         return geneQueryResponse;

@@ -35,26 +35,24 @@ public class SpeciesLookupService {
         this.solrServer = solrServer;
     }
 
-    // used for looking up species for a gene/protein/transcript/mirna/etc. id
-    // they will only have a single species
+    // Used for looking up species for a gene/protein/transcript/mirna/etc. ID; they will only have a single species
     public Optional<String> fetchSpeciesForBioentityId(String identifier) {
-        // eg: bioentity_identifier:ENSMUSG00000021789
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, Collections.singleton(identifier));
     }
 
     public Optional<String> fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
-        return fetchFirstSpeciesByField(fieldName,
-                BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(multiTermQuery));
+        return fetchFirstSpeciesByField(
+                fieldName, BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(multiTermQuery));
     }
 
     public Optional<String> fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
-        return fetchFirstSpeciesByField(fieldName, Collections2.transform(geneQuery.terms(), new Function<SemanticQueryTerm, String>() {
-            @Nullable
-            @Override
-            public String apply(@Nullable SemanticQueryTerm semanticQueryTerm) {
-                return semanticQueryTerm.value();
-            }
-        }));
+        return fetchFirstSpeciesByField(
+                fieldName, Collections2.transform(geneQuery.terms(), new Function<SemanticQueryTerm, String>() {
+                    @Override
+                    public String apply(SemanticQueryTerm semanticQueryTerm) {
+                        return semanticQueryTerm.value();
+                    }
+                }));
     }
 
     private Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {

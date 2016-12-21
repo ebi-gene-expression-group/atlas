@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 
@@ -31,10 +30,10 @@ public class AutocompleteGroupedPropertyValueQueryBuilderIT {
     @Test
     public void asp() {
         //eg: http://lime:8983/solr/gxa/select?q=property_value_edgengram%3A%22asp%22+AND+(bioentity_type%3A%22ensgene%22+OR+bioentity_type%3A%22mirna%22+OR+bioentity_type%3A%22ensprotein%22+OR+bioentity_type%3A%22enstranscript%22)+AND+(property_name%3A%22symbol%22)&rows=15&wt=json&indent=true&group=true&group.field=property_value&group.main=true
-        String species = "homo sapiens";
+        String speciesReferenceName = "homo sapiens";
         String propertyNames = "symbol";
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleteGroupedPropertyValueQueryBuilder()
-                .withSpecies(SpeciesUtils.convertToEnsemblSpecies(species))
+                .withSpecies(speciesReferenceName)
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)
                 .build("asp");

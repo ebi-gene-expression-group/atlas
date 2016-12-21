@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class DifferentialExperiment extends Experiment {
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
     public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description,
-                                  boolean hasRData, String species, Collection<String> pubMedIds,
+                                  boolean hasRData, Species species, Collection<String> pubMedIds,
                                   ExperimentDesign experimentDesign) {
 
         this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasRData,
@@ -34,7 +35,7 @@ public class DifferentialExperiment extends Experiment {
     }
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
-                                     Set<Contrast> contrasts, String description, boolean hasRData, String species,
+                                     Set<Contrast> contrasts, String description, boolean hasRData, Species species,
                                      Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
 
         super(experimentType, accession, lastUpdate,null, description, "", hasRData, species, pubMedIds,
@@ -116,8 +117,8 @@ public class DifferentialExperiment extends Experiment {
     }
 
     @Override
-    public ExperimentInfo getExperimentInfo() {
-        ExperimentInfo experimentInfo = super.getExperimentInfo();
+    public ExperimentInfo buildExperimentInfo() {
+        ExperimentInfo experimentInfo = super.buildExperimentInfo();
         experimentInfo.setNumberOfAssays(getAssayAccessions().size());
         experimentInfo.setNumberOfContrasts(getContrastIds().size());
         return  experimentInfo;

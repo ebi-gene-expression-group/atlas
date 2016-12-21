@@ -4,6 +4,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Date;
@@ -18,7 +19,7 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     private SortedSet<String> arrayDesignNames;
 
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
-                                String description, boolean hasRData, String species,
+                                String description, boolean hasRData, Species species,
                                 SortedSet<String> arrayDesignAccessions, SortedSet<String> arrayDesignNames,
                                 ExperimentDesign experimentDesign, Set<String> pubMedIds) {
 
@@ -45,8 +46,8 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     }
 
     @Override
-    public ExperimentInfo getExperimentInfo(){
-        ExperimentInfo experimentInfo = super.getExperimentInfo();
+    public ExperimentInfo buildExperimentInfo(){
+        ExperimentInfo experimentInfo = super.buildExperimentInfo();
         experimentInfo.setArrayDesigns(arrayDesignAccessions);
         experimentInfo.setArrayDesignNames(arrayDesignNames);
         return experimentInfo;

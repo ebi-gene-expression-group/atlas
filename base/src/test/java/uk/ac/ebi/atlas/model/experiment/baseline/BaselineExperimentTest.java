@@ -11,8 +11,8 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.experiment.baseline.*;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,21 +35,6 @@ public class BaselineExperimentTest {
     private ExperimentalFactors experimentalFactorsMock;
 
     @Mock
-    private ExperimentRun runMock1;
-
-    @Mock
-    private ExperimentRun runMock2;
-
-    @Mock
-    private FactorGroup factorGroupMock1;
-
-    @Mock
-    private FactorGroup factorGroupMock2;
-
-    @Mock
-    private Factor factorMock;
-
-    @Mock
     private ExperimentDesign experimentDesignMock;
     
     @Mock
@@ -59,12 +44,6 @@ public class BaselineExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        when(runMock1.getFactorGroup()).thenReturn(factorGroupMock1);
-        when(runMock1.getAccession()).thenReturn(RUN_ACCESSION1);
-        when(runMock2.getFactorGroup()).thenReturn(factorGroupMock2);
-        when(runMock2.getAccession()).thenReturn(RUN_ACCESSION2);
-
-
         when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
         when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
@@ -77,8 +56,7 @@ public class BaselineExperimentTest {
             experimentDesign, AssayGroups assayGroups){
             return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                     experimentalFactors,
-                    "description", "displayName", "", new Species("species", "species", "kingdom",
-                    "ensembl"), true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
+                    "description", "displayName", "", new Species("species", SpeciesProperties.UNKNOWN), true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
                     Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
 
     }
