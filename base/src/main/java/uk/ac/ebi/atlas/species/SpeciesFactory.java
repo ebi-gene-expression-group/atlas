@@ -14,6 +14,6 @@ public class SpeciesFactory {
     }
 
     public Species create(String name) {
-        return new Species(name, speciesPropertiesTrader.find(name));
+        return new Species(name, speciesPropertiesTrader.get(name));
     }
 }

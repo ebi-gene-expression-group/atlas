@@ -39,7 +39,7 @@ public class SpeciesPropertiesDao {
 //        return null;
 //    }
 
-    public ImmutableList<SpeciesProperties> getAll() throws IOException {
+    public ImmutableList<SpeciesProperties> fetchAll() throws IOException {
         ImmutableList.Builder<SpeciesProperties> allSpeciesPropertiesBuilder = ImmutableList.builder();
 
         try (JsonReader reader = dataFileHub.getSpeciesPropertiesFile().json.get()) {

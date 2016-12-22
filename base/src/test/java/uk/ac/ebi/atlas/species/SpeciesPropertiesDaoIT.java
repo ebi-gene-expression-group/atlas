@@ -12,7 +12,6 @@ import java.util.List;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,7 +23,7 @@ public class SpeciesPropertiesDaoIT {
 
     @Test
     public void fetchAllSpecies() throws Exception {
-        List<SpeciesProperties> allSpeciesProperties = subject.getAll();
+        List<SpeciesProperties> allSpeciesProperties = subject.fetchAll();
         assertThat(allSpeciesProperties, hasSize(greaterThan(50)));
     }
 

@@ -27,7 +27,7 @@ public class SpeciesFactoryTest {
 //
 //    @Test
 //    public void plantsHaveTwoGenomeBrowsers() throws Exception {
-//        List<SpeciesProperties> allSpeciesProperties = subject.getAll();
+//        List<SpeciesProperties> allSpeciesProperties = subject.fetchAll();
 //
 //        for (SpeciesProperties speciesProperties : allSpeciesProperties) {
 //            if ("plants".equalsIgnoreCase(speciesProperties.kingdom())) {
