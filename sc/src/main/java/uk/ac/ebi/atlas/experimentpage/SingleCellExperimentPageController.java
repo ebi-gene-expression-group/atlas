@@ -43,7 +43,7 @@ public class SingleCellExperimentPageController extends ExperimentPageController
         String howManySamples = MessageFormat.format("{0} single cells",
                 experiment.getExperimentDesign().getAllRunOrAssay().size());
 
-        String updates = MessageFormat.format("Last updated: {0}",experiment.getExperimentInfo().getLastUpdate());
+        String updates = MessageFormat.format("Last updated: {0}",experiment.buildExperimentInfo().getLastUpdate());
 
         model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("displayName", experiment.getDisplayName());

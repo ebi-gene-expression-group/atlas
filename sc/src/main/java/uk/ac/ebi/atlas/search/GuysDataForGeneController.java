@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.resource.SingleCellFileHub;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -74,7 +74,7 @@ public class GuysDataForGeneController { // give me a better class name when I b
 
     private Set<String> getGuysIdentifiers(SemanticQuery query){
         ImmutableSet.Builder<String> b = ImmutableSet.builder();
-        for(String bioentityIdentifier: analyticsSearchService.searchBioentityIdentifiers(query, SemanticQuery.create(), SPECIES_IN_GUYS_EXPERIMENT)){
+        for(String bioentityIdentifier: analyticsSearchService.searchBioentityIdentifiers(query, SemanticQuery.create(), SPECIES_IN_GUYS_EXPERIMENT.getReferenceName())){
             if(guysIdentifiersPerEnsemblId.containsKey(bioentityIdentifier)){
                 b.add(guysIdentifiersPerEnsemblId.get(bioentityIdentifier));
             }
