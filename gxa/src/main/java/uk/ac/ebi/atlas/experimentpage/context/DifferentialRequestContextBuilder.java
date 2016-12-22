@@ -40,7 +40,7 @@ public class DifferentialRequestContextBuilder
         requestContext.setRequestPreferences(getRequestPreferences());
         requestContext.setQueryDescription(SearchDescription.get(getRequestPreferences().getGeneQuery()));
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
-        requestContext.setFilteredBySpecies(experiment.getSpecies().getName());
+        requestContext.setFilteredBySpecies(experiment.getSpecies().getReferenceName());
         requestContext.setAllQueryFactors(experiment.getContrasts());
         requestContext.setExperiment(experiment);
 

@@ -12,21 +12,27 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import java.util.List;
 import java.util.TreeSet;
 
-import static org.mockito.Matchers.anySet;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfilesHeatMapWranglerTest {
@@ -46,20 +52,20 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Mock
     private ExperimentalFactors experimentalFactors;
 
-    JsonObject resultObject = new JsonObject();
+    private JsonObject resultObject = new JsonObject();
 
-    BaselineProfilesHeatMapWrangler subject;
+    private BaselineProfilesHeatMapWrangler subject;
 
-    BaselineRequestPreferences baselineRequestPreferences;
+    private BaselineRequestPreferences baselineRequestPreferences;
 
-    static String ACCESSION = "E-MTAB-1337";
-    static String GENE_WE_ASK_FOR = "T0";
-    static String NAME_OF_THE_GENE_WE_ASK_FOR = "N0";
+    private static final String ACCESSION = "E-MTAB-1337";
+    private static final String GENE_WE_ASK_FOR = "T0";
+    private static final String NAME_OF_THE_GENE_WE_ASK_FOR = "N0";
 
     @Before
     public void setUp(){
         when(experiment.getAccession()).thenReturn(ACCESSION);
-        when(experiment.getSpecies()).thenReturn(new Species("some species", "some species", "ensembldb", "animals"));
+        when(experiment.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         when(experiment.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         baselineRequestPreferences = new BaselineRequestPreferences();
@@ -67,10 +73,10 @@ public class BaselineProfilesHeatMapWranglerTest {
 
         TreeSet<Factor> ts = new TreeSet<>();
         ts.add(mock(Factor.class));
-        when(experimentalFactors.getComplementFactors(anySet())).thenReturn(ts);
+        when(experimentalFactors.getComplementFactors(anySetOf(Factor.class))).thenReturn(ts);
 
-        when(baselineProfilesViewModelBuilder.build(Matchers.any(BaselineProfilesList.class), Matchers.any(List
-                .class))).thenReturn(resultObject);
+        when(baselineProfilesViewModelBuilder.build(
+                Matchers.any(BaselineProfilesList.class), anyListOf(Factor.class))).thenReturn(resultObject);
 
         subject = fakeWrangler(baselineRequestPreferences, experiment);
     }
@@ -85,7 +91,7 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     @Test
     public void rightQueriesToDataSources() throws Exception{
-        GeneQueryResponse response = Mockito.mock(GeneQueryResponse.class);
+        GeneQueryResponse response = mock(GeneQueryResponse.class);
         when(solrQueryService.fetchResponse((SemanticQuery) Mockito.any(),anyString()))
                 .thenReturn(response);
 
@@ -99,7 +105,7 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     @Test
     public void rightQueriesToDataSourcesForGeneSets() throws Exception{
-        GeneQueryResponse response = Mockito.mock(GeneQueryResponse.class);
+        GeneQueryResponse response = mock(GeneQueryResponse.class);
         when(solrQueryService.fetchResponse(Mockito.any(SemanticQuery.class) ,anyString()))
                 .thenReturn(response);
 

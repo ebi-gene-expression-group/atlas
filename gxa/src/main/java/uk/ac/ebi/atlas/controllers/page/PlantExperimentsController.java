@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.controllers.page;
 
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -12,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.annotation.PostConstruct;
@@ -93,8 +92,8 @@ public class PlantExperimentsController {
 
                 Species species = experiment.getSpecies();
                 if (species.isPlant()) {
-                    baselineExperimentAccessionsBySpecies.put(species.originalName, experimentAccession);
-                    experimentLinks.put(experimentAccession + species.originalName, "");
+                    baselineExperimentAccessionsBySpecies.put(species.getName(), experimentAccession);
+                    experimentLinks.put(experimentAccession + species.getName(), "");
                     numberOfPlantExperiments++;
                 }
 
@@ -124,8 +123,8 @@ public class PlantExperimentsController {
                 Species species = experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getSpecies();
 
                 if (species.isPlant()) {
-                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species.originalName);
-                    numDifferentialExperimentsBySpecies.put(species.originalName,numSoFar == null ? 1: ++numSoFar);
+                    Integer numSoFar = numDifferentialExperimentsBySpecies.get(species.getName());
+                    numDifferentialExperimentsBySpecies.put(species.getName(), numSoFar == null ? 1: ++numSoFar);
                     numberOfPlantExperiments++;
                 }
 

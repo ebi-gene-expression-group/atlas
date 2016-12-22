@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.trader.cache.loader;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedMap;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,12 +21,15 @@ import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactorsFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
@@ -48,7 +52,7 @@ public class BaselineExperimentCacheLoaderTest {
 
         protected Loader(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
                          ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
-            super( experimentalFactorsFactory,experimentType, configurationTrader,speciesFactory,dataFileHub);
+            super( experimentalFactorsFactory, experimentType, configurationTrader, speciesFactory, dataFileHub);
         }
     }
 
@@ -63,7 +67,7 @@ public class BaselineExperimentCacheLoaderTest {
     @Mock
     private ConfigurationTrader configurationTrader ;
     @Mock
-    private SpeciesFactory speciesFactory;
+    private SpeciesFactory speciesFactoryMock;
     @Mock
     private ExperimentConfiguration configuration;
     @Mock
@@ -89,15 +93,16 @@ public class BaselineExperimentCacheLoaderTest {
         Set<String> assayGroupIds =  ImmutableSet.of("assay group id 1");
         dataFileHub.addTemporaryFile(MessageFormat.format("/magetab/{0}/{0}.tsv", experimentAccession),assayGroupIds);
 
-        subject = new Loader(experimentalFactorsFactory,experimentType, configurationTrader, speciesFactory, dataFileHub);
+        subject = new Loader(experimentalFactorsFactory,experimentType, configurationTrader, speciesFactoryMock, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
         when(assayGroups.getAssayGroupIds()).thenReturn(assayGroupIds);
-        when(speciesFactory.create(dto,baselineConfiguration)).thenReturn(new Species("homo_sapiens","homo_sapiens","kingdom",
-                "ensembl_db"));
+        when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
+                        SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                                ImmutableSortedMap.<String, List<String>>of())));
 
-        when(experimentalFactorsFactory.createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),
+                when(experimentalFactorsFactory.createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean())).thenReturn
                 (experimentalFactors);
     }
@@ -108,7 +113,7 @@ public class BaselineExperimentCacheLoaderTest {
         verify(configuration).getAssayGroups();
         verify(experimentalFactorsFactory).createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),
                 eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean());
-        verify(speciesFactory).create(dto,baselineConfiguration);
+        verify(speciesFactoryMock).create(dto.getSpecies());
         if(!baselineConfiguration.orderCurated()){
             verify(dataFileHub, atLeastOnce()).getBaselineExperimentFiles(experimentAccession);
         }
@@ -116,7 +121,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     private void noMoreInteractionsWithCollaborators() {
         verifyNoMoreInteractions(experimentalFactorsFactory, configurationTrader,
-                speciesFactory);
+                speciesFactoryMock);
     }
 
     @Test(expected=IllegalStateException.class)

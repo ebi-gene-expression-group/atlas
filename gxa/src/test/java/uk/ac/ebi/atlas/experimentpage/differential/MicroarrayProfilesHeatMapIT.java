@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
@@ -43,7 +44,7 @@ public class MicroarrayProfilesHeatMapIT {
     private MicroarrayProfilesHeatMap subject;
 
     @Inject
-    MicroarrayRequestContextBuilder requestContextBuilder;
+    private MicroarrayRequestContextBuilder requestContextBuilder;
 
     private MicroarrayRequestPreferences requestPreferences;
 
@@ -59,7 +60,7 @@ public class MicroarrayProfilesHeatMapIT {
             logFoldCutoff) {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
-        DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+        MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
         return requestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences)

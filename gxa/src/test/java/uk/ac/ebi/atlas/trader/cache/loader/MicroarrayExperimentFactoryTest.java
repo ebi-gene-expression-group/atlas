@@ -10,17 +10,19 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,7 +32,7 @@ public class MicroarrayExperimentFactoryTest {
     private static final String ARRAYDESIGN_ID = "arraydesignId";
     private static final String ARRAYDESIGN_NAME = "arraydesignName";
     private static final String SPECIES_STRING = "species";
-    private static final Species SPECIES = new Species(SPECIES_STRING, SPECIES_STRING, "ensembl","kingdom");
+    private static final Species SPECIES = new Species(SPECIES_STRING, SpeciesProperties.UNKNOWN);
     private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
@@ -68,7 +70,7 @@ public class MicroarrayExperimentFactoryTest {
         when(experimentDTOMock.getAccessKey()).thenReturn(ACCESS_KEY);
         when(experimentDTOMock.getPubmedIds()).thenReturn(Sets.newHashSet("pubmed1"));
 
-        when(speciesFactory.create(experimentDTOMock)).thenReturn(SPECIES);
+        when(speciesFactory.create(anyString())).thenReturn(SPECIES);
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
@@ -81,8 +83,8 @@ public class MicroarrayExperimentFactoryTest {
 
     @Test
     public void testLoad() throws Exception {
-        MicroarrayExperiment microarrayExperiment = subject.create(experimentDTOMock, "description",
-                experimentDesignMock);
+        MicroarrayExperiment microarrayExperiment =
+                subject.create(experimentDTOMock, "description", experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGN_ID));
         assertThat(microarrayExperiment.getSpecies(), is(SPECIES));

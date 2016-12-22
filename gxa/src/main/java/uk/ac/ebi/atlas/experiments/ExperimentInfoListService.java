@@ -34,7 +34,7 @@ public class ExperimentInfoListService {
                 MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL
         )){
             for(Experiment experiment: experimentTrader.getPublicExperiments(experimentType)){
-                experimentInfos.add(experiment.getExperimentInfo());
+                experimentInfos.add(experiment.buildExperimentInfo());
             }
         }
         return experimentInfos;

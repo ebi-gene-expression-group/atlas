@@ -14,7 +14,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
     @Test
     public void geneExpressedInBaselineAndDifferentialExperiments() {
         JsonObject result = baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(BASELINE_GENE),
-                SemanticQuery.create(), SpeciesFactory.NULL);
+                SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN));
         assertThat(result.entrySet(), not(Matchers.empty()));
         assertTrue("This Ensembl gene has a homo sapiens result", result.has("homo sapiens"));
 
@@ -53,7 +54,7 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
     @Test
     public void geneExpressedInDifferentialExperimentsOnly() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN)),
                 is(new JsonObject()));
         assertThat(
                 differentialAnalyticsSearchService.fetchDifferentialFacetsForQuery(SemanticQuery.create
@@ -63,7 +64,7 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
     @Test
     public void nonExistentGene() {
         assertThat(
-                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), SpeciesFactory.NULL),
+                baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN)),
                 is(new JsonObject()));
         assertThat(
                 differentialAnalyticsSearchService.fetchDifferentialResultsForQuery(SemanticQuery.create
@@ -93,7 +94,7 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
             "colour",
             "id");
 
-    void testDifferentialResultsAreInRightFormat(JsonObject result){
+    private void testDifferentialResultsAreInRightFormat(JsonObject result){
         assertTrue(new Gson().toJson(result), result.has("results"));
         assertThat(result.get("results").getAsJsonArray().size(), greaterThan(0));
         for(JsonElement e: result.get("results").getAsJsonArray()){

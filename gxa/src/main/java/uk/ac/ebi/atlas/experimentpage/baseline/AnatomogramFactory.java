@@ -5,15 +5,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.species.Species;
 
 public class AnatomogramFactory {
 
     public JsonElement get(String queryFactorType, Species species, Iterable<AssayGroupFactor>
             filteredAssayGroupFactors) {
         if ("ORGANISM_PART".equals(queryFactorType)) {
-            return getAnatomogramProperties(species.mappedName, filteredAssayGroupFactors);
+            return getAnatomogramProperties(species.getReferenceName(), filteredAssayGroupFactors);
         } else {
             return JsonNull.INSTANCE;
         }

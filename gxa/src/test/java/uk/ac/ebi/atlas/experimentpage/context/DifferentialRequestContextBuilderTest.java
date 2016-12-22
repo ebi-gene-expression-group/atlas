@@ -1,28 +1,37 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialRequestContextBuilderTest {
 
-    private static final Species SPECIES = new Species("homo sapiens", "homo sapiens", "homo sapiens", "animals");
+    private static final Species SPECIES =
+            new Species("Homo sapiens",
+                    SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                            ImmutableSortedMap.<String, List<String>>of()));
+
     private static final String CONTRAST_NAME1 = "a";
     private static final String CONTRAST_NAME2 = "b";
 

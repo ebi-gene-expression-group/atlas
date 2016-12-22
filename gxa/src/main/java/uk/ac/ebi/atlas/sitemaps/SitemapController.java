@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.sitemaps;
 
-import uk.ac.ebi.atlas.model.SpeciesUtils;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -27,13 +26,13 @@ public class SitemapController {
 
     private final AnalyticsSearchService solr;
     private final SpeciesFactory speciesFactory;
-    private final SpeciesPropertiesTrader speciesTrader;
+    private final SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Inject
-    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesTrader){
+    public SitemapController(AnalyticsSearchService solr, SpeciesFactory speciesFactory, SpeciesPropertiesTrader speciesPropertiesTrader){
         this.solr = solr;
         this.speciesFactory = speciesFactory;
-        this.speciesTrader = speciesTrader;
+        this.speciesPropertiesTrader = speciesPropertiesTrader;
     }
 
 
@@ -43,7 +42,7 @@ public class SitemapController {
 
         response.setContentType(MediaType.TEXT_XML_VALUE);
 
-        sitemapWriter.writeSitemapIndex(response.getOutputStream(), speciesTrader.getAll());
+        sitemapWriter.writeSitemapIndex(response.getOutputStream(), speciesPropertiesTrader.getAll());
 
     }
 
@@ -54,8 +53,9 @@ public class SitemapController {
         response.setContentType(MediaType.TEXT_XML_VALUE);
         Collection<String> various = ImmutableList.of("/experiments","/plant/experiments");
 
-        sitemapWriter.writeGenes(response.getOutputStream(), various, solr.getBioentityIdentifiersForSpecies
-                (speciesFactory.create((SpeciesUtils.convertUnderscoreToSpaces(species)))));
+        sitemapWriter.writeGenes(
+                response.getOutputStream(), various,
+                solr.getBioentityIdentifiersForSpecies(speciesFactory.create(species).getReferenceName()));
 
     }
 

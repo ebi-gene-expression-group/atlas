@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -17,10 +18,12 @@ import java.util.List;
 public class AutoCompleteController {
 
     private final SuggestionService suggestionService;
+    private final SpeciesFactory speciesFactory;
 
     @Inject
-    public AutoCompleteController(SuggestionService suggestionService) {
+    public AutoCompleteController(SuggestionService suggestionService, SpeciesFactory speciesFactory) {
         this.suggestionService = suggestionService;
+        this.speciesFactory = speciesFactory;
     }
 
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET,
@@ -35,9 +38,9 @@ public class AutoCompleteController {
             return StringUtils.EMPTY;
         }
 
-        List<SemanticQueryTerm> suggestions = suggestionService.fetchTopSuggestions(query, species);
+        List<SemanticQueryTerm> suggestions =
+                suggestionService.fetchTopSuggestions(query, speciesFactory.create(species).getReferenceName());
         return new Gson().toJson(suggestions);
-
     }
 
 }

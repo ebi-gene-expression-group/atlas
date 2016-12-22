@@ -84,7 +84,7 @@ public class SolrInputDocumentInputStreamIT {
             assertThat(solrInputDocument.size(), greaterThan(6));
             assertThat(experiment.getType().name().toUpperCase(),
                     is(solrInputDocument.getField("experimentType").getValue()));
-            assertThat(experiment.getSpecies().mappedName, is(solrInputDocument.getField("species").getValue()));
+            assertThat(experiment.getSpecies().getReferenceName(), is(solrInputDocument.getField("species").getValue()));
         }
         assertThat(count, is(greaterThan(100)));
     }
@@ -149,7 +149,7 @@ public class SolrInputDocumentInputStreamIT {
         assertThat(species.size(), is(1));
 
         assertThat(species.iterator().next(),
-                is(experimentTrader.getPublicExperiment(accession).getSpecies().mappedName));
+                is(experimentTrader.getPublicExperiment(accession).getSpecies().getReferenceName()));
     }
 
     private void assertThatIndexReturnsDataFor(String accession, SemanticQuery identifierSearch) {

@@ -51,7 +51,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
 
-        if(!isWidget) {
+        if (!isWidget) {
             addFactorMenu(model, experiment, requestContext);
         }
 
@@ -60,7 +60,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAllAttributes(experiment.getAttributes());
-        model.addAllAttributes(headerAttributes(experiment, preferences));
+        model.addAllAttributes(headerAttributes(experiment));
     }
 
     public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,

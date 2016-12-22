@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import org.junit.Before;
@@ -35,12 +34,10 @@ import static org.mockito.Mockito.when;
 public class DifferentialExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
+    private String species = "Mus musculus";
 
     @Inject
     private DifferentialExperimentFactory differentialExperimentFactory;
-
-    ExperimentsCacheLoader<DifferentialExperiment> subject;
-
 
     @Mock
     private ExperimentDAO experimentDao;
@@ -51,7 +48,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     @Inject
     private ExperimentDesignParser experimentDesignParser;
 
-    String species = "Mus musculus";
+    private ExperimentsCacheLoader<DifferentialExperiment> subject;
 
     @Before
     public void setUp(){
@@ -73,7 +70,7 @@ public class DifferentialExperimentsCacheLoaderIT {
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
         //then
-        assertThat(experiment.getSpecies().originalName, is(species));
+        assertThat(experiment.getSpecies().getName(), is(species));
     }
 
     @Test

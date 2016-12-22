@@ -83,7 +83,7 @@ public class BaselineRequestContextBuilder {
                 candidateAnswers.add(selectedFilterFactor.getValue().toLowerCase());
             }
         }
-        candidateAnswers.add(experiment.getSpecies().mappedName);
+        candidateAnswers.add(experiment.getSpecies().getReferenceName());
         return candidateAnswers.get(0);
     }
 
