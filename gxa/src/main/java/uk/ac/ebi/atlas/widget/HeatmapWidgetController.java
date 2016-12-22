@@ -1,14 +1,13 @@
 package uk.ac.ebi.atlas.widget;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
-import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.model.Expression;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.profiles.json.ProfilesToJsonConverter;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSortedSet;
@@ -21,7 +20,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
@@ -30,18 +28,15 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesVie
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,38 +140,17 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
                                                                BaselineExperimentSearchResult searchResult, Model model) {
         model.addAttribute("geneQuery", geneQuery);
         model.addAttribute("conditionQuery", conditionQuery);
-        //TODO does not take conditionQuery into account - but it's very hard to implement
-        try {
-
-            return resultsFromDataAndModel(ProfilesToJsonConverter.createForCrossExperimentResults(
-                    new URI(ApplicationProperties.buildServerURL(request) + "/experiments/"),
-                    ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson())
-                    ),
-                    request, species, searchResult, model);
-        } catch (URISyntaxException e){
-            throw new RuntimeException(e);
-        }
-
+        return resultsFromDataAndModel(request, species, searchResult, model);
     }
 
     private JsonObject populateModelWithMultiExperimentResults(HttpServletRequest request,SemanticQuery query, Species species,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
         model.addAttribute("query", query);
-        try {
-
-        return resultsFromDataAndModel(ProfilesToJsonConverter.createForCrossExperimentResults(
-                new URI(ApplicationProperties.buildServerURL(request) + "/experiments/"),
-                ImmutableMap.of("geneQuery", query.toUrlEncodedJson())
-                ),
-                request, species, searchResult, model);
-        } catch (URISyntaxException e){
-            throw new RuntimeException(e);
-        }
+        return resultsFromDataAndModel(request, species, searchResult, model);
     }
 
-    private JsonObject resultsFromDataAndModel(ProfilesToJsonConverter<Factor, BaselineExperimentProfile> profilesToJsonConverter,
-                                               HttpServletRequest request, Species species,
-                                               BaselineExperimentSearchResult searchResult, Model model){
+    private JsonObject resultsFromDataAndModel(HttpServletRequest request, Species species,
+                                BaselineExperimentSearchResult searchResult, Model model){
 
         JsonObject result = new JsonObject();
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
@@ -193,15 +167,13 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         if(!experimentProfiles.isEmpty()){
             result.add("columnHeaders", gson.toJsonTree(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
             result.add("columnGroupings", factorGroupingService.group(convert(orderedFactors)));
-
-            result.add("profilesOld", baselineExperimentProfilesViewModelBuilder.buildJson
+            result.add("profiles", baselineExperimentProfilesViewModelBuilder.buildJson
                     (experimentProfiles, orderedFactors));
-            result.add("profiles", profilesToJsonConverter.convert(experimentProfiles, orderedFactors));
             result.add("geneSetProfiles", JsonNull.INSTANCE);
             result.add("jsonCoexpressions", new JsonArray());
         }
 
-        model.addAttribute("species", species.mappedName);
+        model.addAttribute("species", species.getReferenceName());
         model.addAttribute("isWidget", true);
         result.add("experiment", JsonNull.INSTANCE);
 

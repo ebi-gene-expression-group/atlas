@@ -4,7 +4,7 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Collection;
@@ -54,8 +54,8 @@ public class BaselineExperiment extends Experiment {
     }
 
     @Override
-    public ExperimentInfo getExperimentInfo(){
-        ExperimentInfo experimentInfo = super.getExperimentInfo();
+    public ExperimentInfo buildExperimentInfo(){
+        ExperimentInfo experimentInfo = super.buildExperimentInfo();
         experimentInfo.setNumberOfAssays(getExperimentRunAccessions().size());
         return experimentInfo;
     }

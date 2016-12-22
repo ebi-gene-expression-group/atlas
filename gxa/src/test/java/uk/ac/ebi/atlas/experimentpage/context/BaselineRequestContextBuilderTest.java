@@ -1,23 +1,27 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
-import static org.mockito.Matchers.anySet;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,35 +36,42 @@ public class BaselineRequestContextBuilderTest {
     private static final String factorValueSelectedToFilterBy = "lung";
     private static final String SERIALIZED_FACTORS = factorTypeSelectedToFilterBy+":"+factorValueSelectedToFilterBy;
 
-    BaselineRequestContextBuilder subject;
+    private BaselineRequestContextBuilder subject;
 
     @Mock
-    BaselineExperiment experimentMock;
+    private BaselineExperiment experimentMock;
 
     @Mock
-    BaselineRequestPreferences preferencesMock;
+    private BaselineRequestPreferences preferencesMock;
 
     @Mock
-    ExperimentalFactors experimentalFactorsMock;
+    private ExperimentalFactors experimentalFactorsMock;
 
     @Before
     public void setUp() throws Exception {
         subject = new BaselineRequestContextBuilder();
 
         when(preferencesMock.getSerializedFilterFactors()).thenReturn(SERIALIZED_FACTORS);
-        when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
+        when(preferencesMock.getQueryFactorValues())
+                .thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(experimentMock.getSpecies()).thenReturn(new Species("Homo sapiens", "homo sapiens", "ensembldb",
-                "animals"));
-        when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));
+        when(experimentMock.getSpecies())
+                .thenReturn(new Species("Homo sapiens",
+                        SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                                ImmutableSortedMap.<String, List<String>>of())) );
+        when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class)))
+                .thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));
     }
 
     @Test
     public void testBuild() throws Exception {
-        BaselineRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
-        assertThat(context.getSelectedFilterFactors(), hasItem(new Factor(factorTypeSelectedToFilterBy,factorValueSelectedToFilterBy)));
+        BaselineRequestContext context =
+                subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
+
+        assertThat(context.getSelectedFilterFactors(),
+                hasItem(new Factor(factorTypeSelectedToFilterBy,factorValueSelectedToFilterBy)));
         assertThat(context.getFilteredBySpecies(), is(FACTOR_VALUE));
         Factor factor1 = new Factor(FACTOR_TYPE, QUERY_FACTOR1);
         Factor factor2 = new Factor(FACTOR_TYPE, QUERY_FACTOR2);

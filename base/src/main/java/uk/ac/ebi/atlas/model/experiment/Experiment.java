@@ -7,7 +7,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
@@ -40,9 +40,11 @@ public abstract class Experiment implements Serializable {
     private List<String> alternativeViewDescriptions;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, boolean hasRData, Species species,
-                      Collection<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL,
-                      List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
+                      String disclaimer, boolean hasRData, Species species, Collection<String> pubMedIds,
+                      ExperimentDesign experimentDesign, List<String> dataProviderURL,
+                      List<String> dataProviderDescription, List<String> alternativeViews,
+                      List<String> alternativeViewDescriptions) {
+
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -57,6 +59,7 @@ public abstract class Experiment implements Serializable {
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
         this.alternativeViewDescriptions = alternativeViewDescriptions;
+
     }
 
     public ExperimentType getType() {
@@ -89,7 +92,8 @@ public abstract class Experiment implements Serializable {
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
-        for(int i = 0; i<alternativeViews.size(); i++){
+
+        for(int i = 0 ; i < alternativeViews.size() ; i++) {
             result.add(Pair.of(alternativeViews.get(i), alternativeViewDescriptions.get(i)));
         }
         return result;
@@ -101,7 +105,7 @@ public abstract class Experiment implements Serializable {
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
         result.put("experimentHasRData", hasRData);
-        result.putAll(species.getAttributes());
+        result.put("species", species);
         result.put("experimentDescription", description);
         result.put("pubMedIds", pubMedIds);
         result.put("experimentAccession", accession);
@@ -134,15 +138,14 @@ public abstract class Experiment implements Serializable {
         return result;
     }
 
-    public ExperimentInfo getExperimentInfo(){
+    public ExperimentInfo buildExperimentInfo(){
 
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(accession);
         experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
         experimentInfo.setExperimentDescription(description);
-        experimentInfo.setSpecies(species.originalName);
-        experimentInfo.setKingdom(species.kingdom);
-        experimentInfo.setEnsemblDB(species.ensemblDb);
+        experimentInfo.setSpecies(species.getName());
+        experimentInfo.setKingdom(species.getKingdom());
         experimentInfo.setExperimentType(type.getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
 

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Named;
 import java.util.Collections;
@@ -126,11 +126,13 @@ public class BaselineExperimentBuilder {
                 alternativeViewDescriptions);
     }
 
-    void validate() {
+    private void validate() {
         checkNotNull(experimentType);
         checkState(experimentType.isBaseline());
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
-        checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
+        checkNotNull(species, "Please provide a species name");
+        checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()),
+                "Please provide a non empty set of AssayGroup objects");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");

@@ -76,6 +76,6 @@ public class MockDataFileHub extends DataFileHub {
     }
 
     public void addSpeciesJsonFile(Collection<String> lines) {
-        addTemporaryFile(SPECIES_FILE_PATH, lines);
+        addTemporaryFile(SPECIES_PROPERTIES_FILE_PATH, lines);
     }
 }

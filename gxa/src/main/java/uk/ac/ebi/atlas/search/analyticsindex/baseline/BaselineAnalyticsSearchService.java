@@ -2,11 +2,11 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultProducer;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -34,12 +34,12 @@ public class BaselineAnalyticsSearchService {
     public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,
                                                           Species species, String queryFactorTypeOrBlank) {
         String queryFactorType = isBlank(queryFactorTypeOrBlank) ?
-                species.defaultQueryFactorType() :
+                species.getDefaultQueryFactorType() :
                 queryFactorTypeOrBlank.toUpperCase();
 
         List<Map<String, Object>> response =
                 baselineAnalyticsSearchDao.
-                        fetchExpressionLevelFaceted(geneQuery, conditionQuery, species.mappedName, queryFactorType);
+                        fetchExpressionLevelFaceted(geneQuery, conditionQuery, species.getReferenceName(), queryFactorType);
 
         ImmutableList<BaselineExperimentExpression> expressions =
                 baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
@@ -51,7 +51,7 @@ public class BaselineAnalyticsSearchService {
                                                           String queryFactorType) {
         List<Map<String, Object>> response =
                 baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(
-                        query, species.mappedName, queryFactorType.toUpperCase());
+                        query, species.getReferenceName(), queryFactorType.toUpperCase());
 
         ImmutableList<BaselineExperimentExpression> expressions =
                 baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
@@ -72,7 +72,7 @@ public class BaselineAnalyticsSearchService {
 
     public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, SemanticQuery conditionQuery, Species species) {
         List<Map<String, Object>> results =
-                baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species.mappedName);
+                baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery, conditionQuery, species.getReferenceName());
 
         return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }

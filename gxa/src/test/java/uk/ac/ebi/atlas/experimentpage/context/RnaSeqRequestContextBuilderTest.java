@@ -1,14 +1,18 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.google.common.collect.ImmutableSortedMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -17,13 +21,16 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqRequestContextBuilderTest {
 
-    private static final Species SPECIES = new Species("homo sapiens", "homo sapiens", "homo sapiens", "animals");
+    private static final Species SPECIES =
+            new Species("Homo sapiens",
+                    SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                            ImmutableSortedMap.<String, List<String>>of()));
     
     @Mock
-    DifferentialExperiment experimentMock;
+    private DifferentialExperiment experimentMock;
 
     @Mock
-    DifferentialRequestPreferences preferencesMock;
+    private DifferentialRequestPreferences preferencesMock;
 
     private RnaSeqRequestContextBuilder subject;
 

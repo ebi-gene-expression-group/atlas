@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.species.Species;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +24,7 @@ public class GenePageController extends BioentityPageController {
                                Model model) {
 
         Species species = speciesFactory.create(speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""));
-        model.addAttribute("species", species.originalName);
+        model.addAttribute("species", species.getName());
 
         Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
         Set<String> entityNames = propertyValuesByType.get(BioentityPropertyName.SYMBOL);
@@ -40,13 +40,12 @@ public class GenePageController extends BioentityPageController {
 
     @Override
     protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName) {
-        String s = "Expression summary for " + entityName + " - " +
-                StringUtils.capitalize(species.originalName);
+        String s = "Expression summary for " + entityName + " - " + species.getName();
 
         return ImmutableMap.<String, Object>of(
                 "mainTitle", s,
                 "pageDescription", s,
-                "pageKeywords", "gene," + identifier + "," + species.originalName
+                "pageKeywords", "gene," + identifier + "," + species.getName()
         );
     }
 }

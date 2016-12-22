@@ -38,11 +38,9 @@ public class HeatmapDataToJsonService {
         config.addProperty("conditionQuery", conditionQuery.toUrlEncodedJson());
         config.addProperty("accessKey", request.getParameter("accessKey"));
         config.addProperty("species", get(model, "species"));
-        config.addProperty("ensemblDB", get(model, "ensemblDB"));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("enableEnsemblLauncher",
-                model.containsKey("enableEnsemblLauncher")
-                        ? Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()) : false);
+                model.containsKey("enableEnsemblLauncher") && Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()));
         config.addProperty("showMaPlotButton", true);
         config.addProperty("downloadProfilesURL",
                 Strings.isNullOrEmpty((String) model.get("downloadURL"))

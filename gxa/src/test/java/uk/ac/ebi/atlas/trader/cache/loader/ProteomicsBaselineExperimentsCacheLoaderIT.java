@@ -42,9 +42,6 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     @Inject
     private ProteomicsBaselineExperimentFactory proteomicsBaselineExperimentFactory;
 
-    ExperimentsCacheLoader<BaselineExperiment> subject;
-
-
     @Mock
     private ExperimentDAO experimentDao;
 
@@ -53,6 +50,8 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
 
     @Inject
     private ExperimentDesignParser experimentDesignParser;
+
+    private ExperimentsCacheLoader<BaselineExperiment> subject;
 
     @Before
     public void mockOutDatabaseAndArrayExpress() {
@@ -76,7 +75,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load(E_PROT_1);
         //then
-        String species = experiment.getSpecies().originalName;
+        String species = experiment.getSpecies().getName();
         assertThat(species, is("Homo sapiens"));
 
     }

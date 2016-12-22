@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
+import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -8,9 +9,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.List;
 
@@ -22,19 +25,15 @@ import static org.mockito.Mockito.when;
 public class AutoCompleteControllerTest {
 
     private static final String QUERY_STRING = "This is a query";
-
-    private static final String HOMO_SAPIENS = "homo sapiens";
-
-    private AutoCompleteController subject;
-
-    @Mock
-    private BaselineRequestContext requestContextMock;
+    private static final String HOMO_SAPIENS = "Homo sapiens";
 
     @Mock
     private SuggestionService suggestionServiceMock;
 
     @Mock
-    private MultiTermSuggestionService multiTermSuggestionServiceMock;
+    private SpeciesFactory speciesFactoryMock;
+
+    private AutoCompleteController subject;
 
     @Before
     public void setUp() throws Exception {
@@ -43,12 +42,10 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
-        when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
+        when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableSortedMap.<String, List<String>>of())));
+        when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, "homo sapiens")).thenReturn(suggestions);
 
-        when(requestContextMock.getFilteredBySpecies()).thenReturn(HOMO_SAPIENS);
-
-        subject = new AutoCompleteController(suggestionServiceMock);
-
+        subject = new AutoCompleteController(suggestionServiceMock, speciesFactoryMock);
     }
 
     @Test

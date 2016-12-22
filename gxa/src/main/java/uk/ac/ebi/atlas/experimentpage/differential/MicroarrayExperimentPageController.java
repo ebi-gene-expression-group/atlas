@@ -49,7 +49,6 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                 new DifferentialExperimentPageService<>(requestContextBuilder, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
-
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})

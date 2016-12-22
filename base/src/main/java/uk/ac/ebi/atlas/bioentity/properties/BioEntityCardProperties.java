@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
 
+
 public class BioEntityCardProperties {
 
     public static final ImmutableMap<BioentityPropertyName, String> linkTemplates =
@@ -21,7 +22,7 @@ public class BioEntityCardProperties {
         .put(INTERPRO,
                 "http://www.ebi.ac.uk/interpro/entry/{0}")
         .put(ENSFAMILY_DESCRIPTION,
-                "http://www.ensembl.org/{1}/Search/Results?q={2};facet_feature_type=Protein%20Family" )
+                "http://www.ensembl.org/{1}/Search/Results?q={2};facet_feature_type=Protein%20Family")
         .put(ENSGENE,
                 "http://www.ensemblgenomes.org/id-gene/{0}")
         .put(ENSTRANSCRIPT,
@@ -46,8 +47,8 @@ public class BioEntityCardProperties {
 
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
             BioentityPropertyName.SYNONYM,
-            BioentityPropertyName.ORTHOLOG,
-            BioentityPropertyName.GO,
+            ORTHOLOG,
+            GO,
             BioentityPropertyName.PO,
             BioentityPropertyName.INTERPRO,
             BioentityPropertyName.ENSFAMILY_DESCRIPTION,

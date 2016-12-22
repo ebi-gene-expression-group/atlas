@@ -1,13 +1,15 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
+import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Collections;
 import java.util.Date;
@@ -76,9 +78,9 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
         Set<Contrast> contrasts = Collections.singleton(contrast1);
-        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", true, new Species("species","species name", "kingdom", "ensemblDb"), Collections
-                .EMPTY_SET, experimentDesign);
+        DifferentialExperiment experiment =
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
+                        new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -115,8 +117,9 @@ public class DifferentialExperimentContrastLinesTest {
 
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
-        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
+        DifferentialExperiment experiment =
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
+                        new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -152,8 +155,9 @@ public class DifferentialExperimentContrastLinesTest {
 
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
-        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", true, new Species("species","species name", "kingdom", "ensemblDb"), Collections.EMPTY_SET, experimentDesign);
+        DifferentialExperiment experiment =
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
+                        new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 

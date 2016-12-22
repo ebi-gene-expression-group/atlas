@@ -102,8 +102,8 @@ public class BaselineExperimentsController {
 
             try {
                 BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-                experimentAccessionsBySpecies.put(experiment.getSpecies().originalName, experimentAccession);
-                experimentLinks.put(experimentAccession + experiment.getSpecies().originalName, "");
+                experimentAccessionsBySpecies.put(experiment.getSpecies().getName(), experimentAccession);
+                experimentLinks.put(experimentAccession + experiment.getSpecies().getName(), "");
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);

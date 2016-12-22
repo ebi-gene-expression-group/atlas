@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultFormatter;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.io.IOUtils;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -52,28 +52,6 @@ public final class HeatmapWidgetDownloadController {
         this.speciesFactory = speciesFactory;
     }
 
-    //TODO I wonder if this isn't dead code?
-    @RequestMapping(value = {"/widgets/heatmap/bioentity.tsv", "/widgets/heatmap/multiExperiment.tsv"}, method = RequestMethod.GET)
-         public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
-                                        @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                        @RequestParam(value = "species") String species,
-                                        HttpServletResponse response) throws IOException {
-
-        ImmutableSet<String> geneIds = analyticsSearchService.searchBioentityIdentifiers(geneQuery, conditionQuery,
-                speciesFactory.create(species));
-
-        BaselineExperimentSearchResult searchResult = !geneIds.isEmpty()
-                ? baselineExperimentProfileSearchService.query(geneIds)
-                : new BaselineExperimentSearchResult();
-
-        if (!searchResult.isEmpty()) {
-            setHttpHeaders(response, "Expression_Atlas_results_baseline.tsv");
-            PrintWriter writer = response.getWriter();
-            writer.write(formatFileHeader(geneQuery, conditionQuery, species));
-            writeTsv(searchResult, writer);
-        }
-    }
-
     @RequestMapping(value = {"/widgets/heatmap/baselineAnalytics.tsv"}, method = RequestMethod.GET)
     public void baselineAnalytics (@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                    @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
@@ -85,15 +63,15 @@ public final class HeatmapWidgetDownloadController {
                 conditionQuery, speciesFactory.create(species), defaultFactorQueryType);
 
         if (!searchResult.isEmpty()) {
-            setHttpHeaders(response, "Expression_Atlas_results_baseline.tsv");
+            setHttpHeaders(response);
             PrintWriter writer = response.getWriter();
             writer.write(formatFileHeader(geneQuery, conditionQuery, species));
             writeTsv(searchResult, writer);
         }
     }
 
-    private void setHttpHeaders(HttpServletResponse response, String fileName) {
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+    private void setHttpHeaders(HttpServletResponse response) {
+        response.setHeader("Content-Disposition", "attachment; filename=\"Expression_Atlas_results_baseline.tsv\"");
         response.setContentType("text/tab-separated-values");
     }
 

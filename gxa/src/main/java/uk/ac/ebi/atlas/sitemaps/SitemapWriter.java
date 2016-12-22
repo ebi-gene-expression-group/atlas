@@ -1,9 +1,9 @@
 package uk.ac.ebi.atlas.sitemaps;
 
-import uk.ac.ebi.atlas.model.SpeciesUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
@@ -22,12 +22,12 @@ public class SitemapWriter {
 
     private static final String ourAddress = "http://www.ebi.ac.uk/gxa";
 
-    public void writeSitemapIndex(OutputStream outputStream, Collection<String> species) throws XMLStreamException {
+    public void writeSitemapIndex(OutputStream outputStream, Collection<SpeciesProperties> speciesProperties) throws XMLStreamException {
 
-        writeDocument(outputStream,Collections2.transform(species, new Function<String, String>() {
+        writeDocument(outputStream,Collections2.transform(speciesProperties, new Function<SpeciesProperties, String>() {
             @Override
-            public String apply(String s) {
-                return ourAddress+"/species/"+ SpeciesUtils.convertSpacesToUnderscore(s)+"/sitemap.xml";
+            public String apply(SpeciesProperties s) {
+                return ourAddress+"/species/"+ s.ensemblName() + "/sitemap.xml";
             }
         }), "sitemapindex", "sitemap", ImmutableMap.<String,String>of());
     }

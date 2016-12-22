@@ -30,9 +30,9 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
 
     protected StringBuilder queryStringBuilder = new StringBuilder();
 
-    public T withSpecies(String species){
-        if (StringUtils.isNotBlank(species)){
-            queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(species).append("\"");
+    public T withSpecies(String speciesReferenceName){
+        if (StringUtils.isNotBlank(speciesReferenceName)){
+            queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(speciesReferenceName).append("\"");
         }
         return getThis();
     }

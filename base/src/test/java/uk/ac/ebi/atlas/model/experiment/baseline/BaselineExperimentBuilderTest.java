@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -9,10 +10,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,8 +24,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentBuilderTest {
 
-    private static final String SPECIES = "homo sapiens";
     private static final String SPECIES_NAME = "Homo sapiens";
+    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableMap.<String, List<String>>of());
 
     private static final String EXPERIMENT_ACCESSION = "accession";
     private static final String DESCRIPTION = "description";
@@ -48,7 +47,7 @@ public class BaselineExperimentBuilderTest {
     public void testCreate() throws Exception {
 
         BaselineExperiment experiment = subject
-                .forSpecies(new Species(SPECIES_NAME,SPECIES,"kingdom","ensembl_db"))
+                .forSpecies(new Species(SPECIES_NAME, SPECIES_PROPERTIES))
                 .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)

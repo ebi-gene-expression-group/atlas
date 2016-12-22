@@ -18,11 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
@@ -51,18 +51,17 @@ public class QuerySearchController {
 
 
     @RequestMapping(value = "/query")
-    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
-                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                          @RequestParam(value = "organism", required = false, defaultValue = "")
-                                              String speciesString,
+    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false) SemanticQuery geneQuery,
+                                          @RequestParam(value = "conditionQuery", required = false) SemanticQuery conditionQuery,
+                                          @RequestParam(value = "organism", required = false) String speciesString,
                                           Model model, RedirectAttributes redirectAttributes)
     throws UnsupportedEncodingException {
         Species species = speciesFactory.create(speciesString);
         checkArgument(geneQuery.isNotEmpty() || conditionQuery.isNotEmpty(), "Please specify a gene query or a condition.");
 
-        String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species.originalName);
+        String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species.getName());
         model.addAttribute("searchDescription", searchDescription);
-        model.addAttribute("species", species.mappedName);
+        model.addAttribute("species", species.getReferenceName());
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
 
@@ -72,8 +71,8 @@ public class QuerySearchController {
             String geneSetId = geneQuery.terms().iterator().next().value();
 
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
-            if (!GeneSetUtil.matchesReactomeID(geneSetId) && !species.isBlank()) {
-                stringBuilder.append("?").append("organism=").append(species.originalName);
+            if (!GeneSetUtil.matchesReactomeID(geneSetId) && !species.isUnknown()) {
+                stringBuilder.append("?").append("organism=").append(species.getName());
             }
 
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
@@ -82,7 +81,7 @@ public class QuerySearchController {
 
         // No gene IDs -> empty results page
         ImmutableSet<String> geneIds = analyticsSearchService.searchMoreThanOneBioentityIdentifier(geneQuery,
-                conditionQuery, species);
+                conditionQuery, species.getReferenceName());
         if (geneIds.size() == 0) {
             return "empty-search-page";
         }
@@ -95,7 +94,7 @@ public class QuerySearchController {
         // Resolves to multiple IDs or the query includes a condition -> General results page
         else {
             ImmutableSet<String> experimentTypes =
-                    analyticsSearchService.fetchExperimentTypes(geneQuery, conditionQuery, species);
+                    analyticsSearchService.fetchExperimentTypes(geneQuery, conditionQuery, species.getReferenceName());
 
             boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
             boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);

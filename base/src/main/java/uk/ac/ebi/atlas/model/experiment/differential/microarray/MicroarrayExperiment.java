@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.Date;
@@ -19,12 +19,11 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     private SortedSet<String> arrayDesignNames;
 
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
-                                String description, boolean hasRData,
-                                Species species, SortedSet<String>
-                                        arrayDesignAccessions,
-                                SortedSet<String> arrayDesignNames, ExperimentDesign experimentDesign, Set<String> pubMedIds) {
+                                String description, boolean hasRData, Species species,
+                                SortedSet<String> arrayDesignAccessions, SortedSet<String> arrayDesignNames,
+                                ExperimentDesign experimentDesign, Set<String> pubMedIds) {
 
-        super(type, accession, lastUpdate, contrasts, description, hasRData, species,pubMedIds, experimentDesign);
+        super(type, accession, lastUpdate, contrasts, description, hasRData, species, pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
         this.arrayDesignNames = arrayDesignNames;
     }
@@ -42,14 +41,13 @@ public class MicroarrayExperiment extends DifferentialExperiment {
         result.putAll(super.getAttributes());
         //For showing the QC REPORTS button in the header
         result.put("qcArrayDesigns", getArrayDesignAccessions());
-        result.put("allArrayDesigns",getArrayDesignNames());
+        result.put("allArrayDesigns", getArrayDesignNames());
         return result;
-
     }
 
     @Override
-    public ExperimentInfo getExperimentInfo(){
-        ExperimentInfo experimentInfo = super.getExperimentInfo();
+    public ExperimentInfo buildExperimentInfo(){
+        ExperimentInfo experimentInfo = super.buildExperimentInfo();
         experimentInfo.setArrayDesigns(arrayDesignAccessions);
         experimentInfo.setArrayDesignNames(arrayDesignNames);
         return experimentInfo;

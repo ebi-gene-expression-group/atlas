@@ -23,8 +23,7 @@ public class ExperimentPageService {
         this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
-    protected Map<String, ?> headerAttributes(Experiment experiment,
-                                               ExperimentPageRequestPreferences requestPreferences) {
+    protected Map<String, ?> headerAttributes(Experiment experiment) {
         Map<String, Object> result = new HashMap<>();
         result.put("hasExtraInfo", atlasResourceHub.hasExtraInfo(experiment));
         return result;
@@ -53,7 +52,7 @@ public class ExperimentPageService {
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
-        experimentDescription.addProperty("species", experiment.getSpecies().originalName);
+        experimentDescription.addProperty("species", experiment.getSpecies().getName());
         return experimentDescription;
     }
 }

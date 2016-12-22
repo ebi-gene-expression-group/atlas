@@ -27,7 +27,6 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
     private int numberOfContrasts;
     private String species;
     private String kingdom;
-    private String ensemblDB;
     private SortedSet<String> experimentalFactors = Sets.newTreeSet();
     private SortedSet<String> arrayDesigns = Sets.newTreeSet();
     private SortedSet<String> arrayDesignNames = Sets.newTreeSet();
@@ -86,14 +85,6 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     public void setKingdom(String kingdom) {
         this.kingdom = kingdom;
-    }
-
-    public String getEnsemblDB() {
-        return ensemblDB;
-    }
-
-    public void setEnsemblDB(String ensemblDB) {
-        this.ensemblDB = ensemblDB;
     }
 
     public SortedSet<String> getExperimentalFactors() {

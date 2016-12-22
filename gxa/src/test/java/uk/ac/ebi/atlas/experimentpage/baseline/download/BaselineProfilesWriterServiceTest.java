@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
@@ -23,10 +22,16 @@ import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.io.Writer;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
@@ -35,19 +40,19 @@ import static org.mockito.Mockito.when;
 public class BaselineProfilesWriterServiceTest {
 
     @Mock
-    ObjectInputStream<BaselineProfile> objectInputStreamMock;
+    private ObjectInputStream<BaselineProfile> objectInputStreamMock;
 
     @Mock
-    ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+    private ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
     @Mock
-    BaselineProfileInputStreamFactory inputStreamFactory;
+    private BaselineProfileInputStreamFactory inputStreamFactory;
 
     @Mock
-    SolrQueryService solrQueryService;
+    private SolrQueryService solrQueryService;
 
     @Mock
-    CoexpressedGenesService coexpressedGenesService;
+    private CoexpressedGenesService coexpressedGenesService;
 
     private BaselineProfilesWriterService subject;
 
@@ -80,7 +85,7 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", "some species", "ensembldb", "animals"));
+        when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
         when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);

@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -30,24 +30,24 @@ public class GeneSetPageController extends BioentityPageController {
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier,
-                                  @RequestParam(value = "organism", required = false, defaultValue = "") String
-                                          speciesString,
+                                  @RequestParam(value = "organism", required = false) String speciesString,
                                   Model model) {
 
-        Species species = speciesFactory.create(matchesReactomeID(identifier)? speciesLookupService.fetchSpeciesForGeneSet(identifier).or(""): speciesString);
+        Species species = speciesFactory.create(matchesReactomeID(identifier) ? speciesLookupService.fetchSpeciesForGeneSet(identifier).or("") : speciesString);
 
-        model.addAttribute("species", species.originalName);
+        model.addAttribute("species", species.getName());
 
-        ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(SemanticQuery.create
-                (identifier), species);
+        ImmutableSet<String> experimentTypes =
+                analyticsSearchService.fetchExperimentTypes(
+                        SemanticQuery.create(identifier), species.getReferenceName());
 
-        return super.showBioentityPage(identifier, species,identifier, model, experimentTypes,
+        return super.showBioentityPage(identifier, species, identifier, model, experimentTypes,
                 GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier));
     }
 
     @Override
     protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String description){
-        String speciesString = matchesReactomeID(identifier) ? species.originalName : "";
+        String speciesString = matchesReactomeID(identifier) ? species.getName() : "";
         String s = "Expression summary for " + description +
                 (StringUtils.isNotBlank(speciesString) ?
                         " - " + StringUtils.capitalize(speciesString) : "");

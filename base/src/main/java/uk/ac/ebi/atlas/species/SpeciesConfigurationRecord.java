@@ -1,25 +1,46 @@
 package uk.ac.ebi.atlas.species;
 
-import com.google.auto.value.AutoValue;
+import java.util.Collection;
 
-import java.util.List;
-import java.util.Map;
+public class Species {
 
-@AutoValue
-public abstract class SpeciesConfigurationRecord {
-    public static SpeciesConfigurationRecord create(String name, String defaultQueryFactorType, String kingdom,
-                                                  Map<String, List<String>> resources) {
-        return new AutoValue_SpeciesConfigurationRecord(name, defaultQueryFactorType, kingdom, resources);
+    private final String name;
+    private final SpeciesProperties mappedProperties;
+
+    public Species(String name, SpeciesProperties mappedProperties) {
+        this.name = name;
+        this.mappedProperties = mappedProperties;
     }
 
-    public abstract String name();
-    public abstract String defaultQueryFactorType();
-    public abstract String kingdom();
-    public abstract Map<String, List<String>> resources();
+    public String getName() {
+        return name;
+    }
+
+    public String getReferenceName() {
+        return mappedProperties.referenceName();
+    }
+
+    public String getEnsemblName() {
+        return mappedProperties.ensemblName();
+    }
+
+    public String getKingdom() {
+        return mappedProperties.kingdom();
+    }
+
+    public String getDefaultQueryFactorType() {
+        return mappedProperties.defaultQueryFactorType();
+    }
+
+    public Collection<String> getResources(String type) {
+        return mappedProperties.resources().get(type);
+    }
 
     public boolean isPlant() {
-        return "plants".equals(kingdom());
+        return "plants".equalsIgnoreCase(mappedProperties.kingdom());
     }
 
-
+    public boolean isUnknown() {
+        return mappedProperties == SpeciesProperties.UNKNOWN;
+    }
 }

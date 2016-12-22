@@ -7,15 +7,15 @@ import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-public class DifferentialRequestContext<T extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> implements DifferentialProfileStreamOptions {
+public class DifferentialRequestContext<E extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> implements DifferentialProfileStreamOptions {
 
-    private T experiment;
+    private E experiment;
 
-    public T getExperiment() {
+    public E getExperiment() {
         return experiment;
     }
 
-    void setExperiment(T experiment) {
+    void setExperiment(E experiment) {
         this.experiment = experiment;
     }
 

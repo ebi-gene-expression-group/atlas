@@ -14,24 +14,19 @@ import java.util.UUID;
 
 public class ExperimentDTO {
 
+    private final String experimentAccession;
+    private final ExperimentType experimentType;
+    private final String species;
+    private final Set<String> pubmedIds;
+    private final String title;
+    private final Date lastUpdate;
+    private final boolean isPrivate;
     private final String accessKey;
 
-    private String experimentAccession;
 
-    private ExperimentType experimentType;
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species,
+                         Set<String> pubmedIds, String title, Date lastUpdate, boolean isPrivate, String accessKey) {
 
-    private Date lastUpdate;
-
-    private boolean isPrivate;
-
-    private String species;
-
-    private Set<String> pubmedIds;
-
-    private String title;
-
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, String species, Set<String> pubmedIds,
-                         String title, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
         this.species = species;
@@ -40,27 +35,26 @@ public class ExperimentDTO {
         this.lastUpdate = lastUpdate;
         this.isPrivate = isPrivate;
         this.accessKey = accessKey;
+
     }
 
     static ExperimentDTO createNew(String experimentAccession, ExperimentType experimentType, String species,
-                                    Set<String> pubmedIds,
-                                String title, boolean isPrivate){
-        return new ExperimentDTO(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
+                                   Set<String> pubmedIds, String title, boolean isPrivate) {
+
+        return new ExperimentDTO(
+                experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate,
+                UUID.randomUUID().toString());
+
     }
 
-    static ExperimentDTO createNew(CondensedSdrfParserOutput condensedSdrfParserOutput, String species, boolean isPrivate){
+    static ExperimentDTO createNew(CondensedSdrfParserOutput condensedSdrfParserOutput, String species,
+                                   boolean isPrivate) {
+
         return ExperimentDTO.createNew(
-                condensedSdrfParserOutput.getExperimentAccession(),
-                condensedSdrfParserOutput.getExperimentType(),
-                species,
-                condensedSdrfParserOutput.getPubmedIds(),
-                condensedSdrfParserOutput.getTitle(),
-                isPrivate
-        );
+                condensedSdrfParserOutput.getExperimentAccession(), condensedSdrfParserOutput.getExperimentType(),
+                species, condensedSdrfParserOutput.getPubmedIds(), condensedSdrfParserOutput.getTitle(), isPrivate);
+
     }
-
-
-
 
     public String getExperimentAccession() {
         return experimentAccession;
@@ -83,8 +77,8 @@ public class ExperimentDTO {
     public boolean equals(Object obj) {
         if (obj instanceof ExperimentDTO) {
             ExperimentDTO other = (ExperimentDTO) obj;
-            return this.experimentAccession.equals(other.experimentAccession)
-                    && this.experimentType.equals(other.experimentType);
+            return this.experimentAccession.equals(other.experimentAccession) &&
+                    this.experimentType.equals(other.experimentType);
         }
         return false;
     }
@@ -102,13 +96,11 @@ public class ExperimentDTO {
                 .add("lastUpdate", lastUpdate).toString();
     }
 
-    public JsonObject toJson(){
+    public JsonObject toJson() {
         JsonObject result = new JsonObject();
         result.add("accession", new JsonPrimitive(experimentAccession));
         result.add("type", new JsonPrimitive(experimentType.name()));
-        JsonArray speciesArray = new JsonArray();
-        speciesArray.add(new JsonPrimitive(species));
-        result.add("species", speciesArray);
+        result.add("species", new JsonPrimitive(species));
         JsonArray pubmedIdsArray = new JsonArray();
         for(String id: pubmedIds){
             pubmedIdsArray.add(new JsonPrimitive(id));
@@ -118,6 +110,7 @@ public class ExperimentDTO {
         result.add("isPrivate", new JsonPrimitive(isPrivate));
         result.add("accessKey", new JsonPrimitive(accessKey));
         result.add("lastUpdate", new JsonPrimitive(lastUpdate.toString()));
+
         return result;
     }
 
@@ -139,10 +132,6 @@ public class ExperimentDTO {
 
     public String getTitle() {
         return title;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
     }
 
 }

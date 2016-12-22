@@ -12,8 +12,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactorsFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.SpeciesFactory;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
 
         return new BaselineExperimentBuilder()
                 .ofType(experimentType)
-                .forSpecies(speciesFactory.create(experimentDTO, factorsConfig))
+                .forSpecies(speciesFactory.create(experimentDTO.getSpecies()))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)

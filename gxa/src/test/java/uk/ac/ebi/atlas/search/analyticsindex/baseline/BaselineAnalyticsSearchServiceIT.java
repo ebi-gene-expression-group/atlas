@@ -1,17 +1,19 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 import java.util.HashSet;
@@ -31,9 +33,14 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class BaselineAnalyticsSearchServiceIT {
 
-    public static final String ORGANISM_PART = "ORGANISM_PART";
-    public static final Species HUMAN = new Species("Homo sapiens", "homo sapiens", "ensembldb","animals");
+    private static Species HUMAN;
     private static final Set<Factor> organismPartFactors = new HashSet<>();
+
+    public static final String ORGANISM_PART = "ORGANISM_PART";
+
+    @Inject
+    private SpeciesFactory speciesFactory;
+
     static {
         organismPartFactors.add(new Factor(ORGANISM_PART, "adipose tissue"));
         organismPartFactors.add(new Factor(ORGANISM_PART, "adrenal gland"));
@@ -98,10 +105,13 @@ public class BaselineAnalyticsSearchServiceIT {
         cellLineFactors.add(new Factor(CELL_LINE, "SK-N-SH_RA"));
     }
 
-
-
     @Inject
     private BaselineAnalyticsSearchService subject;
+
+    @Before
+    public void setUp() {
+        HUMAN = speciesFactory.create("homo sapiens");
+    }
 
     @Test
     public void singleSpeciesGeneAccessionTissues() {

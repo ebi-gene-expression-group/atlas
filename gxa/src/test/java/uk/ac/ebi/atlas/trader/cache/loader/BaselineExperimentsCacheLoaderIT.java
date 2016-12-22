@@ -33,12 +33,10 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class BaselineExperimentsCacheLoaderIT {
 
-    String accession = "E-MTAB-513";
+    private String accession = "E-MTAB-513";
+
     @Inject
     private RnaSeqBaselineExperimentFactory rnaSeqBaselineExperimentFactory;
-
-    ExperimentsCacheLoader<BaselineExperiment> subject;
-
 
     @Mock
     private ExperimentDAO experimentDao;
@@ -49,8 +47,10 @@ public class BaselineExperimentsCacheLoaderIT {
     @Inject
     private ExperimentDesignParser experimentDesignParser;
 
+    private ExperimentsCacheLoader<BaselineExperiment> subject;
+
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         Set<String> pubMedIds = Collections.emptySet();
         ExperimentDTO experimentDTO = new ExperimentDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE,
@@ -68,7 +68,7 @@ public class BaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load(accession);
         //then
-        String species = experiment.getSpecies().originalName;
+        String species = experiment.getSpecies().getName();
         assertThat(species, is("Homo sapiens"));
     }
 
