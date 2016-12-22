@@ -48,6 +48,7 @@ public class SingleCellExperimentPageController extends ExperimentPageController
         model.addAttribute("experimentAccession", experimentAccession);
         model.addAttribute("displayName", experiment.getDisplayName());
         model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
+        model.addAttribute("species", experiment.getSpecies().getName());
 
         switch (experimentAccession.toUpperCase()) {
             case "E-MTAB-2865":
