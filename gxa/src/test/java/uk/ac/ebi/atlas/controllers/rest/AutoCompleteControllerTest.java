@@ -28,9 +28,6 @@ public class AutoCompleteControllerTest {
     private static final String HOMO_SAPIENS = "Homo sapiens";
 
     @Mock
-    private BaselineRequestContext requestContextMock;
-
-    @Mock
     private SuggestionService suggestionServiceMock;
 
     @Mock
@@ -45,9 +42,8 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
-        when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PARt", "animals", ImmutableSortedMap.<String, List<String>>of())));
-        when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
-        when(requestContextMock.getFilteredBySpecies()).thenReturn(HOMO_SAPIENS);
+        when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableSortedMap.<String, List<String>>of())));
+        when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, "homo sapiens")).thenReturn(suggestions);
 
         subject = new AutoCompleteController(suggestionServiceMock, speciesFactoryMock);
     }
