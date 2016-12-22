@@ -2,13 +2,13 @@ package uk.ac.ebi.atlas.species;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSortedMap;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 
 @Named
@@ -37,7 +37,8 @@ public class SpeciesPropertiesTrader {
     private String normalise(String str) {
         String normalisedString = str.contains("_") ? str.replace("_", " ") : str;
 
-        return Joiner.on(' ').join(Arrays.copyOf(normalisedString.toLowerCase().split(" "), 2));
+        // Arrays.copyOf pads the array with nulls, which breaks Joiner
+        return Joiner.on(' ').join(ArrayUtils.subarray(normalisedString.toLowerCase().split(" "), 0, 2));
     }
 
     public void refresh() {
@@ -56,8 +57,9 @@ public class SpeciesPropertiesTrader {
                 nameToSpeciesPropertiesBuilder.put(speciesProperties.referenceName(), speciesProperties);
             }
 
-            LOGGER.info("Retrieved {} species properties", nameToSpecies.size());
-            return nameToSpeciesPropertiesBuilder.build();
+            ImmutableSortedMap<String, SpeciesProperties> nameToSpeciesProperties = nameToSpeciesPropertiesBuilder.build();
+            LOGGER.info("Retrieved {} species properties", nameToSpeciesProperties.size());
+            return nameToSpeciesProperties;
 
         } catch (IOException e) {
             LOGGER.error("Error reading species properties");

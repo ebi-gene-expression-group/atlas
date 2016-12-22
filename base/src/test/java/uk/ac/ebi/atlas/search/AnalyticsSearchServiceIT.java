@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableSet;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,7 +29,12 @@ public class AnalyticsSearchServiceIT {
 
     private SemanticQuery query = SemanticQuery.create("zinc finger");
     private SemanticQuery condition = SemanticQuery.create("pish");
-    private Species species = speciesFactory.create("oryza sativa");
+    private Species species;
+
+    @Before
+    public void setUp() {
+        species = speciesFactory.create("oryza sativa");
+    }
 
     @Test
     public void fetchExperimentTypes1() {
