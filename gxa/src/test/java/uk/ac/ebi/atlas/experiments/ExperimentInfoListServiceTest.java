@@ -17,27 +17,25 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.PublicExperimentTypesCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.*;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -59,31 +57,12 @@ public class ExperimentInfoListServiceTest {
     @Mock
     private ExpressionAtlasExperimentTrader experimentTraderMock;
 
-    @Mock
-    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCacheMock;
-
-    @Mock
-    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCacheMock;
-
-    @Mock
-    private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
-
     private BaselineExperiment baselineExperiment;
-
-    @Mock
-    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCacheMock;
-
-    @Mock
-    private PublicExperimentTypesCache publicExperimentTypesCacheMock;
-
     @Mock
     private DifferentialExperiment differentialExperiment;
 
     @Mock
     private MicroarrayExperiment microarrayExperiment;
-
-    @Mock
-    private ArrayDesignTrader arrayDesignTraderMock;
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -99,7 +78,7 @@ public class ExperimentInfoListServiceTest {
         when(assayGroups.getAssayGroupIds()).thenReturn(Sets.newHashSet("RUN"));
 
         baselineExperiment = Mockito.spy(new BaselineExperimentBuilder()
-                .forSpecies(new Species(SPECIES,SPECIES,"kingdom","ensembl_db"))
+                .forSpecies(new Species(SPECIES, SpeciesProperties.UNKNOWN))
                 .withAccession(BASELINE_ACCESSION)
                 .withLastUpdate(lastUpdateStub)
                 .withDescription(DESCRIPTION)
@@ -119,13 +98,13 @@ public class ExperimentInfoListServiceTest {
         differentialExperiment = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,
-                "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"),
+                "description", false, new Species(SPECIES, SpeciesProperties.UNKNOWN),
                 new HashSet<String>(),experimentDesignMock));
 
         microarrayExperiment = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
-                "description", false, new Species(SPECIES,SPECIES, "kingdom", "ensemblDb"), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
+                "description", false, new Species(SPECIES, SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
                 Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment>> experimentAccessionsPerType = ImmutableMap.of(
@@ -162,7 +141,7 @@ public class ExperimentInfoListServiceTest {
 
     @Test
     public void testExtractBasicExperimentInfo()   {
-        ExperimentInfo experimentInfo = baselineExperiment.getExperimentInfo();
+        ExperimentInfo experimentInfo = baselineExperiment.buildExperimentInfo();
         assertThat(experimentInfo.getExperimentAccession(), is(BASELINE_ACCESSION));
         assertThat(experimentInfo.getLastUpdate(), is("12-01-1940"));
         assertThat(experimentInfo.getExperimentDescription(), is(DESCRIPTION));
