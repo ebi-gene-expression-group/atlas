@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.acceptance.rest;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
@@ -21,7 +19,7 @@ import static org.junit.Assert.assertThat;
 
 public class RestfulLinksEIT extends RestAssuredFixture{
 
-    SemanticQuery query = SemanticQuery.create("zinc finger");
+    private SemanticQuery query = SemanticQuery.create("zinc finger");
 
     @Test
     public void testWholeQueryFlow(){
@@ -76,8 +74,8 @@ public class RestfulLinksEIT extends RestAssuredFixture{
         assertThat(results.entrySet().size(), greaterThan(0));
 
         List<String> l = new ArrayList<>();
-        for(JsonElement row: results.get("profiles").getAsJsonObject().get("rows").getAsJsonArray()){
-            String uri =row.getAsJsonObject().get("uri").getAsString();
+        for (JsonElement row: results.get("profiles").getAsJsonObject().get("rows").getAsJsonArray()) {
+            String uri = row.getAsJsonObject().get("uri").getAsString();
             l.add(uri);
         }
 
