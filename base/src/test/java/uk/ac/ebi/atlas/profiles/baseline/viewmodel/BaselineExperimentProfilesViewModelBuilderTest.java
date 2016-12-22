@@ -109,8 +109,9 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "  \"rows\": [\n" +
                 "    {\n" +
                 "      \"id\": \"EXP1\",\n" +
-                "      \"name\": \"EXP1NAME\",\n" +
                 "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
+                "      \"name\": \"EXP1NAME\",\n" +
+                "      \"serializedFilterFactors\": \"ORGANISM%3AHomo+sapiens\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
@@ -129,13 +130,13 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"\"\n" +
                 "        }\n" +
-                "      ],\n" +
-                "      \"serializedFilterFactors\": \"ORGANISM:Homo sapiens\"\n" +
+                "      ]\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"id\": \"EXP2\",\n" +
-                "      \"name\": \"EXP2NAME\",\n" +
                 "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
+                "      \"name\": \"EXP2NAME\",\n" +
+                "      \"serializedFilterFactors\": \"\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
@@ -154,8 +155,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"\"\n" +
                 "        }\n" +
-                "      ],\n" +
-                "      \"serializedFilterFactors\": \"\"\n" +
+                "      ]\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}";

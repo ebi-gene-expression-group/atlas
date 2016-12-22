@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.ImmutableSet;
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -18,6 +16,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentsInfoListServiceTest {
@@ -29,12 +28,11 @@ public class ExperimentsInfoListServiceTest {
                   "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
                   "      \"experimentAccession\": \"accession\",\n" +
                   "      \"experimentDescription\": \"description\",\n" +
-                  "      \"lastUpdate\": \"16-12-2016\",\n" +
+                  "      \"lastUpdate\": \"22-12-2016\",\n" +
                   "      \"numberOfAssays\": 0,\n" +
                   "      \"numberOfContrasts\": 0,\n" +
                   "      \"species\": \"species\",\n" +
-                  "      \"kingdom\": \"ensembl\",\n" +
-                  "      \"ensemblDB\": \"kingdom\",\n" +
+                  "      \"kingdom\": \"kingdom\",\n" +
                   "      \"experimentalFactors\": [],\n" +
                   "      \"arrayDesigns\": [],\n" +
                   "      \"arrayDesignNames\": []\n" +
@@ -44,21 +42,22 @@ public class ExperimentsInfoListServiceTest {
 
 
     @Mock
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
     private ExperimentInfoListService subject;
 
     @Before
     public void setUp() throws Exception {
 
-        Mockito.when(experimentTrader.getPublicExperiments(ExperimentType.RNASEQ_MRNA_BASELINE)).thenReturn
-                (ImmutableSet.<Experiment>of(BaselineExperimentTest.mockExperiment()));
+        when(experimentTrader.getPublicExperiments(ExperimentType.RNASEQ_MRNA_BASELINE))
+                .thenReturn(ImmutableSet.<Experiment>of(BaselineExperimentTest.mockExperiment()));
 
-
-        subject = new ExperimentInfoListService(experimentTrader, ImmutableSet.of(ExperimentType
-                .RNASEQ_MRNA_BASELINE));
+        subject =
+                new ExperimentInfoListService(experimentTrader, ImmutableSet.of(ExperimentType.RNASEQ_MRNA_BASELINE));
 
     }
+
+
 
     @Test
     public void sizeIsRight() throws Exception {
