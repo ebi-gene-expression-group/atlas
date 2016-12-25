@@ -6,6 +6,7 @@
 <%--@elvariable id="dataProviderDescription" type="java.util.List<String>"--%>
 <%--@elvariable id="allArrayDesigns" type="java.util.SortedSet<String>"--%>
 <%--@elvariable id="pubMedIds" type="java.util.List<String>"--%>
+<%--@elvariable id="species" type="uk.ac.ebi.atlas.species.Species"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -40,7 +41,7 @@
     </c:if>
 </div>
 <div id="experimentOrganisms">Organism:
-    <span style="font-style:italic">${species}</span>
+    <span style="font-style:italic">${species.name}</span>
 </div>
 <c:if test="${allArrayDesigns!=null}">
     <div id="experimentArrayDesigns">Array Design(s):

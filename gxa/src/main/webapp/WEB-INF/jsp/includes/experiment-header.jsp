@@ -1,5 +1,5 @@
 <%--@elvariable id="experimentAccession" type="java.lang.String"--%>
-<%--@elvariable id="species" type="java.lang.String"--%>
+<%--@elvariable id="species" type="uk.ac.ebi.atlas.species.Species"--%>
 <%--@elvariable id="rawDownloadUrl" type="java.lang.String"--%>
 <%--@elvariable id="analyticsDownloadUrl" type="java.lang.String"--%>
 <%--@elvariable id="normalizedUrl" type="java.lang.String"--%>
@@ -96,11 +96,11 @@
 
 
                     <%--@elvariable id="fastQCReportUtil" type="atlas.experimentpage.fastqc.FastQCReportUtil"--%>
-                    <c:set var="hasFastQcReport" value="${fastQCReportUtil.hasFastQC(experimentAccession, species)}"/>
+                    <c:set var="hasFastQcReport" value="${fastQCReportUtil.hasFastQC(experimentAccession, species.referenceName)}"/>
                     <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
                         <td>
                             <a id="display-fastqc-report" title="Quality Metrics Report"
-                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/fastqc/${species}/qc.html${accessKeyQueryString}">
+                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/fastqc/${species.referenceName}/qc.html${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
                             </a>
                         </td>
