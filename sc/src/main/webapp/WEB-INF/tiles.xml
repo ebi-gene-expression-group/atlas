@@ -10,8 +10,9 @@
         <put-attribute name="header"/>
         <put-attribute name="body"/>
         <put-attribute name="news"/>
-        <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
         <put-attribute name="mega-footer" value="/WEB-INF/jsp/tiles/mega-footer.jsp"/>
+        <put-attribute name="credits" value="/WEB-INF/jsp/tiles/collaborators.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
     </definition>
 
     <definition name="home" extends="base">

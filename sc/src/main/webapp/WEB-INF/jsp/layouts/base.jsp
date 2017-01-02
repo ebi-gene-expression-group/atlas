@@ -113,6 +113,10 @@
     <tiles:insertAttribute name="mega-footer"/>
 </div>
 
+<div class="row expanded" style="border-top: 5px solid #eee;padding: .5rem 0;display:flex">
+    <tiles:insertAttribute name="credits"/>
+</div>
+
 <footer>
     <tiles:insertAttribute name="footer"/>
 </footer>
