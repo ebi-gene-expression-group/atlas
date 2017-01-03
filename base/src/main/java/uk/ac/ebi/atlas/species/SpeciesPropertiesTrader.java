@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.species;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSortedMap;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class SpeciesPropertiesTrader {
     }
 
     public SpeciesProperties get(String speciesName) {
-        return nameToSpecies.containsKey(normalise(speciesName)) ?
+        return StringUtils.isNotEmpty(speciesName) && nameToSpecies.containsKey(normalise(speciesName)) ?
                 nameToSpecies.get(normalise(speciesName)) : SpeciesProperties.UNKNOWN;
     }
 
