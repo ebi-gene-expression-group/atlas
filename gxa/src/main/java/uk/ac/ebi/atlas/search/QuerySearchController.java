@@ -51,8 +51,8 @@ public class QuerySearchController {
 
 
     @RequestMapping(value = "/query")
-    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false) SemanticQuery geneQuery,
-                                          @RequestParam(value = "conditionQuery", required = false) SemanticQuery conditionQuery,
+    public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
+                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                           @RequestParam(value = "organism", required = false) String speciesString,
                                           Model model, RedirectAttributes redirectAttributes)
     throws UnsupportedEncodingException {
