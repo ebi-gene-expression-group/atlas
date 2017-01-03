@@ -4,7 +4,7 @@
 
 <div class="callout experiment-list-latest" data-equalizer-watch>
     <ul class="tabs" data-tabs id="experiments-tabs">
-        <li class="tabs-title is-active"><a href="#latest-experiments" aria-selected="true">Latest experiments</a></li>
+        <li class="tabs-title is-active"><a href="#latest-experiments" aria-selected="true">Browse experiments</a></li>
     </ul>
 
 
