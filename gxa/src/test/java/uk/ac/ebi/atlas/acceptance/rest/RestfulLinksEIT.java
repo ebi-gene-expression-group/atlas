@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.acceptance.rest;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -13,8 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class RestfulLinksEIT extends RestAssuredFixture{
@@ -58,8 +56,8 @@ public class RestfulLinksEIT extends RestAssuredFixture{
             String uri =row.getAsJsonObject().get("uri").getAsString();
             RestAssured.get(uri).then()
                     .assertThat()
-                    .content(Matchers.containsString(accession))
-                    .content(Matchers.containsString("rows"));
+                    .content(containsString(accession))
+                    .content(containsString("rows"));
         }
     }
 
@@ -80,6 +78,28 @@ public class RestfulLinksEIT extends RestAssuredFixture{
         }
 
         assertThat(l.size(), is(new ArrayList(new HashSet<>(l)).size()));
+    }
+
+    @Test
+    public void urisContainGeneQuery(){
+        /*
+        I don't think this fully works
+         */
+        JsonObject results = new EndPoint(
+                "/gxa/json/search/baselineResults",
+                MessageFormat.format("query={0}&species={1}&source={2}",query.toUrlEncodedJson(), "homo sapiens",
+                        "organism_part")
+        ).getJsonResponse();
+
+        assertThat(results.entrySet().size(), greaterThan(0));
+
+        List<String> l = new ArrayList<>();
+        for(JsonElement row: results.get("profiles").getAsJsonObject().get("rows").getAsJsonArray()){
+            String uri =row.getAsJsonObject().get("uri").getAsString();
+            assertThat(uri, containsString(query.toUrlEncodedJson()));
+        }
+
+
     }
 
 }
