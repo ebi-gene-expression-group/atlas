@@ -27,7 +27,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
@@ -55,7 +54,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private AnatomogramFactory anatomogramFactory;
     private SpeciesLookupService speciesLookupService;
 
-    private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final BaselineExperimentPageService baselineExperimentPageService;
     private final SpeciesFactory speciesFactory;
@@ -66,16 +64,14 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     @Inject
     private HeatmapWidgetController(SpeciesLookupService speciesLookupService,
-                                    BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
                                     BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-                                    @Qualifier ("baselineProfileInputStreamFactory")BaselineProfileInputStreamFactory
+                                    @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory
                                                 baselineProfileInputStreamFactory,
-                                    SpeciesFactory speciesFactory,FactorGroupingService factorGroupingService,
+                                    SpeciesFactory speciesFactory, FactorGroupingService factorGroupingService,
                                     HeatmapDataToJsonService heatmapDataToJsonService) {
         this.anatomogramFactory = new AnatomogramFactory();
         this.speciesLookupService = speciesLookupService;
-        this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
         this.speciesFactory = speciesFactory;
@@ -195,8 +191,6 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
             result.add("columnHeaders", gson.toJsonTree(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
             result.add("columnGroupings", factorGroupingService.group(convert(orderedFactors)));
 
-            result.add("profilesOld", baselineExperimentProfilesViewModelBuilder.buildJson
-                    (experimentProfiles, orderedFactors));
             result.add("profiles", profilesToJsonConverter.convert(experimentProfiles, orderedFactors));
             result.add("geneSetProfiles", JsonNull.INSTANCE);
             result.add("jsonCoexpressions", new JsonArray());
