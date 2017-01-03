@@ -140,8 +140,8 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
     private JsonObject populateModelWithMultiExperimentResults(HttpServletRequest request,SemanticQuery geneQuery,
                                                                SemanticQuery conditionQuery, Species species,
                                                                BaselineExperimentSearchResult searchResult, Model model) {
-        model.addAttribute("geneQuery", geneQuery);
-        model.addAttribute("conditionQuery", conditionQuery);
+        model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
+        model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
         //TODO does not take conditionQuery into account - but it's very hard to implement
         try {
 
@@ -158,7 +158,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
 
     private JsonObject populateModelWithMultiExperimentResults(HttpServletRequest request,SemanticQuery query, Species species,
                                                          BaselineExperimentSearchResult searchResult, Model model) {
-        model.addAttribute("query", query);
+        model.addAttribute("query", query.toUrlEncodedJson());
         try {
 
         return resultsFromDataAndModel(ProfilesToJsonConverter.createForCrossExperimentResults(
@@ -200,7 +200,7 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         model.addAttribute("isWidget", true);
         result.add("experiment", JsonNull.INSTANCE);
 
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(request, SemanticQuery.create(), SemanticQuery.create(),
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(request,
                 model.asMap()));
         return result;
     }

@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.base.Strings;
-import com.google.gson.*;
-import uk.ac.ebi.atlas.search.SemanticQuery;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
@@ -28,24 +26,21 @@ public class HeatmapDataToJsonService {
             return result;
     }
 
-    public JsonObject configAsJsonObject(HttpServletRequest request, SemanticQuery geneQuery, SemanticQuery conditionQuery,
-                                         Map<String, Object> model){
+    public JsonObject configAsJsonObject(HttpServletRequest request,Map<String, Object> model){
         JsonObject config = new JsonObject();
         config.addProperty("atlasHost", applicationProperties.buildAtlasHostURL(request));
         config.addProperty("contextRoot", request.getContextPath());
         config.addProperty("experimentAccession", get(model, "experimentAccession"));
-        config.addProperty("geneQuery", geneQuery.toUrlEncodedJson());
-        config.addProperty("conditionQuery", conditionQuery.toUrlEncodedJson());
+        config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
+        config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("accessKey", request.getParameter("accessKey"));
         config.addProperty("species", get(model, "species"));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("enableEnsemblLauncher",
                 model.containsKey("enableEnsemblLauncher") && Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()));
         config.addProperty("showMaPlotButton", true);
-        config.addProperty("downloadProfilesURL",
-                Strings.isNullOrEmpty((String) model.get("downloadURL"))
-                        ? applicationProperties.buildDownloadURL(geneQuery,request)
-                        : get(model, "downloadURL"));
+        config.addProperty("downloadProfilesURL", get(model, "downloadProfilesURL"));
+
         config.addProperty("disclaimer", get(model, "disclaimer"));
         return config;
     }

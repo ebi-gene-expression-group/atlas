@@ -38,6 +38,7 @@ public final class ExpressionDataController {
         return mav;
     }
 
+    // Wojtek: this doesn't seem right.
     @RequestMapping(value = "/json/expressionData/species", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ModelAndView existSpeciesForGeneIdentifier() {

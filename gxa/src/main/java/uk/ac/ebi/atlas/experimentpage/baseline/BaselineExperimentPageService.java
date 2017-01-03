@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -29,7 +28,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
-    private final ApplicationProperties applicationProperties;
     private final AnatomogramFactory anatomogramFactory;
     private final FactorGroupingService factorGroupingService;
 
@@ -38,8 +36,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                                          AtlasResourceHub atlasResourceHub,
                                          TracksUtil tracksUtil,FactorGroupingService factorGroupingService,
                                          HeatmapDataToJsonService heatmapDataToJsonService) {
-        super(atlasResourceHub, heatmapDataToJsonService);
-        this.applicationProperties = applicationProperties;
+        super(atlasResourceHub, heatmapDataToJsonService, applicationProperties);
         this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.tracksUtil = tracksUtil;
@@ -73,7 +70,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         List<AssayGroupFactor> filteredAssayGroupFactors =requestContext.getOrderedAssayGroupFactors();
 
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
-        model.addAttribute("geneQuery", preferences.getGeneQuery());
+        model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
 
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
@@ -118,14 +115,13 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("isWidget", isWidget);
         if (!isWidget) {
             addFactorMenu(model, experiment, requestContext);
-        } else {
-            model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
         }
 
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
         }
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create(),
+        model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(request,
                 model.asMap()));
 
         return result;

@@ -22,7 +22,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -44,7 +43,6 @@ public class DifferentialExperimentPageService
     private final DifferentialRequestContextBuilder<E, ? extends DifferentialRequestContext<E>, K> differentialRequestContextBuilder;
     private final DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>> profilesHeatMap;
     private final TracksUtil tracksUtil;
-    private final ApplicationProperties applicationProperties;
 
     protected DifferentialExperimentPageService(
             DifferentialRequestContextBuilder<E, ? extends DifferentialRequestContext<E>, K> differentialRequestContextBuilder,
@@ -52,13 +50,12 @@ public class DifferentialExperimentPageService
             DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
             TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
 
-        super(atlasResourceHub, new HeatmapDataToJsonService(applicationProperties));
+        super(atlasResourceHub, new HeatmapDataToJsonService(applicationProperties), applicationProperties);
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.profilesHeatMap = profilesHeatMap;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.tracksUtil = tracksUtil;
         this.atlasResourceHub = atlasResourceHub;
-        this.applicationProperties = applicationProperties;
 
     }
 
@@ -82,7 +79,7 @@ public class DifferentialExperimentPageService
         DifferentialRequestContext<E> requestContext = initRequestContext(experiment, preferences);
         Set<Contrast> contrasts = experiment.getContrasts();
         model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("geneQuery", preferences.getGeneQuery());
+        model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
 
@@ -113,8 +110,8 @@ public class DifferentialExperimentPageService
                     }
                     result.add("geneSetProfiles", JsonNull.INSTANCE);
                     result.add("jsonCoexpressions", new JsonArray());
-                    result.add("config",heatmapDataToJsonService.configAsJsonObject(request,preferences.getGeneQuery(), SemanticQuery.create
-                            (), model.asMap()));
+                    model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
+                    result.add("config",heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
                     return result;
                 } else {
                     //copypasted:(

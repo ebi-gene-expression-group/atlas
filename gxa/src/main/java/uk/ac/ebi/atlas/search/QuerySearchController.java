@@ -53,14 +53,12 @@ public class QuerySearchController {
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                           @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                          @RequestParam(value = "organism", required = false) String speciesString,
-                                          Model model, RedirectAttributes redirectAttributes)
-    throws UnsupportedEncodingException {
-        Species species = speciesFactory.create(speciesString);
+                                          @RequestParam(value = "organism", required = false, defaultValue = "") String speciesString,
+                                          Model model, RedirectAttributes redirectAttributes){
         checkArgument(geneQuery.isNotEmpty() || conditionQuery.isNotEmpty(), "Please specify a gene query or a condition.");
+        Species species = speciesFactory.create(speciesString);
 
-        String searchDescription = SearchDescription.get(geneQuery, conditionQuery, species.getName());
-        model.addAttribute("searchDescription", searchDescription);
+        model.addAttribute("searchDescription", SearchDescription.get(geneQuery, conditionQuery, species.getName()));
         model.addAttribute("species", species.getReferenceName());
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());

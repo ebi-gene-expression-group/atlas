@@ -131,14 +131,6 @@ public class ApplicationProperties {
         return sourceURLBuilder.toString();
     }
 
-    @Deprecated //Not used because now we save data from the page. Also it's probably broken.
-    public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {
-        // get original query string, not the one modified by ExperimentDispatcher
-        String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
-        return Joiner.on("?").skipNulls()
-                .join(new String[]{"/experiments/" + experimentAccession + TSV_FILE_EXTENSION, queryString});
-    }
-
     /* Used in bioentities.jsp and bioentities-search-results.jsp */
     public String urlParamEncode(String value) throws UnsupportedEncodingException {
         return URLEncoder.encode(value, "UTF-8");
