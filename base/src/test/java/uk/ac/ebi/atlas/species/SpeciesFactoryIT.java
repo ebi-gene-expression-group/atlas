@@ -7,11 +7,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,31 +19,25 @@ public class SpeciesFactoryIT {
     private SpeciesFactory subject;
 
     @Test
+    public void differentSpeciesSameProperties() {
+        Species oryzaJaponica = subject.create("Oryza sativa Japonica group");
+        Species oryzaIndica = subject.create("Oryza sativa Indica group");
+
+        assertThat(oryzaJaponica.isUnknown(), is(false));
+        assertThat(oryzaIndica.isUnknown(), is(false));
+
+        assertThat(oryzaJaponica.getName(), is(not(oryzaIndica.getName())));
+
+        assertThat(oryzaJaponica.getReferenceName(), is(oryzaIndica.getReferenceName()));
+        assertThat(oryzaJaponica.getEnsemblName(), is(oryzaIndica.getEnsemblName()));
+        assertThat(oryzaJaponica.getDefaultQueryFactorType(), is(oryzaIndica.getDefaultQueryFactorType()));
+        assertThat(oryzaJaponica.getKingdom(), is(oryzaIndica.getKingdom()));
+        assertThat(oryzaJaponica.isPlant(), is(true));
+        assertThat(oryzaIndica.isPlant(), is(true));
+    }
+
+    @Test
     public void unknownSpecies() {
         assertThat(subject.create("foobar").isUnknown(), is(true));
     }
-
-//
-//    @Test
-//    public void plantsHaveTwoGenomeBrowsers() throws Exception {
-//        List<SpeciesProperties> allSpeciesProperties = subject.fetchAll();
-//
-//        for (SpeciesProperties speciesProperties : allSpeciesProperties) {
-//            if ("plants".equalsIgnoreCase(speciesProperties.kingdom())) {
-//                assertThat(species.resources().get("genome_browser"), hasSize(2));
-//            }
-//        }
-//    }
-
-
-//    @Test
-//    public void wbpsSpecies() throws Exception {
-//        Species caenorhabditisElegans = subject.fetchSpecies("caenorhabditis_elegans");
-//        Species schistosomaMansoni = subject.fetchSpecies("schistosoma_mansoni");
-//
-//        assertThat(caenorhabditisElegans.resources().get("genome_browser").get(0), startsWith("http://parasite"));
-//        assertThat(schistosomaMansoni.resources().get("genome_browser").get(0), startsWith("http://parasite"));
-//        assertThat(caenorhabditisElegans.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
-//        assertThat(schistosomaMansoni.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
-//    }
 }

@@ -75,18 +75,19 @@ public class SpeciesPropertiesTrader {
     }
 
     public SpeciesProperties get(String speciesName) {
-        return StringUtils.isNotEmpty(speciesName) && nameToSpecies.containsKey(normalise(speciesName)) ?
-                nameToSpecies.get(normalise(speciesName)) : SpeciesProperties.UNKNOWN;
+        return StringUtils.isNotEmpty(speciesName) && nameToSpecies.containsKey(normaliseTruncate(speciesName)) ?
+                nameToSpecies.get(normaliseTruncate(speciesName)) : SpeciesProperties.UNKNOWN;
     }
 
     public Collection<SpeciesProperties> getAll() {
         return nameToSpecies.values();
     }
 
-    private String normalise(String str) {
-        String normalisedString = str.contains("_") ? str.replace("_", " ") : str;
-
-        return Joiner.on(' ').skipNulls().join(Arrays.copyOf(normalisedString.toLowerCase().split(" "), 2));
+    private static String normaliseTruncate(String str) {
+        return Joiner.on(' ').skipNulls().join(Arrays.copyOf(normalise(str).split(" "), 2));
     }
 
+    static String normalise(String str) {
+        return StringUtils.isEmpty(str) ? "" : str.toLowerCase().replace("_", " ");
+    }
 }

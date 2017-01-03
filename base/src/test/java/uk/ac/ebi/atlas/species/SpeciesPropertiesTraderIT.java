@@ -1,88 +1,56 @@
 package uk.ac.ebi.atlas.species;
 
-import com.google.common.collect.ImmutableList;
-import org.apache.commons.io.IOUtils;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import javax.inject.Inject;
+
 import java.util.Collection;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class SpeciesPropertiesTraderIT {
 
-    private static MockDataFileHub dataFileHub;
-
-    private SpeciesPropertiesDao speciesPropertiesDao = new SpeciesPropertiesDao();
-
+    @Inject
     private SpeciesPropertiesTrader subject = new SpeciesPropertiesTrader();
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        dataFileHub = new MockDataFileHub();
-        dataFileHub.addSpeciesJsonFile(
-                IOUtils.readLines(
-                        SpeciesPropertiesTraderIT.class.getResourceAsStream("species-all.json"), StandardCharsets.UTF_8));
+    // The following tests are actually validating species-properties.json
+
+    @Test
+    public void propertiesAreInitialisedAfterBeanCreation() {
+        assertThat(subject.getAll(), hasSize(greaterThan(50)));
+        assertThat(subject.get("Homo sapiens").referenceName(), is("homo sapiens"));
+        assertThat(subject.get("Homo sapiens").ensemblName(), is("Homo_sapiens"));
+        assertThat(subject.get("Homo sapiens").kingdom(), is("animals"));
+        assertThat(subject.get("Hordeum vulgare").resources().get("genome_browser"), hasSize(2));
     }
 
-    @Before
-    public void setUp() throws IOException {
-        speciesPropertiesDao.setDataFileHub(dataFileHub);
-        subject.setSpeciesPropertiesDao(speciesPropertiesDao);
+    public void plantsHaveTwoGenomeBrowsers() throws Exception {
+        Collection<SpeciesProperties> allSpeciesProperties = subject.getAll();
+
+        for (SpeciesProperties speciesProperties : allSpeciesProperties) {
+            if ("plants".equalsIgnoreCase(speciesProperties.kingdom())) {
+                assertThat(speciesProperties.resources().get("genome_browser"), hasSize(2));
+            }
+        }
     }
 
     @Test
-    public void deleteMe() {
+    public void wbpsSpecies() throws Exception {
+        SpeciesProperties caenorhabditisElegans = subject.get("Caenorhabditis elegans");
+        SpeciesProperties schistosomaMansoni = subject.get("Schistosoma mansoni");
 
+        assertThat(caenorhabditisElegans.resources().get("genome_browser").get(0), startsWith("http://parasite"));
+        assertThat(schistosomaMansoni.resources().get("genome_browser").get(0), startsWith("http://parasite"));
+        assertThat(caenorhabditisElegans.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
+        assertThat(schistosomaMansoni.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
     }
-
-//    @Test
-//    public void getSpeciesByName() {
-//        assertThat(subject.getByName("homo_sapiens"), is(subject.getByName("Homo sapiens")));
-//    }
-//
-//    @Test
-//    public void getSpeciesWithSubspecies() {
-//        assertThat(subject.getByName("Hordeum vulgare subsp. vulgare"), is(subject.getByName("hordeum_vulgare")));
-//    }
-//
-//    @Test
-//    public void getSpeciesByKingdom() throws Exception {
-//        int count = 0;
-//        for (String kingdom : ImmutableList.of("animals", "plants", "fungi")) {
-//            Collection<Species> kingdomSpecies = subject.getByKingdom(kingdom);
-//
-//            count += kingdomSpecies.size();
-//
-//            for (Species species : kingdomSpecies) {
-//                assertThat(species.kingdom(), is(kingdom));
-//            }
-//        }
-//
-//        assertThat(speciesDao.fetchAllSpecies(), hasSize(count));
-//    }
-//
-//    @Test
-//    public void refreshSpecies() throws Exception {
-//        assertThat(subject.getByName("Tyrannosaurus rex"), is(nullValue()));
-//        dataFileHub.addSpeciesJsonFile(
-//                IOUtils.readLines(
-//                        SpeciesPropertiesTraderIT.class.getResourceAsStream("species-tyrannosaurus-rex.json"), StandardCharsets.UTF_8));
-//        subject.refresh();
-//        assertThat(subject.getByName("Tyrannosaurus rex"), is(not(nullValue())));
-//    }
-
 }

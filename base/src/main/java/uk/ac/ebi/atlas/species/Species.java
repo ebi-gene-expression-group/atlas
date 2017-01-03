@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.species;
 
-import java.util.Collection;
-
 public class Species {
 
     private final String name;
@@ -30,10 +28,6 @@ public class Species {
 
     public String getDefaultQueryFactorType() {
         return mappedProperties.defaultQueryFactorType();
-    }
-
-    public Collection<String> getResources(String type) {
-        return mappedProperties.resources().get(type);
     }
 
     public boolean isPlant() {

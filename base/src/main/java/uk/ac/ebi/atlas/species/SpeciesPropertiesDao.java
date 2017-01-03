@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static uk.ac.ebi.atlas.species.SpeciesPropertiesTrader.normalise;
+
 @Named
 public class SpeciesPropertiesDao {
 
@@ -84,7 +86,7 @@ public class SpeciesPropertiesDao {
         reader.endObject();
 
         return SpeciesProperties.create(
-                ensemblName.toLowerCase().replace("_", " "), ensemblName, defaultQueryFactorType, kingdom, resources);
+                normalise(ensemblName), ensemblName, defaultQueryFactorType, kingdom, resources);
     }
 
     private Pair<String, List<String>> readSpeciesResource(JsonReader reader) throws IOException {
