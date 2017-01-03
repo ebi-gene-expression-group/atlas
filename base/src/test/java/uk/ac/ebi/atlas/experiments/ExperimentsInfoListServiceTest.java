@@ -23,22 +23,22 @@ public class ExperimentsInfoListServiceTest {
 
     private static final String EXPECTED_JSON =
           "{\n" +
-                  "  \"aaData\": [\n" +
-                  "    {\n" +
-                  "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
-                  "      \"experimentAccession\": \"accession\",\n" +
-                  "      \"experimentDescription\": \"description\",\n" +
-                  "      \"lastUpdate\": \"22-12-2016\",\n" +
-                  "      \"numberOfAssays\": 0,\n" +
-                  "      \"numberOfContrasts\": 0,\n" +
-                  "      \"species\": \"species\",\n" +
-                  "      \"kingdom\": \"kingdom\",\n" +
-                  "      \"experimentalFactors\": [],\n" +
-                  "      \"arrayDesigns\": [],\n" +
-                  "      \"arrayDesignNames\": []\n" +
-                  "    }\n" +
-                  "  ]\n" +
-                  "}";
+          "  \"aaData\": [\n" +
+          "    {\n" +
+          "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
+          "      \"experimentAccession\": \"accession\",\n" +
+          "      \"experimentDescription\": \"description\",\n" +
+          "      \"lastUpdate\": \"\\d+-\\d+-\\d+\",\n" +
+          "      \"numberOfAssays\": 0,\n" +
+          "      \"numberOfContrasts\": 0,\n" +
+          "      \"species\": \"species\",\n" +
+          "      \"kingdom\": \"kingdom\",\n" +
+          "      \"experimentalFactors\": [],\n" +
+          "      \"arrayDesigns\": [],\n" +
+          "      \"arrayDesignNames\": []\n" +
+          "    }\n" +
+          "  ]\n" +
+          "}";
 
 
     @Mock
@@ -68,6 +68,13 @@ public class ExperimentsInfoListServiceTest {
     @Test
     public void formatIsInSyncWithWhatWeExpectAndTheDataOfMockBaselineExperiment() throws Exception {
         JsonElement result = subject.getExperimentsJson();
-        assertThat(result, is(new Gson().fromJson(EXPECTED_JSON, JsonElement.class)));
+        assertThat(result.toString().matches(
+                EXPECTED_JSON.replace(" ", "")
+                             .replace("\n", "")
+                             .replace("[","\\[")
+                             .replace("]","\\]")
+                             .replace("{","\\{")
+                             .replace("}","\\}")),
+                is(true));
     }
 }
