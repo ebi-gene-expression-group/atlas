@@ -19779,6 +19779,7 @@ var tsne =
 	//*------------------------------------------------------------------*
 	var referencePlotOptions = {
 	  "chart": {
+	    width: 520,
 	    "type": "scatter",
 	    "zoomType": "xy",
 	    "borderWidth": 2,
