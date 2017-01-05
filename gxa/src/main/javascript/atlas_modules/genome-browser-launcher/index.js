@@ -1,1 +1,2 @@
-module.exports = require(`./src/GenomeBrowserLauncher.jsx`);
+import render from './src/GenomeBrowserLauncherRenderer.jsx';
+export {render};

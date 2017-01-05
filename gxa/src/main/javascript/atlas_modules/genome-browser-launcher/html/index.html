@@ -10,20 +10,102 @@
     <script src="../dist/genomeBrowserLauncherRenderer.bundle.js"></script>
 </head>
 <body>
-    <div id="main">
-      <h3>Just a button- check image, tooltip</h3>
-      <div id="button0"></div>
-      <h3>Fort lauderdale button- should open modal on click</h3>
-      <div style="margin-bottom: 10px" id="button1"></div>
-      <h3>Zebrafish button- should open modal on click</h3>
-      <div style="margin-bottom: 10px" id="button2"></div>
+    <div>
+        <h3>WormBase</h3>
+        <div id="worm1">
+            If you see this something went wrong
+        </div>
+        <div id="worm2">
+            If you see this something went wrong
+        </div>
+        <div id="worm3">
+            If you see this something went wrong
+        </div>
+
+    </div>
+
+    <div>
+        <h3>Ensembl and Gramene</h3>
+        <div  id="plant1">
+            If you see this something went wrong
+        </div>
+        <div  id="plant2">
+            If you see this something went wrong
+        </div>
+
+        <div  id="plant3">
+            If you see this something went wrong
+        </div>
+
+    </div>
+
+    <div>
+        <h3>Ensembl</h3>
+        <div id="animal">
+            If you see this something went wrong
+        </div>
     </div>
 </body>
 
 <script>
-  genomeBrowserLauncherRenderer(document.getElementById("button0"), "http://www.ebi.ac.uk/gxa",":void", "");
-  genomeBrowserLauncherRenderer(document.getElementById("button1"), "http://www.ebi.ac.uk/gxa",":void", "fortLauderdale");
-  genomeBrowserLauncherRenderer(document.getElementById("button2"), "http://www.ebi.ac.uk/gxa",":void", "zebrafish");
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-MTAB-2812',
+        accessKey: '',
+        columnType: 'developmental stage',
+        mountNode: document.getElementById('worm1')
+    });
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-MTAB-2812',
+        accessKey: '',
+        columnType: 'developmental stage',
+        selectedGeneId: 'WBGene00004567',
+        mountNode: document.getElementById('worm2')
+    });
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-MTAB-2812',
+        accessKey: '',
+        columnType: 'developmental stage',
+        selectedGeneId: 'WBGene00004567',
+        selectedColumnId: 'g7',
+        mountNode: document.getElementById('worm3')
+    });
+
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-GEOD-55482',
+        accessKey: '',
+        columnType: 'ecotype',
+        mountNode: document.getElementById('plant1')
+    });
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-GEOD-55482',
+        accessKey: '',
+        columnType: 'ecotype',
+        selectedColumnId: 'g1',
+        mountNode: document.getElementById('plant2')
+    });
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-GEOD-55482',
+        accessKey: '',
+        columnType: 'ecotype',
+        selectedGeneId: 'AT4G08874',
+        selectedColumnId: 'g1',
+        mountNode: document.getElementById('plant3')
+    });
+
+    genomeBrowserLauncherRenderer.render({
+        atlasBaseUrl: 'https://localhost:8443/gxa',
+        experimentAccession: 'E-MTAB-513',
+        accessKey: '',
+        columnType: 'organism part',
+        mountNode: document.getElementById('animal')
+    });
+
 </script>
 
 </html>
