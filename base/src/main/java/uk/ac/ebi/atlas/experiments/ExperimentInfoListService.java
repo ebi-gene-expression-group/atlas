@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experiments;
 
 import com.google.common.collect.FluentIterable;
@@ -32,6 +31,11 @@ public class ExperimentInfoListService {
     public ExperimentInfoListService(ExperimentTrader experimentTrader, Collection<ExperimentType> experimentTypes ) {
         this.experimentTrader = experimentTrader;
         this.experimentTypes = experimentTypes;
+    }
+
+    public String getExperimentJson(String experimentAccession, String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        return gson.toJson(experiment.buildExperimentInfo());
     }
 
     public JsonObject getExperimentsJson() {
@@ -68,10 +72,6 @@ public class ExperimentInfoListService {
         return experimentInfos;
     }
 
-
-
-
-
     private ImmutableMap<String, Object> cached = null;
 
     public ImmutableMap<String, Object> getLatestExperimentsListAttributes(){
@@ -86,16 +86,16 @@ public class ExperimentInfoListService {
     }
 
     List<ExperimentInfo> fetchLatest(){
-        ImmutableList<ExperimentInfo> l = FluentIterable.from(listPublicExperiments()).toSortedList(new Comparator<ExperimentInfo>
-                () {
-            @Override
-            public int compare(ExperimentInfo o1, ExperimentInfo o2) {
-                return (-1) * DateTime.parse(o1.getLastUpdate(), expectedDateFormat).compareTo(DateTime.parse(o2
-                        .getLastUpdate(), expectedDateFormat));
-            }
-        });
+        ImmutableList<ExperimentInfo> l =
+                FluentIterable.from(listPublicExperiments()).toSortedList(new Comparator<ExperimentInfo>() {
+                    @Override
+                    public int compare(ExperimentInfo o1, ExperimentInfo o2) {
+                        return (-1) *
+                                DateTime.parse(o1.getLastUpdate(), expectedDateFormat)
+                                        .compareTo(DateTime.parse(o2.getLastUpdate(), expectedDateFormat));
+                    }
+                });
         return l.subList(0, Math.min(5, l.size()));
     }
-
 
 }
