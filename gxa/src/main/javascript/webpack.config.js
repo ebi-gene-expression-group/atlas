@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-        expressionAtlasHeatmap: ['babel-polyfill', './atlas_bundles/heatmap'],
+        expressionAtlasHeatmap: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap'],
         expressionAtlasHeatmapHighcharts: ['babel-polyfill', './atlas_bundles/heatmap-highcharts'],
         experimentPageHeatmap: ['babel-polyfill', './atlas_bundles/heatmap/src/experimentPageHeatmapAnatomogramRenderer.js'],
         expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
