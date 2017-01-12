@@ -4,7 +4,9 @@
 
 <div class="callout experiment-list-latest" data-equalizer-watch>
     <ul class="tabs" data-tabs id="experiments-tabs">
-        <li class="tabs-title is-active"><a href="#latest-experiments" aria-selected="true">Browse experiments</a></li>
+        <li class="tabs-title is-active"><a href="#latest-experiments" aria-selected="true">Latest experiments</a></li>
+        <li class="tabs-title"><a href="#featured-experiments">Featured</a></li>
+        <li class="tabs-title"><a href="#popular-experiments">Most popular</a></li>
     </ul>
 
 
@@ -49,7 +51,7 @@
 
     <div class="row">
         <div class="small-6 small-centered columns margin-top-large">
-            <a href="#" class="button float-center">View all experiments</a>
+            <a href='${pageContext.request.contextPath}/experiments' class="button float-center">View all experiments</a>
         </div>
     </div>
 
