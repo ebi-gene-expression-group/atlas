@@ -28,7 +28,7 @@ public class StaticPageController {
 
         request.setAttribute("contentResource", fetchResource(path));
         request.setAttribute("nav", pageName.replace(" ","_").replace("-","_").toLowerCase());
-        return "static-template";
+        return "foundation-static";
     }
 
     @RequestMapping("/help/{pageName}.html")
@@ -37,7 +37,7 @@ public class StaticPageController {
 
         request.setAttribute("contentResource", fetchResource(path));
         request.setAttribute("nav", "help");
-        return "static-template";
+        return "foundation-static";
     }
 
     @RequestMapping("/{pageName}.hhhh")
