@@ -30,10 +30,10 @@
                                     ${experimentInfo.experimentDescription}
                                 <c:choose>
                                     <c:when test="${experimentInfo.experimentType.baseline}">
-                                        ${experimentInfo.numberOfAssays} assays &ndash;
+                                        (${experimentInfo.numberOfAssays} assays) &ndash;
                                     </c:when>
                                     <c:otherwise>
-                                        ${experimentInfo.numberOfContrasts} contrasts &ndash;
+                                        (${experimentInfo.numberOfContrasts} contrasts) &ndash;
                                     </c:otherwise>
                                 </c:choose>
                                 <em>${experimentInfo.species}</em>
@@ -46,4 +46,11 @@
         </div>
 
     </div>
+
+    <div class="row">
+        <div class="small-6 small-centered columns margin-top-large">
+            <a href="#" class="button float-center">View all experiments</a>
+        </div>
+    </div>
+
 </div>
