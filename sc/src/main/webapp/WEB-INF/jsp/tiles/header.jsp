@@ -9,7 +9,6 @@
                 <div class="atlas-logo" ></div>
                 </a>
                 Single-cell Expression Atlas
-                <%--<img src="${pageContext.request.contextPath}/resources/images/logos/logo_atlas_transparent.png" alt="Expression Atlas logo" >--%>
             </h1>
             <h4 class="show-for-large">Single-cell gene expression across species</h4>
         </div>
