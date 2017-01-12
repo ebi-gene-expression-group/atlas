@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
 
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,20 +29,24 @@ public class GenePageController extends BioentityPageController {
         model.addAttribute("species", species.getName());
 
         Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
-        Set<String> entityNames = propertyValuesByType.get(BioentityPropertyName.SYMBOL);
-        if (entityNames == null || entityNames.isEmpty()) {
-            entityNames = ImmutableSet.of(identifier);
-        }
+        Set<String> symbols =
+                bioentityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);
+        String geneName = symbols == null || symbols.isEmpty()
+                ? ""
+                : Joiner.on("/").join(symbols);
+
 
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, species, entityNames.iterator().next(), model, experimentTypes,
+        return super.showBioentityPage(identifier, species, geneName, model, experimentTypes,
                 BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
     }
 
     @Override
     protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName) {
-        String s = "Expression summary for " + entityName + " - " + species.getName();
+        String s = "Expression summary for "
+                + (StringUtils.isEmpty(entityName) ? identifier : entityName)
+                + " - " + species.getName();
 
         return ImmutableMap.<String, Object>of(
                 "mainTitle", s,

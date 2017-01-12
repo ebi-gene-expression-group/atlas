@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.utils.UniProtClient;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,7 +59,14 @@ public class BioEntityPropertyService {
         addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("entityName",entityName);
+        result.put("entityBriefName",
+                StringUtils.isEmpty(entityName)
+                        ? identifier
+                        : entityName);
+        result.put("entityFullName",
+                StringUtils.isEmpty(entityName)
+                        ? identifier
+                        : MessageFormat.format("{0} ({1})", identifier, entityName));
         result.put("bioEntityDescription",getBioEntityDescription(propertyValuesByType));
         result.put("propertyNames", propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType));
         result.put("bioentityProperties",

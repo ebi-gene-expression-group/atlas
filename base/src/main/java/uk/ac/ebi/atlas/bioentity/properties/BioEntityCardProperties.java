@@ -46,25 +46,26 @@ public class BioEntityCardProperties {
         .build();
 
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
-            BioentityPropertyName.SYNONYM,
+            DESCRIPTION, SYMBOL, //not displayed in the table but useful for other things
+            SYNONYM,
             ORTHOLOG,
             GO,
-            BioentityPropertyName.PO,
-            BioentityPropertyName.INTERPRO,
-            BioentityPropertyName.ENSFAMILY_DESCRIPTION,
-            BioentityPropertyName.ENSGENE,
-            BioentityPropertyName.ENSTRANSCRIPT,
-            BioentityPropertyName.ENSPROTEIN,
-            BioentityPropertyName.ENTREZGENE,
-            BioentityPropertyName.UNIPROT,
-            BioentityPropertyName.MGI_ID,
-            BioentityPropertyName.MGI_DESCRIPTION,
-            BioentityPropertyName.GENE_BIOTYPE,
-            BioentityPropertyName.DESIGN_ELEMENT,
-            BioentityPropertyName.REACTOME,
-            BioentityPropertyName.MIRBASE_ID,
-            BioentityPropertyName.MIRBASE_ACCESSION,
-            BioentityPropertyName.MIRBASE_SEQUENCE
+            PO,
+            INTERPRO,
+            ENSFAMILY_DESCRIPTION,
+            ENSGENE,
+            ENSTRANSCRIPT,
+            ENSPROTEIN,
+            ENTREZGENE,
+            UNIPROT,
+            MGI_ID,
+            MGI_DESCRIPTION,
+            GENE_BIOTYPE,
+            DESIGN_ELEMENT,
+            REACTOME,
+            MIRBASE_ID,
+            MIRBASE_ACCESSION,
+            MIRBASE_SEQUENCE
     );
 
 }

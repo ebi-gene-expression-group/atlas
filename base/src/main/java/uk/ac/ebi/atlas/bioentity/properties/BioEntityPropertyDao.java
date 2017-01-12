@@ -3,8 +3,8 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 import uk.ac.ebi.atlas.solr.query.BioentityNotFoundException;
+import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;

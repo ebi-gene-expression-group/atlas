@@ -46,9 +46,9 @@ public class GeneSetPageController extends BioentityPageController {
     }
 
     @Override
-    protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String description){
+    protected Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName){
         String speciesString = matchesReactomeID(identifier) ? species.getName() : "";
-        String s = "Expression summary for " + description +
+        String s = "Expression summary for " + (StringUtils.isEmpty(entityName) ? identifier : entityName) +
                 (StringUtils.isNotBlank(speciesString) ?
                         " - " + StringUtils.capitalize(speciesString) : "");
         return ImmutableMap.<String, Object>of(

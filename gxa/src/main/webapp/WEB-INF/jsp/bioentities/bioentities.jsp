@@ -32,7 +32,7 @@
 <!-- Simple page header -->
 <section class="gxaSection">
     <div class="gxaBioentityHeader">
-        <p class="gxaBioentityName">${entityName}</p>
+        <p class="gxaBioentityName">${entityFullName}</p>
         <p class="gxaBioentitySpecies">${species}</p>
         <p class="gxaBioentityDescription">${bioEntityDescription}</p>
     </div>
@@ -46,7 +46,7 @@
         <c:if test="${hasDifferentialResults}"><li title="Differential experiments" role="presentation"><a href="${requestScope['javax.servlet.forward.request_uri']}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
         <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" role="presentation" class="disabled noBorderTab">Differential expression</li></c:if>
 
-        <li role="presentation" title="Bioentity information"><a href="${requestScope['javax.servlet.forward.request_uri']}#info" data-toggle="tab" id="informationTabLink">${entityName} information</a></li>
+        <li role="presentation" title="Bioentity information"><a href="${requestScope['javax.servlet.forward.request_uri']}#info" data-toggle="tab" id="informationTabLink">${entityBriefName} information</a></li>
     </ul>
 
     <!-- Tab panes -->
