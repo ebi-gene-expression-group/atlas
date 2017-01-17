@@ -9,7 +9,8 @@ class GenomeBrowserLauncher extends React.Component {
     render() {
         const buttons =
             this.props.genomeBrowserUrls.map(genomeBrowserUrl =>
-                <GenomeBrowserButton genomeBrowserUrl={genomeBrowserUrl}
+                <GenomeBrowserButton pathToResources={this.props.pathToResources}
+                                     genomeBrowserUrl={genomeBrowserUrl}
                                      trackUrlParameter={this._buildTrackUrlParameter()}
                                      key={genomeBrowserUrl}
                 />
@@ -66,6 +67,7 @@ class GenomeBrowserLauncher extends React.Component {
 // doesn’t complain that they’re not there
 GenomeBrowserLauncher.propTypes = {
     atlasBaseUrl: React.PropTypes.string.isRequired,
+    pathToResources: React.PropTypes.string,
     experimentAccession: React.PropTypes.string.isRequired,
     isBaseline: React.PropTypes.bool.isRequired,
     columnType: React.PropTypes.string.isRequired,

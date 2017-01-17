@@ -1,2 +1,4 @@
 import render from './src/GenomeBrowserLauncherRenderer.jsx';
-export {render};
+import GenomeBrowserLauncherFetcher from './src/GenomeBrowserLauncherFetcher.jsx';
+
+export {render, GenomeBrowserLauncherFetcher};

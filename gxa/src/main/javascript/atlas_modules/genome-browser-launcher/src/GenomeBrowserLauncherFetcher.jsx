@@ -15,6 +15,7 @@ class GenomeBrowserLauncherFetcher extends React.Component {
 
             return (
                 <GenomeBrowserLauncher atlasBaseUrl={this.props.atlasBaseUrl}
+                                       pathToResources={this.props.pathToResources}
                                        experimentAccession={this.props.experimentAccession}
                                        isBaseline={experimentType.endsWith(`BASELINE`)}
                                        genomeBrowserUrls={genomeBrowserUrls}
@@ -34,6 +35,7 @@ class GenomeBrowserLauncherFetcher extends React.Component {
 
 GenomeBrowserLauncherFetcher.propTypes = {
     atlasBaseUrl: React.PropTypes.string.isRequired,
+    pathToResources: React.PropTypes.string,
     experimentAccession: React.PropTypes.string.isRequired,
     accessKey: React.PropTypes.string,
     columnType: React.PropTypes.string.isRequired,
