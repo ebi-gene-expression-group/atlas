@@ -11,24 +11,34 @@ module.exports = {
         expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
         expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
         expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
-        dependencies: ['react', 'react-dom', 'react-radio-group','react-prop-types-check',
-                       'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup',
-                       'react-bootstrap/lib/FormControl', 'react-bootstrap', 'react-bootstrap/lib/Button',
-                       'rc-slider',
-                       'anatomogram',
-                       'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'jquery-toolbar',
-                       'urijs', 'query-string', 'atlas-modernizr',
-                       'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-                       'highcharts-more','react-highcharts', 'react-addons-css-transition-group', 'react-emojione',
-                       'react-localstorage', 'react-timer-mixin', 'lodash', 'highcharts-heatmap', 'rc-slider/assets/index.css', 'fancybox/dist/css/jquery.fancybox.css',
-                       'jquery-toolbar/jquery.toolbar.css']
+        dependencies: [
+            'react', 'react-dom',
+            'react-refetch',
+            'react-radio-group',
+            'react-prop-types-check',
+            'react-bootstrap', 'react-bootstrap/lib/DropdownButton', 'react-bootstrap/lib/MenuItem', 'react-bootstrap/lib/FormGroup', 'react-bootstrap/lib/FormControl', 'react-bootstrap/lib/Button',
+            'rc-slider', 'rc-slider/assets/index.css',
+            'jquery', 'jquery-ui-bundle', 'jquery.browser', 'jquery-hc-sticky', 'fancybox', 'fancybox/dist/css/jquery.fancybox.css', 'jquery-toolbar', 'jquery-toolbar/jquery.toolbar.css',
+            'urijs',
+            'query-string',
+            'events',
+            'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+            'react-highcharts', 'highcharts-more',
+            'react-addons-css-transition-group',
+            'react-emojione', 'react-localstorage', 'react-timer-mixin',
+            'lodash',
+            'atlas-modernizr',
+            'anatomogram',
+            'highcharts-heatmap'
+        ]
     },
 
     output: {
         libraryTarget: 'var',
         library: '[name]',
         path: path.resolve(__dirname, '../webapp/resources/js-bundles'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
+        publicPath: '/gxa/resources/js-bundles/'
     },
 
     plugins: [
