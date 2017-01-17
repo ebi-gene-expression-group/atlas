@@ -9,13 +9,15 @@
   "dependencies": {
     "anatomogram": "latest",
     "atlas-modernizr": "git+https://github.com/alfonsomunozpomer/atlas-modernizr.git",
-    "expression-atlas-feedback": "file:../../atlas_modules/feedback",
     "expression-atlas-cell-differential": "file:../../atlas_modules/cell-differential",
     "expression-atlas-contrast-tooltips": "file:../../atlas_modules/contrast-tooltips",
     "expression-atlas-display-levels-button": "file:../../atlas_modules/display-levels-button",
     "expression-atlas-download-profiles-button": "file:../../atlas_modules/download-profiles-button",
+    "expression-atlas-feedback": "file:../../atlas_modules/feedback",
+    "expression-atlas-genome-browser-launcher": "file:../../atlas_modules/genome-browser-launcher",
     "expression-atlas-heatmap-baseline-cell-variance": "file:../../atlas_modules/heatmap-baseline-cell-variance",
     "expression-atlas-help-tooltips": "file:../../atlas_modules/help-tooltips",
+    "expression-atlas-legend": "file:../../atlas_modules/legend",
     "expression-atlas-number-format": "file:../../atlas_modules/number-format",
     "fancybox": "^3.0.0",
     "jquery": "^2.2.1",
@@ -24,7 +26,6 @@
     "jquery-toolbar": "git+https://github.com/alfonsomunozpomer/jquery-toolbar.git",
     "jquery-ui-bundle": "^1.11.4",
     "jquery.browser": "^0.1.0",
-    "expression-atlas-legend": "file:../../atlas_modules/legend",
     "modernizr": "^3.3.1",
     "rc-slider": "^4.0.1",
     "react": "^0.14.7",
@@ -32,7 +33,8 @@
     "react-dom": "^0.14.7",
     "react-radio-group": "^3.0.1",
     "snapsvg": "^0.4.0",
-    "urijs": "^1.17.1"
+    "urijs": "^1.17.1",
+    "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
@@ -49,7 +51,6 @@
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.14",
-    "webpack-dev-server": "^1.14.1",
-    "whatwg-fetch": "^2.0.1"
+    "webpack-dev-server": "^1.14.1"
   }
 }

@@ -1,6 +1,7 @@
 module.exports = Object.assign(require('../../webpack.config.package-test-build.js'),
     {
         entry: {
+            expressionAtlasExperimentHeatmap: ['whatwg-fetch', './src/experimentPageHeatmapAnatomogramRenderer.js'],
             expressionAtlasHeatmap: ['whatwg-fetch', './index.js'],
             dependencies: ['react', 'react-dom', 'react-radio-group', 'react-bootstrap',
                 'jquery', 'jquery-ui-bundle', 'jquery.browser', 'fancybox', 'jquery-hc-sticky', 'jquery-toolbar', 'jquery-hc-sticky',

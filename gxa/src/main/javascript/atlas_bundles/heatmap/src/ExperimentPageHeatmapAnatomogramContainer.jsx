@@ -16,7 +16,7 @@ var EventEmitter = require('events');
 var Anatomogram = require('anatomogram');
 var FeedbackSmileys=require('expression-atlas-feedback');
 var Heatmap = require('./Heatmap.jsx');
-var EnsemblLauncher = require('./EnsemblLauncher.jsx');
+var EnsemblLauncher = require('expression-atlas-genome-browser-launcher').GenomeBrowserLauncherFetcher;
 
 var ExperimentTypes = require('./experimentTypes.js');
 
@@ -130,18 +130,16 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         isWidget: React.PropTypes.bool.isRequired,
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
-        ensemblEventEmitter : React.PropTypes.object.isRequired,
         anatomogramEventEmitter: React.PropTypes.object.isRequired
     },
 
     getDefaultProps: function (){
       //one ExperimentPageHeatmapAnatomogramContainer per page so this is fine- otherwise the event emitters would be shared
-      var ensemblEventEmitter = new EventEmitter();
-      ensemblEventEmitter.setMaxListeners(0);
       var anatomogramEventEmitter = new EventEmitter();
       anatomogramEventEmitter.setMaxListeners(0);
-      return {ensemblEventEmitter: ensemblEventEmitter, anatomogramEventEmitter:anatomogramEventEmitter };
+      return { anatomogramEventEmitter: anatomogramEventEmitter };
     },
+
     _ontologyIdsForTissuesExpressedInRow: function(rowTitle){
       //TODO be more sane
       var _expressedFactorsPerRow = function(profileRows){
@@ -165,7 +163,26 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
     },
 
     getInitialState: function () {
-      return {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){},idsToBeHighlighted: []}
+      return {
+          googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function (){},
+          idsToBeHighlighted: [],
+          selectedGeneId: '',
+          selectedColumnId: ''
+      }
+    },
+
+    _selectGeneIdCallback: function (geneId) {
+        var selectedGeneId = (geneId === this.state.selectedGeneId) ? '' : geneId;
+        this.setState({
+            selectedGeneId: selectedGeneId
+        });
+    },
+
+    _selectColumnIdCallback: function (columnId) {
+        var selectedColumnId = (columnId === this.state.selectedColumnId) ? '' : columnId;
+        this.setState({
+            selectedColumnId: selectedColumnId
+        });
     },
 
     render: function () {
@@ -174,17 +191,6 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         var anatomogramHoveredTissueColour = this.props.type.isMultiExperiment ? "indigo" : "red";
 
         var prefFormDisplayLevels = $('#displayLevels');
-
-        var feedbackSmileys = $.browser.msie ? null
-            :
-            <div className="gxaHeatmapPosition gxaFeedbackBoxWrapper">
-            <FeedbackSmileys collectionCallback= {
-                    function(score,comment){
-                      this.state.googleAnalyticsCallback(
-                        'send','event','HeatmapReact', 'feedback',
-                        comment,score);
-                    }.bind(this)} />
-            </div>;
 
         return (
             <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
@@ -203,13 +209,13 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                         })
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
-                        <EnsemblLauncher isBaseline={this.props.type === ExperimentTypes.BASELINE || this.props.type === ExperimentTypes.PROTEOMICS_BASELINE}
+                        <EnsemblLauncher atlasBaseUrl={this.props.atlasBaseURL}
                                          experimentAccession={this.props.heatmapConfig.experimentAccession}
-                                         species={this.props.heatmapConfig.species}
-                                         ensemblDB={this.props.heatmapConfig.ensemblDB}
                                          columnType={this.props.heatmapConfig.columnType}
-                                         eventEmitter={this.props.ensemblEventEmitter}
-                                         atlasBaseURL={this.props.atlasBaseURL} />
+                                         accessKey=""
+                                         selectedGeneId={this.state.selectedGeneId}
+                                         selectedColumnId={this.state.selectedColumnId}
+                        />
                         : null }
                 </div>
                 <div id="heatmap-react" className="gxaHeatmapPosition">
@@ -222,13 +228,26 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                              geneSetProfiles={this.props.geneSetProfiles}
                              isWidget={false}
                              prefFormDisplayLevels={prefFormDisplayLevels}
-                             ensemblEventEmitter={this.props.ensemblEventEmitter}
                              anatomogramEventEmitter={this.props.anatomogramEventEmitter}
                              atlasBaseURL={this.props.atlasBaseURL}
                              linksAtlasBaseURL={this.props.linksAtlasBaseURL}
+                             selectGeneIdCallback={this._selectGeneIdCallback}
+                             selectedGeneId={this.state.selectedGeneId}
+                             selectColumnIdCallback={this._selectColumnIdCallback}
+                             selectedColumnId={this.state.selectedColumnId}
                              googleAnalyticsCallback={this.state.googleAnalyticsCallback}/>
                 </div>
-                {feedbackSmileys}
+                {$.browser.msie ?
+                    null :
+                    <div className="gxaHeatmapPosition gxaFeedbackBoxWrapper">
+                        <FeedbackSmileys collectionCallback= {
+                            function(score,comment){
+                                this.state.googleAnalyticsCallback(
+                                    'send','event','HeatmapReact', 'feedback',
+                                    comment,score);
+                            }.bind(this)} />
+                    </div>
+                }
             </div>
         );
     },

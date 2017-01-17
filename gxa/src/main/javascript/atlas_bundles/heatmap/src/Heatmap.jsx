@@ -89,11 +89,14 @@ var Heatmap = React.createClass({
         })),
         geneSetProfiles: React.PropTypes.object,
         prefFormDisplayLevels: React.PropTypes.object,
-        ensemblEventEmitter: React.PropTypes.object,
         anatomogramEventEmitter: React.PropTypes.object,
         googleAnalytics: React.PropTypes.bool,
         atlasBaseURL: React.PropTypes.string.isRequired,
         linksAtlasBaseURL: React.PropTypes.string.isRequired,
+        selectGeneIdCallback: React.PropTypes.func,
+        selectedGeneId: React.PropTypes.string,
+        selectColumnIdCallback: React.PropTypes.func,
+        selectedColumnId: React.PropTypes.string,
         googleAnalyticsCallback: React.PropTypes.func.isRequired
     },
 
@@ -108,8 +111,6 @@ var Heatmap = React.createClass({
         return {
             showGeneSetProfiles: false,
             displayLevels: displayLevels,
-            selectedColumnId: null,
-            selectedGeneId: null,
             hoveredColumnId: null,
             hoveredGeneId: null,
             selectedRadioButton: "gradients",
@@ -163,20 +164,14 @@ var Heatmap = React.createClass({
     },
 
     selectColumn: function (columnId) {
-        if (this.props.ensemblEventEmitter) {
-            var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
-            this.setState({selectedColumnId: selectedColumnId}, function () {
-                this.props.ensemblEventEmitter.emit('onColumnSelectionChange', selectedColumnId);
-            });
+        if (this.props.selectColumnIdCallback) {
+            this.props.selectColumnIdCallback(columnId);
         }
     },
 
     selectGene: function (geneId) {
-        if (this.props.ensemblEventEmitter) {
-            var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
-            this.setState({selectedGeneId: selectedGeneId}, function() {
-                this.props.ensemblEventEmitter.emit('onGeneSelectionChange', selectedGeneId);
-            });
+        if (this.props.selectGeneIdCallback) {
+            this.props.selectGeneIdCallback(geneId);
         }
     },
 
@@ -219,7 +214,7 @@ var Heatmap = React.createClass({
 
     _stateChangeRepresentsInteraction: function (s1, s2) {
       var ks = [
-        "displayLevels", "showGeneSetProfiles", "selectedColumnId", "selectedGeneId", "hoveredColumnId", "hoveredGeneId", "hoveredRowId"
+        "displayLevels", "showGeneSetProfiles", "hoveredColumnId", "hoveredGeneId", "hoveredRowId"
       ];
       for(var i = 0; i< ks.length ; i++){
         var k = ks[i];
@@ -229,6 +224,20 @@ var Heatmap = React.createClass({
       }
       return false;
     },
+
+    _propsChangeRepresentsInteraction: function (s1, s2) {
+        var ks = [
+            "selectedGeneId", "selectedColumnId"
+        ];
+        for(var i = 0; i< ks.length ; i++){
+            var k = ks[i];
+            if(s1[k] !== s2[k]){
+                return k || true;
+            }
+        }
+        return false;
+    },
+
     shouldComponentUpdate: function(nextProps,nextState){
       return shallowCompare(this, nextProps, nextState);
     },
@@ -239,7 +248,13 @@ var Heatmap = React.createClass({
           this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'interact');
           this.setState({userInteractedWithTheHeatmap: true});
         }
+
+        if (this._propsChangeRepresentsInteraction(this.props, nextProps)) {
+            this.props.googleAnalyticsCallback('send', 'event', 'HeatmapReact', 'interact');
+            this.setState({userInteractedWithTheHeatmap: true});
+        }
       }
+
       if(nextProps.ontologyIdsToHighlight){
         var forEachXNotInYsEmit = function(xs, ys, eventName){
           xs
@@ -249,14 +264,15 @@ var Heatmap = React.createClass({
           .forEach(function(id){
             eventEmitter.emit(eventName, id);
           });
-        }
+        };
+
         forEachXNotInYsEmit(nextProps.ontologyIdsToHighlight, this.props.ontologyIdsToHighlight, 'gxaAnatomogramTissueMouseEnter');
-        forEachXNotInYsEmit(this.props.ontologyIdsToHighlight,nextProps.ontologyIdsToHighlight, 'gxaAnatomogramTissueMouseLeave')
+        forEachXNotInYsEmit(this.props.ontologyIdsToHighlight,nextProps.ontologyIdsToHighlight, 'gxaAnatomogramTissueMouseLeave');
       }
     },
 
     componentDidMount: function() {
-        var table	        = ReactDOM.findDOMNode(this.refs.heatmapTable),
+        var table           = ReactDOM.findDOMNode(this.refs.heatmapTable),
             stickyIntersect = ReactDOM.findDOMNode(this.refs.stickyIntersect),
             stickyColumn    = ReactDOM.findDOMNode(this.refs.stickyColumn),
             stickyHeadRow   = ReactDOM.findDOMNode(this.refs.stickyHeader),
@@ -406,7 +422,7 @@ var Heatmap = React.createClass({
                                             type={this.props.type}
                                             columnHeaders={this.props.columnHeaders}
                                             multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                            selectedColumnId={this.state.selectedColumnId}
+                                            selectedColumnId={this.props.selectedColumnId}
                                             selectColumn={this.selectColumn}
                                             hoverColumnCallback={this._hoverColumn}
                                             heatmapConfig={this.props.heatmapConfig}
@@ -419,7 +435,7 @@ var Heatmap = React.createClass({
                                             renderContrastFactorHeaders={true}
                                             anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
                         <HeatmapTableRows profiles={this._getProfiles().rows}
-                                          selectedGeneId={this.state.selectedGeneId}
+                                          selectedGeneId={this.props.selectedGeneId}
                                           selectGene={this.selectGene}
                                           type={this.props.type}
                                           heatmapConfig={this.props.heatmapConfig}
@@ -445,7 +461,7 @@ var Heatmap = React.createClass({
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
                                                     multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                    selectedColumnId={this.state.selectedColumnId}
+                                                    selectedColumnId={this.props.selectedColumnId}
                                                     selectColumn={this.selectColumn}
                                                     heatmapConfig={this.props.heatmapConfig}
                                                     atlasBaseURL={this.props.atlasBaseURL}
@@ -470,7 +486,7 @@ var Heatmap = React.createClass({
                                                 columnHeaders={this.props.columnHeaders}
                                                 type={this.props.type}
                                                 multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                selectedColumnId={this.state.selectedColumnId}
+                                                selectedColumnId={this.props.selectedColumnId}
                                                 selectColumn={this.selectColumn}
                                                 heatmapConfig={this.props.heatmapConfig}
                                                 atlasBaseURL={this.props.atlasBaseURL}
@@ -481,7 +497,7 @@ var Heatmap = React.createClass({
                                                 toggleRadioButton={this.toggleRadioButton}
                                                 renderContrastFactorHeaders={false}/>
                             <HeatmapTableRows profiles={this._getProfiles().rows}
-                                              selectedGeneId={this.state.selectedGeneId}
+                                              selectedGeneId={this.props.selectedGeneId}
                                               selectGene={this.selectGene}
                                               type={this.props.type}
                                               heatmapConfig={this.props.heatmapConfig}
@@ -509,7 +525,7 @@ var Heatmap = React.createClass({
                                                     type={this.props.type}
                                                     columnHeaders={this.props.columnHeaders}
                                                     multipleColumnHeaders={this.props.multipleColumnHeaders}
-                                                    selectedColumnId={this.state.selectedColumnId}
+                                                    selectedColumnId={this.props.selectedColumnId}
                                                     selectColumn={this.selectColumn}
                                                     heatmapConfig={this.props.heatmapConfig}
                                                     atlasBaseURL={this.props.atlasBaseURL}
@@ -542,6 +558,7 @@ var HeatmapTableHeader = React.createClass({
 
     renderContrastFactorHeaders: function () {
         var heatmapConfig = this.props.heatmapConfig;
+
         if (this.props.type.isBaseline) {
             return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.mainHeaderNames, this.props.type, this.props.columnHeaders, heatmapConfig.experimentAccession,
                                         this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
@@ -933,7 +950,11 @@ var LevelsRadioGroup = function(__args__) {
     },
 
     getInitialState: function() {
-        return {value: this.props.allValues.indexOf(this.props.selectedRadioButton)>-1 ? this.props.selectedRadioButton :this.props.allValues[0] };
+        return {
+            value: this.props.allValues.indexOf(this.props.selectedRadioButton) > -1 ?
+                this.props.selectedRadioButton :
+                this.props.allValues[0]
+        };
     },
     componentDidMount: function() {
       if(this.props.allValues.indexOf(this.props.selectedRadioButton)==-1){
