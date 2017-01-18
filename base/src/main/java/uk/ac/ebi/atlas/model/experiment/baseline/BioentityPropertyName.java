@@ -33,12 +33,14 @@ public enum BioentityPropertyName {
     ORTHOLOG("ortholog", false),
     MIRBASE_ACCESSION("mirbase_accession", false),
     ENSGENE("ensgene", false,"Ensembl Gene"),
+    WBPSGENE("wbpsgene", false, "WBPS Gene"),
     ENTREZGENE("entrezgene", false, "Entrez"),
     ENSFAMILY_DESCRIPTION("ensfamily_description", false, "Ensembl Family"),
     MIRBASE_ID("mirbase_id", false, "miRBase Identifier"),
     MIRBASE_SEQUENCE("mirbase_sequence", false, "miRBase Sequence"),
     REACTOME("reactome", false), //does not come from the files- currently,fetched from Uniprot
-    ENSTRANSCRIPT("enstranscript", true, "Ensembl Transcript"), ENSPROTEIN("ensprotein", true, "Ensembl Protein");//not used for analytics index now
+    ENSTRANSCRIPT("enstranscript", true, "Ensembl Transcript"), ENSPROTEIN("ensprotein", true, "Ensembl Protein"),
+    WBPSTRANSCRIPT("wbpstranscript", true, "WBPS Transcript"), WBPSPROTEIN("wbpsprotein", true, "WBPS Protein");//not used for analytics index now
 
     public final String name;
     public final String label;

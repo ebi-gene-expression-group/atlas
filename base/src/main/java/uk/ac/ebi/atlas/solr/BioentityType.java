@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr;
 
 import com.google.common.collect.Sets;
@@ -7,9 +6,9 @@ import java.util.Set;
 
 public enum BioentityType {
 
-    GENE("genes", "ensgene", "mirna"),
-    PROTEIN("proteins", "ensprotein"),
-    TRANSCRIPT("genes", "enstranscript");
+    GENE("genes", "ensgene", "mirna", "wbpsgene"),
+    PROTEIN("proteins", "ensprotein", "wbpsprotein"),
+    TRANSCRIPT("genes", "enstranscript", "wbpstranscript");
 
     private static Set<String> allSolrAliases = Sets.newHashSet();
     private final String bioentityPageName;

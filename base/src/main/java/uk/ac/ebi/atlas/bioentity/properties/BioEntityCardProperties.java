@@ -6,7 +6,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
 
-
 public class BioEntityCardProperties {
 
     public static final ImmutableMap<BioentityPropertyName, String> linkTemplates =
@@ -42,7 +41,13 @@ public class BioEntityCardProperties {
         .put(REACTOME,
                 "http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID={0}")
         .put(MIRBASE_ACCESSION,
-                " http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc={0}")
+                "http://www.mirbase.org/cgi-bin/mirna_entry.pl?acc={0}")
+        .put(WBPSGENE,
+                "http://parasite.wormbase.org/id/{0}")
+        .put(WBPSTRANSCRIPT,
+                "http://parasite.wormbase.org/id/{0}")
+        .put(WBPSPROTEIN,
+                "http://parasite.wormbase.org/id/{0}")
         .build();
 
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
@@ -56,6 +61,9 @@ public class BioEntityCardProperties {
             ENSGENE,
             ENSTRANSCRIPT,
             ENSPROTEIN,
+            WBPSGENE,
+            WBPSTRANSCRIPT,
+            WBPSPROTEIN,
             ENTREZGENE,
             UNIPROT,
             MGI_ID,
