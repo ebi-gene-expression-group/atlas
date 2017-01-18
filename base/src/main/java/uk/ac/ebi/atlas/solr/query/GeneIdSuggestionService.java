@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,14 +28,11 @@ public class GeneIdSuggestionService {
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
     private final GxaSolrClient solrServer;
-    private final SpeciesFactory speciesFactory;
 
     @Inject
-    public GeneIdSuggestionService(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrServer,
-                                   SpeciesFactory speciesFactory) {
+    public GeneIdSuggestionService(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrServer) {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrServer = solrServer;
-        this.speciesFactory = speciesFactory;
     }
 
     public List<SemanticQueryTerm> fetchGeneIdSuggestionsInName(String geneName, String speciesReferenceName) {
