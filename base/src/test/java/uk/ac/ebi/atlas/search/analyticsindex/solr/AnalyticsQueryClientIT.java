@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
+import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class AnalyticsQueryClientIT {
     Resource bioentityIdentifiersQueryJson;
 
     @Mock
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     private AnalyticsQueryClient subject;
 
@@ -179,14 +180,14 @@ public class AnalyticsQueryClientIT {
 
 
 
-    class TestableAnalyticsQueryClient extends AnalyticsQueryClient{
+    class TestableAnalyticsQueryClient extends AnalyticsQueryClient {
 
         public TestableAnalyticsQueryClient(RestTemplate restTemplate, String solrBaseUrl, Resource baselineFacetsQueryJSON, Resource differentialFacetsQueryJSON,Resource experimentTypesQueryJson, Resource bioentityIdentifiersQueryJson) {
             super(restTemplate, solrBaseUrl, baselineFacetsQueryJSON, differentialFacetsQueryJSON, experimentTypesQueryJson, bioentityIdentifiersQueryJson);
         }
 
         @Override
-        String fetchResponseAsString(String url) {
+        protected String fetchResponseAsString(String url, SolrQuery q) {
             try {
                 return URLDecoder.decode(url, "UTF-8");
             } catch (UnsupportedEncodingException e) {

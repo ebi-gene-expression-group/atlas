@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.search.analyticsindex.solr;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.utils.ResourceUtils;
@@ -18,8 +21,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +59,7 @@ public class AnalyticsQueryClient {
         for(SolrQuery q: qs){
             Stopwatch stopwatch = Stopwatch.createStarted();
             LOGGER.debug("fetchResults q={} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
-            result = fetchResponseAsString(MessageFormat.format("{0}query?{1}", solrBaseUrl, q.toString()));
+            result = fetchResponseAsString(MessageFormat.format("{0}query", solrBaseUrl), q);
             stopwatch.stop();
             if(responseNonEmpty(result)){
                 break;
@@ -73,10 +74,13 @@ public class AnalyticsQueryClient {
     }
 
 
-    String fetchResponseAsString(String url) {
+    protected String fetchResponseAsString(String url, SolrQuery query) {
         try {
-            return restTemplate.getForObject(new URI(url), String.class);
-        } catch (RestClientException | URISyntaxException e) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            HttpEntity<String> request = new HttpEntity<>(query.toString(), headers);
+            return restTemplate.postForObject(url, request, String.class);
+        } catch (RestClientException e) {
             throw new RuntimeException(e);
         }
     }
