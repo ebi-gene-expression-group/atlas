@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -52,5 +53,14 @@ public class SpeciesPropertiesTraderIT {
         assertThat(schistosomaMansoni.resources().get("genome_browser").get(0), startsWith("http://parasite"));
         assertThat(caenorhabditisElegans.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
         assertThat(schistosomaMansoni.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
+    }
+
+    @Test
+    public void exceptionsApply() {
+        //http://www.ensembl.org/Canis_familiaris/Info/Index
+        SpeciesProperties dog = subject.get("Canis lupus familiaris");
+
+        assertNotEquals(dog, SpeciesProperties.UNKNOWN);
+        assertThat(dog.ensemblName(), is("canis familiaris"));
     }
 }

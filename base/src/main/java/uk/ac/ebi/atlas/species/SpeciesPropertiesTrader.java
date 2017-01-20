@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.species;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
@@ -14,6 +15,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 @Named
 public class SpeciesPropertiesTrader {
@@ -83,11 +85,30 @@ public class SpeciesPropertiesTrader {
         return nameToSpecies.values();
     }
 
+
+
     private static String normaliseTruncate(String str) {
+
+
         return Joiner.on(' ').skipNulls().join(Arrays.copyOf(normalise(str).split(" "), 2));
     }
 
     static String normalise(String str) {
-        return StringUtils.isEmpty(str) ? "" : str.toLowerCase().replace("_", " ");
+        return applyExceptions(truncate(toWords(nullSafe(str))));
+    }
+
+    private static String nullSafe(String str){
+        return org.apache.commons.lang.StringUtils.isEmpty(str) ? "" : str;
+    }
+    private static String toWords(String str){
+        return str.toLowerCase().replace("_", " ");
+    }
+    private static String truncate(String str){
+        return Joiner.on(' ').skipNulls().join(Arrays.copyOf(str.split(" "), 2));
+    }
+
+    private static final ImmutableMap<String, String> exceptions = ImmutableMap.of("canis lupus", "canis familiaris");
+    private static String applyExceptions(String str){
+        return exceptions.containsKey(str) ? exceptions.get(str) : str;
     }
 }
