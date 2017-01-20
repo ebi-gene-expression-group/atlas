@@ -4,6 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.support.ServletContextResourceLoader;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
@@ -23,21 +24,25 @@ public class StaticPageController {
     }
 
     @RequestMapping("/{pageName}.html")
-    public String getStaticPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
+    public String getStaticPage(HttpServletRequest request,
+                                @PathVariable String pageName,
+                                @RequestParam(value = "foundation", required = false) String foundationKey) throws IOException {
         String path = String.format("/resources/html/%s.html", pageName);
 
         request.setAttribute("contentResource", fetchResource(path));
         request.setAttribute("nav", pageName.replace(" ","_").replace("-","_").toLowerCase());
-        return request.getParameterMap().containsKey("foundation") ? "foundation-static" : "static-template";
+        return foundationKey == null ? "foundation-static" : "static-template";
     }
 
     @RequestMapping("/help/{pageName}.html")
-    public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
+    public String getHelpPage(HttpServletRequest request,
+                              @PathVariable String pageName,
+                              @RequestParam(value = "foundation", required = false) String foundationKey) throws IOException {
         String path = String.format("/resources/html/help/%s.html", pageName);
 
         request.setAttribute("contentResource", fetchResource(path));
         request.setAttribute("nav", "help");
-        return request.getParameterMap().containsKey("foundation") ? "foundation-static" : "static-template";
+        return foundationKey == null ? "foundation-static" : "static-template";
     }
 
     @RequestMapping("/{pageName}.hhhh")

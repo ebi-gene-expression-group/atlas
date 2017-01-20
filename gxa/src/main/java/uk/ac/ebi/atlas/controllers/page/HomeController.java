@@ -41,7 +41,6 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/fhome")
-
     public String getFoundationHomePage(Model model) {
         model.addAllAttributes(experimentInfoListService.getLatestExperimentsListAttributes());
         return "foundation-home";
