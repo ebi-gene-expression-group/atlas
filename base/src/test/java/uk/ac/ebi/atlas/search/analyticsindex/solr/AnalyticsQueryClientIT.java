@@ -189,7 +189,7 @@ public class AnalyticsQueryClientIT {
         @Override
         protected String fetchResponseAsString(String url, SolrQuery q) {
             try {
-                return URLDecoder.decode(url, "UTF-8");
+                return URLDecoder.decode(q.toString(), "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 return "";
             }
