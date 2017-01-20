@@ -42,6 +42,7 @@ public abstract class ExperimentDataPoint {
         propertyMap.put("species", experiment.getSpecies().getReferenceName());
         propertyMap.put("kingdom", experiment.getSpecies().getKingdom());
         propertyMap.put("experimentAccession", experiment.getAccession());
+        //propertyMap.put("experimentType", experiment.getType().getDescription());
         propertyMap.put("experimentType", experiment.getType().name().toUpperCase());
 
         propertyMap.put("conditionsSearch", conditionSearch);

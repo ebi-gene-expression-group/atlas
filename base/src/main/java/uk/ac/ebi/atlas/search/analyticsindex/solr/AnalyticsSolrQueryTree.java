@@ -184,7 +184,7 @@ public class AnalyticsSolrQueryTree {
     private static String decideOnKeywordField(SemanticQueryTerm term){
         if(term.hasNoCategory()){
             if(ensemblIdRegexFromTheInternet.matcher(term.value()).matches()){
-                return "bioentityIdentifier";
+                return "bioentityIdentifierLower";
             }
             //a multiword string cannot be a keyword
             if(term.value().trim().contains(" ")){
@@ -197,8 +197,10 @@ public class AnalyticsSolrQueryTree {
         }
     }
 
-    private static final Pattern ensemblIdRegexFromTheInternet = Pattern.compile
-            ("ENS[A-Z]+[0-9]{11}|[A-Z]{3}[0-9]{3}[A-Za-z](-[A-Za-z])?|CG[0-9]+|[A-Z0-9]+\\.[0-9]+|YM[A-Z][0-9]{3}[a-z][0-9]");
+    private static final Pattern ensemblIdRegexFromTheInternet =
+            Pattern.compile(
+                    "ENS[A-Z]+[0-9]{11}|[A-Z]{3}[0-9]{3}[A-Za-z](-[A-Za-z])?|CG[0-9]+|[A-Z0-9]+\\.[0-9]+|YM[A-Z][0-9]{3}[a-z][0-9]",
+                    Pattern.CASE_INSENSITIVE);
 
 
     //package
