@@ -16,6 +16,7 @@ public class ExperimentsController {
             @RequestParam(value = "experimentType", required = false) String experimentType,
             @RequestParam(value = "kingdom", required = false) String kingdom,
             @RequestParam(value = "organism", required = false) String organism,
+            @RequestParam(value = "foundation", required = false) String foundationKey,
             Model model) {
 
         model.addAttribute("experimentType", experimentType);
@@ -24,7 +25,7 @@ public class ExperimentsController {
 
         model.addAttribute("mainTitle", "Experiments ");
 
-        return "experiments";
+        return foundationKey == null ? "experiments" : "foundation-experiments";
     }
 
 }
