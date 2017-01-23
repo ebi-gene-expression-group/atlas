@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = Object.assign(require('../../webpack.config.js'), {
     entry: {
-      numberFormat: './index.js',
+      // numberFormat: './index.js',
         numberFormatRenderer: './html/numberFormatRenderer.jsx',
         dependencies: ['react', 'react-dom']
     },

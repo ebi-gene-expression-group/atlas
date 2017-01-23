@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import NumberFormat from '../src/NumberFormat.jsx';
+import NumberFormat from '../index.js';
 
 class Test extends React.Component {
     constructor(props, context) {
