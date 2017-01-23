@@ -23,7 +23,7 @@ public class BaselineAnalyticsFacetsReaderTest {
 
     private final static JsonObject RESPONSE_2_JSON_FACETS = new Gson().fromJson(
             "{\n" +
-            "  \"Homo sapiens\": [\n" +
+            "  \"homo sapiens\": [\n" +
             "    {\n" +
             "      \"name\": \"ORGANISM_PART\",\n" +
             "      \"value\": \"Organism part\"\n" +
@@ -33,7 +33,7 @@ public class BaselineAnalyticsFacetsReaderTest {
             "      \"value\": \"Cell line\"\n" +
             "    }\n" +
             "  ],\n" +
-            "  \"Mus musculus\": [\n" +
+            "  \"mus musculus\": [\n" +
             "    {\n" +
             "      \"name\": \"ORGANISM_PART\",\n" +
             "      \"value\": \"Organism part\"\n" +
@@ -69,7 +69,7 @@ public class BaselineAnalyticsFacetsReaderTest {
 
     @Test
     public void extractTreeFacets() throws IOException {
-        JsonObject facetsTreeJson = subject.generateFacetsTreeJson(loadJsonWithFacets());
+        JsonObject facetsTreeJson = BaselineAnalyticsFacetsReader.generateFacetsTreeJson(loadJsonWithFacets());
 
         assertThat(facetsTreeJson, is(RESPONSE_2_JSON_FACETS));
     }

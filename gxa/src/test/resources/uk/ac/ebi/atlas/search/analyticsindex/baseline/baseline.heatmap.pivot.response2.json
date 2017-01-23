@@ -9,12 +9,12 @@
     "experimentType": {
       "buckets": [
         {
-          "val": "rnaseq_mrna_baseline",
+          "val": "RNASEQ_MRNA_BASELINE",
           "count": 456088,
           "species": {
             "buckets": [
               {
-                "val": "Homo sapiens",
+                "val": "homo sapiens",
                 "count": 456088,
                 "defaultQueryFactorType": {
                   "buckets": [
@@ -79,7 +79,7 @@
                 }
               },
               {
-                "val": "Mus musculus",
+                "val": "mus musculus",
                 "count": 456088,
                 "defaultQueryFactorType": {
                   "buckets": [

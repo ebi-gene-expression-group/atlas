@@ -58,7 +58,7 @@ public class AnalyticsQueryClient {
 
         for(SolrQuery q: qs){
             Stopwatch stopwatch = Stopwatch.createStarted();
-            LOGGER.debug("fetchResults q={} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+            LOGGER.debug("fetchResults {} took {} seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
             result = fetchResponseAsString(MessageFormat.format("{0}query", solrBaseUrl), q);
             stopwatch.stop();
             if(responseNonEmpty(result)){
