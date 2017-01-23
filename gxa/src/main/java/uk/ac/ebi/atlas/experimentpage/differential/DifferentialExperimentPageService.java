@@ -35,7 +35,8 @@ import java.util.Set;
 
 public class DifferentialExperimentPageService
         <E extends DifferentialExperiment,
-         K extends DifferentialRequestPreferences, P extends DifferentialProfile<? extends DifferentialExpression>>
+         K extends DifferentialRequestPreferences,
+         P extends DifferentialProfile<? extends DifferentialExpression>>
         extends ExperimentPageService {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
@@ -96,8 +97,6 @@ public class DifferentialExperimentPageService
 
                 DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
                 if (!differentialProfiles.isEmpty()) {
-                    model.addAttribute("gseaPlots", gson.toJson(atlasResourceHub.createJsonByContrastIdForTheOldHeatmap(experiment
-                            .getAccession(), contrasts)));
                     result.add("columnGroupings", new JsonArray());
                     result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
                     result.add("profiles",differentialProfilesViewModelBuilder.build
@@ -111,7 +110,10 @@ public class DifferentialExperimentPageService
                     result.add("geneSetProfiles", JsonNull.INSTANCE);
                     result.add("jsonCoexpressions", new JsonArray());
                     model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
-                    result.add("config",heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
+
+                    JsonObject heatmapConfig = heatmapDataToJsonService.configAsJsonObject(request, model.asMap());
+
+                    result.add("config", heatmapConfig);
                     return result;
                 } else {
                     //copypasted:(

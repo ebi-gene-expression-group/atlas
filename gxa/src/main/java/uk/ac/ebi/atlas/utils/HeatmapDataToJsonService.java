@@ -38,7 +38,6 @@ public class HeatmapDataToJsonService {
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("enableEnsemblLauncher",
                 model.containsKey("enableEnsemblLauncher") && Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()));
-        config.addProperty("showMaPlotButton", true);
         config.addProperty("downloadProfilesURL", get(model, "downloadProfilesURL"));
 
         config.addProperty("disclaimer", get(model, "disclaimer"));
