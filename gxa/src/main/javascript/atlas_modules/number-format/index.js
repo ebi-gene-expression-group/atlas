@@ -1,5 +1,1 @@
-"use strict";
-
-//*------------------------------------------------------------------*
-
-module.exports = require('./src/NumberFormat.jsx');
+export {NumberFormat} from './src/NumberFormat.jsx';
