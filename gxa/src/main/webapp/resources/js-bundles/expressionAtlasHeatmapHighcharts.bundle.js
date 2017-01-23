@@ -24145,12 +24145,14 @@ webpackJsonp_name_([6],[
 	                    null,
 	                    React.createElement(
 	                        Button,
-	                        { bsStyle: "primary", onClick: this._apply },
+	                        { bsStyle: "primary", onClick: this._apply,
+	                            style: { textTransform: "unset", letterSpacing: "unset", height: "unset" } },
 	                        "Apply"
 	                    ),
 	                    React.createElement(
 	                        Button,
-	                        { onClick: this._close },
+	                        { onClick: this._close,
+	                            style: { textTransform: "unset", letterSpacing: "unset", height: "unset" } },
 	                        "Close"
 	                    )
 	                )

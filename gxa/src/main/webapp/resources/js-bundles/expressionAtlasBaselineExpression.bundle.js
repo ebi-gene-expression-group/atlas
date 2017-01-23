@@ -37322,7 +37322,7 @@ webpackJsonp_name_([2],[
 /***/ function(module, exports) {
 
 	/**
-	* Custom events v2.0.6 (2017-01-12)
+	* Custom events v2.0.7 (2017-01-19)
 	*
 	* (c) 2012-2016 Black Label
 	*
@@ -37390,7 +37390,7 @@ webpackJsonp_name_([2],[
 					defaultEvents = false;
 				}
 	
-				proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+				return proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 			});
 		}
 		if (seriesProto) { // # condition for highmaps and custom builds
@@ -37506,18 +37506,19 @@ webpackJsonp_name_([2],[
 							events: UNDEFINED,
 							element: UNDEFINED
 						},
+						proceedObject,
 						len,
 						j;
 	
 					//  call default actions
-					proceed.apply(this, Array.prototype.slice.call(arguments, 1));
+					proceedObject = proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 	
 					//	call
 					eventElement = customEvents.eventElement[hcMethod].call(this);
 	
 					//  stop, when events and SVG element do not exist
 					if (!eventElement.events && !eventElement.eventsPoint) {
-						return false;
+						return proceedObject;
 					}
 					
 					if (eventElement.eventsPoint) { //
@@ -37547,6 +37548,8 @@ webpackJsonp_name_([2],[
 					}
 	
 					customEvents.add(eventElement.element, eventElement.events, eventElement, this);
+	
+					return proceedObject;
 	
 				});
 			},
@@ -40787,12 +40790,14 @@ webpackJsonp_name_([2],[
 	                    null,
 	                    React.createElement(
 	                        Button,
-	                        { bsStyle: "primary", onClick: this._apply },
+	                        { bsStyle: "primary", onClick: this._apply,
+	                            style: { textTransform: "unset", letterSpacing: "unset", height: "unset" } },
 	                        "Apply"
 	                    ),
 	                    React.createElement(
 	                        Button,
-	                        { onClick: this._close },
+	                        { onClick: this._close,
+	                            style: { textTransform: "unset", letterSpacing: "unset", height: "unset" } },
 	                        "Close"
 	                    )
 	                )
@@ -45897,7 +45902,7 @@ webpackJsonp_name_([2],[
 	    convertUnicode: false,
 	    convertAscii: true,
 	    styles: {
-	      backgroundImage: 'url(' + (window.location.href.indexOf("gxa") > -1 ? "resources/js-bundles/" : "") + EmojiSpritesFile + ')',
+	      backgroundImage: 'url(' + EmojiSpritesFile + ')',
 	      width: '32px',
 	      height: '32px',
 	      margin: '4px'
