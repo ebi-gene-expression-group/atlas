@@ -74,11 +74,13 @@ public enum ExperimentType {
     }
 
     public static boolean containsBaseline(Set<String> experimentTypes) {
-        return experimentTypes.contains(RNASEQ_MRNA_BASELINE.getDescription()) || experimentTypes.contains(PROTEOMICS_BASELINE.getDescription());
+        //return experimentTypes.contains(RNASEQ_MRNA_BASELINE.getDescription()) || experimentTypes.contains(PROTEOMICS_BASELINE.getDescription());
+        return experimentTypes.contains(RNASEQ_MRNA_BASELINE.name()) || experimentTypes.contains(PROTEOMICS_BASELINE.name());
     }
 
     public static boolean containsDifferential(Set<String> experimentTypes) {
-        return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.getDescription());
+        //return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.getDescription());
+        return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.name());
     }
 
 

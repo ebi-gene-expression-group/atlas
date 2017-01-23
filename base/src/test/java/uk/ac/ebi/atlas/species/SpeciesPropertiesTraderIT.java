@@ -61,6 +61,6 @@ public class SpeciesPropertiesTraderIT {
         SpeciesProperties dog = subject.get("Canis lupus familiaris");
 
         assertNotEquals(dog, SpeciesProperties.UNKNOWN);
-        assertThat(dog.ensemblName(), is("canis familiaris"));
+        assertThat(dog.ensemblName(), is("Canis_familiaris"));
     }
 }

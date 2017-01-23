@@ -118,13 +118,16 @@ public class AnalyticsQueryClient {
 
         public Builder baselineFacets(){
             setFacets(baselineFacetsQueryJSON);
-            solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)");
+            solrQuery.addFilterQuery("experimentType:(RNASEQ_MRNA_BASELINE OR PROTEOMICS_BASELINE)");
             return this;
         }
 
         private Builder differential(){
-            solrQuery.addFilterQuery("experimentType:(rnaseq_mrna_differential OR " +
-                    "microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)");
+            solrQuery.addFilterQuery("experimentType:(" +
+                    "RNASEQ_MRNA_DIFFERENTIAL " +
+                    "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
+                    "OR MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL " +
+                    "OR MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)");
             return this;
         }
 
@@ -241,7 +244,7 @@ public class AnalyticsQueryClient {
     enum Field {
         EXPERIMENT_TYPE("experimentType"),
         EXPERIMENT_ACCESSION("experimentAccession"),
-        BIOENTITY_IDENTIFIER("bioentityIdentifier"),
+        BIOENTITY_IDENTIFIER("bioentityIdentifierLower"),
         SPECIES("species"),
         IDENTIFIER_SEARCH("identifierSearch"),
         CONDITIONS_SEARCH("conditionsSearch"),

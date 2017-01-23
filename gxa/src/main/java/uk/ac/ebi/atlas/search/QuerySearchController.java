@@ -77,9 +77,12 @@ public class QuerySearchController {
             return stringBuilder.toString();
         }
 
+
+        ImmutableSet<String> geneIds =
+                analyticsSearchService.searchMoreThanOneBioentityIdentifier(
+                        geneQuery, conditionQuery, species.getReferenceName());
+
         // No gene IDs -> empty results page
-        ImmutableSet<String> geneIds = analyticsSearchService.searchMoreThanOneBioentityIdentifier(geneQuery,
-                conditionQuery, species.getReferenceName());
         if (geneIds.size() == 0) {
             return "empty-search-page";
         }
