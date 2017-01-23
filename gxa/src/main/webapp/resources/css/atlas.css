@@ -54,3 +54,7 @@ a.help-icon {
 .ui-button-text {
     text-align: center;
 }
+
+a.fancybox-close {
+    border-bottom: none;
+}
