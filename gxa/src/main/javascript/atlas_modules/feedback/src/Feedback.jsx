@@ -165,10 +165,7 @@ var FeedbackBox = React.createClass({
       convertUnicode: false,
       convertAscii: true,
       styles: {
-          backgroundImage: 'url('+
-            (window.location.href.indexOf("gxa") >-1
-            ? "resources/js-bundles/"
-            : "" )+EmojiSpritesFile+')',
+          backgroundImage: 'url('+EmojiSpritesFile+')',
           width: '32px',
           height: '32px',
           margin: '4px'
