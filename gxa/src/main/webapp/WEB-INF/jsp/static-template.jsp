@@ -11,6 +11,7 @@
     IOUtils.copy(contentResource.getInputStream(), pageContext.getOut());
 %>
 
+<%--TODO: REMOVE THIS when we completely move to foundation --%>
 <script type="text/javascript">
     $(function () {
         clearLocalNav();

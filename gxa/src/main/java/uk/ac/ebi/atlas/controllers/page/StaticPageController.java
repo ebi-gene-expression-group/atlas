@@ -38,11 +38,21 @@ public class StaticPageController {
     public String getHelpPage(HttpServletRequest request,
                               @PathVariable String pageName,
                               @RequestParam(value = "foundation", required = false) String foundationKey) throws IOException {
-        String path = String.format("/resources/html/help/%s.html", pageName);
+        String path;
 
-        request.setAttribute("contentResource", fetchResource(path));
-        request.setAttribute("nav", "help");
-        return foundationKey != null ? "foundation-static" : "static-template";
+        if( foundationKey != null ) {
+            path = String.format("/resources/html/help-foundation/%s.html", pageName);
+            request.setAttribute("contentResource", fetchResource(path));
+
+            return "foundation-static";
+
+        } else {
+            path = String.format("/resources/html/help/%s.html", pageName);
+            request.setAttribute("contentResource", fetchResource(path));
+            request.setAttribute("nav", "help");
+
+            return "static-template";
+        }
     }
 
     @RequestMapping("/{pageName}.hhhh")
