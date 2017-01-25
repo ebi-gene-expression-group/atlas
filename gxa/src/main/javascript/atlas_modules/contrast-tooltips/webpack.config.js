@@ -21,8 +21,8 @@ module.exports = {
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'dependencies',
-            filename: 'vendor.bundle.js',
-            minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
+            filename: 'vendorCommons.bundle.js',
+            minChunks: Infinity     // Explicit definition-based split
         })
     ],
 

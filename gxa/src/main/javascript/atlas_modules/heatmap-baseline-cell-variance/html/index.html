@@ -6,14 +6,12 @@
     <title>Heatmap baseline cell variance demo</title>
 
     <script src="../dist/vendorCommons.bundle.js"></script>
-    <script src="../dist/heatmapBaselineCellVarianceDemo.bundle.js"></script>
+    <script src="../dist/heatmapBaselineCellVarianceRenderer.bundle.js"></script>
 </head>
 <body>
     <div>
-        <div id="expression1" style="display: inline-block; width: 300px">
-        </div>
-        <div id="expression2" style="display: inline-block; width: 300px">
-        </div>
+        <div id="expression1" style="display: inline-block; width: 300px"></div>
+        <div id="expression2" style="display: inline-block; width: 300px"></div>
     </div>
 </body>
 
@@ -33,8 +31,8 @@
         "quartiles": {"min":43.0,"lower":46.5,"median":57.0,"upper":75.0,"max":108.0}
     };
 
-    heatmapBaselineCellVarianceDemo(expression1.quartiles, document.getElementById('expression1'));
-    heatmapBaselineCellVarianceDemo(expression2.quartiles, document.getElementById('expression2'));
+    heatmapBaselineCellVarianceRenderer(expression1.quartiles, document.getElementById('expression1'));
+    heatmapBaselineCellVarianceRenderer(expression2.quartiles, document.getElementById('expression2'));
 </script>
 
 </html>

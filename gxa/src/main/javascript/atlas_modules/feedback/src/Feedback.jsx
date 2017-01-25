@@ -1,6 +1,3 @@
-"use strict";
-
-//*------------------------------------------------------------------*
 var React = require('react');
 var LocalStorageMixin = require('react-localstorage');
 var TimerMixin = require('react-timer-mixin');

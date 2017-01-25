@@ -9,12 +9,12 @@
   "author": "Wojciech Bażant<wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
   "license": "Apache-2.0",
   "dependencies": {
-    "react": "^15.3.2",
-    "react-bootstrap": "^0.30.5",
-    "react-dom": "^15.3.2",
-    "react-refetch": "^1.0.0"
+    "react": "15.3.2",
+    "react-bootstrap": "0.30.7",
+    "react-dom": "15.3.2",
+    "react-refetch": "1.0.0"
   },
   "devDependencies": {
-    "whatwg-fetch": "^2.0.1"
+    "whatwg-fetch": "2.0.1"
   }
 }

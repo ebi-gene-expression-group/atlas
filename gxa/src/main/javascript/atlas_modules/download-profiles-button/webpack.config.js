@@ -2,7 +2,6 @@ module.exports = Object.assign(require('../../webpack.config.package-test-build.
     {
         entry: {
         downloadProfilesButton: './index.js',
-        renderer: './html/renderer.js',
         dependencies: ['react', 'react-dom', 'react-bootstrap']
     }
 });

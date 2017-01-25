@@ -7,13 +7,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "react": "^0.14.7",
-    "react-addons-css-transition-group": "^0.14.8",
-    "react-bootstrap": "^0.29.5",
-    "react-dom": "^0.14.7",
-    "react-emojione": "^1.1.1",
-    "react-localstorage": "^0.2.9",
-    "react-timer-mixin": "^0.13.3"
+    "react": "15.3.2",
+    "react-addons-css-transition-group": "15.3.2",
+    "react-bootstrap": "0.30.7",
+    "react-dom": "15.3.2",
+    "react-emojione": "1.1.1",
+    "react-localstorage": "0.2.9",
+    "react-timer-mixin": "0.13.3"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",

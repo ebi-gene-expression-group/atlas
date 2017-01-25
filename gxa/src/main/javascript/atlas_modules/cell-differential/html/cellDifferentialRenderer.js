@@ -1,16 +1,7 @@
-"use strict";
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-//*------------------------------------------------------------------*
-
-var React = require('react');
-
-var ReactDOM = require('react-dom');
-
-//*------------------------------------------------------------------*
-
-var CellDifferential = require('../src/CellDifferential.jsx');
-
-//*------------------------------------------------------------------*
+const CellDifferential = require('../src/CellDifferential.jsx');
 
 module.exports = function(fontSize, colour, foldChange, pValue, tStat, displayLevels, mountNode) {
     ReactDOM.render(

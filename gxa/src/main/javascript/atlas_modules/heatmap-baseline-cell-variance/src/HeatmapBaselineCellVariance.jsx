@@ -1,12 +1,6 @@
-"use strict";
-
-//*------------------------------------------------------------------*
-
 var React = require('react');
 var Highcharts = require('react-highcharts');
 require('highcharts-more')(Highcharts.Highcharts);
-
-//*------------------------------------------------------------------*
 
 var HeatmapBaselineCellVariance = React.createClass({
 
@@ -72,7 +66,7 @@ var HeatmapBaselineCellVariance = React.createClass({
         var boxPlotStyle = {width: chartWidth, height: chartHeight, margin: chartMargin};
         return (
             <td>
-                <div id="container" ref="container" style={boxPlotStyle}>
+                <div id="container" style={boxPlotStyle}>
                     <Highcharts config={highchartsOptions}/>
                 </div>
             </td>
@@ -80,7 +74,5 @@ var HeatmapBaselineCellVariance = React.createClass({
     }
 
 });
-
-//*------------------------------------------------------------------*
 
 module.exports = HeatmapBaselineCellVariance;

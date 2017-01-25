@@ -7,8 +7,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "jquery": "^2.2.1",
-    "jquery-ui-bundle": "^1.11.4"
+    "jquery": "2.2.1",
+    "jquery-ui-bundle": "1.11.4"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
