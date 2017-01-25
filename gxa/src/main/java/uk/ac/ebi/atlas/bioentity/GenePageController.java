@@ -24,6 +24,13 @@ public class GenePageController extends BioentityPageController {
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier,
                                Model model) {
+        if(identifier.toUpperCase().startsWith("MGI")){
+            Set<String> correspondingEnsemblIdentifiers = bioentityPropertyDao.fetchGeneIdsForPropertyValue
+                    (BioentityPropertyName.MGI_ID, identifier);
+            if(correspondingEnsemblIdentifiers.size() > 0){
+                return MessageFormat.format("redirect:/genes/{0}", correspondingEnsemblIdentifiers.iterator().next());
+            }
+        }
 
         Species species = speciesFactory.create(speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""));
         model.addAttribute("species", species.getName());

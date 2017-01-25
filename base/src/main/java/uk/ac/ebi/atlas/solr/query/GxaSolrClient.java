@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityType;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -31,9 +32,6 @@ import java.util.Set;
 @Named
 public class GxaSolrClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(GxaSolrClient.class);
-
-    private static final String PROPERTY_NAME_FIELD = "property_name";
-    private static final String PROPERTY_VALUE_FIELD = "property_value";
 
     private SolrClient solrClient;
 
@@ -65,6 +63,23 @@ public class GxaSolrClient {
         return results;
     }
 
+    public Set<String> getBioentityIdentifiers(BioentityType bioentityType, BioentityPropertyName
+            bioentityPropertyName, String
+            bioentityPropertyValue){
+        SolrQuery query = new SolrQuery();
+        query.setRows(1000);
+        query.setQuery(MessageFormat.format("property_name:\"{0}\" AND property_value:\"{1}\" AND bioentity_type:({2})",
+                bioentityPropertyName.name, bioentityPropertyValue,  Joiner.on("\" OR \"").join(bioentityType
+                        .getSolrAliases())));
+        query.setFields("bioentity_identifier");
+
+        Set<String> result = new HashSet<>();
+        for(SolrDocument d: query(query).getResults()){
+            result.add(d.getFieldValue("bioentity_identifier").toString());
+        }
+        return result;
+    }
+
     public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier, Collection<BioentityPropertyName> bioentityPropertyNames) {
         SolrQuery query = new SolrQuery();
 
@@ -85,8 +100,8 @@ public class GxaSolrClient {
         QueryResponse queryResponse = query(query);
 
         for (SolrDocument document : queryResponse.getResults()) {
-            BioentityPropertyName key = BioentityPropertyName.getByName(document.getFieldValue(PROPERTY_NAME_FIELD).toString());
-            String value = document.getFieldValue(PROPERTY_VALUE_FIELD).toString();
+            BioentityPropertyName key = BioentityPropertyName.getByName(document.getFieldValue("property_name").toString());
+            String value = document.getFieldValue("property_value").toString();
 
             if(!result.containsKey(key)){
                 result.put(key, new HashSet<String>());

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.BioentityNotFoundException;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 
@@ -25,6 +26,11 @@ public class BioEntityPropertyDao {
         String _identifier = identifier.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
 
         return FluentIterable.concat(solrClient.getMap(_identifier, ImmutableList.of(propertyName)).values()).toSet();
+    }
+
+    public Set<String> fetchGeneIdsForPropertyValue(BioentityPropertyName bioentityPropertyName, String
+            bioentityPropertyValue){
+        return solrClient.getBioentityIdentifiers(BioentityType.GENE, bioentityPropertyName, bioentityPropertyValue);
     }
 
     public Map<BioentityPropertyName, Set<String>> fetchTooltipProperties(String identifier) {
