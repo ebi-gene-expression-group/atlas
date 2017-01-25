@@ -20,6 +20,7 @@ export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 
 atlas_modules=`ls atlas_modules`
 atlas_bundles=`ls atlas_bundles`
+npm_packages=(expression-atlas-heatmap-highcharts anatomogram)
 
 all_packages=("${atlas_modules[@]}" "${atlas_bundles[@]}")
 
@@ -31,6 +32,10 @@ do
         do
             rm -rf node_modules/expression-atlas-$module
         done
+	for module in ${npm_packages}
+	do
+	    rm -rf node_modules/$module
+	done
     npm install
     popd > /dev/null
 done
