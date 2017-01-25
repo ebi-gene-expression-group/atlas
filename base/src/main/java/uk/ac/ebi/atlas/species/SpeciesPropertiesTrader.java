@@ -69,12 +69,19 @@ public class SpeciesPropertiesTrader {
                 ImmutableSortedMap.naturalOrder();
 
         for (SpeciesProperties speciesProperties : speciesPropertiesDao.fetchAll()) {
-            nameToSpeciesPropertiesBuilder.put(speciesProperties.referenceName(), speciesProperties);
+            nameToSpeciesPropertiesBuilder.put(normalise(speciesProperties.referenceName()), speciesProperties);
         }
 
         return nameToSpeciesPropertiesBuilder.build();
     }
 
+    /*
+    We require that
+     normalise(speciesName) == normalise(speciesProperties.referenceName())
+     for all the reasonable species spelling variants we want:
+     - underscores or not
+     - long variants of names
+     */
     public SpeciesProperties get(String speciesName) {
         SpeciesProperties result = nameToSpecies.get(normalise(speciesName));
         return result!= null ? result : SpeciesProperties.UNKNOWN;
@@ -84,8 +91,8 @@ public class SpeciesPropertiesTrader {
         return nameToSpecies.values();
     }
 
-    static String normalise(String str) {
-        return applyExceptions(StringUtils.capitalize(fromWords(truncate(toWords(nullSafe(str))))));
+    private static String normalise(String str) {
+        return applyExceptions(StringUtils.capitalize(StringUtils.lowerCase(fromWords(truncate(toWords(nullSafe(str)))))));
     }
 
     private static String nullSafe(String str){

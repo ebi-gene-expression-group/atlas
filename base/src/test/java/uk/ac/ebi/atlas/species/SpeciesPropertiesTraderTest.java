@@ -12,10 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class SpeciesPropertiesTraderTest {
@@ -113,7 +110,12 @@ public class SpeciesPropertiesTraderTest {
 
     @Test
     public void speciesNamesAreNormalised() throws Exception {
+        assertThat(subject.get("homo sapiens"), not(is(SpeciesProperties.UNKNOWN)));
         assertThat(subject.get("homo sapiens"), is(subject.get("HoMo_SaPieNs")));
-        assertThat(subject.get("Hordeum vulgare subsp. vulgare"), is(subject.get("hordeum_vulgare")));
+        assertThat(subject.get("homo sapiens"), is(subject.get("Homo sapiens")));
+
+        assertThat(subject.get("hordeum vulgare"), not(is(SpeciesProperties.UNKNOWN)));
+        assertThat(subject.get("hordeum vulgare"), is(subject.get("Hordeum vulgare subsp. vulgare")));
+        assertThat(subject.get("hordeum vulgare"), is(subject.get("Hordeum_vulgare")));
     }
 }
