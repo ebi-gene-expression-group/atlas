@@ -32,10 +32,10 @@ do
         do
             rm -rf node_modules/expression-atlas-$module
         done
-	for module in ${npm_packages}
-	do
-	    rm -rf node_modules/$module
-	done
+        for module in ${npm_packages[*]}
+        do
+            rm -rf node_modules/$module
+        done
     npm install
     popd > /dev/null
 done
@@ -43,6 +43,10 @@ done
 for module in ${all_packages[*]}
 do
     rm -rf node_modules/expression-atlas-$module
+done
+for module in ${npm_packages[*]}
+do
+    rm -rf node_modules/$module
 done
 
 npm install
