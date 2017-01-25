@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
@@ -13,6 +16,8 @@ I used to be "heatmap-data.jsp" but it got complicated when we split into base a
  */
 @Named
 public class HeatmapDataToJsonService {
+
+    private static final Gson gson = new Gson();
 
     private final ApplicationProperties applicationProperties;
     @Inject
@@ -35,6 +40,7 @@ public class HeatmapDataToJsonService {
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("accessKey", request.getParameter("accessKey"));
         config.addProperty("species", get(model, "species"));
+        config.add("resources", getAsJsonSerializable(model, "resources", new JsonArray()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("enableEnsemblLauncher",
                 model.containsKey("enableEnsemblLauncher") && Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()));
@@ -42,6 +48,14 @@ public class HeatmapDataToJsonService {
 
         config.addProperty("disclaimer", get(model, "disclaimer"));
         return config;
+    }
+
+    private JsonElement getAsJsonSerializable(Map<String, Object> model, String key, JsonElement defaultValue){
+        if(model.containsKey(key)){
+            return gson.toJsonTree(model.get(key));
+        } else {
+            return defaultValue;
+        }
     }
 
     private String getOrDefault(Map<String, Object> model, String key, String defaultValue){

@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.species;
 
+import java.util.List;
+import java.util.Map;
+
 public class Species {
 
     private final String name;
@@ -20,6 +23,10 @@ public class Species {
 
     public String getEnsemblName() {
         return mappedProperties.ensemblName();
+    }
+
+    public Map<String, List<String>> getResources() {
+        return mappedProperties.resources();
     }
 
     public String getKingdom() {
