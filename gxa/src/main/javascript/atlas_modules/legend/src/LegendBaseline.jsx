@@ -8,7 +8,7 @@ var ReactDOM = require('react-dom');
 //*------------------------------------------------------------------*
 
 var LegendRow = require('./LegendRow.jsx');
-var NumberFormat = require('expression-atlas-number-format');
+var NumberFormat = require('expression-atlas-number-format').default;
 var HelpTooltips = require('expression-atlas-help-tooltips');
 
 //*------------------------------------------------------------------*
@@ -21,8 +21,8 @@ var LegendBaseline = React.createClass({
 
     propTypes: {
         atlasBaseURL: React.PropTypes.string.isRequired,
-        minExpressionLevel: React.PropTypes.string.isRequired,
-        maxExpressionLevel: React.PropTypes.string.isRequired,
+        minExpressionLevel: React.PropTypes.number.isRequired,
+        maxExpressionLevel: React.PropTypes.number.isRequired,
         isMultiExperiment: React.PropTypes.bool.isRequired
     },
 
@@ -38,13 +38,13 @@ var LegendBaseline = React.createClass({
                                lowValueColour="#C0C0C0"
                                highValueColour="#0000FF"/>
                 </div>
-                <div ref="legendHelp" data-help-loc={dataHelpLoc} className="gxaLegendHelp"></div>
+                <div ref={legendHelpDiv => { this.legendHelpDiv = legendHelpDiv; }} data-help-loc={dataHelpLoc} className="gxaLegendHelp"></div>
             </div>
         );
     },
 
     componentDidMount: function () {
-        HelpTooltips(this.props.atlasBaseURL, "experiment", ReactDOM.findDOMNode(this.refs.legendHelp));
+        HelpTooltips(this.props.atlasBaseURL, "experiment", ReactDOM.findDOMNode(this.legendHelpDiv));
     }
 });
 

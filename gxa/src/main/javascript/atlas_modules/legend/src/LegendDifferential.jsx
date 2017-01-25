@@ -32,15 +32,15 @@ var LegendDifferential = React.createClass({
                 <div style={{display: "inline-table"}}>
                     {isNaN(this.props.minDownLevel) && isNaN(this.props.maxDownLevel) ?
                         null :
-                        <LegendRow lowExpressionLevel={this.props.minDownLevel}
-                                   highExpressionLevel={this.props.maxDownLevel}
+                        <LegendRow lowExpressionLevel={<span>{this.props.minDownLevel}</span>}
+                                   highExpressionLevel={<span>{this.props.maxDownLevel}</span>}
                                    lowValueColour="#C0C0C0"
                                    highValueColour="#0000FF"/>
                     }
                     {isNaN(this.props.minUpLevel) && isNaN(this.props.maxUpLevel) ?
                         null :
-                        <LegendRow lowExpressionLevel={this.props.minUpLevel}
-                                   highExpressionLevel={this.props.maxUpLevel}
+                        <LegendRow lowExpressionLevel={<span>{this.props.minUpLevel}</span>}
+                                   highExpressionLevel={<span>{this.props.maxUpLevel}</span>}
                                    lowValueColour="#FFAFAF"
                                    highValueColour="#FF0000"/>
                     }
