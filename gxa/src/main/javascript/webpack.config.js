@@ -8,9 +8,9 @@ module.exports = {
         expressionAtlasHeatmap: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap'],
         expressionAtlasHeatmapHighcharts: ['babel-polyfill', './atlas_bundles/heatmap-highcharts'],
         experimentPageHeatmap: ['babel-polyfill', './atlas_bundles/heatmap/src/experimentPageHeatmapAnatomogramRenderer.js'],
-        // expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
-        // expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
-        // expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
+        expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
+        expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
+        expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
         dependencies: [
             // Bundled dependencies: expressionAtlasHeatmapHighcharts, heatmap
             'anatomogram',
@@ -20,7 +20,7 @@ module.exports = {
             // 'expression-atlas-contrast-tooltips',
             // 'expression-atlas-display-levels-button',
             // 'expression-atlas-download-profiles-button',
-            // 'expression-atlas-feedback',
+            'expression-atlas-feedback',
             // 'expression-atlas-genome-browser-launcher',
             // 'expression-atlas-heatmap-baseline-cell-variance',
             // 'expression-atlas-help-tooltips',
@@ -78,8 +78,11 @@ module.exports = {
 
             // anatomogram
             // 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+
+            // Node.js stuff
             'url',
             'path',
+            'events',
 
             // feedback
             'react-addons-css-transition-group',
@@ -95,7 +98,11 @@ module.exports = {
             // baseline-cell
             // 'react-highcharts',
             'highcharts-more',
-            'react-addons-css-transition-group'
+            'react-addons-css-transition-group',
+
+            //
+            'expression-atlas-heatmap-highcharts',
+            'react-ebi-species'
         ]
     },
 

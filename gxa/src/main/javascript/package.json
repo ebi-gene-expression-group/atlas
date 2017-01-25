@@ -63,6 +63,10 @@
     "react-timer-mixin": "0.13.3",
     "react-refetch": "1.0.0",
     "whatwg-fetch": "2.0.1",
-    "highcharts-more": "0.1.2"
+    "highcharts-more": "0.1.2",
+
+    "expression-atlas-feedback": "file:./atlas_modules/feedback",
+    "expression-atlas-heatmap-highcharts": "latest",
+    "react-ebi-species": "latest"
   }
 }
