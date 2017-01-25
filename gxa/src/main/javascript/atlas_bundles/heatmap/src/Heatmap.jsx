@@ -33,7 +33,7 @@ var LegendBaseline = Legend.LegendBaseline;
 var LegendDifferential = Legend.LegendDifferential;
 var CellDifferential = require('expression-atlas-cell-differential');
 var DisplayLevelsButton = require('expression-atlas-display-levels-button');
-var NumberFormat = require('expression-atlas-number-format');
+var NumberFormat = require('expression-atlas-number-format').default;
 var HelpTooltips = require('expression-atlas-help-tooltips');
 var ContrastTooltips = require('expression-atlas-contrast-tooltips');
 
@@ -328,25 +328,16 @@ var Heatmap = React.createClass({
         if (this.props.type.isBaseline || this.props.type.isMultiExperiment) {
           return <LegendBaseline
             atlasBaseURL={this.props.atlasBaseURL}
-            minExpressionLevel={this._getMinExpressionLevel().toString()}
-            maxExpressionLevel={this._getMaxExpressionLevel().toString()}
+            minExpressionLevel={this._getMinExpressionLevel()}
+            maxExpressionLevel={this._getMaxExpressionLevel()}
             isMultiExperiment={this.props.type.isMultiExperiment ? true : false}/> ;
         } else {
           var ps = this._getProfiles();
-          return <LegendDifferential
-            atlasBaseURL={this.props.atlasBaseURL}
-            minDownLevel={"minDownLevel" in ps
-                            ? ps.minDownLevel.toString()
-                            : "NaN"}
-            maxDownLevel={"maxDownLevel" in ps
-                            ? ps.maxDownLevel.toString()
-                            : "NaN"}
-            minUpLevel={"minUpLevel" in ps
-                            ? ps.minUpLevel.toString()
-                            : "NaN"}
-            maxUpLevel={"maxUpLevel" in ps
-                            ? ps.maxUpLevel.toString()
-                            : "NaN"}  />;
+          return <LegendDifferential atlasBaseURL={this.props.atlasBaseURL}
+                                     minDownLevel={"minDownLevel" in ps ? ps.minDownLevel : "NaN"}
+                                     maxDownLevel={"maxDownLevel" in ps ? ps.maxDownLevel : "NaN"}
+                                     minUpLevel={"minUpLevel" in ps ? ps.minUpLevel : "NaN"}
+                                     maxUpLevel={"maxUpLevel" in ps ? ps.maxUpLevel : "NaN"} />;
         }
     },
 
