@@ -555,12 +555,7 @@ var HeatmapTableHeader = React.createClass({
                                         this.props.selectColumn, this.props.selectedColumnId, this.props.hoverColumnCallback, this.props.anatomogramEventEmitter);
         }
         else if (this.props.type.isDifferential) {
-            return (<ContrastHeaders heatmapConfig={heatmapConfig}
-                                     atlasBaseURL={this.props.atlasBaseURL}
-                                     contrasts={this.props.columnHeaders}
-                                     selectedColumnId={this.props.selectedColumnId}
-                                     selectColumn={this.props.selectColumn}
-                                     experimentAccession={heatmapConfig.experimentAccession}/>);
+            return renderContrastHeaders(heatmapConfig, this.props.atlasBaseURL, this.props.columnHeaders, this.props.selectedColumnId, this.props.selectColumn, heatmapConfig.experimentAccession);
         }
         else if (this.props.type.isMultiExperiment) {
             return renderFactorHeaders(heatmapConfig, this.props.atlasBaseURL, null, this.props.type, this.props.columnHeaders, "",
@@ -710,41 +705,32 @@ var FactorHeader = React.createClass({
 });
 
 
-var ContrastHeaders = React.createClass({
+function renderContrastHeaders(heatmapConfig, atlasBaseURL, contrasts, selectedColumnId, selectColumn, experimentAccession){
+    var contrastHeaders = contrasts.map(function (contrast) {
 
-    render: function () {
-        var heatmapConfig = this.props.heatmapConfig;
+        var plotsThisContrast = {
+            maPlot: contrast.resources.some(function(e) {return e.type === 'ma-plot'}),
+            gseaGo: contrast.resources.some(function(e) {return e.type === 'gsea_go'}),
+            gseaInterpro: contrast.resources.some(function(e) {return e.type === 'gsea_interpro'}),
+            gseaReactome: contrast.resources.some(function(e) {return e.type === 'gsea_reactome'})
+        };
 
-        var contrastHeaders = this.props.contrasts.map(function (contrast) {
+        // var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : {go: false, interpro: false, reactome: false};
+        return <ContrastHeader key={contrast.id}
+                               heatmapConfig={heatmapConfig}
+                               atlasBaseURL={atlasBaseURL}
+                               selectColumn={selectColumn}
+                               selected={contrast.id === selectedColumnId}
+                               contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession}
+                               contrastId={contrast.id} experimentAccession={experimentAccession}
+                               showMaPlotButton={plotsThisContrast.maPlot}
+                               showGseaGoPlot={plotsThisContrast.gseaGo}
+                               showGseaInterproPlot={plotsThisContrast.gseaInterpro}
+                               showGseaReactomePlot={plotsThisContrast.gseaReactome}/>;
+    }.bind(this));
 
-            var plotsThisContrast = {
-                maPlot: contrast.resources.some(function(e) {return e.type === 'ma-plot'}),
-                gseaGo: contrast.resources.some(function(e) {return e.type === 'gsea_go'}),
-                gseaInterpro: contrast.resources.some(function(e) {return e.type === 'gsea_interpro'}),
-                gseaReactome: contrast.resources.some(function(e) {return e.type === 'gsea_reactome'})
-            };
-
-            // var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : {go: false, interpro: false, reactome: false};
-            return <ContrastHeader key={contrast.id}
-                                   heatmapConfig={heatmapConfig}
-                                   atlasBaseURL={this.props.atlasBaseURL}
-                                   selectColumn={this.props.selectColumn}
-                                   selected={contrast.id === this.props.selectedColumnId}
-                                   contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession}
-                                   contrastId={contrast.id} experimentAccession={this.props.experimentAccession}
-                                   showMaPlotButton={plotsThisContrast.maPlot}
-                                   showGseaGoPlot={plotsThisContrast.gseaGo}
-                                   showGseaInterproPlot={plotsThisContrast.gseaInterpro}
-                                   showGseaReactomePlot={plotsThisContrast.gseaReactome}/>;
-        }.bind(this));
-
-        return (
-            <div>{contrastHeaders}</div>
-        );
-    }
-
-});
-
+    return contrastHeaders;
+}
 
 var ContrastHeader = React.createClass({
 
