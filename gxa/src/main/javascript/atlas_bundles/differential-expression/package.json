@@ -16,11 +16,11 @@
     "expression-atlas-contrast-tooltips": "file:../../atlas_modules/contrast-tooltips",
     "expression-atlas-display-levels-button": "file:../../atlas_modules/display-levels-button",
     "expression-atlas-legend": "file:../../atlas_modules/legend",
-    "jquery": "^2.2.1",
-    "jquery-ui-bundle": "^1.11.4",
-    "jquery.browser": "^0.1.0",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "jquery": "2.2.1",
+    "jquery-ui-bundle": "1.11.4",
+    "jquery.browser": "0.1.0",
+    "react": "15.3.2",
+    "react-dom": "15.3.2",
     "react-ebi-species": "latest"
   },
   "devDependencies": {
