@@ -85,7 +85,7 @@ public class SpeciesPropertiesTraderTest {
         Matcher matcher = removedSpeciesPattern.matcher(refreshMessage);
         matcher.find();
         assertThat(matcher.group(1).split(", ").length, is(speciesPropertiesCountBeforeRefresh));
-        assertThat(refreshMessage, containsString("[tyrannosaurus rex] added"));
+        assertThat(refreshMessage, containsString("[Tyrannosaurus_rex] added"));
     }
 
     @Test
