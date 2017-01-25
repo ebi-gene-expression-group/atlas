@@ -334,10 +334,10 @@ var Heatmap = React.createClass({
         } else {
           var ps = this._getProfiles();
           return <LegendDifferential atlasBaseURL={this.props.atlasBaseURL}
-                                     minDownLevel={"minDownLevel" in ps ? ps.minDownLevel : "NaN"}
-                                     maxDownLevel={"maxDownLevel" in ps ? ps.maxDownLevel : "NaN"}
-                                     minUpLevel={"minUpLevel" in ps ? ps.minUpLevel : "NaN"}
-                                     maxUpLevel={"maxUpLevel" in ps ? ps.maxUpLevel : "NaN"} />;
+                                     minDownLevel={parseFloat(ps.minDownLevel)}
+                                     maxDownLevel={parseFloat(ps.maxDownLevel)}
+                                     minUpLevel={parseFloat(ps.minUpLevel)}
+                                     maxUpLevel={parseFloat(ps.maxUpLevel)} />;
         }
     },
 
@@ -1120,9 +1120,9 @@ var GeneProfileRow = React.createClass({
             return (
                 <CellDifferential key={this.props.designElement + this.props.name + expression.contrastName}
                                   colour={expression.color}
-                                  foldChange={expression.foldChange}
-                                  pValue={expression.pValue}
-                                  tStat={expression.tStat}
+                                  foldChange={parseFloat(expression.foldChange)}
+                                  pValue={parseFloat(expression.pValue)}
+                                  tStat={parseFloat(expression.tStat)}
                                   displayLevels={this.props.displayLevels}/>
             );
         }
