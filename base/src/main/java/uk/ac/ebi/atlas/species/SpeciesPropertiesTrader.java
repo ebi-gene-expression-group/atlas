@@ -15,7 +15,6 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
 
 @Named
 public class SpeciesPropertiesTrader {
@@ -77,28 +76,20 @@ public class SpeciesPropertiesTrader {
     }
 
     public SpeciesProperties get(String speciesName) {
-        return StringUtils.isNotEmpty(speciesName) && nameToSpecies.containsKey(normaliseTruncate(speciesName)) ?
-                nameToSpecies.get(normaliseTruncate(speciesName)) : SpeciesProperties.UNKNOWN;
+        SpeciesProperties result = nameToSpecies.get(normalise(speciesName));
+        return result!= null ? result : SpeciesProperties.UNKNOWN;
     }
 
     public Collection<SpeciesProperties> getAll() {
         return nameToSpecies.values();
     }
 
-
-
-    private static String normaliseTruncate(String str) {
-
-
-        return Joiner.on(' ').skipNulls().join(Arrays.copyOf(normalise(str).split(" "), 2));
-    }
-
     static String normalise(String str) {
-        return applyExceptions(truncate(toWords(nullSafe(str))));
+        return applyExceptions(StringUtils.capitalize(fromWords(truncate(toWords(nullSafe(str))))));
     }
 
     private static String nullSafe(String str){
-        return org.apache.commons.lang.StringUtils.isEmpty(str) ? "" : str;
+        return StringUtils.isEmpty(str) ? "" : str;
     }
     private static String toWords(String str){
         return str.toLowerCase().replace("_", " ");
@@ -107,7 +98,11 @@ public class SpeciesPropertiesTrader {
         return Joiner.on(' ').skipNulls().join(Arrays.copyOf(str.split(" "), 2));
     }
 
-    private static final ImmutableMap<String, String> exceptions = ImmutableMap.of("canis lupus", "canis familiaris");
+    private static String fromWords(String str){
+        return str.replace(" ", "_");
+    }
+
+    private static final ImmutableMap<String, String> exceptions = ImmutableMap.of("Canis_lupus", "Canis_familiaris");
     private static String applyExceptions(String str){
         return exceptions.containsKey(str) ? exceptions.get(str) : str;
     }

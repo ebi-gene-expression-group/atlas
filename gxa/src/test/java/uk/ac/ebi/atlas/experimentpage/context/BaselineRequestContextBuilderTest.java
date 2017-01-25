@@ -59,7 +59,7 @@ public class BaselineRequestContextBuilderTest {
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(experimentMock.getSpecies())
                 .thenReturn(new Species("Homo sapiens",
-                        SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                        SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals",
                                 ImmutableSortedMap.<String, List<String>>of())) );
         when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class)))
                 .thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));

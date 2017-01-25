@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
@@ -42,7 +41,7 @@ public class AutoCompleteControllerTest {
 
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
-        when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableSortedMap.<String, List<String>>of())));
+        when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableSortedMap.<String, List<String>>of())));
         when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, "homo sapiens")).thenReturn(suggestions);
 
         subject = new AutoCompleteController(suggestionServiceMock, speciesFactoryMock);

@@ -99,7 +99,7 @@ public class BaselineExperimentCacheLoaderTest {
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
         when(assayGroups.getAssayGroupIds()).thenReturn(assayGroupIds);
         when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
-                        SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                        SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals",
                                 ImmutableSortedMap.<String, List<String>>of())));
 
                 when(experimentalFactorsFactory.createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),

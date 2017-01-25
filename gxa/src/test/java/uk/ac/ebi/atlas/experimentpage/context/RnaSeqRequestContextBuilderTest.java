@@ -23,7 +23,7 @@ public class RnaSeqRequestContextBuilderTest {
 
     private static final Species SPECIES =
             new Species("Homo sapiens",
-                    SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals",
+                    SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals",
                             ImmutableSortedMap.<String, List<String>>of()));
     
     @Mock

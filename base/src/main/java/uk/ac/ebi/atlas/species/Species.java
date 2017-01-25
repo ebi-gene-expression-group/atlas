@@ -13,10 +13,12 @@ public class Species {
         this.mappedProperties = mappedProperties;
     }
 
+    //the string that came to us
     public String getName() {
         return name;
     }
 
+    //a nice looking version of getEnsemblName
     public String getReferenceName() {
         return mappedProperties.referenceName();
     }

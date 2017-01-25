@@ -25,7 +25,7 @@ import static org.junit.Assert.assertThat;
 public class BaselineExperimentBuilderTest {
 
     private static final String SPECIES_NAME = "Homo sapiens";
-    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("homo sapiens", "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableMap.<String, List<String>>of());
+    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableMap.<String, List<String>>of());
 
     private static final String EXPERIMENT_ACCESSION = "accession";
     private static final String DESCRIPTION = "description";

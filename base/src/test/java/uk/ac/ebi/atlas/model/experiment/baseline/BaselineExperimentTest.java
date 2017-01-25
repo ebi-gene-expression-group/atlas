@@ -60,7 +60,7 @@ public class BaselineExperimentTest {
                     experimentalFactors, "description", "displayName", "",
                     new Species("species",
                             SpeciesProperties.create(
-                                    "referenceName", "ensemblName", "defaulQueryFactorType",
+                                    "ensemblName", "defaulQueryFactorType",
                                     "kingdom", ImmutableSortedMap.<String, List<String>>of())),
                     true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
                     Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
