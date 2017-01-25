@@ -1,13 +1,13 @@
 {
   "name": "expression-atlas-number-format",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Legend for differential expression experiments",
   "main": "index.js",
   "author": "Wojciech Bażant<wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
   "license": "Apache-2.0",
   "dependencies": {
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react": "15.3.2",
+    "react-dom": "15.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
