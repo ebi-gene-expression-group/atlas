@@ -13,22 +13,22 @@
         <div class="tabs-panel is-active" id="by-species">
             <div class="row">
                 <div class="columns small-4 text-center combo">
-                    <a href="#"><span class="icon icon-generic large-green" data-icon="R"/>
+                    <a href="${pageContext.request.contextPath}/experiments?kingdom=Plants&foundation"><span class="icon icon-generic large-green" data-icon="R"/>
                         <h5>Plants</h5>
                         <p>
-                            671 experiments<br/>
-                            <a href="#" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> 633</a>
-                            <a href="#" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> 38</a>
+                            ${plantsExperiments} experiments<br/>
+                            <a href="${pageContext.request.contextPath}/experiments?kingdom=Plants&experimentType=Differential" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> ${plantsDifferential}</a>
+                            <a href="${pageContext.request.contextPath}/experiments?kingdom=Plants&experimentType=Baseline" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> ${plantsBaseline}</a>
                         </p>
                     </a>
                 </div>
                     <div class="columns small-4 text-center combo">
-                        <a href="#"><span class="icon icon-species large-red" data-icon="H"></span>
+                        <a href="${pageContext.request.contextPath}/experiments?kingdom=animals-fungi&foundation"><span class="icon icon-species large-red" data-icon="H"></span>
                             <h5>Human</h5>
                             <p>
-                                1058 experiments<br/>
-                                <a href="#" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> 1037</a>
-                                <a href="#" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> 21</a>
+                                ${animalsExperiments} experiments<br/>
+                                <a href="${pageContext.request.contextPath}/experiments?kingdom=animals-fungi&experimentType=Differential" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> ${animalsDifferential}</a>
+                                <a href="${pageContext.request.contextPath}/experiments?kingdom=animals-fungi&experimentType=Baseline" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> ${animalsBaseline}</a>
                             </p>
                         </a>
                     </div>
@@ -47,7 +47,7 @@
 
             <div class="row">
                 <div class="small-6 small-centered columns margin-top-large">
-                    <a href="#" class="button float-center">View all species</a>
+                    <a href='${pageContext.request.contextPath}/experiments?foundation' class="button float-center">View all species</a>
                 </div>
             </div>
         </div>

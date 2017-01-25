@@ -51,7 +51,7 @@
 
     <div class="row">
         <div class="small-6 small-centered columns margin-top-large">
-            <a href='${pageContext.request.contextPath}/experiments' class="button float-center">View all experiments</a>
+            <a href='${pageContext.request.contextPath}/experiments?foundation' class="button float-center">View all experiments</a>
         </div>
     </div>
 

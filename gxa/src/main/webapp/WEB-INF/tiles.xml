@@ -30,7 +30,7 @@
 
     <definition name="foundation-static" extends="foundation-base">
         <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/static-template.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/foundation-static-template.jsp"/>
     </definition>
 
     <definition name="foundation-experiments" extends="foundation-base">

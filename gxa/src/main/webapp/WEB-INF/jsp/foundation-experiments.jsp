@@ -61,11 +61,6 @@
 <script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/foundationExperimentsPageModule.js"></script>
 
 <script>
-    //    $(function () {
-    //        clearLocalNav();
-    //        $('#gxaLocalNavHome').addClass("active");
-    //    });
-
     (function ($) {
         $(document).ready(function () {
             foundationExperimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}");
