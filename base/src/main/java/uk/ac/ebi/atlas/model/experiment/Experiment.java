@@ -105,7 +105,8 @@ public abstract class Experiment implements Serializable {
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
         result.put("experimentHasRData", hasRData);
-        result.put("species", species.getReferenceName());
+        result.put("speciesReferenceName", species.getReferenceName());
+        result.put("species", species);
         result.put("resources", species.getResources());
         result.put("experimentDescription", description);
         result.put("pubMedIds", pubMedIds);

@@ -39,7 +39,7 @@ public class HeatmapDataToJsonService {
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("accessKey", request.getParameter("accessKey"));
-        config.addProperty("species", get(model, "species"));
+        config.addProperty("species", get(model, "speciesReferenceName"));
         config.add("resources", getAsJsonSerializable(model, "resources", new JsonArray()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("enableEnsemblLauncher",
