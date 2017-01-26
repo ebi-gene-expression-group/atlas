@@ -52,6 +52,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model, request, false
         );
 
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         return "experiment";
     }
 

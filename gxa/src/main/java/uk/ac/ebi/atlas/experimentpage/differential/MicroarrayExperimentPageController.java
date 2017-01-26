@@ -64,6 +64,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                 preferences, model,request
         );
 
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         return "experiment";
     }
 

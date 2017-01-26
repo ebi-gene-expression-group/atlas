@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.solr.common.SolrException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Controller
 @Scope("prototype")
 public class QuerySearchController {
+
+    @Autowired
+    private Environment env;
 
     private AnalyticsSearchService analyticsSearchService;
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
@@ -111,6 +116,8 @@ public class QuerySearchController {
 
             model.addAttribute("hasDifferentialResults", hasDifferentialResults);
             model.addAttribute("hasBaselineResults", hasBaselineResults);
+
+            model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
             return "bioentities-search-results";
         }

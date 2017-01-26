@@ -51,6 +51,8 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,model, request,false
         );
 
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         return "experiment";
     }
 

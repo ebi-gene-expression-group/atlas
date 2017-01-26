@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.bioentity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +28,9 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class BioentityPageController {
+
+    @Autowired
+    private Environment env;
 
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
@@ -99,6 +104,8 @@ public abstract class BioentityPageController {
         model.addAttribute("geneQuery", SemanticQuery.create(identifier).toUrlEncodedJson());
         model.addAllAttributes(bioEntityPropertyService.modelAttributes(identifier, species,desiredOrderOfPropertyNames,
                 entityName, propertyValuesByType));
+
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         return "bioentities";
     }

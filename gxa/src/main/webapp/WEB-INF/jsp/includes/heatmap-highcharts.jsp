@@ -1,8 +1,8 @@
 <%--@elvariable id="isMultiExperiment" type="boolean"--%>
 <%--@elvariable id="type" type="atlas.model.ExperimentType"--%>
 
-<script src="${pageContext.request.contextPath}/resources/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
 
 <div id="genenametooltip-content" style="display: none"></div>
 

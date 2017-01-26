@@ -64,6 +64,8 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model,request
         );
 
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         return "experiment";
     }
 
