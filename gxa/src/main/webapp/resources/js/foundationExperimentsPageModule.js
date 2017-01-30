@@ -25,10 +25,10 @@ var foundationExperimentsPageModule = (function ($) {
 
     function formatExperimentType(data) {
         if (data === 'RNASEQ_MRNA_BASELINE' || data === 'PROTEOMICS_BASELINE') {
-            return '<img src="resources/images/allup2_transparent_bkg.png" title="baseline"/>';
+            return '<img src="resources/images/allup2_transparent_bkg.png" alt="baseline"/>';
         }
         if (data === 'RNASEQ_MRNA_DIFFERENTIAL' || data === 'MICROARRAY_ANY') {
-            return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
+            return '<img src="resources/images/updown_transparent_bkg.png" alt="differential"/>';
         }
         return data;
     }
@@ -59,14 +59,24 @@ var foundationExperimentsPageModule = (function ($) {
 
     function _init(experimentType, kingdom, organism) {
 
-        /* Create an array with the values of all the img title attributes in a column */
-        //TODO: Make it work again with new datatables version
-        // $.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
-        //     return $.map(oSettings.oApi._fnGetTrNodes(oSettings), function (tr, i) {
-        //         return $('td:eq(' + iColumn + ') img', tr).attr("title");
-        //     });
-        // };
-        /* This was taken from datatables examples */
+        /* Sort on the 'alt' tags of images in a column */
+        $.extend($.fn.dataTableExt.oSort, {
+            "alt-string-pre": function ( a ) {
+                return a.match(/alt="(.*?)"/)[1].toLowerCase();
+            },
+
+            "alt-string-asc": function( a, b ) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+
+            "alt-string-desc": function(a,b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        } );
+
+        /* This was taken from datatables examples
+         * This sorting function pair will use the * 'title' attribute of en empty span element (or anything else)
+         * to sort numerically (for example `<span title="1000000"><span>1'000'000`) */
         $.extend($.fn.dataTableExt.oSort, {
             "title-numeric-pre":function (a) {
                 var x = a.match(/title="*(-?[0-9\.]+)/)[1];
@@ -121,61 +131,77 @@ var foundationExperimentsPageModule = (function ($) {
         //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
         $experimentsTable.dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
-        var oTable = $experimentsTable.dataTable({
-            "bAutoWidth": false,
-            "bProcessing":true,
-            "sAjaxSource":"json/experiments",
-            "aoColumns":[
-                { "sTitle":"Type", "mData":"experimentType", "sClass":"center", "sSortDataType":"dom-text",
-                    "mRender": function (data, type, full) {
+        var oTable = $experimentsTable.DataTable({
+            "autoWidth": false,
+            "processing": true,
+            "ajax":"json/experiments",
+            "columns":[
+                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string",
+                    "render": function (data, type, full) {
                         return formatExperimentType(data);
                     } },
-                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center nowrap", 'sType': 'date-eu',
-                    "mRender": function (data, type, full) {
+                { "title":"Loaded", "data":"lastUpdate", "className":"center nowrap", 'type': 'date-eu',
+                    "render": function (data, type, full) {
                         return formatLastUpdate(data);
                     } },
-                { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center",
-                    "mRender": function (data, type, full) {
+                { "title":"Experiment", "data":"experimentDescription", "className":"center",
+                    "render": function (data, type, full) {
                         return formatExperimentDescription(data, full);
                     } },
-                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center", "sType":"title-numeric", "sWidth":"5%",
-                    "mRender": function (data, type, full) {
+                { "title":"Assays", "data":"numberOfAssays", "className":"center", "type":"title-numeric", "width":"5%",
+                    "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center", "sType":"title-numeric",
-                    "mRender": function (data, type, full) {
+                { "title":"Comparisons", "data":"numberOfContrasts", "className":"center", "type":"title-numeric",
+                    "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, full);
                     } },
-                { "sTitle":"Organisms", "mData":"species", "sClass":"center italic", "sWidth":"10%",
-                    "mRender": function (data, type, full) {
+                { "title":"Organisms", "data":"species", "className":"center italic", "width":"10%",
+                    "render": function (data, type, full) {
                         return data;
                     } },
-                { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center",
-                    "mRender": function (data, type, full) {
+                { "title":"Experimental Variables", "data":"experimentalFactors", "className":"center",
+                    "render": function (data, type, full) {
                         return withLineBreaks(data);
                     } },
-                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center", "sWidth":"15%",
-                    "mRender": function (data, type, full) {
+                { "title":"Array Designs", "data":"arrayDesigns", "className":"center", "width":"15%",
+                    "render": function (data, type, full) {
                         return formatArrayDesign(data, full);
                     } },
-                { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center",
-                    "mRender": function (data, type, full) {
+                { "title":"ArrayExpress", "data":"experimentAccession", "className":"center",
+                    "render": function (data, type, full) {
                         return formatExperimentAccession(data);
                     } },
-                { "sTitle":"Kingdom", "mData":"kingdom", "bVisible": false }
+                { "title":"Kingdom", "data":"kingdom", "visible": false }
             ],
-            "aLengthMenu":[
+            "lengthMenu":[
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
-            "oLanguage":{
-                "sSearch":"Search all columns:"
+            "language":{
+                "search":"Search all columns:"
             }
         });
 
-        $experimentsTable.find("tfoot input").keyup(function () {
-            /* Filter on the column (the index) of this element */
-            oTable.fnFilter(this.value, $experimentsTable.find("tfoot input").index(this));
+        $('#gxaExperimentsTableDescriptionInput').on('keyup', function () {
+            oTable
+                .columns(2)
+                .search(this.value)
+                .draw();
+        });
+
+        $('#gxaExperimentsTableOrganismInput').on('keyup', function () {
+            oTable
+                .columns(5)
+                .search(this.value)
+                .draw();
+        });
+
+        $('#gxaExperimentsTableFactorsInput').on('keyup', function () {
+            oTable
+                .columns(6)
+                .search(this.value)
+                .draw();
         });
 
         var $experimentsTableKingdomSelect = $("#gxaExperimentsTableKingdomSelect");
@@ -209,7 +235,9 @@ var foundationExperimentsPageModule = (function ($) {
 
         function filterByExperimentType(value, selectionId) {
             /* same for drop down filter */
-            oTable.fnFilter(value, $experimentsTable.find("tfoot select").index(selectionId));
+            oTable.columns(0)
+                  .search(value)
+                  .draw();
         }
 
         /*
@@ -238,13 +266,22 @@ var foundationExperimentsPageModule = (function ($) {
 
         function filterByKingdom() {
             if (hiddenKingdomSelected === 'plants') {
-                oTable.fnFilter('plants', 9);
+                oTable
+                    .columns(9)
+                    .search('plants')
+                    .draw();
             }
             else if (hiddenKingdomSelected === 'animals-fungi') {
-                oTable.fnFilter('animals|fungi', 9, true);
+                oTable
+                    .columns(9)
+                    .search('animals|fungi', true)
+                    .draw();
             }
             else {
-                oTable.fnFilter('', 9);
+                oTable
+                    .columns(9)
+                    .search('')
+                    .draw();
             }
         }
 

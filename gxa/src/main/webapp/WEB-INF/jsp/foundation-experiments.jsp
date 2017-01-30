@@ -36,7 +36,7 @@
 
             </th>
             <th rowspan="1" colspan="1">
-                <input type="text" class="search_init" value="Search" name="search_description">
+                <input id="gxaExperimentsTableDescriptionInput" type="text" class="search_init" value="Search" name="search_description">
             </th>
             <th><input type="hidden" class="search_init"></th>
             <th><input type="hidden" class="search_init"></th>
@@ -44,7 +44,7 @@
                 <input id="gxaExperimentsTableOrganismInput" type="text" class="search_init" value="Search" name="search_organisms">
             </th>
             <th rowspan="1" colspan="1">
-                <input type="text" class="search_init" value="Search" name="search_factors">
+                <input id="gxaExperimentsTableFactorsInput" type="text" class="search_init" value="Search" name="search_factors">
             </th>
             <th><input type="hidden" class="search_init"></th>
             <th><input type="hidden" class="search_init"></th>
