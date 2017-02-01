@@ -16,7 +16,7 @@
     <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="species">
 
         <c:if test="${speciesCount %3 == 0}">
-            <div class="grid_24 species-nav">
+        <div class="grid_24 species-nav">
         </c:if>
 
         <c:choose>
@@ -165,13 +165,10 @@
                 <c:set var="total" value="${fn:length(experimentAccessionsBySpecies.get(species))}"/>
                 <c:forEach items="${experimentAccessionsBySpecies.get(species)}" begin="0" var="experimentAccession">
                     <c:set var="key" value="${experimentAccession}${species}"/>
-
                     <li>
                         <a href="experiments/${experimentAccession}${experimentLinks.get(key)}" style="color:#337ab7; border-bottom: none;">
                                 ${experimentDisplayNames.get(experimentAccession)}</a>
                     </li>
-
-
                 </c:forEach>
 
                 <c:if test="${total > 5}">
@@ -184,15 +181,14 @@
             </ul>
         </div>
 
-        <c:if test="${(speciesCount + 1) %3 == 0}">
-            </div>
-        </c:if>
-
         <c:set var="speciesCount" value="${speciesCount + 1}"/>
+        <c:if test="${speciesCount %3 == 0}">
+        </div>
+        </c:if>
     </c:forEach>
 
-    <c:if test="${(speciesCount - 1) %3 != 0}">
-        </div>
+    <c:if test="${speciesCount %3 != 0}">
+    </div>
     </c:if>
 </section>
 

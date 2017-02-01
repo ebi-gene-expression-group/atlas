@@ -100,13 +100,15 @@
                 </ul>
             </div>
 
-            <c:if test="${(speciesCount + 1) %3 == 0}">
-                </div>
-            </c:if>
-
             <c:set var="speciesCount" value="${speciesCount + 1}"/>
+            <c:if test="${speciesCount %3 == 0}">
+            </div>
+            </c:if>
         </c:forEach>
 
+        <c:if test="${speciesCount %3 != 0}">
+        </div>
+        </c:if>
     </div>
 
 
@@ -174,13 +176,15 @@
                 </ul>
             </div>
 
-            <c:if test="${(speciesCount + 1) %3 == 0}">
-                </div>
-            </c:if>
-
             <c:set var="speciesCount" value="${speciesCount + 1}"/>
-
+            <c:if test="${speciesCount %3 == 0}">
+            </div>
+            </c:if>
         </c:forEach>
+
+        <c:if test="${speciesCount %3 != 0}">
+        </div>
+        </c:if>
     </div>
 </section>
 
