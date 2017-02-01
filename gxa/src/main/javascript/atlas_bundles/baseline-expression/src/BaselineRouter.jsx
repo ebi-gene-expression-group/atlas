@@ -145,7 +145,7 @@ const BaselineRouter = React.createClass({
     },
 
     _organismPartInQuerySelect (querySelect = this.state.querySelect) {
-        return Object.keys(querySelect).some(species => querySelect[species].includes("organism_part"));
+        return Object.keys(querySelect).some(species => querySelect[species].some(facetItem => facetItem.toLowerCase() == "organism_part"));
     },
 
     // Also syncs this.state.facetsTreeData with querySelect
