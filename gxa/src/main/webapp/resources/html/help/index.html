@@ -6,57 +6,81 @@
         <h2>Quick start help</h2>
 
         <p>This page provides a brief summary of how to search Expression Atlas. For
-            more details please see the <a href="help/baseline-atlas.html">Baseline</a> and
-            <a href="help/differential-atlas.html">Differential</a> Atlas help pages, as
-            well as the <a href="FAQ.html">FAQ</a>.
+        more details please see the <a href="https://www.ebi.ac.uk/gxa/help/baseline-atlas.html">Baseline</a> and
+        <a href="https://www.ebi.ac.uk/gxa/help/differential-atlas.html">Differential</a> Atlas help pages, as
+        well as the <a href="https://www.ebi.ac.uk/gxa/FAQ.html">FAQ</a>.
+
 
 
         <h3>How to search</h3>
 
-        <p>From the <a href="/gxa">home page</a> you can search to find out which genes
-            are expressed in various biological conditions.</p>
+	<p>From the <a href="https://www.ebi.ac.uk/gxa">home page</a> you can either search to find out what genes are expressed in a particular condition by using the <strong>Condition query</strong> search box (e.g. <a href="http://www.ebi.ac.uk/gxa/query?geneQuery=%5B%5D&organism=&conditionQuery=%5B%7B%22value%22%3A%22lung%22%7D%5D&bs=%7B%22homo%20sapiens%22%3A%5B%22organism_part%22%5D%2C%22bos%20taurus%22%3A%5B%22organism_part%22%5D%2C%22gallus%20gallus%22%3A%5B%22organism_part%22%5D%2C%22macaca%20mulatta%22%3A%5B%22organism_part%22%5D%2C%22mus%20musculus%22%3A%5B%22organism_part%22%5D%2C%22ovis%20aries%22%3A%5B%22organism_part%22%5D%2C%22papio%20anubis%22%3A%5B%22organism_part%22%5D%2C%22rattus%20norvegicus%22%3A%5B%22organism_part%22%5D%7D&ds=%7B%22kingdom%22%3A%5B%22animals%22%5D%7D#baseline">what genes are expressed in lung?)</a> or search to find in which conditions one or several genes are expressed by using the <strong>Gene query</strong> search box (e.g. <a href="http://www.ebi.ac.uk/gxa/query?geneQuery=%5B%7B%22value%22%3A%22GFAP%22%2C%22category%22%3A%22symbol%22%7D%5D&organism=&conditionQuery=%5B%5D&bs=%7B%22homo%20sapiens%22%3A%5B%22organism_part%22%5D%2C%22anolis%20carolinensis%22%3A%5B%22organism_part%22%5D%2C%22bos%20taurus%22%3A%5B%22organism_part%22%5D%2C%22chlorocebus%20sabaeus%22%3A%5B%22organism_part%22%5D%2C%22danio%20rerio%22%3A%5B%22developmental_stage%22%5D%2C%22equus%20caballus%22%3A%5B%22organism_part%22%5D%2C%22gallus%20gallus%22%3A%5B%22organism_part%22%5D%2C%22macaca%20mulatta%22%3A%5B%22organism_part%22%5D%2C%22monodelphis%20domestica%22%3A%5B%22organism_part%22%5D%2C%22mus%20musculus%22%3A%5B%22organism_part%22%5D%2C%22ovis%20aries%22%3A%5B%22organism_part%22%5D%2C%22papio%20anubis%22%3A%5B%22organism_part%22%5D%2C%22rattus%20norvegicus%22%3A%5B%22organism_part%22%5D%7D&ds=%7B%22kingdom%22%3A%5B%22animals%22%5D%7D#baseline">in which conditions is gene GFAP expressed)</a>.</p>
 
-        <p><img src="resources/images/help/homepage_help.png" alt="Expression Atlas home page" /></p>
+        <p><img src="./Expression Atlas _ EMBL-EBI_files/homepage_help.png" alt="Expression Atlas home page"></p>
 
-        <p>Separate terms with spaces, and put multi-word terms in quotes.</p>
+	<p>Your query is expanded using the Experimental Factor Ontology <a href="http://www.ebi.ac.uk/efo/">EFO</a>. This means that if you search for e.g. "cancer", you will also see results with terms such as "carcinoma" and other terms that are children of the <a href="http://www.ebi.ac.uk/efo/EFO_0000311">cancer</a> entry in EFO.</p>
 
-        <p><img src="resources/images/help/homepage_query.png" alt="Homepage query boxes" /></p>
-
-        <p>Your queries are expanded using <a href="http://www.ebi.ac.uk/efo/">EFO</a>.
-            This means that if you search for e.g. "cancer", you will also see results with
-            terms such as "carcinoma", "malignant tumour", and other synonyms and children
-            of the <a href="http://www.ebi.ac.uk/efo/EFO_0000311">cancer</a> entry in
-            EFO.</p>
-
-        <h3>Search results</h3>
-
-        <h4>Gene query results</h4>
-
-        <p>See annotations for a gene:</p>
-        <p><img src="resources/images/help/genePage_shot1.png" alt="gene annotations" /></p>
-
-        <p>See <a href="help/baseline-atlas.html">Baseline</a> expression for a gene:</p>
-        <p><img src="resources/images/help/gene_results_baseline_heatmap.png" alt="gene baseline expression" /></p>
-
-        <p>See <a href="help/differential-atlas.html">Differential</a> expression for a gene:</p>
-        <p><img src="resources/images/help/genePage_shot3.png" alt="gene differential expression" /></p>
+        <p><img src="./Expression Atlas _ EMBL-EBI_files/homepage_query.png" alt="Homepage query boxes"></p>
 
 
 
-        <h4>Combined gene and sample attribute/experimental variable query results</h4>
-        <p><img src="resources/images/help/gene_and_condition_results_baseline.png" alt="combined query results" /></p>
+	<h3>Baseline Expression results</h3>
+
+  	<p>When you search for a particular gene (e.g. UMOD), the Baseline Expression results will display <a href="http://www.ebi.ac.uk/gxa/query?geneQuery=%5B%7B%22value%22%3A%22UMOD%22%2C%22category%22%3A%22symbol%22%7D%5D&organism=&conditionQuery=%5B%5D&bs=%7B%22homo%20sapiens%22%3A%5B%22organism_part%22%5D%2C%22bos%20taurus%22%3A%5B%22organism_part%22%5D%2C%22chlorocebus%20sabaeus%22%3A%5B%22organism_part%22%5D%2C%22macaca%20mulatta%22%3A%5B%22organism_part%22%5D%2C%22monodelphis%20domestica%22%3A%5B%22organism_part%22%5D%2C%22mus%20musculus%22%3A%5B%22organism_part%22%5D%2C%22ovis%20aries%22%3A%5B%22organism_part%22%5D%2C%22papio%20anubis%22%3A%5B%22organism_part%22%5D%2C%22rattus%20norvegicus%22%3A%5B%22organism_part%22%5D%7D&ds=%7B%22kingdom%22%3A%5B%22animals%22%5D%7D#baseline">all organisms and conditions in which UMOD is expressed</a> above the default minimum expression level of 0.5 FPKM or 0.5 TPM. If you are interested in finding in which conditions gene UMOD is expressed in humans, you can either <a href="http://www.ebi.ac.uk/gxa/query?geneQuery=%5B%7B%22value%22%3A%22UMOD%22%2C%22category%22%3A%22symbol%22%7D%5D&organism=&conditionQuery=%5B%5D&bs=%7B%22homo%20sapiens%22%3A%5B%22organism_part%22%5D%7D&ds=%7B%22kingdom%22%3A%5B%22animals%22%5D%7D#baseline">filter the Baseline Expression results by selecting just Homo sapiens</a> using the Filters that appear in the left part of the Baseline expression results page or include the information about the organism on the Expression Atlas <a href="https://www.ebi.ac.uk/gxa">home page</a>:</p>
+
+   	<p><img src="./Expression Atlas _ EMBL-EBI_files/gene_results_baseline_heatmap.png" alt="gene baseline expression"></p>
+
+	<p>Have a look at the results for each experiment in <a href="https://www.ebi.ac.uk/gxa/help/baseline-atlas.html">Baseline expression results</a>.</p>
 
 
-        <h4>Gene set search results</h4>
 
-        <p>See <a href="help/baseline-atlas.html">Baseline</a> expression for a gene set e.g. a <a href="http://www.reactome.org">Reactome</a> pathway&hellip;</p>
-        <p><img src="resources/images/help/pathway_results_baseline_heatmap.png" alt="reactome gene set before" /></p>
+	<h4>Anatomical Systems Filter</h4>
+	
+	<p>Use the button Filters above the heatmap to select expression values just in a particular anatomical system. For example, you can display only expression values of gene UMOD above the default minimum expression level of 0.5 FPKM or 0.5 TPM in renal system.</p>	
+
+	<p><img src="./Expression Atlas _ EMBL-EBI_files/anatomical_systems.png" alt="anatomical system"></p>
 
 
 
-        <h3>Expression Atlas experiments list</h3>
-        <p><img src="resources/images/help/experimentList_help.png" alt="experiment list help" /></p>
-        <p>Click on "All Experiments" on the homepage to browse all experiments in ExpressionAtlas.</p>
+	<h3>Differential Expression results</h3>
+	
+	<p>When you search for a particular gene (e.g. UMOD), the Differential Expression results will display <a href="http://www.ebi.ac.uk/gxa/query?geneQuery=%5B%7B%22value%22%3A%22UMOD%22%2C%22category%22%3A%22symbol%22%7D%5D&organism=&conditionQuery=%5B%5D&bs=%7B%22homo%20sapiens%22%3A%5B%22organism_part%22%5D%2C%22bos%20taurus%22%3A%5B%22organism_part%22%5D%2C%22chlorocebus%20sabaeus%22%3A%5B%22organism_part%22%5D%2C%22macaca%20mulatta%22%3A%5B%22organism_part%22%5D%2C%22monodelphis%20domestica%22%3A%5B%22organism_part%22%5D%2C%22mus%20musculus%22%3A%5B%22organism_part%22%5D%2C%22ovis%20aries%22%3A%5B%22organism_part%22%5D%2C%22papio%20anubis%22%3A%5B%22organism_part%22%5D%2C%22rattus%20norvegicus%22%3A%5B%22organism_part%22%5D%7D&ds=%7B%22kingdom%22%3A%5B%22animals%22%5D%7D#differential">all comparisons in all species in which UMOD is differentially expressed</a> (absolute value of log<sub>2</sub> fold-change &gt; 1 and adjusted p-value &lt; 0.05). You can narrow down the results displayed using the filters in the left where you can select, for example, to see only comparisons in which gene UMOD is up-regulated:</p> 
+
+	<p><img src="./Expression Atlas _ EMBL-EBI_files/gene_results_differential_table.png" alt="gene differential expression"></p>
+
+	<p>Have a look at the results for each experiment in <a href="https://www.ebi.ac.uk/gxa/help/differential-atlas.html">Differential expression results</a>.</p>
+
+
+
+	<h3>Annotations for a gene</h3>
+        <p>Following the same example of gene UMOD, you will find the annotations for that gene under <strong>UMOD information</strong>:</p>
+        
+	<p><img src="./Expression Atlas _ EMBL-EBI_files/gene_annotations.png" alt="gene annotations"></p>
+
+
+        
+	<h3>Combining both searching options: Gene query search and Condition query search</h3>
+
+	<p>You can also query Expression Atlas by using both the <strong>Gene query</strong> search box and the <strong>Condition query</strong> search box on the <a href="https://www.ebi.ac.uk/gxa">home page</a> at the same time. That way you will find out, for example, if a particular gene is expressed in a particular condition, such as is gene HOXB13 associated to a particular cancer?:</p>
+
+        <p><img src="./Expression Atlas _ EMBL-EBI_files/combined_query_results.png" alt="combined query results"></p>
+
+
+
+        <h3>Searching for a set of genes</h3>
+
+        <p>It is possible to query Expression Atlas for a set of genes, e.g. a <a href="http://www.reactome.org/">Reactome</a> pathway</a>. Here are the Baseline expression results for the genes involved in <a href="http://www.reactome.org/content/detail/196741">Cobalamin (Cbl, vitamin B12) transport and metabolism</a>, R-HSA-196741:</p>
+
+        <p><img src="./Expression Atlas _ EMBL-EBI_files/pathway_results.png" alt="reactome gene set results"></p>
+
+
+
+        <h3>All Experiments in Expression Atlas</h3>
+
+	<p>You can easily see all experiments in Expression Atlas by clicking in <strong>All experiments</strong> on the <a href="https://www.ebi.ac.uk/gxa">home page</a>: 
+  
+        <p><img src="./Expression Atlas _ EMBL-EBI_files/experimentList_help.png" alt="experiment list help"></p>
+
 
     </div>
 </section>
