@@ -1,36 +1,35 @@
 <section>
-  <div class="columns small-10">
-    <h3>Expression Atlas data in R</h3>
+    <h1>Expression Atlas data in R</h1>
 
     <div class="grid_18">
         <p>The expression data and meta-data for experiments in Atlas are
-        available as a pre-packaged <a href="http://www.r-project.org/">R</a> object.
-        There are two ways to access this data:
+            available as a pre-packaged <a href="http://www.r-project.org/">R</a> object.
+            There are two ways to access this data:
         <ul>
-            <li>Using the 
-        <a href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas</a>
-        package</a>, available from <a href="http://www.bioconductor.org">Bioconductor</a>. This package allows
-        you to search Atlas and download the data you need inside an R session. See the
-        <a
-        href="https://www.bioconductor.org/packages/release/bioc/vignettes/ExpressionAtlas/inst/doc/ExpressionAtlas.html">package
-        vignette</a> for more information.</p></li>
-    <li>By going to each experiment page in Expression Atlas and downloading the file containing the R object, which you can then load into R (see below).</li>
+            <li>Using the
+                <a href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas</a>
+                package</a>, available from <a href="http://www.bioconductor.org">Bioconductor</a>. This package allows
+                you to search Atlas and download the data you need inside an R session. See the
+                <a
+                        href="https://www.bioconductor.org/packages/release/bioc/vignettes/ExpressionAtlas/inst/doc/ExpressionAtlas.html">package
+                    vignette</a> for more information.</p></li>
+        <li>By going to each experiment page in Expression Atlas and downloading the file containing the R object, which you can then load into R (see below).</li>
         </ul>
         </p>
 
         <h2><a name="howto">How to load an Atlas experiment summary file in R</a></h2>
 
         <p>If you don't want to use the <a
-        href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas</a>
-        package to access Atlas R data, you can download the file containing the R
-        object representing an experiment by clicking the <strong>R</strong> button
-        on the top-right of any differential experiment page to download one.</p>
+                href="http://www.bioconductor.org/packages/release/bioc/html/ExpressionAtlas.html">ExpressionAtlas</a>
+            package to access Atlas R data, you can download the file containing the R
+            object representing an experiment by clicking the <strong>R</strong> button
+            on the top-right of any differential experiment page to download one.</p>
 
         <img src="resources/images/help/Rhelp_exptPage_buttons.png" alt="Experiment page download button screenshot" />
 
         <p>Start an R session on your computer. For details on how to get and use R,
-        please see the documentation on the <a href="http://www.r-project.org/">R
-        project website</a>.</p>
+            please see the documentation on the <a href="http://www.r-project.org/">R
+                project website</a>.</p>
 
         <img src="resources/images/help/Rhelp_startR.png" alt="New R session screenshot" />
 
@@ -45,7 +44,7 @@
         </ul>
 
         <p>If you have not already installed these packages, do this
-        by running the following two commands:</p>
+            by running the following two commands:</p>
 
         <p><code>source( &quot;http://bioconductor.org/biocLite.R&quot; )</code></p>
         <p><code>biocLite( c( &quot;S4Vectors&quot;, &quot;IRanges&quot;, &quot;GenomicRanges&quot;, &quot;SummarizedExperiment&quot; ) )</code></p>
@@ -61,15 +60,15 @@
         <img src="resources/images/help/Rhelp_loadData.png" alt="Load Atlas Rdata object screenshot" />
 
         <p>This has created an object called <code>experimentSummary</code>. This
-        object is a SimpleList object (see the <a
-        href="http://www.bioconductor.org/packages/release/bioc/html/S4Vectors.html">S4Vectors package</a>).
-        Each element is one of three <a
-        href="http://www.bioconductor.org">Bioconductor</a> objects:
-            <ul>
-                <li><a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> (RNA-seq experiments)</li>
-                <li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> (1-colour microarray experiments)</li>
-                <li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.106">MAList</a> (2-colour microarray experiments)</li>
-            </ul>
+            object is a SimpleList object (see the <a
+                    href="http://www.bioconductor.org/packages/release/bioc/html/S4Vectors.html">S4Vectors package</a>).
+            Each element is one of three <a
+                    href="http://www.bioconductor.org">Bioconductor</a> objects:
+        <ul>
+            <li><a href="https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> (RNA-seq experiments)</li>
+            <li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> (1-colour microarray experiments)</li>
+            <li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.106">MAList</a> (2-colour microarray experiments)</li>
+        </ul>
         </p>
 
 
@@ -78,9 +77,9 @@
         <h3><a name="rna-seq">RNA-seq data</a></h3>
 
         <p>Data from an RNA-seq experiment is contained in a single <a
-            href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> object in the SimpleList you have loaded.
+                href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> object in the SimpleList you have loaded.
         <p>The RangedSummarizedExperiment object is stored under the name "rnaseq", so you
-        can assign it to a new variable like this:</p>
+            can assign it to a new variable like this:</p>
 
         <p><code>rSumExp &lt;- experimentSummary$rnaseq</code></p>
 
@@ -88,57 +87,56 @@
 
 
         <p>The RangedSummarizedExperiment object contains the following:
-            <ul>
-                <li>Matrix of raw counts (not normalized), in the
+        <ul>
+            <li>Matrix of raw counts (not normalized), in the
                 <strong>assays</strong> slot, in a <strong>counts</strong>
                 element.</li>
-        <img src="resources/images/help/Rhelp_sumExp_counts.png" alt="SummarizedExperiment counts screenshot" />
-                <li>Sample annotations, in the <strong>colData</strong> slot.</li>
-        <img src="resources/images/help/Rhelp_sumExp_coldata.png" alt="SummarizedExperiment coldata screenshot" />
-                <li>Brief outline of methods, from QC of FASTQ files to production of
+            <img src="resources/images/help/Rhelp_sumExp_counts.png" alt="SummarizedExperiment counts screenshot" />
+            <li>Sample annotations, in the <strong>colData</strong> slot.</li>
+            <img src="resources/images/help/Rhelp_sumExp_coldata.png" alt="SummarizedExperiment coldata screenshot" />
+            <li>Brief outline of methods, from QC of FASTQ files to production of
                 raw counts, in the <strong>metadata</strong> slot.</li>
-        <img src="resources/images/help/Rhelp_sumExp_exptdata.png" alt="SummarizedExperiment exptdata screenshot" />
-            </ul>
+            <img src="resources/images/help/Rhelp_sumExp_exptdata.png" alt="SummarizedExperiment exptdata screenshot" />
+        </ul>
         </p>
 
         <p>For more information on how to use a RangedSummarizedExperiment object, please see
-        the <a href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">documentation</a> from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
+            the <a href="http://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">documentation</a> from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
 
         <h3><a name="one-colour">One-colour microarray data</a></h3>
 
         <p>Data from a one-colour, or single-channel, microarray experiment is stored
-        in potentially multiple <a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> objects in the SimpleList
-        summary you have loaded. There is one ExpressionSet per array design used in
-        the experiment. The ExpressionSets are indexed by the <a
-            href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> accession of the array design used.</p>
+            in potentially multiple <a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> objects in the SimpleList
+            summary you have loaded. There is one ExpressionSet per array design used in
+            the experiment. The ExpressionSets are indexed by the <a
+                    href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> accession of the array design used.</p>
 
         <img src="resources/images/help/Rhelp_multiArrayNames.png" alt="Multiple array design names screenshot" />
 
         <p>You can access each ExpressionSet via its array design accession, by typing
-        e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code></p>
+            e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code></p>
 
         <img src="resources/images/help/Rhelp_exprSet.png" alt="ExpressionSet screenshot" />
 
         <p>Each ExpressionSet object contains the following:
-            <ul>
-                <li>Matrix of normalized intensity values, in the
+        <ul>
+            <li>Matrix of normalized intensity values, in the
                 <strong>assayData</strong>, accessed via: <code>exprs( expressionSet
                     )</code></li>
-        <img src="resources/images/help/Rhelp_exprSet_exprs.png" alt="ExpressionSet normalized intensities screenshot" />
-                <li>Sample annotations, in the <strong>phenoData</strong>, accessed via:
+            <img src="resources/images/help/Rhelp_exprSet_exprs.png" alt="ExpressionSet normalized intensities screenshot" />
+            <li>Sample annotations, in the <strong>phenoData</strong>, accessed via:
                 <code>pData( expressionSet )</code></li>
-        <img src="resources/images/help/Rhelp_exprSet_pdata.png" alt="ExpressionSet phenodata screenshot" />
-                <li>Brief outline of normalization method applied, in the
+            <img src="resources/images/help/Rhelp_exprSet_pdata.png" alt="ExpressionSet phenodata screenshot" />
+            <li>Brief outline of normalization method applied, in the
                 <strong>experimentData</strong> slot, accessed via: <code>preproc(
                     experimentData( expressionSet ) )</code></li>
-        <img src="resources/images/help/Rhelp_exprSet_preproc.png" alt="ExpressionSet preproc screenshot" />
-            </ul>
+            <img src="resources/images/help/Rhelp_exprSet_preproc.png" alt="ExpressionSet preproc screenshot" />
+        </ul>
         </p>
 
         <p>For more information on how to use an ExpressionSet object, please see the
-        <a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.
+            <a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.
     </div>
-  </div>
 </section>
 
 <!----------------------------------------------------
