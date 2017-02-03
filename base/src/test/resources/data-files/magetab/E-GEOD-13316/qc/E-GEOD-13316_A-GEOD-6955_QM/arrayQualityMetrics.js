@@ -83,7 +83,10 @@ function setReportObj(reportObjId, status, doTable)
         /* Some of this looping could already be cached in reportInit() */
         while( (!success) & (i < ssrules.length) ) {
             selector = ssrules[i].selectorText;  // The selector
-            if (!selector) continue; // Skip @import and other nonstyle rules
+            if (!selector) {
+                i++;
+                continue;
+            }
             if (selector == (".aqm" + reportObjId)) {
                 success = true;
                 ssrules[i].style.cssText = cssText[0+status];
