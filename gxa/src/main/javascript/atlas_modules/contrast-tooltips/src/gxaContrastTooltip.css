@@ -1,4 +1,6 @@
 .gxaContrastTooltip {
+    position: relative;
+    bottom: -200px;
     border: solid transparent;
     color: darkslategray;
     padding: 2px;

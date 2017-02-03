@@ -24,7 +24,7 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, contr
 
         tooltipClass: "gxaContrastTooltip",
 
-        position: {my: "right bottom", at: "bottom"},
+        position: {my: "bottom-100", at:"bottom", of: element},
 
         close: function() {
             $(".gxaContrastTooltip").remove();
