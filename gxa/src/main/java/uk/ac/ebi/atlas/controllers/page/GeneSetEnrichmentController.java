@@ -42,11 +42,11 @@ public class GeneSetEnrichmentController {
     }
 
 
-    @RequestMapping(value = "/gse/{query}", method = RequestMethod.GET)
+    @RequestMapping(value = "/genesetenrichment", method = RequestMethod.GET)
     public String getExperimentsListParameters(
-            @PathVariable String query,
+            @RequestParam String query,
             Model model) {
-        List<String> bioentityIdentifiers = Arrays.asList(query.split(" "));
+        List<String> bioentityIdentifiers = Arrays.asList(query.split("\\W+"));
 
         Species species = speciesFactory.create(
                 speciesLookupService.
