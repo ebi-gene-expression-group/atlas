@@ -11,14 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.experiments.ExperimentMetadataEnrichmentService;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.GeneSetEnrichmentClient;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -29,30 +30,34 @@ public class GeneSetEnrichmentController {
     private final ExperimentMetadataEnrichmentService experimentMetadataEnrichmentService;
     private final GeneSetEnrichmentClient geneSetEnrichmentClient;
     private final SpeciesFactory speciesFactory;
+    private final SpeciesLookupService speciesLookupService;
 
     @Inject
     public GeneSetEnrichmentController(ExperimentTrader experimentTrader,
-                                       GeneSetEnrichmentClient geneSetEnrichmentClient,SpeciesFactory speciesFactory){
+                                       GeneSetEnrichmentClient geneSetEnrichmentClient,SpeciesFactory speciesFactory,SpeciesLookupService speciesLookupService){
         this.experimentMetadataEnrichmentService = new ExperimentMetadataEnrichmentService(experimentTrader);
         this.geneSetEnrichmentClient = geneSetEnrichmentClient;
         this.speciesFactory = speciesFactory;
+        this.speciesLookupService = speciesLookupService;
     }
 
 
-    @RequestMapping(value = "/gse/{species}/{query}", method = RequestMethod.GET)
+    @RequestMapping(value = "/gse/{query}", method = RequestMethod.GET)
     public String getExperimentsListParameters(
-            @PathVariable String species,
             @PathVariable String query,
-            HttpServletRequest request,
             Model model) {
+        List<String> bioentityIdentifiers = Arrays.asList(query.split(" "));
 
-        Species speciesObject = speciesFactory.create(species);
+        Species species = speciesFactory.create(
+                speciesLookupService.
+                        fetchFirstSpeciesForBioentityIdentifiers(bioentityIdentifiers)
+                        .or("could not be determined for "+query)
+        );
 
-        Pair<Optional<String>, Optional<JsonArray>> result = geneSetEnrichmentClient.fetchEnrichedGenes
-                (speciesObject, Arrays.asList(query.split(" ")));
+        Pair<Optional<String>, Optional<JsonArray>> result = geneSetEnrichmentClient.fetchEnrichedGenes(species, bioentityIdentifiers);
 
         if(GeneSetEnrichmentClient.isSuccess(result)){
-            model.addAttribute("species", speciesObject.getReferenceName());
+            model.addAttribute("species", species.getReferenceName());
             model.addAttribute("query", query);
             model.addAttribute("data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";

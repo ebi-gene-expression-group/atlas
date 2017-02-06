@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -47,7 +48,8 @@ public class HeatmapWidgetDispatcher extends HeatmapWidgetErrorHandler {
 
         if (isBlank(species)) {
             Optional<String> maybeSpecies = speciesLookupService.fetchFirstSpeciesByField(propertyType,
-                    geneQueryString);
+                    BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQueryString)
+                    );
             if(maybeSpecies.isPresent()){
                 species = maybeSpecies.get();
             } else {

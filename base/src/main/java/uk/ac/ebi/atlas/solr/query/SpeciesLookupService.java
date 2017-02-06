@@ -40,9 +40,8 @@ public class SpeciesLookupService {
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, Collections.singleton(identifier));
     }
 
-    public Optional<String> fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
-        return fetchFirstSpeciesByField(
-                fieldName, BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(multiTermQuery));
+    public Optional<String> fetchFirstSpeciesForBioentityIdentifiers(Collection<String> identifiers) {
+        return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifiers);
     }
 
     public Optional<String> fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
@@ -55,7 +54,7 @@ public class SpeciesLookupService {
                 }));
     }
 
-    private Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {
+    public Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {
         if (StringUtils.isBlank(fieldName)) {
             fieldName = PROPERTY_LOWER_FIELD;
         }

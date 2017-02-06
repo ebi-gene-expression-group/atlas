@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+import java.util.Collections;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -20,12 +22,14 @@ public class SpeciesLookupServiceIT {
 
     @Test
     public void widget_lookupSingleSpeciesGeneSet() {
-        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, "Q9Y615").get(), is("homo sapiens"));
+        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, Collections.singleton("Q9Y615")).get(),
+                is("homo sapiens"));
     }
 
     @Test
     public void widget_lookupProtein() {
-        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, "R-HSA-73887").get(), is("homo sapiens"));
+        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, Collections.singleton("R-HSA-73887")).get(),
+                is("homo sapiens"));
     }
 
     @Test

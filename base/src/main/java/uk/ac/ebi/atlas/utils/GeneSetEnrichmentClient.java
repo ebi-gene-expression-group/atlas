@@ -15,9 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.StringReader;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Named
 public class GeneSetEnrichmentClient {
@@ -115,15 +113,15 @@ public class GeneSetEnrichmentClient {
 
     Optional<String> validateInput(Species species, Collection<String>
             bioentityIdentifiers){
-        String errorMessage = "";
+        Set<String> errors = new HashSet<>();
         if(species.isUnknown()){
-            errorMessage += "Unknown species: "+species.getName();
+            errors.add("Unknown species: "+species.getName());
         }
         if(bioentityIdentifiers.size() < 10){
-            errorMessage += "Too few identifiers: "+Joiner.on(" ").join(bioentityIdentifiers);
+            errors.add("Too few identifiers: "+Joiner.on(" ").join(bioentityIdentifiers));
         }
 
-        return errorMessage == "" ? Optional.<String>absent() : Optional.of(errorMessage);
+        return errors.isEmpty() ? Optional.<String>absent() : Optional.of(Joiner.on("\n").join(errors));
     }
 
     public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species, Collection<String>
