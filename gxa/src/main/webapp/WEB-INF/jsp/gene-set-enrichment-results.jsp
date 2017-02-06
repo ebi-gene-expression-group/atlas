@@ -9,10 +9,20 @@
     <h3>Gene set enrichment results</h3>
     <h4>Species: ${species}</h4>
     <h4>Genes: </h4>
-    <p>${query}</p>
-
-    <input type="hidden" id="hiddenTypeSelected" name="hiddenTypeSelected" value="">
-    <input type="hidden" id="hiddenKingdomSelected" name="hiddenKingdomSelected" value="">
+    <div id="query-short">
+        <span>
+    ${queryShort}
+        </span>
+        <a role="button" style="cursor: pointer;" onclick="$('#query-short').hide() ; $('#query-full').show()" >
+            … (show all)</a>
+    </div>
+    <div id="query-full" style="display:none">
+    <span>
+        ${query}
+    </span>
+    <a role="button" style="cursor: pointer;" onclick="$('#query-full').hide() ; $('#query-short').show()" >
+        (show fewer)</a>
+    </div>
 
     <table id="gene-set-enrichment-results-table">
         <thead></thead>

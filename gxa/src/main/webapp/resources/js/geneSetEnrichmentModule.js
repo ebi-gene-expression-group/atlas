@@ -6,6 +6,15 @@ var geneSetEnrichmentModule = (function ($) {
         return '<a href=' + data.url + ' title="View experiment">' + data.name + '</a>';
     }
 
+    //http://stackoverflow.com/a/26655674
+    function formatPValue(num) {
+        try{
+            return (+num).toExponential(4).replace("e","x10<sup>")+"</sup>"
+        }
+        catch ( e) {
+            return num;
+        }
+    }
 
     function _init(allData) {
 
@@ -28,7 +37,7 @@ var geneSetEnrichmentModule = (function ($) {
                     } },
                 { "title":"P-Value", "data":"p-value", "className":"center", "type":"title-numeric", "width":"10%",
                     "render": function (data, type, full) {
-                        return data;
+                        return type == 'sort' ? data : formatPValue(data);
                     } },
                 { "title":"Observed", "data":"observed", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {
@@ -40,14 +49,14 @@ var geneSetEnrichmentModule = (function ($) {
                     } },
                 { "title":"Adjusted P-Value", "data":"adjusted p-value", "className":"center", "type":"title-numeric", "width":"10%",
                     "render": function (data, type, full) {
-                        return data;
+                        return  type == 'sort' ? data : formatPValue(data);
                     } },
-                { "title":"Effect Size", "data":"effect size", "className":"center bold", "type":"title-numeric", "width":"10%",
+                { "title":"Observed/Expected", "data":"effect size", "className":"center", "type":"title-numeric", "width":"10%",
                     "render": function (data, type, full) {
                         return data;
                     } }
             ],
-            "order": [[ 6, "desc" ]],
+            "order": [[ 5, "asc" ]],
             "lengthMenu":[
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]

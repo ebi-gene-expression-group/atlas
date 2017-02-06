@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.controllers.page;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.velocity.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -51,13 +53,14 @@ public class GeneSetEnrichmentController {
         Species species = speciesFactory.create(
                 speciesLookupService.
                         fetchFirstSpeciesForBioentityIdentifiers(bioentityIdentifiers)
-                        .or("could not be determined for "+query)
+                        .or("could not be determined for query")
         );
 
         Pair<Optional<String>, Optional<JsonArray>> result = geneSetEnrichmentClient.fetchEnrichedGenes(species, bioentityIdentifiers);
 
         if(GeneSetEnrichmentClient.isSuccess(result)){
-            model.addAttribute("species", species.getReferenceName());
+            model.addAttribute("species", StringUtils.capitalizeFirstLetter(species.getReferenceName()));
+            model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0,3)));
             model.addAttribute("query", query);
             model.addAttribute("data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";

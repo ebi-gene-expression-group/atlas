@@ -118,7 +118,7 @@ public class GeneSetEnrichmentClient {
             errors.add("Unknown species: "+species.getName());
         }
         if(bioentityIdentifiers.size() < 10){
-            errors.add("Too few identifiers: "+Joiner.on(" ").join(bioentityIdentifiers));
+            errors.add("Please use at least 10 gene identifiers, was: "+bioentityIdentifiers.size());
         }
 
         return errors.isEmpty() ? Optional.<String>absent() : Optional.of(Joiner.on("\n").join(errors));
