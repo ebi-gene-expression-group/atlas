@@ -7,7 +7,7 @@
 
 <section>
     <h3>Gene set enrichment results</h3>
-    <h4>Species: ${species}</h4>
+    <h4>Species: <i> ${species} </i></h4>
     <h4>Genes: </h4>
     <div id="query-short">
         <span>
