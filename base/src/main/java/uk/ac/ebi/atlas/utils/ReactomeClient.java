@@ -18,8 +18,8 @@ public class ReactomeClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactomeClient.class);
 
-    private RestTemplate restTemplate;
-    private String reactomeURL;
+    private final RestTemplate restTemplate;
+    private final String reactomeURL;
 
     @Inject
     public ReactomeClient(RestTemplate restTemplate, @Value("#{configuration['reactome.restful.query.url']}") String reactomeURL) {
