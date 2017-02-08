@@ -38,6 +38,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/foundation-experiments.jsp"/>
     </definition>
 
+    <definition name="foundation-experiment-page" extends="foundation-base">
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/foundation-experiment-page.jsp"/>
+    </definition>
+
     <definition name="gene-set-enrichment-results" extends="foundation-base">
         <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/gene-set-enrichment-results.jsp"/>

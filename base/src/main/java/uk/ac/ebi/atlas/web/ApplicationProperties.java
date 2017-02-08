@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.search.SemanticQuery;
