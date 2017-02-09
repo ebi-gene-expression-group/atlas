@@ -18,8 +18,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 public class ConditionsLookupService {
 
-    private static final String ERROR_MESSAGE_TEMPLATE = "No %s found for assay accession '%s'. Check assays defined in configuration.xml match Assay Name/Scan Name in the SDRF.";
-
     private EFOLookupService efoLookupService;
 
     @Inject
@@ -47,24 +45,13 @@ public class ConditionsLookupService {
     }
 
 
-    protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> assayGroupIdToOntologyTermId) {
-
-        Map<String, String> factors = experimentDesign.getFactorValues(assayAccession);
-        Map<String, String> samples = experimentDesign.getSampleCharacteristicsValues(assayAccession);
-        Set<String> ontologyIds = assayGroupIdToOntologyTermId.get(assayAccession);
-        Set<String> ontologyLabels = efoLookupService.getLabels(ontologyIds);
-
-        checkNotNull(factors, ERROR_MESSAGE_TEMPLATE, "factors", assayAccession);
-        checkNotNull(samples, ERROR_MESSAGE_TEMPLATE, "samples", assayAccession);
-
-        ImmutableSet.Builder<String> builder =
-                ImmutableSet.<String>builder()
-                        .addAll(factors.values())
-                        .addAll(samples.values())
-                        .addAll(ontologyIds)
-                        .addAll(ontologyLabels);
-
-        return builder.build();
+    protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, Set<String> ontologyIds) {
+        return ImmutableSet.<String>builder()
+                .addAll(experimentDesign.getFactorValues(assayAccession).values())
+                .addAll(experimentDesign.getSampleCharacteristicsValues(assayAccession).values())
+                .addAll(ontologyIds)
+                .addAll(efoLookupService.getLabels(ontologyIds))
+                .build();
     }
 
     abstract class ConditionsBuilder<Cond extends Condition> {
@@ -100,7 +87,7 @@ public class ConditionsLookupService {
                         collectAssayProperties(
                                 experimentDesign,
                                 assayAccession,
-                                assayGroupIdToOntologyTermId)));
+                                assayGroupIdToOntologyTermId.get(assayAccession))));
             }
         }
     }
@@ -120,7 +107,7 @@ public class ConditionsLookupService {
                         collectAssayProperties(
                                 experimentDesign,
                                 assayAccession,
-                                assayGroupIdToOntologyTermId)));
+                                assayGroupIdToOntologyTermId.get(assayAccession))));
             }
         }
 
