@@ -78,7 +78,9 @@ public class ExperimentCrud {
                         .getExperimentDesign()
                         .getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate);
 
-        updateExperimentDesign(experimentDTO);
+        updateExperimentDesign(experimentAccession, experimentType,
+                experimentDTO.isPrivate(),
+                condensedSdrfParserOutput.getExperimentDesign());
 
         return experimentDAO.addExperiment(experimentDTO, accessKey);
 
@@ -131,17 +133,13 @@ public class ExperimentCrud {
 
     public void updateExperimentDesign(String experimentAccession) {
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
-        updateExperimentDesign(experimentDTO);
-    }
-
-    void updateExperimentDesign(ExperimentDTO experimentDTO) {
         updateExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(),
                 experimentDTO.isPrivate(),
                 condensedSdrfParser.parse(experimentDTO.getExperimentAccession(),
-                experimentDTO.getExperimentType())
-                .getExperimentDesign());
+                        experimentDTO.getExperimentType())
+                        .getExperimentDesign());
     }
-
+    
     private void updateExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
                                         ExperimentDesign experimentDesign) {
         try {

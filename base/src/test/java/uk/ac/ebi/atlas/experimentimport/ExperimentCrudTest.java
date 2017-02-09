@@ -155,7 +155,7 @@ public class ExperimentCrudTest {
 
     @Test
     public void updateExperimentDesignAlsoIndexesConditions() throws Exception {
-        subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
         verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
     }
 
@@ -167,8 +167,14 @@ public class ExperimentCrudTest {
 
     @Test
     public void updateExperimentIndexesConditions() throws Exception {
-        subject.updateExperimentDesign(ExperimentDTO.createNew(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
         verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
+    }
+
+    @Test
+    public void importExperimentParsesDesignFileOnce() throws Exception {
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
+        verify(condensedSdrfParserMock).parse(EXPERIMENT_ACCESSION, experimentType);
     }
 
 }
