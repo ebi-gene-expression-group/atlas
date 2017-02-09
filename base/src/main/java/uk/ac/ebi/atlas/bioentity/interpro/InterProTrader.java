@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -30,7 +31,13 @@ public class InterProTrader {
 
     }
 
+    @Nullable
     public String getTermName(String accession) {
-        return interProAccessionToTerm.get(accession);
+        try {
+            return interProAccessionToTerm.get(accession);
+        } catch (NullPointerException e) {
+            return null;
+        }
+
     }
 }

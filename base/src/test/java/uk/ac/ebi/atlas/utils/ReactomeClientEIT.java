@@ -9,17 +9,23 @@ import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class ReactomeClientEIT {
 
     @Inject
-    ReactomeClient subject;
+    private ReactomeClient subject;
 
     @Test
     public void parseReactomeId() {
-        assertThat(subject.fetchPathwayNameFailSafe("REACT_1698"), is("Metabolism of nucleotides"));
-        assertThat(subject.fetchPathwayNameFailSafe("REACT_1619"), is("Death Receptor Signalling"));
+        assertThat(subject.fetchPathwayNameFailSafe("R-HSA-15869"), is("Metabolism of nucleotides"));
+        assertThat(subject.fetchPathwayNameFailSafe("R-HSA-73887"), is("Death Receptor Signalling"));
+    }
+
+    @Test
+    public void unmatchedIdReturnsNull() {
+        assertThat(subject.fetchPathwayNameFailSafe("foobar"), is(nullValue()));
     }
 }
