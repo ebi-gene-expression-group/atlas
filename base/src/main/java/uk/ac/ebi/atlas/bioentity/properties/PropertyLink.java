@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.gson.JsonObject;
 
-// Used in bioentity-information.jsp
 public class PropertyLink {
 
     private String text;
@@ -34,4 +33,5 @@ public class PropertyLink {
         result.addProperty("relevance", relevance);
         return result;
     }
+
 }
