@@ -16,10 +16,12 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /*
  * Responsible for:
@@ -57,10 +59,11 @@ public class ExperimentCrud {
     }
 
     public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
-
         checkNotNull(experimentAccession);
+
         ExperimentConfiguration experimentConfiguration = loadExperimentConfiguration(experimentAccession);
-        checkNotNull(experimentConfiguration);
+        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
+        crossValidateExperimentFiles(experimentConfiguration, condensedSdrfParserOutput);
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
 
@@ -69,8 +72,6 @@ public class ExperimentCrud {
         }
 
         analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
-
-        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
 
         updateExperimentDesign(experimentAccession, experimentConfiguration.getExperimentType(),
                 isPrivate,
@@ -84,6 +85,20 @@ public class ExperimentCrud {
 
     }
 
+    private void crossValidateExperimentFiles(ExperimentConfiguration experimentConfiguration,
+                                              CondensedSdrfParserOutput condensedSdrfParserOutput){
+        for(String assayGroupId : experimentConfiguration.getAssayAccessions()){
+            checkState(! condensedSdrfParserOutput.getExperimentDesign().getFactorValues(assayGroupId).isEmpty(),
+                    MessageFormat.format("Factor values for assay id {0} missing from experiment design file!",
+                            assayGroupId));
+            checkState(! condensedSdrfParserOutput.getExperimentDesign().getSampleCharacteristicsValues(assayGroupId).isEmpty(),
+                    MessageFormat.format("Sample characteristics values for assay id {0} missing from experiment design file!",
+                            assayGroupId));
+        }
+    }
+
+
+
     private Optional<String> fetchExperimentAccessKey(String experimentAccession) {
         try {
             ExperimentDTO experiment = findExperiment(experimentAccession);
@@ -92,6 +107,8 @@ public class ExperimentCrud {
             return Optional.absent();
         }
     }
+
+
 
     public String deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
