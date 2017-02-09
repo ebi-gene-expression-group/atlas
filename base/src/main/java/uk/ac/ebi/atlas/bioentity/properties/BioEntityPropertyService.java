@@ -149,11 +149,7 @@ public class BioEntityPropertyService {
 
         if (ImmutableList.of(BioentityPropertyName.GO, BioentityPropertyName.PO).contains(bioentityPropertyName)) {
             OntologyTerm o = goPoTermTrader.getTerm(propertyValue);
-            if (o!=null) {
-                return o.depth();
-            } else {
-                return 0;
-            }
+            return o != null ? o.depth() : 0;
         } else {
             return 0;
         }
