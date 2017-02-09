@@ -70,19 +70,17 @@ public class ExperimentCrud {
 
         analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
 
-        ExperimentType experimentType = experimentConfiguration.getExperimentType();
-        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentType);
-        ExperimentDTO experimentDTO = ExperimentDTO.createNew(
+        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
+
+        updateExperimentDesign(experimentAccession, experimentConfiguration.getExperimentType(),
+                isPrivate,
+                condensedSdrfParserOutput.getExperimentDesign());
+
+        return experimentDAO.addExperiment(ExperimentDTO.createNew(
                 condensedSdrfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
-                        .getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate);
-
-        updateExperimentDesign(experimentAccession, experimentType,
-                experimentDTO.isPrivate(),
-                condensedSdrfParserOutput.getExperimentDesign());
-
-        return experimentDAO.addExperiment(experimentDTO, accessKey);
+                        .getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate), accessKey);
 
     }
 
@@ -139,7 +137,7 @@ public class ExperimentCrud {
                         experimentDTO.getExperimentType())
                         .getExperimentDesign());
     }
-    
+
     private void updateExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
                                         ExperimentDesign experimentDesign) {
         try {
