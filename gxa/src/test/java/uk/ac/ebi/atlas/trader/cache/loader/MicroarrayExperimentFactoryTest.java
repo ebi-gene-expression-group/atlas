@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -47,8 +49,8 @@ public class MicroarrayExperimentFactoryTest {
     @Mock
     private ExperimentDTO experimentDTOMock;
 
-    @Mock
-    private Contrast contrastMock;
+    private Contrast contrast = new Contrast("id",ARRAYDESIGN_ID, new AssayGroup("reference", "assay 1"),
+            new AssayGroup("test", "assay 2") , "display name");
 
     @Mock
     private ExperimentDAO experimentDAOMock;
@@ -73,7 +75,7 @@ public class MicroarrayExperimentFactoryTest {
         when(speciesFactory.create(anyString())).thenReturn(SPECIES);
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
-        when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
+        when(experimentConfigurationMock.getContrasts()).thenReturn(ImmutableList.of(contrast));
         when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)));
         when(arrayDesignTraderMock.getArrayDesignNames(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_ID)))).thenReturn
                 (Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGN_NAME)));

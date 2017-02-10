@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -14,7 +15,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -33,7 +37,7 @@ public class BaselineExperimentTest {
     private ExperimentDesign experimentDesignMock;
 
 
-    static Collection<AssayGroup> assayGroups = Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup
+    static List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup
             ("g2",
             RUN_ACCESSION2));
 
@@ -50,7 +54,7 @@ public class BaselineExperimentTest {
     }
 
     public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
-            experimentDesign, Collection<AssayGroup> assayGroups){
+            experimentDesign, List<AssayGroup> assayGroups){
             return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                     experimentalFactors, "description", "displayName", "",
                     new Species("species",

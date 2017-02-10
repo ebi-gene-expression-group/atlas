@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model.experiment;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.lang3.StringUtils;
@@ -12,14 +11,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.*;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -36,9 +31,9 @@ public class ExperimentConfiguration {
         this.xmlReader = xmlReader;
     }
 
-    public Set<Contrast> getContrasts() {
+    public List<Contrast> getContrasts() {
 
-        Set<Contrast> contrasts = Sets.newLinkedHashSet();
+        List<Contrast> contrasts = new ArrayList<>();
 
         NodeList arrayDesigns = xmlReader.getDocument().getElementsByTagName("array_design");
         for (int i = 0; i < arrayDesigns.getLength(); i++) {
@@ -55,7 +50,7 @@ public class ExperimentConfiguration {
         return contrasts;
     }
 
-    private void parseContrastConfiguration(String query, String arrayDesignAccession, Set<Contrast> contrasts) {
+    private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Contrast> contrasts) {
         String[] ids = xmlReader.getStringArray(query);
         for (String id : ids) {
             Contrast contrast = getContrast(id, arrayDesignAccession);

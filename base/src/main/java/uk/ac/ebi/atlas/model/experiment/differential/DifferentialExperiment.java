@@ -15,7 +15,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     private static final Gson gson = new Gson();
 
-    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description,
+    public DifferentialExperiment(String accession, Date lastUpdate, List<Contrast> contrasts, String description,
                                   boolean hasRData, Species species, Collection<String> pubMedIds,
                                   ExperimentDesign experimentDesign) {
 
@@ -25,7 +25,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
     }
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
-                                     Set<Contrast> contrasts, String description, boolean hasRData, Species species,
+                                     List<Contrast> contrasts, String description, boolean hasRData, Species species,
                                      Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
 
         super(experimentType, accession, lastUpdate,null, description, "", hasRData, species, pubMedIds,

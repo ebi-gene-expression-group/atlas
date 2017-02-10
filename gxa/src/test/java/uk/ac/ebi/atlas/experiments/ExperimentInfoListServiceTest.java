@@ -87,7 +87,7 @@ public class ExperimentInfoListServiceTest {
 
         when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", ASSAY_1,ASSAY_2));
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test",ASSAY_1));
-        Set<Contrast> contrasts = Sets.newTreeSet(Sets.newHashSet(contrast));
+        List<Contrast> contrasts = ImmutableList.of(contrast);
         differentialExperiment = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,

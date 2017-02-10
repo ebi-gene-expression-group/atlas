@@ -47,7 +47,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
                       String disclaimer, boolean hasRData, Species species, Collection<String> pubMedIds,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
-                      List<String> alternativeViewDescriptions, Collection<DataColumnDescriptor> dataColumnDescriptors) {
+                      List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors) {
 
         this.type = type;
         this.lastUpdate = lastUpdate;

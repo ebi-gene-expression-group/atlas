@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Date;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -61,7 +60,7 @@ public class DifferentialExperimentTest {
         when(contrastMock2.getReferenceAssayGroup()).thenReturn(assayGroupMock2);
         when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
 
-        subject = new DifferentialExperiment("accession", new Date(), Sets.newHashSet(contrastMock1, contrastMock2),
+        subject = new DifferentialExperiment("accession", new Date(), ImmutableList.of(contrastMock1, contrastMock2),
                 "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID), experimentDesignMock);
     }
 

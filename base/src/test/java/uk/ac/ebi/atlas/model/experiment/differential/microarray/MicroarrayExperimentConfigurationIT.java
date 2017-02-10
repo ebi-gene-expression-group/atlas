@@ -6,11 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
-import java.util.Set;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -38,7 +37,7 @@ public class MicroarrayExperimentConfigurationIT {
 
     @Test
     public void testGetContrasts() throws Exception {
-        Set<Contrast> contrasts = subject.getContrasts();
+        List<Contrast> contrasts = subject.getContrasts();
         assertThat(contrasts.size(), greaterThan(0));
         for(Contrast contrast: contrasts){
             assertNotNull(contrast.getId());

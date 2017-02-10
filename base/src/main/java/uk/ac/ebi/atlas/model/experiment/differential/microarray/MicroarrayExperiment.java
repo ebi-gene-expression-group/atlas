@@ -7,18 +7,14 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 public class MicroarrayExperiment extends DifferentialExperiment {
 
     private SortedSet<String> arrayDesignAccessions;
     private SortedSet<String> arrayDesignNames;
 
-    public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
+    public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, List<Contrast> contrasts,
                                 String description, boolean hasRData, Species species,
                                 SortedSet<String> arrayDesignAccessions, SortedSet<String> arrayDesignNames,
                                 ExperimentDesign experimentDesign, Set<String> pubMedIds) {

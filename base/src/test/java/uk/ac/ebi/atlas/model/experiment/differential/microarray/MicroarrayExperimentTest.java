@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,8 @@ public class MicroarrayExperimentTest {
         when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", "assay 1","assay 2"));
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test","assay 1"));
 
-        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrast),
+        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date
+                (), ImmutableList.of(contrast),
                 "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets
                 .newHashSet
                 (ARRAY_DESIGN_ACCESSIONS)),

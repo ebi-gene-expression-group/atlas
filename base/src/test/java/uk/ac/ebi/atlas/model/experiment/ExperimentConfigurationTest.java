@@ -23,7 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -140,7 +139,7 @@ public class ExperimentConfigurationTest {
 
     @Test
     public void testGetContrasts()  {
-        Set<Contrast> contrasts = subject.getContrasts();
+        List<Contrast> contrasts = subject.getContrasts();
         assertThat(contrasts, hasSize(1));
         Contrast contrast = contrasts.iterator().next();
         assertThat(contrast.getId(), is("g1_g2"));

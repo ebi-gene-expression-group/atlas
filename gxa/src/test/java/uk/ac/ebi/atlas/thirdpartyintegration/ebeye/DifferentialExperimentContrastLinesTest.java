@@ -1,20 +1,18 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -77,7 +75,7 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putSampleCharacteristic(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
-        Set<Contrast> contrasts = Collections.singleton(contrast1);
+        List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
                 new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
@@ -116,7 +114,7 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         //Adding the contrasts
-        Set<Contrast> contrasts = Collections.singleton(contrast1);
+        List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
                 new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
@@ -154,7 +152,7 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         //Adding the contrasts
-        Set<Contrast> contrasts = Collections.singleton(contrast1);
+        List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
                 new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
