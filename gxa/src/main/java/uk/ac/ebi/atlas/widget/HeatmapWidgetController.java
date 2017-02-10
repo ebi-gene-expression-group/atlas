@@ -79,10 +79,16 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
-    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", method = RequestMethod.GET)
+    @Deprecated
+    public String oldReferenceExperiment() {
+        return "forward:/json/widget/refexperiment";
+    }
+
+    @RequestMapping(value = "/json/widget/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                                       Model model, HttpServletRequest request) {
+    public String widgetReferenceExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                            Model model, HttpServletRequest request) {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute("experiment");
 
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(experiment, preferences, model, request,true);
@@ -94,15 +100,21 @@ public final class HeatmapWidgetController extends HeatmapWidgetErrorHandler {
         }
     }
 
-    @RequestMapping(value = "/widgets/heatmap/baselineAnalytics", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/widgets/heatmap/baselineAnalytics", method = RequestMethod.GET)
+    @Deprecated
+    public String analyticsJson() {
+        return "forward:/json/widget/multiexperiment";
+    }
+
+    @RequestMapping(value = "/json/widget/multiexperiment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String analyticsJson(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
-                                @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
-                                @RequestParam(value = "propertyType", required = false) String propertyType,
-                                @RequestParam(value = "source", required = false) String defaultQueryFactorType,
-                                HttpServletRequest request,
-                                Model model) {
+    public String widgetMultiexperiment(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
+                                        @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
+                                        @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
+                                        @RequestParam(value = "propertyType", required = false) String propertyType,
+                                        @RequestParam(value = "source", required = false) String defaultQueryFactorType,
+                                        HttpServletRequest request,
+                                        Model model) {
 
         if(isBlank(speciesString)){
             Optional<String> maybeSpecies = speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery);
