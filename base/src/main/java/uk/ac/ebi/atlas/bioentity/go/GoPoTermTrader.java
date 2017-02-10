@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.io.IOException;
 
@@ -31,8 +32,17 @@ public class GoPoTermTrader {
 
     }
 
+    @Nullable
     public OntologyTerm getTerm(String accession) {
         return accessionToTerm.get(accession);
     }
 
+    @Nullable
+    public String getTermName(String accession) {
+        try {
+            return accessionToTerm.get(accession).name();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
 }

@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,4 +48,23 @@ public class    GoPoTermTraderIT {
         assertThat(subject.getTerm(PO_0030087), is(PO_0030087_TERM));
     }
 
+    @Test
+    public void goTermName() throws Exception {
+        assertThat(subject.getTermName(GO_0000001), is(GO_0000001_TERM.name()));
+    }
+
+    @Test
+    public void poTermName() throws Exception {
+        assertThat(subject.getTermName(PO_0030087), is(PO_0030087_TERM.name()));
+    }
+
+    @Test
+    public void noTerm() throws Exception {
+        assertThat(subject.getTerm("FO:OBAR"), is(nullValue()));
+    }
+
+    @Test
+    public void noTermName() throws Exception {
+        assertThat(subject.getTermName("FO:OBAR"), is(nullValue()));
+    }
 }

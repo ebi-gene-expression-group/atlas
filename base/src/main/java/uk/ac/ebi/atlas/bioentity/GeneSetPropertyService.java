@@ -40,9 +40,9 @@ public class GeneSetPropertyService {
         if (GeneSetUtil.matchesReactomeID(identifier)) {
             return propertyValuesByType(REACTOME, identifier, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.matchesGeneOntologyAccession(identifier)) {
-            return propertyValuesByType(GO, identifier, goPoTermTrader.getTerm(identifier).name());
+            return propertyValuesByType(GO, identifier, goPoTermTrader.getTermName(identifier));
         } else if (GeneSetUtil.matchesPlantOntologyAccession(identifier)) {
-            return propertyValuesByType(PO, identifier, goPoTermTrader.getTerm(identifier).name());
+            return propertyValuesByType(PO, identifier, goPoTermTrader.getTermName(identifier));
         }else if (GeneSetUtil.matchesInterProAccession(identifier)) {
             return propertyValuesByType(INTERPRO, identifier, interProTermTrader.getTermName(identifier));
         } else {
@@ -50,8 +50,9 @@ public class GeneSetPropertyService {
         }
     }
 
-    private Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,String identifier,String value){
-        return ImmutableMap.of(which, (Set<String>)ImmutableSet.of(identifier), DESCRIPTION,ImmutableSet.of(value));
+    private Map<BioentityPropertyName, Set<String>> propertyValuesByType(BioentityPropertyName which,
+                                                                         String identifier, String value) {
+        return ImmutableMap.of(which, (Set<String>)ImmutableSet.of(identifier), DESCRIPTION, ImmutableSet.of(value));
     }
 
 }

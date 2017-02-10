@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.MessageFormat;
@@ -27,15 +28,15 @@ public class ReactomeClient {
         this.reactomeURL = reactomeURL;
     }
 
+    @Nullable
     public String fetchPathwayNameFailSafe(String reactomeId) {
         String url = MessageFormat.format(reactomeURL, reactomeId);
 
         try {
-            String result = restTemplate.getForObject(url, String.class);
-            return StringUtils.trimToEmpty(result);
+            return StringUtils.trim(restTemplate.getForObject(url, String.class));
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
-            return reactomeId;
+            return null;
         }
 
     }

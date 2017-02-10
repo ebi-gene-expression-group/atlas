@@ -37,43 +37,43 @@ public class BioEntityPropertyLinkBuilder {
 
     }
 
-    Optional<PropertyLink> createLink(String identifier, BioentityPropertyName propertyName, String propertyValue,
-                                      Species species, int relevance) {
+    public Optional<PropertyLink> createLink(String identifier, BioentityPropertyName propertyName,
+                                             String propertyValue, Species species, int relevance) {
 
         String linkSpecies = species.getEnsemblName();
-        String linkText = fetchLinkText(propertyName, propertyValue);
+        Optional<String> linkText = fetchLinkText(propertyName, propertyValue);
 
-        if (linkText == null) {
+        if (!linkText.isPresent()) {
             return Optional.absent();
         }
 
-        String link = BioEntityCardProperties.linkTemplates.get(propertyName);
+        String linkTemplate = BioEntityCardProperties.linkTemplates.get(propertyName);
 
-        if (link != null) {
-            String linkValue = getEncodedString(propertyValue);
-            link = MessageFormat.format(link, linkValue, linkSpecies, identifier);
-            return Optional.of(new PropertyLink(linkText, link, relevance));
+        if (linkTemplate != null) {
+            String linkValue = getEncodedString(propertyName, propertyValue);
+            String href = MessageFormat.format(linkTemplate, linkValue, linkSpecies, identifier);
+            return Optional.of(new PropertyLink(linkText.get(), href, relevance));
+        } else {
+            return Optional.of(new PropertyLink(linkText.get(), relevance));
         }
-
-        return Optional.of(new PropertyLink(linkText,relevance));
 
     }
 
-    private String fetchLinkText(BioentityPropertyName propertyName, String propertyValue) {
+    private Optional<String> fetchLinkText(BioentityPropertyName propertyName, String propertyValue) {
 
         switch (propertyName) {
             case ORTHOLOG:
-                return fetchSymbolAndSpeciesForOrtholog(propertyValue);
+                return Optional.of(fetchSymbolAndSpeciesForOrtholog(propertyValue));
             case REACTOME:
-                return reactomeClient.fetchPathwayNameFailSafe(propertyValue);
+                return Optional.fromNullable(reactomeClient.fetchPathwayNameFailSafe(propertyValue));
             case GO:
-                return goPoTermTrader.getTerm(propertyValue).name();
+                return Optional.fromNullable(goPoTermTrader.getTermName(propertyValue));
             case INTERPRO:
-                return interProTermTrader.getTermName(propertyValue);
+                return Optional.fromNullable(interProTermTrader.getTermName(propertyValue));
             case PO:
-                return goPoTermTrader.getTerm(propertyValue).name();
+                return Optional.fromNullable(goPoTermTrader.getTermName(propertyValue));
             default:
-                return propertyValue;
+                return Optional.of(propertyValue);
         }
 
     }
@@ -100,10 +100,14 @@ public class BioEntityPropertyLinkBuilder {
 
     }
 
-    private String getEncodedString(String value) {
+    private String getEncodedString(BioentityPropertyName propertyName, String value) {
 
         try {
-            return URLEncoder.encode(value, "UTF-8");
+            if (propertyName == BioentityPropertyName.GO || propertyName == BioentityPropertyName.PO) {
+                return URLEncoder.encode(value.replaceAll(":", "_"), "UTF-8");
+            } else {
+                return URLEncoder.encode(value, "UTF-8");
+            }
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("Cannot create URL from " + value, e);
         }

@@ -194,17 +194,17 @@ public class ExperimentDesign implements Serializable {
      * @return  map of {factorHeader, factorValue}
      */
     public Map<String, String> getFactorValues(String runOrAssay) {
-        Map<String, String> valueByHeader = Maps.newHashMap();
         FactorSet factorSet = factorSetMap.get(runOrAssay);
 
         if (factorSet == null){
-            return null;
+            return ImmutableMap.of();
         }
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         for (Factor factor : factorSet){
-            valueByHeader.put(factor.getHeader(), factor.getValue());
+            builder.put(factor.getHeader(), factor.getValue());
         }
 
-        return valueByHeader;
+        return builder.build();
     }
 
 
@@ -224,15 +224,15 @@ public class ExperimentDesign implements Serializable {
     // returns header, value
     public Map<String, String> getSampleCharacteristicsValues(String runOrAssay) {
         SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
-
-        checkNotNull(sampleCharacteristics, "No sample characteristics for run or assay " + runOrAssay + ". Check configuration.xml matches ExpDesign/SDRF.");
+        if(sampleCharacteristics == null){
+            return ImmutableMap.of();
+        }
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
         for (Map.Entry<String, SampleCharacteristic> sampleCharacteristic : sampleCharacteristics.entrySet()) {
-            String header = sampleCharacteristic.getKey();
-            String value = sampleCharacteristic.getValue().value();
-            builder.put(header, value);
+
+            builder.put(sampleCharacteristic.getKey(), sampleCharacteristic.getValue().value());
         }
 
         return builder.build();
@@ -276,8 +276,6 @@ public class ExperimentDesign implements Serializable {
     public String getSpeciesForAssays(Set<String> assayAccessions) {
         for (String assayAccession: assayAccessions) {
             Map<String, String> assaySamples = getSampleCharacteristicsValues(assayAccession);
-
-            checkNotNull(assaySamples, String.format("Assay accession %s does not exist or has no samples", assayAccession));
 
             for (String sampleName : assaySamples.keySet()) {
                 if ("organism".equalsIgnoreCase(sampleName)){

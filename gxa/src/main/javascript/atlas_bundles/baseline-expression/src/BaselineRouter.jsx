@@ -46,7 +46,8 @@ const BaselineRouter = React.createClass({
                     this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name);
                     newShowAnatomograms = true;
                 } else if (this.props.facetsTreeData[species].length) {
-                    this._addElementToObjectOfArrays(newQuerySelect, species, this.props.facetsTreeData[species][0].name);
+                    this._addElementToObjectOfArrays(
+                        newQuerySelect, species, this.props.facetsTreeData[species][0].name);
                 }
             });
         }
@@ -54,7 +55,8 @@ const BaselineRouter = React.createClass({
         UrlManager.baselinePush(newQuerySelect, true);
 
         return {
-            // In this case, transforming props to state isn’t an anti-pattern because state can be mutated when facets are clicked in _setChecked
+            // In this case, transforming props to state isn’t an anti-pattern because state can be mutated when facets
+            // are clicked in _setChecked
             facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect),
             querySelect: newQuerySelect,
             anatomogramDataEventEmitter: anatomogramDataEventEmitter,
@@ -109,10 +111,12 @@ const BaselineRouter = React.createClass({
 
         if (checked) {
             this._addElementToObjectOfArrays(newQuerySelect, species, factorName);
-            newFacetsTreeData.find(facet => facet.facetName === species).facetItems.find(factor => factor.name === factorName).checked = true;
+            newFacetsTreeData.find(facet => facet.facetName === species).facetItems
+                .find(factor => factor.name === factorName).checked = true;
         } else {
             this._removeElementFromObjectOfArrays(newQuerySelect, species, factorName);
-            newFacetsTreeData.find(facet => facet.facetName === species).facetItems.find(factor => factor.name === factorName).checked = false;
+            newFacetsTreeData.find(facet => facet.facetName === species).facetItems
+                .find(factor => factor.name === factorName).checked = false;
         }
 
         UrlManager.baselinePush(newQuerySelect, false);
@@ -145,7 +149,8 @@ const BaselineRouter = React.createClass({
     },
 
     _organismPartInQuerySelect (querySelect = this.state.querySelect) {
-        return Object.keys(querySelect).some(species => querySelect[species].some(facetItem => facetItem.toLowerCase() == "organism_part"));
+        return Object.keys(querySelect)
+               .some(species => querySelect[species].some(facetItem => facetItem.toLowerCase() === 'organism_part'));
     },
 
     // Also syncs this.state.facetsTreeData with querySelect
@@ -177,10 +182,12 @@ const BaselineRouter = React.createClass({
          */
         let heatmaps = [];
 
-        // We iterate over facetsTreeData instead of over querySelect to get the heatmaps in the same order as the facets tree
+        // We iterate over facetsTreeData instead of over querySelect to get heatmaps in the same order as the facets
+        // tree
         this.state.facetsTreeData.forEach(facet => {
             facet.facetItems.forEach(facetItem => {
-                if (this.state.querySelect[facet.facetName] && this.state.querySelect[facet.facetName].includes(facetItem.name)) {
+                if (this.state.querySelect[facet.facetName] &&
+                    this.state.querySelect[facet.facetName].includes(facetItem.name)) {
                     heatmaps.push({
                         species: facet.facetName,
                         factor: facetItem

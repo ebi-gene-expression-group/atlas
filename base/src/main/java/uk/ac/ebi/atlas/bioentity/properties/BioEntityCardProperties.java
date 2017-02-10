@@ -13,9 +13,13 @@ public class BioEntityCardProperties {
         .put(ORTHOLOG,
                 "/gxa/genes/{0}")
         .put(GOTERM,
-                "http://amigo.geneontology.org/cgi-bin/amigo/search.cgi?search_constraint=term&exact_match=yes&action=new-search&search_query={0}")
+                "http://www.ebi.ac.uk/ols/search?q={0}")
         .put(GO,
-                "http://amigo.geneontology.org/amigo/term/{0}")
+                "http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/{0}")
+        .put(POTERM,
+                "http://www.ebi.ac.uk/ols/search?q={0}")
+        .put(PO,
+                "http://www.ebi.ac.uk/ols/ontologies/po/terms?iri=http://purl.obolibrary.org/obo/{0}")
         .put(INTERPROTERM,
                 "http://www.ebi.ac.uk/interpro/search?q={0}")
         .put(INTERPRO,
