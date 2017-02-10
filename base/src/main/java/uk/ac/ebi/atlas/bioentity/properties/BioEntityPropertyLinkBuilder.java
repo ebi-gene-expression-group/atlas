@@ -50,7 +50,7 @@ public class BioEntityPropertyLinkBuilder {
         String linkTemplate = BioEntityCardProperties.linkTemplates.get(propertyName);
 
         if (linkTemplate != null) {
-            String linkValue = getEncodedString(propertyValue);
+            String linkValue = getEncodedString(propertyName, propertyValue);
             String href = MessageFormat.format(linkTemplate, linkValue, linkSpecies, identifier);
             return Optional.of(new PropertyLink(linkText.get(), href, relevance));
         } else {
@@ -100,10 +100,14 @@ public class BioEntityPropertyLinkBuilder {
 
     }
 
-    private String getEncodedString(String value) {
+    private String getEncodedString(BioentityPropertyName propertyName, String value) {
 
         try {
-            return URLEncoder.encode(value, "UTF-8");
+            if (propertyName == BioentityPropertyName.GO || propertyName == BioentityPropertyName.PO) {
+                return URLEncoder.encode(value.replaceAll(":", "_"), "UTF-8");
+            } else {
+                return URLEncoder.encode(value, "UTF-8");
+            }
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("Cannot create URL from " + value, e);
         }

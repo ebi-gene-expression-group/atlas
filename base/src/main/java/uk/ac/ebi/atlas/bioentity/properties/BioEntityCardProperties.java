@@ -13,13 +13,13 @@ public class BioEntityCardProperties {
         .put(ORTHOLOG,
                 "/gxa/genes/{0}")
         .put(GOTERM,
-                "http://amigo.geneontology.org/amigo/medial_search?q={0}")
+                "http://www.ebi.ac.uk/ols/search?q={0}")
         .put(GO,
-                "http://amigo.geneontology.org/amigo/term/{0}")
+                "http://www.ebi.ac.uk/ols/ontologies/go/terms?iri=http://purl.obolibrary.org/obo/{0}")
         .put(POTERM,
-                "http://browser.planteome.org/amigo/search/ontology?q={0}")
+                "http://www.ebi.ac.uk/ols/search?q={0}")
         .put(PO,
-                "http://browser.planteome.org/amigo/term/{0}")
+                "http://www.ebi.ac.uk/ols/ontologies/po/terms?iri=http://purl.obolibrary.org/obo/{0}")
         .put(INTERPROTERM,
                 "http://www.ebi.ac.uk/interpro/search?q={0}")
         .put(INTERPRO,
