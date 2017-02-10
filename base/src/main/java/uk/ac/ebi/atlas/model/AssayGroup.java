@@ -12,9 +12,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class AssayGroup implements Iterable<String>{
+public class AssayGroup extends DescribesDataColumns implements Iterable<String> {
 
-    private String id;
     private Set<String> assayAccessions;
     private int replicates;
 
@@ -23,10 +22,9 @@ public class AssayGroup implements Iterable<String>{
     }
 
     public AssayGroup(String id, int replicates, String... assayAccessions) {
-        checkArgument(StringUtils.isNotBlank(id));
+        super(id);
         checkArgument(assayAccessions.length > 0 );
 
-        this.id = id;
         this.replicates = replicates;
         this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
@@ -34,10 +32,6 @@ public class AssayGroup implements Iterable<String>{
     @Override
     public Iterator<String> iterator() {
         return assayAccessions.iterator();
-    }
-
-    public String getId() {
-        return id;
     }
 
     public int getReplicates() {

@@ -5,26 +5,22 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 
 import java.util.Set;
 
-public class Contrast implements Comparable<Contrast> {
-    private String id;
+public class Contrast extends DescribesDataColumns implements Comparable<Contrast> {
     private String arrayDesignAccession; //used only for micro-array experiments
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
     private String displayName;
 
     public Contrast(String id, String arrayDesignAccession, AssayGroup referenceAssayGroup, AssayGroup testAssayGroup, String displayName) {
-        this.id = id;
+        super(id);
         this.arrayDesignAccession = arrayDesignAccession;
         this.referenceAssayGroup = referenceAssayGroup;
         this.testAssayGroup = testAssayGroup;
         this.displayName = displayName;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getArrayDesignAccession() {
