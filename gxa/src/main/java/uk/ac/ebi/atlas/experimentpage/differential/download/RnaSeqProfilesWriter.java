@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
 
 @Named
 @Scope("prototype")
@@ -39,7 +40,8 @@ public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast
                 .getFilteredBySpecies());
         ObjectInputStream<RnaSeqProfile> inputStream = inputStreamFactory.create(
                 requestContext.getExperiment(), requestContext);
-        return super.write(outputWriter, inputStream, requestContext, requestContext.getExperiment().getContrasts(),
+        return super.write(outputWriter, inputStream, requestContext, new HashSet<>(requestContext.getExperiment()
+                .getDataColumnDescriptors()),
                 geneQueryResponse);
     }
 

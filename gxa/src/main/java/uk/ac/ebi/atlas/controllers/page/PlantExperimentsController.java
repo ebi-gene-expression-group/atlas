@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.controllers.page;
 
-import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.slf4j.Logger;
@@ -10,8 +8,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
@@ -80,14 +78,9 @@ public class PlantExperimentsController {
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
             try {
-                int numberOfAssays = 0;
                 Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-                if (experiment.getType() == ExperimentType.RNASEQ_MRNA_BASELINE || experiment.getType() == ExperimentType.PROTEOMICS_BASELINE) {
-                    numberOfAssays = ((BaselineExperiment) experiment).getExperimentRunAccessions().size();
-                }
-                else if (experiment.getType() == ExperimentType.MICROARRAY_ANY || experiment.getType() == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
-                    numberOfAssays = ((DifferentialExperiment) experiment).getAssayAccessions().size();
-                }
+                int numberOfAssays = experiment.getAnalysedRowsAccessions().size();
+
                 experimentDisplayNames.put(experimentAccession, experiment.getDisplayName() + " (" + numberOfAssays + " assays)");
 
                 Species species = experiment.getSpecies();

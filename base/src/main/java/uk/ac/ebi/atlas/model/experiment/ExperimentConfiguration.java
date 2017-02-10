@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -124,14 +125,14 @@ public class ExperimentConfiguration {
         }
     }
 
-    public AssayGroups getAssayGroups() {
-        List<AssayGroup> assayGroups = Lists.newArrayList();
+    public List<AssayGroup> getAssayGroups() {
+        ImmutableList.Builder<AssayGroup> b = ImmutableList.builder();
 
         for (String assayGroupId : xmlReader.getStringArray("/analytics/assay_groups/assay_group/@id")) {
-            assayGroups.add(getAssayGroup(assayGroupId));
+            b.add(getAssayGroup(assayGroupId));
         }
 
-        return new AssayGroups(assayGroups);
+        return b.build();
     }
 
     public ExperimentType getExperimentType() {

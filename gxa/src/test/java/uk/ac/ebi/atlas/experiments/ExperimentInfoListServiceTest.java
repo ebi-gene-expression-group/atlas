@@ -13,7 +13,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -28,17 +28,11 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentInfoListServiceTest {
@@ -74,8 +68,7 @@ public class ExperimentInfoListServiceTest {
     public void setUp() throws Exception {
         Date lastUpdateStub = new GregorianCalendar(39 + 1900, 12, 12).getTime();
 
-        AssayGroups assayGroups = mock(AssayGroups.class);
-        when(assayGroups.getAssayGroupIds()).thenReturn(Sets.newHashSet("RUN"));
+        List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("RUN", ASSAY_1, ASSAY_2));
 
         baselineExperiment = Mockito.spy(new BaselineExperimentBuilder()
                 .forSpecies(new Species(SPECIES, SpeciesProperties.UNKNOWN))
@@ -107,7 +100,9 @@ public class ExperimentInfoListServiceTest {
                 "description", false, new Species(SPECIES, SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
                 Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
 
-        final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment>> experimentAccessionsPerType = ImmutableMap.of(
+        final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>
+                experimentAccessionsPerType =
+                ImmutableMap.of(
                 baselineExperiment.getType(), ImmutableSet.of(baselineExperiment),
                 differentialExperiment.getType(), ImmutableSet.of(differentialExperiment),
                 microarrayExperiment.getType(), ImmutableSet.of(microarrayExperiment)

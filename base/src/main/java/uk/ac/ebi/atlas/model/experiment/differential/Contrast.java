@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -85,5 +86,13 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         o.add("testAssayGroup", testAssayGroup.toJson());
         o.addProperty("displayName",displayName);
         return o;
+    }
+
+    @Override
+    public Set<String> assaysAnalyzedForThisDataColumn() {
+        return ImmutableSet.<String>builder()
+                .addAll(referenceAssayGroup.assaysAnalyzedForThisDataColumn())
+                .addAll(testAssayGroup.assaysAnalyzedForThisDataColumn())
+                .build();
     }
 }

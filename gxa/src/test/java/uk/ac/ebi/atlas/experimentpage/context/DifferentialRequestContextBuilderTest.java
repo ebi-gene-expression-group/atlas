@@ -61,10 +61,10 @@ public class DifferentialRequestContextBuilderTest {
         sortedSet.add(contrastMock1);
         sortedSet.add(contrastMock2);
 
-        when(experimentMock.getContrasts()).thenReturn(sortedSet);
+        when(experimentMock.getDataColumnDescriptors()).thenReturn(sortedSet);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("a")));
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
-        when(experimentMock.getContrast(CONTRAST_NAME1)).thenReturn(contrastMock1);
+        when(experimentMock.getDataColumnDescriptor(CONTRAST_NAME1)).thenReturn(contrastMock1);
 
     }
 

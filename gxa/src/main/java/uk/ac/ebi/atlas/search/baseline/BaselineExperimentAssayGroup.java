@@ -80,9 +80,13 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
     // If all assay groups have expression, then it is not specific and so returns the empty set. 
     // Otherwise returns only those assay groups with the expression
     private Set<String> specificAssayGroupIdsWithCondition(Set<String> assayGroupIdsWithCondition, BaselineExperiment experiment) {
-        Set<String> allAssayGroupIds = experiment.getAssayGroups().getAssayGroupIds();
-        Set<String> intersect = Sets.intersection(assayGroupIdsWithCondition, allAssayGroupIds);
-        return (intersect.size() == allAssayGroupIds.size()) ? new HashSet<String>(): assayGroupIdsWithCondition;
+        Set<String> intersect = Sets.newHashSet();
+        for(String id: assayGroupIdsWithCondition){
+            if(experiment.getDataColumnDescriptor(id) != null){
+                intersect.add(id);
+            }
+        }
+        return (intersect.size() == experiment.getDataColumnDescriptors().size()) ? new HashSet<String>(): assayGroupIdsWithCondition;
     }
 
     public void setFilterFactors(FactorGroup filterFactors) {

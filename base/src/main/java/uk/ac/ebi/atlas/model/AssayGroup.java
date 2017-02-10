@@ -64,4 +64,9 @@ public class AssayGroup extends DescribesDataColumns implements Iterable<String>
         o.addProperty("replicates", replicates);
         return o;
     }
+
+    @Override
+    public Set<String> assaysAnalyzedForThisDataColumn() {
+        return assayAccessions;
+    }
 }

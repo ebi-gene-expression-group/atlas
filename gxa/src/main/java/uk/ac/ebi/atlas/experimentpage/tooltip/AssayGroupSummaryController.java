@@ -35,7 +35,7 @@ public class AssayGroupSummaryController {
                                     @RequestParam(value = "assayGroupId") String assayGroupId) {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        AssayGroup assayGroup = experiment.getAssayGroups().getAssayGroup(assayGroupId);
+        AssayGroup assayGroup = experiment.getDataColumnDescriptor(assayGroupId);
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 

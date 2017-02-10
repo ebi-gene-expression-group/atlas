@@ -22,7 +22,7 @@ public class ExperimentMetadataEnrichmentService {
 
     String getComparisonTitle(Experiment e, String chosenContrast){
         if(e!= null && e instanceof DifferentialExperiment){
-           Contrast c = ((DifferentialExperiment) e).getContrast(chosenContrast);
+           Contrast c = ((DifferentialExperiment) e).getDataColumnDescriptor(chosenContrast);
             if(c != null){
                 return c.getDisplayName();
             }

@@ -80,7 +80,7 @@ public class BaselineExperimentAssayGroupsLinesTest {
 
 
         when(baselineExperiment.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(baselineExperiment.getAssayGroups()).thenReturn(new AssayGroups(ImmutableSet.of(ASSAY_GROUP1, ASSAY_GROUP2, ASSAY_GROUP3)));
+        when(baselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableSet.of(ASSAY_GROUP1, ASSAY_GROUP2, ASSAY_GROUP3));
         when(baselineExperiment.getExperimentDesign()).thenReturn(experimentDesign);
 
         BaselineExperimentAssayGroupsLines subject = new BaselineExperimentAssayGroupsLines(baselineExperiment);

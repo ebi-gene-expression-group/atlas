@@ -9,22 +9,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentTest {
@@ -38,24 +31,26 @@ public class BaselineExperimentTest {
 
     @Mock
     private ExperimentDesign experimentDesignMock;
-    
-    @Mock
-    private AssayGroups assayGroupsMock;
+
+
+    static Collection<AssayGroup> assayGroups = Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup
+            ("g2",
+            RUN_ACCESSION2));
+
 
     private BaselineExperiment subject;
 
     @Before
     public void setUp() throws Exception {
-        when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
-        when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
-        when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
-        subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroupsMock);
+
+
+        subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroups);
 
     }
 
     public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
-            experimentDesign, AssayGroups assayGroups){
+            experimentDesign, Collection<AssayGroup> assayGroups){
             return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                     experimentalFactors, "description", "displayName", "",
                     new Species("species",
@@ -69,13 +64,13 @@ public class BaselineExperimentTest {
 
     public static BaselineExperiment mockExperiment(){
         return mockExperiment(Mockito.mock(ExperimentalFactors.class), Mockito.mock(ExperimentDesign.class),
-                Mockito.mock(AssayGroups.class));
+                assayGroups);
     }
 
 
     @Test
     public void testGetExperimentRunAccessions() throws Exception {
-        assertThat(subject.getExperimentRunAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
+        assertThat(subject.getAnalysedRowsAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
     }
 
     @Test

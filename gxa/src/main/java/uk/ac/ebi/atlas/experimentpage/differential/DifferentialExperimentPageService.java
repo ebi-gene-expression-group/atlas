@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
@@ -30,6 +31,7 @@ import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,7 +69,7 @@ public class DifferentialExperimentPageService
         initRequestPreferences(preferences, experiment);
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
         model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("allQueryFactors", experiment.getContrasts());
+        model.addAttribute("allQueryFactors", experiment.getDataColumnDescriptors());
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(experiment.getDifferentialAttributes());
         model.addAllAttributes(new DownloadURLBuilder(experiment.getAccession()).dataDownloadUrls(request.getRequestURI()));
@@ -78,7 +80,7 @@ public class DifferentialExperimentPageService
                                                    BindingResult bindingResult, Model model) {
         JsonObject result = new JsonObject();
         DifferentialRequestContext<E> requestContext = initRequestContext(experiment, preferences);
-        Set<Contrast> contrasts = experiment.getContrasts();
+        Collection<Contrast> contrasts = experiment.getDataColumnDescriptors();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
@@ -158,8 +160,9 @@ public class DifferentialExperimentPageService
 
     private void initRequestPreferences(K requestPreferences, E experiment) {
         //if there is only one contrast we want to preselect it... from Robert feedback
-        if (experiment.getContrasts().size() == 1) {
-            requestPreferences.setQueryFactorValues(experiment.getContrastIds());
+        if (experiment.getDataColumnDescriptors().size() == 1) {
+            requestPreferences.setQueryFactorValues(ImmutableSet.of(
+                    experiment.getDataColumnDescriptors().iterator().next().getId()));
         }
     }
 

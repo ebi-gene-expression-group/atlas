@@ -98,7 +98,7 @@ public class ExperimentDataPointStreamFactory {
     private Map<String, Integer> buildNumReplicatesByContrastId(DifferentialExperiment experiment) {
         ImmutableMap.Builder<String, Integer> builder = ImmutableMap.builder();
 
-        for (Contrast contrast : experiment.getContrasts()) {
+        for (Contrast contrast : experiment.getDataColumnDescriptors()) {
             int numReplicates = Math.min(contrast.getReferenceAssayGroup().getReplicates(), contrast.getTestAssayGroup().getReplicates());
             builder.put(contrast.getId(), numReplicates);
         }
@@ -109,7 +109,7 @@ public class ExperimentDataPointStreamFactory {
     private ImmutableSetMultimap<String, String> buildAssayGroupIdToConditionsSearchTerms(BaselineExperiment experiment) {
         Collection<Condition> conditions = conditionsLookupService.buildPropertiesForBaselineExperiment(experiment
                 .getAccession(),
-                experiment.getExperimentDesign(), experiment.getAssayGroups());
+                experiment.getExperimentDesign(), experiment.getDataColumnDescriptors());
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 
         for (Condition condition : conditions) {
@@ -122,7 +122,7 @@ public class ExperimentDataPointStreamFactory {
     private ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(DifferentialExperiment experiment) {
         Collection<DifferentialCondition> conditions = conditionsLookupService.buildPropertiesForDifferentialExperiment
                 (experiment.getAccession(), experiment
-                .getExperimentDesign(), experiment.getContrasts());
+                .getExperimentDesign(), experiment.getDataColumnDescriptors());
 
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 

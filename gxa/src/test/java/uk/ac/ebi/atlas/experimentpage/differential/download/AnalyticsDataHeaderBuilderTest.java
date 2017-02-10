@@ -32,8 +32,8 @@ public class AnalyticsDataHeaderBuilderTest {
         when(contrastMock1.getDisplayName()).thenReturn("contrast1");
         when(contrastMock2.getDisplayName()).thenReturn("contrast2");
 
-        when(experimentMock.getContrast("c1")).thenReturn(contrastMock1);
-        when(experimentMock.getContrast("c2")).thenReturn(contrastMock2);
+        when(experimentMock.getDataColumnDescriptor("c1")).thenReturn(contrastMock1);
+        when(experimentMock.getDataColumnDescriptor("c2")).thenReturn(contrastMock2);
 
         subject = new AnalyticsDataHeaderBuilder(experimentMock);
     }

@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,7 +27,9 @@ public class ConditionsLookupService {
     }
 
     public ImmutableSet<DifferentialCondition> buildPropertiesForDifferentialExperiment(String experimentAccession,
-                                                                                       ExperimentDesign experimentDesign, Set<Contrast> contrasts){
+                                                                                       ExperimentDesign
+                                                                                               experimentDesign,
+                                                                                        Collection<Contrast> contrasts){
         DifferentialConditionsBuilder b = new DifferentialConditionsBuilder(experimentAccession,experimentDesign);
         for(Contrast c: contrasts){
             b.addContrast(c);
@@ -36,7 +39,7 @@ public class ConditionsLookupService {
 
     public ImmutableSet<Condition> buildPropertiesForBaselineExperiment(String experimentAccession,
                                                                                    ExperimentDesign experimentDesign,
-                                                                                   AssayGroups assayGroups){
+                                                                                   Collection<AssayGroup> assayGroups){
         BaselineConditionsBuilder b = new BaselineConditionsBuilder(experimentAccession,experimentDesign);
         for(AssayGroup assayGroup: assayGroups){
             b.addCondition(assayGroup);

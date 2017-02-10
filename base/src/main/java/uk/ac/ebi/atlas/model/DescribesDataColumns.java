@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Set;
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class DescribesDataColumns {
@@ -15,5 +17,8 @@ public abstract class DescribesDataColumns {
     public String getId() {
         return id;
     }
+
+
+    public abstract Set<String> assaysAnalyzedForThisDataColumn();
 
 }

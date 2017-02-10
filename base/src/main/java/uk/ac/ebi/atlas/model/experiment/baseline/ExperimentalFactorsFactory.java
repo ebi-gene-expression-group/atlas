@@ -17,7 +17,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ExperimentalFactorsFactory {
 
+
     public ExperimentalFactors createExperimentalFactors(String experimentAccession, ExperimentDesign
+            experimentDesign, BaselineExperimentConfiguration factorsConfig,
+                                                         List<AssayGroup> assayGroups, String[] orderedAssayGroupIds, boolean
+                                                                 orderCurated) {
+       return createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, new AssayGroups
+                (assayGroups),
+                orderedAssayGroupIds,
+                orderCurated);
+    }
+
+    @Deprecated
+    ExperimentalFactors createExperimentalFactors(String experimentAccession, ExperimentDesign
             experimentDesign, BaselineExperimentConfiguration factorsConfig,
                                                          AssayGroups assayGroups, String[] orderedAssayGroupIds, boolean orderCurated) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();

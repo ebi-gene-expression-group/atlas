@@ -33,7 +33,7 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
         for (String columnHeader : Arrays.asList(tsvFileHeaders)) {
             if (columnHeader.endsWith(".p-value")) {
                 String contrastId = StringUtils.substringBefore(columnHeader, ".");
-                orderedContrasts.add(experiment.getContrast(contrastId));
+                orderedContrasts.add(experiment.getDataColumnDescriptor(contrastId));
             }
         }
 

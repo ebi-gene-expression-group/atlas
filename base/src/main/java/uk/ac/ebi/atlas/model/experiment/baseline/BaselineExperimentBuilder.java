@@ -4,6 +4,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -33,7 +34,7 @@ public class BaselineExperimentBuilder {
     private Set<String> pubMedIds;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
-    private AssayGroups assayGroups;
+    private List<AssayGroup> assayGroups;
     private ExperimentalFactors experimentalFactors;
     private ExperimentType experimentType;
     private List<String> alternativeViews = Collections.emptyList();
@@ -89,7 +90,7 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
-    public BaselineExperimentBuilder withAssayGroups(AssayGroups assayGroups) {
+    public BaselineExperimentBuilder withAssayGroups(List<AssayGroup> assayGroups) {
         this.assayGroups = assayGroups;
         return this;
     }
@@ -131,7 +132,7 @@ public class BaselineExperimentBuilder {
         checkState(experimentType.isBaseline());
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkNotNull(species, "Please provide a species name");
-        checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()),
+        checkState(CollectionUtils.isNotEmpty(assayGroups),
                 "Please provide a non empty set of AssayGroup objects");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");

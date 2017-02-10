@@ -33,7 +33,7 @@ class AnalyticsDataHeaderBuilder {
 
     protected String replaceContrastIdWithName(String columnHeader) {
         String contrastId = StringUtils.substringBefore(columnHeader, ".");
-        String displayName = experiment.getContrast(contrastId).getDisplayName();
+        String displayName = experiment.getDataColumnDescriptor(contrastId).getDisplayName();
         return StringUtils.replace(columnHeader, contrastId, displayName);
     }
 

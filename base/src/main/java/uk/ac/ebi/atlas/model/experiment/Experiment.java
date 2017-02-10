@@ -3,10 +3,13 @@ package uk.ac.ebi.atlas.model.experiment;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
@@ -21,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class Experiment implements Serializable {
+public abstract class Experiment<DataColumnDescriptor extends DescribesDataColumns> implements Serializable {
 
     private static final Gson gson = new Gson();
     private ExperimentType type;
@@ -38,12 +41,13 @@ public abstract class Experiment implements Serializable {
     private List<String> dataProviderDescription;
     private List<String> alternativeViews;
     private List<String> alternativeViewDescriptions;
+    protected final ImmutableMap<String, DataColumnDescriptor> dataColumnDescriptorsPerId;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
                       String disclaimer, boolean hasRData, Species species, Collection<String> pubMedIds,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
-                      List<String> alternativeViewDescriptions) {
+                      List<String> alternativeViewDescriptions, Collection<DataColumnDescriptor> dataColumnDescriptors) {
 
         this.type = type;
         this.lastUpdate = lastUpdate;
@@ -59,7 +63,20 @@ public abstract class Experiment implements Serializable {
         this.dataProviderDescription = dataProviderDescription;
         this.alternativeViews = alternativeViews;
         this.alternativeViewDescriptions = alternativeViewDescriptions;
+        ImmutableMap.Builder<String, DataColumnDescriptor> builder = ImmutableMap.builder();
+        for(DataColumnDescriptor dataColumnDescriptor: dataColumnDescriptors){
+            builder.put(dataColumnDescriptor.getId(), dataColumnDescriptor);
+        }
+        this.dataColumnDescriptorsPerId = builder.build();
 
+    }
+
+    public Collection<DataColumnDescriptor> getDataColumnDescriptors(){
+        return dataColumnDescriptorsPerId.values();
+    }
+
+    public DataColumnDescriptor getDataColumnDescriptor(String id){
+        return dataColumnDescriptorsPerId.get(id);
     }
 
     public ExperimentType getType() {
@@ -99,7 +116,16 @@ public abstract class Experiment implements Serializable {
         return result;
     }
 
-    protected abstract Set<String> getAnalysedRowsAccessions();
+    //this doesn't quite match our model and is only used in experiment design
+    //and only to tell if an assay has been analysed or not
+    //possibly: move it to experiment design?
+    public Set<String> getAnalysedRowsAccessions(){
+        ImmutableSet.Builder<String> b = ImmutableSet.builder();
+        for(DataColumnDescriptor dataColumnDescriptor: getDataColumnDescriptors()){
+            b.addAll(dataColumnDescriptor.assaysAnalyzedForThisDataColumn());
+        }
+        return b.build();
+    }
 
     public Map<String, Object> getAttributes(){
         Map<String, Object> result = new HashMap<>();
@@ -150,7 +176,7 @@ public abstract class Experiment implements Serializable {
         experimentInfo.setKingdom(species.getKingdom());
         experimentInfo.setExperimentType(type.getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
-
+        experimentInfo.setNumberOfAssays(getAnalysedRowsAccessions().size());
         return experimentInfo;
     }
 }

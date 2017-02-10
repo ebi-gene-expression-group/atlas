@@ -83,7 +83,7 @@ public class SingleCellExperimentPageController extends ExperimentPageController
 
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
-        return gson.toJson(experiment.getAssayGroups());
+        return gson.toJson(experiment.getDataColumnDescriptors());
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/cell_types/{assayGroupId}")
@@ -98,7 +98,7 @@ public class SingleCellExperimentPageController extends ExperimentPageController
 
         return gson.toJson(new AssayGroupSummaryBuilder()
                 .withExperimentDesign(experiment.getExperimentDesign())
-                .forAssayGroup(experiment.getAssayGroups().getAssayGroup(assayGroupId))
+                .forAssayGroup(experiment.getDataColumnDescriptor(assayGroupId))
                 .build());
 
     }

@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -41,7 +42,7 @@ public class DifferentialRequestContextBuilder
         requestContext.setQueryDescription(SearchDescription.get(getRequestPreferences().getGeneQuery()));
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
         requestContext.setFilteredBySpecies(experiment.getSpecies().getReferenceName());
-        requestContext.setAllQueryFactors(experiment.getContrasts());
+        requestContext.setAllQueryFactors(new HashSet<>(experiment.getDataColumnDescriptors()));
         requestContext.setExperiment(experiment);
 
         return requestContext;
@@ -56,7 +57,7 @@ public class DifferentialRequestContextBuilder
         for (String queryContrastId : getRequestPreferences().getQueryFactorValues()) {
 
             try {
-                Contrast contrast = experiment.getContrast(queryContrastId);
+                Contrast contrast = experiment.getDataColumnDescriptor(queryContrastId);
                 selectedQueryContrasts.add(contrast);
             } catch (IllegalArgumentException e) {
                 throw new ResourceNotFoundException(e);

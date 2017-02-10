@@ -137,7 +137,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             o.addProperty("factorValueOntologyTermId", assayGroupFactor.getValueOntologyTermId());
             o.add("assayGroupSummary",
                     new AssayGroupSummaryBuilder()
-                    .forAssayGroup(experiment.getAssayGroups().getAssayGroup(assayGroupFactor.getAssayGroupId()))
+                    .forAssayGroup(experiment.getDataColumnDescriptor(assayGroupFactor.getAssayGroupId()))
                     .withExperimentDesign(experiment.getExperimentDesign())
                     .build().toJson());
             result.add(o);

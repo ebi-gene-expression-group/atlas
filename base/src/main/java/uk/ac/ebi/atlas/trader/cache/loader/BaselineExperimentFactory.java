@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.trader.cache.loader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -52,14 +53,18 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
         ExperimentConfiguration configuration = configurationTrader.getExperimentConfiguration(experimentAccession);
         BaselineExperimentConfiguration factorsConfig = configurationTrader.getBaselineFactorsConfiguration(experimentAccession);
 
-        AssayGroups assayGroups = configuration.getAssayGroups();
+        List<AssayGroup> assayGroups = configuration.getAssayGroups();
 
         String[] orderedAssayGroupIds;
         boolean orderCurated;
 
         if (factorsConfig.orderCurated()) {
             orderCurated = true;
-            orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
+            orderedAssayGroupIds = new String[assayGroups.size()];
+            for(int i = 0 ; i < assayGroups.size() ; i++){
+                orderedAssayGroupIds[i] = assayGroups.get(i).getId();
+            }
+
         } else {
             orderCurated = false;
             orderedAssayGroupIds = readOrderedAssayGroupIds(experimentAccession, experimentDTO.getExperimentType());

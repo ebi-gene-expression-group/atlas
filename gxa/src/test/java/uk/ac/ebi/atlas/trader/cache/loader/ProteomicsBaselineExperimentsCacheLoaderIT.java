@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
@@ -84,7 +85,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     public void experimentShouldOnlyContainRunsFromDataFile() throws IOException {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
-        assertThat(experiment.getExperimentRunAccessions(), containsInAnyOrder(
+        assertThat(experiment.getAnalysedRowsAccessions(), containsInAnyOrder(
                 "Adult_Adrenalgland", "Adult_Bcells", "Adult_CD4Tcells", "Adult_CD8Tcells",
                 "Adult_Colon", "Adult_Esophagus", "Adult_Frontalcortex", "Adult_Gallbladder",
                 "Adult_Heart", "Adult_Kidney", "Adult_Liver", "Adult_Lung",
@@ -101,7 +102,12 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     public void experimentShouldContainAssayGroups() throws IOException {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
-        assertThat(experiment.getAssayGroups().getAssayGroupIds(), contains("g1", "g2", "g3", "g4", "g5", "g6",
+        Set<String> allAssayGroupIds = new HashSet<>();
+        for(AssayGroup assayGroup : experiment.getDataColumnDescriptors()){
+            allAssayGroupIds.add(assayGroup.getId());
+        }
+
+        assertThat(allAssayGroupIds, contains("g1", "g2", "g3", "g4", "g5", "g6",
                 "g7", "g8", "g9", "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21",
                 "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30"));
     }

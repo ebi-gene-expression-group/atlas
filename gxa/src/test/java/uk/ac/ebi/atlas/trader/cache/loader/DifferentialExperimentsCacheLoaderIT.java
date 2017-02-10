@@ -79,8 +79,8 @@ public class DifferentialExperimentsCacheLoaderIT {
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
         //then
-        assertThat(experiment.getContrasts().size(), is(1));
-        assertThat(experiment.getContrasts().iterator().next().getDisplayName(), startsWith("'expressing"));
+        assertThat(experiment.getDataColumnDescriptors().size(), is(1));
+        assertThat(experiment.getDataColumnDescriptors().iterator().next().getDisplayName(), startsWith("'expressing"));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class DifferentialExperimentsCacheLoaderIT {
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
         //when
-        Contrast contrast = experiment.getContrast("g1_g2");
+        Contrast contrast = experiment.getDataColumnDescriptor("g1_g2");
 
         //then
         assertThat(contrast.getId(), is("g1_g2"));

@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -107,7 +109,10 @@ public class MicroarrayProfilesWriterIT {
         for (String accession : accessions) {
             MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(accession);
             String arrayDesignAccession = experiment.getArrayDesignAccessions().iterator().next();
-            Set<String> queryFactors = experiment.getContrastIds();
+            Set<String> queryFactors = new HashSet<>();
+            for(DescribesDataColumns d: experiment.getDataColumnDescriptors()){
+                queryFactors.add(d.getId());
+            }
 
             defaultParametersHeader(accession, arrayDesignAccession);
             teardown();

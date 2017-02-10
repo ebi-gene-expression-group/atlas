@@ -11,7 +11,7 @@ import org.mockito.MockitoAnnotations;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
@@ -27,14 +27,11 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class BaselineProfilesWriterServiceTest {
@@ -57,9 +54,6 @@ public class BaselineProfilesWriterServiceTest {
     private BaselineProfilesWriterService subject;
 
     @Mock
-    private AssayGroups assayGroupsMock;
-
-    @Mock
     private BaselineRequestPreferences preferencesMock;
 
     @Mock
@@ -74,6 +68,9 @@ public class BaselineProfilesWriterServiceTest {
 
     @Before
     public void setUp() {
+        AssayGroup assayGroupMock = mock(AssayGroup.class);
+        when(assayGroupMock.getId()).thenReturn("g1");
+
         MockitoAnnotations.initMocks(this);
         subject = new BaselineProfilesWriterService(inputStreamFactory, profilesWriter, solrQueryService, coexpressedGenesService);
 
@@ -81,9 +78,8 @@ public class BaselineProfilesWriterServiceTest {
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
-        when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet("assayGroupIds")));
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
-        when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);
+        when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableSet.of(assayGroupMock));
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         TreeSet<Factor> t = new TreeSet<>();
@@ -93,7 +89,7 @@ public class BaselineProfilesWriterServiceTest {
 
     @Test
     public void writeWithNoCoexpressionsDoesNotInteractWithCoexpressedGenesService() throws Exception {
-        Writer writer = Mockito.mock(Writer.class);
+        Writer writer = mock(Writer.class);
         Map<String, Integer> coexpressions = new HashMap<>();
 
         subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions );
@@ -103,7 +99,7 @@ public class BaselineProfilesWriterServiceTest {
 
     @Test
     public void writeWithCoexpressionsDoesInteractWithCoexpressedGenesService() throws Exception {
-        Writer writer = Mockito.mock(Writer.class);
+        Writer writer = mock(Writer.class);
 
         Map<String, Integer> coexpressions = ImmutableMap.of(geneId, 3);
 
@@ -137,7 +133,7 @@ public class BaselineProfilesWriterServiceTest {
 
     //TODO make this test reasonable and useful again
     private void theFlowOfTheDataIsRightForCoexpressions(Map<String, Integer> coexpressions) throws Exception {
-        Writer writer = Mockito.mock(Writer.class);
+        Writer writer = mock(Writer.class);
 
         GeneQueryResponse response = new GeneQueryResponse();
         response.addGeneIds(geneName, ImmutableSet.of(geneId));
@@ -177,7 +173,7 @@ public class BaselineProfilesWriterServiceTest {
 
     @Test
     public void returnValueComesFromTheWriter() throws Exception {
-        Writer writer = Mockito.mock(Writer.class);
+        Writer writer = mock(Writer.class);
         Map<String, Integer> coexpressions = new HashMap<>();
 
         long expected = 123L;

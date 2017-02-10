@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -30,7 +30,6 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
@@ -39,11 +38,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
@@ -74,8 +69,7 @@ public class BaselineExperimentCacheLoaderTest {
     private BaselineExperimentConfiguration baselineConfiguration;
     @Mock
     private ExperimentalFactors experimentalFactors;
-    @Mock
-    private AssayGroups assayGroups;
+
     @Mock
     private ExperimentDesign experimentDesign;
     @Spy
@@ -90,14 +84,18 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Before
     public void setUp(){
-        Set<String> assayGroupIds =  ImmutableSet.of("assay group id 1");
-        dataFileHub.addTemporaryFile(MessageFormat.format("/magetab/{0}/{0}.tsv", experimentAccession),assayGroupIds);
+        AssayGroup assayGroup = mock(AssayGroup.class);
+        when(assayGroup.getId()).thenReturn("assay group id 1");
+
+        List<AssayGroup> assayGroups = ImmutableList.of(assayGroup);
+        dataFileHub.addTemporaryFile(MessageFormat.format("/magetab/{0}/{0}.tsv", experimentAccession),
+                ImmutableSet.of("assay group id 1"));
 
         subject = new Loader(experimentalFactorsFactory,experimentType, configurationTrader, speciesFactoryMock, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
-        when(assayGroups.getAssayGroupIds()).thenReturn(assayGroupIds);
+
         when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
                         SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals",
                                 ImmutableSortedMap.<String, List<String>>of())));
@@ -112,7 +110,7 @@ public class BaselineExperimentCacheLoaderTest {
         verify(configurationTrader).getBaselineFactorsConfiguration(experimentAccession);
         verify(configuration).getAssayGroups();
         verify(experimentalFactorsFactory).createExperimentalFactors(eq(experimentAccession),eq(experimentDesign),
-                eq(baselineConfiguration), eq(assayGroups), any(String [] .class), anyBoolean());
+                eq(baselineConfiguration), (List<AssayGroup>) any(List.class), any(String [] .class), anyBoolean());
         verify(speciesFactoryMock).create(dto.getSpecies());
         if(!baselineConfiguration.orderCurated()){
             verify(dataFileHub, atLeastOnce()).getBaselineExperimentFiles(experimentAccession);
@@ -126,7 +124,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Test(expected=IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() throws Exception{
-        when(configuration.getAssayGroups()).thenReturn(mock(AssayGroups.class));
+        when(configuration.getAssayGroups()).thenReturn(ImmutableList.<AssayGroup>of());
         subject.create(dto, "description from array express", experimentDesign);
     }
 

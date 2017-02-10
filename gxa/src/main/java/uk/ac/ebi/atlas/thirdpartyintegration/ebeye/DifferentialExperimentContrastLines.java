@@ -21,7 +21,7 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
     }
 
     private LinkedHashSet<ImmutableList<String>> buildContrastDetails(DifferentialExperiment experiment) {
-        for (Contrast contrast : experiment.getContrasts()) {
+        for (Contrast contrast : experiment.getDataColumnDescriptors()) {
             for (String assayAccession : contrast.getReferenceAssayGroup()) {
                 this.populateSamples(experiment, assayAccession, contrast, "reference");
                 this.populateFactors(experiment, assayAccession, contrast, "reference");

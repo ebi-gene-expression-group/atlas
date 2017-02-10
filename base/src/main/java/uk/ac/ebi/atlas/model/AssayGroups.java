@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+@Deprecated
 public class AssayGroups implements Iterable<AssayGroup> {
 
     private Map<String, AssayGroup> assayGroupsById;

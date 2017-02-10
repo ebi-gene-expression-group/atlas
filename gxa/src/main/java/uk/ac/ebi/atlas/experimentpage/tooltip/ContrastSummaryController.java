@@ -35,7 +35,7 @@ public class ContrastSummaryController {
 
         DifferentialExperiment differentialExperiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        Contrast contrast = differentialExperiment.getContrast(contrastId);
+        Contrast contrast = differentialExperiment.getDataColumnDescriptor(contrastId);
         if (contrast == null) {
             throw new IllegalStateException("No contrast with ID " + contrastId + " found.");
         }

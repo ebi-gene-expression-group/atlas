@@ -10,10 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
-import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.XmlReaderMock;
-import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -24,6 +22,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -119,18 +118,24 @@ public class ExperimentConfigurationTest {
 
     @Test
     public void testGetAssayGroups()  {
-        AssayGroups assayGroups = subject.getAssayGroups();
-        assertThat(assayGroups.getAssayGroupIds(), hasSize(5));
+        List<AssayGroup> assayGroups = subject.getAssayGroups();
+        assertThat(assayGroups, hasSize(5));
     }
 
     @Test
     public void replicatesIsSumOfUniqueTechnicalReplicatesAndUnqualifiedAssays() {
-        AssayGroups assayGroups = subject.getAssayGroups();
-        assertThat(assayGroups.getAssayGroup("g1").getReplicates(), is(1));
-        assertThat(assayGroups.getAssayGroup("g2").getReplicates(), is(1));
-        assertThat(assayGroups.getAssayGroup("g3").getReplicates(), is(2));
-        assertThat(assayGroups.getAssayGroup("g4").getReplicates(), is(3));
-        assertThat(assayGroups.getAssayGroup("g5").getReplicates(), is(5));
+        List<AssayGroup> assayGroups = subject.getAssayGroups();
+        assertThat(assayGroups.get(0).getId(), is("g1"));
+        assertThat(assayGroups.get(1).getId(), is("g2"));
+        assertThat(assayGroups.get(2).getId(), is("g3"));
+        assertThat(assayGroups.get(3).getId(), is("g4"));
+        assertThat(assayGroups.get(4).getId(), is("g5"));
+
+        assertThat(assayGroups.get(0).getReplicates(), is(1));
+        assertThat(assayGroups.get(1).getReplicates(), is(1));
+        assertThat(assayGroups.get(2).getReplicates(), is(2));
+        assertThat(assayGroups.get(3).getReplicates(), is(3));
+        assertThat(assayGroups.get(4).getReplicates(), is(5));
     }
 
     @Test

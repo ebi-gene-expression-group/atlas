@@ -51,7 +51,7 @@ public class AtlasResourceHub {
 
     public Map<String,JsonArray> contrastImages(DifferentialExperiment differentialExperiment){
         Map<String,JsonArray>  result = new HashMap<>();
-        for(Contrast contrast : differentialExperiment.getContrasts()){
+        for(Contrast contrast : differentialExperiment.getDataColumnDescriptors()){
             Optional<String> arrayDesign =
                     differentialExperiment instanceof MicroarrayExperiment
                             ? Optional.of(contrast.getArrayDesignAccession())

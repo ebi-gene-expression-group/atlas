@@ -142,7 +142,8 @@ public class RnaSeqProfilesHeatMapIT {
             }
         }
 
-        requestPreferences.setQueryFactorValues(Collections.singleton(experimentsCache.getExperiment(accession).getContrastIds().iterator().next()));
+        requestPreferences.setQueryFactorValues(Collections.singleton(experimentsCache.getExperiment(accession).getDataColumnDescriptors()
+                .iterator().next().getId()));
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
@@ -177,7 +178,7 @@ public class RnaSeqProfilesHeatMapIT {
             assertTrue(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
                     Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere );
 
-            assertTrue(experiment.getContrasts().containsAll(profile.getConditions()));
+            assertTrue(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()));
             for(Contrast contrast: profile.getConditions()){
                 assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
 

@@ -77,7 +77,7 @@ public class BaselineExperimentsCacheLoaderIT {
     public void experimentShouldOnlyContainRunsFromDataFile() throws IOException {
         BaselineExperiment experiment = subject.load(accession);
 
-        assertThat(experiment.getExperimentRunAccessions(), hasItems(
+        assertThat(experiment.getAnalysedRowsAccessions(), hasItems(
             "ERR030872", "ERR030873", "ERR030874", "ERR030875",
             "ERR030876", "ERR030877", "ERR030878", "ERR030879",
             "ERR030880", "ERR030881", "ERR030882", "ERR030883",
@@ -90,7 +90,7 @@ public class BaselineExperimentsCacheLoaderIT {
     public void experimentShouldContainAssayGroups() throws IOException {
         BaselineExperiment experiment = subject.load(accession);
 
-        assertThat(experiment.getAssayGroups().getAssayGroupIds(), hasSize(16));
+        assertThat(experiment.getDataColumnDescriptors(), hasSize(16));
     }
 
     @Test(expected = IllegalStateException.class)

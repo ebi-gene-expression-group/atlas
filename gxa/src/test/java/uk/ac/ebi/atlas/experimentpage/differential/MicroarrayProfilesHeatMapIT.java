@@ -146,7 +146,8 @@ public class MicroarrayProfilesHeatMapIT {
         }
 
         setUp();
-        requestPreferences.setQueryFactorValues(Collections.singleton(experimentsCache.getExperiment(accession).getContrastIds().iterator().next()));
+        requestPreferences.setQueryFactorValues(Collections.singleton(experimentsCache.getExperiment(accession).getDataColumnDescriptors()
+                .iterator().next().getId()));
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
@@ -180,7 +181,7 @@ public class MicroarrayProfilesHeatMapIT {
             assertThat(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
                     Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere, is(true) );
 
-            assertThat(experiment.getContrasts().containsAll(profile.getConditions()), is(true));
+            assertThat(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()), is(true));
             for(Contrast contrast: profile.getConditions()){
                 assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
 

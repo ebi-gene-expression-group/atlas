@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.collect.Sets;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Date;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -65,23 +67,18 @@ public class DifferentialExperimentTest {
 
     @Test
     public void testGetContrasts() throws Exception {
-        assertThat(subject.getContrasts(), hasItems(contrastMock1, contrastMock2));
+        assertThat(subject.getDataColumnDescriptors(), hasItems(contrastMock1, contrastMock2));
     }
 
     @Test
     public void testGetContrast() throws Exception {
-        assertThat(subject.getContrast(CONTRAST_ID1), is(contrastMock1));
-        assertThat(subject.getContrast(CONTRAST_ID2), is(contrastMock2));
-    }
-
-    @Test
-    public void testGetContrastIds() throws Exception {
-        assertThat(subject.getContrastIds(), hasItems(CONTRAST_ID1, CONTRAST_ID2));
+        assertThat(subject.getDataColumnDescriptor(CONTRAST_ID1), is(contrastMock1));
+        assertThat(subject.getDataColumnDescriptor(CONTRAST_ID2), is(contrastMock2));
     }
 
     @Test
     public void testGetAssayAccessions() throws Exception {
-        assertThat(subject.getAssayAccessions(), hasItems(ASSAY_GROUP_1, ASSAY_GROUP_2));
+        assertThat(subject.getAnalysedRowsAccessions(), hasItems(ASSAY_GROUP_1, ASSAY_GROUP_2));
     }
 
     @Test

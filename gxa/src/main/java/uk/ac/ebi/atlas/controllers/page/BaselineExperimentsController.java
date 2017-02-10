@@ -65,7 +65,7 @@ public class BaselineExperimentsController {
                 displayName = experimentAccession;
             }
 
-            int numberOfAssays = ((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getExperimentRunAccessions().size();
+            int numberOfAssays = ((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getAnalysedRowsAccessions().size();
 
             experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
