@@ -1,24 +1,19 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowRawDeserializer;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
 public class ExpressionsRowRawDeserializerBaseline extends ExpressionsRowRawDeserializer<BaselineExpression> {
 
-    final int expectedNumberOfValues;
-    Iterator<FactorGroup> factorGroups;
+    private  int expectedNumberOfValues;
 
     public ExpressionsRowRawDeserializerBaseline(List<FactorGroup> orderedFactorGroups) {
         expectedNumberOfValues = orderedFactorGroups.size();
-        factorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 
     @Override
