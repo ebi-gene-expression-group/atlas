@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -79,7 +80,7 @@ public class BaselineProfilesWriterServiceTest {
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
-        when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableSet.of(assayGroupMock));
+        when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         TreeSet<Factor> t = new TreeSet<>();

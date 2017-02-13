@@ -1,15 +1,15 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 
 import java.util.Iterator;
@@ -79,7 +79,8 @@ public class BaselineExperimentAssayGroupsLinesTest {
 
 
         when(baselineExperiment.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(baselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableSet.of(ASSAY_GROUP1, ASSAY_GROUP2, ASSAY_GROUP3));
+        when(baselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(ASSAY_GROUP1, ASSAY_GROUP2,
+                ASSAY_GROUP3));
         when(baselineExperiment.getExperimentDesign()).thenReturn(experimentDesign);
 
         BaselineExperimentAssayGroupsLines subject = new BaselineExperimentAssayGroupsLines(baselineExperiment);

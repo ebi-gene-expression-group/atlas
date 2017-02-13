@@ -71,8 +71,8 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
 
     }
 
-    public Collection<DataColumnDescriptor> getDataColumnDescriptors(){
-        return dataColumnDescriptorsPerId.values();
+    public List<DataColumnDescriptor> getDataColumnDescriptors(){
+        return ImmutableList.<DataColumnDescriptor>builder().addAll(dataColumnDescriptorsPerId.values()).build();
     }
 
     public DataColumnDescriptor getDataColumnDescriptor(String id){

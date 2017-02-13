@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentTest {
@@ -67,7 +68,7 @@ public class BaselineExperimentTest {
     }
 
     public static BaselineExperiment mockExperiment(){
-        return mockExperiment(Mockito.mock(ExperimentalFactors.class), Mockito.mock(ExperimentDesign.class),
+        return mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
                 assayGroups);
     }
 
@@ -90,5 +91,16 @@ public class BaselineExperimentTest {
     @Test
     public void testGetExperimentDesign() throws Exception {
         assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
+    }
+
+    @Test
+    public void orderOfAssayGroupsIsPreserved(){
+        int num = (int) Math.round(Math.random()*10000);
+        List<AssayGroup> assayGroups = new ArrayList<>(num);
+        for(int i = 0 ; i< num; i++){
+            assayGroups.add(new AssayGroup("id_"+i, "assay_"+i));
+        }
+        assertThat(mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
+                assayGroups).getDataColumnDescriptors(), is(assayGroups));
     }
 }

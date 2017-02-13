@@ -14,8 +14,8 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpres
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
-import java.awt.Color;
-import java.util.SortedSet;
+import java.awt.*;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -51,7 +51,7 @@ public class DifferentialProfilesViewModelBuilderTest {
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
     private PValueFormatter pValueFormatter = new PValueFormatter();
     private DifferentialProfilesViewModelBuilder subject = new DifferentialProfilesViewModelBuilder(colorGradient, pValueFormatter);
-    private SortedSet<Contrast> orderedContrasts = ImmutableSortedSet.of(G2_G1, G2_G3);
+    private List<Contrast> orderedContrasts = ImmutableList.of(G2_G1, G2_G3);
 
     @Test
     public void buildProfilesViewModel() {

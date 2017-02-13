@@ -15,11 +15,7 @@ import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
@@ -31,9 +27,8 @@ import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class DifferentialExperimentPageService
         <E extends DifferentialExperiment,
@@ -80,7 +75,7 @@ public class DifferentialExperimentPageService
                                                    BindingResult bindingResult, Model model) {
         JsonObject result = new JsonObject();
         DifferentialRequestContext<E> requestContext = initRequestContext(experiment, preferences);
-        Collection<Contrast> contrasts = experiment.getDataColumnDescriptors();
+        List<Contrast> contrasts = experiment.getDataColumnDescriptors();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());

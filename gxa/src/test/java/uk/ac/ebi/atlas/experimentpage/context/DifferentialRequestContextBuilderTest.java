@@ -14,13 +14,10 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -57,11 +54,11 @@ public class DifferentialRequestContextBuilderTest {
 
         when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_NAME1);
         when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_NAME2);
-        SortedSet<Contrast> sortedSet = new TreeSet<>();
-        sortedSet.add(contrastMock1);
-        sortedSet.add(contrastMock2);
+        List<Contrast> contrasts = new ArrayList<>();
+        contrasts.add(contrastMock1);
+        contrasts.add(contrastMock2);
 
-        when(experimentMock.getDataColumnDescriptors()).thenReturn(sortedSet);
+        when(experimentMock.getDataColumnDescriptors()).thenReturn(contrasts);
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("a")));
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(experimentMock.getDataColumnDescriptor(CONTRAST_NAME1)).thenReturn(contrastMock1);

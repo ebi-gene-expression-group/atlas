@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.NumberFormat;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Named
@@ -34,7 +35,7 @@ public class DifferentialProfilesViewModelBuilder {
     }
 
     public JsonObject build(DifferentialProfilesList<? extends DifferentialProfile<? extends
-                DifferentialExpression>> diffProfiles, Collection<Contrast> orderedContrasts) {
+                DifferentialExpression>> diffProfiles, List<Contrast> orderedContrasts) {
         JsonObject result = new JsonObject();
         addDoublePropertyIfNotNaN(result, "maxDownLevel", diffProfiles.getMaxDownRegulatedExpressionLevel());
         addDoublePropertyIfNotNaN(result, "maxUpLevel", diffProfiles.getMaxUpRegulatedExpressionLevel());
@@ -54,7 +55,7 @@ public class DifferentialProfilesViewModelBuilder {
 
     private <P extends DifferentialProfile<?
                 extends DifferentialExpression>> JsonArray buildGenes(DifferentialProfilesList<P> profiles,
-                                                                      Collection<Contrast> orderedContrasts) {
+                                                                      List<Contrast> orderedContrasts) {
         JsonArray serializedProfiles = new JsonArray();
         for(P profile: profiles){
             serializedProfiles.add(build(profile, orderedContrasts, profiles.getMinUpRegulatedExpressionLevel(),
@@ -65,7 +66,7 @@ public class DifferentialProfilesViewModelBuilder {
     }
 
     private JsonObject build(DifferentialProfile<? extends DifferentialExpression> profile,
-                             Collection<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+                             List<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         JsonObject serializedProfileRow = new JsonObject();
         serializedProfileRow.addProperty("id", profile.getId());
         serializedProfileRow.addProperty("name", profile.getName());
@@ -76,7 +77,8 @@ public class DifferentialProfilesViewModelBuilder {
     }
 
     private JsonArray buildExpressions(DifferentialProfile<? extends DifferentialExpression>
-                                                                        profile, Collection<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+                                                                        profile, List<Contrast> orderedContrasts, double
+            minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         JsonArray serializedExpressions = new JsonArray();
         for(Contrast contrast: orderedContrasts){
             JsonObject expr = new JsonObject();
