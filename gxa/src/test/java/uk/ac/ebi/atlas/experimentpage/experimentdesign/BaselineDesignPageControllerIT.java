@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 public class BaselineDesignPageControllerIT {
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final List<String> RUNS = Lists.newArrayList("ERR030887","ERR030886","ERR030879","ERR030878","ERR030885","ERR030884","ERR030877","ERR030883","ERR030882","ERR030881","ERR030880","ERR030872","ERR030875","ERR030876","ERR030873","ERR030874");
+    private static final List<String> RUNS = Lists.newArrayList("ERR030875","ERR030878","ERR030874","ERR030883","ERR030885","ERR030887","ERR030876","ERR030886","ERR030882","ERR030877","ERR030879","ERR030872","ERR030884","ERR030873","ERR030880","ERR030881");
 
     private static final Set<String> runSet = Sets.newLinkedHashSet();
 

@@ -38,10 +38,13 @@ public class ProteomicsBaselineDesignPageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-PROT-1";
 
-    private static final List<String> RUNS = Lists.newArrayList("Adult_Bcells", "Fetal_Heart", "Adult_Adrenalgland", "Adult_Monocytes", "Adult_Liver",
-            "Adult_Platelets", "Adult_Heart", "Adult_Pancreas", "Adult_Urinarybladder", "Fetal_Brain", "Fetal_Placenta", "Adult_Lung", "Adult_Spinalcord",
-            "Fetal_Ovary", "Fetal_Liver", "Adult_Colon", "Adult_Gallbladder", "Adult_Rectum", "Fetal_Gut", "Adult_Retina", "Adult_Testis", "Adult_NKcells",
-            "Adult_Prostate", "Adult_CD4Tcells", "Adult_Ovary", "Fetal_Testis", "Adult_Frontalcortex", "Adult_CD8Tcells", "Adult_Esophagus", "Adult_Kidney");
+    /*
+    // cut -f 1 ~/ATLAS3.TEST/integration-test-data/expdesign/ExpDesign-E-PROT-1.tsv | tr $'\n' ,
+     */
+    private static final List<String> RUNS = Lists.newArrayList("Adult_Adrenalgland","Adult_Bcells","Adult_CD4Tcells","Adult_CD8Tcells","Adult_Colon",
+            "Adult_Esophagus","Adult_Frontalcortex","Adult_Gallbladder","Adult_Heart","Adult_Kidney","Adult_Liver","Adult_Lung","Adult_Monocytes","Adult_NKcells",
+            "Adult_Ovary","Adult_Pancreas","Adult_Platelets","Adult_Prostate","Adult_Rectum","Adult_Retina","Adult_Spinalcord","Adult_Testis","Adult_Urinarybladder",
+            "Fetal_Brain","Fetal_Gut","Fetal_Heart","Fetal_Liver","Fetal_Ovary","Fetal_Placenta","Fetal_Testis");
 
     private static final Set<String> runSet = Sets.newLinkedHashSet();
 

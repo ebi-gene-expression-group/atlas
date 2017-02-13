@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -26,7 +27,7 @@ public class ExperimentDesignDownloadController<T extends Experiment> {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv")
-    protected void extractExperimentDesign(String experimentAccession, HttpServletResponse response, String
+    protected void extractExperimentDesign(@PathVariable String experimentAccession, HttpServletResponse response, String
             accessKey) throws IOException {
 
 
