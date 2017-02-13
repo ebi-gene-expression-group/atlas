@@ -104,14 +104,14 @@ public class AnalyticsSearchServiceIT {
     public void speciesOfSpeciesSpecificSearch() {
         SemanticQueryTerm reactomeQueryTerm = SemanticQueryTerm.create("R-MMU-69002", "pathwayid");
         Optional<String> species = subject.findSpeciesFor(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
-        assertThat(species.get(), is("mus musculus"));
+        assertThat(species.orNull(), is("mus musculus"));
     }
 
     @Test
     public void speciesOfMultipleSpeciesSearch() {
         SemanticQueryTerm reactomeQueryTerm = SemanticQueryTerm.create("GO:0008150", "go");
         Optional<String> species = subject.findSpeciesFor(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
-        assertThat(speciesFactory.create(species.get()).isUnknown(), is(false));
+        assertThat(speciesFactory.create(species.orNull()).isUnknown(), is(false));
     }
 
 }
