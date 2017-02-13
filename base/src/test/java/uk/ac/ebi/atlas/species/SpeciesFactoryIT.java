@@ -40,4 +40,15 @@ public class SpeciesFactoryIT {
     public void unknownSpecies() {
         assertThat(subject.create("foobar").isUnknown(), is(true));
     }
+
+    @Test
+    public void emptySpecies() {
+        assertThat(subject.create("").isUnknown(), is(true));
+    }
+
+    @Test
+    public void nullSpecies() {
+        assertThat(subject.create(null).isUnknown(), is(true));
+    }
+
 }
