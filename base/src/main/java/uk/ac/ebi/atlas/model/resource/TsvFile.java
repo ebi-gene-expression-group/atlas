@@ -14,7 +14,7 @@ import java.text.MessageFormat;
 public abstract class TsvFile<T> extends AtlasResource<T>{
 
     public TsvFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, args)));
+        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object []) args)));
     }
 
     public static class ReadOnly extends TsvFile<TsvReader> {

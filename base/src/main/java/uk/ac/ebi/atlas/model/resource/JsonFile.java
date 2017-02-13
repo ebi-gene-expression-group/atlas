@@ -11,7 +11,7 @@ import java.text.MessageFormat;
 public abstract class JsonFile<T> extends AtlasResource<T> {
 
     public JsonFile(String dataFilesLocation, String template, String ... args) {
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, args)));
+        super(Paths.get(dataFilesLocation, MessageFormat.format(template, (Object []) args)));
     }
 
     public static class ReadOnly extends JsonFile<JsonReader> {
