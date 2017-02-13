@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class DataFileHubIT {
 
     @Inject
-    DataFileHub subject;
+    private DataFileHub subject;
 
     @Test
     public void testGetExperimentFiles() throws Exception {
@@ -35,6 +35,6 @@ public class DataFileHubIT {
     }
 
     private void assertAtlasResourceExists(AtlasResource<?> resource){
-        assertTrue(resource.toString(), resource.exists());
+        assertThat(resource.exists(), is(true));
     }
 }
