@@ -111,18 +111,18 @@ public class AnalyticsQueryClient {
         Interesting lack of symmetry - baselineResults are retrieved with a different code path! :)
          */
 
-        private void setFacets(Resource r){
+        private void setFacets(Resource r) {
             solrQuery.setRows(0);
             solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(r).replaceAll("\\s+",""));
         }
 
-        public Builder baselineFacets(){
+        public Builder baselineFacets() {
             setFacets(baselineFacetsQueryJSON);
             solrQuery.addFilterQuery("experimentType:(RNASEQ_MRNA_BASELINE OR PROTEOMICS_BASELINE)");
             return this;
         }
 
-        private Builder differential(){
+        private Builder differential() {
             solrQuery.addFilterQuery("experimentType:(" +
                     "RNASEQ_MRNA_DIFFERENTIAL " +
                     "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
@@ -131,23 +131,29 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        public Builder differentialResults(){
+        public Builder firstSpecies() {
+            solrQuery.setFields("species");
+            solrQuery.setRows(1);
+            return this;
+        }
+
+        public Builder differentialResults() {
             solrQuery.setRows(1000);
             solrQuery.set("sort", "abs(foldChange)desc,pValue asc");
             return differential();
         }
 
-        public Builder differentialFacets(){
+        public Builder differentialFacets() {
             setFacets(differentialFacetsQueryJSON);
             return differential();
         }
 
-        public Builder experimentTypeFacets(){
+        public Builder experimentTypeFacets() {
             setFacets(experimentTypesQueryJson);
             return this;
         }
 
-        public Builder bioentityIdentifierFacets(int facetLimit){
+        public Builder bioentityIdentifierFacets(int facetLimit) {
             solrQuery.setRows(0);
             solrQuery.set("json.facet", ResourceUtils.readPlainTextResource(bioentityIdentifiersQueryJson).replace("\"limit\": -1",
                     MessageFormat.format("\"limit\": {0}", Integer.toString(facetLimit))).replaceAll("\\s+",""));
@@ -177,7 +183,7 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        private AnalyticsSolrQueryTree conditionsSearchQuery(SemanticQuery conditionQuery){
+        private AnalyticsSolrQueryTree conditionsSearchQuery(SemanticQuery conditionQuery) {
             ImmutableList.Builder<String> b = ImmutableList.builder();
             for(SemanticQueryTerm term: conditionQuery.terms()){
                 if(term.hasValue()){
@@ -215,7 +221,7 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        public String fetch(){
+        public String fetch() {
 
             List<String> qsForQueryClauses = qsForQueryClauses(queryClausesBuilder.build());
             SolrQuery[] solrQueries = new SolrQuery[qsForQueryClauses.size()];
@@ -230,7 +236,7 @@ public class AnalyticsQueryClient {
         }
     }
 
-    private static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses){
+    private static List<String> qsForQueryClauses(List<AnalyticsSolrQueryTree> queryClauses) {
 
         if (queryClauses.isEmpty()) {
             return ImmutableList.of(Builder.DEFAULT_QUERY);
