@@ -21,25 +21,17 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExperimentTest {
 
-    private static final String CONTRAST_ID1 = "a";
-    private static final String CONTRAST_ID2 = "b";
-    private static final String ASSAY_GROUP_1 = "assayGroup1";
-    private static final String ASSAY_GROUP_2 = "assayGroup2";
     private static final String PUBMEDID = "PUBMEDID";
 
     private DifferentialExperiment subject;
 
-    @Mock
-    private Contrast contrastMock1;
+    AssayGroup referenceAssay1 = new AssayGroup("g1", "assay1");
+    AssayGroup testAssay1 = new AssayGroup("g2", "assay2");
+    AssayGroup referenceAssay2 = new AssayGroup("g3", "assay3");
+    AssayGroup testAssay2 = new AssayGroup("g4", "assay41", "assay42");
 
-    @Mock
-    private Contrast contrastMock2;
-
-    @Mock
-    private AssayGroup assayGroupMock1;
-
-    @Mock
-    private AssayGroup assayGroupMock2;
+    Contrast c1 = new Contrast("g1_g2", null, referenceAssay1, testAssay1, "first contrast");
+    Contrast c2 = new Contrast("g3_g4", null, referenceAssay2, testAssay2, "second contrast");
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -47,37 +39,25 @@ public class DifferentialExperimentTest {
     @Before
     public void setUp() throws Exception {
 
-        when(assayGroupMock1.iterator()).thenReturn(Sets.newHashSet(ASSAY_GROUP_1).iterator());
-        when(assayGroupMock2.iterator()).thenReturn(Sets.newHashSet(ASSAY_GROUP_2).iterator());
 
-        when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_ID1);
-        when(contrastMock1.getId()).thenReturn(CONTRAST_ID1);
-        when(contrastMock1.getReferenceAssayGroup()).thenReturn(assayGroupMock1);
-        when(contrastMock1.getTestAssayGroup()).thenReturn(assayGroupMock2);
-
-        when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_ID2);
-        when(contrastMock2.getId()).thenReturn(CONTRAST_ID2);
-        when(contrastMock2.getReferenceAssayGroup()).thenReturn(assayGroupMock2);
-        when(contrastMock2.getTestAssayGroup()).thenReturn(assayGroupMock1);
-
-        subject = new DifferentialExperiment("accession", new Date(), ImmutableList.of(contrastMock1, contrastMock2),
+        subject = new DifferentialExperiment("accession", new Date(), ImmutableList.of(c1, c2),
                 "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID), experimentDesignMock);
     }
 
     @Test
     public void testGetContrasts() throws Exception {
-        assertThat(subject.getDataColumnDescriptors(), hasItems(contrastMock1, contrastMock2));
+        assertThat(subject.getDataColumnDescriptors(), hasItems(c1, c2));
     }
 
     @Test
     public void testGetContrast() throws Exception {
-        assertThat(subject.getDataColumnDescriptor(CONTRAST_ID1), is(contrastMock1));
-        assertThat(subject.getDataColumnDescriptor(CONTRAST_ID2), is(contrastMock2));
+        assertThat(subject.getDataColumnDescriptor("g1_g2"), is(c1));
+        assertThat(subject.getDataColumnDescriptor("g3_g4"), is(c2));
     }
 
     @Test
     public void testGetAssayAccessions() throws Exception {
-        assertThat(subject.getAnalysedRowsAccessions(), hasItems(ASSAY_GROUP_1, ASSAY_GROUP_2));
+        assertThat(subject.getAnalysedRowsAccessions(), hasItems("assay1", "assay2", "assay3","assay41", "assay42"));
     }
 
     @Test

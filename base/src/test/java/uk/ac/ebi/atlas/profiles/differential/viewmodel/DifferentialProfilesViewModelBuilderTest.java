@@ -62,11 +62,11 @@ public class DifferentialProfilesViewModelBuilderTest {
 
         JsonObject actual = subject.build(diffProfiles, orderedContrasts);
 
-
         String expected = "{\n" +
-                "  \"minUpLevel\": 1.3,\n" +
+                "  \"maxDownLevel\": -8.8,\n" +
                 "  \"maxUpLevel\": 1.3,\n" +
-                "  \"searchResultTotal\": 50,\n" +
+                "  \"minDownLevel\": -0.8,\n" +
+                "  \"minUpLevel\": 1.3,\n" +
                 "  \"rows\": [\n" +
                 "    {\n" +
                 "      \"id\": \"FBgn0051624\",\n" +
@@ -74,18 +74,18 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "      \"designElement\": \"1630811_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
-                "          \"contrastName\": \"cdk8\",\n" +
-                "          \"color\": \"#C0C0C0\",\n" +
-                "          \"foldChange\": -0.8,\n" +
-                "          \"pValue\": \"0.002\",\n" +
-                "          \"tStat\": \"-6.45\"\n" +
-                "        },\n" +
-                "        {\n" +
                 "          \"contrastName\": \"cycC\",\n" +
                 "          \"color\": \"#0000FF\",\n" +
                 "          \"foldChange\": -8.8,\n" +
                 "          \"pValue\": \"3.24E-4\",\n" +
                 "          \"tStat\": \"-3.37\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"contrastName\": \"cdk8\",\n" +
+                "          \"color\": \"#C0C0C0\",\n" +
+                "          \"foldChange\": -0.8,\n" +
+                "          \"pValue\": \"0.002\",\n" +
+                "          \"tStat\": \"-6.45\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    },\n" +
@@ -95,20 +95,19 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "      \"designElement\": \"1640410_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
+                "          \"contrastName\": \"cycC\"\n" +
+                "        },\n" +
+                "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
                 "          \"color\": \"#FF0000\",\n" +
                 "          \"foldChange\": 1.3,\n" +
                 "          \"pValue\": \"2.16E-4\",\n" +
                 "          \"tStat\": \"10.71\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"contrastName\": \"cycC\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    }\n" +
                 "  ],\n" +
-                "  \"minDownLevel\": -0.8,\n" +
-                "  \"maxDownLevel\": -8.8\n" +
+                "  \"searchResultTotal\": 50\n" +
                 "}";
 
         assertThat(actual,is(new JsonParser().parse(expected)));
@@ -122,52 +121,53 @@ public class DifferentialProfilesViewModelBuilderTest {
 
         String expected = "[\n" +
                 "  {\n" +
-                "    \"id\": \"g2_g3\",\n" +
                 "    \"arrayDesignAccession\": \"A-AFFY-35\",\n" +
                 "    \"referenceAssayGroup\": {\n" +
-                "      \"id\": \"g2\",\n" +
                 "      \"assayAccessions\": [\n" +
                 "        \"WT3\",\n" +
                 "        \"WT1\",\n" +
                 "        \"WT2\"\n" +
                 "      ],\n" +
-                "      \"replicates\": 3\n" +
+                "      \"replicates\": 3,\n" +
+                "      \"id\": \"g2\"\n" +
                 "    },\n" +
                 "    \"testAssayGroup\": {\n" +
-                "      \"id\": \"g1\",\n" +
                 "      \"assayAccessions\": [\n" +
                 "        \"K1\",\n" +
                 "        \"K2\",\n" +
                 "        \"K3\"\n" +
                 "      ],\n" +
-                "      \"replicates\": 3\n" +
+                "      \"replicates\": 3,\n" +
+                "      \"id\": \"g1\"\n" +
                 "    },\n" +
-                "    \"displayName\": \"cdk8\"\n" +
+                "    \"displayName\": \"cdk8\",\n" +
+                "    \"id\": \"g2_g3\"\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"id\": \"g2_g1\",\n" +
                 "    \"arrayDesignAccession\": \"A-AFFY-35\",\n" +
                 "    \"referenceAssayGroup\": {\n" +
-                "      \"id\": \"g2\",\n" +
                 "      \"assayAccessions\": [\n" +
                 "        \"WT3\",\n" +
                 "        \"WT1\",\n" +
                 "        \"WT2\"\n" +
                 "      ],\n" +
-                "      \"replicates\": 3\n" +
+                "      \"replicates\": 3,\n" +
+                "      \"id\": \"g2\"\n" +
                 "    },\n" +
                 "    \"testAssayGroup\": {\n" +
-                "      \"id\": \"g1\",\n" +
                 "      \"assayAccessions\": [\n" +
                 "        \"C1\",\n" +
                 "        \"C2\",\n" +
                 "        \"C3\"\n" +
                 "      ],\n" +
-                "      \"replicates\": 3\n" +
+                "      \"replicates\": 3,\n" +
+                "      \"id\": \"g1\"\n" +
                 "    },\n" +
-                "    \"displayName\": \"cycC\"\n" +
+                "    \"displayName\": \"cycC\",\n" +
+                "    \"id\": \"g2_g1\"\n" +
                 "  }\n" +
                 "]";
+
         assertThat(json, is(expected));
 
     }
