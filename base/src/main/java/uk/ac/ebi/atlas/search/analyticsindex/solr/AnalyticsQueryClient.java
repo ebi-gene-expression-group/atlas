@@ -133,7 +133,7 @@ public class AnalyticsQueryClient {
 
         public Builder differentialResults(){
             solrQuery.setRows(1000);
-            solrQuery.set("sort", "abs(foldChange)desc");
+            solrQuery.set("sort", "abs(foldChange)desc,pValue asc");
             return differential();
         }
 
