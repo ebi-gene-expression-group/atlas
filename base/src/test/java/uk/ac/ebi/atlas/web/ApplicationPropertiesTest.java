@@ -6,10 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -37,28 +35,17 @@ public class ApplicationPropertiesTest {
     private static final String EXPERIMENT_URL = "http://x.y/z/experiments/X";
     private static final String CONTEXT_PATH = "/z";
 
-    private static final Map<?,?> REQUEST_PARAMETERS_MAP = ImmutableMap.of("p1",new String[]{"1"},"p2",new
-            String[]{"2"});
+    private static final Map<String, String[]> REQUEST_PARAMETERS_MAP =
+            ImmutableMap.of("p1",new String[]{"1"},"p2",new String[]{"2"});
     private static final String REQUEST_PARAMETERS = "p2=2&p1=1";
-    private static final String DOWNLOAD_URL = "/experiments/X.tsv?" + REQUEST_PARAMETERS+"&geneQuery="+SemanticQuery.create().toUrlEncodedJson();
+    private static final String DOWNLOAD_URL =
+            "/experiments/X.tsv?" + REQUEST_PARAMETERS+"&geneQuery="+SemanticQuery.create().toUrlEncodedJson();
 
     @Mock
     private HttpServletRequest httpServletRequestMock;
 
     @Mock
-    private BaselineExperiment homoSapiensExperimentMock;
-
-    @Mock
-    private BaselineExperiment mouseExperimentMock;
-
-    @Mock
-    private RnaSeqBaselineExperimentsCache experimentCacheMock;
-
-    @Mock
     private Properties configurationPropertiesMock;
-
-    @Mock
-    private Properties speciesToExperimentPropertiesMock;
 
     @Mock
     private ArrayDesignTrader arrayDesignTraderMock;
@@ -67,10 +54,13 @@ public class ApplicationPropertiesTest {
 
     @Before
     public void setUp() throws Exception {
-        when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_URL + "{0}");
-        when(configurationPropertiesMock.getProperty(FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
+        when(configurationPropertiesMock.getProperty(
+                EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(
+                FEEDBACK_EMAIL_PROPERTY_KEY)).thenReturn(FEEDBACK_EMAIL_VALUE);
 
-        when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
+        when(configurationPropertiesMock.getProperty(
+                EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_ARRAYS_URL + "{0}");
         when(configurationPropertiesMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
 
         //given
@@ -120,7 +110,6 @@ public class ApplicationPropertiesTest {
         when(httpServletRequestMock.getContextPath()).thenReturn("/gxa");
         when(httpServletRequestMock.isSecure()).thenReturn(false);
 
-        assertThat(subject.buildServerURL(httpServletRequestMock), is("http://localhost:9090/gxa"));
+        assertThat(ApplicationProperties.buildServerURL(httpServletRequestMock), is("http://localhost:9090/gxa"));
     }
-
 }
