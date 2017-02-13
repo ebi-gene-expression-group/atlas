@@ -4,14 +4,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.efo.EFOLookupService;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;

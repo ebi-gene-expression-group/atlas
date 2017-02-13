@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;

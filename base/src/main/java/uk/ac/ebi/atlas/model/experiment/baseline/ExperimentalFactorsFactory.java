@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.velocity.util.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 
 import java.util.List;
@@ -22,16 +21,6 @@ public class ExperimentalFactorsFactory {
             experimentDesign, BaselineExperimentConfiguration factorsConfig,
                                                          List<AssayGroup> assayGroups, String[] orderedAssayGroupIds, boolean
                                                                  orderCurated) {
-       return createExperimentalFactors(experimentAccession, experimentDesign, factorsConfig, new AssayGroups
-                (assayGroups),
-                orderedAssayGroupIds,
-                orderCurated);
-    }
-
-    @Deprecated
-    ExperimentalFactors createExperimentalFactors(String experimentAccession, ExperimentDesign
-            experimentDesign, BaselineExperimentConfiguration factorsConfig,
-                                                         AssayGroups assayGroups, String[] orderedAssayGroupIds, boolean orderCurated) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
@@ -107,12 +96,12 @@ public class ExperimentalFactorsFactory {
         return nbUpperCase;
     }
 
-    List<FactorGroup> extractOrderedFactorGroups(String experimentAccession, String[] orderedAssayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+    List<FactorGroup> extractOrderedFactorGroups(String experimentAccession, String[] orderedAssayGroupIds, final List<AssayGroup> assayGroups, ExperimentDesign experimentDesign) {
 
         List<FactorGroup> factorGroups = Lists.newArrayList();
 
         for (String groupId : orderedAssayGroupIds) {
-            AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
+            AssayGroup assayGroup = getAssayGroup(assayGroups,groupId);
 
             checkNotNull(assayGroup, String.format("%s: No assay group \"%s\"", experimentAccession, groupId));
 
@@ -126,12 +115,12 @@ public class ExperimentalFactorsFactory {
 
     }
 
-    Map<String, FactorGroup> extractOrderedFactorGroupsByAssayGroup(String[] orderedAssayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+    Map<String, FactorGroup> extractOrderedFactorGroupsByAssayGroup(String[] orderedAssayGroupIds, final List<AssayGroup> assayGroups, ExperimentDesign experimentDesign) {
 
         Map<String, FactorGroup> factorGroups = Maps.newLinkedHashMap();
 
         for (String groupId : orderedAssayGroupIds) {
-            AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
+            AssayGroup assayGroup = getAssayGroup(assayGroups,groupId);
 
             FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
             factorGroups.put(groupId, factorGroup);
@@ -139,5 +128,14 @@ public class ExperimentalFactorsFactory {
         }
         return factorGroups;
 
+    }
+
+    private AssayGroup getAssayGroup(List<AssayGroup> assayGroups, String assayGroupId){
+        for(AssayGroup assayGroup : assayGroups){
+            if(assayGroup.getId().equals(assayGroupId)){
+                return assayGroup;
+            }
+        }
+        return null;
     }
 }
