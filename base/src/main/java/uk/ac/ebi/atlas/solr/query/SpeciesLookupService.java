@@ -1,24 +1,21 @@
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.solr.SolrUtil;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.Collections;
 
+// See AnalyticsSearchService.findSpeciesFor
+@Deprecated
 @Named
 public class SpeciesLookupService {
 
@@ -44,17 +41,7 @@ public class SpeciesLookupService {
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifiers);
     }
 
-    public Optional<String> fetchFirstSpeciesByField(String fieldName, SemanticQuery geneQuery) {
-        return fetchFirstSpeciesByField(
-                fieldName, Collections2.transform(geneQuery.terms(), new Function<SemanticQueryTerm, String>() {
-                    @Override
-                    public String apply(SemanticQueryTerm semanticQueryTerm) {
-                        return semanticQueryTerm.value();
-                    }
-                }));
-    }
-
-    public Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {
+    private Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {
         if (StringUtils.isBlank(fieldName)) {
             fieldName = PROPERTY_LOWER_FIELD;
         }
@@ -68,16 +55,11 @@ public class SpeciesLookupService {
         return Optional.absent();
     }
 
-    // surround in quotes, so queries with special chars work, eg: "GO:0003674"
-    private String encloseInQuotes(String queryToken) {
-        return "\"" + queryToken + "\"";
-    }
-
     // this is faster than fetchSpeciesForGeneSet because it doesn't facet
     private Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
         LOGGER.debug("fetch first species for {}:{}", fieldName, queryToken);
 
-        SolrQuery query = new SolrQuery(fieldName + ":" + encloseInQuotes(queryToken));
+        SolrQuery query = new SolrQuery(fieldName + ":" + StringUtils.wrap(queryToken, "\""));
 
         //fields to be returned, ie: fl=species
         query.setFields(SPECIES_FIELD);
@@ -93,7 +75,7 @@ public class SpeciesLookupService {
     // If results are empty, then term does not exist in Solr
     public Optional<String> fetchSpeciesForGeneSet(String term) {
         // eg: property_value_lower:"IPR027417"
-        String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term) +
+        String queryText = PROPERTY_LOWER_FIELD + ":" + StringUtils.wrap(term, "\"") +
                 " AND property_name:(pathwayid OR go OR po OR interpro)";  // Needed to exclude Entrez numerical ids, identical to Plant Reactome ids (pathwayid)
         LOGGER.debug("fetch species for geneset {}", queryText);
 
