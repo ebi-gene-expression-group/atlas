@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,9 +24,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class AnalyticsQueryClientIT {
-
-    @Qualifier("solrAnalyticsServerURL")
-    private String solrBaseUrl;
 
     @Value("classpath:/solr/conf")
     Resource solrConf;
@@ -51,7 +47,7 @@ public class AnalyticsQueryClientIT {
 
     @Before
     public void setUp(){
-        subject = new TestableAnalyticsQueryClient(restTemplate, solrBaseUrl, baselineFacetsQueryJSON,
+        subject = new TestableAnalyticsQueryClient(restTemplate, null, baselineFacetsQueryJSON,
                 differentialFacetsQueryJSON,experimentTypesQueryJson,bioentityIdentifiersQueryJson);
     }
 
@@ -178,8 +174,6 @@ public class AnalyticsQueryClientIT {
     }
 
 
-
-
     class TestableAnalyticsQueryClient extends AnalyticsQueryClient {
 
         public TestableAnalyticsQueryClient(RestTemplate restTemplate, String solrBaseUrl, Resource baselineFacetsQueryJSON, Resource differentialFacetsQueryJSON,Resource experimentTypesQueryJson, Resource bioentityIdentifiersQueryJson) {
@@ -200,7 +194,5 @@ public class AnalyticsQueryClientIT {
             return true;
         }
     }
-
-
 
 }
