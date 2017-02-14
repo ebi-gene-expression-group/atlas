@@ -4,6 +4,8 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
 
+<%@ include file="includes/experiment-header.jsp" %>
+
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
 <script
         src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasExperimentPage.bundle.js"></script>

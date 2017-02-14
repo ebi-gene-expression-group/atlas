@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 
@@ -16,11 +17,11 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
                        String description, String displayName, String disclaimer, Species species,
                        boolean hasRData, Collection<String> pubMedIds, ExperimentDesign experimentDesign,
                        List<AssayGroup> assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription,
-                       List<String> alternativeViews, List<String> alternativeViewDescriptions) {
+                       List<String> alternativeViews, List<String> alternativeViewDescriptions, ExperimentDisplayDefaults experimentDisplayDefaults) {
 
         super(experimentType, accession, lastUpdate, displayName, description, disclaimer, hasRData, species,
               pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
-              alternativeViews, alternativeViewDescriptions, assayGroups);
+              alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
 
         this.experimentalFactors = experimentalFactors;
     }

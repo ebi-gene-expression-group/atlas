@@ -34,6 +34,7 @@ import static com.google.common.base.Preconditions.checkState;
  *  experiment design page.
  *
  */
+@Deprecated //replaced with ExperimentDisplayDefaults
 public class ExperimentalFactors implements Serializable {
 
     private String defaultQueryFactorType;

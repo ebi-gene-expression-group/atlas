@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
@@ -30,7 +31,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
         super(experimentType, accession, lastUpdate,null, description, "", hasRData, species, pubMedIds,
                 experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
-                Collections.<String>emptyList(), Collections.<String>emptyList(), contrasts);
+                Collections.<String>emptyList(), Collections.<String>emptyList(), contrasts, ExperimentDisplayDefaults.create());
     }
 
     @Override

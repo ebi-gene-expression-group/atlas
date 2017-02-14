@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
@@ -83,6 +84,8 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                 .withExperimentalFactors(experimentalFactorsFactory.createExperimentalFactors(experimentAccession,
                         experimentDesign,
                         factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated))
+                .withDisplayDefaults(ExperimentDisplayDefaults.create(factorsConfig.getDefaultFilterFactors(),
+                        factorsConfig.getMenuFilterFactorTypes()))
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
                 .withRData(configuration.hasRData())

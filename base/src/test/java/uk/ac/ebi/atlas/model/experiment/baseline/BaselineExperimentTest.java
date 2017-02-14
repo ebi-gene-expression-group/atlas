@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
@@ -63,7 +63,7 @@ public class BaselineExperimentTest {
                                     "ensemblName", "defaulQueryFactorType",
                                     "kingdom", ImmutableSortedMap.<String, List<String>>of())),
                     true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
-                    Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>());
+                    Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>(), ExperimentDisplayDefaults.create());
 
     }
 
