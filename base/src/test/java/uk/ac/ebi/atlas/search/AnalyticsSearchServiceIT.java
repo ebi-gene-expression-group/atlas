@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search;
 
-import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -88,30 +89,32 @@ public class AnalyticsSearchServiceIT {
     }
 
     @Test
-    public void speciesOfEmptyQueryIsAbsent() {
-        Optional<String> species = subject.findSpeciesFor(SemanticQuery.create(), SemanticQuery.create());
-        assertThat(species.isPresent(), is(false));
+    public void speciesOfEmptyQuery() {
+        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(), SemanticQuery.create(), "");
+        assertThat(species.size(), is(greaterThan(25)));    // Number of species present in analytics index is now 27
     }
 
     @Test
-    public void speciesOfEmptyResultsIsAbsent() {
+    public void speciesWhenNoResults() {
         SemanticQueryTerm foobarQueryTerm = SemanticQueryTerm.create("Foo", "Bar");
-        Optional<String> species = subject.findSpeciesFor(SemanticQuery.create(), SemanticQuery.create(foobarQueryTerm));
-        assertThat(species.isPresent(), is(false));
+        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(), SemanticQuery.create(foobarQueryTerm), "");
+        assertThat(species, hasSize(0));
     }
 
     @Test
-    public void speciesOfSpeciesSpecificSearch() {
+    public void speciesSpecificSearch() {
         SemanticQueryTerm reactomeQueryTerm = SemanticQueryTerm.create("R-MMU-69002", "pathwayid");
-        Optional<String> species = subject.findSpeciesFor(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
-        assertThat(species.orNull(), is("mus musculus"));
+        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create(), "");
+        assertThat(species, hasSize(1));
+        assertThat(species.get(0), is("mus musculus"));
     }
 
     @Test
-    public void speciesOfMultipleSpeciesSearch() {
+    public void multipleSpeciesSearch() {
         SemanticQueryTerm reactomeQueryTerm = SemanticQueryTerm.create("GO:0008150", "go");
-        Optional<String> species = subject.findSpeciesFor(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create());
-        assertThat(speciesFactory.create(species.orNull()).isUnknown(), is(false));
+        ImmutableList<String> species = subject.findSpecies(SemanticQuery.create(reactomeQueryTerm), SemanticQuery.create(), "");
+        assertThat(species.size(), is(greaterThan(0)));
+        assertThat(speciesFactory.create(species.get(0)).isUnknown(), is(false));
     }
 
 }

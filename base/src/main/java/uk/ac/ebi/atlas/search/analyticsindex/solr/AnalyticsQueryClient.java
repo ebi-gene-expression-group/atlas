@@ -131,9 +131,12 @@ public class AnalyticsQueryClient {
             return this;
         }
 
-        public Builder firstSpecies() {
-            solrQuery.setFields("species");
-            solrQuery.setRows(1);
+        public Builder speciesFacets() {
+            solrQuery.setRows(0);
+            solrQuery.setFacet(true);
+            solrQuery.addFacetField("species");
+            solrQuery.setFacetMinCount(1);
+            solrQuery.setFacetLimit(100); // Some number greater than the number of species indexed
             return this;
         }
 

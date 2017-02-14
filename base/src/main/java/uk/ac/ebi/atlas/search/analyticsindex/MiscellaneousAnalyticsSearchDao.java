@@ -56,11 +56,13 @@ public class MiscellaneousAnalyticsSearchDao {
                         .fetch();
     }
 
-    String getFirstSpeciesForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
+    String getSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         return analyticsQueryClient.queryBuilder()
-                .firstSpecies()
+                .speciesFacets()
                 .queryIdentifierSearch(geneQuery)
                 .queryConditionsSearch(conditionQuery)
+                .ofSpecies(species)
                 .fetch();
     }
+
 }

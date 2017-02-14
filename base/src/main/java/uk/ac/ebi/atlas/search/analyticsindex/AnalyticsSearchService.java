@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
-import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import net.minidev.json.JSONArray;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import com.google.common.collect.ImmutableSet;
@@ -79,14 +79,17 @@ public class AnalyticsSearchService {
         return ! readBuckets(response).isEmpty();
     }
 
-    public Optional<String> findSpeciesFor(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
-        if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
-            return Optional.absent();
+    public ImmutableList<String> findSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+        return readSpecies(miscellaneousAnalyticsSearchDao.getSpecies(geneQuery, conditionQuery, species));
+    }
+
+    private static ImmutableList<String> readSpecies(String response){
+        JSONArray res = JsonPath.read(response, "$..species[*]");
+
+        ImmutableList.Builder<String> b = ImmutableList.builder();
+        for (int i = 0 ; i < res.size() ; i += 2) {
+            b.add(res.get(i).toString());
         }
-
-        JSONArray jsonArray = JsonPath.read(
-                miscellaneousAnalyticsSearchDao.getFirstSpeciesForQuery(geneQuery, conditionQuery), "$..species");
-
-        return jsonArray.size() != 0 ? Optional.of(jsonArray.get(0).toString()) : Optional.<String>absent();
+        return b.build();
     }
 }
