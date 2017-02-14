@@ -33,8 +33,8 @@ public class Factor implements Comparable<Factor> {
         this.valueOntologyTerms = new ImmutableSet.Builder<OntologyTerm>().add(valueOntologyTerms).build();
     }
 
-    public static String normalize(String type) {
-        return type.replaceAll(" ", "_").toUpperCase();
+    public static String normalize(String header) {
+        return header.replaceAll(" ", "_").toUpperCase();
     }
 
     public static String convertToLowerCase(String type) {

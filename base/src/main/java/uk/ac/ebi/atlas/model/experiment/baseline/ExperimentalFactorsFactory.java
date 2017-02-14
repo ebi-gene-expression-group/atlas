@@ -33,7 +33,7 @@ public class ExperimentalFactorsFactory {
         ExperimentalFactorsBuilder b= new ExperimentalFactorsBuilder()
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
-                .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
+                .withMenuFilterFactorTypes(Sets.newHashSet(factorsConfig.getMenuFilterFactorTypes()))
                 .withFactorNamesByType(factorNamesByType)
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors);

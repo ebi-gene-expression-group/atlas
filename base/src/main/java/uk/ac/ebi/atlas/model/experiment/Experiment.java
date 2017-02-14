@@ -15,14 +15,7 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Experiment<DataColumnDescriptor extends DescribesDataColumns> implements Serializable {
 
@@ -42,12 +35,14 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     private List<String> alternativeViews;
     private List<String> alternativeViewDescriptions;
     protected final ImmutableMap<String, DataColumnDescriptor> dataColumnDescriptorsPerId;
+    private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
                       String disclaimer, boolean hasRData, Species species, Collection<String> pubMedIds,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
-                      List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors) {
+                      List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors,
+                      ExperimentDisplayDefaults experimentDisplayDefaults) {
 
         this.type = type;
         this.lastUpdate = lastUpdate;
@@ -68,6 +63,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
             builder.put(dataColumnDescriptor.getId(), dataColumnDescriptor);
         }
         this.dataColumnDescriptorsPerId = builder.build();
+        this.experimentDisplayDefaults = experimentDisplayDefaults;
 
     }
 
@@ -85,6 +81,10 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     
     public ExperimentDesign getExperimentDesign() {
         return experimentDesign;
+    }
+
+    public ExperimentDisplayDefaults getDisplayDefaults() {
+        return experimentDisplayDefaults;
     }
 
     public String getDisplayName() {
@@ -179,4 +179,5 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         experimentInfo.setNumberOfAssays(getAnalysedRowsAccessions().size());
         return experimentInfo;
     }
+
 }

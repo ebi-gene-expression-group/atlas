@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 
@@ -35,6 +36,7 @@ public class BaselineExperimentBuilder {
     private Date lastUpdate;
     private List<AssayGroup> assayGroups;
     private ExperimentalFactors experimentalFactors;
+    private ExperimentDisplayDefaults experimentDisplayDefaults;
     private ExperimentType experimentType;
     private List<String> alternativeViews = Collections.emptyList();
     private List<String> alternativeViewDescriptions = Collections.emptyList();
@@ -71,6 +73,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withExperimentalFactors(ExperimentalFactors experimentalFactors) {
         this.experimentalFactors = experimentalFactors;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withDisplayDefaults(ExperimentDisplayDefaults experimentDisplayDefaults) {
+        this.experimentDisplayDefaults = experimentDisplayDefaults;
         return this;
     }
 
@@ -123,7 +130,7 @@ public class BaselineExperimentBuilder {
         return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, disclaimer, species, hasRData,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews,
-                alternativeViewDescriptions);
+                alternativeViewDescriptions , experimentDisplayDefaults);
     }
 
     private void validate() {
