@@ -25,6 +25,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsQueryClient.Field.*;
 
@@ -165,7 +166,7 @@ public class AnalyticsQueryClient {
         }
 
         private void addQueryClause(Field searchField, String searchValue) {
-            if (!searchValue.isEmpty()) {
+            if (!isBlank(searchValue)) {
                 queryClausesBuilder.add(new AnalyticsSolrQueryTree(searchField.toString(), searchValue));
             }
         }
