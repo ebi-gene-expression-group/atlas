@@ -29,8 +29,8 @@ public class ExperimentsInfoListServiceTest {
           "      \"experimentAccession\": \"accession\",\n" +
           "      \"experimentDescription\": \"description\",\n" +
           "      \"lastUpdate\": \"\\d+-\\d+-\\d+\",\n" +
-          "      \"numberOfAssays\": 0,\n" +
-          "      \"numberOfContrasts\": 0,\n" +
+          "      \"numberOfAssays\": \\d+,\n" +
+          "      \"numberOfContrasts\": \\d+,\n" +
           "      \"species\": \"species\",\n" +
           "      \"kingdom\": \"kingdom\",\n" +
           "      \"experimentalFactors\": [],\n" +
