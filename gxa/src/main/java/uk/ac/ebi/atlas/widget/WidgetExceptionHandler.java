@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
-public abstract class HeatmapWidgetErrorHandler {
+public abstract class WidgetExceptionHandler {
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
