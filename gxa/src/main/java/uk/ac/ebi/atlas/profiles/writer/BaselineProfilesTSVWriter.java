@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import static org.apache.commons.lang3.StringUtils.wrap;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
 public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineRequestContext> {
 
@@ -78,7 +79,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     @Override
     protected String getTsvFileMasthead(BaselineRequestContext requestContext, boolean isGeneSet) {
         String responseType = isGeneSet ? "Gene sets" : "Genes";
-        String geneQuery = requestContext.getGeneQuery().isEmpty() ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
+        String geneQuery = isEmpty(requestContext.getGeneQuery()) ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String selectedQueryFactors = formatSelectedQueryFactors(requestContext);
         double cutoff = requestContext.getCutoff();

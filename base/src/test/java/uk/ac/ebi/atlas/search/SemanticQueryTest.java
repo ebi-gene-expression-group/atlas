@@ -8,6 +8,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
 public class SemanticQueryTest {
 
@@ -19,7 +21,7 @@ public class SemanticQueryTest {
     @Test
     public void testEmptyGeneQuery() {
         SemanticQuery subject = SemanticQuery.create(SemanticQueryTerm.create("", "symbol"), SemanticQueryTerm.create(" ", "synonym"), SemanticQueryTerm.create("\t"));
-        assertThat(subject.isEmpty(), is(true));
+        assertThat(isEmpty(subject), is(true));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class SemanticQueryTest {
     @Test
     public void parsesJsonWithoutCategories() throws Exception {
         SemanticQuery subject = SemanticQuery.fromJson("[{\"value\":\"zinc finger\"},{\"value\":\"BRCA2B\"}]");
-        assertThat(subject.isNotEmpty(), is(true));
+        assertThat(isNotEmpty(subject), is(true));
         assertThat(subject.size(), is(2));
     }
 

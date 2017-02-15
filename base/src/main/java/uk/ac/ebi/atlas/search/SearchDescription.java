@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.search;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
 public class SearchDescription {
 
@@ -9,37 +11,37 @@ public class SearchDescription {
     }
 
     public static String get(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        if (geneQuery.isEmpty() && conditionQuery.isEmpty()) {
+        if (isEmpty(geneQuery) && isEmpty(conditionQuery)) {
             return "default query";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (geneQuery.isNotEmpty()) {
+        if (isNotEmpty(geneQuery)) {
             String geneQueryString = geneQuery.description();
 
-            if (geneQuery.size() > 1 && conditionQuery.isNotEmpty()) {
+            if (geneQuery.size() > 1 && isNotEmpty(conditionQuery)) {
                 stringBuilder.append("(").append(geneQueryString).append(")");
             } else {
                 stringBuilder.append(geneQueryString);
             }
         }
 
-        if (geneQuery.isNotEmpty() && conditionQuery.isNotEmpty()) {
+        if (isNotEmpty(geneQuery) && isNotEmpty(conditionQuery)) {
             stringBuilder.append(" AND ");
         }
 
-        if (conditionQuery.isNotEmpty()) {
+        if (isNotEmpty(conditionQuery)) {
             String conditionQueryString = conditionQuery.description();
 
-            if (conditionQuery.size() > 1 && geneQuery.isNotEmpty()) {
+            if (conditionQuery.size() > 1 && isNotEmpty(geneQuery)) {
                 stringBuilder.append("(").append(conditionQueryString).append(")");
             } else {
                 stringBuilder.append(conditionQueryString);
             }
         }
 
-        if ((geneQuery.isNotEmpty() || conditionQuery.isNotEmpty()) && isNotBlank(species)) {
+        if ((isNotEmpty(geneQuery) || isNotEmpty(conditionQuery)) && isNotBlank(species)) {
             stringBuilder.append(" AND ");
         }
 

@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
 @Controller
 @Scope("prototype")
@@ -47,7 +48,7 @@ public class SearchController {
     public String showGeneQueryResultPage(@RequestParam(value = "query", defaultValue = "") SemanticQuery query,
                                           Model model)
     throws UnsupportedEncodingException {
-        checkArgument(query.isNotEmpty(), "Please specify a search term, a gene query or a condition query.");
+        checkArgument(isNotEmpty(query), "Please specify a search term, a gene query or a condition query.");
 
         model.addAttribute("searchDescription", SearchDescription.get(query));
         model.addAttribute("query", query.toUrlEncodedJson());

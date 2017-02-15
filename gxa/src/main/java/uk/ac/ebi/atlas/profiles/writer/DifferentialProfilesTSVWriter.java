@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.wrap;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
 public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast, DifferentialProfileStreamOptions> {
 
@@ -68,7 +69,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     @Override
     protected String getTsvFileMasthead(DifferentialProfileStreamOptions options, boolean isGeneSet) {
         DifferentialRequestContext requestContext = getRequestContext();
-        String geneQuery = requestContext.getGeneQuery().isEmpty() ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
+        String geneQuery = isEmpty(requestContext.getGeneQuery()) ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
         String specific = requestContext.isSpecific() ? " specifically" : "";
         String regulation = " " + requestContext.getRegulation().getLabel();
         String selectedContrasts = formatSelectedContrasts(requestContext);

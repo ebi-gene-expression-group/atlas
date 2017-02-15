@@ -43,27 +43,26 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return new AutoValue_SemanticQuery(ImmutableSet.of(SemanticQueryTerm.create(queryTermValue)));
     }
 
+    public static boolean isEmpty(SemanticQuery query) {
+        return query == null || query.isEmpty();
+    }
+
+    public static boolean isNotEmpty(SemanticQuery query) {
+        return query != null && !query.isEmpty();
+    }
+
     @Override
     public Iterator<SemanticQueryTerm> iterator() {
         return terms().iterator();
     }
 
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         for (SemanticQueryTerm term : terms()) {
             if (term.hasValue()) {
                 return false;
             }
         }
         return true;
-    }
-
-    public boolean isNotEmpty() {
-        for (SemanticQueryTerm term : terms()) {
-            if (term.hasValue()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public int size() {

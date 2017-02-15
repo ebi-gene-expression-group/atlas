@@ -23,6 +23,7 @@ import java.util.Date;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_ESCAPE_CHARACTER;
 import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
+import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
 @Named
 @Scope("prototype")
@@ -31,7 +32,6 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(DiffAnalyticsTSVWriter.class);
 
     private String tsvFileMastheadTemplate;
-    private static final String[] HEADERS = {"Gene", "Organism", "Experiment Accession", "Comparison", "p-value", "log2foldchange", "t-statistic"};
 
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
@@ -123,10 +123,10 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable {
     }
 
     public String getTsvFileMasthead(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        String geneQueryHeader = geneQuery.isNotEmpty() ? "Genes matching: '" + SearchDescription.get(geneQuery) + "'" : "";
-        String comma = geneQuery.isNotEmpty() ? ", " : "";
+        String geneQueryHeader = isNotEmpty(geneQuery) ? "Genes matching: '" + SearchDescription.get(geneQuery) + "'" : "";
+        String comma = isNotEmpty(geneQuery) ? ", " : "";
 
-        boolean hasCondition = conditionQuery.isNotEmpty();
+        boolean hasCondition = isNotEmpty(conditionQuery);
         String condition = hasCondition ? " in condition matching '" + SearchDescription.get(conditionQuery) + "'": "";
         String organism = StringUtils.isNotEmpty(species) ? (hasCondition ? " and" : "")  + " in organism '" + species + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());

@@ -16,6 +16,8 @@ import javax.inject.Named;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
+
 @Named
 // Can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non
 // thread safe state!
@@ -76,7 +78,7 @@ public class SolrQueryService {
 
     public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String speciesReferenceName) {
 
-        if (geneQuery.isEmpty()) {
+        if (isEmpty(geneQuery)) {
             return new GeneQueryResponse();
         }
 
