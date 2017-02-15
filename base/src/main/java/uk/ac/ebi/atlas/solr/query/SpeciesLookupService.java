@@ -14,8 +14,7 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.Collections;
 
-// See AnalyticsSearchService.findSpeciesFor
-@Deprecated
+@Deprecated // See SpeciesInferrer for a better (?) option
 @Named
 public class SpeciesLookupService {
 
