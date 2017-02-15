@@ -22,12 +22,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Controller
 @Scope("request")
-public class BaselineReferenceExperimentController extends WidgetExceptionHandler {
+public class JsonBaselineRefExperiment extends WidgetExceptionHandler {
 
     private SpeciesInferrer speciesInferenceEngine;
 
     @Inject
-    public BaselineReferenceExperimentController(SpeciesInferrer speciesInferenceEngine) {
+    public JsonBaselineRefExperiment(SpeciesInferrer speciesInferenceEngine) {
         this.speciesInferenceEngine = speciesInferenceEngine;
     }
 
@@ -38,9 +38,9 @@ public class BaselineReferenceExperimentController extends WidgetExceptionHandle
     }
 
     @RequestMapping(value = {"/json/baseline_refexperiment"})
-    public String dispatchWidget(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
-                                 @RequestParam(value = "species", required = false) String speciesString,
-                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
+    public String jsonBaselineRefExperiment(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
+                                            @RequestParam(value = "species", required = false) String speciesString,
+                                            @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
 
         Species species = speciesInferenceEngine.inferSpeciesForGeneQuery(geneQuery, speciesString);
         String experimentAccession = ApplicationProperties.getBaselineReferenceExperimentAccession(species);

@@ -39,7 +39,7 @@ import java.util.List;
 
 @Controller
 @Scope("request")
-public final class BaselineExperimentsController extends WidgetExceptionHandler {
+public final class JsonExperimentsBaselineController extends WidgetExceptionHandler {
 
     private final AnatomogramFactory anatomogramFactory;
     private final SpeciesInferrer speciesInferrer;
@@ -50,10 +50,10 @@ public final class BaselineExperimentsController extends WidgetExceptionHandler 
     private Gson gson = new Gson();
 
     @Inject
-    private BaselineExperimentsController(SpeciesInferrer speciesInferrer,
-                                          BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                                          FactorGroupingService factorGroupingService,
-                                          HeatmapDataToJsonService heatmapDataToJsonService) {
+    private JsonExperimentsBaselineController(SpeciesInferrer speciesInferrer,
+                                              BaselineAnalyticsSearchService baselineAnalyticsSearchService,
+                                              FactorGroupingService factorGroupingService,
+                                              HeatmapDataToJsonService heatmapDataToJsonService) {
         this.anatomogramFactory = new AnatomogramFactory();
         this.speciesInferrer = speciesInferrer;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
@@ -64,16 +64,16 @@ public final class BaselineExperimentsController extends WidgetExceptionHandler 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics", method = RequestMethod.GET)
     @Deprecated
     public String analyticsJson() {
-        return "forward:/json/experiments_baseline";
+        return "forward:/json/baseline_experiments";
     }
 
-    @RequestMapping(value = "/json/experiments_baseline", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/json/baseline_experiments", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String widgetMultiexperiment(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
-                                        @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                        @RequestParam(value = "source", required = false) String defaultQueryFactorType,
-                                        @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
-                                        HttpServletRequest request, Model model) {
+    public String jsonBaselineExperiments(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
+                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
+                                          @RequestParam(value = "source", required = false) String defaultQueryFactorType,
+                                          @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
+                                          HttpServletRequest request, Model model) {
 
         Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
 
