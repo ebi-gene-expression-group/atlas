@@ -19,8 +19,10 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
+import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -30,18 +32,21 @@ import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 @Scope("prototype")
 public class SearchController {
 
-    private AnalyticsSearchService analyticsSearchService;
-    private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
-    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final AnalyticsSearchService analyticsSearchService;
+    private final DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private final SpeciesInferrer speciesInferrer;
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
                             DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
-                            BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
+                            BaselineAnalyticsSearchService baselineAnalyticsSearchService,
+                            SpeciesInferrer speciesInferrer) {
         this.analyticsSearchService = analyticsSearchService;
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
+        this.speciesInferrer = speciesInferrer;
     }
 
     @RequestMapping(value = "/search")
@@ -87,6 +92,22 @@ public class SearchController {
     @ResponseBody
     public String fetchBaselineJsonFacets(@RequestParam(value = "query", defaultValue = "") SemanticQuery query) {
         return gson.toJson(baselineAnalyticsSearchService.findFacets(query));
+    }
+
+    // TODO Endpoint with generic “query” parameter (cf. with geneQuery and conditionQuery) for single input search in Foundation homepage
+    @RequestMapping(value = "/json/search/baselineResults", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String analyticsJson(@RequestParam(value = "query") SemanticQuery query,
+                                @RequestParam(value = "species") String speciesString,
+                                @RequestParam(value = "source") String defaultQueryFactorType,
+                                HttpServletRequest request,
+                                Model model) {
+        // See JsonExperimentsBaselineController for a reference implementation that takes geneQuery and conditionQuery
+        // Species species = speciesInferrer.inferSpeciesForGeneQuery(query, speciesString);
+        // BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(query, species, defaultQueryFactorType);
+        //
+        // return gson.toJson(populateModelWithMultiExperimentResults(request,query, species, searchResult, model));
+        return "";
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
