@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.acceptance.rest;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -19,6 +20,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
 
     private SemanticQuery query = SemanticQuery.create("zinc finger");
 
+    @Ignore("baselineResults endpoint not used yet")
     @Test
     public void testWholeQueryFlow(){
         JsonObject facets = new EndPoint("/gxa/json/search/baselineFacets", "query="+query.toUrlEncodedJson())
@@ -61,6 +63,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
         }
     }
 
+    @Ignore("baselineResults endpoint not used yet")
     @Test
     public void urisAreAllDifferent(){
         JsonObject results = new EndPoint(
@@ -80,6 +83,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
         assertThat(l.size(), is(new ArrayList(new HashSet<>(l)).size()));
     }
 
+    @Ignore("baselineResults endpoint not used yet")
     @Test
     public void urisContainGeneQuery(){
         /*
