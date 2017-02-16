@@ -51,6 +51,27 @@ a.clear {
     border-bottom: none;
 }
 
+div.single-box {
+    height: 266px;
+}
+
+h5.species {
+    position: relative;
+    min-height: 56px;
+}
+
+p.experiments {
+    line-height: 1.7;
+}
+
+span.diffBaselinePosition {
+    margin-top: 1px;
+}
+
+span.large-species-icon {
+    font-size: 600% !important;
+}
+
 span.large-green:before {
     font-size: 600%;
     color: #5CB85C;
@@ -68,10 +89,12 @@ span.large-blue:before {
 
 .button-rd.differential {
     background-color: #5E8CC0;
+    margin-right: 2px;
 }
 
 .button-rd.baseline {
     background-color: #23AFA5;
+    margin-right: 2px;
 }
 
 .button-rd.tiny {

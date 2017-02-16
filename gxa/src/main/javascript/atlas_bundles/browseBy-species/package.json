@@ -1,0 +1,27 @@
+{
+  "name": "expression-atlas-browseby-species",
+  "version": "1.0.0",
+  "description": "Browse by Species tab",
+  "main": "index.js",
+  "author": "atlas devs",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "15.3.2",
+    "react-dom": "15.3.2",
+    "react-ebi-species": "^0.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "clean-webpack-plugin": "^0.1.8",
+    "css-loader": "^0.23.1",
+    "image-webpack-loader": "^1.6.3",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

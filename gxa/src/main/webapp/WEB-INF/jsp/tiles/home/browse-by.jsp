@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
+
 <div class="callout browse-by" data-equalizer-watch>
     <ul class="tabs" data-tabs id="browse-by-tabs">
         <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>
@@ -10,49 +13,9 @@
     </ul>
 
     <div class="tabs-content" data-tabs-content="browse-by-tabs">
+
         <div class="tabs-panel is-active" id="by-species">
-            <div class="row">
-                <div class="columns small-4 text-center combo">
-                    <a href="${pageContext.request.contextPath}/experiments?kingdom=Plants&foundation"><span class="icon icon-generic large-green" data-icon="R"/>
-                        <h5>Plants</h5>
-                        <p>
-                            ${plantsExperiments} experiments<br/>
-                            <a href="${pageContext.request.contextPath}/experiments?kingdom=Plants&experimentType=Differential" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> ${plantsDifferential}</a>
-                            <a href="${pageContext.request.contextPath}/experiments?kingdom=Plants&experimentType=Baseline" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> ${plantsBaseline}</a>
-                        </p>
-                    </a>
-                </div>
-                    <div class="columns small-4 text-center combo">
-                        <a href="${pageContext.request.contextPath}/experiments?kingdom=animals-fungi&foundation"><span class="icon icon-species large-red" data-icon="H"></span>
-                            <h5>Human</h5>
-                            <p>
-                                ${animalsExperiments} experiments<br/>
-                                <a href="${pageContext.request.contextPath}/experiments?kingdom=animals-fungi&experimentType=Differential" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> ${animalsDifferential}</a>
-                                <a href="${pageContext.request.contextPath}/experiments?kingdom=animals-fungi&experimentType=Baseline" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd" title="Baseline experiments">B</span> ${animalsBaseline}</a>
-                            </p>
-                        </a>
-                    </div>
-                    <div class="columns small-4 text-center combo">
-                        <a href="#">
-                            <span class="icon icon-species large-blue" data-icon="W"></span>
-                            <h5> Worms</h5>
-                            <p>
-                                22 experiments<br/>
-                                <a  href="#" class="differential"><span data-tooltip aria-haspopup="true" class="differential tiny button-rd" title="Differential experiments">D</span> 21</a>
-                                <a  href="#" class="baseline padding-left-medium"><span data-tooltip aria-haspopup="true" class="baseline tiny button-rd " title="Baseline experiments">B</span> 1</a>
-                            </p>
-                        </a>
-                    </div>
-            </div>
-
-            <div class="row">
-                <div class="small-6 small-centered columns margin-top-large">
-                    <a href='${pageContext.request.contextPath}/experiments?foundation' class="button float-center">View all species</a>
-                </div>
-            </div>
         </div>
-
-
 
         <div class="tabs-panel" id="by-tissue">
             <div class="row">
@@ -208,3 +171,11 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    expressionAtlasBrowseBySpecies.render({
+        speciesInfoList : ${speciesList},
+        mountNode: document.getElementById('by-species')
+    });
+</script>
