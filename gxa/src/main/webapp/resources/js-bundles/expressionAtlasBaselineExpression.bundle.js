@@ -3660,7 +3660,8 @@ webpackJsonp_name_([2],[
 	        UrlManager.baselinePush(newQuerySelect, true);
 	
 	        return {
-	            // In this case, transforming props to state isn’t an anti-pattern because state can be mutated when facets are clicked in _setChecked
+	            // In this case, transforming props to state isn’t an anti-pattern because state can be mutated when facets
+	            // are clicked in _setChecked
 	            facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect),
 	            querySelect: newQuerySelect,
 	            anatomogramDataEventEmitter: anatomogramDataEventEmitter,
@@ -3759,7 +3760,7 @@ webpackJsonp_name_([2],[
 	
 	        return Object.keys(querySelect).some(function (species) {
 	            return querySelect[species].some(function (facetItem) {
-	                return facetItem.toLowerCase() == "organism_part";
+	                return facetItem.toLowerCase() === 'organism_part';
 	            });
 	        });
 	    },
@@ -3797,7 +3798,8 @@ webpackJsonp_name_([2],[
 	         */
 	        var heatmaps = [];
 	
-	        // We iterate over facetsTreeData instead of over querySelect to get the heatmaps in the same order as the facets tree
+	        // We iterate over facetsTreeData instead of over querySelect to get heatmaps in the same order as the facets
+	        // tree
 	        this.state.facetsTreeData.forEach(function (facet) {
 	            facet.facetItems.forEach(function (facetItem) {
 	                if (_this4.state.querySelect[facet.facetName] && _this4.state.querySelect[facet.facetName].includes(facetItem.name)) {
