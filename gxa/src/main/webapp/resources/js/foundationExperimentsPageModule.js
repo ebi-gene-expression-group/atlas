@@ -277,6 +277,18 @@ var foundationExperimentsPageModule = (function ($) {
                     .search('animals|fungi', true)
                     .draw();
             }
+            else if (hiddenKingdomSelected === 'animals') {
+                oTable
+                    .columns(9)
+                    .search('animals', true)
+                    .draw();
+            }
+            else if (hiddenKingdomSelected === 'fungi') {
+                oTable
+                    .columns(9)
+                    .search('fungi', true)
+                    .draw();
+                }
             else {
                 oTable
                     .columns(9)

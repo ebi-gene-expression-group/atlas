@@ -16,7 +16,8 @@
         <select id="gxaExperimentsTableKingdomSelect">
             <option value="">All</option>
             <option value="plants">Plants</option>
-            <option value="animals-fungi">Animals and Fungi</option>
+            <option value="animals">Animals</option>
+            <option value="fungi">Fungi</option>
         </select>
     </div>
 
