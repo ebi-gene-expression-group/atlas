@@ -105,7 +105,6 @@ module.exports = {
 
             //
             'expression-atlas-heatmap-highcharts',
-            'expression-atlas-experiment-page',
             'react-ebi-species'
         ]
     },

@@ -51,12 +51,14 @@ public class ExperimentController extends ExperimentPageController{
                                      @RequestParam(required = false) String accessKey) {
 
 
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        model.addAllAttributes(experiment.getAttributes());
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
 
         model.addAttribute("content", gson.toJson(
                 experimentPageContentForExperiment(
-                        experimentTrader.getExperiment(experimentAccession, accessKey)
+                        experiment
                 )
         ));
 
@@ -68,6 +70,7 @@ public class ExperimentController extends ExperimentPageController{
 
         // the client can't know that otherwise and it needs that!
         result.addProperty("experimentType", experiment.getType().name());
+        result.addProperty("species", experiment.getSpecies().getReferenceName());
 
         JsonArray availableTabs = new JsonArray();
         // everything wants to have a heatmap
