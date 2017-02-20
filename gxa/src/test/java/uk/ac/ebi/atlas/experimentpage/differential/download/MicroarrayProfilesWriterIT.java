@@ -22,7 +22,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
@@ -42,14 +41,17 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
 public class MicroarrayProfilesWriterIT {
 
-    public static final int GENE_NAME_INDEX = 1;
+    private static final int GENE_NAME_INDEX = 1;
     
     private MicroarrayProfilesWriter subject;
 
@@ -57,13 +59,13 @@ public class MicroarrayProfilesWriterIT {
     private MicroarrayExperimentsCache microarrayExperimentsCache;
 
     @Inject
-    MicroarrayRequestContextBuilder contextBuilder;
+    private MicroarrayRequestContextBuilder contextBuilder;
 
     @Mock
-    PrintWriter printWriterMock;
+    private PrintWriter printWriterMock;
 
     @Mock
-    CSVWriter csvWriterMock;
+    private CSVWriter csvWriterMock;
 
     @Mock
     private CsvWriterFactory csvWriterFactoryMock;
@@ -349,10 +351,6 @@ public class MicroarrayProfilesWriterIT {
         }
 
         return builder.build();
-    }
-
-    private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(SemanticQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {
