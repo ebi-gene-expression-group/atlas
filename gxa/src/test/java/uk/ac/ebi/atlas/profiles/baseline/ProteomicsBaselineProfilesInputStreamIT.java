@@ -26,8 +26,8 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
 public class ProteomicsBaselineProfilesInputStreamIT {
 
-    @Resource(name = "proteomicsBaselineProfileInputStreamFactory")
-    private ProteomicsBaselineProfileInputStreamFactory inputStreamFactory;
+    @Inject
+    private BaselineProfileInputStreamFactory inputStreamFactory;
 
     @Inject
     private ExperimentTrader experimentTrader;

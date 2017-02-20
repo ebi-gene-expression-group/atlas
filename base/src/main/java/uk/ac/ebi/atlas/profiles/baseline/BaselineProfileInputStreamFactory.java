@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Set;
 
-@Named("baselineProfileInputStreamFactory")
+@Named
 public class BaselineProfileInputStreamFactory
 implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions,BaselineProfile, Factor>{
 
