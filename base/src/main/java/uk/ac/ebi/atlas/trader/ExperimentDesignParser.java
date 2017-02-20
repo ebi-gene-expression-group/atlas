@@ -4,13 +4,13 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import com.google.common.collect.ImmutableList;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Named
-@Scope("prototype")
 public class ExperimentDesignParser {
-
     private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic\\[(.*?)\\]\\s*");
@@ -37,13 +35,12 @@ public class ExperimentDesignParser {
         this.dataFileHub = dataFileHub;
     }
 
-
-    public ExperimentDesign parse(String experimentAccession) {
+    public ExperimentDesign parse(String experimentAccession) throws FileNotFoundException {
 
         AtlasResource<TsvReader> r = dataFileHub.getExperimentFiles(experimentAccession).experimentDesign;
 
         if (!r.exists()) {
-            throw new IllegalStateException(String.format("%s does not exist", r));
+            throw new FileNotFoundException(String.format("%s does not exist", r));
         }
         List<String[]> csvLines = new ArrayList<>(r.get().readAll());
 
