@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -15,7 +17,8 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-public class SingleCellExperimentTrader extends ExperimentTrader{
+public class SingleCellExperimentTrader extends ExperimentTrader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellExperimentTrader.class);
 
     private final LoadingCache<String, BaselineExperiment> baselineExperimentsCache;
     @Inject
@@ -29,7 +32,7 @@ public class SingleCellExperimentTrader extends ExperimentTrader{
                 experimentDesignParser, experimentDAO, experimentFactory));
     }
 
-    public Experiment getPublicExperiment(String experimentAccession){
+    public Experiment getPublicExperiment(String experimentAccession) {
         try {
             return baselineExperimentsCache.get(experimentAccession);
         } catch (ExecutionException e) {
@@ -37,11 +40,11 @@ public class SingleCellExperimentTrader extends ExperimentTrader{
         }
     }
 
-    public Experiment getExperiment(String experimentAccession, String accessKey){
+    public Experiment getExperiment(String experimentAccession, String accessKey) {
         return getPublicExperiment(experimentAccession);
     }
 
-    public void removeExperimentFromCache(String experimentAccession){
+    public void removeExperimentFromCache(String experimentAccession) {
         baselineExperimentsCache.invalidate(experimentAccession);
     }
 
@@ -49,11 +52,16 @@ public class SingleCellExperimentTrader extends ExperimentTrader{
         baselineExperimentsCache.invalidateAll();
     }
 
-    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType){
-        if(experimentType.isSingleCell()){
+    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
+        if(experimentType.isSingleCell()) {
             return getPublicExperiment(experimentAccession);
         } else {
             return null;
         }
+    }
+
+    @Override
+    protected void logError(Exception e) {
+        LOGGER.error(e.getMessage());
     }
 }

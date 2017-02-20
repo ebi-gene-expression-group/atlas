@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.trader;
 
+import org.slf4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
@@ -23,11 +24,10 @@ import java.util.Set;
 
 @Named
 public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpressionAtlasExperimentTrader.class);
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ExpressionAtlasExperimentTrader.class);
-    private PublicExperimentTypesCache publicExperimentTypesCache;
-    ImmutableMap<ExperimentType, ExperimentsCache<? extends Experiment>> experimentCachesPerType;
-
+    private final PublicExperimentTypesCache publicExperimentTypesCache;
+    private final ImmutableMap<ExperimentType, ExperimentsCache<? extends Experiment>> experimentCachesPerType;
 
     @Inject
     public ExpressionAtlasExperimentTrader(ExperimentDAO experimentDAO,
@@ -41,19 +41,17 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         this.publicExperimentTypesCache = publicExperimentTypesCache;
         ImmutableMap.Builder<ExperimentType, ExperimentsCache<? extends Experiment>> builder = ImmutableMap.builder();
 
-        builder.put(ExperimentType.RNASEQ_MRNA_BASELINE,rnaSeqBaselineExperimentsCache)
-                .put(ExperimentType.PROTEOMICS_BASELINE,proteomicsBaselineExperimentsCache)
-                .put(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, rnaSeqDiffExperimentsCache);
+        builder.put(ExperimentType.RNASEQ_MRNA_BASELINE, rnaSeqBaselineExperimentsCache)
+               .put(ExperimentType.PROTEOMICS_BASELINE, proteomicsBaselineExperimentsCache)
+               .put(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, rnaSeqDiffExperimentsCache);
 
-        for(ExperimentType type: ExperimentType.values()){
-            if(type.isMicroarray()){
+        for (ExperimentType type: ExperimentType.values()) {
+            if (type.isMicroarray()) {
                 builder.put(type, microarrayExperimentsCache);
             }
         }
         experimentCachesPerType = builder.build();
-
     }
-
 
     @Override
     public Experiment getPublicExperiment(String experimentAccession) {
@@ -68,7 +66,6 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         return getExperimentFromCache(experimentAccession, experimentType);
     }
 
-
     @Override
     public Experiment getExperiment(String experimentAccession, String accessKey) {
         if (StringUtils.isBlank(accessKey)){
@@ -79,7 +76,6 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
     }
 
-
     @Override
     public void removeExperimentFromCache(String experimentAccession) {
         for(ExperimentsCache cache: experimentCachesPerType.values()){
@@ -88,7 +84,6 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         publicExperimentTypesCache.evictExperiment(experimentAccession);
     }
 
-
     @Override
     public void removeAllExperimentsFromCache() {
         for(ExperimentsCache cache: experimentCachesPerType.values()){
@@ -96,7 +91,6 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         }
         publicExperimentTypesCache.evictAll();
     }
-
 
     @Override
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
@@ -120,5 +114,8 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         return identifiers;
     }
 
-
+    @Override
+    protected void logError(Exception e) {
+        LOGGER.error(e.getMessage());
+    }
 }

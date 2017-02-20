@@ -5,11 +5,10 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
-import java.util.List;
 import java.util.Set;
 
 public abstract class ExperimentTrader {
-    protected ExperimentDAO experimentDAO;
+    protected final ExperimentDAO experimentDAO;
 
     public ExperimentTrader(ExperimentDAO experimentDAO) {
         this.experimentDAO = experimentDAO;
@@ -25,10 +24,14 @@ public abstract class ExperimentTrader {
 
     public abstract Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType);
 
-    public Set<Experiment> getPublicExperiments(ExperimentType... experimentTypes){
+    public Set<Experiment> getPublicExperiments(ExperimentType... experimentTypes) {
         ImmutableSet.Builder<Experiment> b = ImmutableSet.builder();
-        for(String accession : getPublicExperimentAccessions(experimentTypes)){
-            b.add(getPublicExperiment(accession));
+        for(String accession : getPublicExperimentAccessions(experimentTypes)) {
+            try {
+                b.add(getPublicExperiment(accession));
+            } catch (Exception e) {
+                logError(e);
+            }
         }
         return b.build();
     }
@@ -36,4 +39,6 @@ public abstract class ExperimentTrader {
     public Set<String> getPublicExperimentAccessions(ExperimentType... experimentTypes) {
         return experimentDAO.findPublicExperimentAccessions(experimentTypes);
     }
+
+    protected abstract void logError(Exception e);
 }
