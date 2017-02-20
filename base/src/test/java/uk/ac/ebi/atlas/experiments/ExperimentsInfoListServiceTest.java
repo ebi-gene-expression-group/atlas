@@ -65,18 +65,7 @@ public class ExperimentsInfoListServiceTest {
         JsonArray result = subject.getExperimentsJson().get("aaData").getAsJsonArray();
        assertThat(result.size(), is(1));
     }
-
-    @Test
-    public void formatIsInSyncWithWhatWeExpectAndTheDataOfMockBaselineExperiment1() throws Exception {
-        JsonElement result = subject.getExperimentsJson();
-        JsonObject dataPoint = result.getAsJsonObject().get("aaData").getAsJsonObject();
-        assertThat(dataPoint.get("experimentType").getAsString(), is("RNASEQ_MRNA_BASELINE"));
-        assertThat(dataPoint.has("experimentAccession"), is(true));
-        assertThat(dataPoint.has("lastUpdate"), is(true));
-        assertThat(dataPoint.has("species"), is(true));
-        assertThat(dataPoint.has("kingdom"), is(true));
-    }
-
+    
     @Test
     public void formatIsInSyncWithWhatWeExpectAndTheDataOfMockBaselineExperiment() throws Exception {
         JsonElement result = subject.getExperimentsJson();
