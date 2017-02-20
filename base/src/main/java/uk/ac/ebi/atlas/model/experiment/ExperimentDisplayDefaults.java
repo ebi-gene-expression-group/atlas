@@ -12,15 +12,17 @@ import java.util.Map;
 @AutoValue
 public abstract class ExperimentDisplayDefaults {
 
-
+    /*
+    The UI treats it as entirely reasonable that there can be multiple defaults, but the curators aren't ready yet.
+     */
     abstract Map<String, String> defaultFilterValues();
     public abstract List<String> prescribedOrderOfFilters();
 
 
-    public String defaultFilterValueForFactor(String factorHeader){
+    public List<String> defaultFilterValuesForFactor(String factorHeader){
         return defaultFilterValues().containsKey(Factor.normalize(factorHeader))
-                ? defaultFilterValues().get(Factor.normalize(factorHeader))
-                : "";
+                ? ImmutableList.of(defaultFilterValues().get(Factor.normalize(factorHeader)))
+                : ImmutableList.<String>of();
     }
     /*
     The curators used to have to specify a slice of the experiment they want displayed, say which dimension to splay

@@ -71,7 +71,7 @@ public class ExperimentController extends ExperimentPageController{
 
         JsonArray availableTabs = new JsonArray();
         // everything wants to have a heatmap
-        availableTabs.add(customContentTab("heatmap", "Heatmap"));
+        availableTabs.add(heatmapTab(groupingsForHeatmap(experiment)));
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(customContentTab("experiment-design", "Experiment Design"));
         }
@@ -96,21 +96,35 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    private JsonObject groupForFilterType(String filterType, String defaultValue,
+    JsonObject heatmapTab(JsonArray groups){
+        JsonObject result = new JsonObject();
+        result.addProperty("type", "heatmap");
+        result.addProperty("name", "Heatmap");
+        JsonObject props = new JsonObject();
+        props.add("groups", groups);
+        result.add("props", props);
+        return result;
+    }
+
+    private JsonObject groupForFilterType(String filterType, List<String> defaultValues,
                                           Map<String, Collection<String>> groupingValuesPerGrouping){
         JsonObject result = new JsonObject();
-        result.addProperty("group", filterType);
-        result.addProperty("default", defaultValue);
+        result.addProperty("name", filterType);
+        result.add("selected",
+                defaultValues.size() == 0
+                        ? new JsonPrimitive("all")
+                        : gson.toJsonTree(defaultValues)
+        );
 
         JsonArray groupings = new JsonArray();
         for(Map.Entry<String, Collection<String>> e: groupingValuesPerGrouping.entrySet()){
-            JsonObject grouping = new JsonObject();
-            grouping.addProperty("name", e.getKey());
+            JsonArray grouping = new JsonArray();
+            grouping.add(new JsonPrimitive(e.getKey()));
             JsonArray groupingValues = new JsonArray();
             for(String groupingValue : uniqueSublist(e.getValue())){
                 groupingValues.add(new JsonPrimitive(groupingValue));
             }
-            grouping.add("values", groupingValues);
+            grouping.add(groupingValues);
             groupings.add(grouping);
         }
 
@@ -173,7 +187,7 @@ public class ExperimentController extends ExperimentPageController{
         }
         JsonArray result = new JsonArray();
         for(Map.Entry<String, LinkedListMultimap<String, String>> e : filtersByType.entries()){
-            result.add(groupForFilterType(e.getKey(), experimentDisplayDefaults.defaultFilterValueForFactor(e.getKey
+            result.add(groupForFilterType(e.getKey(), experimentDisplayDefaults.defaultFilterValuesForFactor(e.getKey
                     ()), e.getValue().asMap()));
         }
 

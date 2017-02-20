@@ -18,9 +18,7 @@ import javax.inject.Inject;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 
@@ -38,6 +36,7 @@ public class ExperimentControllerIT {
     @Test
     public void testSomeGoodExperiments() throws Exception {
 
+        outputInFineFormatForExperiment("E-MTAB-2706");
         outputInFineFormatForExperiment("E-GEOD-54705");
         outputInFineFormatForExperiment("E-MTAB-4260");
         outputInFineFormatForExperiment("E-MTAB-513");
@@ -46,6 +45,11 @@ public class ExperimentControllerIT {
 
 
     }
+
+    /*
+    For differential experiments, a few groupings repeat and we might need something else for them.
+
+     */
 
     public void outputInFineFormatForExperiment(String accession){
         Experiment<DescribesDataColumns> experiment = experimentTrader.getPublicExperiment(accession);
@@ -64,11 +68,11 @@ public class ExperimentControllerIT {
         assertThat(result.size(), greaterThan(0));
 
         for(JsonElement element: result){
-            assertTrue(element.getAsJsonObject().has("group"));
-            assertTrue(element.getAsJsonObject().has("default"));
+            assertTrue(element.getAsJsonObject().has("name"));
+            assertTrue(element.getAsJsonObject().has("selected"));
             for(JsonElement grouping: element.getAsJsonObject().get("groupings").getAsJsonArray()){
-                assertTrue(grouping.getAsJsonObject().has("name"));
-                for(JsonElement groupingValue : grouping.getAsJsonObject().get("values").getAsJsonArray()){
+                assertThat(grouping.getAsJsonArray().size(), is(2));
+                for(JsonElement groupingValue : grouping.getAsJsonArray().get(1).getAsJsonArray()){
                     assertTrue(allDescriptorIds.contains(groupingValue.getAsString()));
                 }
             }
