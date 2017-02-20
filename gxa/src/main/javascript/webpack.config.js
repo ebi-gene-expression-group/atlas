@@ -9,6 +9,7 @@ module.exports = {
         expressionAtlasHeatmap: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap'],
         expressionAtlasHeatmapHighcharts: ['babel-polyfill', './atlas_bundles/heatmap-highcharts'],
         experimentPageHeatmap: ['babel-polyfill', './atlas_bundles/heatmap/src/experimentPageHeatmapAnatomogramRenderer.js'],
+        experimentPage: ['babel-polyfill', './atlas_bundles/experiment-page'],
         expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
         expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
         expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
@@ -103,6 +104,7 @@ module.exports = {
 
             //
             'expression-atlas-heatmap-highcharts',
+            'expression-atlas-experiment-page',
             'react-ebi-species'
         ]
     },
@@ -159,7 +161,7 @@ module.exports = {
             }
         ]
     },
-    
+
     devServer: {
       port: 9000
     }

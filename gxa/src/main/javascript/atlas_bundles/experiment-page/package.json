@@ -1,0 +1,11 @@
+{
+  "name": "expression-atlas-experiment-page-clone",
+  "version": "0.0.1",
+  "description": "Wrapper around https://github.com/wbazant/atlas-experiment",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "expression-atlas-experiment-page": "latest"
+  }
+}
