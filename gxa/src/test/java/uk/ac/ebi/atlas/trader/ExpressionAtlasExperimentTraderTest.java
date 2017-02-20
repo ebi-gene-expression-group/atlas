@@ -18,10 +18,11 @@ import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionAtlasExperimentTraderTest {
@@ -54,8 +55,6 @@ public class ExpressionAtlasExperimentTraderTest {
     @Mock
     ExperimentDTO experimentDTOMock;
 
-
-
     @Before
     public void initSubject(){
 
@@ -74,19 +73,14 @@ public class ExpressionAtlasExperimentTraderTest {
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE,ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets
                 .newHashSet(E_MTAB_513, E_MTAB_599, E_PROT_1));
 
-        subject = new ExpressionAtlasExperimentTrader(experimentDAOMock,
-                rnaSeqBaselineExperimentsCacheMock,
-                                        rnaSeqDiffExperimentsCacheMock,
-                                        microarrayExperimentsCacheMock,
-                                        proteomicsBaselineExperimentsCacheMock,
-                publicExperimentTypesCacheMock);
-    }
-
-    @Test
-    public void experimentOfAnyTypeWillGoIntoSomeCache(){
-        for(ExperimentType t: subject.experimentCachesPerType.keySet()){
-            assertThat(subject.experimentCachesPerType.get(t), notNullValue());
-        }
+        subject =
+                new ExpressionAtlasExperimentTrader(
+                        experimentDAOMock,
+                        rnaSeqBaselineExperimentsCacheMock,
+                        rnaSeqDiffExperimentsCacheMock,
+                        microarrayExperimentsCacheMock,
+                        proteomicsBaselineExperimentsCacheMock,
+                        publicExperimentTypesCacheMock);
     }
 
     @Test
@@ -109,7 +103,7 @@ public class ExpressionAtlasExperimentTraderTest {
     public void getExperimentShouldUseTheCache() throws ExecutionException {
         given(publicExperimentTypesCacheMock.getExperimentType(E_GEOD_21860)).willReturn(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
         subject.getPublicExperiment(E_GEOD_21860);
-        verify(rnaSeqBaselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
+        verify(rnaSeqBaselineExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);
         verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);
         verify(microarrayExperimentsCacheMock).getExperiment(E_GEOD_21860);
     }
