@@ -20,15 +20,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ExperimentInfoListService {
-    private ExperimentTrader experimentTrader;
+    static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd-MM-yyyy");
 
+    private final ExperimentTrader experimentTrader;
     private final Collection<ExperimentType> experimentTypes;
+    private final Gson gson = new Gson();
 
-    private Gson gson = new Gson();
-
-    static final DateTimeFormatter expectedDateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
-
-    public ExperimentInfoListService(ExperimentTrader experimentTrader, Collection<ExperimentType> experimentTypes ) {
+    public ExperimentInfoListService(ExperimentTrader experimentTrader, Collection<ExperimentType> experimentTypes) {
         this.experimentTrader = experimentTrader;
         this.experimentTypes = experimentTypes;
     }
@@ -64,8 +62,8 @@ public class ExperimentInfoListService {
 
     List<ExperimentInfo> listPublicExperiments() {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
-        for(ExperimentType experimentType : experimentTypes){
-            for(Experiment experiment: experimentTrader.getPublicExperiments(experimentType)){
+        for (ExperimentType experimentType : experimentTypes) {
+            for (Experiment experiment : experimentTrader.getPublicExperiments(experimentType)) {
                 experimentInfos.add(experiment.buildExperimentInfo());
             }
         }
@@ -74,8 +72,8 @@ public class ExperimentInfoListService {
 
     private ImmutableMap<String, Object> cached = null;
 
-    public ImmutableMap<String, Object> getLatestExperimentsListAttributes(){
-        if(cached== null){
+    public ImmutableMap<String, Object> getLatestExperimentsListAttributes() {
+        if(cached == null) {
             cached = ImmutableMap.of("experimentCount", fetchCount(), "latestExperiments", fetchLatest());
         }
         return cached;
@@ -85,17 +83,16 @@ public class ExperimentInfoListService {
         return listPublicExperiments().size();
     }
 
-    List<ExperimentInfo> fetchLatest(){
+    List<ExperimentInfo> fetchLatest() {
         ImmutableList<ExperimentInfo> l =
                 FluentIterable.from(listPublicExperiments()).toSortedList(new Comparator<ExperimentInfo>() {
                     @Override
                     public int compare(ExperimentInfo o1, ExperimentInfo o2) {
                         return (-1) *
-                                DateTime.parse(o1.getLastUpdate(), expectedDateFormat)
-                                        .compareTo(DateTime.parse(o2.getLastUpdate(), expectedDateFormat));
+                                DateTime.parse(o1.getLastUpdate(), DATE_FORMAT)
+                                        .compareTo(DateTime.parse(o2.getLastUpdate(), DATE_FORMAT));
                     }
                 });
         return l.subList(0, Math.min(5, l.size()));
     }
-
 }

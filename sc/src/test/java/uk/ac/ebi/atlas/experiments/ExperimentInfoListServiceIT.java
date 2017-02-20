@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experiments;
 
-
 import com.google.common.collect.ImmutableList;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -29,13 +27,11 @@ import static org.junit.Assert.assertTrue;
 public class ExperimentInfoListServiceIT {
 
     @Inject
-    ExperimentTrader experimentTrader;
+    private ExperimentTrader experimentTrader;
 
+    private ExperimentInfoListService subject;
 
-    ExperimentInfoListService subject;
-
-    Collection<ExperimentType> types =
-            ImmutableList.of(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
+    private Collection<ExperimentType> types = ImmutableList.of(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE);
 
     @Before
     public void setUp(){
@@ -48,9 +44,9 @@ public class ExperimentInfoListServiceIT {
         assertThat(experiments.size(), Matchers.greaterThan(0));
         assertThat(experiments.size(), Matchers.lessThan(10));
 
-        DateTime tHead = DateTime.parse(experiments.get(0).getLastUpdate(), ExperimentInfoListService.expectedDateFormat);
+        DateTime tHead = DateTime.parse(experiments.get(0).getLastUpdate(), ExperimentInfoListService.DATE_FORMAT);
         DateTime tTail = DateTime.parse(experiments.get(experiments.size()-1).getLastUpdate(),
-                ExperimentInfoListService.expectedDateFormat);
+                ExperimentInfoListService.DATE_FORMAT);
 
         assertTrue("First element of the list was updated after the last one" , tHead.isAfter(tTail) || tHead.equals(tTail));
     }

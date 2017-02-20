@@ -17,11 +17,8 @@ public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<St
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentsCacheLoader.class);
 
     private final ArrayExpressClient arrayExpressClient;
-
     private final ExperimentDesignParser experimentDesignParser;
-
     private final ExperimentDAO experimentDAO;
-
     private final ExperimentFactory<T> experimentFactory;
 
     public ExperimentsCacheLoader(ArrayExpressClient arrayExpressClient, ExperimentDesignParser
@@ -33,18 +30,14 @@ public class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<St
     }
 
     @Override
-    public T load(@Nonnull String experimentAccession){
-
+    public T load(@Nonnull String experimentAccession) throws Exception {
         LOGGER.info("loading experiment with accession: {}", experimentAccession);
 
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
-
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
-
         String experimentDescription = fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
 
         return experimentFactory.create(experimentDTO, experimentDescription, experimentDesign);
-
     }
 
     private String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {

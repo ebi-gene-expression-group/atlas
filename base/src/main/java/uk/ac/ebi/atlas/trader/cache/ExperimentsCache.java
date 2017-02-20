@@ -13,11 +13,11 @@ public abstract class ExperimentsCache<T extends Experiment> {
         this.experiments = experiments;
     }
 
-    public T getExperiment(String experimentAccession){
+    public T getExperiment(String experimentAccession) {
         try {
             return experiments.get(experimentAccession);
         } catch (ExecutionException e) {
-            throw new RuntimeException("Failed to create experiment from cache: "+experimentAccession);
+            throw new RuntimeException("Failed to create experiment from cache: " + experimentAccession);
         }
     }
 
@@ -28,4 +28,5 @@ public abstract class ExperimentsCache<T extends Experiment> {
     public void evictAll() {
         experiments.invalidateAll();
     }
+
 }
