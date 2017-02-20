@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.trader.cache.PublicExperimentTypesCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.commons.lang3.StringUtils;
