@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +64,17 @@ public class ExperimentsInfoListServiceTest {
     public void sizeIsRight() throws Exception {
         JsonArray result = subject.getExperimentsJson().get("aaData").getAsJsonArray();
        assertThat(result.size(), is(1));
+    }
+
+    @Test
+    public void formatIsInSyncWithWhatWeExpectAndTheDataOfMockBaselineExperiment1() throws Exception {
+        JsonElement result = subject.getExperimentsJson();
+        JsonObject dataPoint = result.getAsJsonObject().get("aaData").getAsJsonObject();
+        assertThat(dataPoint.get("experimentType").getAsString(), is("RNASEQ_MRNA_BASELINE"));
+        assertThat(dataPoint.has("experimentAccession"), is(true));
+        assertThat(dataPoint.has("lastUpdate"), is(true));
+        assertThat(dataPoint.has("species"), is(true));
+        assertThat(dataPoint.has("kingdom"), is(true));
     }
 
     @Test
