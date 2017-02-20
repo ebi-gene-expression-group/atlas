@@ -48,9 +48,9 @@ class SingleSpecies extends React.Component {
 
     render() {
 
-        const iconUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&foundation";
-        const differentialUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&experimentType=Differential&foundation";
-        const baselineUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&experimentType=Baseline&foundation";
+        const iconUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&foundation";
+        const differentialUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Differential&foundation";
+        const baselineUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Baseline&foundation";
 
         const speciesFirstCapitalLetter = this.props.species[0].toUpperCase() + this.props.species.substr(1);
 

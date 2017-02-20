@@ -1198,9 +1198,9 @@ webpackJsonp_name_([4],{
 	        key: 'render',
 	        value: function render() {
 	
-	            var iconUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&foundation";
-	            var differentialUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&experimentType=Differential&foundation";
-	            var baselineUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&experimentType=Baseline&foundation";
+	            var iconUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&foundation";
+	            var differentialUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Differential&foundation";
+	            var baselineUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Baseline&foundation";
 	
 	            var speciesFirstCapitalLetter = this.props.species[0].toUpperCase() + this.props.species.substr(1);
 	

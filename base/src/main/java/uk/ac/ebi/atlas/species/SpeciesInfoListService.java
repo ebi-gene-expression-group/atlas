@@ -111,31 +111,6 @@ public class SpeciesInfoListService {
             return totalExperiments;
         }
 
-        public void setTotalExperiments(Integer totalExperiments) {
-            this.totalExperiments = totalExperiments;
-        }
-
-        public Integer getBaselineExperiments() {
-            return baselineExperiments;
-        }
-
-        public void setBaselineExperiments(Integer baselineExperiments) {
-            this.baselineExperiments = baselineExperiments;
-        }
-
-        public Integer getDifferentialExperiments() {
-            return differentialExperiments;
-        }
-
-        public void setDifferentialExperiments(Integer differentialExperiments) {
-            this.differentialExperiments = differentialExperiments;
-        }
-
-        @Override
-        public String toString() {
-            return super.toString();
-        }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -143,23 +118,12 @@ public class SpeciesInfoListService {
 
             SpeciesInfo that = (SpeciesInfo) o;
 
-            if (species != null ? !species.equals(that.species) : that.species != null) return false;
-            if (kingdom != null ? !kingdom.equals(that.kingdom) : that.kingdom != null) return false;
-            if (totalExperiments != null ? !totalExperiments.equals(that.totalExperiments) : that.totalExperiments != null)
-                return false;
-            if (baselineExperiments != null ? !baselineExperiments.equals(that.baselineExperiments) : that.baselineExperiments != null)
-                return false;
-            return differentialExperiments != null ? differentialExperiments.equals(that.differentialExperiments) : that.differentialExperiments == null;
+            return totalExperiments != null ? totalExperiments.equals(that.totalExperiments) : that.totalExperiments == null;
         }
 
         @Override
         public int hashCode() {
-            int result = species != null ? species.hashCode() : 0;
-            result = 31 * result + (kingdom != null ? kingdom.hashCode() : 0);
-            result = 31 * result + (totalExperiments != null ? totalExperiments.hashCode() : 0);
-            result = 31 * result + (baselineExperiments != null ? baselineExperiments.hashCode() : 0);
-            result = 31 * result + (differentialExperiments != null ? differentialExperiments.hashCode() : 0);
-            return result;
+            return totalExperiments != null ? totalExperiments.hashCode() : 0;
         }
     }
 
