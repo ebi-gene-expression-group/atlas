@@ -31,20 +31,16 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
 
     private ExperimentTrader experimentTrader;
-
     private DifferentialExperimentPageService<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile>
             differentialExperimentPageService;
-    @Inject
-    @Required
-    public void setExperimentTrader(ExperimentTrader experimentTrader) {
-        this.experimentTrader = experimentTrader;
-    }
 
     @Inject
-    public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
+    public MicroarrayExperimentPageController(ExperimentTrader experimentTrader,
+            MicroarrayRequestContextBuilder requestContextBuilder,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                               TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
+        this.experimentTrader = experimentTrader;
         differentialExperimentPageService =
                 new DifferentialExperimentPageService<>(requestContextBuilder, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
@@ -61,27 +57,13 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
         differentialExperimentPageService.prepareRequestPreferencesAndHeaderData(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, model,request
+                preferences, model, request
         );
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         return "experiment";
+
     }
 
-    @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
-    @ResponseBody
-    public String showGeneProfilesData(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
-                                       @PathVariable String experimentAccession,
-                                       @RequestParam(required = false) String accessKey,
-                                       BindingResult result, Model model,HttpServletRequest request,
-                                       HttpServletResponse response) {
-//        experimentPageCallbacks.adjustReceivedObjects(preferences);
-
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return gson.toJson(differentialExperimentPageService.populateModelWithHeatmapData(request,
-                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, result, model
-        ));
-    }
 }

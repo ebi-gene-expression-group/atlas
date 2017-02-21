@@ -22,8 +22,13 @@ import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
-import java.io.IOException;
-import java.util.*;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -82,7 +87,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException {
+    public void experimentShouldOnlyContainRunsFromDataFile() throws Exception {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         assertThat(experiment.getAnalysedRowsAccessions(), containsInAnyOrder(
@@ -99,7 +104,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() throws IOException {
+    public void experimentShouldContainAssayGroups() throws Exception {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         Set<String> allAssayGroupIds = new HashSet<>();
@@ -113,7 +118,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentalFactors() throws IOException {
+    public void experimentalFactors() throws Exception {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         //ImmutableList<FactorGroup> allFactors = experiment.getExperimentalFactors().getFactorGroupsInOrder();
@@ -128,7 +133,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentDesign() throws IOException {
+    public void experimentDesign() throws Exception {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();

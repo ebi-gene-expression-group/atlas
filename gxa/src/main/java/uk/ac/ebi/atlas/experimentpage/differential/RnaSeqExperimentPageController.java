@@ -29,25 +29,21 @@ import java.util.Map;
 @Scope("request")
 public class RnaSeqExperimentPageController extends DifferentialExperimentPageController {
 
-    private ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
-
-    private ExperimentTrader experimentTrader;
-
-    private DifferentialExperimentPageService<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile>
-        differentialExperimentPageService;
-    @Inject
-    @Required
-    public void setExperimentTrader(ExperimentTrader experimentTrader) {
-        this.experimentTrader = experimentTrader;
-    }
+    private final ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
+    private final ExperimentTrader experimentTrader;
+    private final
+            DifferentialExperimentPageService<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile>
+            differentialExperimentPageService;
 
     @Inject
-    public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
+    public RnaSeqExperimentPageController(ExperimentTrader experimentTrader,
+                                          RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
                                           DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                           TracksUtil tracksUtil,
                                           AtlasResourceHub atlasResourceHub,
                                           ApplicationProperties applicationProperties) {
+        this.experimentTrader = experimentTrader;
         differentialExperimentPageService = new DifferentialExperimentPageService<>(rnaSeqRequestContextBuilder, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
@@ -61,26 +57,14 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
         model.addAttribute("sourceURL", experimentPageCallbacks.create(preferences, allParameters, request.getRequestURI()));
 
         differentialExperimentPageService.prepareRequestPreferencesAndHeaderData(
-                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, model,request
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                preferences, model, request
         );
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         return "experiment";
-    }
 
-    @RequestMapping(value = "/json/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
-    @ResponseBody
-    public String showGeneProfilesData(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
-                                       @PathVariable String experimentAccession,
-                                       @RequestParam(required = false) String accessKey,
-                                       BindingResult result, Model model,HttpServletRequest request,
-                                       HttpServletResponse response) {
-//        experimentPageCallbacks.adjustReceivedObjects(preferences);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return gson.toJson(differentialExperimentPageService.populateModelWithHeatmapData(request,
-                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences, result, model
-        ));
     }
 
 }

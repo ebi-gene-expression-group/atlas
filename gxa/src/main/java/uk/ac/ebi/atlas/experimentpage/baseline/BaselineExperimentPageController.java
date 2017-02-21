@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentPageController;
 public abstract class BaselineExperimentPageController extends ExperimentPageController {
 
     @InitBinder("preferences")
-    protected void initBinder(WebDataBinder binder) {
+    public void initBinder(WebDataBinder binder) {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 

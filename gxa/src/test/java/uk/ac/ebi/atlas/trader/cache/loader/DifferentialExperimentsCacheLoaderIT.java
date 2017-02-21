@@ -18,7 +18,6 @@ import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -64,7 +63,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldHaveExactlyOneSpecies() throws IOException {
+    public void shouldHaveExactlyOneSpecies() throws Exception {
 
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
@@ -74,7 +73,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldContainOneContrast() throws IOException {
+    public void shouldContainOneContrast() throws Exception {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -84,7 +83,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldContainGivenContrast() throws IOException {
+    public void shouldContainGivenContrast() throws Exception {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -103,7 +102,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldHaveDisplayNameEqualsToAccession() throws IOException {
+    public void shouldHaveDisplayNameEqualsToAccession() throws Exception {
         when(arrayExpressClient.fetchExperimentName(EXPERIMENT_ACCESSION)).thenThrow(new RuntimeException("Woosh!"));
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
