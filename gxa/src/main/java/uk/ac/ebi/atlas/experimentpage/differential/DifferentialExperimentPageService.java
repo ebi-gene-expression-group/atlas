@@ -42,7 +42,7 @@ public class DifferentialExperimentPageService
     private final DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>> profilesHeatMap;
     private final TracksUtil tracksUtil;
 
-    protected DifferentialExperimentPageService(
+    public DifferentialExperimentPageService(
             DifferentialRequestContextBuilder<E, ? extends DifferentialRequestContext<E>, K> differentialRequestContextBuilder,
             DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>> profilesHeatMap,
             DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
@@ -56,7 +56,6 @@ public class DifferentialExperimentPageService
         this.atlasResourceHub = atlasResourceHub;
 
     }
-
 
     // called from sub classes
     public void prepareRequestPreferencesAndHeaderData(E experiment, K preferences, Model model, HttpServletRequest request) {

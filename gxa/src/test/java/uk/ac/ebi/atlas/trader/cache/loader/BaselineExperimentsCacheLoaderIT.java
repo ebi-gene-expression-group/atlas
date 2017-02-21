@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -74,7 +73,7 @@ public class BaselineExperimentsCacheLoaderIT {
 
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException {
+    public void experimentShouldOnlyContainRunsFromDataFile() throws Exception {
         BaselineExperiment experiment = subject.load(accession);
 
         assertThat(experiment.getAnalysedRowsAccessions(), hasItems(
@@ -87,14 +86,14 @@ public class BaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() throws IOException {
+    public void experimentShouldContainAssayGroups() throws Exception {
         BaselineExperiment experiment = subject.load(accession);
 
         assertThat(experiment.getDataColumnDescriptors(), hasSize(16));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void loadNonExistentExperimentThrowsIllegalStateException() throws IOException {
+    public void loadNonExistentExperimentThrowsIllegalStateException() throws Exception {
         subject.load("FOOBAR");
     }
 
