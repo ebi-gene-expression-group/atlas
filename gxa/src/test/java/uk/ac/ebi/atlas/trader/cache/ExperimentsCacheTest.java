@@ -26,7 +26,7 @@ public class ExperimentsCacheTest {
         subject = new RnaSeqBaselineExperimentsCache(loadingCacheMock);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = ExecutionException.class)
     public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new FileNotFoundException()));
         subject.getExperiment("");

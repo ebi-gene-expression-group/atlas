@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
@@ -40,9 +39,10 @@ public class BaselineExperimentsCacheTest {
         assertThat(subject.getExperiment("bla"), is(baselineExperimentMock));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = ExecutionException.class)
     public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new FileNotFoundException()));
         subject.getExperiment("");
     }
+
 }

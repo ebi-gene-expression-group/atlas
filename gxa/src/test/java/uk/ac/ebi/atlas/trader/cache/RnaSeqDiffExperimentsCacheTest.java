@@ -39,7 +39,7 @@ public class RnaSeqDiffExperimentsCacheTest {
         assertThat(subject.getExperiment("bla"), is(differentialExperimentMock));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = ExecutionException.class)
     public void whenGetFromCacheFailsCacheShallThrowExecutionException() throws ExecutionException {
         given(loadingCacheMock.get("")).willThrow(new ExecutionException(new FileNotFoundException()));
         subject.getExperiment("");
