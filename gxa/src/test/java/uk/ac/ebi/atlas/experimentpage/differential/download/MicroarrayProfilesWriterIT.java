@@ -84,7 +84,7 @@ public class MicroarrayProfilesWriterIT {
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;
 
-    private MicroarrayRequestContext setUpAndPopulateRequestContext(String experimentAccession){
+    private MicroarrayRequestContext setUpAndPopulateRequestContext(String experimentAccession) throws Exception {
         MockitoAnnotations.initMocks(this);
         MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
 

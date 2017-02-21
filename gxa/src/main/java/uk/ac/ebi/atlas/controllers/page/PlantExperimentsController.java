@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 
 @Controller
@@ -121,7 +122,7 @@ public class PlantExperimentsController {
                     numberOfPlantExperiments++;
                 }
 
-            } catch (RuntimeException e) {
+            } catch (RuntimeException | ExecutionException e) {
                 // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
