@@ -58,13 +58,13 @@ public class RnaSeqProfilesWriterIT {
     private RnaSeqDiffExperimentsCache experimentsCache;
 
     @Inject
-    RnaSeqRequestContextBuilder contextBuilder;
+    private RnaSeqRequestContextBuilder contextBuilder;
 
     @Mock
-    PrintWriter printWriterMock;
+    private PrintWriter printWriterMock;
 
     @Mock
-    CSVWriter csvWriterMock;
+    private CSVWriter csvWriterMock;
 
     @Mock
     private CsvWriterFactory csvWriterFactoryMock;
@@ -83,7 +83,7 @@ public class RnaSeqProfilesWriterIT {
     @Inject
     private ExpressionAtlasExperimentTrader experimentTrader;
 
-    private RnaSeqRequestContext populateRequestContext(String experimentAccession) {
+    private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws Exception {
         MockitoAnnotations.initMocks(this);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 

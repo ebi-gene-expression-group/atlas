@@ -18,9 +18,9 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 public class SingleCellExperimentTrader extends ExperimentTrader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellExperimentTrader.class);
 
     private final LoadingCache<String, BaselineExperiment> baselineExperimentsCache;
+
     @Inject
     public SingleCellExperimentTrader(ExperimentDAO experimentDAO,
                                       SingleCellRnaSeqBaselineExperimentFactory
@@ -60,8 +60,4 @@ public class SingleCellExperimentTrader extends ExperimentTrader {
         }
     }
 
-    @Override
-    protected void logError(Exception e) {
-        LOGGER.error(e.getMessage());
-    }
 }

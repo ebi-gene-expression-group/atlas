@@ -8,6 +8,8 @@ import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.ParseContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
@@ -19,14 +21,16 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Named
 public class DifferentialResultsReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialResultsReader.class);
 
     private final ExperimentTrader experimentTrader;
     private final ContrastTrader contrastTrader;
 
-    private static final String DOCS_PATH                  = "$.response.docs[*]";
+    private static final String DOCS_PATH = "$.response.docs[*]";
 
     private static final ParseContext parser = JsonPath.using(Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST));
 
@@ -73,16 +77,20 @@ public class DifferentialResultsReader {
                 maxDownLevel = Math.min(maxDownLevel, foldChange);
             }
 
-            JsonObject o = gson.toJsonTree(document).getAsJsonObject();
-            o.addProperty("bioentityIdentifier", (String) document.get("bioentityIdentifier"));
-            o.addProperty("bioentityName", bioentityName);
-            o.addProperty("experimentAccession", experimentAccession);
-            o.addProperty("experimentType", experimentType.toString());
-            o.addProperty("contrastId", contrastId);
-            o.addProperty("foldChange", foldChange);
-            o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
-            o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
-            filteredDocuments.add(o);
+            try {
+                JsonObject o = gson.toJsonTree(document).getAsJsonObject();
+                o.addProperty("bioentityIdentifier", (String) document.get("bioentityIdentifier"));
+                o.addProperty("bioentityName", bioentityName);
+                o.addProperty("experimentAccession", experimentAccession);
+                o.addProperty("experimentType", experimentType.toString());
+                o.addProperty("contrastId", contrastId);
+                o.addProperty("foldChange", foldChange);
+                o.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+                o.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+                filteredDocuments.add(o);
+            } catch (ExecutionException e) {
+                LOGGER.error("Error adding differential result: {}", e.getMessage());
+            }
         }
         for (JsonObject document : filteredDocuments) {
             double foldChange = document.get("foldChange").getAsDouble();

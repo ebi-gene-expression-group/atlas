@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 @Named
 public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
@@ -58,12 +59,15 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         ExperimentType experimentType;
         try {
             experimentType = publicExperimentTypesCache.getExperimentType(experimentAccession);
-        } catch (UncheckedExecutionException | NullPointerException e) {
+            return getExperimentFromCache(experimentAccession, experimentType);
+        } catch (ExecutionException e) {
             LOGGER.error(e.getMessage());
-            throw new ResourceNotFoundException("Experiment: " + experimentAccession + " not found");
+            throw new ResourceNotFoundException("Failed to load " + experimentAccession);
         }
-
-        return getExperimentFromCache(experimentAccession, experimentType);
+        catch (UncheckedExecutionException | NullPointerException e) {
+            LOGGER.error(e.getMessage());
+            throw new ResourceNotFoundException("Experiment " + experimentAccession + " not found");
+        }
     }
 
     @Override
@@ -73,7 +77,11 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         }
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, accessKey);
 
-        return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+        try {
+            return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -93,7 +101,7 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
     }
 
     @Override
-    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
+    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) throws ExecutionException {
         return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
     }
 
@@ -112,10 +120,5 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
         identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL)));
         identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)));
         return identifiers;
-    }
-
-    @Override
-    protected void logError(Exception e) {
-        LOGGER.error(e.getMessage());
     }
 }

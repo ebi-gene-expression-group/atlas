@@ -104,7 +104,7 @@ public class ExperimentDesignParserTest {
     }
 
     @Test
-    public void testGetSpeciesForAssays() {
+    public void testGetSpeciesForAssays() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         String species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
         MatcherAssert.assertThat(species, is(SPECIES_1));

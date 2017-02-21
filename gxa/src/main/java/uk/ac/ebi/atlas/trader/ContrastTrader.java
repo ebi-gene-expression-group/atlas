@@ -8,9 +8,9 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.concurrent.ExecutionException;
 
 @Named()
-@Scope("singleton")
 public class ContrastTrader {
 
     private ExperimentTrader experimentTrader;
@@ -27,7 +27,11 @@ public class ContrastTrader {
     }
 
     public Contrast getContrastFromCache(String experimentAccession, ExperimentType experimentType, String contrastId) {
-        Experiment experiment = experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
-        return ((DifferentialExperiment)experiment).getDataColumnDescriptor(contrastId);
+        try {
+            Experiment experiment = experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
+            return ((DifferentialExperiment)experiment).getDataColumnDescriptor(contrastId);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

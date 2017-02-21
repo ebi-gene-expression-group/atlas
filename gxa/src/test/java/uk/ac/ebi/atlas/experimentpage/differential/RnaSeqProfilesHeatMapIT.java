@@ -42,7 +42,7 @@ public class RnaSeqProfilesHeatMapIT {
     private RnaSeqProfilesHeatMap subject;
 
     @Inject
-    RnaSeqRequestContextBuilder requestContextBuilder;
+    private RnaSeqRequestContextBuilder requestContextBuilder;
 
     private DifferentialRequestPreferences requestPreferences;
 
@@ -50,12 +50,12 @@ public class RnaSeqProfilesHeatMapIT {
         requestPreferences = new DifferentialRequestPreferences();
     }
 
-    private RnaSeqRequestContext populateRequestContext(String experimentAccession) {
+    private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws Exception {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
-    private RnaSeqRequestContext populateRequestContext(String experimentAccession, double cutoff, double
-            logFoldCutoff) {
+    private RnaSeqRequestContext populateRequestContext(
+            String experimentAccession, double cutoff, double logFoldCutoff) throws Exception {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -88,7 +88,7 @@ public class RnaSeqProfilesHeatMapIT {
     }
 
 
-     private void testDefaultParameters(String accession) {
+     private void testDefaultParameters(String accession) throws Exception {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -97,7 +97,7 @@ public class RnaSeqProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-     private void testNotSpecific(String accession) {
+     private void testNotSpecific(String accession) throws Exception {
         requestPreferences.setSpecific(false);
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -107,7 +107,7 @@ public class RnaSeqProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) {
+    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws Exception {
         RnaSeqRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList<RnaSeqProfile> profilesAll = subject.fetch(requestContext);

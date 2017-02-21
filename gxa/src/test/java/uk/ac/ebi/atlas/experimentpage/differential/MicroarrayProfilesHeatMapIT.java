@@ -22,6 +22,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -52,12 +53,12 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences = new MicroarrayRequestPreferences();
     }
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession) {
+    private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws Exception {
         return populateRequestContext(experimentAccession, 1.0, 0.0);
     }
 
-    private MicroarrayRequestContext populateRequestContext(String experimentAccession, double cutoff, double
-            logFoldCutoff) {
+    private MicroarrayRequestContext populateRequestContext(
+            String experimentAccession, double cutoff, double logFoldCutoff) throws Exception {
         requestPreferences.setFoldChangeCutOff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
@@ -90,7 +91,7 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    private void testDefaultParameters(String accession) {
+    private void testDefaultParameters(String accession) throws Exception {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
 
@@ -99,7 +100,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testNotSpecific(String accession) {
+    private void testNotSpecific(String accession) throws Exception {
         requestPreferences.setSpecific(false);
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
         DifferentialExperiment experiment = requestContext.getExperiment();
@@ -109,7 +110,7 @@ public class MicroarrayProfilesHeatMapIT {
         assertAbout(experiment, profiles);
     }
 
-    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) {
+    private void testUpAndDownRegulatedAndAlsoQueryFactorValues(String accession) throws Exception {
         MicroarrayRequestContext requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList<MicroarrayProfile> profilesAll = subject.fetch(requestContext);

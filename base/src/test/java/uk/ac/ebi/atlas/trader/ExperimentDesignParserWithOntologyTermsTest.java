@@ -125,7 +125,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
-    public void parseEmptyOntologyTermInSample() {
+    public void parseEmptyOntologyTermInSample() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getSampleCharacteristics(ASSAY_ACCESSION_3)));
@@ -134,7 +134,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
 
     @Test
-    public void parseEmptyOntologyTermInFactor() {
+    public void parseEmptyOntologyTermInFactor() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getFactors(ASSAY_ACCESSION_3)));
@@ -164,7 +164,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
-    public void testGetSpeciesForAssays() {
+    public void testGetSpeciesForAssays() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         String species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1));
         assertThat(species, is(SPECIES_1));
