@@ -39,7 +39,7 @@ import java.util.List;
 
 @Controller
 @Scope("request")
-public final class JsonExperimentsBaselineController extends WidgetExceptionHandler {
+public final class JsonExperimentsBaselineController extends WidgetController {
 
     private final AnatomogramFactory anatomogramFactory;
     private final SpeciesInferrer speciesInferrer;

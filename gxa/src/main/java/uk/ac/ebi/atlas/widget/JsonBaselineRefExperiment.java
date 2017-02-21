@@ -22,27 +22,27 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Controller
 @Scope("request")
-public class JsonBaselineRefExperiment extends WidgetExceptionHandler {
+public class JsonBaselineRefExperiment extends WidgetController {
 
-    private SpeciesInferrer speciesInferenceEngine;
+    private SpeciesInferrer speciesInferrer;
 
     @Inject
-    public JsonBaselineRefExperiment(SpeciesInferrer speciesInferenceEngine) {
-        this.speciesInferenceEngine = speciesInferenceEngine;
+    public JsonBaselineRefExperiment(SpeciesInferrer speciesInferrer) {
+        this.speciesInferrer = speciesInferrer;
     }
 
-    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", method = RequestMethod.GET)
+    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @Deprecated
     public String oldReferenceExperiment() {
         return "forward:/json/baseline_refexperiment";
     }
 
-    @RequestMapping(value = {"/json/baseline_refexperiment"})
+    @RequestMapping(value = "/json/baseline_refexperiment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String jsonBaselineRefExperiment(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
                                             @RequestParam(value = "species", required = false) String speciesString,
                                             @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
 
-        Species species = speciesInferenceEngine.inferSpeciesForGeneQuery(geneQuery, speciesString);
+        Species species = speciesInferrer.inferSpeciesForGeneQuery(geneQuery, speciesString);
         String experimentAccession = ApplicationProperties.getBaselineReferenceExperimentAccession(species);
 
         if (isBlank(experimentAccession)) {
