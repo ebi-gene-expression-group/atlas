@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
@@ -92,8 +93,8 @@ public class BaselineExperimentsCacheLoaderIT {
         assertThat(experiment.getDataColumnDescriptors(), hasSize(16));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void loadNonExistentExperimentThrowsIllegalStateException() throws Exception {
+    @Test(expected = FileNotFoundException.class)
+    public void loadNonExistentExperimentThrowsFileNotFoundException() throws Exception {
         subject.load("FOOBAR");
     }
 
