@@ -56,17 +56,12 @@ public abstract class Profile<Condition, T extends Expression> {
     }
 
     @Nullable
-    public Double getKnownExpressionLevel(Condition condition) {
+    public Double getExpressionLevel(Condition condition) {
         Expression expression = expressionsByCondition.get(condition);
-        if (expression != null && expression.isKnown()) {
+        if (expression != null) {
             return expression.getLevel();
         }
         return null;
-    }
-
-    protected boolean isKnownLevel(Condition condition){
-        Expression expression = expressionsByCondition.get(condition);
-        return expression != null && expression.isKnown();
     }
 
     protected abstract void addExpression(T expression);

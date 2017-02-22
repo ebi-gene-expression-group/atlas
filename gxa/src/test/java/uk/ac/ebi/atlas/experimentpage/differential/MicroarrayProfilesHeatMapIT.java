@@ -22,7 +22,6 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -186,7 +185,7 @@ public class MicroarrayProfilesHeatMapIT {
             for(Contrast contrast: profile.getConditions()){
                 assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
 
-                double expressionLevel = profile.getKnownExpressionLevel(contrast);
+                double expressionLevel = profile.getExpressionLevel(contrast);
                 if(! Double.isNaN(expressionLevel)) {
                     assertThat(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp, is(true));
                     assertThat(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown, is(true));

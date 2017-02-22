@@ -6,7 +6,6 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
@@ -19,7 +18,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
     private double level;
     private String levelString;
     private FactorGroup factorGroup;
-    private boolean known;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
@@ -28,7 +26,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     public BaselineExpression(double level) {
         this.level = level;
-        this.known = true;
     }
 
     public BaselineExpression(double level, FactorGroup factorGroup) {
@@ -52,16 +49,13 @@ public class BaselineExpression implements Expression, KryoSerializable {
         switch (expressionLevelString) {
             case "NT":  //Non-Tissue
                 level = 0;
-                known = false;
                 break;
             case "NA":
                 // treat as if zero
                 level = 0;
-                known = true;
                 break;
             default:
                 level = Double.parseDouble(expressionLevelString);
-                known = true;
                 break;
         }
         this.factorGroup = factorGroup;
@@ -77,14 +71,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     }
 
     public double getLevel() {
-        if (!isKnown()) {
-            throw new UnsupportedOperationException("BaselineExpression level is " + levelString + ". Call isKnown() first to check.");
-        }
         return level;
-    }
-
-    public boolean isKnown() {
-        return known;
     }
 
     public String getLevelAsString() {
@@ -149,7 +136,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
     public void write(Kryo kryo, Output output) {
         output.writeDouble(level);
         output.writeString(levelString);
-        output.writeBoolean(known);
         boolean hasQuartiles = !ArrayUtils.isEmpty(quartiles);
         output.writeBoolean(hasQuartiles);
         output.writeDoubles(quartiles);
@@ -159,7 +145,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
     public void read(Kryo kryo, Input input) {
         level = input.readDouble();
         levelString = input.readString();
-        known = input.readBoolean();
         boolean hasQuartiles = input.readBoolean();
         quartiles = hasQuartiles ? input.readDoubles(5) : input.readDoubles(0);
     }
@@ -171,9 +156,9 @@ public class BaselineExpression implements Expression, KryoSerializable {
     @Override
     public JsonObject toJson() {
         JsonObject result = new JsonObject();
-        if(known){
-            result.addProperty("value", level);
-        }
+
+        result.addProperty("value", level);
+
         if(quartiles!=null && quartiles.length == 5){
             result.add("quartiles",Quartiles.create(quartiles).toJson());
         }

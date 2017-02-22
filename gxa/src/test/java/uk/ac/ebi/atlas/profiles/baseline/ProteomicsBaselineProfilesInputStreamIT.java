@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,7 +57,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
         assertThat(baselineProfile.getName(), is("TSPAN6"));
         assertThat(baselineProfile.getSpecificity(), is(23));
         for(String organismPart: "colon ovary pancreas prostate".split(" ")){
-            assertNotNull(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, organismPart)));
+            assertNotNull(baselineProfile.getExpressionLevel(new Factor(ORGANISM_PART, organismPart)));
         }
         BaselineProfile baselineProfile2 = subject.readNext();
 
@@ -81,7 +80,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
         assertThat(baselineProfile.getSpecificity(), is(7));
-        assertNotNull(baselineProfile.getKnownExpressionLevel(new Factor(ORGANISM_PART, "ovary")));
+        assertNotNull(baselineProfile.getExpressionLevel(new Factor(ORGANISM_PART, "ovary")));
 
         BaselineProfile baselineProfile2 = subject.readNext();
 

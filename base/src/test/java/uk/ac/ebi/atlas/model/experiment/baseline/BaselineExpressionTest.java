@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.*;
 public class BaselineExpressionTest {
 
     private static final String EXPRESSION_LEVEL_1 = "0";
-    private static final String EXPRESSION_LEVEL_2 = "NA";
+    private static final String EXPRESSION_LEVEL_2 = "123.4";
 
     private BaselineExpression subject;
 
@@ -25,7 +25,6 @@ public class BaselineExpressionTest {
         subject = new BaselineExpression(EXPRESSION_LEVEL_1, factorGroup);
 
         assertThat(subject.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
-        assertThat(subject.isKnown(), is(true));
 
     }
 
@@ -38,7 +37,6 @@ public class BaselineExpressionTest {
 
         subject = new BaselineExpression(EXPRESSION_LEVEL_2, factorGroup);
 
-        assertThat(subject.isKnown(), is(true));
         assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_2));
 
     }

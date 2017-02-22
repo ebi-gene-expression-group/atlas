@@ -182,7 +182,7 @@ public class RnaSeqProfilesHeatMapIT {
             for(Contrast contrast: profile.getConditions()){
                 assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
 
-                double expressionLevel = profile.getKnownExpressionLevel(contrast);
+                double expressionLevel = profile.getExpressionLevel(contrast);
                 if(! Double.isNaN(expressionLevel)) {
                     assertTrue(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp);
                     assertTrue(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown);

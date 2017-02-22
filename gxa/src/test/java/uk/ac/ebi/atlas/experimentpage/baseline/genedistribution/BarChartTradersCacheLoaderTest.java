@@ -159,12 +159,11 @@ public class BarChartTradersCacheLoaderTest {
     public void testAddGeneToIndexes() {
         //given
         BaselineExpression expression1 = mock(BaselineExpression.class);
-        when(expression1.isKnown()).thenReturn(true);
+        
         when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
         when(expression1.getLevel()).thenReturn(1.0);
 
         BaselineExpression expression2 = mock(BaselineExpression.class);
-        when(expression2.isKnown()).thenReturn(true);
         when(expression2.getFactorGroup()).thenReturn(factorHashSet2);
         when(expression2.getLevel()).thenReturn(2.0);
 
@@ -192,12 +191,10 @@ public class BarChartTradersCacheLoaderTest {
     public void testAddTwoGenesToIndexes() {
         //given
         BaselineExpression expression1 = mock(BaselineExpression.class);
-        when(expression1.isKnown()).thenReturn(true);
         when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
         when(expression1.getLevel()).thenReturn(1d);
 
         BaselineExpression expression2 = mock(BaselineExpression.class);
-        when(expression2.isKnown()).thenReturn(true);
         when(expression2.getFactorGroup()).thenReturn(factorHashSet2);
         when(expression2.getLevel()).thenReturn(2d);
 
@@ -206,7 +203,6 @@ public class BarChartTradersCacheLoaderTest {
 
         //given
         BaselineExpression expression21 = mock(BaselineExpression.class);
-        when(expression21.isKnown()).thenReturn(true);
         when(expression21.getFactorGroup()).thenReturn(factorHashSet1);
         when(expression21.getLevel()).thenReturn(3d);
 

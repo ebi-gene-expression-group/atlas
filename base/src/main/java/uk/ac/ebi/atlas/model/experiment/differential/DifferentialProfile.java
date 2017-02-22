@@ -61,7 +61,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         double expressionLevel = DifferentialExpression.WEAKEST_LEVEL;
 
         for (Contrast condition : queryContrasts) {
-            Double level = getKnownExpressionLevel(condition);
+            Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, Math.abs(level));
             }
@@ -76,7 +76,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         double expressionLevel = 0D;
 
         for (Contrast contrast : contrasts) {
-            Double level = getKnownExpressionLevel(contrast);
+            Double level = getExpressionLevel(contrast);
             if (level != null) {
                 expressionLevel += Math.abs(level);
             }
@@ -93,7 +93,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
 
         for (Contrast contrast : contrasts) {
             T expression = getExpression(contrast);
-            if (expression != null && expression.isKnown()) {
+            if (expression != null ) {
                 pValueTotal += expression.getPValue();
             } else {
                 pValueTotal += MIN_P_VALUE;

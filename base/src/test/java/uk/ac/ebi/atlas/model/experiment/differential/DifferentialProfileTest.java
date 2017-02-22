@@ -6,10 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -103,7 +99,7 @@ public class DifferentialProfileTest {
         //given
         given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
-        given(differentialExpressionMock1.isKnown()).willReturn(true);
+
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
@@ -111,7 +107,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(false);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
 
         //when
         subject.add(differentialExpressionMock1);
@@ -127,14 +123,14 @@ public class DifferentialProfileTest {
         //given
         given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(-0.3D);
-        given(differentialExpressionMock1.isKnown()).willReturn(true);
+
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(-0.5D);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -153,7 +149,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -171,14 +167,14 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getLevel()).willReturn(-5D);
-        given(differentialExpressionMock1.isKnown()).willReturn(true);
+
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -197,14 +193,14 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getLevel()).willReturn(-5D);
-        given(differentialExpressionMock1.isKnown()).willReturn(true);
+
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -223,7 +219,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -241,7 +237,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -257,7 +253,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock1.isRegulatedLike(Regulation.UP)).willReturn(true);
         given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(5D);
-        given(differentialExpressionMock1.isKnown()).willReturn(true);
+
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
@@ -265,7 +261,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -283,7 +279,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
@@ -300,7 +296,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock1.isRegulatedLike(Regulation.UP)).willReturn(true);
         given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
-        given(differentialExpressionMock1.isKnown()).willReturn(true);
+
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
@@ -308,7 +304,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
         given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-        given(differentialExpressionMock2.isKnown()).willReturn(true);
+
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when

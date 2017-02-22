@@ -7,9 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -36,10 +33,10 @@ public class BaselineProfilesListTest {
     public void setUp() throws Exception {
 
         when(profileMock1.getMaxExpressionLevel()).thenReturn(10.0);
-        when(profileMock1.getKnownExpressionLevel(factorMock1)).thenReturn(5.0);
+        when(profileMock1.getExpressionLevel(factorMock1)).thenReturn(5.0);
 
         when(profileMock2.getMinExpressionLevel()).thenReturn(-10.0);
-        when(profileMock2.getKnownExpressionLevel(factorMock2)).thenReturn(2.0);
+        when(profileMock2.getExpressionLevel(factorMock2)).thenReturn(2.0);
 
         subject = new BaselineProfilesList(Lists.newArrayList(profileMock1, profileMock2));
         subject.setTotalResultCount(2);

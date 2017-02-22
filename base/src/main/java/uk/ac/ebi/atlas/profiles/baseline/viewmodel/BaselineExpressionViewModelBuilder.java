@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.Quartiles;
-import uk.ac.ebi.atlas.utils.ColourGradient;
 import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.Quartiles;
+import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,17 +43,12 @@ public class BaselineExpressionViewModelBuilder {
         BaselineExpression expression = profile.getExpression(factor);
         Optional<Quartiles> quartiles = (expression == null || expression.getQuartiles().length == 0) ? Optional.<Quartiles>absent() : Optional.of(Quartiles.create(expression.getQuartiles()));
 
-        Double value = expression == null || !expression.isKnown()
+        Double value = expression == null
                 ? Double.NaN
                 : expression.getLevel();
         String color = (expression == null)
                 ? ""
-                : (expression.isKnown() && !expression.getLevelAsString().equals("NT")
-                    ? colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel)
-                    : (expression.getLevelAsString().equals("NT")
-                        ? ""
-                        : "UNKNOWN"));
-
+                :colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel);
         // We are assuming that the only relevant ontology term for tissues is the first one
         String svgPathId = factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().accession();
 

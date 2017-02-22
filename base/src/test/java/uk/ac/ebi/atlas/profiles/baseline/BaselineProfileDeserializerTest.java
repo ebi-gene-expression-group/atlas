@@ -39,19 +39,19 @@ public class BaselineProfileDeserializerTest {
         assertThat(profile1.getName(), is("CCNT2"));
         assertThat(profile1.getMinExpressionLevel(), is(3D));
         assertThat(profile1.getMaxExpressionLevel(), is(11D));
-        assertThat(profile1.getKnownExpressionLevel(ADIPOSE), is(3D));
-        assertThat(profile1.getKnownExpressionLevel(ADRENAL_GLAND), is(9D));
-        assertThat(profile1.getKnownExpressionLevel(BRAIN), is(5D));
-        assertThat(profile1.getKnownExpressionLevel(BREAST), is(11D));
+        assertThat(profile1.getExpressionLevel(ADIPOSE), is(3D));
+        assertThat(profile1.getExpressionLevel(ADRENAL_GLAND), is(9D));
+        assertThat(profile1.getExpressionLevel(BRAIN), is(5D));
+        assertThat(profile1.getExpressionLevel(BREAST), is(11D));
 
         assertThat(profile2.getId(), is("ENSG00000047315"));
         assertThat(profile2.getName(), is("POLR2B"));
         assertThat(profile2.getMinExpressionLevel(), is(25D));
         assertThat(profile2.getMaxExpressionLevel(), is(47D));
-        assertThat(profile2.getKnownExpressionLevel(ADIPOSE), is(28D));
-        assertThat(profile2.getKnownExpressionLevel(ADRENAL_GLAND), is(47D));
-        assertThat(profile2.getKnownExpressionLevel(BREAST), is(25D));
-        assertThat(profile2.getKnownExpressionLevel(BRAIN), is(nullValue()));
+        assertThat(profile2.getExpressionLevel(ADIPOSE), is(28D));
+        assertThat(profile2.getExpressionLevel(ADRENAL_GLAND), is(47D));
+        assertThat(profile2.getExpressionLevel(BREAST), is(25D));
+        assertThat(profile2.getExpressionLevel(BRAIN), is(nullValue()));
 
     }
 

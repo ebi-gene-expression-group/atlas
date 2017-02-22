@@ -91,13 +91,13 @@ public class BaselineProfilesHeatMapTest {
         assertThat(ccnt2.getName(), is("CCNT2"));
         assertThat(zkscan5.getName(), is("ZKSCAN5"));
 
-        assertThat(srsf2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
-        assertThat(znf713.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
-        assertThat(zfp2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
-        assertThat(polr2b.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
-        assertThat(snrpa.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
-        assertThat(ccnt2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
-        assertThat(zkscan5.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
+        assertThat(srsf2.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(znf713.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(zfp2.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(polr2b.getExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
+        assertThat(snrpa.getExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
+        assertThat(ccnt2.getExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
+        assertThat(zkscan5.getExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
 
         checkAllPolr2bExpressionLevels(polr2b);
     }
@@ -128,13 +128,13 @@ public class BaselineProfilesHeatMapTest {
         assertThat(ccnt2.getName(), is("CCNT2"));
         assertThat(zkscan5.getName(), is("ZKSCAN5"));
 
-        assertThat(srsf2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
-        assertThat(znf713.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
-        assertThat(zfp2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
-        assertThat(polr2b.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
-        assertThat(snrpa.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
-        assertThat(ccnt2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
-        assertThat(zkscan5.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
+        assertThat(srsf2.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(znf713.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(zfp2.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(polr2b.getExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
+        assertThat(snrpa.getExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
+        assertThat(ccnt2.getExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
+        assertThat(zkscan5.getExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
 
         checkAllPolr2bExpressionLevels(polr2b);
     }
@@ -204,10 +204,10 @@ public class BaselineProfilesHeatMapTest {
         assertThat(ccnt2.getName(), is("CCNT2"));
         assertThat(zkscan5.getName(), is("ZKSCAN5"));
 
-        assertThat(polr2b.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
-        assertThat(snrpa.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
-        assertThat(ccnt2.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
-        assertThat(zkscan5.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
+        assertThat(polr2b.getExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
+        assertThat(snrpa.getExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
+        assertThat(ccnt2.getExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
+        assertThat(zkscan5.getExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
 
         checkAllPolr2bExpressionLevels(polr2b);
     }
@@ -254,42 +254,42 @@ public class BaselineProfilesHeatMapTest {
     }
 
     private void checkAllPolr2bExpressionLevels(BaselineProfile polr2b) {
-        assertThat(polr2b.getKnownExpressionLevel(factor("adipose")), is(16D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("adrenal gland")), is(30D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("brain")), is(24D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("breast")), is(18D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("colon")), is(20D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("heart")), is(26D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("kidney")), is(nullValue()));
-        assertThat(polr2b.getKnownExpressionLevel(factor("leukocyte")), is(47D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("liver")), is(12D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("lung")), is(nullValue()));
-        assertThat(polr2b.getKnownExpressionLevel(factor("lymph node")), is(21D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("ovary")), is(25D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("prostate")), is(24D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("skeletal muscle")), is(28D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("testis")), is(33D));
-        assertThat(polr2b.getKnownExpressionLevel(factor("thyroid")), is(38D));
+        assertThat(polr2b.getExpressionLevel(factor("adipose")), is(16D));
+        assertThat(polr2b.getExpressionLevel(factor("adrenal gland")), is(30D));
+        assertThat(polr2b.getExpressionLevel(factor("brain")), is(24D));
+        assertThat(polr2b.getExpressionLevel(factor("breast")), is(18D));
+        assertThat(polr2b.getExpressionLevel(factor("colon")), is(20D));
+        assertThat(polr2b.getExpressionLevel(factor("heart")), is(26D));
+        assertThat(polr2b.getExpressionLevel(factor("kidney")), is(nullValue()));
+        assertThat(polr2b.getExpressionLevel(factor("leukocyte")), is(47D));
+        assertThat(polr2b.getExpressionLevel(factor("liver")), is(12D));
+        assertThat(polr2b.getExpressionLevel(factor("lung")), is(nullValue()));
+        assertThat(polr2b.getExpressionLevel(factor("lymph node")), is(21D));
+        assertThat(polr2b.getExpressionLevel(factor("ovary")), is(25D));
+        assertThat(polr2b.getExpressionLevel(factor("prostate")), is(24D));
+        assertThat(polr2b.getExpressionLevel(factor("skeletal muscle")), is(28D));
+        assertThat(polr2b.getExpressionLevel(factor("testis")), is(33D));
+        assertThat(polr2b.getExpressionLevel(factor("thyroid")), is(38D));
     }
 
 
     private void checkAllReact71ExpressionLevels(BaselineProfile react71) {
-        assertThat(react71.getKnownExpressionLevel(factor("adipose")), is(7D));
-        assertThat(react71.getKnownExpressionLevel(factor("adrenal gland")), is(10D));
-        assertThat(react71.getKnownExpressionLevel(factor("brain")), is(6D));
-        assertThat(react71.getKnownExpressionLevel(factor("breast")), is(6D));
-        assertThat(react71.getKnownExpressionLevel(factor("colon")), is(8D));
-        assertThat(react71.getKnownExpressionLevel(factor("heart")), is(6D));
-        assertThat(react71.getKnownExpressionLevel(factor("kidney")), is(4D));
-        assertThat(react71.getKnownExpressionLevel(FACTOR_LEUKOCYTE), is(MathUtils.round((POLR2B_LEUKOCYTE + SNRPA_LEUKOCYTE + CCNT2_LEUKOCYTE + ZKSCAN5_LEUKOCYTE) / NUMBER_OF_GENES_IN_GENE_SET, NUMBER_OF_FRACTIONAL_DIGITS)));
-        assertThat(react71.getKnownExpressionLevel(factor("liver")), is(4D));
-        assertThat(react71.getKnownExpressionLevel(factor("lung")), is(6D));
-        assertThat(react71.getKnownExpressionLevel(factor("lymph node")), is(9D));
-        assertThat(react71.getKnownExpressionLevel(factor("ovary")), is(9D));
-        assertThat(react71.getKnownExpressionLevel(factor("prostate")), is(17D));
-        assertThat(react71.getKnownExpressionLevel(factor("skeletal muscle")), is(11D));
-        assertThat(react71.getKnownExpressionLevel(factor("testis")), is(11D));
-        assertThat(react71.getKnownExpressionLevel(factor("thyroid")), is(8D));
+        assertThat(react71.getExpressionLevel(factor("adipose")), is(7D));
+        assertThat(react71.getExpressionLevel(factor("adrenal gland")), is(10D));
+        assertThat(react71.getExpressionLevel(factor("brain")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("breast")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("colon")), is(8D));
+        assertThat(react71.getExpressionLevel(factor("heart")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("kidney")), is(4D));
+        assertThat(react71.getExpressionLevel(FACTOR_LEUKOCYTE), is(MathUtils.round((POLR2B_LEUKOCYTE + SNRPA_LEUKOCYTE + CCNT2_LEUKOCYTE + ZKSCAN5_LEUKOCYTE) / NUMBER_OF_GENES_IN_GENE_SET, NUMBER_OF_FRACTIONAL_DIGITS)));
+        assertThat(react71.getExpressionLevel(factor("liver")), is(4D));
+        assertThat(react71.getExpressionLevel(factor("lung")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("lymph node")), is(9D));
+        assertThat(react71.getExpressionLevel(factor("ovary")), is(9D));
+        assertThat(react71.getExpressionLevel(factor("prostate")), is(17D));
+        assertThat(react71.getExpressionLevel(factor("skeletal muscle")), is(11D));
+        assertThat(react71.getExpressionLevel(factor("testis")), is(11D));
+        assertThat(react71.getExpressionLevel(factor("thyroid")), is(8D));
     }
 
     private Factor factor(String factorValue) {

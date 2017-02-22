@@ -59,24 +59,10 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactorsTest {
         //given
         subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
-        given(expressionMock.isKnown()).willReturn(true);
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
         //then
         assertThat(subject.apply(expressionMock), is(false));
     }
-
-    @Test
-    public void applyShouldFailUnknownExpressionDoesntContainAllLimitingFactors() throws Exception {
-
-        //given
-        subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
-        subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
-        given(expressionMock.isKnown()).willReturn(false);
-        given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
-        //then
-        assertThat(subject.apply(expressionMock), is(false));
-    }
-
 
     @Test
     public void applyShouldSucceedIfLevelIsGreaterThanCutoff() throws Exception {

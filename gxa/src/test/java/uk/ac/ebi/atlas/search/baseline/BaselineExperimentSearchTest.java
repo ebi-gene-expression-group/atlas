@@ -146,9 +146,9 @@ public class BaselineExperimentSearchTest {
         assertThat(baselineProfile.getMinExpressionLevel(), is(Doubles.min(LUNG_LEVEL, SPLEEN_LEVEL, THYMUS_LEVEL)));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(Doubles.max(LUNG_LEVEL, SPLEEN_LEVEL, THYMUS_LEVEL)));
         assertThat(baselineProfile.getSpecificity(), is(3));
-        assertThat(baselineProfile.getKnownExpressionLevel(LUNG), is(LUNG_LEVEL));
-        assertThat(baselineProfile.getKnownExpressionLevel(SPLEEN), is(SPLEEN_LEVEL));
-        assertThat(baselineProfile.getKnownExpressionLevel(THYMUS), is(THYMUS_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(LUNG), is(LUNG_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(SPLEEN), is(SPLEEN_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(THYMUS), is(THYMUS_LEVEL));
     }
 
     @Test
@@ -172,7 +172,7 @@ public class BaselineExperimentSearchTest {
         assertThat(baselineProfile.getMinExpressionLevel(), is(Doubles.min(IMR_90_LEVEL)));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(Doubles.max(IMR_90_LEVEL)));
         assertThat(baselineProfile.getSpecificity(), is(1));
-        assertThat(baselineProfile.getKnownExpressionLevel(IMR_90), is(IMR_90_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(IMR_90), is(IMR_90_LEVEL));
 
     }
 

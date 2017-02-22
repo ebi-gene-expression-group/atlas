@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import javax.inject.Named;
 import java.util.HashSet;
@@ -32,7 +32,7 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predi
 
     @Override
     public boolean apply(BaselineExpression expression) {
-        return checkFilterFactors(expression) && (!expression.isKnown() || expression.isGreaterThanOrEqual(cutoff));
+        return checkFilterFactors(expression) && (expression.isGreaterThanOrEqual(cutoff));
     }
 
     protected boolean checkFilterFactors(BaselineExpression expression) {

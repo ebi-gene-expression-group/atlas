@@ -41,11 +41,9 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         double expressionLevel = 0D;
 
         for (Factor condition : factors) {
-            if(isKnownLevel(condition)){
-                Double level = getKnownExpressionLevel(condition);
-                if (level != null) {
-                    expressionLevel += level;
-                }
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel += level;
             }
         }
         return expressionLevel / factors.size();
@@ -57,7 +55,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         double expressionLevel = MIN_LEVEL;
 
         for (Factor condition : factors) {
-            Double level = getKnownExpressionLevel(condition);
+            Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, level);
             }
@@ -68,7 +66,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     public Set<Factor> getFactorsWithExpressionLevelAtLeast(double threshold){
         Set<Factor> result = new HashSet<>();
         for(Factor condition : expressionsByCondition.keySet()){
-            Double level = getKnownExpressionLevel(condition);
+            Double level = getExpressionLevel(condition);
             if (level != null && level >= threshold) {
                 result.add(condition);
             }
@@ -85,15 +83,14 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
 
             if (thisExpression == null) {
                 add(factor.getType(), otherExpression);
-            } else if (thisExpression.isKnown()) {
+            } else {
                 FactorGroup otherFactorGroup = otherExpression.getFactorGroup();
                 FactorGroup thisFactorGroup = thisExpression.getFactorGroup();
 
                 checkArgument(thisFactorGroup.equals(otherFactorGroup), "%s != %s", thisFactorGroup, otherFactorGroup);
 
-                BaselineExpression totalExpression = otherExpression.isKnown() ?
-                        new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup)
-                        : new BaselineExpression(otherExpression.getLevelAsString(), thisFactorGroup);
+                BaselineExpression totalExpression =
+                        new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup);
 
                 add(factor.getType(), totalExpression);
             }
@@ -106,12 +103,10 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         resetMaxMin();
         for (Factor factor : getConditions()) {
             BaselineExpression expression = getExpression(factor);
-            if (expression.isKnown()) {
-                double foldLevel = fold(expression.getLevel(), foldFactor);
-                BaselineExpression foldedExpression =
-                        new BaselineExpression(foldLevel, expression.getFactorGroup());
-                add(factor.getType(), foldedExpression);
-            }
+            double foldLevel = fold(expression.getLevel(), foldFactor);
+            BaselineExpression foldedExpression =
+                    new BaselineExpression(foldLevel, expression.getFactorGroup());
+            add(factor.getType(), foldedExpression);
         }
         return this;
     }
@@ -126,10 +121,8 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
     @Override
     protected void addExpression(BaselineExpression geneExpression) {
-        if (geneExpression.isKnown()) {
-            maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
-            minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
-        }
+        maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
+        minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
     }
 
     @Override

@@ -3,11 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.ArrayUtils;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.experiment.baseline.OrderedFactorGroups;
+import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -60,7 +56,7 @@ public final class BaselineProfileDeserializer {
     }
 
     private static boolean isAboveCutoff(BaselineExpression expression, double cutOff) {
-        return !expression.isKnown() || expression.isGreaterThanOrEqual(cutOff);
+        return expression.isGreaterThanOrEqual(cutOff);
     }
 
     public static OrderedFactorGroups orderedFactorGroupsOfSameFactorType(String factorType, String factorValues) {
