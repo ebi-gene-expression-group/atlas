@@ -7,9 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.Set;
 
@@ -23,16 +20,16 @@ import static org.mockito.Mockito.when;
 public class GeneReverseSpecificityComparatorTest {
 
     private static final String FACTOR_TYPE = "ORG";
-    private BaselineProfileComparator subject;
+    private OldBaselineProfileComparator subject;
 
     @Mock
-    private BaselineProfile geneWithSpecificity1;
+    private OldBaselineProfile geneWithSpecificity1;
 
     @Mock
-    private BaselineProfile geneWithSpecificity16;
+    private OldBaselineProfile geneWithSpecificity16;
 
     @Mock
-    private BaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
+    private OldBaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
     Factor factor1 = new Factor(FACTOR_TYPE, "heart");
     Factor factor2 = new Factor(FACTOR_TYPE, "nose");
@@ -50,7 +47,7 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new BaselineProfileComparator(false, selectedOrganismParts, null, 0.5);
+        subject = new OldBaselineProfileComparator(false, selectedOrganismParts, null, 0.5);
     }
 
     @Test

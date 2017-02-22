@@ -11,7 +11,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentRun;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class BaselineProfilesTsvInputStreamTest {
 
     private static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
     private static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
-    private static final BaselineProfile EMPTY_BASELINE_PROFILE = new BaselineProfile("gene_id", "gene_name");
+    private static final OldBaselineProfile EMPTY_BASELINE_PROFILE = new OldBaselineProfile("gene_id", "gene_name");
 
     @Mock
     private ExpressionsRowDeserializerBaselineBuilder expressionsBufferBuilderMock;

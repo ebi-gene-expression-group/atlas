@@ -76,13 +76,13 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("SRSF2", "ZNF713", "ZFP2", "POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
-        BaselineProfile srsf2 = profiles.get(0);
-        BaselineProfile znf713 = profiles.get(1);
-        BaselineProfile zfp2 = profiles.get(2);
-        BaselineProfile polr2b = profiles.get(3);
-        BaselineProfile snrpa = profiles.get(4);
-        BaselineProfile ccnt2 = profiles.get(5);
-        BaselineProfile zkscan5 = profiles.get(6);
+        OldBaselineProfile srsf2 = profiles.get(0);
+        OldBaselineProfile znf713 = profiles.get(1);
+        OldBaselineProfile zfp2 = profiles.get(2);
+        OldBaselineProfile polr2b = profiles.get(3);
+        OldBaselineProfile snrpa = profiles.get(4);
+        OldBaselineProfile ccnt2 = profiles.get(5);
+        OldBaselineProfile zkscan5 = profiles.get(6);
         assertThat(srsf2.getName(), is("SRSF2"));
         assertThat(znf713.getName(), is("ZNF713"));
         assertThat(zfp2.getName(), is("ZFP2"));
@@ -113,13 +113,13 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5", "ZFP2", "ZNF713", "SRSF2"));
 
-        BaselineProfile srsf2 = profiles.get(6);
-        BaselineProfile znf713 = profiles.get(5);
-        BaselineProfile zfp2 = profiles.get(4);
-        BaselineProfile polr2b = profiles.get(0);
-        BaselineProfile snrpa = profiles.get(1);
-        BaselineProfile ccnt2 = profiles.get(2);
-        BaselineProfile zkscan5 = profiles.get(3);
+        OldBaselineProfile srsf2 = profiles.get(6);
+        OldBaselineProfile znf713 = profiles.get(5);
+        OldBaselineProfile zfp2 = profiles.get(4);
+        OldBaselineProfile polr2b = profiles.get(0);
+        OldBaselineProfile snrpa = profiles.get(1);
+        OldBaselineProfile ccnt2 = profiles.get(2);
+        OldBaselineProfile zkscan5 = profiles.get(3);
         assertThat(srsf2.getName(), is("SRSF2"));
         assertThat(znf713.getName(), is("ZNF713"));
         assertThat(zfp2.getName(), is("ZFP2"));
@@ -148,7 +148,7 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
-        BaselineProfile react71 = profiles.get(0);
+        OldBaselineProfile react71 = profiles.get(0);
 
         checkAllReact71ExpressionLevels(react71);
 
@@ -162,7 +162,7 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
-        BaselineProfile react71 = profiles.get(0);
+        OldBaselineProfile react71 = profiles.get(0);
 
         checkAllReact71ExpressionLevels(react71);
     }
@@ -177,7 +177,7 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B"));
 
-        BaselineProfile polr2b = profiles.get(0);
+        OldBaselineProfile polr2b = profiles.get(0);
 
         checkAllPolr2bExpressionLevels(polr2b);
     }
@@ -195,10 +195,10 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
-        BaselineProfile polr2b = profiles.get(0);
-        BaselineProfile snrpa = profiles.get(1);
-        BaselineProfile ccnt2 = profiles.get(2);
-        BaselineProfile zkscan5 = profiles.get(3);
+        OldBaselineProfile polr2b = profiles.get(0);
+        OldBaselineProfile snrpa = profiles.get(1);
+        OldBaselineProfile ccnt2 = profiles.get(2);
+        OldBaselineProfile zkscan5 = profiles.get(3);
         assertThat(polr2b.getName(), is("POLR2B"));
         assertThat(snrpa.getName(), is("SNRPA"));
         assertThat(ccnt2.getName(), is("CCNT2"));
@@ -234,7 +234,7 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
-        BaselineProfile react71 = profiles.get(0);
+        OldBaselineProfile react71 = profiles.get(0);
 
         checkAllReact71ExpressionLevels(react71);
     }
@@ -248,12 +248,12 @@ public class BaselineProfilesHeatMapTest {
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
-        BaselineProfile react71 = profiles.get(0);
+        OldBaselineProfile react71 = profiles.get(0);
 
         checkAllReact71ExpressionLevels(react71);
     }
 
-    private void checkAllPolr2bExpressionLevels(BaselineProfile polr2b) {
+    private void checkAllPolr2bExpressionLevels(OldBaselineProfile polr2b) {
         assertThat(polr2b.getExpressionLevel(factor("adipose")), is(16D));
         assertThat(polr2b.getExpressionLevel(factor("adrenal gland")), is(30D));
         assertThat(polr2b.getExpressionLevel(factor("brain")), is(24D));
@@ -273,7 +273,7 @@ public class BaselineProfilesHeatMapTest {
     }
 
 
-    private void checkAllReact71ExpressionLevels(BaselineProfile react71) {
+    private void checkAllReact71ExpressionLevels(OldBaselineProfile react71) {
         assertThat(react71.getExpressionLevel(factor("adipose")), is(7D));
         assertThat(react71.getExpressionLevel(factor("adrenal gland")), is(10D));
         assertThat(react71.getExpressionLevel(factor("brain")), is(6D));

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.PrescribedOrderProfileSelection;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
@@ -30,7 +30,7 @@ public class BaselineProfilesHeatMap {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
     private final RankBaselineProfilesFactory rankProfilesFactory;
-    private ProfilesHeatMapSource<BaselineExperiment, BaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
+    private ProfilesHeatMapSource<BaselineExperiment, OldBaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
             profilesHeatmapSource;
 
     public BaselineProfilesHeatMap(RankBaselineProfilesFactory rankProfilesFactory,
@@ -60,7 +60,7 @@ public class BaselineProfilesHeatMap {
     public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder,BaselineExperiment experiment, BaselineProfileStreamOptions options,
                                                         GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
-        SelectProfiles<BaselineProfile, BaselineProfilesList> s =
+        SelectProfiles<OldBaselineProfile, BaselineProfilesList> s =
                 new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder());
 
         return profilesHeatmapSource.fetch(experiment,options, s,geneQueryResponse, asGeneSets);

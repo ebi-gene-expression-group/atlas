@@ -4,7 +4,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.OrderedFactorGroups;
 
 import java.util.Iterator;
@@ -23,10 +23,10 @@ import java.util.Iterator;
  * Factor values: skeletal muscle, leukocyte, heart, ovary, lymph node, breast, brain, prostate, lung, thyroid, kidney, colon, testis, liver, adipose, adrenal gland
  *
  */
-public class BaselineProfilesEMTab513React71 implements ObjectInputStream<BaselineProfile> {
+public class BaselineProfilesEMTab513React71 implements ObjectInputStream<OldBaselineProfile> {
 
     private final OrderedFactorGroups orderedFactorGroups;
-    private Iterator<BaselineProfile> geneProfilesIterator;
+    private Iterator<OldBaselineProfile> geneProfilesIterator;
 
     private static final String FACTOR_TYPE = "ORGANISM_PART";
     private static final String FACTOR_VALUES = "skeletal muscle, leukocyte, heart, ovary, lymph node, breast, brain, prostate, lung, thyroid, kidney, colon, testis, liver, adipose, adrenal gland";
@@ -41,7 +41,7 @@ public class BaselineProfilesEMTab513React71 implements ObjectInputStream<Baseli
 
     public BaselineProfilesEMTab513React71(double cutOff) {
         orderedFactorGroups = BaselineProfileDeserializer.orderedFactorGroupsOfSameFactorType(FACTOR_TYPE, FACTOR_VALUES);
-        ImmutableList<BaselineProfile> profiles = BaselineProfileDeserializer.buildProfiles(FACTOR_TYPE, orderedFactorGroups, EXPRESSIONS, cutOff);
+        ImmutableList<OldBaselineProfile> profiles = BaselineProfileDeserializer.buildProfiles(FACTOR_TYPE, orderedFactorGroups, EXPRESSIONS, cutOff);
         geneProfilesIterator = profiles.iterator();
     }
 
@@ -50,7 +50,7 @@ public class BaselineProfilesEMTab513React71 implements ObjectInputStream<Baseli
     }
 
     @Override
-    public BaselineProfile readNext() {
+    public OldBaselineProfile readNext() {
         if (geneProfilesIterator.hasNext()) {
             return geneProfilesIterator.next();
         }

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.base.Objects;
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
@@ -13,18 +12,18 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
+public class OldBaselineProfile extends Profile<Factor, BaselineExpression> {
     private static final double MIN_LEVEL = 0D;
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    public BaselineProfile(String geneId, String geneName) {
+    public OldBaselineProfile(String geneId, String geneName) {
         super(geneId, geneName);
     }
 
-    public BaselineProfile add(AssayGroup assayGroup, BaselineExpression expression) {
+    public OldBaselineProfile add(String queryFactorType, BaselineExpression expression) {
 
-        addExpression(assayGroup, expression);
+        addExpression(expression.getFactor(queryFactorType), expression);
         return this;
     }
 
@@ -36,26 +35,26 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
         return minExpressionLevel;
     }
 
-    public double getAverageExpressionLevelOn(Set<AssayGroup> assayGroups) {
-        checkArgument(!CollectionUtils.isEmpty(assayGroups), "This method must be invoked with a non empty set of conditions");
+    public double getAverageExpressionLevelOn(Set<Factor> factors) {
+        checkArgument(!CollectionUtils.isEmpty(factors), "This method must be invoked with a non empty set of conditions");
 
         double expressionLevel = 0D;
 
-        for (AssayGroup condition : assayGroups) {
+        for (Factor condition : factors) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel += level;
             }
         }
-        return expressionLevel / assayGroups.size();
+        return expressionLevel / factors.size();
     }
 
-    public double getMaxExpressionLevelOn(Set<AssayGroup> assayGroups) {
-        checkArgument(!CollectionUtils.isEmpty(assayGroups), "assayGroups set is supposed to be not empty");
+    public double getMaxExpressionLevelOn(Set<Factor> factors) {
+        checkArgument(!CollectionUtils.isEmpty(factors), "factors set is supposed to be not empty");
 
         double expressionLevel = MIN_LEVEL;
 
-        for (AssayGroup condition : assayGroups) {
+        for (Factor condition : factors) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, level);
@@ -64,9 +63,9 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
         return expressionLevel;
     }
 
-    public Set<AssayGroup> getAssayGroupsWithExpressionLevelAtLeast(double threshold){
-        Set<AssayGroup> result = new HashSet<>();
-        for(AssayGroup condition : expressionsByCondition.keySet()){
+    public Set<Factor> getFactorsWithExpressionLevelAtLeast(double threshold){
+        Set<Factor> result = new HashSet<>();
+        for(Factor condition : expressionsByCondition.keySet()){
             Double level = getExpressionLevel(condition);
             if (level != null && level >= threshold) {
                 result.add(condition);
@@ -77,29 +76,37 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
 
 
     // add the expression levels of another profile to this one
-    public BaselineProfile sumProfile(BaselineProfile otherProfile) {
-        for (AssayGroup assayGroup : otherProfile.getConditions()) {
-            BaselineExpression otherExpression = otherProfile.getExpression(assayGroup);
-            BaselineExpression thisExpression = getExpression(assayGroup);
+    public OldBaselineProfile sumProfile(OldBaselineProfile otherProfile) {
+        for (Factor factor : otherProfile.getConditions()) {
+            BaselineExpression otherExpression = otherProfile.getExpression(factor);
+            BaselineExpression thisExpression = getExpression(factor);
 
             if (thisExpression == null) {
-                add(assayGroup, otherExpression);
+                add(factor.getType(), otherExpression);
             } else {
-                add(assayGroup, new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel()));
+                FactorGroup otherFactorGroup = otherExpression.getFactorGroup();
+                FactorGroup thisFactorGroup = thisExpression.getFactorGroup();
+
+                checkArgument(thisFactorGroup.equals(otherFactorGroup), "%s != %s", thisFactorGroup, otherFactorGroup);
+
+                BaselineExpression totalExpression =
+                        new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup);
+
+                add(factor.getType(), totalExpression);
             }
         }
         return this;
     }
 
     // divide all expression levels by foldFactor
-    public BaselineProfile foldProfile(int foldFactor) {
+    public OldBaselineProfile foldProfile(int foldFactor) {
         resetMaxMin();
-        for (AssayGroup assayGroup : getConditions()) {
-            BaselineExpression expression = getExpression(assayGroup);
+        for (Factor factor : getConditions()) {
+            BaselineExpression expression = getExpression(factor);
             double foldLevel = fold(expression.getLevel(), foldFactor);
             BaselineExpression foldedExpression =
                     new BaselineExpression(foldLevel, expression.getFactorGroup());
-            add(assayGroup, foldedExpression);
+            add(factor.getType(), foldedExpression);
         }
         return this;
     }

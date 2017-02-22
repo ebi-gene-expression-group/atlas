@@ -135,7 +135,7 @@ public class BaselineExperimentSearchTest {
 
         assertThat(profiles, hasSize(1));
 
-        BaselineProfile baselineProfile = profiles.get(0);
+        OldBaselineProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_MTAB_599));
         assertThat(baselineProfile.getName(), is(E_MTAB_599_NAME));
@@ -161,7 +161,7 @@ public class BaselineExperimentSearchTest {
 
         assertThat(profiles, hasSize(1));
 
-        BaselineProfile baselineProfile = profiles.get(0);
+        OldBaselineProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_GEOD_26284));
         assertThat(baselineProfile.getName(), is(E_GEOD_26284_NAME));

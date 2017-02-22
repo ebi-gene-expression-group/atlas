@@ -17,6 +17,7 @@ import java.util.Set;
 public class BaselineExpression implements Expression, KryoSerializable {
     private double level;
     private String levelString;
+    @Deprecated
     private FactorGroup factorGroup;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");

@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -31,7 +31,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
     @Inject
     private ExperimentTrader experimentTrader;
 
-    private ObjectInputStream<BaselineProfile> subject;
+    private ObjectInputStream<OldBaselineProfile> subject;
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final double CUTOFF_ZERO = 0;
@@ -51,7 +51,7 @@ public class ProteomicsBaselineProfilesInputStreamIT {
     @Test
     public void firstThreeProfiles_ForAdult() throws Exception {
         setUp(DEVELOPMENTAL_STAGE_ADULT);
-        BaselineProfile baselineProfile = subject.readNext();
+        OldBaselineProfile baselineProfile = subject.readNext();
 
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
@@ -59,13 +59,13 @@ public class ProteomicsBaselineProfilesInputStreamIT {
         for(String organismPart: "colon ovary pancreas prostate".split(" ")){
             assertNotNull(baselineProfile.getExpressionLevel(new Factor(ORGANISM_PART, organismPart)));
         }
-        BaselineProfile baselineProfile2 = subject.readNext();
+        OldBaselineProfile baselineProfile2 = subject.readNext();
 
         assertThat(baselineProfile2.getId(), is("ENSG00000000419"));
         assertThat(baselineProfile2.getName(), is("DPM1"));
         assertThat(baselineProfile2.getSpecificity(), is(23));
 
-        BaselineProfile baselineProfile3 = subject.readNext();
+        OldBaselineProfile baselineProfile3 = subject.readNext();
 
         assertThat(baselineProfile3.getId(), is("ENSG00000000457"));
         assertThat(baselineProfile3.getName(), is("SCYL3"));
@@ -75,20 +75,20 @@ public class ProteomicsBaselineProfilesInputStreamIT {
     @Test
     public void firstThreeProfiles_ForFetus() throws Exception {
         setUp(DEVELOPMENTAL_STAGE_FETUS);
-        BaselineProfile baselineProfile = subject.readNext();
+        OldBaselineProfile baselineProfile = subject.readNext();
 
         assertThat(baselineProfile.getId(), is("ENSG00000000003"));
         assertThat(baselineProfile.getName(), is("TSPAN6"));
         assertThat(baselineProfile.getSpecificity(), is(7));
         assertNotNull(baselineProfile.getExpressionLevel(new Factor(ORGANISM_PART, "ovary")));
 
-        BaselineProfile baselineProfile2 = subject.readNext();
+        OldBaselineProfile baselineProfile2 = subject.readNext();
 
         assertThat(baselineProfile2.getId(), is("ENSG00000000419"));
         assertThat(baselineProfile2.getName(), is("DPM1"));
         assertThat(baselineProfile2.getSpecificity(), is(7));
 
-        BaselineProfile baselineProfile3 = subject.readNext();
+        OldBaselineProfile baselineProfile3 = subject.readNext();
 
         assertThat(baselineProfile3.getId(), is("ENSG00000000457"));
         assertThat(baselineProfile3.getName(), is("SCYL3"));

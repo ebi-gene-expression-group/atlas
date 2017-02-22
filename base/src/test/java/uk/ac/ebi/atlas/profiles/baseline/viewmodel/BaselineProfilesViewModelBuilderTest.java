@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
@@ -32,7 +32,7 @@ public class BaselineProfilesViewModelBuilderTest {
     private static final double minExpressionLevel = 0.3;
     private static final double maxExpressionLevel = 47;
 
-    private static final ImmutableList<BaselineProfile> baselineProfiles = BaselineProfileDeserializer.buildProfiles(factorType, factorValues, profileLines, 0.5D);
+    private static final ImmutableList<OldBaselineProfile> baselineProfiles = BaselineProfileDeserializer.buildProfiles(factorType, factorValues, profileLines, 0.5D);
 
     private Color startColour = Color.LIGHT_GRAY;
     private Color endColour = Color.BLUE;

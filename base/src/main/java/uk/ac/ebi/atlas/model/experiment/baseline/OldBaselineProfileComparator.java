@@ -4,13 +4,12 @@ import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
 import java.util.Comparator;
 import java.util.Set;
 
-public class BaselineProfileComparator implements Comparator<BaselineProfile> {
+public class OldBaselineProfileComparator implements Comparator<OldBaselineProfile> {
 
     // This value is just smaller than the smallest non-zero value we allow,
     // c.f. FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ZEROPOINTONE in
@@ -18,27 +17,27 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.00000009;
 
     private boolean isSpecific;
-    private Set<AssayGroup> selectedQueryFactors;
-    private Set<AssayGroup> allQueryFactors;
+    private Set<Factor> selectedQueryFactors;
+    private Set<Factor> allQueryFactors;
     private double cutoffDivisor;
     private Double minimumExpressionLevelToQualifyAsGoodForOurRule = null;
     private Double minimumFractionOfExpressionToQualifyAsGoodForOurRule = null;
 
 
-    public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
-        return new BaselineProfileComparator(options.isSpecific(),
+    public static Comparator<OldBaselineProfile> create(BaselineProfileStreamOptions options) {
+        return new OldBaselineProfileComparator(options.isSpecific(),
                 options.getSelectedQueryFactors(),
                 options.getAllQueryFactors(),
                 options.getCutoff(), options.getThresholdForPremium(), options.getFractionForPremium());
     }
 
-    BaselineProfileComparator(boolean isSpecific, Set<AssayGroup> selectedQueryFactors,
-                                 Set<AssayGroup> allQueryFactors, double cutoff) {
+    OldBaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+                                 Set<Factor> allQueryFactors, double cutoff) {
         this(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
     }
-    protected BaselineProfileComparator(boolean isSpecific, Set<AssayGroup> selectedQueryFactors,
-                                           Set<AssayGroup> allQueryFactors, double cutoff, Double
-                                                   minimumExpressionLevelToQualifyAsGoodForOurRule, Double minimumFractionOfExpressionToQualifyAsGoodForOurRule ) {
+    protected OldBaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
+                                           Set<Factor> allQueryFactors, double cutoff, Double
+                                      minimumExpressionLevelToQualifyAsGoodForOurRule, Double minimumFractionOfExpressionToQualifyAsGoodForOurRule ) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors;
         this.allQueryFactors = allQueryFactors;
@@ -49,7 +48,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     }
 
     @Override
-    public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
+    public int compare(OldBaselineProfile firstBaselineProfile, OldBaselineProfile otherBaselineProfile) {
 
         // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
@@ -80,30 +79,30 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     }
 
-    boolean ourRule(BaselineProfile baselineProfile){
+    boolean ourRule(OldBaselineProfile baselineProfile){
         if(minimumExpressionLevelToQualifyAsGoodForOurRule == null ||
                 minimumFractionOfExpressionToQualifyAsGoodForOurRule == null){
             return false;
         } else {
-            return baselineProfile.getAssayGroupsWithExpressionLevelAtLeast(minimumExpressionLevelToQualifyAsGoodForOurRule).size()
+            return baselineProfile.getFactorsWithExpressionLevelAtLeast(minimumExpressionLevelToQualifyAsGoodForOurRule).size()
                     >= minimumFractionOfExpressionToQualifyAsGoodForOurRule * allQueryFactors.size();
         }
     }
 
-    protected int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile
+    protected int compareOnAverageExpressionLevel(OldBaselineProfile firstBaselineProfile, OldBaselineProfile
             otherBaselineProfile,
-                                                  Set<AssayGroup> assayGroups) {
+                                                  Set<Factor> factors) {
 
         return Ordering.natural().reverse().
-                compare(firstBaselineProfile.getAverageExpressionLevelOn(assayGroups),
-                        otherBaselineProfile.getAverageExpressionLevelOn(assayGroups));
+                compare(firstBaselineProfile.getAverageExpressionLevelOn(factors),
+                        otherBaselineProfile.getAverageExpressionLevelOn(factors));
     }
 
-    public double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
+    public double getExpressionLevelFoldChange(OldBaselineProfile baselineProfile) {
 
         double averageExpressionLevelOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
 
-        Set<AssayGroup> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
+        Set<Factor> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
 
         double maxExpressionLevelOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
 

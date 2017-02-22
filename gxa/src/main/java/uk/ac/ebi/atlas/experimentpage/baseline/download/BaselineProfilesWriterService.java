@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline.download;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
@@ -21,14 +21,14 @@ public class BaselineProfilesWriterService {
 
     private BaselineProfileInputStreamFactory inputStreamFactory;
 
-    private ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+    private ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
     private SolrQueryService solrQueryService;
 
     private CoexpressedGenesService coexpressedGenesService;
 
     public BaselineProfilesWriterService(BaselineProfileInputStreamFactory inputStreamFactory,
-                                         ProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter,
+                                         ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter,
                                          SolrQueryService solrQueryService,
                                          CoexpressedGenesService coexpressedGenesService) {
         this.inputStreamFactory = inputStreamFactory;

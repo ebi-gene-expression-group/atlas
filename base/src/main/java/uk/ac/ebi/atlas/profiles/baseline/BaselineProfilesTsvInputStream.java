@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.Reader;
 
-public class BaselineProfilesTsvInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
+public class BaselineProfilesTsvInputStream extends TsvInputStream<OldBaselineProfile, BaselineExpression> {
 
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
@@ -20,8 +20,8 @@ public class BaselineProfilesTsvInputStream extends TsvInputStream<BaselineProfi
     }
 
     @Override
-    public BaselineProfile createProfile() {
-        BaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
+    public OldBaselineProfile createProfile() {
+        OldBaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
         return baselineProfile.isEmpty() ? null : baselineProfile;
     }
 

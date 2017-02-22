@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -85,7 +85,7 @@ public class BaselineProfilesHeatMapWrangler {
         JsonArray result = new JsonArray();
 
         if (jsonProfiles.size() == 1) {
-            BaselineProfile baselineProfile = jsonProfiles.get(0);
+            OldBaselineProfile baselineProfile = jsonProfiles.get(0);
 
             Optional<Pair<GeneQueryResponse, List<String>>> coexpressedStuff =
                     coexpressedGenesService.tryGetRelatedCoexpressions(experiment, getGeneQueryResponseForProfiles(), ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 @Named
 public class BaselineProfileInputStreamFactory
-implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions,BaselineProfile, Factor>{
+implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions,OldBaselineProfile, Factor>{
 
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     protected String baselineExperimentSerializedDataFileUrlTemplate;
@@ -35,7 +35,7 @@ implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions
         this.kryoReaderFactory = kryoReaderFactory;
     }
 
-    public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(BaselineExperiment experiment, String queryFactorType, double cutOff, Set<Factor> filterFactors)
+    public ExpressionProfileInputStream<OldBaselineProfile, BaselineExpression> createBaselineProfileInputStream(BaselineExperiment experiment, String queryFactorType, double cutOff, Set<Factor> filterFactors)
     throws IOException {
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(cutOff);
@@ -66,7 +66,7 @@ implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions
     }
 
     @Override
-    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, BaselineProfileStreamOptions
+    public ObjectInputStream<OldBaselineProfile> create(BaselineExperiment experiment, BaselineProfileStreamOptions
             options) throws
             IOException {
 

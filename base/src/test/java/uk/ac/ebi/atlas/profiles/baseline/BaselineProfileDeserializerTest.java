@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfileDeserializer;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,12 +28,12 @@ public class BaselineProfileDeserializerTest {
         String profileLines = "ENSG00000082258\tCCNT2\t3\t9\t5\t11\n" +
                                "ENSG00000047315\tPOLR2B\t28\t47\t0.3\t25";
 
-        ImmutableList<BaselineProfile> baselineProfiles = BaselineProfileDeserializer.buildProfiles(factorType, factorValues, profileLines, 0.5D);
+        ImmutableList<OldBaselineProfile> baselineProfiles = BaselineProfileDeserializer.buildProfiles(factorType, factorValues, profileLines, 0.5D);
 
         assertThat(baselineProfiles, hasSize(2));
 
-        BaselineProfile profile1 = baselineProfiles.get(0);
-        BaselineProfile profile2 = baselineProfiles.get(1);
+        OldBaselineProfile profile1 = baselineProfiles.get(0);
+        OldBaselineProfile profile2 = baselineProfiles.get(1);
 
         assertThat(profile1.getId(), is("ENSG00000082258"));
         assertThat(profile1.getName(), is("CCNT2"));

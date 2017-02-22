@@ -1,11 +1,11 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.KryoInputStream;
 
-public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselineProfile, BaselineExpression> {
+public class BaselineProfilesKryoInputStream extends KryoInputStream<OldBaselineProfile, BaselineExpression> {
 
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
@@ -19,8 +19,8 @@ public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselinePro
     }
 
     @Override
-    public BaselineProfile createProfile() {
-        BaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
+    public OldBaselineProfile createProfile() {
+        OldBaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
         return baselineProfile.isEmpty() ? null : baselineProfile;
     }
 

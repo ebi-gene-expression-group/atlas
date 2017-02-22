@@ -143,9 +143,9 @@ public class BaselineProfilesHeatMapWranglerTest {
         jsonCoexpressionsNotReturnedForTheseResultsBack(new BaselineProfilesList());
 
         BaselineProfilesList tooBigList = new BaselineProfilesList();
-        tooBigList.add(mock(BaselineProfile.class));
+        tooBigList.add(mock(OldBaselineProfile.class));
         for(int i= 0 ; i<10; i++) {
-            tooBigList.add(mock(BaselineProfile.class));
+            tooBigList.add(mock(OldBaselineProfile.class));
             jsonCoexpressionsNotReturnedForTheseResultsBack(tooBigList);
         }
     }
@@ -172,7 +172,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void jsonCoexpressionsReturnedForOneResult() throws Exception {
         BaselineProfilesList rightList = new BaselineProfilesList();
-        BaselineProfile profile = mock(BaselineProfile.class);
+        OldBaselineProfile profile = mock(OldBaselineProfile.class);
         when(profile.getName()).thenReturn(NAME_OF_THE_GENE_WE_ASK_FOR);
         when(profile.getId()).thenReturn(GENE_WE_ASK_FOR);
         rightList.add(profile);

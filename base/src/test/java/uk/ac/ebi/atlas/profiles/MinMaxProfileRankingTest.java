@@ -5,11 +5,8 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.*;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfileComparator;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 
@@ -29,20 +26,20 @@ public class MinMaxProfileRankingTest {
 
     private Random rng = new Random();
 
-    private class VisibleBaselineProfileComparator extends BaselineProfileComparator {
+    private class VisibleBaselineProfileComparator extends OldBaselineProfileComparator {
         VisibleBaselineProfileComparator(boolean isSpecific, Set<Factor> selectedQueryFactors,
                                          Set<Factor> allQueryFactors, double cutoff,Double
                                                  minimumExpressionLevelToQualifyAsGoodForOurRule,Double minimumFractionOfExpressionToQualifyAsGoodForOurRule){
             super(isSpecific, selectedQueryFactors, allQueryFactors, cutoff, minimumExpressionLevelToQualifyAsGoodForOurRule, minimumFractionOfExpressionToQualifyAsGoodForOurRule);
         }
         @Override
-        public int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile
+        public int compareOnAverageExpressionLevel(OldBaselineProfile firstBaselineProfile, OldBaselineProfile
                 otherBaselineProfile, Set<Factor> factors) {
             return super.compareOnAverageExpressionLevel(firstBaselineProfile,otherBaselineProfile,factors);
         }
     }
 
-    private BaselineProfilesList selectAverageExpressionsOnly(final double cutoff, Iterable<BaselineProfile> profiles,
+    private BaselineProfilesList selectAverageExpressionsOnly(final double cutoff, Iterable<OldBaselineProfile> profiles,
                                                              int maxSize) {
         final boolean isSpecific = true;
         final Set<Factor> selectedQueryFactors = ImmutableSet.of();
@@ -50,20 +47,20 @@ public class MinMaxProfileRankingTest {
 
         final VisibleBaselineProfileComparator c = new VisibleBaselineProfileComparator(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
 
-        Comparator<BaselineProfile> comparatorThatTestsAverageExpressionsOnly = new Comparator<BaselineProfile>(){
+        Comparator<OldBaselineProfile> comparatorThatTestsAverageExpressionsOnly = new Comparator<OldBaselineProfile>(){
             @Override
-            public int compare(BaselineProfile o1, BaselineProfile o2) {
+            public int compare(OldBaselineProfile o1, OldBaselineProfile o2) {
                 return c.compareOnAverageExpressionLevel(o1,o2,allQueryFactors);
             }
         };
 
-        MinMaxProfileRanking<BaselineProfile, BaselineProfilesList> subject = new MinMaxProfileRanking<>(comparatorThatTestsAverageExpressionsOnly, new BaselineProfilesListBuilder());
+        MinMaxProfileRanking<OldBaselineProfile, BaselineProfilesList> subject = new MinMaxProfileRanking<>(comparatorThatTestsAverageExpressionsOnly, new BaselineProfilesListBuilder());
 
         return subject.select(profiles,maxSize);
     }
 
-    private BaselineProfile mockProfile(double averageExpression){
-        BaselineProfile result = Mockito.mock(BaselineProfile.class);
+    private OldBaselineProfile mockProfile(double averageExpression){
+        OldBaselineProfile result = Mockito.mock(OldBaselineProfile.class);
         when(result.getAverageExpressionLevelOn(Matchers.anySetOf(Factor.class))).thenReturn(averageExpression);
         return result;
     }
@@ -95,7 +92,7 @@ public class MinMaxProfileRankingTest {
 
         BaselineProfilesList result = selectAverageExpressionsOnly(cutoff, l, maxSize);
         List<Double> resultExpressions = new ArrayList<>();
-        for(BaselineProfile p: result){
+        for(OldBaselineProfile p: result){
             resultExpressions.add(p.getAverageExpressionLevelOn(ImmutableSet.<Factor>of()));
         }
 
@@ -106,9 +103,9 @@ public class MinMaxProfileRankingTest {
         assertEquals(sortedExpressions,resultExpressions);
     }
 
-    private BaselineProfile randomProfile(double min, double max,String id,List<String> allFactors, boolean includeAll){
+    private OldBaselineProfile randomProfile(double min, double max, String id, List<String> allFactors, boolean includeAll){
 
-        BaselineProfile result = new BaselineProfile(id,id);
+        OldBaselineProfile result = new OldBaselineProfile(id,id);
         for(String factorName: allFactors){
             if(rng.nextBoolean() || includeAll){
                 result.add("FACTOR_TYPE", new BaselineExpression(randDouble(min,max), new FactorSet(new Factor
@@ -221,7 +218,7 @@ public class MinMaxProfileRankingTest {
                         selectedFactors,allFactors, cutoff,queueSize).getSpecificity()) {
                     /*
                     We understand this scenario - the cutoff does enter the formula when there are no non-selected
-                    factors, see BaselineProfileComparator.getExpressionLevelFoldChange.
+                    factors, see OldBaselineProfileComparator.getExpressionLevelFoldChange.
                     The behaviour is not great but does not represent a failure really.
                      */
                 } else {
@@ -233,8 +230,8 @@ public class MinMaxProfileRankingTest {
         }
     }
 
-    private BaselineProfile getFirstProfile(BaselineProfilesList l,Set<Factor> selectedFactors, Set<Factor> allFactors, double
-            cutoff,int queueSize) {
+    private OldBaselineProfile getFirstProfile(BaselineProfilesList l, Set<Factor> selectedFactors, Set<Factor> allFactors, double
+            cutoff, int queueSize) {
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true,
                 selectedFactors, allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
                 (l,queueSize);

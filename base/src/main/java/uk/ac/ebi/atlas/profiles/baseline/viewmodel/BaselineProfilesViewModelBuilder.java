@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import com.google.gson.JsonArray;
@@ -32,10 +32,10 @@ public class BaselineProfilesViewModelBuilder {
         return result;
     }
 
-    JsonArray buildGenes(List<BaselineProfile> baselineProfiles, List<Factor>
+    JsonArray buildGenes(List<OldBaselineProfile> baselineProfiles, List<Factor>
             orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         JsonArray result = new JsonArray();
-        for (BaselineProfile baselineProfile : baselineProfiles) {
+        for (OldBaselineProfile baselineProfile : baselineProfiles) {
             result.add(build(baselineProfile, orderedFactors,
                     minExpressionLevel, maxExpressionLevel));
         }

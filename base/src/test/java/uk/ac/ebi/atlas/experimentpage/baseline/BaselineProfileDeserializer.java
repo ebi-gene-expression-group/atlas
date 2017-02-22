@@ -20,14 +20,14 @@ public final class BaselineProfileDeserializer {
      * @param profileLines eg: "ENSG00000082258\tCCNT2\t3\t9\t5\t11\t8\n" +
      *                          "ENSG00000047315\tPOLR2B\t28\t47\t0\t25"
      */
-    public static ImmutableList<BaselineProfile> buildProfiles(String factorType, String factorValues, String profileLines, double cutOff) {
+    public static ImmutableList<OldBaselineProfile> buildProfiles(String factorType, String factorValues, String profileLines, double cutOff) {
         String normalizedFactorType = Factor.normalize(factorType);
         OrderedFactorGroups factorGroups = orderedFactorGroupsOfSameFactorType(normalizedFactorType, factorValues);
         return buildProfiles(normalizedFactorType, factorGroups, profileLines, cutOff);
     }
 
-    public static ImmutableList<BaselineProfile> buildProfiles(String factorType, OrderedFactorGroups factorGroups, String expressions, double cutOff) {
-        ImmutableList.Builder<BaselineProfile> builder = ImmutableList.builder();
+    public static ImmutableList<OldBaselineProfile> buildProfiles(String factorType, OrderedFactorGroups factorGroups, String expressions, double cutOff) {
+        ImmutableList.Builder<OldBaselineProfile> builder = ImmutableList.builder();
         String[] expressionLines = expressions.split("\n");
 
         for (String expressionLine : expressionLines) {
@@ -35,7 +35,7 @@ public final class BaselineProfileDeserializer {
 
             String geneId = cells[0];
             String geneName = cells[1];
-            BaselineProfile profile = new BaselineProfile(geneId, geneName);
+            OldBaselineProfile profile = new OldBaselineProfile(geneId, geneName);
 
             String[] levels = (String[]) ArrayUtils.subarray(cells, 2, cells.length);
             checkState(levels.length == factorGroups.size(), "Number of levels != number of factor groups");

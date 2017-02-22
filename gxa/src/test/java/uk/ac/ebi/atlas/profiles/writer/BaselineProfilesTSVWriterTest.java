@@ -13,7 +13,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
@@ -35,7 +35,7 @@ import static org.mockito.Mockito.when;
 public class BaselineProfilesTSVWriterTest {
 
     @Mock
-    private ObjectInputStream<BaselineProfile> inputStreamMock;
+    private ObjectInputStream<OldBaselineProfile> inputStreamMock;
     @Mock
     private BaselineRequestContext requestContextMock;
     @Mock
@@ -85,14 +85,14 @@ public class BaselineProfilesTSVWriterTest {
         BaselineExpression expressionLung = new BaselineExpression(9d, fgLung);
         BaselineExpression expressionLiver = new BaselineExpression(21.12d, fgLiver);
 
-        BaselineProfile baselineProfile1 = new BaselineProfile("GI1", "GN1");
+        OldBaselineProfile baselineProfile1 = new OldBaselineProfile("GI1", "GN1");
         baselineProfile1.add("ORG", expressionAdipose0);
         baselineProfile1.add("ORG", expressionBrain);
         baselineProfile1.add("ORG", expressionBreast0);
         baselineProfile1.add("ORG", expressionLiver0);
         baselineProfile1.add("ORG", expressionLung);
 
-        BaselineProfile baselineProfile2 = new BaselineProfile("GI2", "GN2");
+        OldBaselineProfile baselineProfile2 = new OldBaselineProfile("GI2", "GN2");
         baselineProfile2.add("ORG", expressionAdipose0);
         baselineProfile2.add("ORG", expressionBrain0);
         baselineProfile2.add("ORG", expressionBreast0);

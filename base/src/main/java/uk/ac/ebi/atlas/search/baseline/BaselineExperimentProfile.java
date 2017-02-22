@@ -2,13 +2,13 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.Map;
 
-public class BaselineExperimentProfile extends BaselineProfile implements Comparable<BaselineExperimentProfile> {
+public class BaselineExperimentProfile extends OldBaselineProfile implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
 

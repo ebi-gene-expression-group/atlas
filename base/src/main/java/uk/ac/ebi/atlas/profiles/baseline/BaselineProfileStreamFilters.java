@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.GeneSet;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
@@ -11,23 +11,23 @@ import com.google.common.collect.Iterables;
 
 import java.util.Set;
 
-public class BaselineProfileStreamFilters extends ProfileStreamFilters<BaselineProfile, Factor> {
+public class BaselineProfileStreamFilters extends ProfileStreamFilters<OldBaselineProfile, Factor> {
 
     @Override
-    public Iterable<BaselineProfile> filterBySpecificQueryFactors(Iterable<BaselineProfile> profiles, Set<Factor> queryFactors, Set<Factor> allQueryFactors) {
-        return Iterables.filter(profiles, new IsBaselineProfileSpecific(queryFactors, allQueryFactors));
+    public Iterable<OldBaselineProfile> filterBySpecificQueryFactors(Iterable<OldBaselineProfile> profiles, Set<Factor> queryFactors, Set<Factor> allQueryFactors) {
+        return Iterables.filter(profiles, new OldIsBaselineProfileSpecific(queryFactors, allQueryFactors));
     }
 
     @Override
-    public Iterable<BaselineProfile> averageIntoGeneSets(Iterable<BaselineProfile> profiles,
-                                                         ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
-        ImmutableList.Builder<BaselineProfile> builder = ImmutableList.builder();
+    public Iterable<OldBaselineProfile> averageIntoGeneSets(Iterable<OldBaselineProfile> profiles,
+                                                            ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
+        ImmutableList.Builder<OldBaselineProfile> builder = ImmutableList.builder();
 
         ImmutableMap<String, GeneSet> geneSets = createGeneSetsById(geneSetIdsToGeneIds.keySet());
 
         ImmutableSetMultimap<String, String> geneIdsToGeneSetIds = geneSetIdsToGeneIds.inverse();
 
-        for (BaselineProfile profile : profiles) {
+        for (OldBaselineProfile profile : profiles) {
             String geneId = profile.getId();
             for (String geneSetId : geneIdsToGeneSetIds.get(geneId)) {
                 geneSets.get(geneSetId).addBaselineProfile(profile);
@@ -35,7 +35,7 @@ public class BaselineProfileStreamFilters extends ProfileStreamFilters<BaselineP
         }
 
         for (GeneSet geneSet : geneSets.values()) {
-            BaselineProfile averageProfile = geneSet.getAverageProfile();
+            OldBaselineProfile averageProfile = geneSet.getAverageProfile();
             if (!averageProfile.isEmpty()) {
                 builder.add(averageProfile);
             }

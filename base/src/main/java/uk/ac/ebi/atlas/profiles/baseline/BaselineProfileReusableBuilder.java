@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkState;
 public class BaselineProfileReusableBuilder {
 
     private final String queryFactorType;
-    private BaselineProfile baselineProfile;
+    private OldBaselineProfile baselineProfile;
 
     private Predicate<BaselineExpression> baselineExpressionFilter;
 
@@ -22,7 +22,7 @@ public class BaselineProfileReusableBuilder {
     }
 
     public BaselineProfileReusableBuilder beginNewInstance(String geneId, String geneName) {
-        baselineProfile = new BaselineProfile(geneId, geneName);
+        baselineProfile = new OldBaselineProfile(geneId, geneName);
         return this;
     }
 
@@ -34,7 +34,7 @@ public class BaselineProfileReusableBuilder {
         return this;
     }
 
-    public BaselineProfile create() {
+    public OldBaselineProfile create() {
         checkState(baselineProfile != null, "Please invoke beginNewInstance before create");
         return baselineProfile;
     }

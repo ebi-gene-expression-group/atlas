@@ -7,7 +7,7 @@ import com.google.gson.JsonArray;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.utils.ColourGradient;
@@ -42,7 +42,7 @@ public class BaselineExpressionViewModelBuilderTest {
 
     @Test
     public void buildExpressionViewModel () {
-        BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
+        OldBaselineProfile profile = new OldBaselineProfile("Factor_ID", "Factor_NAME");
         profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(0.3, new FactorSet(ADRENAL)));
 
@@ -79,7 +79,7 @@ public class BaselineExpressionViewModelBuilderTest {
 
     @Test
     public void buildExpressionViewModelWithQuartiles () {
-        BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
+        OldBaselineProfile profile = new OldBaselineProfile("Factor_ID", "Factor_NAME");
         profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(new double[]{0.1,0.2,0.3,0.4,0.5}, new FactorSet(ADRENAL)));
 

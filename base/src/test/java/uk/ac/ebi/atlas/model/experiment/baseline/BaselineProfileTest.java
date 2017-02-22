@@ -35,11 +35,11 @@ public class BaselineProfileTest {
     private BaselineExpression expression_2 = new BaselineExpression(3D, new FactorSet().add(factor2));
     private BaselineExpression expression_3 = new BaselineExpression(3.001D, new FactorSet().add(factor3));
 
-    private BaselineProfile subject;
+    private OldBaselineProfile subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineProfile(GENE_ID, GENE_NAME);
+        subject = new OldBaselineProfile(GENE_ID, GENE_NAME);
         subject.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2).add(QUERY_FACTOR_TYPE, expression_3);
     }
 
@@ -85,7 +85,7 @@ public class BaselineProfileTest {
 
     @Test
     public void sumProfileShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
-        BaselineProfile otherProfile = new BaselineProfile("other profile", "other name").add(QUERY_FACTOR_TYPE, expression_2);
+        OldBaselineProfile otherProfile = new OldBaselineProfile("other profile", "other name").add(QUERY_FACTOR_TYPE, expression_2);
 
         subject.sumProfile(otherProfile);
         assertThat(subject.getId(), is(GENE_ID));
@@ -108,7 +108,7 @@ public class BaselineProfileTest {
 
     @Test
     public void testFold(){
-        BaselineProfile sumProfile = subject.foldProfile(3);
+        OldBaselineProfile sumProfile = subject.foldProfile(3);
         assertThat(sumProfile.getId(), is(subject.getId()));
         assertThat(sumProfile.getExpressionLevel(factor1), is(0.7D));
         assertThat(sumProfile.getExpressionLevel(factor2), is(1.0D));
@@ -117,13 +117,13 @@ public class BaselineProfileTest {
     }
 
 
-    BaselineProfile buildOtherProfile(){
+    OldBaselineProfile buildOtherProfile(){
         BaselineExpression expression_1 = new BaselineExpression(1D, new FactorSet().add(factor1));
         BaselineExpression expression_2 = new BaselineExpression(2D, new FactorSet().add(factor2));
         BaselineExpression expression_3 = new BaselineExpression(3D, new FactorSet().add(factor3));
         BaselineExpression expression_4 = new BaselineExpression(300D, new FactorSet().add(factor4));
 
-        BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID", "OTHER_NAME");
+        OldBaselineProfile baselineProfile = new OldBaselineProfile("OTHER_ID", "OTHER_NAME");
 
         return baselineProfile.add(QUERY_FACTOR_TYPE, expression_1)
                               .add(QUERY_FACTOR_TYPE, expression_2)

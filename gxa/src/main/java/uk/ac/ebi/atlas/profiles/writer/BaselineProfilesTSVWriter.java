@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import static org.apache.commons.lang3.StringUtils.wrap;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
-public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineRequestContext> {
+public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<OldBaselineProfile, Factor, BaselineRequestContext> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesTSVWriter.class);
 
@@ -57,12 +57,12 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String getSecondaryRowHeader(BaselineProfile geneProfile) {
+    protected String getSecondaryRowHeader(OldBaselineProfile geneProfile) {
        return null;
     }
 
     @Override
-    protected String[] extractConditionLevels(BaselineProfile geneProfile, Set<Factor> conditions) {
+    protected String[] extractConditionLevels(OldBaselineProfile geneProfile, Set<Factor> conditions) {
         String[] expressionLevels = new String[conditions.size()];
         int i = 0;
         for (Factor condition: conditions) {

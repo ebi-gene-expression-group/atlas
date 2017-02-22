@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.Set;
@@ -29,10 +29,10 @@ public class IsGeneIdMatchTest {
     private ObjectInputStream<Profile> inputStreamMock;
 
     @Mock
-    private BaselineProfile gene1ProfileMock;
+    private OldBaselineProfile gene1ProfileMock;
 
     @Mock
-    private BaselineProfile gene3ProfileMock;
+    private OldBaselineProfile gene3ProfileMock;
 
     private Set<String> geneIDs = newHashSet("GENE1", "GENE2");
 

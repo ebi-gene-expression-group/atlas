@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
@@ -41,14 +41,14 @@ public class BaselineProfileStreamFiltersTest {
         when(options.getSelectedQueryFactors()).thenReturn(Collections.singleton(new Factor("ORGANISM_PART",
                 "prostate")));
 
-        Iterable<BaselineProfile> profiles = subject.filterBySpecificQueryFactors(new IterableObjectInputStream<>
+        Iterable<OldBaselineProfile> profiles = subject.filterBySpecificQueryFactors(new IterableObjectInputStream<>
                 (eMTab513react71InputStream),
                 options
                 .getSelectedQueryFactors(), options
                 .getAllQueryFactors());
 
         Set<String> genesOut = new HashSet<>();
-        for(BaselineProfile profile: profiles){
+        for(OldBaselineProfile profile: profiles){
             genesOut.add(profile.getName());
         }
         assertEquals(Sets.newHashSet("SRSF2", "SNRPA"), genesOut);
@@ -63,18 +63,18 @@ public class BaselineProfileStreamFiltersTest {
                         .put("gene_set","gene_1")
                         .put("gene_set","gene_2")
                         .build();
-        BaselineProfile p1 = new BaselineProfile("gene_1","gene_1");
+        OldBaselineProfile p1 = new OldBaselineProfile("gene_1","gene_1");
         p1.add("ORGANISM_PART",new BaselineExpression(
                 10, new FactorSet()
                 .add(new Factor("ORGANISM_PART","seed"))
                 ));
-        BaselineProfile p2 = new BaselineProfile("gene_2","gene_2");
+        OldBaselineProfile p2 = new OldBaselineProfile("gene_2","gene_2");
         p2.add("ORGANISM_PART",new BaselineExpression(
                 20, new FactorSet()
                 .add(new Factor("ORGANISM_PART","seed"))
                 ));
 
-        List<BaselineProfile> result = ImmutableList.<BaselineProfile>builder().addAll(subject.averageIntoGeneSets(ImmutableList.of(p1,
+        List<OldBaselineProfile> result = ImmutableList.<OldBaselineProfile>builder().addAll(subject.averageIntoGeneSets(ImmutableList.of(p1,
                 p2),genesByGeneSet)).build();
 
         assertThat(result.size(),is(1));
@@ -98,12 +98,12 @@ public class BaselineProfileStreamFiltersTest {
                         .put("gene_set","gene_1")
                         .put("gene_set","gene_2")
                         .build();
-        BaselineProfile p1 = new BaselineProfile("gene_1","gene_1");
+        OldBaselineProfile p1 = new OldBaselineProfile("gene_1","gene_1");
         p1.add("ORGANISM_PART",new BaselineExpression(
                 Math.random(), new FactorSet()
                     .add(new Factor("ORGANISM_PART","seed"))
                     .add(new Factor("AGE","20"))));
-        BaselineProfile p2 = new BaselineProfile("gene_2","gene_2");
+        OldBaselineProfile p2 = new OldBaselineProfile("gene_2","gene_2");
         p2.add("ORGANISM_PART",new BaselineExpression(
                 Math.random(), new FactorSet()
                 .add(new Factor("ORGANISM_PART","seed"))

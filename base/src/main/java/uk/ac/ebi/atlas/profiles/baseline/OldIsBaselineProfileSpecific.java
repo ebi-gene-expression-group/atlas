@@ -3,22 +3,21 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class IsBaselineProfileSpecific implements Predicate<BaselineProfile>, Serializable {
+public class OldIsBaselineProfileSpecific implements Predicate<OldBaselineProfile>, Serializable {
 
-    private Set<AssayGroup> selectedQueryFactors;
+    private Set<Factor> selectedQueryFactors;
 
-    private Collection<AssayGroup> allQueryFactors;
+    private Set<Factor> allQueryFactors;
 
-    public IsBaselineProfileSpecific(Set<AssayGroup> selectedQueryFactors, Collection<AssayGroup> allQueryFactors) {
+    public OldIsBaselineProfileSpecific(Set<Factor> selectedQueryFactors, Set<Factor> allQueryFactors) {
         checkArgument(!selectedQueryFactors.isEmpty(), "selectedQueryFactors is empty");
         checkArgument(!allQueryFactors.isEmpty(), "allQueryFactors is empty");
         this.selectedQueryFactors = selectedQueryFactors;
@@ -26,14 +25,14 @@ public class IsBaselineProfileSpecific implements Predicate<BaselineProfile>, Se
     }
 
     @Override
-    public boolean apply(BaselineProfile baselineProfile) {
+    public boolean apply(OldBaselineProfile baselineProfile) {
         return isOverExpressedInSelectedQueryFactors(baselineProfile);
     }
 
-    boolean isOverExpressedInSelectedQueryFactors(BaselineProfile baselineProfile) {
+    boolean isOverExpressedInSelectedQueryFactors(OldBaselineProfile baselineProfile) {
 
         double averageOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
-        Set<AssayGroup> nonSelectedQueryFactors = Sets.newHashSet(allQueryFactors);
+        Set<Factor> nonSelectedQueryFactors = Sets.newHashSet(allQueryFactors);
         nonSelectedQueryFactors.removeAll(selectedQueryFactors);
 
         double maxOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);

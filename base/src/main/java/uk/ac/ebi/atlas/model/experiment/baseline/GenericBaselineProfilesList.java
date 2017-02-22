@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import java.util.Collection;
 
-public class GenericBaselineProfilesList<T extends BaselineProfile> extends GeneProfilesList<T> {
+public class GenericBaselineProfilesList<T extends OldBaselineProfile> extends GeneProfilesList<T> {
 
     public GenericBaselineProfilesList() {
     }
@@ -17,7 +17,7 @@ public class GenericBaselineProfilesList<T extends BaselineProfile> extends Gene
 
     public double getMaxExpressionLevel() {
         double maxExpressionLevel = 0;
-        for (BaselineProfile geneProfile : this) {
+        for (OldBaselineProfile geneProfile : this) {
             if (maxExpressionLevel < geneProfile.getMaxExpressionLevel()) {
                 maxExpressionLevel = geneProfile.getMaxExpressionLevel();
             }
@@ -27,7 +27,7 @@ public class GenericBaselineProfilesList<T extends BaselineProfile> extends Gene
 
     public double getMinExpressionLevel() {
         double minExpressionLevel = Double.MAX_VALUE;
-        for (BaselineProfile geneProfile : this) {
+        for (OldBaselineProfile geneProfile : this) {
             if (geneProfile.getMinExpressionLevel() < minExpressionLevel) {
                 minExpressionLevel = geneProfile.getMinExpressionLevel();
             }

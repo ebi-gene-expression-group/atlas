@@ -18,10 +18,10 @@ public class BaselineProfilesListTest {
     private BaselineProfilesList subject;
 
     @Mock
-    private BaselineProfile profileMock1;
+    private OldBaselineProfile profileMock1;
 
     @Mock
-    private BaselineProfile profileMock2;
+    private OldBaselineProfile profileMock2;
 
     @Mock
     private Factor factorMock1;

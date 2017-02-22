@@ -7,8 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 
 import java.util.List;
 
@@ -20,15 +18,15 @@ import static org.mockito.Mockito.when;
 public class GeneProfilesListTest {
 
     @Mock
-    BaselineProfile profile_1;
+    OldBaselineProfile profile_1;
     @Mock
-    BaselineProfile profile_2;
+    OldBaselineProfile profile_2;
     @Mock
-    BaselineProfile profile_3;
+    OldBaselineProfile profile_3;
     @Mock
-    BaselineProfile profile_4;
+    OldBaselineProfile profile_4;
     @Mock
-    BaselineProfile profile_5;
+    OldBaselineProfile profile_5;
 
     private BaselineProfilesList subject;
 
@@ -47,20 +45,20 @@ public class GeneProfilesListTest {
     @Test(expected = IllegalArgumentException.class)
     public void sublistShouldThrowIllegalArguemntExceptionWhenUpperIndexIsLessThanZero() throws Exception {
         //when
-        List<BaselineProfile> e = subject.subList(0, -1);
+        List<OldBaselineProfile> e = subject.subList(0, -1);
         assertThat(e, is(nullValue()));
     }
 
     public void sublistTest() throws Exception {
         //when
-        List<BaselineProfile> geneProfiles = subject.subList(0, 3);
+        List<OldBaselineProfile> geneProfiles = subject.subList(0, 3);
         //then
         assertThat(geneProfiles, contains(profile_5, profile_3, profile_4));
     }
 
     public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
         //when
-        List<BaselineProfile> geneProfiles = subject.subList(0, 7);
+        List<OldBaselineProfile> geneProfiles = subject.subList(0, 7);
         //then
         assertThat(geneProfiles, hasSize(5));
     }
