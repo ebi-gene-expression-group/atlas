@@ -31,6 +31,7 @@ public class GeneSetPageController extends BioentityPageController {
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showGeneSetPage(@PathVariable String identifier,
                                   @RequestParam(value = "organism", required = false) String speciesString,
+                                  @RequestParam(value = "foundation", required = false) String foundationKey,
                                   Model model) {
 
         Species species = speciesFactory.create(matchesReactomeID(identifier) ? speciesLookupService.fetchSpeciesForGeneSet(identifier).or("") : speciesString);
@@ -42,7 +43,7 @@ public class GeneSetPageController extends BioentityPageController {
                         SemanticQuery.create(identifier), species.getReferenceName());
 
         return super.showBioentityPage(identifier, species, identifier, model, experimentTypes,
-                GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier));
+                GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier), foundationKey);
     }
 
     @Override

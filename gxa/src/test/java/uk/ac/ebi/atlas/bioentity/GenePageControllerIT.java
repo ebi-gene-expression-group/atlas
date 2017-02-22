@@ -45,7 +45,7 @@ public class GenePageControllerIT {
 
     private void bioentityProperties(String bioentityIdentifier, int expectedMinimalSize, boolean expectGoTerms){
         Model model = new BindingAwareModelMap();
-        subject.showGenePage(bioentityIdentifier,model);
+        subject.showGenePage(bioentityIdentifier, "",model);
 
         JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
 
