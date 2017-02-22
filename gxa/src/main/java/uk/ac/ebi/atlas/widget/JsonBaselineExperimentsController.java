@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.profiles.json.ProfilesToJsonConverter;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
@@ -38,7 +39,7 @@ import java.util.List;
 
 @Controller
 @Scope("request")
-public final class JsonBaselineExperimentsController extends WidgetController {
+public final class JsonBaselineExperimentsController extends JsonExceptionHandlingController {
 
     private final AnatomogramFactory anatomogramFactory;
     private final SpeciesInferrer speciesInferrer;

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
@@ -22,7 +23,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Controller
 @Scope("request")
-public class JsonBaselineRefExperiment extends WidgetController {
+public class JsonBaselineRefExperiment extends JsonExceptionHandlingController {
 
     private SpeciesInferrer speciesInferrer;
 
