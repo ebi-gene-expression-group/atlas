@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultProducer;
 import uk.ac.ebi.atlas.species.Species;
@@ -20,14 +18,12 @@ import static org.apache.commons.lang.StringUtils.isBlank;
 public class BaselineAnalyticsSearchService {
 
     private final BaselineAnalyticsSearchDao baselineAnalyticsSearchDao;
-    private final BaselineAnalyticsFacetsReader baselineAnalyticsFacetsReader;
     private final BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer;
 
     @Inject
     public BaselineAnalyticsSearchService(BaselineAnalyticsSearchDao baselineAnalyticsSearchDao,
                                           ExperimentTrader experimentTrader) {
         this.baselineAnalyticsSearchDao = baselineAnalyticsSearchDao;
-        this.baselineAnalyticsFacetsReader = new BaselineAnalyticsFacetsReader();
         this.baselineExperimentSearchResultProducer = new BaselineExperimentSearchResultProducer(experimentTrader);
     }
 
@@ -41,10 +37,8 @@ public class BaselineAnalyticsSearchService {
                 baselineAnalyticsSearchDao.
                         fetchExpressionLevelFaceted(geneQuery, conditionQuery, species.getReferenceName(), queryFactorType);
 
-        ImmutableList<BaselineExperimentExpression> expressions =
-                baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
 
-        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
+        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(response, queryFactorType);
     }
 
     public BaselineExperimentSearchResult findExpressions(SemanticQuery query, Species species,
@@ -53,10 +47,7 @@ public class BaselineAnalyticsSearchService {
                 baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(
                         query, species.getReferenceName(), queryFactorType.toUpperCase());
 
-        ImmutableList<BaselineExperimentExpression> expressions =
-                baselineAnalyticsFacetsReader.extractAverageExpressionLevel(response);
-
-        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, queryFactorType);
+        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(response, queryFactorType);
     }
 
     public JsonObject findFacets(SemanticQuery geneQuery) {

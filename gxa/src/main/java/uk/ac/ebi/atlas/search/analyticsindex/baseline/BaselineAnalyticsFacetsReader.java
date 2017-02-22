@@ -15,35 +15,6 @@ import java.util.Map;
 
 public class BaselineAnalyticsFacetsReader {
 
-    public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
-
-        ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
-
-        for (Map<String, Object> experiment : results) {
-            String experimentAccession = (String) experiment.get("val");
-            int numberOfGenesExpressedAcrossAllAssayGroups = (int) experiment.get("uniqueIdentifiers");
-
-            @SuppressWarnings("unchecked")
-            Map<String, Object> assayGroupIdRoot = (Map<String, Object>) experiment.get("assayGroupId");
-            @SuppressWarnings("unchecked")
-            List<Map<String, Object>> buckets = (List<Map<String, Object>>) assayGroupIdRoot.get("buckets");
-
-            for(Map<String, Object> assayGroup : buckets)  {
-                String assayGroupId = (String) assayGroup.get("val");
-                double sumExpressionLevel;
-                sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
-
-                double expression = BaselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
-                BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
-
-                builder.add(bslnExpression);
-            }
-        }
-
-        return builder.build();
-    }
-
-
     public static JsonObject generateFacetsTreeJson(List<Map<String, Object>> results) {
 
         TreeMultimap<String, FacetTreeItem> facetTreeMultimap = TreeMultimap.create(new HomoSapiensFirstComparator(), new OrganismPartFirstComparator());

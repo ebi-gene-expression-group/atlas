@@ -10,11 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -156,7 +152,7 @@ public class BaselineExperimentSearchTest {
         // include tissue expressions which should be filtered out
         ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 
-        BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForExperiments(expressions, CELL_LINE);
+        BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForExpressions(expressions, CELL_LINE);
 
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;

@@ -1,25 +1,18 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named
 public class BaselineExperimentSearchResultProducer {
@@ -31,12 +24,49 @@ public class BaselineExperimentSearchResultProducer {
         this.experimentTrader = experimentTrader;
     }
 
+    public BaselineExperimentSearchResult buildProfilesForExperiments(List<Map<String, Object>> response, String defaultQueryFactorType) {
+
+        return buildProfilesForExpressions(extractAverageExpressionLevel(response), defaultQueryFactorType);
+    }
+
+    @Deprecated // migrate away from Oracle, stop producing BaselineExperimentExpression outside this class, and
+    // remove me!
     public BaselineExperimentSearchResult buildProfilesForTissueExperiments(List<BaselineExperimentExpression> expressions) {
-        return buildProfilesForExperiments(expressions, "ORGANISM_PART");
+        return buildProfilesForExpressions(expressions, "ORGANISM_PART");
 
     }
 
-    public BaselineExperimentSearchResult buildProfilesForExperiments(List<BaselineExperimentExpression> expressions, String defaultQueryFactorType) {
+    static List<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
+
+        ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
+
+        for (Map<String, Object> experiment : results) {
+            String experimentAccession = (String) experiment.get("val");
+            int numberOfGenesExpressedAcrossAllAssayGroups = (int) experiment.get("uniqueIdentifiers");
+
+            @SuppressWarnings("unchecked")
+            Map<String, Object> assayGroupIdRoot = (Map<String, Object>) experiment.get("assayGroupId");
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> buckets = (List<Map<String, Object>>) assayGroupIdRoot.get("buckets");
+
+            for(Map<String, Object> assayGroup : buckets)  {
+                String assayGroupId = (String) assayGroup.get("val");
+                double sumExpressionLevel;
+                sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
+
+                double expression = BaselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
+                BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
+
+                builder.add(bslnExpression);
+            }
+        }
+
+        return builder.build();
+    }
+
+
+    BaselineExperimentSearchResult buildProfilesForExpressions(List<BaselineExperimentExpression> expressions,
+                                                                  String defaultQueryFactorType) {
 
         ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice = groupByExperimentSlice(expressions);
         ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> tissueExperimentsBySlice = filter(expressionsByExperimentSlice, defaultQueryFactorType);

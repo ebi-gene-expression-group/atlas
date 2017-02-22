@@ -27,6 +27,8 @@ public abstract class ExperimentDisplayDefaults {
     /*
     The curators used to have to specify a slice of the experiment they want displayed, say which dimension to splay
     (defaultQueryFactorType) and values for other filters. How cumbersome!
+
+    Note that for gene page, this what will go in the columns, and experiment + other factors will go on rows
      */
     String defaultQueryFactorType() {
         for(String filter: prescribedOrderOfFilters()){
