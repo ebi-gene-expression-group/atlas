@@ -29,8 +29,7 @@ public class BaselineExperimentSearchResultProducer {
         return buildProfilesForExpressions(extractAverageExpressionLevel(response), defaultQueryFactorType);
     }
 
-    @Deprecated // migrate away from Oracle, stop producing BaselineExperimentExpression outside this class, and
-    // remove me!
+    @Deprecated //stop producing BaselineExperimentExpression outside this class, and remove me!
     public BaselineExperimentSearchResult buildProfilesForTissueExperiments(List<BaselineExperimentExpression> expressions) {
         return buildProfilesForExpressions(expressions, "ORGANISM_PART");
 

@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.base.Objects;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.experiment.baseline.Quartiles;
 
 public class DifferentialExpression implements Expression {
     private static final double SMALLEST_P_VALUE_ALLOWED = 1E-125;
@@ -80,12 +78,7 @@ public class DifferentialExpression implements Expression {
     public double getLevel() {
         return getFoldChange();
     }
-
-    @Override
-    public boolean isKnown() {
-        return true;
-    }
-
+    
     public boolean isOverExpressed() {
         return foldChange > 0;
     }
