@@ -25,9 +25,6 @@
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBioentityInformation.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
-
-<h:ebiGlobalSearch ebiSearchTerm="${not empty searchDescription ? applicationProperties.urlParamEncode(searchDescription) : searchDescription}"/>
-
 <c:if test="${not empty searchDescription}">
     <section>
         <h2 class="strapline">
