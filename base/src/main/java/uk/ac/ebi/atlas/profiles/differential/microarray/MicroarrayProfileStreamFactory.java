@@ -9,6 +9,8 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
+import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializerBuilder;
+import uk.ac.ebi.atlas.profiles.tsv.MicroarrayProfilesTsvInputStream;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -75,7 +77,7 @@ implements ProfileStreamFactory<MicroarrayExperiment, MicroarrayProfileStreamOpt
 
         return new MicroarrayProfilesTsvInputStream(
                 dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession).analytics.getReader(),
-                new ExpressionsRowDeserializerMicroarrayBuilder(experiment),
+                new MicroarrayExpressionsRowDeserializerBuilder(experiment),
                 profileBuilder);
     }
 

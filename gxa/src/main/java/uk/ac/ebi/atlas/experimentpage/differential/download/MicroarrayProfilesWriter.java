@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
-import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfilesTsvInputStream;
+import uk.ac.ebi.atlas.profiles.tsv.MicroarrayProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -40,7 +40,7 @@ public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, 
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(requestContext.getGeneQuery(),"");
         MicroarrayProfilesTsvInputStream inputStream =
                 inputStreamFactory.create(requestContext.getExperiment(),requestContext, arrayDesign);
-        Set<Contrast> contrasts = Sets.newHashSet(inputStream.getOrderedContrastsPresentInStream());
+        Set<Contrast> contrasts = Sets.newHashSet(requestContext.getExperiment().getDataColumnDescriptors());
         return super.write(outputWriter, inputStream, requestContext, contrasts,geneQueryResponse);
     }
 

@@ -1,9 +1,8 @@
-package uk.ac.ebi.atlas.profiles.differential.rnaseq;
+package uk.ac.ebi.atlas.profiles.tsv;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,11 +10,11 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class ExpressionsRowTsvDeserializerRnaSeq extends ExpressionsRowTsvDeserializer<DifferentialExpression> {
+public class RnaSeqDifferentialExpressionsRowDeserializer extends DifferentialExpressionsRowDeserializer<DifferentialExpression> {
 
     private Iterator<Contrast> expectedContrasts;
 
-    ExpressionsRowTsvDeserializerRnaSeq(List<Contrast> orderedContrasts) {
+    RnaSeqDifferentialExpressionsRowDeserializer(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 
@@ -36,16 +35,5 @@ public class ExpressionsRowTsvDeserializerRnaSeq extends ExpressionsRowTsvDeseri
         Contrast contrast = expectedContrasts.next();
         return new DifferentialExpression(pValue, foldChange, contrast);
     }
-
-    private double parseDouble(String value) {
-        if (value.equalsIgnoreCase("inf")) {
-            return Double.POSITIVE_INFINITY;
-        }
-        if (value.equalsIgnoreCase("-inf")) {
-            return Double.NEGATIVE_INFINITY;
-        }
-        return Double.parseDouble(value);
-    }
-
 
 }

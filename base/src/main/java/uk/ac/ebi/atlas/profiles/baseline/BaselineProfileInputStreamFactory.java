@@ -5,8 +5,10 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.BaselineProfileKryoInputStream;
-import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.tsv.BaselineProfilesTsvInputStream;
+import uk.ac.ebi.atlas.profiles.tsv.ProteomicsBaselineExpressionsRowDeserializerBuilder;
+import uk.ac.ebi.atlas.profiles.tsv.RnaSeqBaselineExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
@@ -44,7 +46,7 @@ implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions
         if(experiment.getType().isProteomicsBaseline()){
             return new BaselineProfilesTsvInputStream(
                     dataFileHub.getBaselineExperimentFiles(experiment.getAccession()).main.getReader(),
-                    new ExpressionsRowDeserializerProteomicsBaselineBuilder(experiment), baselineProfileReusableBuilder);
+                    new ProteomicsBaselineExpressionsRowDeserializerBuilder(experiment), baselineProfileReusableBuilder);
         } else {
             try {
                 return new BaselineProfileKryoInputStream(
@@ -53,7 +55,7 @@ implements ProfileStreamFactory<BaselineExperiment, BaselineProfileStreamOptions
             } catch (IllegalArgumentException e) {
                 return new BaselineProfilesTsvInputStream(
                         dataFileHub.getBaselineExperimentFiles(experiment.getAccession()).main.getReader(),
-                        new ExpressionsRowDeserializerBaselineBuilder(experiment), baselineProfileReusableBuilder);
+                        new RnaSeqBaselineExpressionsRowDeserializerBuilder(experiment), baselineProfileReusableBuilder);
             }
         }
     }

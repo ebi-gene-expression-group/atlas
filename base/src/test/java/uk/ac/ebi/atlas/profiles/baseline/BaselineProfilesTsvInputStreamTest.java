@@ -13,6 +13,8 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentRun;
+import uk.ac.ebi.atlas.profiles.tsv.BaselineProfilesTsvInputStream;
+import uk.ac.ebi.atlas.profiles.tsv.RnaSeqBaselineExpressionsRowDeserializerBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -38,7 +40,7 @@ public class BaselineProfilesTsvInputStreamTest {
     private static final OldBaselineProfile EMPTY_BASELINE_PROFILE = new OldBaselineProfile("gene_id", "gene_name");
 
     @Mock
-    private ExpressionsRowDeserializerBaselineBuilder expressionsBufferBuilderMock;
+    private RnaSeqBaselineExpressionsRowDeserializerBuilder expressionsBufferBuilderMock;
 
     @Mock
     private ExpressionsRowTsvDeserializerBaseline expressionsBufferMock;

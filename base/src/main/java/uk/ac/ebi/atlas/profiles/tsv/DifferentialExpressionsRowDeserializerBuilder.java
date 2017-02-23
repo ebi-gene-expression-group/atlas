@@ -1,34 +1,33 @@
-package uk.ac.ebi.atlas.profiles.differential;
+package uk.ac.ebi.atlas.profiles.tsv;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializerBuilder;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Expression, K extends DifferentialExperiment> implements ExpressionsRowDeserializerBuilder<String, T> {
+public abstract class DifferentialExpressionsRowDeserializerBuilder<Expr extends DifferentialExpression>
+        implements ExpressionsRowDeserializerBuilder<Expr> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialExpressionsRowDeserializerBuilder.class);
 
     final DifferentialExperiment experiment;
 
 
-    public ExpressionsRowDeserializerDifferentialBuilder(DifferentialExperiment experiment) {
+    public DifferentialExpressionsRowDeserializerBuilder(DifferentialExperiment experiment) {
         this.experiment = experiment;
     }
 
     @Override
-    public ExpressionsRowTsvDeserializer<T> build(String... tsvFileHeaders) {
+    public ExpressionsRowDeserializer<Expr> build(String... tsvFileHeaders) {
         LOGGER.debug("<withHeaders> data file headers: {}", Arrays.toString(tsvFileHeaders));
 
-         List<Contrast> orderedContrasts = new LinkedList<>();;
+         List<Contrast> orderedContrasts = new LinkedList<>();
 
         for (String columnHeader : Arrays.asList(tsvFileHeaders)) {
             if (columnHeader.endsWith(".p-value")) {
@@ -41,5 +40,5 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
 
     }
 
-    protected abstract ExpressionsRowTsvDeserializer<T> getBufferInstance(List<Contrast> orderedContrasts);
+    protected abstract ExpressionsRowDeserializer<Expr> getBufferInstance(List<Contrast> orderedContrasts);
 }

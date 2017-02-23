@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
+import uk.ac.ebi.atlas.profiles.tsv.RnaSeqDifferentialProfilesTsvInputStream;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
@@ -34,7 +35,7 @@ implements ProfileStreamFactory<DifferentialExperiment, DifferentialProfileStrea
                 options.getRegulation());
     }
 
-    public RnaSeqProfilesTsvInputStream create(DifferentialExperiment experiment, double pValueCutOff, double foldChangeCutOff, Regulation regulation) throws IOException {
+    public RnaSeqDifferentialProfilesTsvInputStream create(DifferentialExperiment experiment, double pValueCutOff, double foldChangeCutOff, Regulation regulation) throws IOException {
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
         expressionFilter.setPValueCutoff(pValueCutOff);
@@ -43,9 +44,8 @@ implements ProfileStreamFactory<DifferentialExperiment, DifferentialProfileStrea
 
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
 
-        return new RnaSeqProfilesTsvInputStream(
+        return new RnaSeqDifferentialProfilesTsvInputStream(
                 dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).analytics.getReader(),
-                new ExpressionsRowDeserializerRnaSeqBuilder(experiment),
                 rnaSeqProfileReusableBuilder);
     }
 

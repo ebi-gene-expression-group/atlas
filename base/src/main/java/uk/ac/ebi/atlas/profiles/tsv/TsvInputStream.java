@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.profiles;
+package uk.ac.ebi.atlas.profiles.tsv;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.IOException;
 import java.io.Reader;

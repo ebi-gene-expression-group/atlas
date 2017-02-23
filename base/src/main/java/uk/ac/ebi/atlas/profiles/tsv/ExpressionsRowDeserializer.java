@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.profiles;
+package uk.ac.ebi.atlas.profiles.tsv;
 
 import uk.ac.ebi.atlas.model.Expression;
 
