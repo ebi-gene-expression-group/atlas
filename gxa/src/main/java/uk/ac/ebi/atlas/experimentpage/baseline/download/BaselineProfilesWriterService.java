@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class BaselineProfilesWriterService {
 
 
-    private BaselineProfileInputStreamFactory inputStreamFactory;
+    private BaselineProfileStreamFactory inputStreamFactory;
 
     private ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
@@ -27,7 +27,7 @@ public class BaselineProfilesWriterService {
 
     private CoexpressedGenesService coexpressedGenesService;
 
-    public BaselineProfilesWriterService(BaselineProfileInputStreamFactory inputStreamFactory,
+    public BaselineProfilesWriterService(BaselineProfileStreamFactory inputStreamFactory,
                                          ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter,
                                          SolrQueryService solrQueryService,
                                          CoexpressedGenesService coexpressedGenesService) {

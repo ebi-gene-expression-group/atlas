@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class ProteomicsBaselineProfilesInputStreamIT {
 
     @Inject
-    private BaselineProfileInputStreamFactory inputStreamFactory;
+    private BaselineProfileStreamFactory inputStreamFactory;
 
     @Inject
     private ExperimentTrader experimentTrader;

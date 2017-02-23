@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles;
 
+import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
@@ -13,12 +14,15 @@ public class BaselineProfileKryoInputStream implements ObjectInputStream<Baselin
 
     private final BaselineExperiment baselineExperiment;
 
+    private final Predicate<BaselineExpression> filterExpressions;
 
 
     public BaselineProfileKryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader,
-                                          BaselineExperiment baselineExperiment) {
+                                          BaselineExperiment baselineExperiment,
+                                          Predicate<BaselineExpression> filterExpressions) {
         this.baselineExpressionsKryoReader = baselineExpressionsKryoReader;
         this.baselineExperiment = baselineExperiment;
+        this.filterExpressions = filterExpressions;
     }
 
     @Override
@@ -40,8 +44,9 @@ public class BaselineProfileKryoInputStream implements ObjectInputStream<Baselin
         BaselineProfile baselineProfile = new BaselineProfile(geneId, geneName);
 
         for(BaselineExpression baselineExpression : expressions){
-            baselineProfile.add(baselineExperiment.getDataColumnDescriptor(baselineExpression.getDataColumnDescriptorId()),
-                    baselineExpression);
+            if(filterExpressions.apply(baselineExpression)){
+                baselineProfile.add(baselineExperiment.getDataColumnDescriptor(baselineExpression.getDataColumnDescriptorId()), baselineExpression);
+            }
         }
 
         return baselineProfile;

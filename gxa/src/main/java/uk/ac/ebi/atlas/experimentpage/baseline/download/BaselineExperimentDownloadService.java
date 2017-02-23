@@ -7,7 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
@@ -28,7 +28,7 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
 
     private final ExperimentTrader experimentTrader;
 
-    public BaselineExperimentDownloadService(BaselineProfileInputStreamFactory inputStreamFactory,
+    public BaselineExperimentDownloadService(BaselineProfileStreamFactory inputStreamFactory,
                                              BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
                                              ExperimentTrader experimentTrader) {
         this.baselineProfilesWriterService = baselineProfilesWriterServiceFactory.create(inputStreamFactory);

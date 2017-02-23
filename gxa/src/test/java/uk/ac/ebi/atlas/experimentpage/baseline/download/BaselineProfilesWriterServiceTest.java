@@ -17,7 +17,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -44,7 +44,7 @@ public class BaselineProfilesWriterServiceTest {
     private ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
     @Mock
-    private BaselineProfileInputStreamFactory inputStreamFactory;
+    private BaselineProfileStreamFactory inputStreamFactory;
 
     @Mock
     private SolrQueryService solrQueryService;

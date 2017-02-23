@@ -1,15 +1,14 @@
 package uk.ac.ebi.atlas.resource;
 
+import com.esotericsoftware.kryo.io.UnsafeInput;
+import com.esotericsoftware.kryo.io.UnsafeOutput;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
-import uk.ac.ebi.atlas.model.resource.AtlasResource;
-import uk.ac.ebi.atlas.model.resource.JsonFile;
-import uk.ac.ebi.atlas.model.resource.TsvFile;
-import uk.ac.ebi.atlas.model.resource.XmlFile;
+import uk.ac.ebi.atlas.model.resource.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -61,6 +60,14 @@ public class DataFileHub {
 
     public MicroarrayExperimentFiles getMicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
+    }
+
+    public AtlasResource<UnsafeInput> getKryoFileForReading(String experimentAccession){
+        return new KryoFiles.Input(dataFilesLocation, experimentAccession);
+    }
+
+    public AtlasResource<UnsafeOutput> getKryoFileForWriting(String experimentAccession){
+        return new KryoFiles.Output(dataFilesLocation, experimentAccession);
     }
 
     public class SpeciesPropertiesFile {

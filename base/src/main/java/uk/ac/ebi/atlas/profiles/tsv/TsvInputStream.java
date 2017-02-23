@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles.tsv;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import java.io.IOException;
 import java.io.Reader;
 
-public abstract class TsvInputStream<DataColumnDescriptor extends DescribesDataColumns,
+public class TsvInputStream<DataColumnDescriptor extends DescribesDataColumns,
         Expr extends Expression, Prof extends Profile<DataColumnDescriptor, Expr>> implements ObjectInputStream<Prof> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TsvInputStream.class);
@@ -24,16 +25,19 @@ public abstract class TsvInputStream<DataColumnDescriptor extends DescribesDataC
     private final Predicate<Expr> expressionFilter;
     private final Experiment<DataColumnDescriptor> experiment;
     private final int howManyColumnsOnTheLeftAreForIdentifyingDataRow;
+    private final Function<String[], Prof> initProfileFromIdentifiers;
 
-    protected TsvInputStream(Reader reader, ExpressionsRowDeserializerBuilder<Expr>
+    public TsvInputStream(Reader reader, ExpressionsRowDeserializerBuilder<Expr>
             expressionsRowDeserializerBuilder, Predicate<Expr> expressionFilter,
                              Experiment<DataColumnDescriptor> experiment,
-                             int howManyColumnsOnTheLeftAreForIdentifyingDataRow) {
+                             int howManyColumnsOnTheLeftAreForIdentifyingDataRow,
+                             Function<String[], Prof> initProfileFromIdentifiers) {
         this.csvReader = new CSVReader(reader, '\t');
         this.expressionsRowDeserializer = expressionsRowDeserializerBuilder.build(readHeaders());
         this.expressionFilter = expressionFilter;
         this.experiment = experiment;
         this.howManyColumnsOnTheLeftAreForIdentifyingDataRow = howManyColumnsOnTheLeftAreForIdentifyingDataRow;
+        this.initProfileFromIdentifiers = initProfileFromIdentifiers;
     }
 
     private String[] readHeaders(){
@@ -66,11 +70,8 @@ public abstract class TsvInputStream<DataColumnDescriptor extends DescribesDataC
         }
     }
 
-    // first two or first three
-    protected abstract Prof nextProfile(String... identifierColumns);
-
     protected Prof profileFromLineOfData(String[] values){
-        Prof profile = nextProfile(getIdentifierColumns(values));
+        Prof profile = initProfileFromIdentifiers.apply(getIdentifierColumns(values));
         for(Expr expression: expressionsRowDeserializer.deserializeRow(getDataColumns(values))){
             if(expressionFilter.apply(expression)){
                 profile.add(experiment.getDataColumnDescriptor(expression.getDataColumnDescriptorId()), expression);

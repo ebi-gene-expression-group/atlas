@@ -9,14 +9,14 @@ import javax.inject.Named;
 
 @Named
 @Scope("prototype")
-public class IsDifferentialExpressionAboveCutOff implements Predicate<DifferentialExpression> {
+public class IsDifferentialExpressionAboveCutOff<Expr extends DifferentialExpression> implements Predicate<Expr> {
 
     private Regulation regulation;
     private double pValueCutOff;
     private double foldChangeCutOff;
 
     @Override
-    public boolean apply(DifferentialExpression differentialExpression) {
+    public boolean apply(Expr differentialExpression) {
 
         if (Regulation.UP == regulation){
             return isOverExpressed(differentialExpression);
@@ -27,12 +27,12 @@ public class IsDifferentialExpressionAboveCutOff implements Predicate<Differenti
         return isUnderExpressed(differentialExpression) || isOverExpressed(differentialExpression);
     }
 
-    private boolean isOverExpressed(DifferentialExpression differentialExpression) {
+    private boolean isOverExpressed(Expr differentialExpression) {
         return differentialExpression.getPValue() < pValueCutOff && differentialExpression.isOverExpressed()
                 && differentialExpression.getAbsoluteFoldChange() > foldChangeCutOff;
     }
 
-    private boolean isUnderExpressed(DifferentialExpression differentialExpression){
+    private boolean isUnderExpressed(Expr differentialExpression){
         return differentialExpression.getPValue() < pValueCutOff && differentialExpression.isUnderExpressed()
                 && differentialExpression.getAbsoluteFoldChange() > foldChangeCutOff;
     }

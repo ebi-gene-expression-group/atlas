@@ -15,7 +15,7 @@ public class MicroarrayExpressionsRowDeserializer extends
 
     private Iterator<Contrast> expectedContrasts;
 
-    MicroarrayExpressionsRowDeserializer(List<Contrast> orderedContrasts) {
+    public MicroarrayExpressionsRowDeserializer(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 

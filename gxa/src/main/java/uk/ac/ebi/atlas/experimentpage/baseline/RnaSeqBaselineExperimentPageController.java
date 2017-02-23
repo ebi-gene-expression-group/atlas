@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
@@ -35,8 +35,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
 
     @Inject
     public RnaSeqBaselineExperimentPageController(BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-                                                  BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
-        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
+                                                  BaselineProfileStreamFactory baselineProfileStreamFactory) {
+        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileStreamFactory);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")

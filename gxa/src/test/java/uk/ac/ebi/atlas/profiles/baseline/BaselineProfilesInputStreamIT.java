@@ -36,7 +36,7 @@ public class BaselineProfilesInputStreamIT {
     ExperimentTrader experimentTrader;
 
     @Resource(name = "baselineProfileInputStreamFactory")
-    private BaselineProfileInputStreamFactory inputStreamFactory;
+    private BaselineProfileStreamFactory inputStreamFactory;
 
     private ObjectInputStream<OldBaselineProfile> subject;
 

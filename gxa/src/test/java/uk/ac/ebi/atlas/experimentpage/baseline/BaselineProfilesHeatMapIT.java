@@ -9,7 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -44,7 +44,7 @@ public class BaselineProfilesHeatMapIT {
     RankBaselineProfilesFactory rankProfilesFactory;
 
     @Resource(name="baselineProfileInputStreamFactory")
-    BaselineProfileInputStreamFactory inputStreamFactory;
+    BaselineProfileStreamFactory inputStreamFactory;
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 

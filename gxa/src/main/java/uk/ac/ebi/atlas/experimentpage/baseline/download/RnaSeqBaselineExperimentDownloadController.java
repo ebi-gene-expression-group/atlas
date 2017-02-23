@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageController;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -29,7 +29,7 @@ public class RnaSeqBaselineExperimentDownloadController extends BaselineExperime
 
     @Inject
     public RnaSeqBaselineExperimentDownloadController(@Qualifier("baselineProfileInputStreamFactory")
-                                                      BaselineProfileInputStreamFactory inputStreamFactory,
+                                                      BaselineProfileStreamFactory inputStreamFactory,
                                                       BaselineProfilesWriterServiceFactory
                                                               baselineProfilesWriterServiceFactory,
                                                       ExperimentTrader experimentTrader) {

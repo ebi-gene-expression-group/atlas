@@ -1,52 +1,71 @@
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
+import com.google.common.base.Function;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.profiles.tsv.RnaSeqDifferentialProfilesTsvInputStream;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.tsv.*;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
 
 @Named
-public class RnaSeqProfileStreamFactory
-implements ProfileStreamFactory<DifferentialExperiment, DifferentialProfileStreamOptions, RnaSeqProfile, Contrast> {
-
-    private final DataFileHub dataFileHub;
+public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory<DifferentialExpression, DifferentialExperiment, DifferentialProfileStreamOptions, RnaSeqProfile> {
 
     @Inject
-    public RnaSeqProfileStreamFactory(DataFileHub dataFileHub) {
-        this.dataFileHub = dataFileHub;
+    protected RnaSeqProfileStreamFactory(DataFileHub dataFileHub) {
+        super(dataFileHub);
     }
 
+    @Override
     public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, DifferentialProfileStreamOptions
-            options)
-            throws IOException {
-        return create(experiment,
-                options.getPValueCutOff(),
-                options.getFoldChangeCutOff(),
-                options.getRegulation());
+            options) {
+
+        return new TsvInputStream<>(openDataFile(experiment.getAccession()),
+                getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
+                new Function<String[], RnaSeqProfile>() {
+                    @Nullable
+                    @Override
+                    public RnaSeqProfile apply(@Nullable String[] identifiers) {
+                        return new RnaSeqProfile(identifiers[0], identifiers[1]);
+                    }
+                });
     }
 
-    public RnaSeqDifferentialProfilesTsvInputStream create(DifferentialExperiment experiment, double pValueCutOff, double foldChangeCutOff, Regulation regulation) throws IOException {
+    private Reader openDataFile(String experimentAccession){
+        try {
+            return dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.getReader();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
 
-        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setPValueCutoff(pValueCutOff);
-        expressionFilter.setFoldChangeCutOff(foldChangeCutOff);
-        expressionFilter.setRegulation(regulation);
+    @Override
+    protected ExpressionsRowDeserializerBuilder<DifferentialExpression> getExpressionsRowDeserializerBuilder(DifferentialExperiment experiment) {
+        return new RnaSeqDifferentialExpressionsRowDeserializerBuilder(experiment);
+    }
 
-        RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
+    static class RnaSeqDifferentialExpressionsRowDeserializerBuilder extends DifferentialProfileStreamFactory
+            .DifferentialExpressionsRowDeserializerBuilder<DifferentialExpression> {
 
-        return new RnaSeqDifferentialProfilesTsvInputStream(
-                dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).analytics.getReader(),
-                rnaSeqProfileReusableBuilder);
+        public RnaSeqDifferentialExpressionsRowDeserializerBuilder(DifferentialExperiment experiment) {
+            super(experiment);
+        }
+
+        @Override
+        protected ExpressionsRowDeserializer<DifferentialExpression> getBufferInstance(List<Contrast> orderedContrasts) {
+            return new RnaSeqDifferentialExpressionsRowDeserializer(orderedContrasts);
+        }
+
     }
 
 }

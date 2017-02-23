@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -31,9 +31,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public JsonBaselineExperimentController(
             ExperimentTrader experimentTrader,
             BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-            BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
+            BaselineProfileStreamFactory baselineProfileStreamFactory) {
         super(experimentTrader);
-        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
+        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileStreamFactory);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",

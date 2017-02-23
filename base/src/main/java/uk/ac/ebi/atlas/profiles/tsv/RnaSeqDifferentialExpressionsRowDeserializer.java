@@ -14,7 +14,7 @@ public class RnaSeqDifferentialExpressionsRowDeserializer extends DifferentialEx
 
     private Iterator<Contrast> expectedContrasts;
 
-    RnaSeqDifferentialExpressionsRowDeserializer(List<Contrast> orderedContrasts) {
+    public RnaSeqDifferentialExpressionsRowDeserializer(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 

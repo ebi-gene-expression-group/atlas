@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.UnsafeInput;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -39,18 +40,11 @@ public class BaselineExpressionsKryoReader implements Closeable {
         return kryo;
     }
 
-    public static BaselineExpressionsKryoReader create(String serializedFilePath) {
-        try {
-            Path filePath = FileSystems.getDefault().getPath(checkNotNull(serializedFilePath));
-            InputStream inputStream = Files.newInputStream(filePath);
-            return new BaselineExpressionsKryoReader(createKryo(), new UnsafeInput(inputStream));
-        } catch (IOException e) {
-            LOGGER.warn("{} maybe the file does not exist?", e.getMessage());
-            throw new IllegalArgumentException("Error trying to open " + serializedFilePath, e);
-        }
+    public static BaselineExpressionsKryoReader create(AtlasResource<UnsafeInput> kryoFile) {
+        return new BaselineExpressionsKryoReader(createKryo(), kryoFile.get());
     }
 
-    public BaselineExpressionsKryoReader(Kryo kryo, UnsafeInput input) {
+    BaselineExpressionsKryoReader(Kryo kryo, UnsafeInput input) {
         this.kryo = kryo;
         this.input = input;
         totalNumberOfGenes = kryo.readObject(input, Integer.class);

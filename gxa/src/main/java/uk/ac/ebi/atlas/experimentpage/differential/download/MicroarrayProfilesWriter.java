@@ -9,7 +9,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
-import uk.ac.ebi.atlas.profiles.tsv.MicroarrayProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;

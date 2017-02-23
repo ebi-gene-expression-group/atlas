@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
@@ -36,9 +36,9 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     @Inject
     public ProteomicsBaselineExperimentPageController(
             BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-            BaselineProfileInputStreamFactory baselineProfileInputStreamFactory) {
+            BaselineProfileStreamFactory baselineProfileStreamFactory) {
         this.baselineExperimentPageService =
-                baselineExperimentPageServiceFactory.create(baselineProfileInputStreamFactory);
+                baselineExperimentPageServiceFactory.create(baselineProfileStreamFactory);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")

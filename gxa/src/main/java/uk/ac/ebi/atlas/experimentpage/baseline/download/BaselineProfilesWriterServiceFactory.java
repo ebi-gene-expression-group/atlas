@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
@@ -35,7 +35,7 @@ public class BaselineProfilesWriterServiceFactory {
         this.coexpressedGenesService = new CoexpressedGenesService(new CoexpressedGenesDao(jdbcTemplate));
     }
 
-    BaselineProfilesWriterService create(BaselineProfileInputStreamFactory inputStreamFactory){
+    BaselineProfilesWriterService create(BaselineProfileStreamFactory inputStreamFactory){
         return new BaselineProfilesWriterService(
                 inputStreamFactory,
                 new ProfilesWriter<>(new BaselineProfileStreamFilters(), new BaselineProfilesTSVWriter(csvWriterFactory, tsvFileMastheadTemplateResource)),

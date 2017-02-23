@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 
 import javax.inject.Inject;
@@ -47,7 +47,7 @@ public class BaselineExperimentPageServiceFactory {
         this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
-    public BaselineExperimentPageService create(BaselineProfileInputStreamFactory inputStreamFactory){
+    public BaselineExperimentPageService create(BaselineProfileStreamFactory inputStreamFactory){
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(rankProfilesFactory,
                 inputStreamFactory,baselineProfilesViewModelBuilder, solrQueryService, coexpressedGenesService),
                 applicationProperties,atlasResourceHub,

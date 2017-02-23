@@ -16,7 +16,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -64,7 +64,7 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
     private ExperimentalFactors experimentalFactorsMock;
 
     @Mock
-    private BaselineProfileInputStreamFactory inputStreamFactoryMock;
+    private BaselineProfileStreamFactory inputStreamFactoryMock;
 
     @Mock
     private ExperimentTrader experimentTraderMock;

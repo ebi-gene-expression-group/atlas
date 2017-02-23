@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import org.springframework.context.annotation.Scope;
@@ -27,11 +27,11 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
     private final BaselineExperimentDownloadService<ProteomicsBaselineRequestPreferences> baselineExperimentDownloadService;
     @Inject
     public ProteomicsBaselineExperimentDownloadController(
-            BaselineProfileInputStreamFactory baselineProfileInputStreamFactory,
+            BaselineProfileStreamFactory baselineProfileStreamFactory,
             BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
             ExperimentTrader experimentTrader) {
         this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(
-                baselineProfileInputStreamFactory, baselineProfilesWriterServiceFactory,experimentTrader);
+                baselineProfileStreamFactory, baselineProfilesWriterServiceFactory,experimentTrader);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_PROTEOMICS_BASELINE)

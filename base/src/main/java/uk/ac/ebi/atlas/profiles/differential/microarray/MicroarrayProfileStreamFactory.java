@@ -1,93 +1,98 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
-import org.springframework.context.annotation.Scope;
+import com.google.common.base.Function;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializerBuilder;
-import uk.ac.ebi.atlas.profiles.tsv.MicroarrayProfilesTsvInputStream;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
+import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.TsvInputStream;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
 import java.util.Vector;
 
 @Named
-@Scope("prototype")
 public class MicroarrayProfileStreamFactory
-implements ProfileStreamFactory<MicroarrayExperiment, MicroarrayProfileStreamOptions, MicroarrayProfile, Contrast> {
-
-    private final DataFileHub dataFileHub;
+extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperiment, MicroarrayProfileStreamOptions, MicroarrayProfile> {
 
     @Inject
-    public MicroarrayProfileStreamFactory(
-            DataFileHub dataFileHub) {
-        this.dataFileHub = dataFileHub;
+    public MicroarrayProfileStreamFactory(DataFileHub dataFileHub) {
+        super(dataFileHub);
+        new Function<String[], MicroarrayProfile>() {
+            @Nullable
+            @Override
+            public MicroarrayProfile apply(@Nullable String[] identifiers) {
+                return new MicroarrayProfile(identifiers[0], identifiers[1], identifiers[2]);
+            }
+        };
     }
 
     @Override
     public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayProfileStreamOptions
-            options)
-    throws IOException {
-        return create(experiment,
-                options.getPValueCutOff(),
-                options.getFoldChangeCutOff(),
-                options.getRegulation(),
-                options.getArrayDesignAccessions());
-    }
-
-
-    public MicroarrayProfilesTsvInputStream create(MicroarrayExperiment experiment, MicroarrayProfileStreamOptions
-            options, String arrayDesign)
-    throws IOException {
-        return create(experiment,
-                options.getPValueCutOff(),
-                options.getFoldChangeCutOff(),
-                options.getRegulation(),
-                arrayDesign);
-    }
-
-    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment,
-                                                       double pValueCutOff,
-                                                       double foldChangeCutOff,
-                                                       Regulation regulation,
-                                                       Iterable<String> arrayDesignAccessions) throws IOException {
+            options){
         Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
-        for (String arrayDesignAccession : arrayDesignAccessions) {
-            ObjectInputStream<MicroarrayProfile> stream =
-                    create(experiment, pValueCutOff, foldChangeCutOff, regulation, arrayDesignAccession);
+        for (String arrayDesignAccession : options.getArrayDesignAccessions()) {
+            ObjectInputStream<MicroarrayProfile> stream = create(experiment, options, arrayDesignAccession);
+
             inputStreams.add(stream);
         }
 
         return new SequenceObjectInputStream<>(inputStreams.elements());
     }
 
-    public MicroarrayProfilesTsvInputStream create(MicroarrayExperiment experiment,
-                                                   double pValueCutOff,
-                                                   double foldChangeCutOff,
-                                                   Regulation regulation,
-                                                   String arrayDesignAccession) throws IOException {
-        MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(pValueCutOff, foldChangeCutOff, regulation);
-
-        return new MicroarrayProfilesTsvInputStream(
-                dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesignAccession).analytics.getReader(),
-                new MicroarrayExpressionsRowDeserializerBuilder(experiment),
-                profileBuilder);
+    public Reader openDataFile(String experimentAccession, String arrayDesignAccession){
+        try {
+            return dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesignAccession).analytics.getReader();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
-    private MicroarrayProfileReusableBuilder createProfileBuilder(double pValueCutOff, double foldChangeCutOff, Regulation regulation) {
-        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setPValueCutoff(pValueCutOff);
-        expressionFilter.setFoldChangeCutOff(foldChangeCutOff);
-        expressionFilter.setRegulation(regulation);
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment,
+                                                   MicroarrayProfileStreamOptions options,
+                                                   String arrayDesignAccession){
 
-        return new MicroarrayProfileReusableBuilder(expressionFilter);
+        return new TsvInputStream<>(openDataFile(experiment.getAccession(), arrayDesignAccession),
+                getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 3,
+                new Function<String[], MicroarrayProfile>() {
+                    @Nullable
+                    @Override
+                    public MicroarrayProfile apply(@Nullable String[] identifiers) {
+                        return new MicroarrayProfile(identifiers[0], identifiers[1], identifiers[2]);
+                    }
+                });
+    }
+
+    @Override
+    protected ExpressionsRowDeserializerBuilder<MicroarrayExpression> getExpressionsRowDeserializerBuilder(MicroarrayExperiment experiment) {
+        return new MicroarrayExpressionsRowDeserializerBuilder(experiment);
+    }
+
+
+    static class MicroarrayExpressionsRowDeserializerBuilder extends DifferentialProfileStreamFactory
+            .DifferentialExpressionsRowDeserializerBuilder<MicroarrayExpression> {
+
+
+        public MicroarrayExpressionsRowDeserializerBuilder(MicroarrayExperiment experiment) {
+            super(experiment);
+        }
+
+        @Override
+        protected ExpressionsRowDeserializer<MicroarrayExpression> getBufferInstance(List<Contrast> orderedContrasts) {
+            return new MicroarrayExpressionsRowDeserializer(orderedContrasts);
+        }
+
     }
 
 }

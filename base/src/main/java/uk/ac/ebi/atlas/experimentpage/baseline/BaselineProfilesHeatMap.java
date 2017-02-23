@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.SelectProfiles;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
@@ -34,7 +34,7 @@ public class BaselineProfilesHeatMap {
             profilesHeatmapSource;
 
     public BaselineProfilesHeatMap(RankBaselineProfilesFactory rankProfilesFactory,
-                                   @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory) {
+                                   @Qualifier("baselineProfileInputStreamFactory") BaselineProfileStreamFactory inputStreamFactory) {
         this.rankProfilesFactory = rankProfilesFactory;
         profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new BaselineProfileStreamFilters());
     }
