@@ -8,12 +8,12 @@ webpackJsonp_name_([8],{
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(/*! babel-polyfill */524);
-	module.exports = __webpack_require__(/*! ./atlas_bundles/heatmap-highcharts */6689);
+	module.exports = __webpack_require__(/*! ./atlas_bundles/heatmap-highcharts */6706);
 
 
 /***/ },
 
-/***/ 6689:
+/***/ 6706:
 /*!***************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/index.js ***!
   \***************************************************/
@@ -21,29 +21,29 @@ webpackJsonp_name_([8],{
 
 	"use strict";
 	
-	module.exports = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 6690);
+	module.exports = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 6707);
 
 /***/ },
 
-/***/ 6690:
+/***/ 6707:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/index.js ***!
   \*****************************************************************************************/
-[8323, 6691],
+[8352, 6708],
 
-/***/ 6691:
+/***/ 6708:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapRenderer.jsx ***!
   \******************************************************************************************************************/
-[8324, 6692, 6722, 6873],
+[8353, 6709, 6739, 6890],
 
-/***/ 6692:
+/***/ 6709:
 /*!***********************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/react.js ***!
   \***********************************************************/
-[7635, 6693],
+[7652, 6710],
 
-/***/ 6693:
+/***/ 6710:
 /*!***************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/React.js ***!
   \***************************************************************/
@@ -61,26 +61,26 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6694);
+	var _assign = __webpack_require__(/*! object-assign */ 6711);
 	
-	var ReactChildren = __webpack_require__(/*! ./ReactChildren */ 6695);
-	var ReactComponent = __webpack_require__(/*! ./ReactComponent */ 6708);
-	var ReactPureComponent = __webpack_require__(/*! ./ReactPureComponent */ 6711);
-	var ReactClass = __webpack_require__(/*! ./ReactClass */ 6712);
-	var ReactDOMFactories = __webpack_require__(/*! ./ReactDOMFactories */ 6714);
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
-	var ReactPropTypes = __webpack_require__(/*! ./ReactPropTypes */ 6719);
-	var ReactVersion = __webpack_require__(/*! ./ReactVersion */ 6720);
+	var ReactChildren = __webpack_require__(/*! ./ReactChildren */ 6712);
+	var ReactComponent = __webpack_require__(/*! ./ReactComponent */ 6725);
+	var ReactPureComponent = __webpack_require__(/*! ./ReactPureComponent */ 6728);
+	var ReactClass = __webpack_require__(/*! ./ReactClass */ 6729);
+	var ReactDOMFactories = __webpack_require__(/*! ./ReactDOMFactories */ 6731);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
+	var ReactPropTypes = __webpack_require__(/*! ./ReactPropTypes */ 6736);
+	var ReactVersion = __webpack_require__(/*! ./ReactVersion */ 6737);
 	
-	var onlyChild = __webpack_require__(/*! ./onlyChild */ 6721);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var onlyChild = __webpack_require__(/*! ./onlyChild */ 6738);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	var createElement = ReactElement.createElement;
 	var createFactory = ReactElement.createFactory;
 	var cloneElement = ReactElement.cloneElement;
 	
 	if (true) {
-	  var ReactElementValidator = __webpack_require__(/*! ./ReactElementValidator */ 6715);
+	  var ReactElementValidator = __webpack_require__(/*! ./ReactElementValidator */ 6732);
 	  createElement = ReactElementValidator.createElement;
 	  createFactory = ReactElementValidator.createFactory;
 	  cloneElement = ReactElementValidator.cloneElement;
@@ -140,13 +140,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6694:
+/***/ 6711:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/~/object-assign/index.js ***!
   \***************************************************************************/
 5,
 
-/***/ 6695:
+/***/ 6712:
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactChildren.js ***!
   \***********************************************************************/
@@ -164,11 +164,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6696);
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6713);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6702);
-	var traverseAllChildren = __webpack_require__(/*! ./traverseAllChildren */ 6705);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6719);
+	var traverseAllChildren = __webpack_require__(/*! ./traverseAllChildren */ 6722);
 	
 	var twoArgumentPooler = PooledClass.twoArgumentPooler;
 	var fourArgumentPooler = PooledClass.fourArgumentPooler;
@@ -345,13 +345,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6696:
+/***/ 6713:
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/PooledClass.js ***!
   \*********************************************************************/
-[7632, 6697, 6698],
+[7649, 6714, 6715],
 
-/***/ 6697:
+/***/ 6714:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/reactProdInvariant.js ***!
   \****************************************************************************/
@@ -398,13 +398,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6698:
+/***/ 6715:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/~/fbjs/lib/invariant.js ***!
   \**************************************************************************/
 9,
 
-/***/ 6699:
+/***/ 6716:
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactElement.js ***!
   \**********************************************************************/
@@ -422,15 +422,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6694);
+	var _assign = __webpack_require__(/*! object-assign */ 6711);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6700);
+	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6717);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
-	var canDefineProperty = __webpack_require__(/*! ./canDefineProperty */ 6703);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
+	var canDefineProperty = __webpack_require__(/*! ./canDefineProperty */ 6720);
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	
-	var REACT_ELEMENT_TYPE = __webpack_require__(/*! ./ReactElementSymbol */ 6704);
+	var REACT_ELEMENT_TYPE = __webpack_require__(/*! ./ReactElementSymbol */ 6721);
 	
 	var RESERVED_PROPS = {
 	  key: true,
@@ -753,7 +753,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6700:
+/***/ 6717:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactCurrentOwner.js ***!
   \***************************************************************************/
@@ -792,19 +792,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6701:
+/***/ 6718:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/~/fbjs/lib/warning.js ***!
   \************************************************************************/
-[7640, 6702],
+[7657, 6719],
 
-/***/ 6702:
+/***/ 6719:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/~/fbjs/lib/emptyFunction.js ***!
   \******************************************************************************/
 13,
 
-/***/ 6703:
+/***/ 6720:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/canDefineProperty.js ***!
   \***************************************************************************/
@@ -838,7 +838,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6704:
+/***/ 6721:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactElementSymbol.js ***!
   \****************************************************************************/
@@ -866,7 +866,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6705:
+/***/ 6722:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/traverseAllChildren.js ***!
   \*****************************************************************************/
@@ -884,15 +884,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6697);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6714);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6700);
-	var REACT_ELEMENT_TYPE = __webpack_require__(/*! ./ReactElementSymbol */ 6704);
+	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6717);
+	var REACT_ELEMENT_TYPE = __webpack_require__(/*! ./ReactElementSymbol */ 6721);
 	
-	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6706);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6698);
-	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6707);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6723);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6715);
+	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6724);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	var SEPARATOR = '.';
 	var SUBSEPARATOR = ':';
@@ -1050,7 +1050,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6706:
+/***/ 6723:
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/getIteratorFn.js ***!
   \***********************************************************************/
@@ -1099,7 +1099,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6707:
+/***/ 6724:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/KeyEscapeUtils.js ***!
   \************************************************************************/
@@ -1166,7 +1166,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6708:
+/***/ 6725:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactComponent.js ***!
   \************************************************************************/
@@ -1184,14 +1184,14 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6697);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6714);
 	
-	var ReactNoopUpdateQueue = __webpack_require__(/*! ./ReactNoopUpdateQueue */ 6709);
+	var ReactNoopUpdateQueue = __webpack_require__(/*! ./ReactNoopUpdateQueue */ 6726);
 	
-	var canDefineProperty = __webpack_require__(/*! ./canDefineProperty */ 6703);
-	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6710);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6698);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var canDefineProperty = __webpack_require__(/*! ./canDefineProperty */ 6720);
+	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6715);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -1292,7 +1292,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6709:
+/***/ 6726:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactNoopUpdateQueue.js ***!
   \******************************************************************************/
@@ -1310,7 +1310,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	function warnNoop(publicInstance, callerName) {
 	  if (true) {
@@ -1396,13 +1396,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6710:
+/***/ 6727:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/~/fbjs/lib/emptyObject.js ***!
   \****************************************************************************/
 20,
 
-/***/ 6711:
+/***/ 6728:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactPureComponent.js ***!
   \****************************************************************************/
@@ -1420,12 +1420,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6694);
+	var _assign = __webpack_require__(/*! object-assign */ 6711);
 	
-	var ReactComponent = __webpack_require__(/*! ./ReactComponent */ 6708);
-	var ReactNoopUpdateQueue = __webpack_require__(/*! ./ReactNoopUpdateQueue */ 6709);
+	var ReactComponent = __webpack_require__(/*! ./ReactComponent */ 6725);
+	var ReactNoopUpdateQueue = __webpack_require__(/*! ./ReactNoopUpdateQueue */ 6726);
 	
-	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6710);
+	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6727);
 	
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -1452,7 +1452,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6712:
+/***/ 6729:
 /*!********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactClass.js ***!
   \********************************************************************/
@@ -1470,17 +1470,17 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6697),
-	    _assign = __webpack_require__(/*! object-assign */ 6694);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6714),
+	    _assign = __webpack_require__(/*! object-assign */ 6711);
 	
-	var ReactComponent = __webpack_require__(/*! ./ReactComponent */ 6708);
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
-	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6713);
-	var ReactNoopUpdateQueue = __webpack_require__(/*! ./ReactNoopUpdateQueue */ 6709);
+	var ReactComponent = __webpack_require__(/*! ./ReactComponent */ 6725);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
+	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6730);
+	var ReactNoopUpdateQueue = __webpack_require__(/*! ./ReactNoopUpdateQueue */ 6726);
 	
-	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6710);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6698);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6715);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	var MIXINS_KEY = 'mixins';
 	
@@ -2177,7 +2177,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6713:
+/***/ 6730:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactPropTypeLocationNames.js ***!
   \************************************************************************************/
@@ -2210,7 +2210,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6714:
+/***/ 6731:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactDOMFactories.js ***!
   \***************************************************************************/
@@ -2228,7 +2228,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
 	
 	/**
 	 * Create a factory that creates HTML tag elements.
@@ -2237,7 +2237,7 @@ webpackJsonp_name_([8],{
 	 */
 	var createDOMFactory = ReactElement.createFactory;
 	if (true) {
-	  var ReactElementValidator = __webpack_require__(/*! ./ReactElementValidator */ 6715);
+	  var ReactElementValidator = __webpack_require__(/*! ./ReactElementValidator */ 6732);
 	  createDOMFactory = ReactElementValidator.createFactory;
 	}
 	
@@ -2388,7 +2388,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6715:
+/***/ 6732:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactElementValidator.js ***!
   \*******************************************************************************/
@@ -2413,15 +2413,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6700);
-	var ReactComponentTreeHook = __webpack_require__(/*! ./ReactComponentTreeHook */ 6716);
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
+	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6717);
+	var ReactComponentTreeHook = __webpack_require__(/*! ./ReactComponentTreeHook */ 6733);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
 	
-	var checkReactTypeSpec = __webpack_require__(/*! ./checkReactTypeSpec */ 6717);
+	var checkReactTypeSpec = __webpack_require__(/*! ./checkReactTypeSpec */ 6734);
 	
-	var canDefineProperty = __webpack_require__(/*! ./canDefineProperty */ 6703);
-	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6706);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var canDefineProperty = __webpack_require__(/*! ./canDefineProperty */ 6720);
+	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6723);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	function getDeclarationErrorAddendum() {
 	  if (ReactCurrentOwner.current) {
@@ -2630,7 +2630,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6716:
+/***/ 6733:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactComponentTreeHook.js ***!
   \********************************************************************************/
@@ -2649,12 +2649,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6697);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6714);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6700);
+	var ReactCurrentOwner = __webpack_require__(/*! ./ReactCurrentOwner */ 6717);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6698);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6715);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	function isNative(fn) {
 	  // Based on isNative() from Lodash
@@ -2972,7 +2972,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6717:
+/***/ 6734:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/checkReactTypeSpec.js ***!
   \****************************************************************************/
@@ -2990,13 +2990,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6697);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6714);
 	
-	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6713);
-	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6718);
+	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6730);
+	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6735);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6698);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6715);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	var ReactComponentTreeHook;
 	
@@ -3006,7 +3006,7 @@ webpackJsonp_name_([8],{
 	  // https://github.com/facebook/react/issues/7240
 	  // Remove the inline requires when we don't need them anymore:
 	  // https://github.com/facebook/react/pull/7178
-	  ReactComponentTreeHook = __webpack_require__(/*! ./ReactComponentTreeHook */ 6716);
+	  ReactComponentTreeHook = __webpack_require__(/*! ./ReactComponentTreeHook */ 6733);
 	}
 	
 	var loggedTypeFailures = {};
@@ -3048,7 +3048,7 @@ webpackJsonp_name_([8],{
 	
 	        if (true) {
 	          if (!ReactComponentTreeHook) {
-	            ReactComponentTreeHook = __webpack_require__(/*! ./ReactComponentTreeHook */ 6716);
+	            ReactComponentTreeHook = __webpack_require__(/*! ./ReactComponentTreeHook */ 6733);
 	          }
 	          if (debugID !== null) {
 	            componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -3068,7 +3068,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6718:
+/***/ 6735:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactPropTypesSecret.js ***!
   \******************************************************************************/
@@ -3093,7 +3093,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6719:
+/***/ 6736:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactPropTypes.js ***!
   \************************************************************************/
@@ -3111,13 +3111,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
-	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6713);
-	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6718);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
+	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6730);
+	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6735);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6702);
-	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6706);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6701);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6719);
+	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6723);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6718);
 	
 	/**
 	 * Collection of methods that allow declaration and validation of props that are
@@ -3535,7 +3535,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6720:
+/***/ 6737:
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/ReactVersion.js ***!
   \**********************************************************************/
@@ -3557,7 +3557,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6721:
+/***/ 6738:
 /*!*******************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react/lib/onlyChild.js ***!
   \*******************************************************************/
@@ -3574,11 +3574,11 @@ webpackJsonp_name_([8],{
 	 */
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6697);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6714);
 	
-	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6699);
+	var ReactElement = __webpack_require__(/*! ./ReactElement */ 6716);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6698);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6715);
 	
 	/**
 	 * Returns the first child in a collection of children and verifies that there
@@ -3603,7 +3603,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6722:
+/***/ 6739:
 /*!***************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/index.js ***!
   \***************************************************************/
@@ -3611,12 +3611,12 @@ webpackJsonp_name_([8],{
 
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! ./lib/ReactDOM */ 6723);
+	module.exports = __webpack_require__(/*! ./lib/ReactDOM */ 6740);
 
 
 /***/ },
 
-/***/ 6723:
+/***/ 6740:
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOM.js ***!
   \**********************************************************************/
@@ -3636,17 +3636,17 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactDefaultInjection = __webpack_require__(/*! ./ReactDefaultInjection */ 6729);
-	var ReactMount = __webpack_require__(/*! ./ReactMount */ 6861);
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
-	var ReactVersion = __webpack_require__(/*! ./ReactVersion */ 6866);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactDefaultInjection = __webpack_require__(/*! ./ReactDefaultInjection */ 6746);
+	var ReactMount = __webpack_require__(/*! ./ReactMount */ 6878);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
+	var ReactVersion = __webpack_require__(/*! ./ReactVersion */ 6883);
 	
-	var findDOMNode = __webpack_require__(/*! ./findDOMNode */ 6867);
-	var getHostComponentFromComposite = __webpack_require__(/*! ./getHostComponentFromComposite */ 6868);
-	var renderSubtreeIntoContainer = __webpack_require__(/*! ./renderSubtreeIntoContainer */ 6869);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var findDOMNode = __webpack_require__(/*! ./findDOMNode */ 6884);
+	var getHostComponentFromComposite = __webpack_require__(/*! ./getHostComponentFromComposite */ 6885);
+	var renderSubtreeIntoContainer = __webpack_require__(/*! ./renderSubtreeIntoContainer */ 6886);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	ReactDefaultInjection.inject();
 	
@@ -3685,7 +3685,7 @@ webpackJsonp_name_([8],{
 	}
 	
 	if (true) {
-	  var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	  var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
 	
 	    // First check if devtools is not installed
@@ -3721,10 +3721,10 @@ webpackJsonp_name_([8],{
 	}
 	
 	if (true) {
-	  var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	  var ReactDOMUnknownPropertyHook = __webpack_require__(/*! ./ReactDOMUnknownPropertyHook */ 6870);
-	  var ReactDOMNullInputValuePropHook = __webpack_require__(/*! ./ReactDOMNullInputValuePropHook */ 6871);
-	  var ReactDOMInvalidARIAHook = __webpack_require__(/*! ./ReactDOMInvalidARIAHook */ 6872);
+	  var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	  var ReactDOMUnknownPropertyHook = __webpack_require__(/*! ./ReactDOMUnknownPropertyHook */ 6887);
+	  var ReactDOMNullInputValuePropHook = __webpack_require__(/*! ./ReactDOMNullInputValuePropHook */ 6888);
+	  var ReactDOMInvalidARIAHook = __webpack_require__(/*! ./ReactDOMInvalidARIAHook */ 6889);
 	
 	  ReactInstrumentation.debugTool.addHook(ReactDOMUnknownPropertyHook);
 	  ReactInstrumentation.debugTool.addHook(ReactDOMNullInputValuePropHook);
@@ -3735,7 +3735,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6724:
+/***/ 6741:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMComponentTree.js ***!
   \***********************************************************************************/
@@ -3753,12 +3753,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var ReactDOMComponentFlags = __webpack_require__(/*! ./ReactDOMComponentFlags */ 6728);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var ReactDOMComponentFlags = __webpack_require__(/*! ./ReactDOMComponentFlags */ 6745);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var Flags = ReactDOMComponentFlags;
@@ -3938,13 +3938,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6725:
+/***/ 6742:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/reactProdInvariant.js ***!
   \********************************************************************************/
-6697,
+6714,
 
-/***/ 6726:
+/***/ 6743:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/DOMProperty.js ***!
   \*************************************************************************/
@@ -3962,9 +3962,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	function checkMask(value, bitmask) {
 	  return (value & bitmask) === bitmask;
@@ -4162,13 +4162,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6727:
+/***/ 6744:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/invariant.js ***!
   \******************************************************************************/
 9,
 
-/***/ 6728:
+/***/ 6745:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMComponentFlags.js ***!
   \************************************************************************************/
@@ -4194,7 +4194,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6729:
+/***/ 6746:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDefaultInjection.js ***!
   \***********************************************************************************/
@@ -4212,25 +4212,25 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ARIADOMPropertyConfig = __webpack_require__(/*! ./ARIADOMPropertyConfig */ 6730);
-	var BeforeInputEventPlugin = __webpack_require__(/*! ./BeforeInputEventPlugin */ 6731);
-	var ChangeEventPlugin = __webpack_require__(/*! ./ChangeEventPlugin */ 6749);
-	var DefaultEventPluginOrder = __webpack_require__(/*! ./DefaultEventPluginOrder */ 6766);
-	var EnterLeaveEventPlugin = __webpack_require__(/*! ./EnterLeaveEventPlugin */ 6767);
-	var HTMLDOMPropertyConfig = __webpack_require__(/*! ./HTMLDOMPropertyConfig */ 6772);
-	var ReactComponentBrowserEnvironment = __webpack_require__(/*! ./ReactComponentBrowserEnvironment */ 6773);
-	var ReactDOMComponent = __webpack_require__(/*! ./ReactDOMComponent */ 6786);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactDOMEmptyComponent = __webpack_require__(/*! ./ReactDOMEmptyComponent */ 6832);
-	var ReactDOMTreeTraversal = __webpack_require__(/*! ./ReactDOMTreeTraversal */ 6833);
-	var ReactDOMTextComponent = __webpack_require__(/*! ./ReactDOMTextComponent */ 6834);
-	var ReactDefaultBatchingStrategy = __webpack_require__(/*! ./ReactDefaultBatchingStrategy */ 6835);
-	var ReactEventListener = __webpack_require__(/*! ./ReactEventListener */ 6836);
-	var ReactInjection = __webpack_require__(/*! ./ReactInjection */ 6839);
-	var ReactReconcileTransaction = __webpack_require__(/*! ./ReactReconcileTransaction */ 6840);
-	var SVGDOMPropertyConfig = __webpack_require__(/*! ./SVGDOMPropertyConfig */ 6848);
-	var SelectEventPlugin = __webpack_require__(/*! ./SelectEventPlugin */ 6849);
-	var SimpleEventPlugin = __webpack_require__(/*! ./SimpleEventPlugin */ 6850);
+	var ARIADOMPropertyConfig = __webpack_require__(/*! ./ARIADOMPropertyConfig */ 6747);
+	var BeforeInputEventPlugin = __webpack_require__(/*! ./BeforeInputEventPlugin */ 6748);
+	var ChangeEventPlugin = __webpack_require__(/*! ./ChangeEventPlugin */ 6766);
+	var DefaultEventPluginOrder = __webpack_require__(/*! ./DefaultEventPluginOrder */ 6783);
+	var EnterLeaveEventPlugin = __webpack_require__(/*! ./EnterLeaveEventPlugin */ 6784);
+	var HTMLDOMPropertyConfig = __webpack_require__(/*! ./HTMLDOMPropertyConfig */ 6789);
+	var ReactComponentBrowserEnvironment = __webpack_require__(/*! ./ReactComponentBrowserEnvironment */ 6790);
+	var ReactDOMComponent = __webpack_require__(/*! ./ReactDOMComponent */ 6803);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactDOMEmptyComponent = __webpack_require__(/*! ./ReactDOMEmptyComponent */ 6849);
+	var ReactDOMTreeTraversal = __webpack_require__(/*! ./ReactDOMTreeTraversal */ 6850);
+	var ReactDOMTextComponent = __webpack_require__(/*! ./ReactDOMTextComponent */ 6851);
+	var ReactDefaultBatchingStrategy = __webpack_require__(/*! ./ReactDefaultBatchingStrategy */ 6852);
+	var ReactEventListener = __webpack_require__(/*! ./ReactEventListener */ 6853);
+	var ReactInjection = __webpack_require__(/*! ./ReactInjection */ 6856);
+	var ReactReconcileTransaction = __webpack_require__(/*! ./ReactReconcileTransaction */ 6857);
+	var SVGDOMPropertyConfig = __webpack_require__(/*! ./SVGDOMPropertyConfig */ 6865);
+	var SelectEventPlugin = __webpack_require__(/*! ./SelectEventPlugin */ 6866);
+	var SimpleEventPlugin = __webpack_require__(/*! ./SimpleEventPlugin */ 6867);
 	
 	var alreadyInjected = false;
 	
@@ -4288,7 +4288,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6730:
+/***/ 6747:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ARIADOMPropertyConfig.js ***!
   \***********************************************************************************/
@@ -4370,7 +4370,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6731:
+/***/ 6748:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/BeforeInputEventPlugin.js ***!
   \************************************************************************************/
@@ -4388,11 +4388,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6732);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var FallbackCompositionState = __webpack_require__(/*! ./FallbackCompositionState */ 6742);
-	var SyntheticCompositionEvent = __webpack_require__(/*! ./SyntheticCompositionEvent */ 6746);
-	var SyntheticInputEvent = __webpack_require__(/*! ./SyntheticInputEvent */ 6748);
+	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6749);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var FallbackCompositionState = __webpack_require__(/*! ./FallbackCompositionState */ 6759);
+	var SyntheticCompositionEvent = __webpack_require__(/*! ./SyntheticCompositionEvent */ 6763);
+	var SyntheticInputEvent = __webpack_require__(/*! ./SyntheticInputEvent */ 6765);
 	
 	var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
 	var START_KEYCODE = 229;
@@ -4763,7 +4763,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6732:
+/***/ 6749:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/EventPropagators.js ***!
   \******************************************************************************/
@@ -4781,12 +4781,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6733);
-	var EventPluginUtils = __webpack_require__(/*! ./EventPluginUtils */ 6735);
+	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6750);
+	var EventPluginUtils = __webpack_require__(/*! ./EventPluginUtils */ 6752);
 	
-	var accumulateInto = __webpack_require__(/*! ./accumulateInto */ 6739);
-	var forEachAccumulated = __webpack_require__(/*! ./forEachAccumulated */ 6740);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var accumulateInto = __webpack_require__(/*! ./accumulateInto */ 6756);
+	var forEachAccumulated = __webpack_require__(/*! ./forEachAccumulated */ 6757);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var getListener = EventPluginHub.getListener;
 	
@@ -4905,7 +4905,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6733:
+/***/ 6750:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/EventPluginHub.js ***!
   \****************************************************************************/
@@ -4923,15 +4923,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6734);
-	var EventPluginUtils = __webpack_require__(/*! ./EventPluginUtils */ 6735);
-	var ReactErrorUtils = __webpack_require__(/*! ./ReactErrorUtils */ 6736);
+	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6751);
+	var EventPluginUtils = __webpack_require__(/*! ./EventPluginUtils */ 6752);
+	var ReactErrorUtils = __webpack_require__(/*! ./ReactErrorUtils */ 6753);
 	
-	var accumulateInto = __webpack_require__(/*! ./accumulateInto */ 6739);
-	var forEachAccumulated = __webpack_require__(/*! ./forEachAccumulated */ 6740);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var accumulateInto = __webpack_require__(/*! ./accumulateInto */ 6756);
+	var forEachAccumulated = __webpack_require__(/*! ./forEachAccumulated */ 6757);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * Internal store for event listeners
@@ -5191,7 +5191,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6734:
+/***/ 6751:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/EventPluginRegistry.js ***!
   \*********************************************************************************/
@@ -5210,9 +5210,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * Injectable ordering of event plugins.
@@ -5454,7 +5454,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6735:
+/***/ 6752:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/EventPluginUtils.js ***!
   \******************************************************************************/
@@ -5472,12 +5472,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var ReactErrorUtils = __webpack_require__(/*! ./ReactErrorUtils */ 6736);
+	var ReactErrorUtils = __webpack_require__(/*! ./ReactErrorUtils */ 6753);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	/**
 	 * Injected dependencies:
@@ -5688,7 +5688,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6736:
+/***/ 6753:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactErrorUtils.js ***!
   \*****************************************************************************/
@@ -5773,19 +5773,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6737:
+/***/ 6754:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/warning.js ***!
   \****************************************************************************/
-[7640, 6738],
+[7657, 6755],
 
-/***/ 6738:
+/***/ 6755:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/emptyFunction.js ***!
   \**********************************************************************************/
 13,
 
-/***/ 6739:
+/***/ 6756:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/accumulateInto.js ***!
   \****************************************************************************/
@@ -5804,9 +5804,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * Accumulates items that must not be null or undefined into the first one. This
@@ -5851,7 +5851,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6740:
+/***/ 6757:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/forEachAccumulated.js ***!
   \********************************************************************************/
@@ -5890,13 +5890,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6741:
+/***/ 6758:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/ExecutionEnvironment.js ***!
   \*****************************************************************************************/
 53,
 
-/***/ 6742:
+/***/ 6759:
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/FallbackCompositionState.js ***!
   \**************************************************************************************/
@@ -5914,11 +5914,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
 	
-	var getTextContentAccessor = __webpack_require__(/*! ./getTextContentAccessor */ 6745);
+	var getTextContentAccessor = __webpack_require__(/*! ./getTextContentAccessor */ 6762);
 	
 	/**
 	 * This helper class stores information about text content of a target node,
@@ -5999,19 +5999,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6743:
+/***/ 6760:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/object-assign/index.js ***!
   \*******************************************************************************/
 5,
 
-/***/ 6744:
+/***/ 6761:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/PooledClass.js ***!
   \*************************************************************************/
-[7632, 6725, 6727],
+[7649, 6742, 6744],
 
-/***/ 6745:
+/***/ 6762:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getTextContentAccessor.js ***!
   \************************************************************************************/
@@ -6029,7 +6029,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	
 	var contentKey = null;
 	
@@ -6052,7 +6052,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6746:
+/***/ 6763:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticCompositionEvent.js ***!
   \***************************************************************************************/
@@ -6070,7 +6070,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
 	/**
 	 * @interface Event
@@ -6096,7 +6096,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6747:
+/***/ 6764:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticEvent.js ***!
   \****************************************************************************/
@@ -6114,12 +6114,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var didWarnForAddedNewProperty = false;
 	var isProxySupported = typeof Proxy === 'function';
@@ -6372,7 +6372,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6748:
+/***/ 6765:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticInputEvent.js ***!
   \*********************************************************************************/
@@ -6390,7 +6390,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
 	/**
 	 * @interface Event
@@ -6417,7 +6417,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6749:
+/***/ 6766:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ChangeEventPlugin.js ***!
   \*******************************************************************************/
@@ -6435,16 +6435,16 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6733);
-	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6732);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6750);
+	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6749);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
-	var getEventTarget = __webpack_require__(/*! ./getEventTarget */ 6763);
-	var isEventSupported = __webpack_require__(/*! ./isEventSupported */ 6764);
-	var isTextInputElement = __webpack_require__(/*! ./isTextInputElement */ 6765);
+	var getEventTarget = __webpack_require__(/*! ./getEventTarget */ 6780);
+	var isEventSupported = __webpack_require__(/*! ./isEventSupported */ 6781);
+	var isTextInputElement = __webpack_require__(/*! ./isTextInputElement */ 6782);
 	
 	var eventTypes = {
 	  change: {
@@ -6746,7 +6746,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6750:
+/***/ 6767:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactUpdates.js ***!
   \**************************************************************************/
@@ -6764,16 +6764,16 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var CallbackQueue = __webpack_require__(/*! ./CallbackQueue */ 6751);
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
-	var ReactFeatureFlags = __webpack_require__(/*! ./ReactFeatureFlags */ 6752);
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
-	var Transaction = __webpack_require__(/*! ./Transaction */ 6762);
+	var CallbackQueue = __webpack_require__(/*! ./CallbackQueue */ 6768);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
+	var ReactFeatureFlags = __webpack_require__(/*! ./ReactFeatureFlags */ 6769);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
+	var Transaction = __webpack_require__(/*! ./Transaction */ 6779);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var dirtyComponents = [];
 	var updateBatchNumber = 0;
@@ -7005,7 +7005,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6751:
+/***/ 6768:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/CallbackQueue.js ***!
   \***************************************************************************/
@@ -7024,13 +7024,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * A specialized pseudo-event module to help keep track of components waiting to
@@ -7132,7 +7132,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6752:
+/***/ 6769:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactFeatureFlags.js ***!
   \*******************************************************************************/
@@ -7162,7 +7162,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6753:
+/***/ 6770:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactReconciler.js ***!
   \*****************************************************************************/
@@ -7180,10 +7180,10 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactRef = __webpack_require__(/*! ./ReactRef */ 6754);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
+	var ReactRef = __webpack_require__(/*! ./ReactRef */ 6771);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	/**
 	 * Helper to call ReactRef.attachRefs with this composite component, split out
@@ -7338,7 +7338,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6754:
+/***/ 6771:
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactRef.js ***!
   \**********************************************************************/
@@ -7357,7 +7357,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactOwner = __webpack_require__(/*! ./ReactOwner */ 6755);
+	var ReactOwner = __webpack_require__(/*! ./ReactOwner */ 6772);
 	
 	var ReactRef = {};
 	
@@ -7435,7 +7435,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6755:
+/***/ 6772:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactOwner.js ***!
   \************************************************************************/
@@ -7454,9 +7454,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * @param {?object} object
@@ -7537,7 +7537,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6756:
+/***/ 6773:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactInstrumentation.js ***!
   \**********************************************************************************/
@@ -7561,7 +7561,7 @@ webpackJsonp_name_([8],{
 	var debugTool = null;
 	
 	if (true) {
-	  var ReactDebugTool = __webpack_require__(/*! ./ReactDebugTool */ 6757);
+	  var ReactDebugTool = __webpack_require__(/*! ./ReactDebugTool */ 6774);
 	  debugTool = ReactDebugTool;
 	}
 	
@@ -7569,7 +7569,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6757:
+/***/ 6774:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDebugTool.js ***!
   \****************************************************************************/
@@ -7588,13 +7588,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactInvalidSetStateWarningHook = __webpack_require__(/*! ./ReactInvalidSetStateWarningHook */ 6758);
-	var ReactHostOperationHistoryHook = __webpack_require__(/*! ./ReactHostOperationHistoryHook */ 6759);
-	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	var ReactInvalidSetStateWarningHook = __webpack_require__(/*! ./ReactInvalidSetStateWarningHook */ 6775);
+	var ReactHostOperationHistoryHook = __webpack_require__(/*! ./ReactHostOperationHistoryHook */ 6776);
+	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	
-	var performanceNow = __webpack_require__(/*! fbjs/lib/performanceNow */ 6760);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var performanceNow = __webpack_require__(/*! fbjs/lib/performanceNow */ 6777);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var hooks = [];
 	var didHookThrowForEvent = {};
@@ -7938,7 +7938,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6758:
+/***/ 6775:
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactInvalidSetStateWarningHook.js ***!
   \*********************************************************************************************/
@@ -7957,7 +7957,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	if (true) {
 	  var processingChildContext = false;
@@ -7983,7 +7983,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6759:
+/***/ 6776:
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactHostOperationHistoryHook.js ***!
   \*******************************************************************************************/
@@ -8025,19 +8025,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6760:
+/***/ 6777:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/performanceNow.js ***!
   \***********************************************************************************/
-[7683, 6761],
+[7700, 6778],
 
-/***/ 6761:
+/***/ 6778:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/performance.js ***!
   \********************************************************************************/
-[7684, 6741],
+[7701, 6758],
 
-/***/ 6762:
+/***/ 6779:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/Transaction.js ***!
   \*************************************************************************/
@@ -8056,9 +8056,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var OBSERVED_ERROR = {};
 	
@@ -8270,7 +8270,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6763:
+/***/ 6780:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getEventTarget.js ***!
   \****************************************************************************/
@@ -8313,7 +8313,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6764:
+/***/ 6781:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/isEventSupported.js ***!
   \******************************************************************************/
@@ -8331,7 +8331,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	
 	var useHasFeature;
 	if (ExecutionEnvironment.canUseDOM) {
@@ -8381,7 +8381,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6765:
+/***/ 6782:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/isTextInputElement.js ***!
   \********************************************************************************/
@@ -8440,7 +8440,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6766:
+/***/ 6783:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/DefaultEventPluginOrder.js ***!
   \*************************************************************************************/
@@ -8474,7 +8474,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6767:
+/***/ 6784:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/EnterLeaveEventPlugin.js ***!
   \***********************************************************************************/
@@ -8492,9 +8492,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6732);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6768);
+	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6749);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6785);
 	
 	var eventTypes = {
 	  mouseEnter: {
@@ -8582,7 +8582,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6768:
+/***/ 6785:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticMouseEvent.js ***!
   \*********************************************************************************/
@@ -8600,10 +8600,10 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6769);
-	var ViewportMetrics = __webpack_require__(/*! ./ViewportMetrics */ 6770);
+	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6786);
+	var ViewportMetrics = __webpack_require__(/*! ./ViewportMetrics */ 6787);
 	
-	var getEventModifierState = __webpack_require__(/*! ./getEventModifierState */ 6771);
+	var getEventModifierState = __webpack_require__(/*! ./getEventModifierState */ 6788);
 	
 	/**
 	 * @interface MouseEvent
@@ -8662,7 +8662,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6769:
+/***/ 6786:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticUIEvent.js ***!
   \******************************************************************************/
@@ -8680,9 +8680,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
-	var getEventTarget = __webpack_require__(/*! ./getEventTarget */ 6763);
+	var getEventTarget = __webpack_require__(/*! ./getEventTarget */ 6780);
 	
 	/**
 	 * @interface UIEvent
@@ -8729,7 +8729,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6770:
+/***/ 6787:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ViewportMetrics.js ***!
   \*****************************************************************************/
@@ -8764,7 +8764,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6771:
+/***/ 6788:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getEventModifierState.js ***!
   \***********************************************************************************/
@@ -8815,7 +8815,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6772:
+/***/ 6789:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/HTMLDOMPropertyConfig.js ***!
   \***********************************************************************************/
@@ -8833,7 +8833,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
 	
 	var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
 	var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
@@ -9035,7 +9035,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6773:
+/***/ 6790:
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactComponentBrowserEnvironment.js ***!
   \**********************************************************************************************/
@@ -9053,8 +9053,8 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMChildrenOperations = __webpack_require__(/*! ./DOMChildrenOperations */ 6774);
-	var ReactDOMIDOperations = __webpack_require__(/*! ./ReactDOMIDOperations */ 6785);
+	var DOMChildrenOperations = __webpack_require__(/*! ./DOMChildrenOperations */ 6791);
+	var ReactDOMIDOperations = __webpack_require__(/*! ./ReactDOMIDOperations */ 6802);
 	
 	/**
 	 * Abstracts away all functionality of the reconciler that requires knowledge of
@@ -9073,7 +9073,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6774:
+/***/ 6791:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/DOMChildrenOperations.js ***!
   \***********************************************************************************/
@@ -9091,14 +9091,14 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6775);
-	var Danger = __webpack_require__(/*! ./Danger */ 6781);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
+	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6792);
+	var Danger = __webpack_require__(/*! ./Danger */ 6798);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
 	
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(/*! ./createMicrosoftUnsafeLocalFunction */ 6778);
-	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6777);
-	var setTextContent = __webpack_require__(/*! ./setTextContent */ 6779);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(/*! ./createMicrosoftUnsafeLocalFunction */ 6795);
+	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6794);
+	var setTextContent = __webpack_require__(/*! ./setTextContent */ 6796);
 	
 	function getNodeAfter(parentNode, node) {
 	  // Special case for text components, which return [open, close] comments
@@ -9306,7 +9306,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6775:
+/***/ 6792:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/DOMLazyTree.js ***!
   \*************************************************************************/
@@ -9324,11 +9324,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMNamespaces = __webpack_require__(/*! ./DOMNamespaces */ 6776);
-	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6777);
+	var DOMNamespaces = __webpack_require__(/*! ./DOMNamespaces */ 6793);
+	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6794);
 	
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(/*! ./createMicrosoftUnsafeLocalFunction */ 6778);
-	var setTextContent = __webpack_require__(/*! ./setTextContent */ 6779);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(/*! ./createMicrosoftUnsafeLocalFunction */ 6795);
+	var setTextContent = __webpack_require__(/*! ./setTextContent */ 6796);
 	
 	var ELEMENT_NODE_TYPE = 1;
 	var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -9432,7 +9432,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6776:
+/***/ 6793:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/DOMNamespaces.js ***!
   \***************************************************************************/
@@ -9460,7 +9460,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6777:
+/***/ 6794:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/setInnerHTML.js ***!
   \**************************************************************************/
@@ -9478,13 +9478,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var DOMNamespaces = __webpack_require__(/*! ./DOMNamespaces */ 6776);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var DOMNamespaces = __webpack_require__(/*! ./DOMNamespaces */ 6793);
 	
 	var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 	var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 	
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(/*! ./createMicrosoftUnsafeLocalFunction */ 6778);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(/*! ./createMicrosoftUnsafeLocalFunction */ 6795);
 	
 	// SVG temp container for IE lacking innerHTML
 	var reusableSVGContainer;
@@ -9566,7 +9566,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6778:
+/***/ 6795:
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/createMicrosoftUnsafeLocalFunction.js ***!
   \************************************************************************************************/
@@ -9606,7 +9606,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6779:
+/***/ 6796:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/setTextContent.js ***!
   \****************************************************************************/
@@ -9624,9 +9624,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6780);
-	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6777);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6797);
+	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6794);
 	
 	/**
 	 * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -9666,7 +9666,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6780:
+/***/ 6797:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/escapeTextContentForBrowser.js ***!
   \*****************************************************************************************/
@@ -9797,7 +9797,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6781:
+/***/ 6798:
 /*!********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/Danger.js ***!
   \********************************************************************/
@@ -9815,14 +9815,14 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6775);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6792);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	
-	var createNodesFromMarkup = __webpack_require__(/*! fbjs/lib/createNodesFromMarkup */ 6782);
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var createNodesFromMarkup = __webpack_require__(/*! fbjs/lib/createNodesFromMarkup */ 6799);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var Danger = {
 	
@@ -9853,25 +9853,25 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6782:
+/***/ 6799:
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/createNodesFromMarkup.js ***!
   \******************************************************************************************/
-[7698, 6741, 6783, 6784, 6727],
+[7715, 6758, 6800, 6801, 6744],
 
-/***/ 6783:
+/***/ 6800:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/createArrayFromMixed.js ***!
   \*****************************************************************************************/
-[7699, 6727],
+[7716, 6744],
 
-/***/ 6784:
+/***/ 6801:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/getMarkupWrap.js ***!
   \**********************************************************************************/
-[7700, 6741, 6727],
+[7717, 6758, 6744],
 
-/***/ 6785:
+/***/ 6802:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMIDOperations.js ***!
   \**********************************************************************************/
@@ -9889,8 +9889,8 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMChildrenOperations = __webpack_require__(/*! ./DOMChildrenOperations */ 6774);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
+	var DOMChildrenOperations = __webpack_require__(/*! ./DOMChildrenOperations */ 6791);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
 	
 	/**
 	 * Operations used to process updates to DOM nodes.
@@ -9913,7 +9913,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6786:
+/***/ 6803:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMComponent.js ***!
   \*******************************************************************************/
@@ -9933,35 +9933,35 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var AutoFocusUtils = __webpack_require__(/*! ./AutoFocusUtils */ 6787);
-	var CSSPropertyOperations = __webpack_require__(/*! ./CSSPropertyOperations */ 6789);
-	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6775);
-	var DOMNamespaces = __webpack_require__(/*! ./DOMNamespaces */ 6776);
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var DOMPropertyOperations = __webpack_require__(/*! ./DOMPropertyOperations */ 6797);
-	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6733);
-	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6734);
-	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6799);
-	var ReactDOMComponentFlags = __webpack_require__(/*! ./ReactDOMComponentFlags */ 6728);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactDOMInput = __webpack_require__(/*! ./ReactDOMInput */ 6802);
-	var ReactDOMOption = __webpack_require__(/*! ./ReactDOMOption */ 6805);
-	var ReactDOMSelect = __webpack_require__(/*! ./ReactDOMSelect */ 6806);
-	var ReactDOMTextarea = __webpack_require__(/*! ./ReactDOMTextarea */ 6807);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var ReactMultiChild = __webpack_require__(/*! ./ReactMultiChild */ 6808);
-	var ReactServerRenderingTransaction = __webpack_require__(/*! ./ReactServerRenderingTransaction */ 6828);
+	var AutoFocusUtils = __webpack_require__(/*! ./AutoFocusUtils */ 6804);
+	var CSSPropertyOperations = __webpack_require__(/*! ./CSSPropertyOperations */ 6806);
+	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6792);
+	var DOMNamespaces = __webpack_require__(/*! ./DOMNamespaces */ 6793);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var DOMPropertyOperations = __webpack_require__(/*! ./DOMPropertyOperations */ 6814);
+	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6750);
+	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6751);
+	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6816);
+	var ReactDOMComponentFlags = __webpack_require__(/*! ./ReactDOMComponentFlags */ 6745);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactDOMInput = __webpack_require__(/*! ./ReactDOMInput */ 6819);
+	var ReactDOMOption = __webpack_require__(/*! ./ReactDOMOption */ 6822);
+	var ReactDOMSelect = __webpack_require__(/*! ./ReactDOMSelect */ 6823);
+	var ReactDOMTextarea = __webpack_require__(/*! ./ReactDOMTextarea */ 6824);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var ReactMultiChild = __webpack_require__(/*! ./ReactMultiChild */ 6825);
+	var ReactServerRenderingTransaction = __webpack_require__(/*! ./ReactServerRenderingTransaction */ 6845);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
-	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6780);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var isEventSupported = __webpack_require__(/*! ./isEventSupported */ 6764);
-	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 6818);
-	var validateDOMNesting = __webpack_require__(/*! ./validateDOMNesting */ 6831);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
+	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6797);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var isEventSupported = __webpack_require__(/*! ./isEventSupported */ 6781);
+	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 6835);
+	var validateDOMNesting = __webpack_require__(/*! ./validateDOMNesting */ 6848);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var Flags = ReactDOMComponentFlags;
 	var deleteListener = EventPluginHub.deleteListener;
@@ -10922,7 +10922,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6787:
+/***/ 6804:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/AutoFocusUtils.js ***!
   \****************************************************************************/
@@ -10940,9 +10940,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
 	
-	var focusNode = __webpack_require__(/*! fbjs/lib/focusNode */ 6788);
+	var focusNode = __webpack_require__(/*! fbjs/lib/focusNode */ 6805);
 	
 	var AutoFocusUtils = {
 	  focusDOMComponent: function () {
@@ -10954,13 +10954,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6788:
+/***/ 6805:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/focusNode.js ***!
   \******************************************************************************/
 100,
 
-/***/ 6789:
+/***/ 6806:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/CSSPropertyOperations.js ***!
   \***********************************************************************************/
@@ -10978,15 +10978,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var CSSProperty = __webpack_require__(/*! ./CSSProperty */ 6790);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
+	var CSSProperty = __webpack_require__(/*! ./CSSProperty */ 6807);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
 	
-	var camelizeStyleName = __webpack_require__(/*! fbjs/lib/camelizeStyleName */ 6791);
-	var dangerousStyleValue = __webpack_require__(/*! ./dangerousStyleValue */ 6793);
-	var hyphenateStyleName = __webpack_require__(/*! fbjs/lib/hyphenateStyleName */ 6794);
-	var memoizeStringOnly = __webpack_require__(/*! fbjs/lib/memoizeStringOnly */ 6796);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var camelizeStyleName = __webpack_require__(/*! fbjs/lib/camelizeStyleName */ 6808);
+	var dangerousStyleValue = __webpack_require__(/*! ./dangerousStyleValue */ 6810);
+	var hyphenateStyleName = __webpack_require__(/*! fbjs/lib/hyphenateStyleName */ 6811);
+	var memoizeStringOnly = __webpack_require__(/*! fbjs/lib/memoizeStringOnly */ 6813);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var processStyleName = memoizeStringOnly(function (styleName) {
 	  return hyphenateStyleName(styleName);
@@ -11177,7 +11177,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6790:
+/***/ 6807:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/CSSProperty.js ***!
   \*************************************************************************/
@@ -11333,19 +11333,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6791:
+/***/ 6808:
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/camelizeStyleName.js ***!
   \**************************************************************************************/
-[7706, 6792],
+[7723, 6809],
 
-/***/ 6792:
+/***/ 6809:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/camelize.js ***!
   \*****************************************************************************/
 104,
 
-/***/ 6793:
+/***/ 6810:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/dangerousStyleValue.js ***!
   \*********************************************************************************/
@@ -11363,8 +11363,8 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var CSSProperty = __webpack_require__(/*! ./CSSProperty */ 6790);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var CSSProperty = __webpack_require__(/*! ./CSSProperty */ 6807);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 	var styleWarnings = {};
@@ -11432,25 +11432,25 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6794:
+/***/ 6811:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/hyphenateStyleName.js ***!
   \***************************************************************************************/
-[7708, 6795],
+[7725, 6812],
 
-/***/ 6795:
+/***/ 6812:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/hyphenate.js ***!
   \******************************************************************************/
 107,
 
-/***/ 6796:
+/***/ 6813:
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/memoizeStringOnly.js ***!
   \**************************************************************************************/
 108,
 
-/***/ 6797:
+/***/ 6814:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/DOMPropertyOperations.js ***!
   \***********************************************************************************/
@@ -11468,12 +11468,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
 	
-	var quoteAttributeValueForBrowser = __webpack_require__(/*! ./quoteAttributeValueForBrowser */ 6798);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var quoteAttributeValueForBrowser = __webpack_require__(/*! ./quoteAttributeValueForBrowser */ 6815);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
 	var illegalAttributeNameCache = {};
@@ -11695,7 +11695,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6798:
+/***/ 6815:
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/quoteAttributeValueForBrowser.js ***!
   \*******************************************************************************************/
@@ -11713,7 +11713,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6780);
+	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6797);
 	
 	/**
 	 * Escapes attribute value to prevent scripting attacks.
@@ -11729,7 +11729,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6799:
+/***/ 6816:
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactBrowserEventEmitter.js ***!
   \**************************************************************************************/
@@ -11747,14 +11747,14 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6734);
-	var ReactEventEmitterMixin = __webpack_require__(/*! ./ReactEventEmitterMixin */ 6800);
-	var ViewportMetrics = __webpack_require__(/*! ./ViewportMetrics */ 6770);
+	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6751);
+	var ReactEventEmitterMixin = __webpack_require__(/*! ./ReactEventEmitterMixin */ 6817);
+	var ViewportMetrics = __webpack_require__(/*! ./ViewportMetrics */ 6787);
 	
-	var getVendorPrefixedEventName = __webpack_require__(/*! ./getVendorPrefixedEventName */ 6801);
-	var isEventSupported = __webpack_require__(/*! ./isEventSupported */ 6764);
+	var getVendorPrefixedEventName = __webpack_require__(/*! ./getVendorPrefixedEventName */ 6818);
+	var isEventSupported = __webpack_require__(/*! ./isEventSupported */ 6781);
 	
 	/**
 	 * Summary of `ReactBrowserEventEmitter` event handling:
@@ -12065,7 +12065,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6800:
+/***/ 6817:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactEventEmitterMixin.js ***!
   \************************************************************************************/
@@ -12083,7 +12083,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6733);
+	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6750);
 	
 	function runEventQueueInBatch(events) {
 	  EventPluginHub.enqueueEvents(events);
@@ -12106,7 +12106,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6801:
+/***/ 6818:
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getVendorPrefixedEventName.js ***!
   \****************************************************************************************/
@@ -12124,7 +12124,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	
 	/**
 	 * Generate a mapping of standard vendor prefixes using the defined style property and event name.
@@ -12215,7 +12215,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6802:
+/***/ 6819:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMInput.js ***!
   \***************************************************************************/
@@ -12233,16 +12233,16 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var DOMPropertyOperations = __webpack_require__(/*! ./DOMPropertyOperations */ 6797);
-	var LinkedValueUtils = __webpack_require__(/*! ./LinkedValueUtils */ 6803);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var DOMPropertyOperations = __webpack_require__(/*! ./DOMPropertyOperations */ 6814);
+	var LinkedValueUtils = __webpack_require__(/*! ./LinkedValueUtils */ 6820);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var didWarnValueLink = false;
 	var didWarnCheckedLink = false;
@@ -12501,7 +12501,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6803:
+/***/ 6820:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/LinkedValueUtils.js ***!
   \******************************************************************************/
@@ -12519,13 +12519,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var React = __webpack_require__(/*! react/lib/React */ 6693);
-	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6804);
+	var React = __webpack_require__(/*! react/lib/React */ 6710);
+	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6821);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var hasReadOnlyValue = {
 	  'button': true,
@@ -12644,13 +12644,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6804:
+/***/ 6821:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************/
-6718,
+6735,
 
-/***/ 6805:
+/***/ 6822:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMOption.js ***!
   \****************************************************************************/
@@ -12668,13 +12668,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var React = __webpack_require__(/*! react/lib/React */ 6693);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactDOMSelect = __webpack_require__(/*! ./ReactDOMSelect */ 6806);
+	var React = __webpack_require__(/*! react/lib/React */ 6710);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactDOMSelect = __webpack_require__(/*! ./ReactDOMSelect */ 6823);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	var didWarnInvalidOptionChildren = false;
 	
 	function flattenChildren(children) {
@@ -12781,7 +12781,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6806:
+/***/ 6823:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMSelect.js ***!
   \****************************************************************************/
@@ -12799,13 +12799,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var LinkedValueUtils = __webpack_require__(/*! ./LinkedValueUtils */ 6803);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var LinkedValueUtils = __webpack_require__(/*! ./LinkedValueUtils */ 6820);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var didWarnValueLink = false;
 	var didWarnValueDefaultValue = false;
@@ -12989,7 +12989,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6807:
+/***/ 6824:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMTextarea.js ***!
   \******************************************************************************/
@@ -13007,15 +13007,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var LinkedValueUtils = __webpack_require__(/*! ./LinkedValueUtils */ 6803);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var LinkedValueUtils = __webpack_require__(/*! ./LinkedValueUtils */ 6820);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var didWarnValueLink = false;
 	var didWarnValDefaultVal = false;
@@ -13157,7 +13157,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6808:
+/***/ 6825:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactMultiChild.js ***!
   \*****************************************************************************/
@@ -13175,19 +13175,19 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var ReactComponentEnvironment = __webpack_require__(/*! ./ReactComponentEnvironment */ 6809);
-	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6810);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
+	var ReactComponentEnvironment = __webpack_require__(/*! ./ReactComponentEnvironment */ 6826);
+	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6827);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6700);
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
-	var ReactChildReconciler = __webpack_require__(/*! ./ReactChildReconciler */ 6811);
+	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6717);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
+	var ReactChildReconciler = __webpack_require__(/*! ./ReactChildReconciler */ 6828);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
-	var flattenChildren = __webpack_require__(/*! ./flattenChildren */ 6827);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
+	var flattenChildren = __webpack_require__(/*! ./flattenChildren */ 6844);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * Make an update for markup to be rendered and inserted at a supplied index.
@@ -13615,7 +13615,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6809:
+/***/ 6826:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactComponentEnvironment.js ***!
   \***************************************************************************************/
@@ -13634,9 +13634,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var injected = false;
 	
@@ -13669,7 +13669,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6810:
+/***/ 6827:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactInstanceMap.js ***!
   \******************************************************************************/
@@ -13725,7 +13725,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6811:
+/***/ 6828:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactChildReconciler.js ***!
   \**********************************************************************************/
@@ -13743,13 +13743,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
 	
-	var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ 6812);
-	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6823);
-	var shouldUpdateReactComponent = __webpack_require__(/*! ./shouldUpdateReactComponent */ 6819);
-	var traverseAllChildren = __webpack_require__(/*! ./traverseAllChildren */ 6824);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ 6829);
+	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6840);
+	var shouldUpdateReactComponent = __webpack_require__(/*! ./shouldUpdateReactComponent */ 6836);
+	var traverseAllChildren = __webpack_require__(/*! ./traverseAllChildren */ 6841);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var ReactComponentTreeHook;
 	
@@ -13759,7 +13759,7 @@ webpackJsonp_name_([8],{
 	  // https://github.com/facebook/react/issues/7240
 	  // Remove the inline requires when we don't need them anymore:
 	  // https://github.com/facebook/react/pull/7178
-	  ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	  ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	}
 	
 	function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -13767,7 +13767,7 @@ webpackJsonp_name_([8],{
 	  var keyUnique = childInstances[name] === undefined;
 	  if (true) {
 	    if (!ReactComponentTreeHook) {
-	      ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	      ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	    }
 	    if (!keyUnique) {
 	       true ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -13888,7 +13888,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6812:
+/***/ 6829:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/instantiateReactComponent.js ***!
   \***************************************************************************************/
@@ -13906,16 +13906,16 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var ReactCompositeComponent = __webpack_require__(/*! ./ReactCompositeComponent */ 6813);
-	var ReactEmptyComponent = __webpack_require__(/*! ./ReactEmptyComponent */ 6820);
-	var ReactHostComponent = __webpack_require__(/*! ./ReactHostComponent */ 6821);
+	var ReactCompositeComponent = __webpack_require__(/*! ./ReactCompositeComponent */ 6830);
+	var ReactEmptyComponent = __webpack_require__(/*! ./ReactEmptyComponent */ 6837);
+	var ReactHostComponent = __webpack_require__(/*! ./ReactHostComponent */ 6838);
 	
-	var getNextDebugID = __webpack_require__(/*! ./getNextDebugID */ 6822);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var getNextDebugID = __webpack_require__(/*! ./getNextDebugID */ 6839);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	// To avoid a cyclic dependency, we create the final class in this module
 	var ReactCompositeComponentWrapper = function (element) {
@@ -14024,7 +14024,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6813:
+/***/ 6830:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactCompositeComponent.js ***!
   \*************************************************************************************/
@@ -14042,27 +14042,27 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var React = __webpack_require__(/*! react/lib/React */ 6693);
-	var ReactComponentEnvironment = __webpack_require__(/*! ./ReactComponentEnvironment */ 6809);
-	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6700);
-	var ReactErrorUtils = __webpack_require__(/*! ./ReactErrorUtils */ 6736);
-	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6810);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var ReactNodeTypes = __webpack_require__(/*! ./ReactNodeTypes */ 6814);
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
+	var React = __webpack_require__(/*! react/lib/React */ 6710);
+	var ReactComponentEnvironment = __webpack_require__(/*! ./ReactComponentEnvironment */ 6826);
+	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6717);
+	var ReactErrorUtils = __webpack_require__(/*! ./ReactErrorUtils */ 6753);
+	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6827);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var ReactNodeTypes = __webpack_require__(/*! ./ReactNodeTypes */ 6831);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
 	
 	if (true) {
-	  var checkReactTypeSpec = __webpack_require__(/*! ./checkReactTypeSpec */ 6815);
+	  var checkReactTypeSpec = __webpack_require__(/*! ./checkReactTypeSpec */ 6832);
 	}
 	
-	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6817);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 6818);
-	var shouldUpdateReactComponent = __webpack_require__(/*! ./shouldUpdateReactComponent */ 6819);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6834);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 6835);
+	var shouldUpdateReactComponent = __webpack_require__(/*! ./shouldUpdateReactComponent */ 6836);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var CompositeTypes = {
 	  ImpureClass: 0,
@@ -14934,7 +14934,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6814:
+/***/ 6831:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactNodeTypes.js ***!
   \****************************************************************************/
@@ -14953,11 +14953,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var React = __webpack_require__(/*! react/lib/React */ 6693);
+	var React = __webpack_require__(/*! react/lib/React */ 6710);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var ReactNodeTypes = {
 	  HOST: 0,
@@ -14982,7 +14982,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6815:
+/***/ 6832:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/checkReactTypeSpec.js ***!
   \********************************************************************************/
@@ -15000,13 +15000,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6816);
-	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6804);
+	var ReactPropTypeLocationNames = __webpack_require__(/*! ./ReactPropTypeLocationNames */ 6833);
+	var ReactPropTypesSecret = __webpack_require__(/*! ./ReactPropTypesSecret */ 6821);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var ReactComponentTreeHook;
 	
@@ -15016,7 +15016,7 @@ webpackJsonp_name_([8],{
 	  // https://github.com/facebook/react/issues/7240
 	  // Remove the inline requires when we don't need them anymore:
 	  // https://github.com/facebook/react/pull/7178
-	  ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	  ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	}
 	
 	var loggedTypeFailures = {};
@@ -15058,7 +15058,7 @@ webpackJsonp_name_([8],{
 	
 	        if (true) {
 	          if (!ReactComponentTreeHook) {
-	            ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	            ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	          }
 	          if (debugID !== null) {
 	            componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -15078,25 +15078,25 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6816:
+/***/ 6833:
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactPropTypeLocationNames.js ***!
   \****************************************************************************************/
-6713,
+6730,
 
-/***/ 6817:
+/***/ 6834:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/emptyObject.js ***!
   \********************************************************************************/
 20,
 
-/***/ 6818:
+/***/ 6835:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/shallowEqual.js ***!
   \*********************************************************************************/
 128,
 
-/***/ 6819:
+/***/ 6836:
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/shouldUpdateReactComponent.js ***!
   \****************************************************************************************/
@@ -15146,7 +15146,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6820:
+/***/ 6837:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactEmptyComponent.js ***!
   \*********************************************************************************/
@@ -15184,7 +15184,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6821:
+/***/ 6838:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactHostComponent.js ***!
   \********************************************************************************/
@@ -15202,9 +15202,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var genericComponentClass = null;
 	var textComponentClass = null;
@@ -15260,7 +15260,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6822:
+/***/ 6839:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getNextDebugID.js ***!
   \****************************************************************************/
@@ -15289,13 +15289,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6823:
+/***/ 6840:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/KeyEscapeUtils.js ***!
   \****************************************************************************/
-6707,
+6724,
 
-/***/ 6824:
+/***/ 6841:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/traverseAllChildren.js ***!
   \*********************************************************************************/
@@ -15313,15 +15313,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6700);
-	var REACT_ELEMENT_TYPE = __webpack_require__(/*! ./ReactElementSymbol */ 6825);
+	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6717);
+	var REACT_ELEMENT_TYPE = __webpack_require__(/*! ./ReactElementSymbol */ 6842);
 	
-	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6826);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6823);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var getIteratorFn = __webpack_require__(/*! ./getIteratorFn */ 6843);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6840);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var SEPARATOR = '.';
 	var SUBSEPARATOR = ':';
@@ -15479,19 +15479,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6825:
+/***/ 6842:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactElementSymbol.js ***!
   \********************************************************************************/
-6704,
+6721,
 
-/***/ 6826:
+/***/ 6843:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getIteratorFn.js ***!
   \***************************************************************************/
-6706,
+6723,
 
-/***/ 6827:
+/***/ 6844:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/flattenChildren.js ***!
   \*****************************************************************************/
@@ -15510,9 +15510,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6823);
-	var traverseAllChildren = __webpack_require__(/*! ./traverseAllChildren */ 6824);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var KeyEscapeUtils = __webpack_require__(/*! ./KeyEscapeUtils */ 6840);
+	var traverseAllChildren = __webpack_require__(/*! ./traverseAllChildren */ 6841);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var ReactComponentTreeHook;
 	
@@ -15522,7 +15522,7 @@ webpackJsonp_name_([8],{
 	  // https://github.com/facebook/react/issues/7240
 	  // Remove the inline requires when we don't need them anymore:
 	  // https://github.com/facebook/react/pull/7178
-	  ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	  ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	}
 	
 	/**
@@ -15538,7 +15538,7 @@ webpackJsonp_name_([8],{
 	    var keyUnique = result[name] === undefined;
 	    if (true) {
 	      if (!ReactComponentTreeHook) {
-	        ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	        ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	      }
 	      if (!keyUnique) {
 	         true ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -15576,7 +15576,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6828:
+/***/ 6845:
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactServerRenderingTransaction.js ***!
   \*********************************************************************************************/
@@ -15594,12 +15594,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
-	var Transaction = __webpack_require__(/*! ./Transaction */ 6762);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var ReactServerUpdateQueue = __webpack_require__(/*! ./ReactServerUpdateQueue */ 6829);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
+	var Transaction = __webpack_require__(/*! ./Transaction */ 6779);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var ReactServerUpdateQueue = __webpack_require__(/*! ./ReactServerUpdateQueue */ 6846);
 	
 	/**
 	 * Executed within the scope of the `Transaction` instance. Consider these as
@@ -15674,7 +15674,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6829:
+/***/ 6846:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactServerUpdateQueue.js ***!
   \************************************************************************************/
@@ -15695,9 +15695,9 @@ webpackJsonp_name_([8],{
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var ReactUpdateQueue = __webpack_require__(/*! ./ReactUpdateQueue */ 6830);
+	var ReactUpdateQueue = __webpack_require__(/*! ./ReactUpdateQueue */ 6847);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	function warnNoop(publicInstance, callerName) {
 	  if (true) {
@@ -15821,7 +15821,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6830:
+/***/ 6847:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactUpdateQueue.js ***!
   \******************************************************************************/
@@ -15839,15 +15839,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6700);
-	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6810);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6717);
+	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6827);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	function enqueueUpdate(internalInstance) {
 	  ReactUpdates.enqueueUpdate(internalInstance);
@@ -16055,7 +16055,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6831:
+/***/ 6848:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/validateDOMNesting.js ***!
   \********************************************************************************/
@@ -16073,10 +16073,10 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var validateDOMNesting = emptyFunction;
 	
@@ -16445,7 +16445,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6832:
+/***/ 6849:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMEmptyComponent.js ***!
   \************************************************************************************/
@@ -16463,10 +16463,10 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6775);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
+	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6792);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
 	
 	var ReactDOMEmptyComponent = function (instantiate) {
 	  // ReactCompositeComponent uses this:
@@ -16513,7 +16513,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6833:
+/***/ 6850:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMTreeTraversal.js ***!
   \***********************************************************************************/
@@ -16531,9 +16531,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * Return the lowest common ancestor of A and B, or null if they are in
@@ -16657,7 +16657,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6834:
+/***/ 6851:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMTextComponent.js ***!
   \***********************************************************************************/
@@ -16675,16 +16675,16 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725),
-	    _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742),
+	    _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var DOMChildrenOperations = __webpack_require__(/*! ./DOMChildrenOperations */ 6774);
-	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6775);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
+	var DOMChildrenOperations = __webpack_require__(/*! ./DOMChildrenOperations */ 6791);
+	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6792);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
 	
-	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6780);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var validateDOMNesting = __webpack_require__(/*! ./validateDOMNesting */ 6831);
+	var escapeTextContentForBrowser = __webpack_require__(/*! ./escapeTextContentForBrowser */ 6797);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var validateDOMNesting = __webpack_require__(/*! ./validateDOMNesting */ 6848);
 	
 	/**
 	 * Text nodes violate a couple assumptions that React makes about components:
@@ -16829,7 +16829,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6835:
+/***/ 6852:
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDefaultBatchingStrategy.js ***!
   \******************************************************************************************/
@@ -16847,12 +16847,12 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
-	var Transaction = __webpack_require__(/*! ./Transaction */ 6762);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
+	var Transaction = __webpack_require__(/*! ./Transaction */ 6779);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
 	
 	var RESET_BATCHED_UPDATES = {
 	  initialize: emptyFunction,
@@ -16905,7 +16905,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6836:
+/***/ 6853:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactEventListener.js ***!
   \********************************************************************************/
@@ -16923,16 +16923,16 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var EventListener = __webpack_require__(/*! fbjs/lib/EventListener */ 6837);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var EventListener = __webpack_require__(/*! fbjs/lib/EventListener */ 6854);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var getEventTarget = __webpack_require__(/*! ./getEventTarget */ 6763);
-	var getUnboundedScrollPosition = __webpack_require__(/*! fbjs/lib/getUnboundedScrollPosition */ 6838);
+	var getEventTarget = __webpack_require__(/*! ./getEventTarget */ 6780);
+	var getUnboundedScrollPosition = __webpack_require__(/*! fbjs/lib/getUnboundedScrollPosition */ 6855);
 	
 	/**
 	 * Find the deepest React component completely containing the root of the
@@ -17068,19 +17068,19 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6837:
+/***/ 6854:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/EventListener.js ***!
   \**********************************************************************************/
-[7737, 6738],
+[7754, 6755],
 
-/***/ 6838:
+/***/ 6855:
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/getUnboundedScrollPosition.js ***!
   \***********************************************************************************************/
 143,
 
-/***/ 6839:
+/***/ 6856:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactInjection.js ***!
   \****************************************************************************/
@@ -17098,14 +17098,14 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6733);
-	var EventPluginUtils = __webpack_require__(/*! ./EventPluginUtils */ 6735);
-	var ReactComponentEnvironment = __webpack_require__(/*! ./ReactComponentEnvironment */ 6809);
-	var ReactEmptyComponent = __webpack_require__(/*! ./ReactEmptyComponent */ 6820);
-	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6799);
-	var ReactHostComponent = __webpack_require__(/*! ./ReactHostComponent */ 6821);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var EventPluginHub = __webpack_require__(/*! ./EventPluginHub */ 6750);
+	var EventPluginUtils = __webpack_require__(/*! ./EventPluginUtils */ 6752);
+	var ReactComponentEnvironment = __webpack_require__(/*! ./ReactComponentEnvironment */ 6826);
+	var ReactEmptyComponent = __webpack_require__(/*! ./ReactEmptyComponent */ 6837);
+	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6816);
+	var ReactHostComponent = __webpack_require__(/*! ./ReactHostComponent */ 6838);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
 	var ReactInjection = {
 	  Component: ReactComponentEnvironment.injection,
@@ -17122,7 +17122,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6840:
+/***/ 6857:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactReconcileTransaction.js ***!
   \***************************************************************************************/
@@ -17140,15 +17140,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _assign = __webpack_require__(/*! object-assign */ 6743);
+	var _assign = __webpack_require__(/*! object-assign */ 6760);
 	
-	var CallbackQueue = __webpack_require__(/*! ./CallbackQueue */ 6751);
-	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6744);
-	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6799);
-	var ReactInputSelection = __webpack_require__(/*! ./ReactInputSelection */ 6841);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var Transaction = __webpack_require__(/*! ./Transaction */ 6762);
-	var ReactUpdateQueue = __webpack_require__(/*! ./ReactUpdateQueue */ 6830);
+	var CallbackQueue = __webpack_require__(/*! ./CallbackQueue */ 6768);
+	var PooledClass = __webpack_require__(/*! ./PooledClass */ 6761);
+	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6816);
+	var ReactInputSelection = __webpack_require__(/*! ./ReactInputSelection */ 6858);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var Transaction = __webpack_require__(/*! ./Transaction */ 6779);
+	var ReactUpdateQueue = __webpack_require__(/*! ./ReactUpdateQueue */ 6847);
 	
 	/**
 	 * Ensures that, when possible, the selection range (currently selected text
@@ -17308,7 +17308,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6841:
+/***/ 6858:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactInputSelection.js ***!
   \*********************************************************************************/
@@ -17326,11 +17326,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactDOMSelection = __webpack_require__(/*! ./ReactDOMSelection */ 6842);
+	var ReactDOMSelection = __webpack_require__(/*! ./ReactDOMSelection */ 6859);
 	
-	var containsNode = __webpack_require__(/*! fbjs/lib/containsNode */ 6844);
-	var focusNode = __webpack_require__(/*! fbjs/lib/focusNode */ 6788);
-	var getActiveElement = __webpack_require__(/*! fbjs/lib/getActiveElement */ 6847);
+	var containsNode = __webpack_require__(/*! fbjs/lib/containsNode */ 6861);
+	var focusNode = __webpack_require__(/*! fbjs/lib/focusNode */ 6805);
+	var getActiveElement = __webpack_require__(/*! fbjs/lib/getActiveElement */ 6864);
 	
 	function isInDocument(node) {
 	  return containsNode(document.documentElement, node);
@@ -17440,7 +17440,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6842:
+/***/ 6859:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMSelection.js ***!
   \*******************************************************************************/
@@ -17458,10 +17458,10 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
 	
-	var getNodeForCharacterOffset = __webpack_require__(/*! ./getNodeForCharacterOffset */ 6843);
-	var getTextContentAccessor = __webpack_require__(/*! ./getTextContentAccessor */ 6745);
+	var getNodeForCharacterOffset = __webpack_require__(/*! ./getNodeForCharacterOffset */ 6860);
+	var getTextContentAccessor = __webpack_require__(/*! ./getTextContentAccessor */ 6762);
 	
 	/**
 	 * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -17660,7 +17660,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6843:
+/***/ 6860:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getNodeForCharacterOffset.js ***!
   \***************************************************************************************/
@@ -17742,31 +17742,31 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6844:
+/***/ 6861:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/containsNode.js ***!
   \*********************************************************************************/
-[7742, 6845],
+[7759, 6862],
 
-/***/ 6845:
+/***/ 6862:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/isTextNode.js ***!
   \*******************************************************************************/
-[7743, 6846],
+[7760, 6863],
 
-/***/ 6846:
+/***/ 6863:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/isNode.js ***!
   \***************************************************************************/
 151,
 
-/***/ 6847:
+/***/ 6864:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/~/fbjs/lib/getActiveElement.js ***!
   \*************************************************************************************/
 152,
 
-/***/ 6848:
+/***/ 6865:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SVGDOMPropertyConfig.js ***!
   \**********************************************************************************/
@@ -18076,7 +18076,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6849:
+/***/ 6866:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SelectEventPlugin.js ***!
   \*******************************************************************************/
@@ -18094,15 +18094,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6732);
-	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6741);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactInputSelection = __webpack_require__(/*! ./ReactInputSelection */ 6841);
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6749);
+	var ExecutionEnvironment = __webpack_require__(/*! fbjs/lib/ExecutionEnvironment */ 6758);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactInputSelection = __webpack_require__(/*! ./ReactInputSelection */ 6858);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
-	var getActiveElement = __webpack_require__(/*! fbjs/lib/getActiveElement */ 6847);
-	var isTextInputElement = __webpack_require__(/*! ./isTextInputElement */ 6765);
-	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 6818);
+	var getActiveElement = __webpack_require__(/*! fbjs/lib/getActiveElement */ 6864);
+	var isTextInputElement = __webpack_require__(/*! ./isTextInputElement */ 6782);
+	var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ 6835);
 	
 	var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 	
@@ -18275,7 +18275,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6850:
+/***/ 6867:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SimpleEventPlugin.js ***!
   \*******************************************************************************/
@@ -18294,26 +18294,26 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var EventListener = __webpack_require__(/*! fbjs/lib/EventListener */ 6837);
-	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6732);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var SyntheticAnimationEvent = __webpack_require__(/*! ./SyntheticAnimationEvent */ 6851);
-	var SyntheticClipboardEvent = __webpack_require__(/*! ./SyntheticClipboardEvent */ 6852);
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
-	var SyntheticFocusEvent = __webpack_require__(/*! ./SyntheticFocusEvent */ 6853);
-	var SyntheticKeyboardEvent = __webpack_require__(/*! ./SyntheticKeyboardEvent */ 6854);
-	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6768);
-	var SyntheticDragEvent = __webpack_require__(/*! ./SyntheticDragEvent */ 6857);
-	var SyntheticTouchEvent = __webpack_require__(/*! ./SyntheticTouchEvent */ 6858);
-	var SyntheticTransitionEvent = __webpack_require__(/*! ./SyntheticTransitionEvent */ 6859);
-	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6769);
-	var SyntheticWheelEvent = __webpack_require__(/*! ./SyntheticWheelEvent */ 6860);
+	var EventListener = __webpack_require__(/*! fbjs/lib/EventListener */ 6854);
+	var EventPropagators = __webpack_require__(/*! ./EventPropagators */ 6749);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var SyntheticAnimationEvent = __webpack_require__(/*! ./SyntheticAnimationEvent */ 6868);
+	var SyntheticClipboardEvent = __webpack_require__(/*! ./SyntheticClipboardEvent */ 6869);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
+	var SyntheticFocusEvent = __webpack_require__(/*! ./SyntheticFocusEvent */ 6870);
+	var SyntheticKeyboardEvent = __webpack_require__(/*! ./SyntheticKeyboardEvent */ 6871);
+	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6785);
+	var SyntheticDragEvent = __webpack_require__(/*! ./SyntheticDragEvent */ 6874);
+	var SyntheticTouchEvent = __webpack_require__(/*! ./SyntheticTouchEvent */ 6875);
+	var SyntheticTransitionEvent = __webpack_require__(/*! ./SyntheticTransitionEvent */ 6876);
+	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6786);
+	var SyntheticWheelEvent = __webpack_require__(/*! ./SyntheticWheelEvent */ 6877);
 	
-	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6738);
-	var getEventCharCode = __webpack_require__(/*! ./getEventCharCode */ 6855);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 6755);
+	var getEventCharCode = __webpack_require__(/*! ./getEventCharCode */ 6872);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	/**
 	 * Turns
@@ -18511,7 +18511,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6851:
+/***/ 6868:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticAnimationEvent.js ***!
   \*************************************************************************************/
@@ -18529,7 +18529,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
 	/**
 	 * @interface Event
@@ -18558,7 +18558,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6852:
+/***/ 6869:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticClipboardEvent.js ***!
   \*************************************************************************************/
@@ -18576,7 +18576,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
 	/**
 	 * @interface Event
@@ -18604,7 +18604,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6853:
+/***/ 6870:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticFocusEvent.js ***!
   \*********************************************************************************/
@@ -18622,7 +18622,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6769);
+	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6786);
 	
 	/**
 	 * @interface FocusEvent
@@ -18648,7 +18648,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6854:
+/***/ 6871:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticKeyboardEvent.js ***!
   \************************************************************************************/
@@ -18666,11 +18666,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6769);
+	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6786);
 	
-	var getEventCharCode = __webpack_require__(/*! ./getEventCharCode */ 6855);
-	var getEventKey = __webpack_require__(/*! ./getEventKey */ 6856);
-	var getEventModifierState = __webpack_require__(/*! ./getEventModifierState */ 6771);
+	var getEventCharCode = __webpack_require__(/*! ./getEventCharCode */ 6872);
+	var getEventKey = __webpack_require__(/*! ./getEventKey */ 6873);
+	var getEventModifierState = __webpack_require__(/*! ./getEventModifierState */ 6788);
 	
 	/**
 	 * @interface KeyboardEvent
@@ -18740,7 +18740,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6855:
+/***/ 6872:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getEventCharCode.js ***!
   \******************************************************************************/
@@ -18798,7 +18798,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6856:
+/***/ 6873:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getEventKey.js ***!
   \*************************************************************************/
@@ -18816,7 +18816,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var getEventCharCode = __webpack_require__(/*! ./getEventCharCode */ 6855);
+	var getEventCharCode = __webpack_require__(/*! ./getEventCharCode */ 6872);
 	
 	/**
 	 * Normalization of deprecated HTML5 `key` values
@@ -18908,7 +18908,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6857:
+/***/ 6874:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticDragEvent.js ***!
   \********************************************************************************/
@@ -18926,7 +18926,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6768);
+	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6785);
 	
 	/**
 	 * @interface DragEvent
@@ -18952,7 +18952,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6858:
+/***/ 6875:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticTouchEvent.js ***!
   \*********************************************************************************/
@@ -18970,9 +18970,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6769);
+	var SyntheticUIEvent = __webpack_require__(/*! ./SyntheticUIEvent */ 6786);
 	
-	var getEventModifierState = __webpack_require__(/*! ./getEventModifierState */ 6771);
+	var getEventModifierState = __webpack_require__(/*! ./getEventModifierState */ 6788);
 	
 	/**
 	 * @interface TouchEvent
@@ -19005,7 +19005,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6859:
+/***/ 6876:
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticTransitionEvent.js ***!
   \**************************************************************************************/
@@ -19023,7 +19023,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6747);
+	var SyntheticEvent = __webpack_require__(/*! ./SyntheticEvent */ 6764);
 	
 	/**
 	 * @interface Event
@@ -19052,7 +19052,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6860:
+/***/ 6877:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/SyntheticWheelEvent.js ***!
   \*********************************************************************************/
@@ -19070,7 +19070,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6768);
+	var SyntheticMouseEvent = __webpack_require__(/*! ./SyntheticMouseEvent */ 6785);
 	
 	/**
 	 * @interface WheelEvent
@@ -19114,7 +19114,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6861:
+/***/ 6878:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactMount.js ***!
   \************************************************************************/
@@ -19132,30 +19132,30 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6775);
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var React = __webpack_require__(/*! react/lib/React */ 6693);
-	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6799);
-	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6700);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactDOMContainerInfo = __webpack_require__(/*! ./ReactDOMContainerInfo */ 6862);
-	var ReactDOMFeatureFlags = __webpack_require__(/*! ./ReactDOMFeatureFlags */ 6863);
-	var ReactFeatureFlags = __webpack_require__(/*! ./ReactFeatureFlags */ 6752);
-	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6810);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var ReactMarkupChecksum = __webpack_require__(/*! ./ReactMarkupChecksum */ 6864);
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
-	var ReactUpdateQueue = __webpack_require__(/*! ./ReactUpdateQueue */ 6830);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var DOMLazyTree = __webpack_require__(/*! ./DOMLazyTree */ 6792);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var React = __webpack_require__(/*! react/lib/React */ 6710);
+	var ReactBrowserEventEmitter = __webpack_require__(/*! ./ReactBrowserEventEmitter */ 6816);
+	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6717);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactDOMContainerInfo = __webpack_require__(/*! ./ReactDOMContainerInfo */ 6879);
+	var ReactDOMFeatureFlags = __webpack_require__(/*! ./ReactDOMFeatureFlags */ 6880);
+	var ReactFeatureFlags = __webpack_require__(/*! ./ReactFeatureFlags */ 6769);
+	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6827);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var ReactMarkupChecksum = __webpack_require__(/*! ./ReactMarkupChecksum */ 6881);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
+	var ReactUpdateQueue = __webpack_require__(/*! ./ReactUpdateQueue */ 6847);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6817);
-	var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ 6812);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6777);
-	var shouldUpdateReactComponent = __webpack_require__(/*! ./shouldUpdateReactComponent */ 6819);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6834);
+	var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ 6829);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var setInnerHTML = __webpack_require__(/*! ./setInnerHTML */ 6794);
+	var shouldUpdateReactComponent = __webpack_require__(/*! ./shouldUpdateReactComponent */ 6836);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var ROOT_ATTR_NAME = DOMProperty.ROOT_ATTRIBUTE_NAME;
@@ -19660,7 +19660,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6862:
+/***/ 6879:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMContainerInfo.js ***!
   \***********************************************************************************/
@@ -19678,7 +19678,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var validateDOMNesting = __webpack_require__(/*! ./validateDOMNesting */ 6831);
+	var validateDOMNesting = __webpack_require__(/*! ./validateDOMNesting */ 6848);
 	
 	var DOC_NODE_TYPE = 9;
 	
@@ -19701,7 +19701,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6863:
+/***/ 6880:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMFeatureFlags.js ***!
   \**********************************************************************************/
@@ -19728,7 +19728,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6864:
+/***/ 6881:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactMarkupChecksum.js ***!
   \*********************************************************************************/
@@ -19746,7 +19746,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var adler32 = __webpack_require__(/*! ./adler32 */ 6865);
+	var adler32 = __webpack_require__(/*! ./adler32 */ 6882);
 	
 	var TAG_END = /\/?>/;
 	var COMMENT_START = /^<\!\-\-/;
@@ -19786,7 +19786,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6865:
+/***/ 6882:
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/adler32.js ***!
   \*********************************************************************/
@@ -19838,13 +19838,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6866:
+/***/ 6883:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactVersion.js ***!
   \**************************************************************************/
-6720,
+6737,
 
-/***/ 6867:
+/***/ 6884:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/findDOMNode.js ***!
   \*************************************************************************/
@@ -19862,15 +19862,15 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6700);
-	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6724);
-	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6810);
+	var ReactCurrentOwner = __webpack_require__(/*! react/lib/ReactCurrentOwner */ 6717);
+	var ReactDOMComponentTree = __webpack_require__(/*! ./ReactDOMComponentTree */ 6741);
+	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 6827);
 	
-	var getHostComponentFromComposite = __webpack_require__(/*! ./getHostComponentFromComposite */ 6868);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var getHostComponentFromComposite = __webpack_require__(/*! ./getHostComponentFromComposite */ 6885);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	/**
 	 * Returns the DOM node rendered by this element.
@@ -19912,7 +19912,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6868:
+/***/ 6885:
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/getHostComponentFromComposite.js ***!
   \*******************************************************************************************/
@@ -19930,7 +19930,7 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactNodeTypes = __webpack_require__(/*! ./ReactNodeTypes */ 6814);
+	var ReactNodeTypes = __webpack_require__(/*! ./ReactNodeTypes */ 6831);
 	
 	function getHostComponentFromComposite(inst) {
 	  var type;
@@ -19950,7 +19950,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6869:
+/***/ 6886:
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/renderSubtreeIntoContainer.js ***!
   \****************************************************************************************/
@@ -19968,13 +19968,13 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactMount = __webpack_require__(/*! ./ReactMount */ 6861);
+	var ReactMount = __webpack_require__(/*! ./ReactMount */ 6878);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
 
-/***/ 6870:
+/***/ 6887:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMUnknownPropertyHook.js ***!
   \*****************************************************************************************/
@@ -19992,11 +19992,11 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6734);
-	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var EventPluginRegistry = __webpack_require__(/*! ./EventPluginRegistry */ 6751);
+	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	if (true) {
 	  var reactProps = {
@@ -20094,7 +20094,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6871:
+/***/ 6888:
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMNullInputValuePropHook.js ***!
   \********************************************************************************************/
@@ -20112,9 +20112,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var didWarnValueNull = false;
 	
@@ -20145,7 +20145,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6872:
+/***/ 6889:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMInvalidARIAHook.js ***!
   \*************************************************************************************/
@@ -20163,10 +20163,10 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6726);
-	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6716);
+	var DOMProperty = __webpack_require__(/*! ./DOMProperty */ 6743);
+	var ReactComponentTreeHook = __webpack_require__(/*! react/lib/ReactComponentTreeHook */ 6733);
 	
-	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6737);
+	var warning = __webpack_require__(/*! fbjs/lib/warning */ 6754);
 	
 	var warnedProperties = {};
 	var rARIA = new RegExp('^(aria)-[' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -20246,1109 +20246,1109 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 6873:
+/***/ 6890:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapContainer.jsx ***!
   \*******************************************************************************************************************/
-[8325, 6692, 6874, 6875, 7101, 7120, 7618, 7161],
+[8354, 6709, 6891, 6892, 7118, 7137, 7635, 7178],
 
-/***/ 6874:
+/***/ 6891:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/jquery/dist/jquery.js ***!
   \********************************************************************************************************/
 836,
 
-/***/ 6875:
+/***/ 6892:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/index.js ***!
   \*******************************************************************************************************/
-[7633, 6876],
+[7650, 6893],
 
-/***/ 6876:
+/***/ 6893:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/AnatomogramFactory.jsx ***!
   \*************************************************************************************************************************/
-[7634, 6877, 6909, 7051, 7099],
+[7651, 6894, 6926, 7068, 7116],
 
-/***/ 6877:
+/***/ 6894:
 /*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/react.js ***!
   \***************************************************************************************************************/
-[7635, 6878],
+[7652, 6895],
 
-/***/ 6878:
+/***/ 6895:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/React.js ***!
   \*******************************************************************************************************************/
-[7636, 6879, 6880, 6892, 6895, 6896, 6901, 6884, 6906, 6907, 6908, 6886, 6902],
+[7653, 6896, 6897, 6909, 6912, 6913, 6918, 6901, 6923, 6924, 6925, 6903, 6919],
 
-/***/ 6879:
+/***/ 6896:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/object-assign/index.js ***!
   \*******************************************************************************************************************************/
 5,
 
-/***/ 6880:
+/***/ 6897:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactChildren.js ***!
   \***************************************************************************************************************************/
-[7637, 6881, 6884, 6887, 6889],
+[7654, 6898, 6901, 6904, 6906],
 
-/***/ 6881:
+/***/ 6898:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/PooledClass.js ***!
   \*************************************************************************************************************************/
-[7638, 6882, 6883],
+[7655, 6899, 6900],
 
-/***/ 6882:
+/***/ 6899:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/reactProdInvariant.js ***!
   \********************************************************************************************************************************/
 8,
 
-/***/ 6883:
+/***/ 6900:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/invariant.js ***!
   \******************************************************************************************************************************/
 9,
 
-/***/ 6884:
+/***/ 6901:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactElement.js ***!
   \**************************************************************************************************************************/
-[7639, 6879, 6885, 6886, 6888],
+[7656, 6896, 6902, 6903, 6905],
 
-/***/ 6885:
+/***/ 6902:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactCurrentOwner.js ***!
   \*******************************************************************************************************************************/
 11,
 
-/***/ 6886:
+/***/ 6903:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/warning.js ***!
   \****************************************************************************************************************************/
-[7640, 6887],
+[7657, 6904],
 
-/***/ 6887:
+/***/ 6904:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/emptyFunction.js ***!
   \**********************************************************************************************************************************/
 13,
 
-/***/ 6888:
+/***/ 6905:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/canDefineProperty.js ***!
   \*******************************************************************************************************************************/
 14,
 
-/***/ 6889:
+/***/ 6906:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/traverseAllChildren.js ***!
   \*********************************************************************************************************************************/
-[7641, 6882, 6885, 6884, 6890, 6883, 6891, 6886],
+[7658, 6899, 6902, 6901, 6907, 6900, 6908, 6903],
 
-/***/ 6890:
+/***/ 6907:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getIteratorFn.js ***!
   \***************************************************************************************************************************/
 16,
 
-/***/ 6891:
+/***/ 6908:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/KeyEscapeUtils.js ***!
   \****************************************************************************************************************************/
 17,
 
-/***/ 6892:
+/***/ 6909:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactComponent.js ***!
   \****************************************************************************************************************************/
-[7642, 6882, 6893, 6888, 6894, 6883, 6886],
+[7659, 6899, 6910, 6905, 6911, 6900, 6903],
 
-/***/ 6893:
+/***/ 6910:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactNoopUpdateQueue.js ***!
   \**********************************************************************************************************************************/
-[7643, 6886],
+[7660, 6903],
 
-/***/ 6894:
+/***/ 6911:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/emptyObject.js ***!
   \********************************************************************************************************************************/
 20,
 
-/***/ 6895:
+/***/ 6912:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactPureComponent.js ***!
   \********************************************************************************************************************************/
-[7644, 6879, 6892, 6893, 6894],
+[7661, 6896, 6909, 6910, 6911],
 
-/***/ 6896:
+/***/ 6913:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactClass.js ***!
   \************************************************************************************************************************/
-[7645, 6882, 6879, 6892, 6884, 6897, 6899, 6893, 6894, 6883, 6898, 6900, 6886],
+[7662, 6899, 6896, 6909, 6901, 6914, 6916, 6910, 6911, 6900, 6915, 6917, 6903],
 
-/***/ 6897:
+/***/ 6914:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactPropTypeLocations.js ***!
   \************************************************************************************************************************************/
-[7646, 6898],
+[7663, 6915],
 
-/***/ 6898:
+/***/ 6915:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/keyMirror.js ***!
   \******************************************************************************************************************************/
-[7647, 6883],
+[7664, 6900],
 
-/***/ 6899:
+/***/ 6916:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactPropTypeLocationNames.js ***!
   \****************************************************************************************************************************************/
 25,
 
-/***/ 6900:
+/***/ 6917:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/keyOf.js ***!
   \**************************************************************************************************************************/
 26,
 
-/***/ 6901:
+/***/ 6918:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMFactories.js ***!
   \*******************************************************************************************************************************/
-[7648, 6884, 6902],
+[7665, 6901, 6919],
 
-/***/ 6902:
+/***/ 6919:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactElementValidator.js ***!
   \***********************************************************************************************************************************/
-[7649, 6885, 6903, 6884, 6897, 6904, 6888, 6890, 6886],
+[7666, 6902, 6920, 6901, 6914, 6921, 6905, 6907, 6903],
 
-/***/ 6903:
+/***/ 6920:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactComponentTreeHook.js ***!
   \************************************************************************************************************************************/
-[7650, 6882, 6885, 6883, 6886],
+[7667, 6899, 6902, 6900, 6903],
 
-/***/ 6904:
+/***/ 6921:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/checkReactTypeSpec.js ***!
   \********************************************************************************************************************************/
-[7651, 6882, 6899, 6905, 6883, 6886, 6903, 6903],
+[7668, 6899, 6916, 6922, 6900, 6903, 6920, 6920],
 
-/***/ 6905:
+/***/ 6922:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************************************************************/
 32,
 
-/***/ 6906:
+/***/ 6923:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactPropTypes.js ***!
   \****************************************************************************************************************************/
-[7652, 6884, 6899, 6905, 6887, 6890, 6886],
+[7669, 6901, 6916, 6922, 6904, 6907, 6903],
 
-/***/ 6907:
+/***/ 6924:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactVersion.js ***!
   \**************************************************************************************************************************/
 34,
 
-/***/ 6908:
+/***/ 6925:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/onlyChild.js ***!
   \***********************************************************************************************************************/
-[7653, 6882, 6884, 6883],
+[7670, 6899, 6901, 6900],
 
-/***/ 6909:
+/***/ 6926:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/Anatomogram.jsx ***!
   \******************************************************************************************************************/
-[7654, 6877, 6910, 7050],
+[7671, 6894, 6927, 7067],
 
-/***/ 6910:
+/***/ 6927:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/AnatomogramImage.jsx ***!
   \***********************************************************************************************************************/
-[7655, 6877, 6911, 7049],
+[7672, 6894, 6928, 7066],
 
-/***/ 6911:
+/***/ 6928:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react-dom/index.js ***!
   \*******************************************************************************************************************/
-[7656, 6912],
+[7673, 6929],
 
-/***/ 6912:
+/***/ 6929:
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOM.js ***!
   \**********************************************************************************************************************/
-[7657, 6913, 6916, 7039, 6936, 6933, 6907, 7044, 7045, 7046, 6886, 6926, 6939, 7047, 7048],
+[7674, 6930, 6933, 7056, 6953, 6950, 6924, 7061, 7062, 7063, 6903, 6943, 6956, 7064, 7065],
 
-/***/ 6913:
+/***/ 6930:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMComponentTree.js ***!
   \***********************************************************************************************************************************/
-[7658, 6882, 6914, 6915, 6883],
+[7675, 6899, 6931, 6932, 6900],
 
-/***/ 6914:
+/***/ 6931:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DOMProperty.js ***!
   \*************************************************************************************************************************/
-[7659, 6882, 6883],
+[7676, 6899, 6900],
 
-/***/ 6915:
+/***/ 6932:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMComponentFlags.js ***!
   \************************************************************************************************************************************/
 42,
 
-/***/ 6916:
+/***/ 6933:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDefaultInjection.js ***!
   \***********************************************************************************************************************************/
-[7660, 6917, 6932, 6950, 6951, 6956, 6957, 6971, 6913, 7010, 7011, 7012, 7013, 7014, 7017, 7018, 7026, 7027, 7028],
+[7677, 6934, 6949, 6967, 6968, 6973, 6974, 6988, 6930, 7027, 7028, 7029, 7030, 7031, 7034, 7035, 7043, 7044, 7045],
 
-/***/ 6917:
+/***/ 6934:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/BeforeInputEventPlugin.js ***!
   \************************************************************************************************************************************/
-[7661, 6918, 6919, 6926, 6927, 6929, 6931, 6900],
+[7678, 6935, 6936, 6943, 6944, 6946, 6948, 6917],
 
-/***/ 6918:
+/***/ 6935:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/EventConstants.js ***!
   \****************************************************************************************************************************/
-[7662, 6898],
+[7679, 6915],
 
-/***/ 6919:
+/***/ 6936:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/EventPropagators.js ***!
   \******************************************************************************************************************************/
-[7663, 6918, 6920, 6922, 6924, 6925, 6886],
+[7680, 6935, 6937, 6939, 6941, 6942, 6903],
 
-/***/ 6920:
+/***/ 6937:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/EventPluginHub.js ***!
   \****************************************************************************************************************************/
-[7664, 6882, 6921, 6922, 6923, 6924, 6925, 6883],
+[7681, 6899, 6938, 6939, 6940, 6941, 6942, 6900],
 
-/***/ 6921:
+/***/ 6938:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/EventPluginRegistry.js ***!
   \*********************************************************************************************************************************/
-[7665, 6882, 6883],
+[7682, 6899, 6900],
 
-/***/ 6922:
+/***/ 6939:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/EventPluginUtils.js ***!
   \******************************************************************************************************************************/
-[7666, 6882, 6918, 6923, 6883, 6886],
+[7683, 6899, 6935, 6940, 6900, 6903],
 
-/***/ 6923:
+/***/ 6940:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactErrorUtils.js ***!
   \*****************************************************************************************************************************/
 50,
 
-/***/ 6924:
+/***/ 6941:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/accumulateInto.js ***!
   \****************************************************************************************************************************/
-[7667, 6882, 6883],
+[7684, 6899, 6900],
 
-/***/ 6925:
+/***/ 6942:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/forEachAccumulated.js ***!
   \********************************************************************************************************************************/
 52,
 
-/***/ 6926:
+/***/ 6943:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/ExecutionEnvironment.js ***!
   \*****************************************************************************************************************************************/
 53,
 
-/***/ 6927:
+/***/ 6944:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/FallbackCompositionState.js ***!
   \**************************************************************************************************************************************/
-[7668, 6879, 6881, 6928],
+[7685, 6896, 6898, 6945],
 
-/***/ 6928:
+/***/ 6945:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getTextContentAccessor.js ***!
   \************************************************************************************************************************************/
-[7669, 6926],
+[7686, 6943],
 
-/***/ 6929:
+/***/ 6946:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticCompositionEvent.js ***!
   \***************************************************************************************************************************************/
-[7670, 6930],
+[7687, 6947],
 
-/***/ 6930:
+/***/ 6947:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticEvent.js ***!
   \****************************************************************************************************************************/
-[7671, 6879, 6881, 6887, 6886],
+[7688, 6896, 6898, 6904, 6903],
 
-/***/ 6931:
+/***/ 6948:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticInputEvent.js ***!
   \*********************************************************************************************************************************/
-[7672, 6930],
+[7689, 6947],
 
-/***/ 6932:
+/***/ 6949:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ChangeEventPlugin.js ***!
   \*******************************************************************************************************************************/
-[7673, 6918, 6920, 6919, 6926, 6913, 6933, 6930, 6947, 6948, 6949, 6900],
+[7690, 6935, 6937, 6936, 6943, 6930, 6950, 6947, 6964, 6965, 6966, 6917],
 
-/***/ 6933:
+/***/ 6950:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactUpdates.js ***!
   \**************************************************************************************************************************/
-[7674, 6882, 6879, 6934, 6881, 6935, 6936, 6946, 6883],
+[7691, 6899, 6896, 6951, 6898, 6952, 6953, 6963, 6900],
 
-/***/ 6934:
+/***/ 6951:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/CallbackQueue.js ***!
   \***************************************************************************************************************************/
-[7675, 6882, 6879, 6881, 6883],
+[7692, 6899, 6896, 6898, 6900],
 
-/***/ 6935:
+/***/ 6952:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactFeatureFlags.js ***!
   \*******************************************************************************************************************************/
 62,
 
-/***/ 6936:
+/***/ 6953:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactReconciler.js ***!
   \*****************************************************************************************************************************/
-[7676, 6937, 6939, 6886],
+[7693, 6954, 6956, 6903],
 
-/***/ 6937:
+/***/ 6954:
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactRef.js ***!
   \**********************************************************************************************************************/
-[7677, 6938],
+[7694, 6955],
 
-/***/ 6938:
+/***/ 6955:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactOwner.js ***!
   \************************************************************************************************************************/
-[7678, 6882, 6883],
+[7695, 6899, 6900],
 
-/***/ 6939:
+/***/ 6956:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactInstrumentation.js ***!
   \**********************************************************************************************************************************/
-[7679, 6940],
+[7696, 6957],
 
-/***/ 6940:
+/***/ 6957:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDebugTool.js ***!
   \****************************************************************************************************************************/
-[7680, 6941, 6942, 6903, 6943, 6926, 6944, 6886],
+[7697, 6958, 6959, 6920, 6960, 6943, 6961, 6903],
 
-/***/ 6941:
+/***/ 6958:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactInvalidSetStateWarningHook.js ***!
   \*********************************************************************************************************************************************/
-[7681, 6886],
+[7698, 6903],
 
-/***/ 6942:
+/***/ 6959:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactHostOperationHistoryHook.js ***!
   \*******************************************************************************************************************************************/
 69,
 
-/***/ 6943:
+/***/ 6960:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactChildrenMutationWarningHook.js ***!
   \**********************************************************************************************************************************************/
-[7682, 6903, 6886],
+[7699, 6920, 6903],
 
-/***/ 6944:
+/***/ 6961:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/performanceNow.js ***!
   \***********************************************************************************************************************************/
-[7683, 6945],
+[7700, 6962],
 
-/***/ 6945:
+/***/ 6962:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/performance.js ***!
   \********************************************************************************************************************************/
-[7684, 6926],
+[7701, 6943],
 
-/***/ 6946:
+/***/ 6963:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/Transaction.js ***!
   \*************************************************************************************************************************/
-[7685, 6882, 6883],
+[7702, 6899, 6900],
 
-/***/ 6947:
+/***/ 6964:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getEventTarget.js ***!
   \****************************************************************************************************************************/
 74,
 
-/***/ 6948:
+/***/ 6965:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/isEventSupported.js ***!
   \******************************************************************************************************************************/
-[7686, 6926],
+[7703, 6943],
 
-/***/ 6949:
+/***/ 6966:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/isTextInputElement.js ***!
   \********************************************************************************************************************************/
 76,
 
-/***/ 6950:
+/***/ 6967:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DefaultEventPluginOrder.js ***!
   \*************************************************************************************************************************************/
-[7687, 6900],
+[7704, 6917],
 
-/***/ 6951:
+/***/ 6968:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/EnterLeaveEventPlugin.js ***!
   \***********************************************************************************************************************************/
-[7688, 6918, 6919, 6913, 6952, 6900],
+[7705, 6935, 6936, 6930, 6969, 6917],
 
-/***/ 6952:
+/***/ 6969:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticMouseEvent.js ***!
   \*********************************************************************************************************************************/
-[7689, 6953, 6954, 6955],
+[7706, 6970, 6971, 6972],
 
-/***/ 6953:
+/***/ 6970:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticUIEvent.js ***!
   \******************************************************************************************************************************/
-[7690, 6930, 6947],
+[7707, 6947, 6964],
 
-/***/ 6954:
+/***/ 6971:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ViewportMetrics.js ***!
   \*****************************************************************************************************************************/
 81,
 
-/***/ 6955:
+/***/ 6972:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getEventModifierState.js ***!
   \***********************************************************************************************************************************/
 82,
 
-/***/ 6956:
+/***/ 6973:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/HTMLDOMPropertyConfig.js ***!
   \***********************************************************************************************************************************/
-[7691, 6914],
+[7708, 6931],
 
-/***/ 6957:
+/***/ 6974:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactComponentBrowserEnvironment.js ***!
   \**********************************************************************************************************************************************/
-[7692, 6958, 6970],
+[7709, 6975, 6987],
 
-/***/ 6958:
+/***/ 6975:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DOMChildrenOperations.js ***!
   \***********************************************************************************************************************************/
-[7693, 6959, 6965, 6969, 6913, 6939, 6962, 6961, 6963],
+[7710, 6976, 6982, 6986, 6930, 6956, 6979, 6978, 6980],
 
-/***/ 6959:
+/***/ 6976:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DOMLazyTree.js ***!
   \*************************************************************************************************************************/
-[7694, 6960, 6961, 6962, 6963],
+[7711, 6977, 6978, 6979, 6980],
 
-/***/ 6960:
+/***/ 6977:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DOMNamespaces.js ***!
   \***************************************************************************************************************************/
 87,
 
-/***/ 6961:
+/***/ 6978:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/setInnerHTML.js ***!
   \**************************************************************************************************************************/
-[7695, 6926, 6960, 6962],
+[7712, 6943, 6977, 6979],
 
-/***/ 6962:
+/***/ 6979:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/createMicrosoftUnsafeLocalFunction.js ***!
   \************************************************************************************************************************************************/
 89,
 
-/***/ 6963:
+/***/ 6980:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/setTextContent.js ***!
   \****************************************************************************************************************************/
-[7696, 6926, 6964, 6961],
+[7713, 6943, 6981, 6978],
 
-/***/ 6964:
+/***/ 6981:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/escapeTextContentForBrowser.js ***!
   \*****************************************************************************************************************************************/
 91,
 
-/***/ 6965:
+/***/ 6982:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/Danger.js ***!
   \********************************************************************************************************************/
-[7697, 6882, 6959, 6926, 6966, 6887, 6883],
+[7714, 6899, 6976, 6943, 6983, 6904, 6900],
 
-/***/ 6966:
+/***/ 6983:
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/createNodesFromMarkup.js ***!
   \******************************************************************************************************************************************/
-[7698, 6926, 6967, 6968, 6883],
+[7715, 6943, 6984, 6985, 6900],
 
-/***/ 6967:
+/***/ 6984:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/createArrayFromMixed.js ***!
   \*****************************************************************************************************************************************/
-[7699, 6883],
+[7716, 6900],
 
-/***/ 6968:
+/***/ 6985:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/getMarkupWrap.js ***!
   \**********************************************************************************************************************************/
-[7700, 6926, 6883],
+[7717, 6943, 6900],
 
-/***/ 6969:
+/***/ 6986:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactMultiChildUpdateTypes.js ***!
   \****************************************************************************************************************************************/
-[7701, 6898],
+[7718, 6915],
 
-/***/ 6970:
+/***/ 6987:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMIDOperations.js ***!
   \**********************************************************************************************************************************/
-[7702, 6958, 6913],
+[7719, 6975, 6930],
 
-/***/ 6971:
+/***/ 6988:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMComponent.js ***!
   \*******************************************************************************************************************************/
-[7703, 6882, 6879, 6972, 6974, 6959, 6960, 6914, 6982, 6918, 6920, 6921, 6984, 6987, 6915, 6913, 6989, 6991, 6992, 6993, 6939, 6994, 7006, 6887, 6964, 6883, 6948, 6900, 7001, 7009, 6886],
+[7720, 6899, 6896, 6989, 6991, 6976, 6977, 6931, 6999, 6935, 6937, 6938, 7001, 7004, 6932, 6930, 7006, 7008, 7009, 7010, 6956, 7011, 7023, 6904, 6981, 6900, 6965, 6917, 7018, 7026, 6903],
 
-/***/ 6972:
+/***/ 6989:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/AutoFocusUtils.js ***!
   \****************************************************************************************************************************/
-[7704, 6913, 6973],
+[7721, 6930, 6990],
 
-/***/ 6973:
+/***/ 6990:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/focusNode.js ***!
   \******************************************************************************************************************************/
 100,
 
-/***/ 6974:
+/***/ 6991:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/CSSPropertyOperations.js ***!
   \***********************************************************************************************************************************/
-[7705, 6975, 6926, 6939, 6976, 6978, 6979, 6981, 6886],
+[7722, 6992, 6943, 6956, 6993, 6995, 6996, 6998, 6903],
 
-/***/ 6975:
+/***/ 6992:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/CSSProperty.js ***!
   \*************************************************************************************************************************/
 102,
 
-/***/ 6976:
+/***/ 6993:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/camelizeStyleName.js ***!
   \**************************************************************************************************************************************/
-[7706, 6977],
+[7723, 6994],
 
-/***/ 6977:
+/***/ 6994:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/camelize.js ***!
   \*****************************************************************************************************************************/
 104,
 
-/***/ 6978:
+/***/ 6995:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/dangerousStyleValue.js ***!
   \*********************************************************************************************************************************/
-[7707, 6975, 6886],
+[7724, 6992, 6903],
 
-/***/ 6979:
+/***/ 6996:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/hyphenateStyleName.js ***!
   \***************************************************************************************************************************************/
-[7708, 6980],
+[7725, 6997],
 
-/***/ 6980:
+/***/ 6997:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/hyphenate.js ***!
   \******************************************************************************************************************************/
 107,
 
-/***/ 6981:
+/***/ 6998:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/memoizeStringOnly.js ***!
   \**************************************************************************************************************************************/
 108,
 
-/***/ 6982:
+/***/ 6999:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DOMPropertyOperations.js ***!
   \***********************************************************************************************************************************/
-[7709, 6914, 6913, 6939, 6983, 6886],
+[7726, 6931, 6930, 6956, 7000, 6903],
 
-/***/ 6983:
+/***/ 7000:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/quoteAttributeValueForBrowser.js ***!
   \*******************************************************************************************************************************************/
-[7710, 6964],
+[7727, 6981],
 
-/***/ 6984:
+/***/ 7001:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactBrowserEventEmitter.js ***!
   \**************************************************************************************************************************************/
-[7711, 6879, 6918, 6921, 6985, 6954, 6986, 6948],
+[7728, 6896, 6935, 6938, 7002, 6971, 7003, 6965],
 
-/***/ 6985:
+/***/ 7002:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactEventEmitterMixin.js ***!
   \************************************************************************************************************************************/
-[7712, 6920],
+[7729, 6937],
 
-/***/ 6986:
+/***/ 7003:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getVendorPrefixedEventName.js ***!
   \****************************************************************************************************************************************/
-[7713, 6926],
+[7730, 6943],
 
-/***/ 6987:
+/***/ 7004:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMButton.js ***!
   \****************************************************************************************************************************/
-[7714, 6988],
+[7731, 7005],
 
-/***/ 6988:
+/***/ 7005:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/DisabledInputUtils.js ***!
   \********************************************************************************************************************************/
 115,
 
-/***/ 6989:
+/***/ 7006:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMInput.js ***!
   \***************************************************************************************************************************/
-[7715, 6882, 6879, 6988, 6982, 6990, 6913, 6933, 6883, 6886],
+[7732, 6899, 6896, 7005, 6999, 7007, 6930, 6950, 6900, 6903],
 
-/***/ 6990:
+/***/ 7007:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/LinkedValueUtils.js ***!
   \******************************************************************************************************************************/
-[7716, 6882, 6906, 6897, 6905, 6883, 6886],
+[7733, 6899, 6923, 6914, 6922, 6900, 6903],
 
-/***/ 6991:
+/***/ 7008:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMOption.js ***!
   \****************************************************************************************************************************/
-[7717, 6879, 6880, 6913, 6992, 6886],
+[7734, 6896, 6897, 6930, 7009, 6903],
 
-/***/ 6992:
+/***/ 7009:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMSelect.js ***!
   \****************************************************************************************************************************/
-[7718, 6879, 6988, 6990, 6913, 6933, 6886],
+[7735, 6896, 7005, 7007, 6930, 6950, 6903],
 
-/***/ 6993:
+/***/ 7010:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMTextarea.js ***!
   \******************************************************************************************************************************/
-[7719, 6882, 6879, 6988, 6990, 6913, 6933, 6883, 6886],
+[7736, 6899, 6896, 7005, 7007, 6930, 6950, 6900, 6903],
 
-/***/ 6994:
+/***/ 7011:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactMultiChild.js ***!
   \*****************************************************************************************************************************/
-[7720, 6882, 6995, 6996, 6939, 6969, 6885, 6936, 6997, 6887, 7005, 6883],
+[7737, 6899, 7012, 7013, 6956, 6986, 6902, 6953, 7014, 6904, 7022, 6900],
 
-/***/ 6995:
+/***/ 7012:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactComponentEnvironment.js ***!
   \***************************************************************************************************************************************/
-[7721, 6882, 6883],
+[7738, 6899, 6900],
 
-/***/ 6996:
+/***/ 7013:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactInstanceMap.js ***!
   \******************************************************************************************************************************/
 123,
 
-/***/ 6997:
+/***/ 7014:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactChildReconciler.js ***!
   \**********************************************************************************************************************************/
-[7722, 6936, 6998, 6891, 7002, 6889, 6886, 6903, 6903],
+[7739, 6953, 7015, 6908, 7019, 6906, 6903, 6920, 6920],
 
-/***/ 6998:
+/***/ 7015:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/instantiateReactComponent.js ***!
   \***************************************************************************************************************************************/
-[7723, 6882, 6879, 6999, 7003, 7004, 6883, 6886],
+[7740, 6899, 6896, 7016, 7020, 7021, 6900, 6903],
 
-/***/ 6999:
+/***/ 7016:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactCompositeComponent.js ***!
   \*************************************************************************************************************************************/
-[7724, 6882, 6879, 6995, 6885, 6884, 6923, 6996, 6939, 7000, 6897, 6936, 6904, 6894, 6883, 7001, 7002, 6886],
+[7741, 6899, 6896, 7012, 6902, 6901, 6940, 7013, 6956, 7017, 6914, 6953, 6921, 6911, 6900, 7018, 7019, 6903],
 
-/***/ 7000:
+/***/ 7017:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactNodeTypes.js ***!
   \****************************************************************************************************************************/
-[7725, 6882, 6884, 6883],
+[7742, 6899, 6901, 6900],
 
-/***/ 7001:
+/***/ 7018:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/shallowEqual.js ***!
   \*********************************************************************************************************************************/
 128,
 
-/***/ 7002:
+/***/ 7019:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/shouldUpdateReactComponent.js ***!
   \****************************************************************************************************************************************/
 129,
 
-/***/ 7003:
+/***/ 7020:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactEmptyComponent.js ***!
   \*********************************************************************************************************************************/
 130,
 
-/***/ 7004:
+/***/ 7021:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactHostComponent.js ***!
   \********************************************************************************************************************************/
-[7726, 6882, 6879, 6883],
+[7743, 6899, 6896, 6900],
 
-/***/ 7005:
+/***/ 7022:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/flattenChildren.js ***!
   \*****************************************************************************************************************************/
-[7727, 6891, 6889, 6886, 6903, 6903],
+[7744, 6908, 6906, 6903, 6920, 6920],
 
-/***/ 7006:
+/***/ 7023:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactServerRenderingTransaction.js ***!
   \*********************************************************************************************************************************************/
-[7728, 6879, 6881, 6946, 6939, 7007],
+[7745, 6896, 6898, 6963, 6956, 7024],
 
-/***/ 7007:
+/***/ 7024:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactServerUpdateQueue.js ***!
   \************************************************************************************************************************************/
-[7729, 7008, 6946, 6886],
+[7746, 7025, 6963, 6903],
 
-/***/ 7008:
+/***/ 7025:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactUpdateQueue.js ***!
   \******************************************************************************************************************************/
-[7730, 6882, 6885, 6996, 6939, 6933, 6883, 6886],
+[7747, 6899, 6902, 7013, 6956, 6950, 6900, 6903],
 
-/***/ 7009:
+/***/ 7026:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/validateDOMNesting.js ***!
   \********************************************************************************************************************************/
-[7731, 6879, 6887, 6886],
+[7748, 6896, 6904, 6903],
 
-/***/ 7010:
+/***/ 7027:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMEmptyComponent.js ***!
   \************************************************************************************************************************************/
-[7732, 6879, 6959, 6913],
+[7749, 6896, 6976, 6930],
 
-/***/ 7011:
+/***/ 7028:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMTreeTraversal.js ***!
   \***********************************************************************************************************************************/
-[7733, 6882, 6883],
+[7750, 6899, 6900],
 
-/***/ 7012:
+/***/ 7029:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMTextComponent.js ***!
   \***********************************************************************************************************************************/
-[7734, 6882, 6879, 6958, 6959, 6913, 6964, 6883, 7009],
+[7751, 6899, 6896, 6975, 6976, 6930, 6981, 6900, 7026],
 
-/***/ 7013:
+/***/ 7030:
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDefaultBatchingStrategy.js ***!
   \******************************************************************************************************************************************/
-[7735, 6879, 6933, 6946, 6887],
+[7752, 6896, 6950, 6963, 6904],
 
-/***/ 7014:
+/***/ 7031:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactEventListener.js ***!
   \********************************************************************************************************************************/
-[7736, 6879, 7015, 6926, 6881, 6913, 6933, 6947, 7016],
+[7753, 6896, 7032, 6943, 6898, 6930, 6950, 6964, 7033],
 
-/***/ 7015:
+/***/ 7032:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/EventListener.js ***!
   \**********************************************************************************************************************************/
-[7737, 6887],
+[7754, 6904],
 
-/***/ 7016:
+/***/ 7033:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/getUnboundedScrollPosition.js ***!
   \***********************************************************************************************************************************************/
 143,
 
-/***/ 7017:
+/***/ 7034:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactInjection.js ***!
   \****************************************************************************************************************************/
-[7738, 6914, 6920, 6922, 6995, 6896, 7003, 6984, 7004, 6933],
+[7755, 6931, 6937, 6939, 7012, 6913, 7020, 7001, 7021, 6950],
 
-/***/ 7018:
+/***/ 7035:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactReconcileTransaction.js ***!
   \***************************************************************************************************************************************/
-[7739, 6879, 6934, 6881, 6984, 7019, 6939, 6946, 7008],
+[7756, 6896, 6951, 6898, 7001, 7036, 6956, 6963, 7025],
 
-/***/ 7019:
+/***/ 7036:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactInputSelection.js ***!
   \*********************************************************************************************************************************/
-[7740, 7020, 7022, 6973, 7025],
+[7757, 7037, 7039, 6990, 7042],
 
-/***/ 7020:
+/***/ 7037:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMSelection.js ***!
   \*******************************************************************************************************************************/
-[7741, 6926, 7021, 6928],
+[7758, 6943, 7038, 6945],
 
-/***/ 7021:
+/***/ 7038:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getNodeForCharacterOffset.js ***!
   \***************************************************************************************************************************************/
 148,
 
-/***/ 7022:
+/***/ 7039:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/containsNode.js ***!
   \*********************************************************************************************************************************/
-[7742, 7023],
+[7759, 7040],
 
-/***/ 7023:
+/***/ 7040:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/isTextNode.js ***!
   \*******************************************************************************************************************************/
-[7743, 7024],
+[7760, 7041],
 
-/***/ 7024:
+/***/ 7041:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/isNode.js ***!
   \***************************************************************************************************************************/
 151,
 
-/***/ 7025:
+/***/ 7042:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/~/fbjs/lib/getActiveElement.js ***!
   \*************************************************************************************************************************************/
 152,
 
-/***/ 7026:
+/***/ 7043:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SVGDOMPropertyConfig.js ***!
   \**********************************************************************************************************************************/
 153,
 
-/***/ 7027:
+/***/ 7044:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SelectEventPlugin.js ***!
   \*******************************************************************************************************************************/
-[7744, 6918, 6919, 6926, 6913, 7019, 6930, 7025, 6949, 6900, 7001],
+[7761, 6935, 6936, 6943, 6930, 7036, 6947, 7042, 6966, 6917, 7018],
 
-/***/ 7028:
+/***/ 7045:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SimpleEventPlugin.js ***!
   \*******************************************************************************************************************************/
-[7745, 6882, 6918, 7015, 6919, 6913, 7029, 7030, 6930, 7031, 7032, 6952, 7035, 7036, 7037, 6953, 7038, 6887, 7033, 6883, 6900],
+[7762, 6899, 6935, 7032, 6936, 6930, 7046, 7047, 6947, 7048, 7049, 6969, 7052, 7053, 7054, 6970, 7055, 6904, 7050, 6900, 6917],
 
-/***/ 7029:
+/***/ 7046:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticAnimationEvent.js ***!
   \*************************************************************************************************************************************/
-[7746, 6930],
+[7763, 6947],
 
-/***/ 7030:
+/***/ 7047:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticClipboardEvent.js ***!
   \*************************************************************************************************************************************/
-[7747, 6930],
+[7764, 6947],
 
-/***/ 7031:
+/***/ 7048:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticFocusEvent.js ***!
   \*********************************************************************************************************************************/
-[7748, 6953],
+[7765, 6970],
 
-/***/ 7032:
+/***/ 7049:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticKeyboardEvent.js ***!
   \************************************************************************************************************************************/
-[7749, 6953, 7033, 7034, 6955],
+[7766, 6970, 7050, 7051, 6972],
 
-/***/ 7033:
+/***/ 7050:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getEventCharCode.js ***!
   \******************************************************************************************************************************/
 160,
 
-/***/ 7034:
+/***/ 7051:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getEventKey.js ***!
   \*************************************************************************************************************************/
-[7750, 7033],
+[7767, 7050],
 
-/***/ 7035:
+/***/ 7052:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticDragEvent.js ***!
   \********************************************************************************************************************************/
-[7751, 6952],
+[7768, 6969],
 
-/***/ 7036:
+/***/ 7053:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticTouchEvent.js ***!
   \*********************************************************************************************************************************/
-[7752, 6953, 6955],
+[7769, 6970, 6972],
 
-/***/ 7037:
+/***/ 7054:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticTransitionEvent.js ***!
   \**************************************************************************************************************************************/
-[7753, 6930],
+[7770, 6947],
 
-/***/ 7038:
+/***/ 7055:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/SyntheticWheelEvent.js ***!
   \*********************************************************************************************************************************/
-[7754, 6952],
+[7771, 6969],
 
-/***/ 7039:
+/***/ 7056:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactMount.js ***!
   \************************************************************************************************************************/
-[7755, 6882, 6959, 6914, 6984, 6885, 6913, 7040, 7041, 6884, 6935, 6996, 6939, 7042, 6936, 7008, 6933, 6894, 6998, 6883, 6961, 7002, 6886],
+[7772, 6899, 6976, 6931, 7001, 6902, 6930, 7057, 7058, 6901, 6952, 7013, 6956, 7059, 6953, 7025, 6950, 6911, 7015, 6900, 6978, 7019, 6903],
 
-/***/ 7040:
+/***/ 7057:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMContainerInfo.js ***!
   \***********************************************************************************************************************************/
-[7756, 7009],
+[7773, 7026],
 
-/***/ 7041:
+/***/ 7058:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMFeatureFlags.js ***!
   \**********************************************************************************************************************************/
 168,
 
-/***/ 7042:
+/***/ 7059:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactMarkupChecksum.js ***!
   \*********************************************************************************************************************************/
-[7757, 7043],
+[7774, 7060],
 
-/***/ 7043:
+/***/ 7060:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/adler32.js ***!
   \*********************************************************************************************************************/
 170,
 
-/***/ 7044:
+/***/ 7061:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/findDOMNode.js ***!
   \*************************************************************************************************************************/
-[7758, 6882, 6885, 6913, 6996, 7045, 6883, 6886],
+[7775, 6899, 6902, 6930, 7013, 7062, 6900, 6903],
 
-/***/ 7045:
+/***/ 7062:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/getHostComponentFromComposite.js ***!
   \*******************************************************************************************************************************************/
-[7759, 7000],
+[7776, 7017],
 
-/***/ 7046:
+/***/ 7063:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/renderSubtreeIntoContainer.js ***!
   \****************************************************************************************************************************************/
-[7760, 7039],
+[7777, 7056],
 
-/***/ 7047:
+/***/ 7064:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMUnknownPropertyHook.js ***!
   \*****************************************************************************************************************************************/
-[7761, 6914, 6921, 6903, 6886],
+[7778, 6931, 6938, 6920, 6903],
 
-/***/ 7048:
+/***/ 7065:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/react/lib/ReactDOMNullInputValuePropHook.js ***!
   \********************************************************************************************************************************************/
-[7762, 6903, 6886],
+[7779, 6920, 6903],
 
-/***/ 7049:
+/***/ 7066:
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./~/imports-loader?this=>window,fix=>module.exports=0!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/~/snapsvg/dist/snap.svg.js ***!
   \*******************************************************************************************************************************************************************************/
 176,
 
-/***/ 7050:
+/***/ 7067:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.jsx ***!
   \********************************************************************************************************************/
-[7763, 6877, 7051, 7097],
+[7780, 6894, 7068, 7114],
 
-/***/ 7051:
+/***/ 7068:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/imagesAvailable.js ***!
   \*********************************************************************************************************************/
-[7764, 7052, 7053, 7054, 7065],
+[7781, 7069, 7070, 7071, 7082],
 
-/***/ 7052:
+/***/ 7069:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/json/svgsForSpecies.json ***!
   \*********************************************************************************************************************************/
 187,
 
-/***/ 7053:
+/***/ 7070:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/json/idsForSvgs.json ***!
   \*****************************************************************************************************************************/
 188,
 
-/***/ 7054:
+/***/ 7071:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons ^\.\/.*selected\.png$ ***!
   \************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./brain_selected.png": 7055,
-		"./brain_unselected.png": 7056,
-		"./female_selected.png": 7057,
-		"./female_unselected.png": 7058,
-		"./flower_parts_selected.png": 7059,
-		"./flower_parts_unselected.png": 7060,
-		"./male_selected.png": 7061,
-		"./male_unselected.png": 7062,
-		"./whole_plant_selected.png": 7063,
-		"./whole_plant_unselected.png": 7064
+		"./brain_selected.png": 7072,
+		"./brain_unselected.png": 7073,
+		"./female_selected.png": 7074,
+		"./female_unselected.png": 7075,
+		"./flower_parts_selected.png": 7076,
+		"./flower_parts_unselected.png": 7077,
+		"./male_selected.png": 7078,
+		"./male_unselected.png": 7079,
+		"./whole_plant_selected.png": 7080,
+		"./whole_plant_unselected.png": 7081
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -21361,109 +21361,109 @@ webpackJsonp_name_([8],{
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 7054;
+	webpackContext.id = 7071;
 
 
 /***/ },
 
-/***/ 7055:
+/***/ 7072:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/brain_selected.png ***!
   \*********************************************************************************************************************************/
 190,
 
-/***/ 7056:
+/***/ 7073:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/brain_unselected.png ***!
   \***********************************************************************************************************************************/
 191,
 
-/***/ 7057:
+/***/ 7074:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/female_selected.png ***!
   \**********************************************************************************************************************************/
 192,
 
-/***/ 7058:
+/***/ 7075:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/female_unselected.png ***!
   \************************************************************************************************************************************/
 193,
 
-/***/ 7059:
+/***/ 7076:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/flower_parts_selected.png ***!
   \****************************************************************************************************************************************/
 194,
 
-/***/ 7060:
+/***/ 7077:
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/flower_parts_unselected.png ***!
   \******************************************************************************************************************************************/
 195,
 
-/***/ 7061:
+/***/ 7078:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/male_selected.png ***!
   \********************************************************************************************************************************/
 196,
 
-/***/ 7062:
+/***/ 7079:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/male_unselected.png ***!
   \**********************************************************************************************************************************/
 197,
 
-/***/ 7063:
+/***/ 7080:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/whole_plant_selected.png ***!
   \***************************************************************************************************************************************/
 198,
 
-/***/ 7064:
+/***/ 7081:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/icons/whole_plant_unselected.png ***!
   \*****************************************************************************************************************************************/
 199,
 
-/***/ 7065:
+/***/ 7082:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg ^\.\/.*$ ***!
   \*********************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./anolis_carolinensis.svg": 7066,
-		"./arabidopsis_thaliana_whole_plant.svg": 7067,
-		"./brachypodium_distachyon_flower_parts.svg": 7068,
-		"./brachypodium_distachyon_whole_plant.svg": 7069,
-		"./chicken.svg": 7070,
-		"./cow.svg": 7071,
-		"./hordeum_vulgare_flower_parts.svg": 7072,
-		"./hordeum_vulgare_whole_plant.svg": 7073,
-		"./human_brain.svg": 7074,
-		"./human_female.svg": 7075,
-		"./human_male.svg": 7076,
-		"./macaca_mulatta.svg": 7077,
-		"./monodelphis_domestica.svg": 7078,
-		"./mouse_brain.svg": 7079,
-		"./mouse_female.svg": 7080,
-		"./mouse_male.svg": 7081,
-		"./oryza_sativa_flower_parts.svg": 7082,
-		"./oryza_sativa_whole_plant.svg": 7083,
-		"./papio_anubis.svg": 7084,
-		"./rat.svg": 7085,
-		"./solanum_lycopersicum_flower_parts.svg": 7086,
-		"./solanum_lycopersicum_whole_plant.svg": 7087,
-		"./solanum_tuberosum_whole_plant.svg": 7088,
-		"./sorghum_bicolor_flower_parts.svg": 7089,
-		"./sorghum_bicolor_whole_plant.svg": 7090,
-		"./tetraodon_nigroviridis.svg": 7091,
-		"./triticum_aestivum_flower_parts.svg": 7092,
-		"./triticum_aestivum_whole_plant.svg": 7093,
-		"./xenopus_tropicalis.svg": 7094,
-		"./zea_mays_flower_parts.svg": 7095,
-		"./zea_mays_whole_plant.svg": 7096
+		"./anolis_carolinensis.svg": 7083,
+		"./arabidopsis_thaliana_whole_plant.svg": 7084,
+		"./brachypodium_distachyon_flower_parts.svg": 7085,
+		"./brachypodium_distachyon_whole_plant.svg": 7086,
+		"./chicken.svg": 7087,
+		"./cow.svg": 7088,
+		"./hordeum_vulgare_flower_parts.svg": 7089,
+		"./hordeum_vulgare_whole_plant.svg": 7090,
+		"./human_brain.svg": 7091,
+		"./human_female.svg": 7092,
+		"./human_male.svg": 7093,
+		"./macaca_mulatta.svg": 7094,
+		"./monodelphis_domestica.svg": 7095,
+		"./mouse_brain.svg": 7096,
+		"./mouse_female.svg": 7097,
+		"./mouse_male.svg": 7098,
+		"./oryza_sativa_flower_parts.svg": 7099,
+		"./oryza_sativa_whole_plant.svg": 7100,
+		"./papio_anubis.svg": 7101,
+		"./rat.svg": 7102,
+		"./solanum_lycopersicum_flower_parts.svg": 7103,
+		"./solanum_lycopersicum_whole_plant.svg": 7104,
+		"./solanum_tuberosum_whole_plant.svg": 7105,
+		"./sorghum_bicolor_flower_parts.svg": 7106,
+		"./sorghum_bicolor_whole_plant.svg": 7107,
+		"./tetraodon_nigroviridis.svg": 7108,
+		"./triticum_aestivum_flower_parts.svg": 7109,
+		"./triticum_aestivum_whole_plant.svg": 7110,
+		"./xenopus_tropicalis.svg": 7111,
+		"./zea_mays_flower_parts.svg": 7112,
+		"./zea_mays_whole_plant.svg": 7113
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -21476,198 +21476,198 @@ webpackJsonp_name_([8],{
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 7065;
+	webpackContext.id = 7082;
 
 
 /***/ },
 
-/***/ 7066:
+/***/ 7083:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/anolis_carolinensis.svg ***!
   \************************************************************************************************************************************/
 201,
 
-/***/ 7067:
+/***/ 7084:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/arabidopsis_thaliana_whole_plant.svg ***!
   \*************************************************************************************************************************************************/
 202,
 
-/***/ 7068:
+/***/ 7085:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/brachypodium_distachyon_flower_parts.svg ***!
   \*****************************************************************************************************************************************************/
 203,
 
-/***/ 7069:
+/***/ 7086:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/brachypodium_distachyon_whole_plant.svg ***!
   \****************************************************************************************************************************************************/
 204,
 
-/***/ 7070:
+/***/ 7087:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/chicken.svg ***!
   \************************************************************************************************************************/
 205,
 
-/***/ 7071:
+/***/ 7088:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/cow.svg ***!
   \********************************************************************************************************************/
 206,
 
-/***/ 7072:
+/***/ 7089:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/hordeum_vulgare_flower_parts.svg ***!
   \*********************************************************************************************************************************************/
 207,
 
-/***/ 7073:
+/***/ 7090:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/hordeum_vulgare_whole_plant.svg ***!
   \********************************************************************************************************************************************/
 208,
 
-/***/ 7074:
+/***/ 7091:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/human_brain.svg ***!
   \****************************************************************************************************************************/
 209,
 
-/***/ 7075:
+/***/ 7092:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/human_female.svg ***!
   \*****************************************************************************************************************************/
 210,
 
-/***/ 7076:
+/***/ 7093:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/human_male.svg ***!
   \***************************************************************************************************************************/
 211,
 
-/***/ 7077:
+/***/ 7094:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/macaca_mulatta.svg ***!
   \*******************************************************************************************************************************/
 212,
 
-/***/ 7078:
+/***/ 7095:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/monodelphis_domestica.svg ***!
   \**************************************************************************************************************************************/
 213,
 
-/***/ 7079:
+/***/ 7096:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/mouse_brain.svg ***!
   \****************************************************************************************************************************/
 214,
 
-/***/ 7080:
+/***/ 7097:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/mouse_female.svg ***!
   \*****************************************************************************************************************************/
 215,
 
-/***/ 7081:
+/***/ 7098:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/mouse_male.svg ***!
   \***************************************************************************************************************************/
 216,
 
-/***/ 7082:
+/***/ 7099:
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/oryza_sativa_flower_parts.svg ***!
   \******************************************************************************************************************************************/
 217,
 
-/***/ 7083:
+/***/ 7100:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/oryza_sativa_whole_plant.svg ***!
   \*****************************************************************************************************************************************/
 218,
 
-/***/ 7084:
+/***/ 7101:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/papio_anubis.svg ***!
   \*****************************************************************************************************************************/
 219,
 
-/***/ 7085:
+/***/ 7102:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/rat.svg ***!
   \********************************************************************************************************************/
 220,
 
-/***/ 7086:
+/***/ 7103:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/solanum_lycopersicum_flower_parts.svg ***!
   \**************************************************************************************************************************************************/
 221,
 
-/***/ 7087:
+/***/ 7104:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/solanum_lycopersicum_whole_plant.svg ***!
   \*************************************************************************************************************************************************/
 222,
 
-/***/ 7088:
+/***/ 7105:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/solanum_tuberosum_whole_plant.svg ***!
   \**********************************************************************************************************************************************/
 223,
 
-/***/ 7089:
+/***/ 7106:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/sorghum_bicolor_flower_parts.svg ***!
   \*********************************************************************************************************************************************/
 224,
 
-/***/ 7090:
+/***/ 7107:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/sorghum_bicolor_whole_plant.svg ***!
   \********************************************************************************************************************************************/
 225,
 
-/***/ 7091:
+/***/ 7108:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/tetraodon_nigroviridis.svg ***!
   \***************************************************************************************************************************************/
 226,
 
-/***/ 7092:
+/***/ 7109:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/triticum_aestivum_flower_parts.svg ***!
   \***********************************************************************************************************************************************/
 227,
 
-/***/ 7093:
+/***/ 7110:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/triticum_aestivum_whole_plant.svg ***!
   \**********************************************************************************************************************************************/
 228,
 
-/***/ 7094:
+/***/ 7111:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/xenopus_tropicalis.svg ***!
   \***********************************************************************************************************************************/
 229,
 
-/***/ 7095:
+/***/ 7112:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/zea_mays_flower_parts.svg ***!
   \**************************************************************************************************************************************/
 230,
 
-/***/ 7096:
+/***/ 7113:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/resources/svg/zea_mays_whole_plant.svg ***!
   \*************************************************************************************************************************************/
 231,
 
-/***/ 7097:
+/***/ 7114:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.less ***!
   \*********************************************************************************************************************/
@@ -21676,17 +21676,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../../~/css-loader!./../../../../../../../~/less-loader!./SelectionIcon.less */ 7098);
+	var content = __webpack_require__(/*! !../../../../../../../~/css-loader!../../../../../../../~/less-loader!./SelectionIcon.less */ 7115);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./SelectionIcon.less", function() {
-				var newContent = require("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./SelectionIcon.less");
+			module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./SelectionIcon.less", function() {
+				var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./SelectionIcon.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21697,13 +21697,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7098:
+/***/ 7115:
 /*!****************************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/SelectionIcon.less ***!
   \****************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -21715,7 +21715,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7099:
+/***/ 7116:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/ContainerLayout.less ***!
   \***********************************************************************************************************************/
@@ -21724,17 +21724,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../../~/css-loader!./../../../../../../../~/less-loader!./ContainerLayout.less */ 7100);
+	var content = __webpack_require__(/*! !../../../../../../../~/css-loader!../../../../../../../~/less-loader!./ContainerLayout.less */ 7117);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./ContainerLayout.less", function() {
-				var newContent = require("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./ContainerLayout.less");
+			module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./ContainerLayout.less", function() {
+				var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./ContainerLayout.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21745,13 +21745,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7100:
+/***/ 7117:
 /*!******************************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/anatomogram/src/ContainerLayout.less ***!
   \******************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -21763,101 +21763,101 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7101:
+/***/ 7118:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/load/main.js ***!
   \*************************************************************************************************/
-[8326, 7102, 7103, 7105, 7114],
+[8355, 7119, 7120, 7122, 7131],
 
-/***/ 7102:
+/***/ 7119:
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/load/Config.js ***!
   \***************************************************************************************************/
-1451,
+1466,
 
-/***/ 7103:
+/***/ 7120:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/load/Orderings.js ***!
   \******************************************************************************************************/
-[8327, 7104],
+[8356, 7121],
 
-/***/ 7104:
+/***/ 7121:
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/lodash.js ***!
   \***************************************************************************************************/
 837,
 
-/***/ 7105:
+/***/ 7122:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/load/ColorAxis.js ***!
   \******************************************************************************************************/
-[8328, 6692, 7106],
+[8357, 6709, 7123],
 
-/***/ 7106:
+/***/ 7123:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/index.js ***!
   \*************************************************************************************************/
-[7990, 7107, 7108, 7112],
+[8001, 7124, 7125, 7129],
 
-/***/ 7107:
+/***/ 7124:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/clone/clone.js ***!
   \*********************************************************************************************************/
 821,
 
-/***/ 7108:
+/***/ 7125:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/index.js ***!
   \*****************************************************************************************************************/
-[7991, 7109, 7111],
+[8002, 7126, 7128],
 
-/***/ 7109:
+/***/ 7126:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/conversions.js ***!
   \***********************************************************************************************************************/
-[7992, 7110],
+[8003, 7127],
 
-/***/ 7110:
+/***/ 7127:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/~/color-name/index.js ***!
   \******************************************************************************************************************************/
 828,
 
-/***/ 7111:
+/***/ 7128:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/color-convert/route.js ***!
   \*****************************************************************************************************************/
-[7993, 7109],
+[8004, 7126],
 
-/***/ 7112:
+/***/ 7129:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/color-string/color-string.js ***!
   \***********************************************************************************************************************/
-[7994, 7113],
+[8005, 7130],
 
-/***/ 7113:
+/***/ 7130:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/color/~/color-string/~/color-name/index.js ***!
   \*****************************************************************************************************************************/
 828,
 
-/***/ 7114:
+/***/ 7131:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/load/Data.js ***!
   \*************************************************************************************************/
-[8329, 7104, 7115],
+[8358, 7121, 7132],
 
-/***/ 7115:
+/***/ 7132:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/assets ^\.\/.*\-icon\.png$ ***!
   \***********************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./gsea_go-icon.png": 7116,
-		"./gsea_interpro-icon.png": 7117,
-		"./gsea_reactome-icon.png": 7118,
-		"./ma-plot-icon.png": 7119
+		"./gsea_go-icon.png": 7133,
+		"./gsea_interpro-icon.png": 7134,
+		"./gsea_reactome-icon.png": 7135,
+		"./ma-plot-icon.png": 7136
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -21870,48 +21870,48 @@ webpackJsonp_name_([8],{
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 7115;
+	webpackContext.id = 7132;
 
 
 /***/ },
 
-/***/ 7116:
+/***/ 7133:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/assets/gsea_go-icon.png ***!
   \********************************************************************************************************/
-1456,
+1471,
 
-/***/ 7117:
+/***/ 7134:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/assets/gsea_interpro-icon.png ***!
   \**************************************************************************************************************/
-1457,
+1472,
 
-/***/ 7118:
+/***/ 7135:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/assets/gsea_reactome-icon.png ***!
   \**************************************************************************************************************/
-1458,
+1473,
 
-/***/ 7119:
+/***/ 7136:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/assets/ma-plot-icon.png ***!
   \********************************************************************************************************/
-1459,
+1474,
 
-/***/ 7120:
+/***/ 7137:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/HeatmapWithControls.jsx ***!
   \***********************************************************************************************************************/
-[8330, 6692, 7121, 7162, 7168, 7169, 7104, 7617],
+[8359, 6709, 7138, 7179, 7185, 7186, 7121, 7634],
 
-/***/ 7121:
+/***/ 7138:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/Formatters.jsx ***!
   \**************************************************************************************************************/
-[8331, 6692, 7122, 7126, 7160, 7161],
+[8360, 6709, 7139, 7143, 7177, 7178],
 
-/***/ 7122:
+/***/ 7139:
 /*!****************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/server.js ***!
   \****************************************************************/
@@ -21919,12 +21919,12 @@ webpackJsonp_name_([8],{
 
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! ./lib/ReactDOMServer */ 7123);
+	module.exports = __webpack_require__(/*! ./lib/ReactDOMServer */ 7140);
 
 
 /***/ },
 
-/***/ 7123:
+/***/ 7140:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactDOMServer.js ***!
   \****************************************************************************/
@@ -21942,9 +21942,9 @@ webpackJsonp_name_([8],{
 	
 	'use strict';
 	
-	var ReactDefaultInjection = __webpack_require__(/*! ./ReactDefaultInjection */ 6729);
-	var ReactServerRendering = __webpack_require__(/*! ./ReactServerRendering */ 7124);
-	var ReactVersion = __webpack_require__(/*! ./ReactVersion */ 6866);
+	var ReactDefaultInjection = __webpack_require__(/*! ./ReactDefaultInjection */ 6746);
+	var ReactServerRendering = __webpack_require__(/*! ./ReactServerRendering */ 7141);
+	var ReactVersion = __webpack_require__(/*! ./ReactVersion */ 6883);
 	
 	ReactDefaultInjection.inject();
 	
@@ -21958,7 +21958,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7124:
+/***/ 7141:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactServerRendering.js ***!
   \**********************************************************************************/
@@ -21975,21 +21975,21 @@ webpackJsonp_name_([8],{
 	 */
 	'use strict';
 	
-	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6725);
+	var _prodInvariant = __webpack_require__(/*! ./reactProdInvariant */ 6742);
 	
-	var React = __webpack_require__(/*! react/lib/React */ 6693);
-	var ReactDOMContainerInfo = __webpack_require__(/*! ./ReactDOMContainerInfo */ 6862);
-	var ReactDefaultBatchingStrategy = __webpack_require__(/*! ./ReactDefaultBatchingStrategy */ 6835);
-	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6756);
-	var ReactMarkupChecksum = __webpack_require__(/*! ./ReactMarkupChecksum */ 6864);
-	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6753);
-	var ReactServerBatchingStrategy = __webpack_require__(/*! ./ReactServerBatchingStrategy */ 7125);
-	var ReactServerRenderingTransaction = __webpack_require__(/*! ./ReactServerRenderingTransaction */ 6828);
-	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6750);
+	var React = __webpack_require__(/*! react/lib/React */ 6710);
+	var ReactDOMContainerInfo = __webpack_require__(/*! ./ReactDOMContainerInfo */ 6879);
+	var ReactDefaultBatchingStrategy = __webpack_require__(/*! ./ReactDefaultBatchingStrategy */ 6852);
+	var ReactInstrumentation = __webpack_require__(/*! ./ReactInstrumentation */ 6773);
+	var ReactMarkupChecksum = __webpack_require__(/*! ./ReactMarkupChecksum */ 6881);
+	var ReactReconciler = __webpack_require__(/*! ./ReactReconciler */ 6770);
+	var ReactServerBatchingStrategy = __webpack_require__(/*! ./ReactServerBatchingStrategy */ 7142);
+	var ReactServerRenderingTransaction = __webpack_require__(/*! ./ReactServerRenderingTransaction */ 6845);
+	var ReactUpdates = __webpack_require__(/*! ./ReactUpdates */ 6767);
 	
-	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6817);
-	var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ 6812);
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6727);
+	var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 6834);
+	var instantiateReactComponent = __webpack_require__(/*! ./instantiateReactComponent */ 6829);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 6744);
 	
 	var pendingTransactions = 0;
 	
@@ -22056,7 +22056,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7125:
+/***/ 7142:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/react-dom/lib/ReactServerBatchingStrategy.js ***!
   \*****************************************************************************************/
@@ -22086,235 +22086,235 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7126:
+/***/ 7143:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/index.js ***!
   \**************************************************************************************************************************/
-[8332, 7127],
+[8361, 7144],
 
-/***/ 7127:
+/***/ 7144:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/src/NumberFormat.jsx ***!
   \**************************************************************************************************************************************/
-[8333, 7128],
+[8362, 7145],
 
-/***/ 7128:
+/***/ 7145:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/react.js ***!
   \**********************************************************************************************************************************/
-[7635, 7129],
+[7652, 7146],
 
-/***/ 7129:
+/***/ 7146:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/React.js ***!
   \**************************************************************************************************************************************/
-[7636, 7130, 7131, 7143, 7146, 7147, 7152, 7135, 7157, 7158, 7159, 7137, 7153],
+[7653, 7147, 7148, 7160, 7163, 7164, 7169, 7152, 7174, 7175, 7176, 7154, 7170],
 
-/***/ 7130:
+/***/ 7147:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/object-assign/index.js ***!
   \**************************************************************************************************************************************************/
 5,
 
-/***/ 7131:
+/***/ 7148:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactChildren.js ***!
   \**********************************************************************************************************************************************/
-[7637, 7132, 7135, 7138, 7140],
+[7654, 7149, 7152, 7155, 7157],
 
-/***/ 7132:
+/***/ 7149:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/PooledClass.js ***!
   \********************************************************************************************************************************************/
-[7638, 7133, 7134],
+[7655, 7150, 7151],
 
-/***/ 7133:
+/***/ 7150:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/reactProdInvariant.js ***!
   \***************************************************************************************************************************************************/
 8,
 
-/***/ 7134:
+/***/ 7151:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/fbjs/lib/invariant.js ***!
   \*************************************************************************************************************************************************/
 9,
 
-/***/ 7135:
+/***/ 7152:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactElement.js ***!
   \*********************************************************************************************************************************************/
-[7639, 7130, 7136, 7137, 7139],
+[7656, 7147, 7153, 7154, 7156],
 
-/***/ 7136:
+/***/ 7153:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactCurrentOwner.js ***!
   \**************************************************************************************************************************************************/
 11,
 
-/***/ 7137:
+/***/ 7154:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/fbjs/lib/warning.js ***!
   \***********************************************************************************************************************************************/
-[7640, 7138],
+[7657, 7155],
 
-/***/ 7138:
+/***/ 7155:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/fbjs/lib/emptyFunction.js ***!
   \*****************************************************************************************************************************************************/
 13,
 
-/***/ 7139:
+/***/ 7156:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/canDefineProperty.js ***!
   \**************************************************************************************************************************************************/
 14,
 
-/***/ 7140:
+/***/ 7157:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/traverseAllChildren.js ***!
   \****************************************************************************************************************************************************/
-[7641, 7133, 7136, 7135, 7141, 7134, 7142, 7137],
+[7658, 7150, 7153, 7152, 7158, 7151, 7159, 7154],
 
-/***/ 7141:
+/***/ 7158:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/getIteratorFn.js ***!
   \**********************************************************************************************************************************************/
 16,
 
-/***/ 7142:
+/***/ 7159:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/KeyEscapeUtils.js ***!
   \***********************************************************************************************************************************************/
 17,
 
-/***/ 7143:
+/***/ 7160:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactComponent.js ***!
   \***********************************************************************************************************************************************/
-[7642, 7133, 7144, 7139, 7145, 7134, 7137],
+[7659, 7150, 7161, 7156, 7162, 7151, 7154],
 
-/***/ 7144:
+/***/ 7161:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactNoopUpdateQueue.js ***!
   \*****************************************************************************************************************************************************/
-[7643, 7137],
+[7660, 7154],
 
-/***/ 7145:
+/***/ 7162:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/fbjs/lib/emptyObject.js ***!
   \***************************************************************************************************************************************************/
 20,
 
-/***/ 7146:
+/***/ 7163:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactPureComponent.js ***!
   \***************************************************************************************************************************************************/
-[7644, 7130, 7143, 7144, 7145],
+[7661, 7147, 7160, 7161, 7162],
 
-/***/ 7147:
+/***/ 7164:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactClass.js ***!
   \*******************************************************************************************************************************************/
-[7645, 7133, 7130, 7143, 7135, 7148, 7150, 7144, 7145, 7134, 7149, 7151, 7137],
+[7662, 7150, 7147, 7160, 7152, 7165, 7167, 7161, 7162, 7151, 7166, 7168, 7154],
 
-/***/ 7148:
+/***/ 7165:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactPropTypeLocations.js ***!
   \*******************************************************************************************************************************************************/
-[7646, 7149],
+[7663, 7166],
 
-/***/ 7149:
+/***/ 7166:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/fbjs/lib/keyMirror.js ***!
   \*************************************************************************************************************************************************/
-[7647, 7134],
+[7664, 7151],
 
-/***/ 7150:
+/***/ 7167:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactPropTypeLocationNames.js ***!
   \***********************************************************************************************************************************************************/
 25,
 
-/***/ 7151:
+/***/ 7168:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/~/fbjs/lib/keyOf.js ***!
   \*********************************************************************************************************************************************/
 26,
 
-/***/ 7152:
+/***/ 7169:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactDOMFactories.js ***!
   \**************************************************************************************************************************************************/
-[7648, 7135, 7153],
+[7665, 7152, 7170],
 
-/***/ 7153:
+/***/ 7170:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactElementValidator.js ***!
   \******************************************************************************************************************************************************/
-[7649, 7136, 7154, 7135, 7148, 7155, 7139, 7141, 7137],
+[7666, 7153, 7171, 7152, 7165, 7172, 7156, 7158, 7154],
 
-/***/ 7154:
+/***/ 7171:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactComponentTreeHook.js ***!
   \*******************************************************************************************************************************************************/
-[7650, 7133, 7136, 7134, 7137],
+[7667, 7150, 7153, 7151, 7154],
 
-/***/ 7155:
+/***/ 7172:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/checkReactTypeSpec.js ***!
   \***************************************************************************************************************************************************/
-[7651, 7133, 7150, 7156, 7134, 7137, 7154, 7154],
+[7668, 7150, 7167, 7173, 7151, 7154, 7171, 7171],
 
-/***/ 7156:
+/***/ 7173:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactPropTypesSecret.js ***!
   \*****************************************************************************************************************************************************/
 32,
 
-/***/ 7157:
+/***/ 7174:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactPropTypes.js ***!
   \***********************************************************************************************************************************************/
-[7652, 7135, 7150, 7156, 7138, 7141, 7137],
+[7669, 7152, 7167, 7173, 7155, 7158, 7154],
 
-/***/ 7158:
+/***/ 7175:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/ReactVersion.js ***!
   \*********************************************************************************************************************************************/
 34,
 
-/***/ 7159:
+/***/ 7176:
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/expression-atlas-number-format/~/react/lib/onlyChild.js ***!
   \******************************************************************************************************************************************/
-[7653, 7133, 7135, 7134],
+[7670, 7150, 7152, 7151],
 
-/***/ 7160:
+/***/ 7177:
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/he/he.js ***!
   \*******************************************************************************************/
 833,
 
-/***/ 7161:
+/***/ 7178:
 /*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/util/adjustOutwardLinks.js ***!
   \***************************************************************************************************************/
-1464,
+1479,
 
-/***/ 7162:
+/***/ 7179:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/tooltips/main.jsx ***!
   \*****************************************************************************************************************/
-[8334, 6692, 7163, 7164, 7166, 7167],
+[8363, 6709, 7180, 7181, 7183, 7184],
 
-/***/ 7163:
+/***/ 7180:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/tooltips/GeneTooltip.jsx ***!
   \************************************************************************************************************************/
-[8335, 6692],
+[8364, 6709],
 
-/***/ 7164:
+/***/ 7181:
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/tooltips/Tooltips.less ***!
   \**********************************************************************************************************************/
@@ -22323,17 +22323,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../../~/css-loader!./../../../../../../../~/less-loader!./Tooltips.less */ 7165);
+	var content = __webpack_require__(/*! !../../../../../../../~/css-loader!../../../../../../../~/less-loader!./Tooltips.less */ 7182);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./Tooltips.less", function() {
-				var newContent = require("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./Tooltips.less");
+			module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./Tooltips.less", function() {
+				var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./Tooltips.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -22344,13 +22344,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7165:
+/***/ 7182:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/tooltips/Tooltips.less ***!
   \*****************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -22362,3605 +22362,1681 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7166:
+/***/ 7183:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/tooltips/ContrastTooltip.jsx ***!
   \****************************************************************************************************************************/
-[8337, 6692],
+[8365, 6709],
 
-/***/ 7167:
+/***/ 7184:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/tooltips/FactorTooltip.jsx ***!
   \**************************************************************************************************************************/
-[8338, 6692],
+[8366, 6709],
 
-/***/ 7168:
+/***/ 7185:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/PropTypes.js ***!
   \*************************************************************************************************/
-[8339, 6692],
+[8367, 6709],
 
-/***/ 7169:
+/***/ 7186:
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/main.jsx ***!
   \**************************************************************************************************/
-[8340, 6692, 7168, 7170, 7345, 7351, 7377, 7448, 7462, 7615],
+[8368, 6709, 7185, 7187, 7362, 7368, 7394, 7465, 7479, 7632],
 
-/***/ 7170:
+/***/ 7187:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/download-profiles-button/main.jsx ***!
   \***************************************************************************************************************************/
-[8341, 6692, 7171, 7316, 7321, 7322, 7168, 7323],
+[8369, 6709, 7188, 7333, 7338, 7339, 7185, 7340],
 
-/***/ 7171:
+/***/ 7188:
 /*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Modal.js ***!
   \***************************************************************************************************************/
-[8100, 7172, 7173, 7174, 7243, 7251, 7256, 7257, 7264, 7259, 7265, 6692, 6722, 7266, 7291, 7270, 7300, 7302, 7310, 7311, 7312, 7314, 7303, 7313, 7315, 7309],
+[8113, 7189, 7190, 7191, 7260, 7268, 7273, 7274, 7281, 7276, 7282, 6709, 6739, 7283, 7308, 7287, 7317, 7319, 7327, 7328, 7329, 7331, 7320, 7330, 7332, 7326],
 
-/***/ 7172:
+/***/ 7189:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/objectWithoutProperties.js ***!
   \*****************************************************************************************************************************************************/
 286,
 
-/***/ 7173:
+/***/ 7190:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/classCallCheck.js ***!
   \********************************************************************************************************************************************/
 294,
 
-/***/ 7174:
+/***/ 7191:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
   \*******************************************************************************************************************************************************/
-[7809, 7175],
+[7822, 7192],
 
-/***/ 7175:
+/***/ 7192:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/typeof.js ***!
   \************************************************************************************************************************************/
-[7810, 7176, 7227],
+[7823, 7193, 7244],
 
-/***/ 7176:
+/***/ 7193:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/symbol/iterator.js ***!
   \*********************************************************************************************************************************************/
-[7811, 7177],
+[7824, 7194],
 
-/***/ 7177:
+/***/ 7194:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
   \**********************************************************************************************************************************************************/
-[7812, 7178, 7222, 7226],
+[7825, 7195, 7239, 7243],
 
-/***/ 7178:
+/***/ 7195:
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
   \*******************************************************************************************************************************************************************/
-[7813, 7179, 7182],
+[7826, 7196, 7199],
 
-/***/ 7179:
+/***/ 7196:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
   \**********************************************************************************************************************************************************/
-[7814, 7180, 7181],
+[7827, 7197, 7198],
 
-/***/ 7180:
+/***/ 7197:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
   \***********************************************************************************************************************************************************/
 279,
 
-/***/ 7181:
+/***/ 7198:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_defined.js ***!
   \********************************************************************************************************************************************************/
 276,
 
-/***/ 7182:
+/***/ 7199:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
   \************************************************************************************************************************************************************/
-[7815, 7183, 7184, 7199, 7189, 7200, 7201, 7202, 7218, 7220, 7219],
+[7828, 7200, 7201, 7216, 7206, 7217, 7218, 7219, 7235, 7237, 7236],
 
-/***/ 7183:
+/***/ 7200:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_library.js ***!
   \********************************************************************************************************************************************************/
 302,
 
-/***/ 7184:
+/***/ 7201:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_export.js ***!
   \*******************************************************************************************************************************************************/
-[7784, 7185, 7186, 7187, 7189],
+[7797, 7202, 7203, 7204, 7206],
 
-/***/ 7185:
+/***/ 7202:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_global.js ***!
   \*******************************************************************************************************************************************************/
 255,
 
-/***/ 7186:
+/***/ 7203:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_core.js ***!
   \*****************************************************************************************************************************************************/
 256,
 
-/***/ 7187:
+/***/ 7204:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
   \****************************************************************************************************************************************************/
-[7785, 7188],
+[7798, 7205],
 
-/***/ 7188:
+/***/ 7205:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
   \***********************************************************************************************************************************************************/
 258,
 
-/***/ 7189:
+/***/ 7206:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
   \*****************************************************************************************************************************************************/
-[7786, 7190, 7198, 7194],
+[7799, 7207, 7215, 7211],
 
-/***/ 7190:
+/***/ 7207:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
   \**********************************************************************************************************************************************************/
-[7787, 7191, 7193, 7197, 7194],
+[7800, 7208, 7210, 7214, 7211],
 
-/***/ 7191:
+/***/ 7208:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
   \**********************************************************************************************************************************************************/
-[7788, 7192],
+[7801, 7209],
 
-/***/ 7192:
+/***/ 7209:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
   \**********************************************************************************************************************************************************/
 262,
 
-/***/ 7193:
+/***/ 7210:
 /*!***************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
   \***************************************************************************************************************************************************************/
-[7789, 7194, 7195, 7196],
+[7802, 7211, 7212, 7213],
 
-/***/ 7194:
+/***/ 7211:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
   \************************************************************************************************************************************************************/
-[7790, 7195],
+[7803, 7212],
 
-/***/ 7195:
+/***/ 7212:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
   \******************************************************************************************************************************************************/
 265,
 
-/***/ 7196:
+/***/ 7213:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
   \***********************************************************************************************************************************************************/
-[7791, 7192, 7185],
+[7804, 7209, 7202],
 
-/***/ 7197:
+/***/ 7214:
 /*!*************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
   \*************************************************************************************************************************************************************/
-[7792, 7192],
+[7805, 7209],
 
-/***/ 7198:
+/***/ 7215:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
   \**************************************************************************************************************************************************************/
 268,
 
-/***/ 7199:
+/***/ 7216:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
   \*********************************************************************************************************************************************************/
-[7816, 7189],
+[7829, 7206],
 
-/***/ 7200:
+/***/ 7217:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_has.js ***!
   \****************************************************************************************************************************************************/
 272,
 
-/***/ 7201:
+/***/ 7218:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
   \**********************************************************************************************************************************************************/
 304,
 
-/***/ 7202:
+/***/ 7219:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
   \************************************************************************************************************************************************************/
-[7817, 7203, 7198, 7218, 7189, 7219],
+[7830, 7220, 7215, 7235, 7206, 7236],
 
-/***/ 7203:
+/***/ 7220:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
   \**************************************************************************************************************************************************************/
-[7818, 7191, 7204, 7216, 7213, 7196, 7217],
+[7831, 7208, 7221, 7233, 7230, 7213, 7234],
 
-/***/ 7204:
+/***/ 7221:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
   \***********************************************************************************************************************************************************/
-[7819, 7190, 7191, 7205, 7194],
+[7832, 7207, 7208, 7222, 7211],
 
-/***/ 7205:
+/***/ 7222:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
   \************************************************************************************************************************************************************/
-[7794, 7206, 7216],
+[7807, 7223, 7233],
 
-/***/ 7206:
+/***/ 7223:
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
   \*********************************************************************************************************************************************************************/
-[7795, 7200, 7207, 7210, 7213],
+[7808, 7217, 7224, 7227, 7230],
 
-/***/ 7207:
+/***/ 7224:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
   \***********************************************************************************************************************************************************/
-[7796, 7208, 7181],
+[7809, 7225, 7198],
 
-/***/ 7208:
+/***/ 7225:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
   \********************************************************************************************************************************************************/
-[7797, 7209],
+[7810, 7226],
 
-/***/ 7209:
+/***/ 7226:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
   \****************************************************************************************************************************************************/
 275,
 
-/***/ 7210:
+/***/ 7227:
 /*!***************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
   \***************************************************************************************************************************************************************/
-[7798, 7207, 7211, 7212],
+[7811, 7224, 7228, 7229],
 
-/***/ 7211:
+/***/ 7228:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
   \**********************************************************************************************************************************************************/
-[7799, 7180],
+[7812, 7197],
 
-/***/ 7212:
+/***/ 7229:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
   \*********************************************************************************************************************************************************/
-[7800, 7180],
+[7813, 7197],
 
-/***/ 7213:
+/***/ 7230:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
   \***********************************************************************************************************************************************************/
-[7801, 7214, 7215],
+[7814, 7231, 7232],
 
-/***/ 7214:
+/***/ 7231:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
   \*******************************************************************************************************************************************************/
-[7802, 7185],
+[7815, 7202],
 
-/***/ 7215:
+/***/ 7232:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
   \****************************************************************************************************************************************************/
 283,
 
-/***/ 7216:
+/***/ 7233:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_enum-bug-keys.js ***!
   \**************************************************************************************************************************************************************/
 284,
 
-/***/ 7217:
+/***/ 7234:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_html.js ***!
   \*****************************************************************************************************************************************************/
-[7820, 7185],
+[7833, 7202],
 
-/***/ 7218:
+/***/ 7235:
 /*!******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
   \******************************************************************************************************************************************************************/
-[7821, 7190, 7200, 7219],
+[7834, 7207, 7217, 7236],
 
-/***/ 7219:
+/***/ 7236:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
   \****************************************************************************************************************************************************/
-[7822, 7214, 7215, 7185],
+[7835, 7231, 7232, 7202],
 
-/***/ 7220:
+/***/ 7237:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
   \***********************************************************************************************************************************************************/
-[7823, 7200, 7221, 7213],
+[7836, 7217, 7238, 7230],
 
-/***/ 7221:
+/***/ 7238:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
   \**********************************************************************************************************************************************************/
-[7808, 7181],
+[7821, 7198],
 
-/***/ 7222:
+/***/ 7239:
 /*!****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
   \****************************************************************************************************************************************************************/
-[7824, 7223, 7185, 7189, 7201, 7219],
+[7837, 7240, 7202, 7206, 7218, 7236],
 
-/***/ 7223:
+/***/ 7240:
 /*!******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
   \******************************************************************************************************************************************************************/
-[7825, 7224, 7225, 7201, 7207, 7182],
+[7838, 7241, 7242, 7218, 7224, 7199],
 
-/***/ 7224:
+/***/ 7241:
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
   \*******************************************************************************************************************************************************************/
 314,
 
-/***/ 7225:
+/***/ 7242:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
   \**********************************************************************************************************************************************************/
 315,
 
-/***/ 7226:
+/***/ 7243:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
   \********************************************************************************************************************************************************/
-[7826, 7219],
+[7839, 7236],
 
-/***/ 7227:
+/***/ 7244:
 /*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/symbol.js ***!
   \************************************************************************************************************************************/
-[7827, 7228],
+[7840, 7245],
 
-/***/ 7228:
+/***/ 7245:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
   \*******************************************************************************************************************************************************/
-[7828, 7229, 7240, 7241, 7242, 7186],
+[7841, 7246, 7257, 7258, 7259, 7203],
 
-/***/ 7229:
+/***/ 7246:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
   \**********************************************************************************************************************************************************/
-[7829, 7185, 7200, 7194, 7184, 7199, 7230, 7195, 7214, 7218, 7215, 7219, 7226, 7231, 7232, 7233, 7236, 7191, 7207, 7197, 7198, 7203, 7237, 7239, 7190, 7205, 7238, 7235, 7234, 7183, 7189],
+[7842, 7202, 7217, 7211, 7201, 7216, 7247, 7212, 7231, 7235, 7232, 7236, 7243, 7248, 7249, 7250, 7253, 7208, 7224, 7214, 7215, 7220, 7254, 7256, 7207, 7222, 7255, 7252, 7251, 7200, 7206],
 
-/***/ 7230:
+/***/ 7247:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
   \*****************************************************************************************************************************************************/
-[7830, 7215, 7192, 7200, 7190, 7195],
+[7843, 7232, 7209, 7217, 7207, 7212],
 
-/***/ 7231:
+/***/ 7248:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
   \***********************************************************************************************************************************************************/
-[7831, 7185, 7186, 7183, 7226, 7190],
+[7844, 7202, 7203, 7200, 7243, 7207],
 
-/***/ 7232:
+/***/ 7249:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
   \******************************************************************************************************************************************************/
-[7832, 7205, 7207],
+[7845, 7222, 7224],
 
-/***/ 7233:
+/***/ 7250:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
   \**********************************************************************************************************************************************************/
-[7833, 7205, 7234, 7235],
+[7846, 7222, 7251, 7252],
 
-/***/ 7234:
+/***/ 7251:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gops.js ***!
   \************************************************************************************************************************************************************/
 292,
 
-/***/ 7235:
+/***/ 7252:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-pie.js ***!
   \***********************************************************************************************************************************************************/
 285,
 
-/***/ 7236:
+/***/ 7253:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
   \*********************************************************************************************************************************************************/
-[7834, 7209],
+[7847, 7226],
 
-/***/ 7237:
+/***/ 7254:
 /*!****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
   \****************************************************************************************************************************************************************/
-[7835, 7207, 7238],
+[7848, 7224, 7255],
 
-/***/ 7238:
+/***/ 7255:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
   \************************************************************************************************************************************************************/
-[7836, 7206, 7216],
+[7849, 7223, 7233],
 
-/***/ 7239:
+/***/ 7256:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
   \************************************************************************************************************************************************************/
-[7837, 7235, 7198, 7207, 7197, 7200, 7193, 7194],
+[7850, 7252, 7215, 7224, 7214, 7217, 7210, 7211],
 
-/***/ 7240:
+/***/ 7257:
 /*!********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
   \********************************************************************************************************************************************************************/
 328,
 
-/***/ 7241:
+/***/ 7258:
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
   \*************************************************************************************************************************************************************************/
-[7838, 7231],
+[7851, 7248],
 
-/***/ 7242:
+/***/ 7259:
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
   \*********************************************************************************************************************************************************************/
-[7839, 7231],
+[7852, 7248],
 
-/***/ 7243:
+/***/ 7260:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/inherits.js ***!
   \**************************************************************************************************************************************/
-[7840, 7244, 7248, 7175],
+[7853, 7261, 7265, 7192],
 
-/***/ 7244:
+/***/ 7261:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/set-prototype-of.js ***!
   \*****************************************************************************************************************************************************/
-[7841, 7245],
+[7854, 7262],
 
-/***/ 7245:
+/***/ 7262:
 /*!******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
   \******************************************************************************************************************************************************************/
-[7842, 7246, 7186],
+[7855, 7263, 7203],
 
-/***/ 7246:
+/***/ 7263:
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \***************************************************************************************************************************************************************************/
-[7843, 7184, 7247],
+[7856, 7201, 7264],
 
-/***/ 7247:
+/***/ 7264:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
   \**********************************************************************************************************************************************************/
-[7844, 7192, 7191, 7187, 7239],
+[7857, 7209, 7208, 7204, 7256],
 
-/***/ 7248:
+/***/ 7265:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/create.js ***!
   \*******************************************************************************************************************************************/
-[7845, 7249],
+[7858, 7266],
 
-/***/ 7249:
+/***/ 7266:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
   \********************************************************************************************************************************************************/
-[7846, 7250, 7186],
+[7859, 7267, 7203],
 
-/***/ 7250:
+/***/ 7267:
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
   \*****************************************************************************************************************************************************************/
-[7847, 7184, 7203],
+[7860, 7201, 7220],
 
-/***/ 7251:
+/***/ 7268:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/helpers/extends.js ***!
   \*************************************************************************************************************************************/
-[7803, 7252],
+[7816, 7269],
 
-/***/ 7252:
+/***/ 7269:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/assign.js ***!
   \*******************************************************************************************************************************************/
-[7804, 7253],
+[7817, 7270],
 
-/***/ 7253:
+/***/ 7270:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
   \********************************************************************************************************************************************************/
-[7805, 7254, 7186],
+[7818, 7271, 7203],
 
-/***/ 7254:
+/***/ 7271:
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
   \*****************************************************************************************************************************************************************/
-[7806, 7184, 7255],
+[7819, 7201, 7272],
 
-/***/ 7255:
+/***/ 7272:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
   \**************************************************************************************************************************************************************/
-[7807, 7205, 7234, 7235, 7221, 7208, 7195],
+[7820, 7222, 7251, 7252, 7238, 7225, 7212],
 
-/***/ 7256:
+/***/ 7273:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/classnames/index.js ***!
   \************************************************************************************************************************/
 339,
 
-/***/ 7257:
+/***/ 7274:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/index.js ***!
   \********************************************************************************************************************************/
-[8101, 7258, 7260, 7261],
+[8114, 7275, 7277, 7278],
 
-/***/ 7258:
+/***/ 7275:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/on.js ***!
   \*****************************************************************************************************************************/
-[8065, 7259],
+[8115, 7276],
 
-/***/ 7259:
+/***/ 7276:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/inDOM.js ***!
   \******************************************************************************************************************************/
-1075,
+1081,
 
-/***/ 7260:
+/***/ 7277:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/off.js ***!
   \******************************************************************************************************************************/
-[8074, 7259],
+[8116, 7276],
 
-/***/ 7261:
+/***/ 7278:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/events/filter.js ***!
   \*********************************************************************************************************************************/
-[8102, 7262, 7263],
+[8117, 7279, 7280],
 
-/***/ 7262:
+/***/ 7279:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/contains.js ***!
   \**********************************************************************************************************************************/
-[8068, 7259],
+[8079, 7276],
 
-/***/ 7263:
+/***/ 7280:
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/query/querySelectorAll.js ***!
   \******************************************************************************************************************************************/
-1127,
+1132,
 
-/***/ 7264:
+/***/ 7281:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/ownerDocument.js ***!
   \*********************************************************************************************************************************/
 1079,
 
-/***/ 7265:
+/***/ 7282:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/scrollbarSize.js ***!
   \**************************************************************************************************************************************/
-[8103, 7259],
+[8118, 7276],
 
-/***/ 7266:
+/***/ 7283:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Modal.js ***!
   \********************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8119, 6709, 7284, 7285, 7287, 7288, 7292, 7289, 7311, 7314, 7301, 7315, 7316, 7291],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*eslint-disable react/prop-types */
-	
-	
-	var _react = __webpack_require__(/*! react */ 6692);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _warning = __webpack_require__(/*! warning */ 7267);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	var _componentOrElement = __webpack_require__(/*! react-prop-types/lib/componentOrElement */ 7268);
-	
-	var _componentOrElement2 = _interopRequireDefault(_componentOrElement);
-	
-	var _elementType = __webpack_require__(/*! react-prop-types/lib/elementType */ 7270);
-	
-	var _elementType2 = _interopRequireDefault(_elementType);
-	
-	var _Portal = __webpack_require__(/*! ./Portal */ 7271);
-	
-	var _Portal2 = _interopRequireDefault(_Portal);
-	
-	var _ModalManager = __webpack_require__(/*! ./ModalManager */ 7275);
-	
-	var _ModalManager2 = _interopRequireDefault(_ModalManager);
-	
-	var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 7272);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	var _addEventListener = __webpack_require__(/*! ./utils/addEventListener */ 7294);
-	
-	var _addEventListener2 = _interopRequireDefault(_addEventListener);
-	
-	var _addFocusListener = __webpack_require__(/*! ./utils/addFocusListener */ 7297);
-	
-	var _addFocusListener2 = _interopRequireDefault(_addFocusListener);
-	
-	var _inDOM = __webpack_require__(/*! dom-helpers/util/inDOM */ 7284);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	var _activeElement = __webpack_require__(/*! dom-helpers/activeElement */ 7298);
-	
-	var _activeElement2 = _interopRequireDefault(_activeElement);
-	
-	var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 7299);
-	
-	var _contains2 = _interopRequireDefault(_contains);
-	
-	var _getContainer = __webpack_require__(/*! ./utils/getContainer */ 7274);
-	
-	var _getContainer2 = _interopRequireDefault(_getContainer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var modalManager = new _ModalManager2.default();
-	
-	/**
-	 * Love them or hate them, `<Modal/>` provides a solid foundation for creating dialogs, lightboxes, or whatever else.
-	 * The Modal component renders its `children` node in front of a backdrop component.
-	 *
-	 * The Modal offers a few helpful features over using just a `<Portal/>` component and some styles:
-	 *
-	 * - Manages dialog stacking when one-at-a-time just isn't enough.
-	 * - Creates a backdrop, for disabling interaction below the modal.
-	 * - It properly manages focus; moving to the modal content, and keeping it there until the modal is closed.
-	 * - It disables scrolling of the page content while open.
-	 * - Adds the appropriate ARIA roles are automatically.
-	 * - Easily pluggable animations via a `<Transition/>` component.
-	 *
-	 * Note that, in the same way the backdrop element prevents users from clicking or interacting
-	 * with the page content underneath the Modal, Screen readers also need to be signaled to not to
-	 * interact with page content while the Modal is open. To do this, we use a common technique of applying
-	 * the `aria-hidden='true'` attribute to the non-Modal elements in the Modal `container`. This means that for
-	 * a Modal to be truly modal, it should have a `container` that is _outside_ your app's
-	 * React hierarchy (such as the default: document.body).
-	 */
-	var Modal = _react2.default.createClass({
-	  displayName: 'Modal',
-	
-	
-	  propTypes: _extends({}, _Portal2.default.propTypes, {
-	
-	    /**
-	     * Set the visibility of the Modal
-	     */
-	    show: _react2.default.PropTypes.bool,
-	
-	    /**
-	     * A Node, Component instance, or function that returns either. The Modal is appended to it's container element.
-	     *
-	     * For the sake of assistive technologies, the container should usually be the document body, so that the rest of the
-	     * page content can be placed behind a virtual backdrop as well as a visual one.
-	     */
-	    container: _react2.default.PropTypes.oneOfType([_componentOrElement2.default, _react2.default.PropTypes.func]),
-	
-	    /**
-	     * A callback fired when the Modal is opening.
-	     */
-	    onShow: _react2.default.PropTypes.func,
-	
-	    /**
-	     * A callback fired when either the backdrop is clicked, or the escape key is pressed.
-	     *
-	     * The `onHide` callback only signals intent from the Modal,
-	     * you must actually set the `show` prop to `false` for the Modal to close.
-	     */
-	    onHide: _react2.default.PropTypes.func,
-	
-	    /**
-	     * Include a backdrop component.
-	     */
-	    backdrop: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.oneOf(['static'])]),
-	
-	    /**
-	     * A function that returns a backdrop component. Useful for custom
-	     * backdrop rendering.
-	     *
-	     * ```js
-	     *  renderBackdrop={props => <MyBackdrop {...props} />}
-	     * ```
-	     */
-	    renderBackdrop: _react2.default.PropTypes.func,
-	
-	    /**
-	     * A callback fired when the escape key, if specified in `keyboard`, is pressed.
-	     */
-	    onEscapeKeyUp: _react2.default.PropTypes.func,
-	
-	    /**
-	     * A callback fired when the backdrop, if specified, is clicked.
-	     */
-	    onBackdropClick: _react2.default.PropTypes.func,
-	
-	    /**
-	     * A style object for the backdrop component.
-	     */
-	    backdropStyle: _react2.default.PropTypes.object,
-	
-	    /**
-	     * A css class or classes for the backdrop component.
-	     */
-	    backdropClassName: _react2.default.PropTypes.string,
-	
-	    /**
-	     * A css class or set of classes applied to the modal container when the modal is open,
-	     * and removed when it is closed.
-	     */
-	    containerClassName: _react2.default.PropTypes.string,
-	
-	    /**
-	     * Close the modal when escape key is pressed
-	     */
-	    keyboard: _react2.default.PropTypes.bool,
-	
-	    /**
-	     * A `<Transition/>` component to use for the dialog and backdrop components.
-	     */
-	    transition: _elementType2.default,
-	
-	    /**
-	     * The `timeout` of the dialog transition if specified. This number is used to ensure that
-	     * transition callbacks are always fired, even if browser transition events are canceled.
-	     *
-	     * See the Transition `timeout` prop for more infomation.
-	     */
-	    dialogTransitionTimeout: _react2.default.PropTypes.number,
-	
-	    /**
-	     * The `timeout` of the backdrop transition if specified. This number is used to
-	     * ensure that transition callbacks are always fired, even if browser transition events are canceled.
-	     *
-	     * See the Transition `timeout` prop for more infomation.
-	     */
-	    backdropTransitionTimeout: _react2.default.PropTypes.number,
-	
-	    /**
-	     * When `true` The modal will automatically shift focus to itself when it opens, and
-	     * replace it to the last focused element when it closes. This also
-	     * works correctly with any Modal children that have the `autoFocus` prop.
-	     *
-	     * Generally this should never be set to `false` as it makes the Modal less
-	     * accessible to assistive technologies, like screen readers.
-	     */
-	    autoFocus: _react2.default.PropTypes.bool,
-	
-	    /**
-	     * When `true` The modal will prevent focus from leaving the Modal while open.
-	     *
-	     * Generally this should never be set to `false` as it makes the Modal less
-	     * accessible to assistive technologies, like screen readers.
-	     */
-	    enforceFocus: _react2.default.PropTypes.bool,
-	
-	    /**
-	     * Callback fired before the Modal transitions in
-	     */
-	    onEnter: _react2.default.PropTypes.func,
-	
-	    /**
-	     * Callback fired as the Modal begins to transition in
-	     */
-	    onEntering: _react2.default.PropTypes.func,
-	
-	    /**
-	     * Callback fired after the Modal finishes transitioning in
-	     */
-	    onEntered: _react2.default.PropTypes.func,
-	
-	    /**
-	     * Callback fired right before the Modal transitions out
-	     */
-	    onExit: _react2.default.PropTypes.func,
-	
-	    /**
-	     * Callback fired as the Modal begins to transition out
-	     */
-	    onExiting: _react2.default.PropTypes.func,
-	
-	    /**
-	     * Callback fired after the Modal finishes transitioning out
-	     */
-	    onExited: _react2.default.PropTypes.func,
-	
-	    /**
-	     * A ModalManager instance used to track and manage the state of open
-	     * Modals. Useful when customizing how modals interact within a container
-	     */
-	    manager: _react2.default.PropTypes.object.isRequired
-	  }),
-	
-	  getDefaultProps: function getDefaultProps() {
-	    var noop = function noop() {};
-	
-	    return {
-	      show: false,
-	      backdrop: true,
-	      keyboard: true,
-	      autoFocus: true,
-	      enforceFocus: true,
-	      onHide: noop,
-	      manager: modalManager,
-	      renderBackdrop: function renderBackdrop(props) {
-	        return _react2.default.createElement('div', props);
-	      }
-	    };
-	  },
-	  omitProps: function omitProps(props, propTypes) {
-	
-	    var keys = Object.keys(props);
-	    var newProps = {};
-	    keys.map(function (prop) {
-	      if (!Object.prototype.hasOwnProperty.call(propTypes, prop)) {
-	        newProps[prop] = props[prop];
-	      }
-	    });
-	
-	    return newProps;
-	  },
-	  getInitialState: function getInitialState() {
-	    return { exited: !this.props.show };
-	  },
-	  render: function render() {
-	    var _props = this.props,
-	        show = _props.show,
-	        container = _props.container,
-	        children = _props.children,
-	        Transition = _props.transition,
-	        backdrop = _props.backdrop,
-	        dialogTransitionTimeout = _props.dialogTransitionTimeout,
-	        className = _props.className,
-	        style = _props.style,
-	        onExit = _props.onExit,
-	        onExiting = _props.onExiting,
-	        onEnter = _props.onEnter,
-	        onEntering = _props.onEntering,
-	        onEntered = _props.onEntered;
-	
-	
-	    var dialog = _react2.default.Children.only(children);
-	    var filteredProps = this.omitProps(this.props, Modal.propTypes);
-	
-	    var mountModal = show || Transition && !this.state.exited;
-	    if (!mountModal) {
-	      return null;
-	    }
-	
-	    var _dialog$props = dialog.props,
-	        role = _dialog$props.role,
-	        tabIndex = _dialog$props.tabIndex;
-	
-	
-	    if (role === undefined || tabIndex === undefined) {
-	      dialog = (0, _react.cloneElement)(dialog, {
-	        role: role === undefined ? 'document' : role,
-	        tabIndex: tabIndex == null ? '-1' : tabIndex
-	      });
-	    }
-	
-	    if (Transition) {
-	      dialog = _react2.default.createElement(
-	        Transition,
-	        {
-	          transitionAppear: true,
-	          unmountOnExit: true,
-	          'in': show,
-	          timeout: dialogTransitionTimeout,
-	          onExit: onExit,
-	          onExiting: onExiting,
-	          onExited: this.handleHidden,
-	          onEnter: onEnter,
-	          onEntering: onEntering,
-	          onEntered: onEntered
-	        },
-	        dialog
-	      );
-	    }
-	
-	    return _react2.default.createElement(
-	      _Portal2.default,
-	      {
-	        ref: this.setMountNode,
-	        container: container
-	      },
-	      _react2.default.createElement(
-	        'div',
-	        _extends({
-	          ref: 'modal',
-	          role: role || 'dialog'
-	        }, filteredProps, {
-	          style: style,
-	          className: className
-	        }),
-	        backdrop && this.renderBackdrop(),
-	        dialog
-	      )
-	    );
-	  },
-	  renderBackdrop: function renderBackdrop() {
-	    var _this = this;
-	
-	    var _props2 = this.props,
-	        backdropStyle = _props2.backdropStyle,
-	        backdropClassName = _props2.backdropClassName,
-	        renderBackdrop = _props2.renderBackdrop,
-	        Transition = _props2.transition,
-	        backdropTransitionTimeout = _props2.backdropTransitionTimeout;
-	
-	
-	    var backdropRef = function backdropRef(ref) {
-	      return _this.backdrop = ref;
-	    };
-	
-	    var backdrop = _react2.default.createElement('div', {
-	      ref: backdropRef,
-	      style: this.props.backdropStyle,
-	      className: this.props.backdropClassName,
-	      onClick: this.handleBackdropClick
-	    });
-	
-	    if (Transition) {
-	      backdrop = _react2.default.createElement(
-	        Transition,
-	        { transitionAppear: true,
-	          'in': this.props.show,
-	          timeout: backdropTransitionTimeout
-	        },
-	        renderBackdrop({
-	          ref: backdropRef,
-	          style: backdropStyle,
-	          className: backdropClassName,
-	          onClick: this.handleBackdropClick
-	        })
-	      );
-	    }
-	
-	    return backdrop;
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.show) {
-	      this.setState({ exited: false });
-	    } else if (!nextProps.transition) {
-	      // Otherwise let handleHidden take care of marking exited.
-	      this.setState({ exited: true });
-	    }
-	  },
-	  componentWillUpdate: function componentWillUpdate(nextProps) {
-	    if (!this.props.show && nextProps.show) {
-	      this.checkForFocus();
-	    }
-	  },
-	  componentDidMount: function componentDidMount() {
-	    if (this.props.show) {
-	      this.onShow();
-	    }
-	  },
-	  componentDidUpdate: function componentDidUpdate(prevProps) {
-	    var transition = this.props.transition;
-	
-	
-	    if (prevProps.show && !this.props.show && !transition) {
-	      // Otherwise handleHidden will call this.
-	      this.onHide();
-	    } else if (!prevProps.show && this.props.show) {
-	      this.onShow();
-	    }
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    var _props3 = this.props,
-	        show = _props3.show,
-	        transition = _props3.transition;
-	
-	
-	    if (show || transition && !this.state.exited) {
-	      this.onHide();
-	    }
-	  },
-	  onShow: function onShow() {
-	    var doc = (0, _ownerDocument2.default)(this);
-	    var container = (0, _getContainer2.default)(this.props.container, doc.body);
-	
-	    this.props.manager.add(this, container, this.props.containerClassName);
-	
-	    this._onDocumentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleDocumentKeyUp);
-	
-	    this._onFocusinListener = (0, _addFocusListener2.default)(this.enforceFocus);
-	
-	    this.focus();
-	
-	    if (this.props.onShow) {
-	      this.props.onShow();
-	    }
-	  },
-	  onHide: function onHide() {
-	    this.props.manager.remove(this);
-	
-	    this._onDocumentKeyupListener.remove();
-	
-	    this._onFocusinListener.remove();
-	
-	    this.restoreLastFocus();
-	  },
-	  setMountNode: function setMountNode(ref) {
-	    this.mountNode = ref ? ref.getMountNode() : ref;
-	  },
-	  handleHidden: function handleHidden() {
-	    this.setState({ exited: true });
-	    this.onHide();
-	
-	    if (this.props.onExited) {
-	      var _props4;
-	
-	      (_props4 = this.props).onExited.apply(_props4, arguments);
-	    }
-	  },
-	  handleBackdropClick: function handleBackdropClick(e) {
-	    if (e.target !== e.currentTarget) {
-	      return;
-	    }
-	
-	    if (this.props.onBackdropClick) {
-	      this.props.onBackdropClick(e);
-	    }
-	
-	    if (this.props.backdrop === true) {
-	      this.props.onHide();
-	    }
-	  },
-	  handleDocumentKeyUp: function handleDocumentKeyUp(e) {
-	    if (this.props.keyboard && e.keyCode === 27 && this.isTopModal()) {
-	      if (this.props.onEscapeKeyUp) {
-	        this.props.onEscapeKeyUp(e);
-	      }
-	      this.props.onHide();
-	    }
-	  },
-	  checkForFocus: function checkForFocus() {
-	    if (_inDOM2.default) {
-	      this.lastFocus = (0, _activeElement2.default)();
-	    }
-	  },
-	  focus: function focus() {
-	    var autoFocus = this.props.autoFocus;
-	    var modalContent = this.getDialogElement();
-	    var current = (0, _activeElement2.default)((0, _ownerDocument2.default)(this));
-	    var focusInModal = current && (0, _contains2.default)(modalContent, current);
-	
-	    if (modalContent && autoFocus && !focusInModal) {
-	      this.lastFocus = current;
-	
-	      if (!modalContent.hasAttribute('tabIndex')) {
-	        modalContent.setAttribute('tabIndex', -1);
-	        (0, _warning2.default)(false, 'The modal content node does not accept focus. ' + 'For the benefit of assistive technologies, the tabIndex of the node is being set to "-1".');
-	      }
-	
-	      modalContent.focus();
-	    }
-	  },
-	  restoreLastFocus: function restoreLastFocus() {
-	    // Support: <=IE11 doesn't support `focus()` on svg elements (RB: #917)
-	    if (this.lastFocus && this.lastFocus.focus) {
-	      this.lastFocus.focus();
-	      this.lastFocus = null;
-	    }
-	  },
-	  enforceFocus: function enforceFocus() {
-	    var enforceFocus = this.props.enforceFocus;
-	
-	
-	    if (!enforceFocus || !this.isMounted() || !this.isTopModal()) {
-	      return;
-	    }
-	
-	    var active = (0, _activeElement2.default)((0, _ownerDocument2.default)(this));
-	    var modal = this.getDialogElement();
-	
-	    if (modal && modal !== active && !(0, _contains2.default)(modal, active)) {
-	      modal.focus();
-	    }
-	  },
-	
-	
-	  //instead of a ref, which might conflict with one the parent applied.
-	  getDialogElement: function getDialogElement() {
-	    var node = this.refs.modal;
-	    return node && node.lastChild;
-	  },
-	  isTopModal: function isTopModal() {
-	    return this.props.manager.isTopModal(this);
-	  }
-	});
-	
-	Modal.Manager = _ModalManager2.default;
-	
-	exports.default = Modal;
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7267:
+/***/ 7284:
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/warning/browser.js ***!
   \***********************************************************************************************************************/
 352,
 
-/***/ 7268:
+/***/ 7285:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/componentOrElement.js ***!
   \***********************************************************************************************************************************************/
-[8105, 6692, 7269],
+[8120, 6709, 7286],
 
-/***/ 7269:
+/***/ 7286:
 /*!*************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
   \*************************************************************************************************************************************************************/
 341,
 
-/***/ 7270:
+/***/ 7287:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/elementType.js ***!
   \****************************************************************************************************************************************/
-[7848, 6692, 7269],
+[7861, 6709, 7286],
 
-/***/ 7271:
+/***/ 7288:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Portal.js ***!
   \*********************************************************************************************************************************/
-[8106, 6692, 6722, 7268, 7272, 7274],
+[8121, 6709, 6739, 7285, 7289, 7291],
 
-/***/ 7272:
+/***/ 7289:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/ownerDocument.js ***!
   \**********************************************************************************************************************************************/
-[8075, 6722, 7273],
+[8088, 6739, 7290],
 
-/***/ 7273:
+/***/ 7290:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/ownerDocument.js ***!
   \**************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1102,
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = ownerDocument;
-	function ownerDocument(node) {
-	  return node && node.ownerDocument || document;
-	}
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 7274:
+/***/ 7291:
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/getContainer.js ***!
   \*********************************************************************************************************************************************/
-[8107, 6722],
+[8122, 6739],
 
-/***/ 7275:
+/***/ 7292:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/ModalManager.js ***!
   \***************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8123, 7293, 7303, 7307, 7308, 7310],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _style = __webpack_require__(/*! dom-helpers/style */ 7276);
-	
-	var _style2 = _interopRequireDefault(_style);
-	
-	var _class = __webpack_require__(/*! dom-helpers/class */ 7286);
-	
-	var _class2 = _interopRequireDefault(_class);
-	
-	var _scrollbarSize = __webpack_require__(/*! dom-helpers/util/scrollbarSize */ 7290);
-	
-	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
-	
-	var _isOverflowing = __webpack_require__(/*! ./utils/isOverflowing */ 7291);
-	
-	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
-	
-	var _manageAriaHidden = __webpack_require__(/*! ./utils/manageAriaHidden */ 7293);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function findIndexOf(arr, cb) {
-	  var idx = -1;
-	  arr.some(function (d, i) {
-	    if (cb(d, i)) {
-	      idx = i;
-	      return true;
-	    }
-	  });
-	  return idx;
-	}
-	
-	function findContainer(data, modal) {
-	  return findIndexOf(data, function (d) {
-	    return d.modals.indexOf(modal) !== -1;
-	  });
-	}
-	
-	function setContainerStyle(state, container) {
-	  var style = { overflow: 'hidden' };
-	
-	  // we are only interested in the actual `style` here
-	  // becasue we will override it
-	  state.style = {
-	    overflow: container.style.overflow,
-	    paddingRight: container.style.paddingRight
-	  };
-	
-	  if (state.overflowing) {
-	    // use computed style, here to get the real padding
-	    // to add our scrollbar width
-	    style.paddingRight = parseInt((0, _style2.default)(container, 'paddingRight') || 0, 10) + (0, _scrollbarSize2.default)() + 'px';
-	  }
-	
-	  (0, _style2.default)(container, style);
-	}
-	
-	function removeContainerStyle(_ref, container) {
-	  var style = _ref.style;
-	
-	
-	  Object.keys(style).forEach(function (key) {
-	    return container.style[key] = style[key];
-	  });
-	}
-	/**
-	 * Proper state managment for containers and the modals in those containers.
-	 *
-	 * @internal Used by the Modal to ensure proper styling of containers.
-	 */
-	
-	var ModalManager = function () {
-	  function ModalManager() {
-	    var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-	        _ref2$hideSiblingNode = _ref2.hideSiblingNodes,
-	        hideSiblingNodes = _ref2$hideSiblingNode === undefined ? true : _ref2$hideSiblingNode,
-	        _ref2$handleContainer = _ref2.handleContainerOverflow,
-	        handleContainerOverflow = _ref2$handleContainer === undefined ? true : _ref2$handleContainer;
-	
-	    _classCallCheck(this, ModalManager);
-	
-	    this.hideSiblingNodes = hideSiblingNodes;
-	    this.handleContainerOverflow = handleContainerOverflow;
-	    this.modals = [];
-	    this.containers = [];
-	    this.data = [];
-	  }
-	
-	  _createClass(ModalManager, [{
-	    key: 'add',
-	    value: function add(modal, container, className) {
-	      var modalIdx = this.modals.indexOf(modal);
-	      var containerIdx = this.containers.indexOf(container);
-	
-	      if (modalIdx !== -1) {
-	        return modalIdx;
-	      }
-	
-	      modalIdx = this.modals.length;
-	      this.modals.push(modal);
-	
-	      if (this.hideSiblingNodes) {
-	        (0, _manageAriaHidden.hideSiblings)(container, modal.mountNode);
-	      }
-	
-	      if (containerIdx !== -1) {
-	        this.data[containerIdx].modals.push(modal);
-	        return modalIdx;
-	      }
-	
-	      var data = {
-	        modals: [modal],
-	        //right now only the first modal of a container will have its classes applied
-	        classes: className ? className.split(/\s+/) : [],
-	
-	        overflowing: (0, _isOverflowing2.default)(container)
-	      };
-	
-	      if (this.handleContainerOverflow) {
-	        setContainerStyle(data, container);
-	      }
-	
-	      data.classes.forEach(_class2.default.addClass.bind(null, container));
-	
-	      this.containers.push(container);
-	      this.data.push(data);
-	
-	      return modalIdx;
-	    }
-	  }, {
-	    key: 'remove',
-	    value: function remove(modal) {
-	      var modalIdx = this.modals.indexOf(modal);
-	
-	      if (modalIdx === -1) {
-	        return;
-	      }
-	
-	      var containerIdx = findContainer(this.data, modal);
-	      var data = this.data[containerIdx];
-	      var container = this.containers[containerIdx];
-	
-	      data.modals.splice(data.modals.indexOf(modal), 1);
-	
-	      this.modals.splice(modalIdx, 1);
-	
-	      // if that was the last modal in a container,
-	      // clean up the container
-	      if (data.modals.length === 0) {
-	        data.classes.forEach(_class2.default.removeClass.bind(null, container));
-	
-	        if (this.handleContainerOverflow) {
-	          removeContainerStyle(data, container);
-	        }
-	
-	        if (this.hideSiblingNodes) {
-	          (0, _manageAriaHidden.showSiblings)(container, modal.mountNode);
-	        }
-	        this.containers.splice(containerIdx, 1);
-	        this.data.splice(containerIdx, 1);
-	      } else if (this.hideSiblingNodes) {
-	        //otherwise make sure the next top modal is visible to a SR
-	        (0, _manageAriaHidden.ariaHidden)(false, data.modals[data.modals.length - 1].mountNode);
-	      }
-	    }
-	  }, {
-	    key: 'isTopModal',
-	    value: function isTopModal(modal) {
-	      return !!this.modals.length && this.modals[this.modals.length - 1] === modal;
-	    }
-	  }]);
-	
-	  return ModalManager;
-	}();
-	
-	exports.default = ModalManager;
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7276:
+/***/ 7293:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/style/index.js ***!
   \************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8124, 7294, 7296, 7298, 7299, 7300, 7302],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = style;
-	
-	var _camelizeStyle = __webpack_require__(/*! ../util/camelizeStyle */ 7277);
-	
-	var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
-	
-	var _hyphenateStyle = __webpack_require__(/*! ../util/hyphenateStyle */ 7279);
-	
-	var _hyphenateStyle2 = _interopRequireDefault(_hyphenateStyle);
-	
-	var _getComputedStyle2 = __webpack_require__(/*! ./getComputedStyle */ 7281);
-	
-	var _getComputedStyle3 = _interopRequireDefault(_getComputedStyle2);
-	
-	var _removeStyle = __webpack_require__(/*! ./removeStyle */ 7282);
-	
-	var _removeStyle2 = _interopRequireDefault(_removeStyle);
-	
-	var _properties = __webpack_require__(/*! ../transition/properties */ 7283);
-	
-	var _isTransform = __webpack_require__(/*! ../transition/isTransform */ 7285);
-	
-	var _isTransform2 = _interopRequireDefault(_isTransform);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function style(node, property, value) {
-	  var css = '';
-	  var transforms = '';
-	  var props = property;
-	
-	  if (typeof property === 'string') {
-	    if (value === undefined) {
-	      return node.style[(0, _camelizeStyle2.default)(property)] || (0, _getComputedStyle3.default)(node).getPropertyValue((0, _hyphenateStyle2.default)(property));
-	    } else {
-	      (props = {})[property] = value;
-	    }
-	  }
-	
-	  Object.keys(props).forEach(function (key) {
-	    var value = props[key];
-	    if (!value && value !== 0) {
-	      (0, _removeStyle2.default)(node, (0, _hyphenateStyle2.default)(key));
-	    } else if ((0, _isTransform2.default)(key)) {
-	      transforms += key + '(' + value + ') ';
-	    } else {
-	      css += (0, _hyphenateStyle2.default)(key) + ': ' + value + ';';
-	    }
-	  });
-	
-	  if (transforms) {
-	    css += _properties.transform + ': ' + transforms + ';';
-	  }
-	
-	  node.style.cssText += ';' + css;
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7277:
+/***/ 7294:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/util/camelizeStyle.js ***!
   \*******************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8125, 7295],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = camelizeStyleName;
-	
-	var _camelize = __webpack_require__(/*! ./camelize */ 7278);
-	
-	var _camelize2 = _interopRequireDefault(_camelize);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var msPattern = /^-ms-/; /**
-	                          * Copyright 2014-2015, Facebook, Inc.
-	                          * All rights reserved.
-	                          * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/camelizeStyleName.js
-	                          */
-	function camelizeStyleName(string) {
-	  return (0, _camelize2.default)(string.replace(msPattern, 'ms-'));
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7278:
+/***/ 7295:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/util/camelize.js ***!
   \**************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1141,
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = camelize;
-	var rHyphen = /-(.)/g;
-	
-	function camelize(string) {
-	  return string.replace(rHyphen, function (_, chr) {
-	    return chr.toUpperCase();
-	  });
-	}
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 7279:
+/***/ 7296:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/util/hyphenateStyle.js ***!
   \********************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8126, 7297],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = hyphenateStyleName;
-	
-	var _hyphenate = __webpack_require__(/*! ./hyphenate */ 7280);
-	
-	var _hyphenate2 = _interopRequireDefault(_hyphenate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var msPattern = /^ms-/; /**
-	                         * Copyright 2013-2014, Facebook, Inc.
-	                         * All rights reserved.
-	                         * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/hyphenateStyleName.js
-	                         */
-	
-	function hyphenateStyleName(string) {
-	  return (0, _hyphenate2.default)(string).replace(msPattern, '-ms-');
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7280:
+/***/ 7297:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/util/hyphenate.js ***!
   \***************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1143,
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = hyphenate;
-	
-	var rUpper = /([A-Z])/g;
-	
-	function hyphenate(string) {
-	  return string.replace(rUpper, '-$1').toLowerCase();
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7281:
+/***/ 7298:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/style/getComputedStyle.js ***!
   \***********************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8127, 7294],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = _getComputedStyle;
-	
-	var _camelizeStyle = __webpack_require__(/*! ../util/camelizeStyle */ 7277);
-	
-	var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var rposition = /^(top|right|bottom|left)$/;
-	var rnumnonpx = /^([+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))(?!px)[a-z%]+$/i;
-	
-	function _getComputedStyle(node) {
-	  if (!node) throw new TypeError('No Element passed to `getComputedStyle()`');
-	  var doc = node.ownerDocument;
-	
-	  return 'defaultView' in doc ? doc.defaultView.opener ? node.ownerDocument.defaultView.getComputedStyle(node, null) : window.getComputedStyle(node, null) : {
-	    //ie 8 "magic" from: https://github.com/jquery/jquery/blob/1.11-stable/src/css/curCSS.js#L72
-	    getPropertyValue: function getPropertyValue(prop) {
-	      var style = node.style;
-	
-	      prop = (0, _camelizeStyle2.default)(prop);
-	
-	      if (prop == 'float') prop = 'styleFloat';
-	
-	      var current = node.currentStyle[prop] || null;
-	
-	      if (current == null && style && style[prop]) current = style[prop];
-	
-	      if (rnumnonpx.test(current) && !rposition.test(prop)) {
-	        // Remember the original values
-	        var left = style.left;
-	        var runStyle = node.runtimeStyle;
-	        var rsLeft = runStyle && runStyle.left;
-	
-	        // Put in the new values to get a computed value out
-	        if (rsLeft) runStyle.left = node.currentStyle.left;
-	
-	        style.left = prop === 'fontSize' ? '1em' : current;
-	        current = style.pixelLeft + 'px';
-	
-	        // Revert the changed values
-	        style.left = left;
-	        if (rsLeft) runStyle.left = rsLeft;
-	      }
-	
-	      return current;
-	    }
-	  };
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7282:
+/***/ 7299:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/style/removeStyle.js ***!
   \******************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1145,
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = removeStyle;
-	function removeStyle(node, key) {
-	  return 'removeProperty' in node.style ? node.style.removeProperty(key) : node.style.removeAttribute(key);
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7283:
+/***/ 7300:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/transition/properties.js ***!
   \**********************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8075, 7301],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
-	
-	var _inDOM = __webpack_require__(/*! ../util/inDOM */ 7284);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var transform = 'transform';
-	var prefix = void 0,
-	    transitionEnd = void 0,
-	    animationEnd = void 0;
-	var transitionProperty = void 0,
-	    transitionDuration = void 0,
-	    transitionTiming = void 0,
-	    transitionDelay = void 0;
-	var animationName = void 0,
-	    animationDuration = void 0,
-	    animationTiming = void 0,
-	    animationDelay = void 0;
-	
-	if (_inDOM2.default) {
-	  var _getTransitionPropert = getTransitionProperties();
-	
-	  prefix = _getTransitionPropert.prefix;
-	  exports.transitionEnd = transitionEnd = _getTransitionPropert.transitionEnd;
-	  exports.animationEnd = animationEnd = _getTransitionPropert.animationEnd;
-	
-	
-	  exports.transform = transform = prefix + '-' + transform;
-	  exports.transitionProperty = transitionProperty = prefix + '-transition-property';
-	  exports.transitionDuration = transitionDuration = prefix + '-transition-duration';
-	  exports.transitionDelay = transitionDelay = prefix + '-transition-delay';
-	  exports.transitionTiming = transitionTiming = prefix + '-transition-timing-function';
-	
-	  exports.animationName = animationName = prefix + '-animation-name';
-	  exports.animationDuration = animationDuration = prefix + '-animation-duration';
-	  exports.animationTiming = animationTiming = prefix + '-animation-delay';
-	  exports.animationDelay = animationDelay = prefix + '-animation-timing-function';
-	}
-	
-	exports.transform = transform;
-	exports.transitionProperty = transitionProperty;
-	exports.transitionTiming = transitionTiming;
-	exports.transitionDelay = transitionDelay;
-	exports.transitionDuration = transitionDuration;
-	exports.transitionEnd = transitionEnd;
-	exports.animationName = animationName;
-	exports.animationDuration = animationDuration;
-	exports.animationTiming = animationTiming;
-	exports.animationDelay = animationDelay;
-	exports.animationEnd = animationEnd;
-	exports.default = {
-	  transform: transform,
-	  end: transitionEnd,
-	  property: transitionProperty,
-	  timing: transitionTiming,
-	  delay: transitionDelay,
-	  duration: transitionDuration
-	};
-	
-	
-	function getTransitionProperties() {
-	  var style = document.createElement('div').style;
-	
-	  var vendorMap = {
-	    O: function O(e) {
-	      return 'o' + e.toLowerCase();
-	    },
-	    Moz: function Moz(e) {
-	      return e.toLowerCase();
-	    },
-	    Webkit: function Webkit(e) {
-	      return 'webkit' + e;
-	    },
-	    ms: function ms(e) {
-	      return 'MS' + e;
-	    }
-	  };
-	
-	  var vendors = Object.keys(vendorMap);
-	
-	  var transitionEnd = void 0,
-	      animationEnd = void 0;
-	  var prefix = '';
-	
-	  for (var i = 0; i < vendors.length; i++) {
-	    var vendor = vendors[i];
-	
-	    if (vendor + 'TransitionProperty' in style) {
-	      prefix = '-' + vendor.toLowerCase();
-	      transitionEnd = vendorMap[vendor]('TransitionEnd');
-	      animationEnd = vendorMap[vendor]('AnimationEnd');
-	      break;
-	    }
-	  }
-	
-	  if (!transitionEnd && 'transitionProperty' in style) transitionEnd = 'transitionend';
-	
-	  if (!animationEnd && 'animationName' in style) animationEnd = 'animationend';
-	
-	  style = null;
-	
-	  return { animationEnd: animationEnd, transitionEnd: transitionEnd, prefix: prefix };
-	}
-
-/***/ },
-
-/***/ 7284:
+/***/ 7301:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/util/inDOM.js ***!
   \***********************************************************************************************************************************************/
-/***/ function(module, exports) {
+1075,
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7285:
+/***/ 7302:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/transition/isTransform.js ***!
   \***********************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1146,
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = isTransform;
-	var supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i;
-	
-	function isTransform(property) {
-	  return !!(property && supportedTransforms.test(property));
-	}
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 7286:
+/***/ 7303:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/class/index.js ***!
   \************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8128, 7304, 7306, 7305],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.hasClass = exports.removeClass = exports.addClass = undefined;
-	
-	var _addClass = __webpack_require__(/*! ./addClass */ 7287);
-	
-	var _addClass2 = _interopRequireDefault(_addClass);
-	
-	var _removeClass = __webpack_require__(/*! ./removeClass */ 7289);
-	
-	var _removeClass2 = _interopRequireDefault(_removeClass);
-	
-	var _hasClass = __webpack_require__(/*! ./hasClass */ 7288);
-	
-	var _hasClass2 = _interopRequireDefault(_hasClass);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.addClass = _addClass2.default;
-	exports.removeClass = _removeClass2.default;
-	exports.hasClass = _hasClass2.default;
-	exports.default = { addClass: _addClass2.default, removeClass: _removeClass2.default, hasClass: _hasClass2.default };
-
-/***/ },
-
-/***/ 7287:
+/***/ 7304:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/class/addClass.js ***!
   \***************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8129, 7305],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = addClass;
-	
-	var _hasClass = __webpack_require__(/*! ./hasClass */ 7288);
-	
-	var _hasClass2 = _interopRequireDefault(_hasClass);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function addClass(element, className) {
-	  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element)) element.className = element.className + ' ' + className;
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7288:
+/***/ 7305:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/class/hasClass.js ***!
   \***************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1149,
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = hasClass;
-	function hasClass(element, className) {
-	  if (element.classList) return !!className && element.classList.contains(className);else return (" " + element.className + " ").indexOf(" " + className + " ") !== -1;
-	}
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 7289:
+/***/ 7306:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/class/removeClass.js ***!
   \******************************************************************************************************************************************************/
-1137,
+1150,
 
-/***/ 7290:
+/***/ 7307:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/util/scrollbarSize.js ***!
   \*******************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8130, 7301],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function (recalc) {
-	  if (!size || recalc) {
-	    if (_inDOM2.default) {
-	      var scrollDiv = document.createElement('div');
-	
-	      scrollDiv.style.position = 'absolute';
-	      scrollDiv.style.top = '-9999px';
-	      scrollDiv.style.width = '50px';
-	      scrollDiv.style.height = '50px';
-	      scrollDiv.style.overflow = 'scroll';
-	
-	      document.body.appendChild(scrollDiv);
-	      size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-	      document.body.removeChild(scrollDiv);
-	    }
-	  }
-	
-	  return size;
-	};
-	
-	var _inDOM = __webpack_require__(/*! ./inDOM */ 7284);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var size = void 0;
-	
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7291:
+/***/ 7308:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/isOverflowing.js ***!
   \**********************************************************************************************************************************************/
-[8111, 7292, 7273],
+[8131, 7309, 7290],
 
-/***/ 7292:
+/***/ 7309:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/query/isWindow.js ***!
   \***************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1153,
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = getWindow;
-	function getWindow(node) {
-	  return node === node.window ? node : node.nodeType === 9 ? node.defaultView || node.parentWindow : false;
-	}
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 7293:
+/***/ 7310:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/manageAriaHidden.js ***!
   \*************************************************************************************************************************************************/
-/***/ function(module, exports) {
+1154,
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.ariaHidden = ariaHidden;
-	exports.hideSiblings = hideSiblings;
-	exports.showSiblings = showSiblings;
-	
-	var BLACKLIST = ['template', 'script', 'style'];
-	
-	var isHidable = function isHidable(_ref) {
-	  var nodeType = _ref.nodeType,
-	      tagName = _ref.tagName;
-	  return nodeType === 1 && BLACKLIST.indexOf(tagName.toLowerCase()) === -1;
-	};
-	
-	var siblings = function siblings(container, mount, cb) {
-	  mount = [].concat(mount);
-	
-	  [].forEach.call(container.children, function (node) {
-	    if (mount.indexOf(node) === -1 && isHidable(node)) {
-	      cb(node);
-	    }
-	  });
-	};
-	
-	function ariaHidden(show, node) {
-	  if (!node) {
-	    return;
-	  }
-	  if (show) {
-	    node.setAttribute('aria-hidden', 'true');
-	  } else {
-	    node.removeAttribute('aria-hidden');
-	  }
-	}
-	
-	function hideSiblings(container, mountNode) {
-	  siblings(container, mountNode, function (node) {
-	    return ariaHidden(true, node);
-	  });
-	}
-	
-	function showSiblings(container, mountNode) {
-	  siblings(container, mountNode, function (node) {
-	    return ariaHidden(false, node);
-	  });
-	}
-
-/***/ },
-
-/***/ 7294:
+/***/ 7311:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/addEventListener.js ***!
   \*************************************************************************************************************************************************/
-[8073, 7295, 7296],
+[8086, 7312, 7313],
 
-/***/ 7295:
+/***/ 7312:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/events/on.js ***!
   \**********************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8076, 7301],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _inDOM = __webpack_require__(/*! ../util/inDOM */ 7284);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var on = function on() {};
-	if (_inDOM2.default) {
-	  on = function () {
-	
-	    if (document.addEventListener) return function (node, eventName, handler, capture) {
-	      return node.addEventListener(eventName, handler, capture || false);
-	    };else if (document.attachEvent) return function (node, eventName, handler) {
-	      return node.attachEvent('on' + eventName, function (e) {
-	        e = e || window.event;
-	        e.target = e.target || e.srcElement;
-	        e.currentTarget = node;
-	        handler.call(node, e);
-	      });
-	    };
-	  }();
-	}
-	
-	exports.default = on;
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7296:
+/***/ 7313:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/events/off.js ***!
   \***********************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8087, 7301],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _inDOM = __webpack_require__(/*! ../util/inDOM */ 7284);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var off = function off() {};
-	if (_inDOM2.default) {
-	  off = function () {
-	    if (document.addEventListener) return function (node, eventName, handler, capture) {
-	      return node.removeEventListener(eventName, handler, capture || false);
-	    };else if (document.attachEvent) return function (node, eventName, handler) {
-	      return node.detachEvent('on' + eventName, handler);
-	    };
-	  }();
-	}
-	
-	exports.default = off;
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7297:
+/***/ 7314:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/utils/addFocusListener.js ***!
   \*************************************************************************************************************************************************/
-1141,
+1155,
 
-/***/ 7298:
+/***/ 7315:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/activeElement.js ***!
   \**************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8132, 7290],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = activeElement;
-	
-	var _ownerDocument = __webpack_require__(/*! ./ownerDocument */ 7273);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function activeElement() {
-	  var doc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _ownerDocument2.default)();
-	
-	  try {
-	    return doc.activeElement;
-	  } catch (e) {/* ie throws if no active element */}
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7299:
+/***/ 7316:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/~/dom-helpers/query/contains.js ***!
   \***************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8085, 7301],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _inDOM = __webpack_require__(/*! ../util/inDOM */ 7284);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  // HTML DOM and SVG DOM may have different support levels,
-	  // so we need to check on context instead of a document root element.
-	  return _inDOM2.default ? function (context, node) {
-	    if (context.contains) {
-	      return context.contains(node);
-	    } else if (context.compareDocumentPosition) {
-	      return context === node || !!(context.compareDocumentPosition(node) & 16);
-	    } else {
-	      return fallback(context, node);
-	    }
-	  } : fallback;
-	}();
-	
-	function fallback(context, node) {
-	  if (node) do {
-	    if (node === context) return true;
-	  } while (node = node.parentNode);
-	
-	  return false;
-	}
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7300:
+/***/ 7317:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Fade.js ***!
   \**************************************************************************************************************/
-[8080, 7251, 7173, 7174, 7243, 7256, 6692, 7301],
+[8093, 7268, 7190, 7191, 7260, 7273, 6709, 7318],
 
-/***/ 7301:
+/***/ 7318:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/Transition.js ***!
   \*************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8074, 6709, 6739, 7300, 7312, 7273],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.EXITING = exports.ENTERED = exports.ENTERING = exports.EXITED = exports.UNMOUNTED = undefined;
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 6692);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 6722);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 7283);
-	
-	var _properties2 = _interopRequireDefault(_properties);
-	
-	var _on = __webpack_require__(/*! dom-helpers/events/on */ 7295);
-	
-	var _on2 = _interopRequireDefault(_on);
-	
-	var _classnames = __webpack_require__(/*! classnames */ 7256);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var transitionEndEvent = _properties2.default.end;
-	
-	var UNMOUNTED = exports.UNMOUNTED = 0;
-	var EXITED = exports.EXITED = 1;
-	var ENTERING = exports.ENTERING = 2;
-	var ENTERED = exports.ENTERED = 3;
-	var EXITING = exports.EXITING = 4;
-	
-	/**
-	 * The Transition component lets you define and run css transitions with a simple declarative api.
-	 * It works similar to React's own [CSSTransitionGroup](http://facebook.github.io/react/docs/animation.html#high-level-api-reactcsstransitiongroup)
-	 * but is specifically optimized for transitioning a single child "in" or "out".
-	 *
-	 * You don't even need to use class based css transitions if you don't want to (but it is easiest).
-	 * The extensive set of lifecyle callbacks means you have control over
-	 * the transitioning now at each step of the way.
-	 */
-	
-	var Transition = function (_React$Component) {
-	  _inherits(Transition, _React$Component);
-	
-	  function Transition(props, context) {
-	    _classCallCheck(this, Transition);
-	
-	    var _this = _possibleConstructorReturn(this, (Transition.__proto__ || Object.getPrototypeOf(Transition)).call(this, props, context));
-	
-	    var initialStatus = void 0;
-	    if (props.in) {
-	      // Start enter transition in componentDidMount.
-	      initialStatus = props.transitionAppear ? EXITED : ENTERED;
-	    } else {
-	      initialStatus = props.unmountOnExit ? UNMOUNTED : EXITED;
-	    }
-	    _this.state = { status: initialStatus };
-	
-	    _this.nextCallback = null;
-	    return _this;
-	  }
-	
-	  _createClass(Transition, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      if (this.props.transitionAppear && this.props.in) {
-	        this.performEnter(this.props);
-	      }
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      if (nextProps.in && this.props.unmountOnExit) {
-	        if (this.state.status === UNMOUNTED) {
-	          // Start enter transition in componentDidUpdate.
-	          this.setState({ status: EXITED });
-	        }
-	      } else {
-	        this._needsUpdate = true;
-	      }
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      var status = this.state.status;
-	
-	      if (this.props.unmountOnExit && status === EXITED) {
-	        // EXITED is always a transitional state to either ENTERING or UNMOUNTED
-	        // when using unmountOnExit.
-	        if (this.props.in) {
-	          this.performEnter(this.props);
-	        } else {
-	          this.setState({ status: UNMOUNTED });
-	        }
-	
-	        return;
-	      }
-	
-	      // guard ensures we are only responding to prop changes
-	      if (this._needsUpdate) {
-	        this._needsUpdate = false;
-	
-	        if (this.props.in) {
-	          if (status === EXITING) {
-	            this.performEnter(this.props);
-	          } else if (status === EXITED) {
-	            this.performEnter(this.props);
-	          }
-	          // Otherwise we're already entering or entered.
-	        } else {
-	          if (status === ENTERING || status === ENTERED) {
-	            this.performExit(this.props);
-	          }
-	          // Otherwise we're already exited or exiting.
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.cancelNextCallback();
-	    }
-	  }, {
-	    key: 'performEnter',
-	    value: function performEnter(props) {
-	      var _this2 = this;
-	
-	      this.cancelNextCallback();
-	      var node = _reactDom2.default.findDOMNode(this);
-	
-	      // Not this.props, because we might be about to receive new props.
-	      props.onEnter(node);
-	
-	      this.safeSetState({ status: ENTERING }, function () {
-	        _this2.props.onEntering(node);
-	
-	        _this2.onTransitionEnd(node, function () {
-	          _this2.safeSetState({ status: ENTERED }, function () {
-	            _this2.props.onEntered(node);
-	          });
-	        });
-	      });
-	    }
-	  }, {
-	    key: 'performExit',
-	    value: function performExit(props) {
-	      var _this3 = this;
-	
-	      this.cancelNextCallback();
-	      var node = _reactDom2.default.findDOMNode(this);
-	
-	      // Not this.props, because we might be about to receive new props.
-	      props.onExit(node);
-	
-	      this.safeSetState({ status: EXITING }, function () {
-	        _this3.props.onExiting(node);
-	
-	        _this3.onTransitionEnd(node, function () {
-	          _this3.safeSetState({ status: EXITED }, function () {
-	            _this3.props.onExited(node);
-	          });
-	        });
-	      });
-	    }
-	  }, {
-	    key: 'cancelNextCallback',
-	    value: function cancelNextCallback() {
-	      if (this.nextCallback !== null) {
-	        this.nextCallback.cancel();
-	        this.nextCallback = null;
-	      }
-	    }
-	  }, {
-	    key: 'safeSetState',
-	    value: function safeSetState(nextState, callback) {
-	      // This shouldn't be necessary, but there are weird race conditions with
-	      // setState callbacks and unmounting in testing, so always make sure that
-	      // we can cancel any pending setState callbacks after we unmount.
-	      this.setState(nextState, this.setNextCallback(callback));
-	    }
-	  }, {
-	    key: 'setNextCallback',
-	    value: function setNextCallback(callback) {
-	      var _this4 = this;
-	
-	      var active = true;
-	
-	      this.nextCallback = function (event) {
-	        if (active) {
-	          active = false;
-	          _this4.nextCallback = null;
-	
-	          callback(event);
-	        }
-	      };
-	
-	      this.nextCallback.cancel = function () {
-	        active = false;
-	      };
-	
-	      return this.nextCallback;
-	    }
-	  }, {
-	    key: 'onTransitionEnd',
-	    value: function onTransitionEnd(node, handler) {
-	      this.setNextCallback(handler);
-	
-	      if (node) {
-	        (0, _on2.default)(node, transitionEndEvent, this.nextCallback);
-	        setTimeout(this.nextCallback, this.props.timeout);
-	      } else {
-	        setTimeout(this.nextCallback, 0);
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var status = this.state.status;
-	      if (status === UNMOUNTED) {
-	        return null;
-	      }
-	
-	      var _props = this.props,
-	          children = _props.children,
-	          className = _props.className,
-	          childProps = _objectWithoutProperties(_props, ['children', 'className']);
-	
-	      Object.keys(Transition.propTypes).forEach(function (key) {
-	        return delete childProps[key];
-	      });
-	
-	      var transitionClassName = void 0;
-	      if (status === EXITED) {
-	        transitionClassName = this.props.exitedClassName;
-	      } else if (status === ENTERING) {
-	        transitionClassName = this.props.enteringClassName;
-	      } else if (status === ENTERED) {
-	        transitionClassName = this.props.enteredClassName;
-	      } else if (status === EXITING) {
-	        transitionClassName = this.props.exitingClassName;
-	      }
-	
-	      var child = _react2.default.Children.only(children);
-	      return _react2.default.cloneElement(child, _extends({}, childProps, {
-	        className: (0, _classnames2.default)(child.props.className, className, transitionClassName)
-	      }));
-	    }
-	  }]);
-	
-	  return Transition;
-	}(_react2.default.Component);
-	
-	Transition.propTypes = {
-	  /**
-	   * Show the component; triggers the enter or exit animation
-	   */
-	  in: _react2.default.PropTypes.bool,
-	
-	  /**
-	   * Unmount the component (remove it from the DOM) when it is not shown
-	   */
-	  unmountOnExit: _react2.default.PropTypes.bool,
-	
-	  /**
-	   * Run the enter animation when the component mounts, if it is initially
-	   * shown
-	   */
-	  transitionAppear: _react2.default.PropTypes.bool,
-	
-	  /**
-	   * A Timeout for the animation, in milliseconds, to ensure that a node doesn't
-	   * transition indefinately if the browser transitionEnd events are
-	   * canceled or interrupted.
-	   *
-	   * By default this is set to a high number (5 seconds) as a failsafe. You should consider
-	   * setting this to the duration of your animation (or a bit above it).
-	   */
-	  timeout: _react2.default.PropTypes.number,
-	
-	  /**
-	   * CSS class or classes applied when the component is exited
-	   */
-	  exitedClassName: _react2.default.PropTypes.string,
-	  /**
-	   * CSS class or classes applied while the component is exiting
-	   */
-	  exitingClassName: _react2.default.PropTypes.string,
-	  /**
-	   * CSS class or classes applied when the component is entered
-	   */
-	  enteredClassName: _react2.default.PropTypes.string,
-	  /**
-	   * CSS class or classes applied while the component is entering
-	   */
-	  enteringClassName: _react2.default.PropTypes.string,
-	
-	  /**
-	   * Callback fired before the "entering" classes are applied
-	   */
-	  onEnter: _react2.default.PropTypes.func,
-	  /**
-	   * Callback fired after the "entering" classes are applied
-	   */
-	  onEntering: _react2.default.PropTypes.func,
-	  /**
-	   * Callback fired after the "enter" classes are applied
-	   */
-	  onEntered: _react2.default.PropTypes.func,
-	  /**
-	   * Callback fired before the "exiting" classes are applied
-	   */
-	  onExit: _react2.default.PropTypes.func,
-	  /**
-	   * Callback fired after the "exiting" classes are applied
-	   */
-	  onExiting: _react2.default.PropTypes.func,
-	  /**
-	   * Callback fired after the "exited" classes are applied
-	   */
-	  onExited: _react2.default.PropTypes.func
-	};
-	
-	// Name the function so it is clearer in the documentation
-	function noop() {}
-	
-	Transition.displayName = 'Transition';
-	
-	Transition.defaultProps = {
-	  in: false,
-	  unmountOnExit: false,
-	  transitionAppear: false,
-	
-	  timeout: 5000,
-	
-	  onEnter: noop,
-	  onEntering: noop,
-	  onEntered: noop,
-	
-	  onExit: noop,
-	  onExiting: noop,
-	  onExited: noop
-	};
-	
-	exports.default = Transition;
-
-/***/ },
-
-/***/ 7302:
+/***/ 7319:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalBody.js ***!
   \*******************************************************************************************************************/
-[8112, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7270, 7303],
+[8133, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7287, 7320],
 
-/***/ 7303:
+/***/ 7320:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
   \******************************************************************************************************************************/
-[7849, 7304, 7251, 7308, 6692, 7309],
+[7862, 7321, 7268, 7325, 6709, 7326],
 
-/***/ 7304:
+/***/ 7321:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/entries.js ***!
   \********************************************************************************************************************************************/
-[7850, 7305],
+[7863, 7322],
 
-/***/ 7305:
+/***/ 7322:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
   \*********************************************************************************************************************************************************/
-[7851, 7306, 7186],
+[7864, 7323, 7203],
 
-/***/ 7306:
+/***/ 7323:
 /*!******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
   \******************************************************************************************************************************************************************/
-[7852, 7184, 7307],
+[7865, 7201, 7324],
 
-/***/ 7307:
+/***/ 7324:
 /*!****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
   \****************************************************************************************************************************************************************/
-[7793, 7205, 7207, 7235],
+[7806, 7222, 7224, 7252],
 
-/***/ 7308:
+/***/ 7325:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/invariant/browser.js ***!
   \*************************************************************************************************************************/
 346,
 
-/***/ 7309:
+/***/ 7326:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/StyleConfig.js ***!
   \***************************************************************************************************************************/
 347,
 
-/***/ 7310:
+/***/ 7327:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalDialog.js ***!
   \*********************************************************************************************************************/
-[8113, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7303, 7309],
+[8134, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7320, 7326],
 
-/***/ 7311:
+/***/ 7328:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalFooter.js ***!
   \*********************************************************************************************************************/
-[8114, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7270, 7303],
+[8135, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7287, 7320],
 
-/***/ 7312:
+/***/ 7329:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalHeader.js ***!
   \*********************************************************************************************************************/
-[8115, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7303, 7313],
+[8136, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7320, 7330],
 
-/***/ 7313:
+/***/ 7330:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/createChainedFunction.js ***!
   \*************************************************************************************************************************************/
 1047,
 
-/***/ 7314:
+/***/ 7331:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ModalTitle.js ***!
   \********************************************************************************************************************/
-[8116, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7270, 7303],
+[8137, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7287, 7320],
 
-/***/ 7315:
+/***/ 7332:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/splitComponentProps.js ***!
   \***********************************************************************************************************************************/
-[8079, 7304],
+[8092, 7321],
 
-/***/ 7316:
+/***/ 7333:
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Button.js ***!
   \****************************************************************************************************************/
-[7780, 7317, 7172, 7251, 7173, 7174, 7243, 7256, 6692, 7270, 7303, 7309, 7320],
+[7793, 7334, 7189, 7268, 7190, 7191, 7260, 7273, 6709, 7287, 7320, 7326, 7337],
 
-/***/ 7317:
+/***/ 7334:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/object/values.js ***!
   \*******************************************************************************************************************************************/
-[7781, 7318],
+[7794, 7335],
 
-/***/ 7318:
+/***/ 7335:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
   \********************************************************************************************************************************************************/
-[7782, 7319, 7186],
+[7795, 7336, 7203],
 
-/***/ 7319:
+/***/ 7336:
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
   \*****************************************************************************************************************************************************************/
-[7783, 7184, 7307],
+[7796, 7201, 7324],
 
-/***/ 7320:
+/***/ 7337:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/SafeAnchor.js ***!
   \********************************************************************************************************************/
-[7853, 7251, 7172, 7173, 7174, 7243, 6692, 7270],
+[7866, 7268, 7189, 7190, 7191, 7260, 6709, 7287],
 
-/***/ 7321:
+/***/ 7338:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Glyphicon.js ***!
   \*******************************************************************************************************************/
-[7858, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7303],
+[7871, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7320],
 
-/***/ 7322:
+/***/ 7339:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/download-profiles-button/Disclaimers.jsx ***!
   \**********************************************************************************************************************************/
-[8342, 6692],
+[8370, 6709],
 
-/***/ 7323:
+/***/ 7340:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/download-profiles-button/Download.js ***!
   \******************************************************************************************************************************/
-[8343, 7324, 7344],
+[8371, 7341, 7361],
 
-/***/ 7324:
+/***/ 7341:
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/range.js ***!
   \**************************************************************************************************/
-[8344, 7325],
+[8372, 7342],
 
-/***/ 7325:
+/***/ 7342:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_createRange.js ***!
   \*********************************************************************************************************/
-[8345, 7326, 7327, 7340],
+[8373, 7343, 7344, 7357],
 
-/***/ 7326:
+/***/ 7343:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseRange.js ***!
   \*******************************************************************************************************/
-1478,
+1493,
 
-/***/ 7327:
+/***/ 7344:
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_isIterateeCall.js ***!
   \************************************************************************************************************/
-[8346, 7328, 7329, 7339, 7337],
+[8374, 7345, 7346, 7356, 7354],
 
-/***/ 7328:
+/***/ 7345:
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/eq.js ***!
   \***********************************************************************************************/
-1310,
+1325,
 
-/***/ 7329:
+/***/ 7346:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isArrayLike.js ***!
   \********************************************************************************************************/
-[8232, 7330, 7338],
+[8261, 7347, 7355],
 
-/***/ 7330:
+/***/ 7347:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isFunction.js ***!
   \*******************************************************************************************************/
-[8183, 7331, 7337],
+[8212, 7348, 7354],
 
-/***/ 7331:
+/***/ 7348:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseGetTag.js ***!
   \********************************************************************************************************/
-[8184, 7332, 7335, 7336],
+[8213, 7349, 7352, 7353],
 
-/***/ 7332:
+/***/ 7349:
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_Symbol.js ***!
   \****************************************************************************************************/
-[8185, 7333],
+[8214, 7350],
 
-/***/ 7333:
+/***/ 7350:
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_root.js ***!
   \**************************************************************************************************/
-[8186, 7334],
+[8215, 7351],
 
-/***/ 7334:
+/***/ 7351:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_freeGlobal.js ***!
   \********************************************************************************************************/
-1249,
+1264,
 
-/***/ 7335:
+/***/ 7352:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_getRawTag.js ***!
   \*******************************************************************************************************/
-[8187, 7332],
+[8216, 7349],
 
-/***/ 7336:
+/***/ 7353:
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_objectToString.js ***!
   \************************************************************************************************************/
-1251,
+1266,
 
-/***/ 7337:
+/***/ 7354:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isObject.js ***!
   \*****************************************************************************************************/
-1252,
+1267,
 
-/***/ 7338:
+/***/ 7355:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isLength.js ***!
   \*****************************************************************************************************/
-1320,
+1335,
 
-/***/ 7339:
+/***/ 7356:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_isIndex.js ***!
   \*****************************************************************************************************/
-1298,
+1313,
 
-/***/ 7340:
+/***/ 7357:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/toFinite.js ***!
   \*****************************************************************************************************/
-[8215, 7341],
+[8244, 7358],
 
-/***/ 7341:
+/***/ 7358:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/toNumber.js ***!
   \*****************************************************************************************************/
-[8216, 7337, 7342],
+[8245, 7354, 7359],
 
-/***/ 7342:
+/***/ 7359:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isSymbol.js ***!
   \*****************************************************************************************************/
-[8217, 7331, 7343],
+[8246, 7348, 7360],
 
-/***/ 7343:
+/***/ 7360:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isObjectLike.js ***!
   \*********************************************************************************************************/
-1277,
+1292,
 
-/***/ 7344:
+/***/ 7361:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/downloadjs/download.js ***!
   \*********************************************************************************************************/
 832,
 
-/***/ 7345:
+/***/ 7362:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/HeatmapCanvas.jsx ***!
   \***********************************************************************************************************/
-[8347, 6692, 7346, 7348, 7349, 7350, 7168],
+[8375, 6709, 7363, 7365, 7366, 7367, 7185],
 
-/***/ 7346:
+/***/ 7363:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-highcharts/dist/ReactHighcharts.js ***!
   \***************************************************************************************************************************/
-[8152, 6692, 7347],
+[8181, 6709, 7364],
 
-/***/ 7347:
+/***/ 7364:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-highcharts/~/highcharts/highcharts.js ***!
   \******************************************************************************************************************************/
-1191,
+1206,
 
-/***/ 7348:
+/***/ 7365:
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/highcharts-heatmap/heatmap.js ***!
   \****************************************************************************************************************/
 835,
 
-/***/ 7349:
+/***/ 7366:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/highcharts-custom-events/js/customEvents.js ***!
   \******************************************************************************************************************************/
-1481,
+1496,
 
-/***/ 7350:
+/***/ 7367:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/object-hash/index.js ***!
   \*******************************************************************************************************/
 838,
 
-/***/ 7351:
+/***/ 7368:
 /*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/OrderingsDropdown.jsx ***!
   \***************************************************************************************************************/
-[8348, 6692, 7352, 7376, 7321, 7168],
+[8376, 6709, 7369, 7393, 7338, 7185],
 
-/***/ 7352:
+/***/ 7369:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/Dropdown.js ***!
   \******************************************************************************************************************/
-[8066, 7172, 7251, 7173, 7174, 7243, 7256, 7353, 7262, 7355, 6692, 6722, 7356, 7270, 7357, 7358, 7267, 7361, 7362, 7374, 7303, 7313, 7375, 7373],
+[8077, 7189, 7268, 7190, 7191, 7260, 7273, 7370, 7279, 7372, 6709, 6739, 7373, 7287, 7374, 7375, 7284, 7378, 7379, 7391, 7320, 7330, 7392, 7390],
 
-/***/ 7353:
+/***/ 7370:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/activeElement.js ***!
   \*********************************************************************************************************************************/
-[8067, 7354, 7264],
+[8078, 7371, 7281],
 
-/***/ 7354:
+/***/ 7371:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/dom-helpers/util/babelHelpers.js ***!
   \*************************************************************************************************************************************/
 1071,
 
-/***/ 7355:
+/***/ 7372:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/keycode/index.js ***!
   \*********************************************************************************************************************/
-1081,
+1082,
 
-/***/ 7356:
+/***/ 7373:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/all.js ***!
   \********************************************************************************************************************************/
-[8049, 7269],
+[8060, 7286],
 
-/***/ 7357:
+/***/ 7374:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-prop-types/lib/isRequiredForA11y.js ***!
   \**********************************************************************************************************************************************/
-1082,
+1083,
 
-/***/ 7358:
+/***/ 7375:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/uncontrollable/index.js ***!
   \****************************************************************************************************************************/
-[8069, 7359],
+[8080, 7376],
 
-/***/ 7359:
+/***/ 7376:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/uncontrollable/createUncontrollable.js ***!
   \*******************************************************************************************************************************************/
-[8070, 6692, 7308, 7360],
+[8081, 6709, 7325, 7377],
 
-/***/ 7360:
+/***/ 7377:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/uncontrollable/utils.js ***!
   \****************************************************************************************************************************/
-[8071, 6692, 7308],
+[8082, 6709, 7325],
 
-/***/ 7361:
+/***/ 7378:
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/ButtonGroup.js ***!
   \*********************************************************************************************************************/
-[8048, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7356, 7316, 7303],
+[8059, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7373, 7333, 7320],
 
-/***/ 7362:
+/***/ 7379:
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/DropdownMenu.js ***!
   \**********************************************************************************************************************/
-[8072, 7251, 7172, 7363, 7173, 7174, 7243, 7256, 7355, 6692, 6722, 7372, 7303, 7313, 7373],
+[8083, 7268, 7189, 7380, 7190, 7191, 7260, 7273, 7372, 6709, 6739, 7389, 7320, 7330, 7390],
 
-/***/ 7363:
+/***/ 7380:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/core-js/array/from.js ***!
   \****************************************************************************************************************************************/
-[8008, 7364],
+[8019, 7381],
 
-/***/ 7364:
+/***/ 7381:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/array/from.js ***!
   \*****************************************************************************************************************************************************/
-[8009, 7178, 7365, 7186],
+[8020, 7195, 7382, 7203],
 
-/***/ 7365:
+/***/ 7382:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.array.from.js ***!
   \**************************************************************************************************************************************************************/
-[7984, 7187, 7184, 7221, 7366, 7367, 7211, 7368, 7369, 7371],
+[7995, 7204, 7201, 7238, 7383, 7384, 7228, 7385, 7386, 7388],
 
-/***/ 7366:
+/***/ 7383:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-call.js ***!
   \**********************************************************************************************************************************************************/
-[7985, 7191],
+[7996, 7208],
 
-/***/ 7367:
+/***/ 7384:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-array-iter.js ***!
   \**************************************************************************************************************************************************************/
-[7986, 7201, 7219],
+[7997, 7218, 7236],
 
-/***/ 7368:
+/***/ 7385:
 /*!****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_create-property.js ***!
   \****************************************************************************************************************************************************************/
-[7987, 7190, 7198],
+[7998, 7207, 7215],
 
-/***/ 7369:
+/***/ 7386:
 /*!************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/core.get-iterator-method.js ***!
   \************************************************************************************************************************************************************************/
-[7988, 7370, 7219, 7201, 7186],
+[7999, 7387, 7236, 7218, 7203],
 
-/***/ 7370:
+/***/ 7387:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_classof.js ***!
   \********************************************************************************************************************************************************/
-[7983, 7209, 7219],
+[7994, 7226, 7236],
 
-/***/ 7371:
+/***/ 7388:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-detect.js ***!
   \************************************************************************************************************************************************************/
-[7989, 7219],
+[8000, 7236],
 
-/***/ 7372:
+/***/ 7389:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/~/react-overlays/lib/RootCloseWrapper.js ***!
   \*******************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8084, 7316, 6709, 6739, 7311, 7289],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 7299);
-	
-	var _contains2 = _interopRequireDefault(_contains);
-	
-	var _react = __webpack_require__(/*! react */ 6692);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 6722);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _addEventListener = __webpack_require__(/*! ./utils/addEventListener */ 7294);
-	
-	var _addEventListener2 = _interopRequireDefault(_addEventListener);
-	
-	var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 7272);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var escapeKeyCode = 27;
-	
-	function isLeftClickEvent(event) {
-	  return event.button === 0;
-	}
-	
-	function isModifiedEvent(event) {
-	  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-	}
-	
-	var RootCloseWrapper = function (_React$Component) {
-	  _inherits(RootCloseWrapper, _React$Component);
-	
-	  function RootCloseWrapper(props, context) {
-	    _classCallCheck(this, RootCloseWrapper);
-	
-	    var _this = _possibleConstructorReturn(this, (RootCloseWrapper.__proto__ || Object.getPrototypeOf(RootCloseWrapper)).call(this, props, context));
-	
-	    _this.handleMouseCapture = function (e) {
-	      _this.preventMouseRootClose = isModifiedEvent(e) || !isLeftClickEvent(e) || (0, _contains2.default)(_reactDom2.default.findDOMNode(_this), e.target);
-	    };
-	
-	    _this.handleMouse = function (e) {
-	      if (!_this.preventMouseRootClose && _this.props.onRootClose) {
-	        _this.props.onRootClose(e);
-	      }
-	    };
-	
-	    _this.handleKeyUp = function (e) {
-	      if (e.keyCode === escapeKeyCode && _this.props.onRootClose) {
-	        _this.props.onRootClose(e);
-	      }
-	    };
-	
-	    _this.preventMouseRootClose = false;
-	    return _this;
-	  }
-	
-	  _createClass(RootCloseWrapper, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      if (!this.props.disabled) {
-	        this.addEventListeners();
-	      }
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(prevProps) {
-	      if (!this.props.disabled && prevProps.disabled) {
-	        this.addEventListeners();
-	      } else if (this.props.disabled && !prevProps.disabled) {
-	        this.removeEventListeners();
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      if (!this.props.disabled) {
-	        this.removeEventListeners();
-	      }
-	    }
-	  }, {
-	    key: 'addEventListeners',
-	    value: function addEventListeners() {
-	      var event = this.props.event;
-	
-	      var doc = (0, _ownerDocument2.default)(this);
-	
-	      // Use capture for this listener so it fires before React's listener, to
-	      // avoid false positives in the contains() check below if the target DOM
-	      // element is removed in the React mouse callback.
-	      this.documentMouseCaptureListener = (0, _addEventListener2.default)(doc, event, this.handleMouseCapture, true);
-	
-	      this.documentMouseListener = (0, _addEventListener2.default)(doc, event, this.handleMouse);
-	
-	      this.documentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleKeyUp);
-	    }
-	  }, {
-	    key: 'removeEventListeners',
-	    value: function removeEventListeners() {
-	      if (this.documentMouseCaptureListener) {
-	        this.documentMouseCaptureListener.remove();
-	      }
-	
-	      if (this.documentMouseListener) {
-	        this.documentMouseListener.remove();
-	      }
-	
-	      if (this.documentKeyupListener) {
-	        this.documentKeyupListener.remove();
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return this.props.children;
-	    }
-	  }]);
-	
-	  return RootCloseWrapper;
-	}(_react2.default.Component);
-	
-	exports.default = RootCloseWrapper;
-	
-	
-	RootCloseWrapper.displayName = 'RootCloseWrapper';
-	
-	RootCloseWrapper.propTypes = {
-	  onRootClose: _react2.default.PropTypes.func,
-	  children: _react2.default.PropTypes.element,
-	
-	  /**
-	   * Disable the the RootCloseWrapper, preventing it from triggering
-	   * `onRootClose`.
-	   */
-	  disabled: _react2.default.PropTypes.bool,
-	  /**
-	   * Choose which document mouse event to bind to
-	   */
-	  event: _react2.default.PropTypes.oneOf(['click', 'mousedown'])
-	};
-	
-	RootCloseWrapper.defaultProps = {
-	  event: 'click'
-	};
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7373:
+/***/ 7390:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
   \**************************************************************************************************************************************/
-[7855, 6692],
+[7868, 6709],
 
-/***/ 7374:
+/***/ 7391:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/DropdownToggle.js ***!
   \************************************************************************************************************************/
-[8076, 7251, 7172, 7173, 7174, 7243, 6692, 7256, 7316, 7320, 7303],
+[8089, 7268, 7189, 7190, 7191, 7260, 6709, 7273, 7333, 7337, 7320],
 
-/***/ 7375:
+/***/ 7392:
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/utils/PropTypes.js ***!
   \*************************************************************************************************************************/
-[8077, 7269, 7373],
+[8090, 7286, 7390],
 
-/***/ 7376:
+/***/ 7393:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-bootstrap/lib/MenuItem.js ***!
   \******************************************************************************************************************/
-[8099, 7251, 7172, 7173, 7174, 7243, 7256, 6692, 7356, 7320, 7303, 7313],
+[8112, 7268, 7189, 7190, 7191, 7260, 7273, 6709, 7373, 7337, 7320, 7330],
 
-/***/ 7377:
+/***/ 7394:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/settings/SettingsModal.jsx ***!
   \********************************************************************************************************************/
-[8349, 6692, 7171, 7316, 7321, 7168, 7378, 7447],
+[8377, 6709, 7188, 7333, 7338, 7185, 7395, 7464],
 
-/***/ 7378:
+/***/ 7395:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/settings/FlatFilter.jsx ***!
   \*****************************************************************************************************************/
-[8350, 6692, 7168, 7379, 7445],
+[8378, 6709, 7185, 7396, 7462],
 
-/***/ 7379:
+/***/ 7396:
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/xor.js ***!
   \************************************************************************************************/
-[8351, 7380, 7381, 7396, 7444],
+[8379, 7397, 7398, 7413, 7461],
 
-/***/ 7380:
+/***/ 7397:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_arrayFilter.js ***!
   \*********************************************************************************************************/
-1366,
-
-/***/ 7381:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseRest.js ***!
-  \******************************************************************************************************/
-[8352, 7382, 7383, 7385],
-
-/***/ 7382:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/identity.js ***!
-  \*****************************************************************************************************/
-1240,
-
-/***/ 7383:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_overRest.js ***!
-  \******************************************************************************************************/
-[8316, 7384],
-
-/***/ 7384:
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_apply.js ***!
-  \***************************************************************************************************/
-1261,
-
-/***/ 7385:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_setToString.js ***!
-  \*********************************************************************************************************/
-[8205, 7386, 7395],
-
-/***/ 7386:
-/*!*************************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseSetToString.js ***!
-  \*************************************************************************************************************/
-[8206, 7387, 7388, 7382],
-
-/***/ 7387:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/constant.js ***!
-  \*****************************************************************************************************/
-1287,
-
-/***/ 7388:
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_defineProperty.js ***!
-  \************************************************************************************************************/
-[8207, 7389],
-
-/***/ 7389:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_getNative.js ***!
-  \*******************************************************************************************************/
-[8181, 7390, 7394],
-
-/***/ 7390:
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseIsNative.js ***!
-  \**********************************************************************************************************/
-[8182, 7330, 7391, 7337, 7393],
-
-/***/ 7391:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_isMasked.js ***!
-  \******************************************************************************************************/
-[8188, 7392],
-
-/***/ 7392:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_coreJsData.js ***!
-  \********************************************************************************************************/
-[8189, 7333],
-
-/***/ 7393:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_toSource.js ***!
-  \******************************************************************************************************/
-1255,
-
-/***/ 7394:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_getValue.js ***!
-  \******************************************************************************************************/
-1256,
-
-/***/ 7395:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_shortOut.js ***!
-  \******************************************************************************************************/
-1281,
-
-/***/ 7396:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseXor.js ***!
-  \*****************************************************************************************************/
-[8353, 7397, 7433, 7439],
-
-/***/ 7397:
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseDifference.js ***!
-  \************************************************************************************************************/
-[8354, 7398, 7424, 7429, 7430, 7431, 7432],
+1381,
 
 /***/ 7398:
 /*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_SetCache.js ***!
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseRest.js ***!
   \******************************************************************************************************/
-[8291, 7399, 7422, 7423],
+[8380, 7399, 7400, 7402],
 
 /***/ 7399:
+/*!*****************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/identity.js ***!
+  \*****************************************************************************************************/
+1255,
+
+/***/ 7400:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_overRest.js ***!
+  \******************************************************************************************************/
+[8345, 7401],
+
+/***/ 7401:
+/*!***************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_apply.js ***!
+  \***************************************************************************************************/
+1276,
+
+/***/ 7402:
+/*!*********************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_setToString.js ***!
+  \*********************************************************************************************************/
+[8234, 7403, 7412],
+
+/***/ 7403:
+/*!*************************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseSetToString.js ***!
+  \*************************************************************************************************************/
+[8235, 7404, 7405, 7399],
+
+/***/ 7404:
+/*!*****************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/constant.js ***!
+  \*****************************************************************************************************/
+1302,
+
+/***/ 7405:
+/*!************************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_defineProperty.js ***!
+  \************************************************************************************************************/
+[8236, 7406],
+
+/***/ 7406:
+/*!*******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_getNative.js ***!
+  \*******************************************************************************************************/
+[8210, 7407, 7411],
+
+/***/ 7407:
+/*!**********************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseIsNative.js ***!
+  \**********************************************************************************************************/
+[8211, 7347, 7408, 7354, 7410],
+
+/***/ 7408:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_isMasked.js ***!
+  \******************************************************************************************************/
+[8217, 7409],
+
+/***/ 7409:
+/*!********************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_coreJsData.js ***!
+  \********************************************************************************************************/
+[8218, 7350],
+
+/***/ 7410:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_toSource.js ***!
+  \******************************************************************************************************/
+1270,
+
+/***/ 7411:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_getValue.js ***!
+  \******************************************************************************************************/
+1271,
+
+/***/ 7412:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_shortOut.js ***!
+  \******************************************************************************************************/
+1296,
+
+/***/ 7413:
+/*!*****************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseXor.js ***!
+  \*****************************************************************************************************/
+[8381, 7414, 7450, 7456],
+
+/***/ 7414:
+/*!************************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseDifference.js ***!
+  \************************************************************************************************************/
+[8382, 7415, 7441, 7446, 7447, 7448, 7449],
+
+/***/ 7415:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_SetCache.js ***!
+  \******************************************************************************************************/
+[8320, 7416, 7439, 7440],
+
+/***/ 7416:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_MapCache.js ***!
   \******************************************************************************************************/
-[8245, 7400, 7416, 7419, 7420, 7421],
+[8274, 7417, 7433, 7436, 7437, 7438],
 
-/***/ 7400:
+/***/ 7417:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_mapCacheClear.js ***!
   \***********************************************************************************************************/
-[8246, 7401, 7408, 7415],
+[8275, 7418, 7425, 7432],
 
-/***/ 7401:
+/***/ 7418:
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_Hash.js ***!
   \**************************************************************************************************/
-[8247, 7402, 7404, 7405, 7406, 7407],
+[8276, 7419, 7421, 7422, 7423, 7424],
 
-/***/ 7402:
+/***/ 7419:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_hashClear.js ***!
   \*******************************************************************************************************/
-[8248, 7403],
+[8277, 7420],
 
-/***/ 7403:
+/***/ 7420:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_nativeCreate.js ***!
   \**********************************************************************************************************/
-[8249, 7389],
+[8278, 7406],
 
-/***/ 7404:
+/***/ 7421:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_hashDelete.js ***!
   \********************************************************************************************************/
-1349,
+1364,
 
-/***/ 7405:
+/***/ 7422:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_hashGet.js ***!
   \*****************************************************************************************************/
-[8250, 7403],
+[8279, 7420],
 
-/***/ 7406:
+/***/ 7423:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_hashHas.js ***!
   \*****************************************************************************************************/
-[8251, 7403],
+[8280, 7420],
 
-/***/ 7407:
+/***/ 7424:
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_hashSet.js ***!
   \*****************************************************************************************************/
-[8252, 7403],
+[8281, 7420],
 
-/***/ 7408:
+/***/ 7425:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_ListCache.js ***!
   \*******************************************************************************************************/
-[8236, 7409, 7410, 7412, 7413, 7414],
+[8265, 7426, 7427, 7429, 7430, 7431],
 
-/***/ 7409:
+/***/ 7426:
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_listCacheClear.js ***!
   \************************************************************************************************************/
-1332,
+1347,
 
-/***/ 7410:
+/***/ 7427:
 /*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_listCacheDelete.js ***!
   \*************************************************************************************************************/
-[8237, 7411],
+[8266, 7428],
 
-/***/ 7411:
+/***/ 7428:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_assocIndexOf.js ***!
   \**********************************************************************************************************/
-[8238, 7328],
+[8267, 7345],
 
-/***/ 7412:
+/***/ 7429:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_listCacheGet.js ***!
   \**********************************************************************************************************/
-[8239, 7411],
+[8268, 7428],
 
-/***/ 7413:
+/***/ 7430:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_listCacheHas.js ***!
   \**********************************************************************************************************/
-[8240, 7411],
+[8269, 7428],
 
-/***/ 7414:
+/***/ 7431:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_listCacheSet.js ***!
   \**********************************************************************************************************/
-[8241, 7411],
+[8270, 7428],
 
-/***/ 7415:
+/***/ 7432:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_Map.js ***!
   \*************************************************************************************************/
-[8244, 7389, 7333],
+[8273, 7406, 7350],
 
-/***/ 7416:
+/***/ 7433:
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_mapCacheDelete.js ***!
   \************************************************************************************************************/
-[8253, 7417],
+[8282, 7434],
 
-/***/ 7417:
+/***/ 7434:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_getMapData.js ***!
   \********************************************************************************************************/
-[8254, 7418],
+[8283, 7435],
 
-/***/ 7418:
+/***/ 7435:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_isKeyable.js ***!
   \*******************************************************************************************************/
-1355,
+1370,
 
-/***/ 7419:
+/***/ 7436:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_mapCacheGet.js ***!
   \*********************************************************************************************************/
-[8255, 7417],
+[8284, 7434],
 
-/***/ 7420:
+/***/ 7437:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_mapCacheHas.js ***!
   \*********************************************************************************************************/
-[8256, 7417],
+[8285, 7434],
 
-/***/ 7421:
+/***/ 7438:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_mapCacheSet.js ***!
   \*********************************************************************************************************/
-[8257, 7417],
+[8286, 7434],
 
-/***/ 7422:
+/***/ 7439:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_setCacheAdd.js ***!
   \*********************************************************************************************************/
-1404,
+1419,
 
-/***/ 7423:
+/***/ 7440:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_setCacheHas.js ***!
   \*********************************************************************************************************/
-1405,
+1420,
 
-/***/ 7424:
+/***/ 7441:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_arrayIncludes.js ***!
   \***********************************************************************************************************/
-[8209, 7425],
+[8238, 7442],
 
-/***/ 7425:
+/***/ 7442:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseIndexOf.js ***!
   \*********************************************************************************************************/
-[8210, 7426, 7427, 7428],
+[8239, 7443, 7444, 7445],
 
-/***/ 7426:
+/***/ 7443:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseFindIndex.js ***!
   \***********************************************************************************************************/
-1293,
+1308,
 
-/***/ 7427:
+/***/ 7444:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseIsNaN.js ***!
   \*******************************************************************************************************/
-1294,
+1309,
 
-/***/ 7428:
+/***/ 7445:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_strictIndexOf.js ***!
   \***********************************************************************************************************/
-1295,
+1310,
 
-/***/ 7429:
+/***/ 7446:
 /*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_arrayIncludesWith.js ***!
   \***************************************************************************************************************/
-1489,
+1504,
 
-/***/ 7430:
+/***/ 7447:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_arrayMap.js ***!
   \******************************************************************************************************/
-1423,
+1438,
 
-/***/ 7431:
+/***/ 7448:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseUnary.js ***!
   \*******************************************************************************************************/
-1321,
+1336,
 
-/***/ 7432:
+/***/ 7449:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_cacheHas.js ***!
   \******************************************************************************************************/
-1407,
+1422,
 
-/***/ 7433:
+/***/ 7450:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseFlatten.js ***!
   \*********************************************************************************************************/
-[8314, 7434, 7435],
+[8343, 7451, 7452],
 
-/***/ 7434:
+/***/ 7451:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_arrayPush.js ***!
   \*******************************************************************************************************/
-1370,
+1385,
 
-/***/ 7435:
+/***/ 7452:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_isFlattenable.js ***!
   \***********************************************************************************************************/
-[8315, 7332, 7436, 7438],
+[8344, 7349, 7453, 7455],
 
-/***/ 7436:
+/***/ 7453:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isArguments.js ***!
   \********************************************************************************************************/
-[8224, 7437, 7343],
+[8253, 7454, 7360],
 
-/***/ 7437:
+/***/ 7454:
 /*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseIsArguments.js ***!
   \*************************************************************************************************************/
-[8225, 7331, 7343],
+[8254, 7348, 7360],
 
-/***/ 7438:
+/***/ 7455:
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isArray.js ***!
   \****************************************************************************************************/
-1276,
+1291,
 
-/***/ 7439:
+/***/ 7456:
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_baseUniq.js ***!
   \******************************************************************************************************/
-[8355, 7398, 7424, 7429, 7432, 7440, 7443],
+[8383, 7415, 7441, 7446, 7449, 7457, 7460],
 
-/***/ 7440:
+/***/ 7457:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_createSet.js ***!
   \*******************************************************************************************************/
-[8356, 7441, 7442, 7443],
+[8384, 7458, 7459, 7460],
 
-/***/ 7441:
+/***/ 7458:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_Set.js ***!
   \*************************************************************************************************/
-[8273, 7389, 7333],
+[8302, 7406, 7350],
 
-/***/ 7442:
+/***/ 7459:
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/noop.js ***!
   \*************************************************************************************************/
-1271,
+1286,
 
-/***/ 7443:
+/***/ 7460:
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/_setToArray.js ***!
   \********************************************************************************************************/
-1391,
+1406,
 
-/***/ 7444:
+/***/ 7461:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/lodash/isArrayLikeObject.js ***!
   \**************************************************************************************************************/
-[8357, 7329, 7343],
+[8385, 7346, 7360],
 
-/***/ 7445:
+/***/ 7462:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/settings/Components.less ***!
   \******************************************************************************************************************/
@@ -25969,17 +24045,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../../~/css-loader!./../../../../../../../~/less-loader!./Components.less */ 7446);
+	var content = __webpack_require__(/*! !../../../../../../../~/css-loader!../../../../../../../~/less-loader!./Components.less */ 7463);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./Components.less", function() {
-				var newContent = require("!!./../../../../../../../node_modules/css-loader/index.js!./../../../../../../../node_modules/less-loader/index.js!./Components.less");
+			module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./Components.less", function() {
+				var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./Components.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -25990,13 +24066,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7446:
+/***/ 7463:
 /*!*************************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/settings/Components.less ***!
   \*************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -26008,85 +24084,85 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7447:
+/***/ 7464:
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/settings/GroupedFilter.jsx ***!
   \********************************************************************************************************************/
-[8359, 6692, 7316, 7321, 7168, 7379, 7445],
+[8386, 6709, 7333, 7338, 7185, 7396, 7462],
 
-/***/ 7448:
+/***/ 7465:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/util/TooltipStateManager.jsx ***!
   \*****************************************************************************************************************/
-[8360, 6692, 7449, 7460],
+[8387, 6709, 7466, 7477],
 
-/***/ 7449:
+/***/ 7466:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/index.js ***!
   \**************************************************************************************************************/
-[8153, 6692, 6722, 7450, 7451, 7453, 7454, 7455, 7456, 7457, 7458, 7459],
+[8182, 6709, 6739, 7467, 7468, 7470, 7471, 7472, 7473, 7474, 7475, 7476],
 
-/***/ 7450:
+/***/ 7467:
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/~/classnames/index.js ***!
   \**********************************************************************************************************************/
 339,
 
-/***/ 7451:
+/***/ 7468:
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/decorators/staticMethods.js ***!
   \*********************************************************************************************************************************/
-[8154, 7452],
+[8183, 7469],
 
-/***/ 7452:
+/***/ 7469:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/constant.js ***!
   \*****************************************************************************************************************/
-1195,
+1210,
 
-/***/ 7453:
+/***/ 7470:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/decorators/windowListener.js ***!
   \**********************************************************************************************************************************/
-[8155, 7452],
+[8184, 7469],
 
-/***/ 7454:
+/***/ 7471:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/decorators/customEvent.js ***!
   \*******************************************************************************************************************************/
-1197,
+1212,
 
-/***/ 7455:
+/***/ 7472:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/decorators/isCapture.js ***!
   \*****************************************************************************************************************************/
-1198,
+1213,
 
-/***/ 7456:
+/***/ 7473:
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/utils/getPosition.js ***!
   \**************************************************************************************************************************/
-1199,
+1214,
 
-/***/ 7457:
+/***/ 7474:
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/utils/getTipContent.js ***!
   \****************************************************************************************************************************/
-[8156, 6692],
+[8185, 6709],
 
-/***/ 7458:
+/***/ 7475:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/utils/aria.js ***!
   \*******************************************************************************************************************/
-1201,
+1216,
 
-/***/ 7459:
+/***/ 7476:
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/react-tooltip/dist/style.js ***!
   \**************************************************************************************************************/
-1202,
+1217,
 
-/***/ 7460:
+/***/ 7477:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/util/TooltipStateManager.less ***!
   \******************************************************************************************************************/
@@ -26095,17 +24171,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../~/css-loader!./../../../../../../~/less-loader!./TooltipStateManager.less */ 7461);
+	var content = __webpack_require__(/*! !../../../../../../~/css-loader!../../../../../../~/less-loader!./TooltipStateManager.less */ 7478);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../node_modules/css-loader/index.js!./../../../../../../node_modules/less-loader/index.js!./TooltipStateManager.less", function() {
-				var newContent = require("!!./../../../../../../node_modules/css-loader/index.js!./../../../../../../node_modules/less-loader/index.js!./TooltipStateManager.less");
+			module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/less-loader/index.js!./TooltipStateManager.less", function() {
+				var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/less-loader/index.js!./TooltipStateManager.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -26116,13 +24192,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7461:
+/***/ 7478:
 /*!*************************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/util/TooltipStateManager.less ***!
   \*************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -26134,1094 +24210,901 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7462:
+/***/ 7479:
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/CoexpressionOption.jsx ***!
   \****************************************************************************************************************/
-[8362, 6692, 7463, 7611, 7613, 7316, 7321],
+[8388, 6709, 7480, 7628, 7630, 7333, 7338],
 
-/***/ 7463:
+/***/ 7480:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/lib/index.js ***!
   \*********************************************************************************************************/
-[8002, 7464],
+[8013, 7481],
 
-/***/ 7464:
+/***/ 7481:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/lib/Slider.js ***!
   \**********************************************************************************************************/
-[8003, 7465, 7484, 7523, 7530, 7531, 7554, 6692, 7562, 7567, 7568, 7569, 7608, 7610],
+[8014, 7482, 7501, 7540, 7547, 7548, 7571, 6709, 7579, 7584, 7585, 7586, 7625, 7627],
 
-/***/ 7465:
+/***/ 7482:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/defineProperty.js ***!
   \**************************************************************************************************************************************/
-[8004, 7466],
+[8015, 7483],
 
-/***/ 7466:
+/***/ 7483:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/object/define-property.js ***!
   \**********************************************************************************************************************************************/
-[8005, 7467],
+[8016, 7484],
 
-/***/ 7467:
+/***/ 7484:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/object/define-property.js ***!
   \***********************************************************************************************************************************************************/
-[8006, 7468, 7471],
+[8017, 7485, 7488],
 
-/***/ 7468:
+/***/ 7485:
 /*!********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.object.define-property.js ***!
   \********************************************************************************************************************************************************************/
-[7982, 7469, 7479, 7475],
+[7993, 7486, 7496, 7492],
 
-/***/ 7469:
+/***/ 7486:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_export.js ***!
   \*************************************************************************************************************************************************/
-[7784, 7470, 7471, 7472, 7474],
+[7797, 7487, 7488, 7489, 7491],
 
-/***/ 7470:
+/***/ 7487:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_global.js ***!
   \*************************************************************************************************************************************************/
 255,
 
-/***/ 7471:
+/***/ 7488:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_core.js ***!
   \***********************************************************************************************************************************************/
 256,
 
-/***/ 7472:
+/***/ 7489:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
   \**********************************************************************************************************************************************/
-[7785, 7473],
+[7798, 7490],
 
-/***/ 7473:
+/***/ 7490:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
   \*****************************************************************************************************************************************************/
 258,
 
-/***/ 7474:
+/***/ 7491:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
   \***********************************************************************************************************************************************/
-[7786, 7475, 7483, 7479],
+[7799, 7492, 7500, 7496],
 
-/***/ 7475:
+/***/ 7492:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
   \****************************************************************************************************************************************************/
-[7787, 7476, 7478, 7482, 7479],
+[7800, 7493, 7495, 7499, 7496],
 
-/***/ 7476:
+/***/ 7493:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
   \****************************************************************************************************************************************************/
-[7788, 7477],
+[7801, 7494],
 
-/***/ 7477:
+/***/ 7494:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
   \****************************************************************************************************************************************************/
 262,
 
-/***/ 7478:
+/***/ 7495:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
   \*********************************************************************************************************************************************************/
-[7789, 7479, 7480, 7481],
+[7802, 7496, 7497, 7498],
 
-/***/ 7479:
+/***/ 7496:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
   \******************************************************************************************************************************************************/
-[7790, 7480],
+[7803, 7497],
 
-/***/ 7480:
+/***/ 7497:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
   \************************************************************************************************************************************************/
 265,
 
-/***/ 7481:
+/***/ 7498:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
   \*****************************************************************************************************************************************************/
-[7791, 7477, 7470],
+[7804, 7494, 7487],
 
-/***/ 7482:
+/***/ 7499:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
   \*******************************************************************************************************************************************************/
-[7792, 7477],
+[7805, 7494],
 
-/***/ 7483:
+/***/ 7500:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
   \********************************************************************************************************************************************************/
 268,
 
-/***/ 7484:
+/***/ 7501:
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/toConsumableArray.js ***!
   \*****************************************************************************************************************************************/
-[8007, 7485],
+[8018, 7502],
 
-/***/ 7485:
+/***/ 7502:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/array/from.js ***!
   \**********************************************************************************************************************************/
-[8008, 7486],
+[8019, 7503],
 
-/***/ 7486:
+/***/ 7503:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/array/from.js ***!
   \***********************************************************************************************************************************************/
-[8009, 7487, 7516, 7471],
+[8020, 7504, 7533, 7488],
 
-/***/ 7487:
+/***/ 7504:
 /*!*************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
   \*************************************************************************************************************************************************************/
-[7813, 7488, 7491],
+[7826, 7505, 7508],
 
-/***/ 7488:
+/***/ 7505:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
   \****************************************************************************************************************************************************/
-[7814, 7489, 7490],
+[7827, 7506, 7507],
 
-/***/ 7489:
+/***/ 7506:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
   \*****************************************************************************************************************************************************/
 279,
 
-/***/ 7490:
+/***/ 7507:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_defined.js ***!
   \**************************************************************************************************************************************************/
 276,
 
-/***/ 7491:
+/***/ 7508:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
   \******************************************************************************************************************************************************/
-[7815, 7492, 7469, 7493, 7474, 7494, 7495, 7496, 7512, 7514, 7513],
+[7828, 7509, 7486, 7510, 7491, 7511, 7512, 7513, 7529, 7531, 7530],
 
-/***/ 7492:
+/***/ 7509:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_library.js ***!
   \**************************************************************************************************************************************************/
 302,
 
-/***/ 7493:
+/***/ 7510:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
   \***************************************************************************************************************************************************/
-[7816, 7474],
+[7829, 7491],
 
-/***/ 7494:
+/***/ 7511:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_has.js ***!
   \**********************************************************************************************************************************************/
 272,
 
-/***/ 7495:
+/***/ 7512:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
   \****************************************************************************************************************************************************/
 304,
 
-/***/ 7496:
+/***/ 7513:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
   \******************************************************************************************************************************************************/
-[7817, 7497, 7483, 7512, 7474, 7513],
+[7830, 7514, 7500, 7529, 7491, 7530],
 
-/***/ 7497:
+/***/ 7514:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
   \********************************************************************************************************************************************************/
-[7818, 7476, 7498, 7510, 7507, 7481, 7511],
+[7831, 7493, 7515, 7527, 7524, 7498, 7528],
 
-/***/ 7498:
+/***/ 7515:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
   \*****************************************************************************************************************************************************/
-[7819, 7475, 7476, 7499, 7479],
+[7832, 7492, 7493, 7516, 7496],
 
-/***/ 7499:
+/***/ 7516:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
   \******************************************************************************************************************************************************/
-[7794, 7500, 7510],
+[7807, 7517, 7527],
 
-/***/ 7500:
+/***/ 7517:
 /*!***************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
   \***************************************************************************************************************************************************************/
-[7795, 7494, 7501, 7504, 7507],
+[7808, 7511, 7518, 7521, 7524],
 
-/***/ 7501:
+/***/ 7518:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
   \*****************************************************************************************************************************************************/
-[7796, 7502, 7490],
+[7809, 7519, 7507],
 
-/***/ 7502:
+/***/ 7519:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
   \**************************************************************************************************************************************************/
-[7797, 7503],
+[7810, 7520],
 
-/***/ 7503:
+/***/ 7520:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
   \**********************************************************************************************************************************************/
 275,
 
-/***/ 7504:
+/***/ 7521:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
   \*********************************************************************************************************************************************************/
-[7798, 7501, 7505, 7506],
+[7811, 7518, 7522, 7523],
 
-/***/ 7505:
+/***/ 7522:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
   \****************************************************************************************************************************************************/
-[7799, 7489],
+[7812, 7506],
 
-/***/ 7506:
+/***/ 7523:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
   \***************************************************************************************************************************************************/
-[7800, 7489],
+[7813, 7506],
 
-/***/ 7507:
+/***/ 7524:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
   \*****************************************************************************************************************************************************/
-[7801, 7508, 7509],
+[7814, 7525, 7526],
 
-/***/ 7508:
+/***/ 7525:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
   \*************************************************************************************************************************************************/
-[7802, 7470],
+[7815, 7487],
 
-/***/ 7509:
+/***/ 7526:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
   \**********************************************************************************************************************************************/
 283,
 
-/***/ 7510:
+/***/ 7527:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_enum-bug-keys.js ***!
   \********************************************************************************************************************************************************/
 284,
 
-/***/ 7511:
+/***/ 7528:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_html.js ***!
   \***********************************************************************************************************************************************/
-[7820, 7470],
+[7833, 7487],
 
-/***/ 7512:
+/***/ 7529:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
   \************************************************************************************************************************************************************/
-[7821, 7475, 7494, 7513],
+[7834, 7492, 7511, 7530],
 
-/***/ 7513:
+/***/ 7530:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
   \**********************************************************************************************************************************************/
-[7822, 7508, 7509, 7470],
+[7835, 7525, 7526, 7487],
 
-/***/ 7514:
+/***/ 7531:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
   \*****************************************************************************************************************************************************/
-[7823, 7494, 7515, 7507],
+[7836, 7511, 7532, 7524],
 
-/***/ 7515:
+/***/ 7532:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
   \****************************************************************************************************************************************************/
-[7808, 7490],
+[7821, 7507],
 
-/***/ 7516:
+/***/ 7533:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.array.from.js ***!
   \********************************************************************************************************************************************************/
-[7984, 7472, 7469, 7515, 7517, 7518, 7505, 7519, 7520, 7522],
+[7995, 7489, 7486, 7532, 7534, 7535, 7522, 7536, 7537, 7539],
 
-/***/ 7517:
+/***/ 7534:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iter-call.js ***!
   \****************************************************************************************************************************************************/
-[7985, 7476],
+[7996, 7493],
 
-/***/ 7518:
+/***/ 7535:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_is-array-iter.js ***!
   \********************************************************************************************************************************************************/
-[7986, 7495, 7513],
+[7997, 7512, 7530],
 
-/***/ 7519:
+/***/ 7536:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_create-property.js ***!
   \**********************************************************************************************************************************************************/
-[7987, 7475, 7483],
+[7998, 7492, 7500],
 
-/***/ 7520:
+/***/ 7537:
 /*!******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/core.get-iterator-method.js ***!
   \******************************************************************************************************************************************************************/
-[7988, 7521, 7513, 7495, 7471],
+[7999, 7538, 7530, 7512, 7488],
 
-/***/ 7521:
+/***/ 7538:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_classof.js ***!
   \**************************************************************************************************************************************************/
-[7983, 7503, 7513],
+[7994, 7520, 7530],
 
-/***/ 7522:
+/***/ 7539:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iter-detect.js ***!
   \******************************************************************************************************************************************************/
-[7989, 7513],
+[8000, 7530],
 
-/***/ 7523:
+/***/ 7540:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/extends.js ***!
   \*******************************************************************************************************************************/
-[7803, 7524],
+[7816, 7541],
 
-/***/ 7524:
+/***/ 7541:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/object/assign.js ***!
   \*************************************************************************************************************************************/
-[7804, 7525],
+[7817, 7542],
 
-/***/ 7525:
+/***/ 7542:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
   \**************************************************************************************************************************************************/
-[7805, 7526, 7471],
+[7818, 7543, 7488],
 
-/***/ 7526:
+/***/ 7543:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
   \***********************************************************************************************************************************************************/
-[7806, 7469, 7527],
+[7819, 7486, 7544],
 
-/***/ 7527:
+/***/ 7544:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
   \********************************************************************************************************************************************************/
-[7807, 7499, 7528, 7529, 7515, 7502, 7480],
+[7820, 7516, 7545, 7546, 7532, 7519, 7497],
 
-/***/ 7528:
+/***/ 7545:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-gops.js ***!
   \******************************************************************************************************************************************************/
 292,
 
-/***/ 7529:
+/***/ 7546:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-pie.js ***!
   \*****************************************************************************************************************************************************/
 285,
 
-/***/ 7530:
+/***/ 7547:
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/classCallCheck.js ***!
   \**************************************************************************************************************************************/
 294,
 
-/***/ 7531:
+/***/ 7548:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
   \*************************************************************************************************************************************************/
-[7809, 7532],
+[7822, 7549],
 
-/***/ 7532:
+/***/ 7549:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/typeof.js ***!
   \******************************************************************************************************************************/
-[7810, 7533, 7540],
+[7823, 7550, 7557],
 
-/***/ 7533:
+/***/ 7550:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/symbol/iterator.js ***!
   \***************************************************************************************************************************************/
-[7811, 7534],
+[7824, 7551],
 
-/***/ 7534:
+/***/ 7551:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
   \****************************************************************************************************************************************************/
-[7812, 7487, 7535, 7539],
+[7825, 7504, 7552, 7556],
 
-/***/ 7535:
+/***/ 7552:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
   \**********************************************************************************************************************************************************/
-[7824, 7536, 7470, 7474, 7495, 7513],
+[7837, 7553, 7487, 7491, 7512, 7530],
 
-/***/ 7536:
+/***/ 7553:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
   \************************************************************************************************************************************************************/
-[7825, 7537, 7538, 7495, 7501, 7491],
+[7838, 7554, 7555, 7512, 7518, 7508],
 
-/***/ 7537:
+/***/ 7554:
 /*!*************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
   \*************************************************************************************************************************************************************/
 314,
 
-/***/ 7538:
+/***/ 7555:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
   \****************************************************************************************************************************************************/
 315,
 
-/***/ 7539:
+/***/ 7556:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
   \**************************************************************************************************************************************************/
-[7826, 7513],
+[7839, 7530],
 
-/***/ 7540:
+/***/ 7557:
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/symbol.js ***!
   \******************************************************************************************************************************/
-[7827, 7541],
+[7840, 7558],
 
-/***/ 7541:
+/***/ 7558:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
   \*************************************************************************************************************************************************/
-[7828, 7542, 7551, 7552, 7553, 7471],
+[7841, 7559, 7568, 7569, 7570, 7488],
 
-/***/ 7542:
+/***/ 7559:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
   \****************************************************************************************************************************************************/
-[7829, 7470, 7494, 7479, 7469, 7493, 7543, 7480, 7508, 7512, 7509, 7513, 7539, 7544, 7545, 7546, 7547, 7476, 7501, 7482, 7483, 7497, 7548, 7550, 7475, 7499, 7549, 7529, 7528, 7492, 7474],
+[7842, 7487, 7511, 7496, 7486, 7510, 7560, 7497, 7525, 7529, 7526, 7530, 7556, 7561, 7562, 7563, 7564, 7493, 7518, 7499, 7500, 7514, 7565, 7567, 7492, 7516, 7566, 7546, 7545, 7509, 7491],
 
-/***/ 7543:
+/***/ 7560:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
   \***********************************************************************************************************************************************/
-[7830, 7509, 7477, 7494, 7475, 7480],
+[7843, 7526, 7494, 7511, 7492, 7497],
 
-/***/ 7544:
+/***/ 7561:
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
   \*****************************************************************************************************************************************************/
-[7831, 7470, 7471, 7492, 7539, 7475],
+[7844, 7487, 7488, 7509, 7556, 7492],
 
-/***/ 7545:
+/***/ 7562:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
   \************************************************************************************************************************************************/
-[7832, 7499, 7501],
+[7845, 7516, 7518],
 
-/***/ 7546:
+/***/ 7563:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
   \****************************************************************************************************************************************************/
-[7833, 7499, 7528, 7529],
+[7846, 7516, 7545, 7546],
 
-/***/ 7547:
+/***/ 7564:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
   \***************************************************************************************************************************************************/
-[7834, 7503],
+[7847, 7520],
 
-/***/ 7548:
+/***/ 7565:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
   \**********************************************************************************************************************************************************/
-[7835, 7501, 7549],
+[7848, 7518, 7566],
 
-/***/ 7549:
+/***/ 7566:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
   \******************************************************************************************************************************************************/
-[7836, 7500, 7510],
+[7849, 7517, 7527],
 
-/***/ 7550:
+/***/ 7567:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
   \******************************************************************************************************************************************************/
-[7837, 7529, 7483, 7501, 7482, 7494, 7478, 7479],
+[7850, 7546, 7500, 7518, 7499, 7511, 7495, 7496],
 
-/***/ 7551:
+/***/ 7568:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
   \**************************************************************************************************************************************************************/
 328,
 
-/***/ 7552:
+/***/ 7569:
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
   \*******************************************************************************************************************************************************************/
-[7838, 7544],
+[7851, 7561],
 
-/***/ 7553:
+/***/ 7570:
 /*!***************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
   \***************************************************************************************************************************************************************/
-[7839, 7544],
+[7852, 7561],
 
-/***/ 7554:
+/***/ 7571:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/inherits.js ***!
   \********************************************************************************************************************************/
-[7840, 7555, 7559, 7532],
+[7853, 7572, 7576, 7549],
 
-/***/ 7555:
+/***/ 7572:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/object/set-prototype-of.js ***!
   \***********************************************************************************************************************************************/
-[7841, 7556],
+[7854, 7573],
 
-/***/ 7556:
+/***/ 7573:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
   \************************************************************************************************************************************************************/
-[7842, 7557, 7471],
+[7855, 7574, 7488],
 
-/***/ 7557:
+/***/ 7574:
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \*********************************************************************************************************************************************************************/
-[7843, 7469, 7558],
+[7856, 7486, 7575],
 
-/***/ 7558:
+/***/ 7575:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
   \****************************************************************************************************************************************************/
-[7844, 7477, 7476, 7472, 7550],
+[7857, 7494, 7493, 7489, 7567],
 
-/***/ 7559:
+/***/ 7576:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/core-js/object/create.js ***!
   \*************************************************************************************************************************************/
-[7845, 7560],
+[7858, 7577],
 
-/***/ 7560:
+/***/ 7577:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
   \**************************************************************************************************************************************************/
-[7846, 7561, 7471],
+[7859, 7578, 7488],
 
-/***/ 7561:
+/***/ 7578:
 /*!***********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
   \***********************************************************************************************************************************************************/
-[7847, 7469, 7497],
+[7860, 7486, 7514],
 
-/***/ 7562:
+/***/ 7579:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-util/lib/Dom/addEventListener.js ***!
   \**********************************************************************************************************************************/
-[8010, 7563, 6722],
+[8021, 7580, 6739],
 
-/***/ 7563:
+/***/ 7580:
 /*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-util/~/add-dom-event-listener/lib/index.js ***!
   \********************************************************************************************************************************************/
-[8011, 7564],
+[8022, 7581],
 
-/***/ 7564:
+/***/ 7581:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-util/~/add-dom-event-listener/lib/EventObject.js ***!
   \**************************************************************************************************************************************************/
-[8012, 7565, 7566],
+[8023, 7582, 7583],
 
-/***/ 7565:
+/***/ 7582:
 /*!******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-util/~/add-dom-event-listener/lib/EventBaseObject.js ***!
   \******************************************************************************************************************************************************/
 998,
 
-/***/ 7566:
+/***/ 7583:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-util/~/add-dom-event-listener/~/object-assign/index.js ***!
   \********************************************************************************************************************************************************/
 5,
 
-/***/ 7567:
+/***/ 7584:
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/classnames/index.js ***!
   \******************************************************************************************************************/
 339,
 
-/***/ 7568:
+/***/ 7585:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/lib/Track.js ***!
   \*********************************************************************************************************/
-[8013, 6692],
+[8024, 6709],
 
-/***/ 7569:
+/***/ 7586:
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/lib/Handle.js ***!
   \**********************************************************************************************************/
-[8014, 7530, 7531, 7554, 6692, 7570],
+[8025, 7547, 7548, 7571, 6709, 7587],
 
-/***/ 7570:
+/***/ 7587:
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/lib/index.js ***!
   \**********************************************************************************************************************/
-[8015, 7571],
+[8026, 7588],
 
-/***/ 7571:
+/***/ 7588:
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/lib/Tooltip.js ***!
   \************************************************************************************************************************/
-[8016, 6692, 7572, 7573],
+[8027, 6709, 7589, 7590],
 
-/***/ 7572:
+/***/ 7589:
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/lib/placements.js ***!
   \***************************************************************************************************************************/
 1005,
 
-/***/ 7573:
+/***/ 7590:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/lib/index.js ***!
   \***********************************************************************************************************************************/
-[8017, 7574],
+[8028, 7591],
 
-/***/ 7574:
+/***/ 7591:
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/lib/Trigger.js ***!
   \*************************************************************************************************************************************/
-[8018, 7523, 6692, 6722, 7575, 7576, 7581, 7606, 7607],
+[8029, 7540, 6709, 6739, 7592, 7593, 7598, 7623, 7624],
 
-/***/ 7575:
+/***/ 7592:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/lib/Dom/contains.js ***!
   \****************************************************************************************************************************************************/
 1008,
 
-/***/ 7576:
+/***/ 7593:
 /*!************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/lib/Dom/addEventListener.js ***!
   \************************************************************************************************************************************************************/
-[8010, 7577, 6722],
+[8021, 7594, 6739],
 
-/***/ 7577:
+/***/ 7594:
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/~/add-dom-event-listener/lib/index.js ***!
   \**********************************************************************************************************************************************************************/
-[8011, 7578],
+[8022, 7595],
 
-/***/ 7578:
+/***/ 7595:
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/~/add-dom-event-listener/lib/EventObject.js ***!
   \****************************************************************************************************************************************************************************/
-[8012, 7579, 7580],
+[8023, 7596, 7597],
 
-/***/ 7579:
+/***/ 7596:
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/~/add-dom-event-listener/lib/EventBaseObject.js ***!
   \********************************************************************************************************************************************************************************/
 998,
 
-/***/ 7580:
+/***/ 7597:
 /*!**********************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/~/add-dom-event-listener/~/object-assign/index.js ***!
   \**********************************************************************************************************************************************************************************/
 5,
 
-/***/ 7581:
+/***/ 7598:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/lib/Popup.js ***!
   \***********************************************************************************************************************************/
-[8019, 7523, 6692, 6722, 7582, 7594, 7603, 7604],
+[8030, 7540, 6709, 6739, 7599, 7611, 7620, 7621],
 
-/***/ 7582:
+/***/ 7599:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/lib/index.js ***!
   \**********************************************************************************************************************************************/
-[8020, 7583],
+[8031, 7600],
 
-/***/ 7583:
+/***/ 7600:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/lib/Align.js ***!
   \**********************************************************************************************************************************************/
-[8021, 6692, 6722, 7584, 7576, 7593],
+[8032, 6709, 6739, 7601, 7593, 7610],
 
-/***/ 7584:
+/***/ 7601:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/index.js ***!
   \**********************************************************************************************************************************************************/
-[8022, 7585, 7587, 7588, 7589, 7590, 7591],
+[8033, 7602, 7604, 7605, 7606, 7607, 7608],
 
-/***/ 7585:
+/***/ 7602:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/utils.js ***!
   \**********************************************************************************************************************************************************/
-[8023, 7586],
+[8034, 7603],
 
-/***/ 7586:
+/***/ 7603:
 /*!******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/propertyUtils.js ***!
   \******************************************************************************************************************************************************************/
 1019,
 
-/***/ 7587:
+/***/ 7604:
 /*!********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/getOffsetParent.js ***!
   \********************************************************************************************************************************************************************/
-[8024, 7585],
+[8035, 7602],
 
-/***/ 7588:
+/***/ 7605:
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/getVisibleRectForElement.js ***!
   \*****************************************************************************************************************************************************************************/
-[8025, 7585, 7587],
+[8036, 7602, 7604],
 
-/***/ 7589:
+/***/ 7606:
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/adjustForViewport.js ***!
   \**********************************************************************************************************************************************************************/
-[8026, 7585],
+[8037, 7602],
 
-/***/ 7590:
+/***/ 7607:
 /*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/getRegion.js ***!
   \**************************************************************************************************************************************************************/
-[8027, 7585],
+[8038, 7602],
 
-/***/ 7591:
+/***/ 7608:
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/getElFuturePos.js ***!
   \*******************************************************************************************************************************************************************/
-[8028, 7592],
+[8039, 7609],
 
-/***/ 7592:
+/***/ 7609:
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/~/dom-align/lib/getAlignOffset.js ***!
   \*******************************************************************************************************************************************************************/
 1025,
 
-/***/ 7593:
+/***/ 7610:
 /*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-align/lib/isWindow.js ***!
   \*************************************************************************************************************************************************/
 1026,
 
-/***/ 7594:
+/***/ 7611:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/lib/index.js ***!
   \************************************************************************************************************************************************/
-[8029, 7595],
+[8040, 7612],
 
-/***/ 7595:
+/***/ 7612:
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/lib/Animate.js ***!
   \**************************************************************************************************************************************************/
-[8030, 6692, 7596, 7597, 7602],
+[8041, 6709, 7613, 7614, 7619],
 
-/***/ 7596:
+/***/ 7613:
 /*!********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/lib/ChildrenUtils.js ***!
   \********************************************************************************************************************************************************/
-[8031, 6692],
+[8042, 6709],
 
-/***/ 7597:
+/***/ 7614:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/lib/AnimateChild.js ***!
   \*******************************************************************************************************************************************************/
-[8032, 6692, 6722, 7598, 7602],
+[8043, 6709, 6739, 7615, 7619],
 
-/***/ 7598:
+/***/ 7615:
 /*!****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/~/css-animation/lib/index.js ***!
   \****************************************************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+[8044, 7616, 7617],
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _Event = __webpack_require__(/*! ./Event */ 7599);
-	
-	var _Event2 = _interopRequireDefault(_Event);
-	
-	var _componentClasses = __webpack_require__(/*! component-classes */ 7600);
-	
-	var _componentClasses2 = _interopRequireDefault(_componentClasses);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var isCssAnimationSupported = _Event2["default"].endEvents.length !== 0;
-	
-	
-	var capitalPrefixes = ['Webkit', 'Moz', 'O',
-	// ms is special .... !
-	'ms'];
-	var prefixes = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
-	
-	function getStyleProperty(node, name) {
-	  // old ff need null, https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
-	  var style = window.getComputedStyle(node, null);
-	  var ret = '';
-	  for (var i = 0; i < prefixes.length; i++) {
-	    ret = style.getPropertyValue(prefixes[i] + name);
-	    if (ret) {
-	      break;
-	    }
-	  }
-	  return ret;
-	}
-	
-	function fixBrowserByTimeout(node) {
-	  if (isCssAnimationSupported) {
-	    var transitionDelay = parseFloat(getStyleProperty(node, 'transition-delay')) || 0;
-	    var transitionDuration = parseFloat(getStyleProperty(node, 'transition-duration')) || 0;
-	    var animationDelay = parseFloat(getStyleProperty(node, 'animation-delay')) || 0;
-	    var animationDuration = parseFloat(getStyleProperty(node, 'animation-duration')) || 0;
-	    var time = Math.max(transitionDuration + transitionDelay, animationDuration + animationDelay);
-	    // sometimes, browser bug
-	    node.rcEndAnimTimeout = setTimeout(function () {
-	      node.rcEndAnimTimeout = null;
-	      if (node.rcEndListener) {
-	        node.rcEndListener();
-	      }
-	    }, time * 1000 + 200);
-	  }
-	}
-	
-	function clearBrowserBugTimeout(node) {
-	  if (node.rcEndAnimTimeout) {
-	    clearTimeout(node.rcEndAnimTimeout);
-	    node.rcEndAnimTimeout = null;
-	  }
-	}
-	
-	var cssAnimation = function cssAnimation(node, transitionName, endCallback) {
-	  var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
-	  var className = nameIsObj ? transitionName.name : transitionName;
-	  var activeClassName = nameIsObj ? transitionName.active : transitionName + '-active';
-	  var end = endCallback;
-	  var start = void 0;
-	  var active = void 0;
-	  var nodeClasses = (0, _componentClasses2["default"])(node);
-	
-	  if (endCallback && Object.prototype.toString.call(endCallback) === '[object Object]') {
-	    end = endCallback.end;
-	    start = endCallback.start;
-	    active = endCallback.active;
-	  }
-	
-	  if (node.rcEndListener) {
-	    node.rcEndListener();
-	  }
-	
-	  node.rcEndListener = function (e) {
-	    if (e && e.target !== node) {
-	      return;
-	    }
-	
-	    if (node.rcAnimTimeout) {
-	      clearTimeout(node.rcAnimTimeout);
-	      node.rcAnimTimeout = null;
-	    }
-	
-	    clearBrowserBugTimeout(node);
-	
-	    nodeClasses.remove(className);
-	    nodeClasses.remove(activeClassName);
-	
-	    _Event2["default"].removeEndEventListener(node, node.rcEndListener);
-	    node.rcEndListener = null;
-	
-	    // Usually this optional end is used for informing an owner of
-	    // a leave animation and telling it to remove the child.
-	    if (end) {
-	      end();
-	    }
-	  };
-	
-	  _Event2["default"].addEndEventListener(node, node.rcEndListener);
-	
-	  if (start) {
-	    start();
-	  }
-	  nodeClasses.add(className);
-	
-	  node.rcAnimTimeout = setTimeout(function () {
-	    node.rcAnimTimeout = null;
-	    nodeClasses.add(activeClassName);
-	    if (active) {
-	      setTimeout(active, 0);
-	    }
-	    fixBrowserByTimeout(node);
-	    // 30ms for firefox
-	  }, 30);
-	
-	  return {
-	    stop: function stop() {
-	      if (node.rcEndListener) {
-	        node.rcEndListener();
-	      }
-	    }
-	  };
-	};
-	
-	cssAnimation.style = function (node, style, callback) {
-	  if (node.rcEndListener) {
-	    node.rcEndListener();
-	  }
-	
-	  node.rcEndListener = function (e) {
-	    if (e && e.target !== node) {
-	      return;
-	    }
-	
-	    if (node.rcAnimTimeout) {
-	      clearTimeout(node.rcAnimTimeout);
-	      node.rcAnimTimeout = null;
-	    }
-	
-	    clearBrowserBugTimeout(node);
-	
-	    _Event2["default"].removeEndEventListener(node, node.rcEndListener);
-	    node.rcEndListener = null;
-	
-	    // Usually this optional callback is used for informing an owner of
-	    // a leave animation and telling it to remove the child.
-	    if (callback) {
-	      callback();
-	    }
-	  };
-	
-	  _Event2["default"].addEndEventListener(node, node.rcEndListener);
-	
-	  node.rcAnimTimeout = setTimeout(function () {
-	    for (var s in style) {
-	      if (style.hasOwnProperty(s)) {
-	        node.style[s] = style[s];
-	      }
-	    }
-	    node.rcAnimTimeout = null;
-	    fixBrowserByTimeout(node);
-	  }, 0);
-	};
-	
-	cssAnimation.setTransition = function (node, p, value) {
-	  var property = p;
-	  var v = value;
-	  if (value === undefined) {
-	    v = property;
-	    property = '';
-	  }
-	  property = property || '';
-	  capitalPrefixes.forEach(function (prefix) {
-	    node.style[prefix + 'Transition' + property] = v;
-	  });
-	};
-	
-	cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
-	
-	exports["default"] = cssAnimation;
-	module.exports = exports['default'];
-
-/***/ },
-
-/***/ 7599:
+/***/ 7616:
 /*!****************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/~/css-animation/lib/Event.js ***!
   \****************************************************************************************************************************************************************/
 1032,
 
-/***/ 7600:
+/***/ 7617:
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/~/css-animation/~/component-classes/index.js ***!
   \********************************************************************************************************************************************************************************/
-[8034, 7601, 7601],
+[8045, 7618, 7618],
 
-/***/ 7601:
+/***/ 7618:
 /*!****************************************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/~/css-animation/~/component-classes/~/component-indexof/index.js ***!
   \****************************************************************************************************************************************************************************************************/
 1034,
 
-/***/ 7602:
+/***/ 7619:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-animate/lib/util.js ***!
   \***********************************************************************************************************************************************/
 1035,
 
-/***/ 7603:
+/***/ 7620:
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/lib/PopupInner.js ***!
   \****************************************************************************************************************************************/
-[8035, 6692, 7604],
+[8046, 6709, 7621],
 
-/***/ 7604:
+/***/ 7621:
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/lib/LazyRenderBox.js ***!
   \*******************************************************************************************************************************************/
-[8036, 7605, 6692],
+[8047, 7622, 6709],
 
-/***/ 7605:
+/***/ 7622:
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/babel-runtime/helpers/objectWithoutProperties.js ***!
   \***********************************************************************************************************************************************/
 286,
 
-/***/ 7606:
+/***/ 7623:
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/lib/utils.js ***!
   \***********************************************************************************************************************************/
-[8037, 7523],
+[8048, 7540],
 
-/***/ 7607:
+/***/ 7624:
 /*!***************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/rc-tooltip/~/rc-trigger/~/rc-util/lib/getContainerRenderMixin.js ***!
   \***************************************************************************************************************************************************************/
-[8038, 6722],
+[8049, 6739],
 
-/***/ 7608:
+/***/ 7625:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/lib/Steps.js ***!
   \*********************************************************************************************************/
-[8039, 7465, 6692, 7567, 7609],
+[8050, 7482, 6709, 7584, 7626],
 
-/***/ 7609:
+/***/ 7626:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/~/warning/browser.js ***!
   \*****************************************************************************************************************/
 352,
 
-/***/ 7610:
+/***/ 7627:
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/lib/Marks.js ***!
   \*********************************************************************************************************/
-[8040, 7523, 7532, 7465, 6692, 7567],
+[8051, 7540, 7549, 7482, 6709, 7584],
 
-/***/ 7611:
+/***/ 7628:
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/CoexpressionOption.less ***!
   \*****************************************************************************************************************/
@@ -27230,17 +25113,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../~/css-loader!./../../../../../../~/less-loader!./CoexpressionOption.less */ 7612);
+	var content = __webpack_require__(/*! !../../../../../../~/css-loader!../../../../../../~/less-loader!./CoexpressionOption.less */ 7629);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../node_modules/css-loader/index.js!./../../../../../../node_modules/less-loader/index.js!./CoexpressionOption.less", function() {
-				var newContent = require("!!./../../../../../../node_modules/css-loader/index.js!./../../../../../../node_modules/less-loader/index.js!./CoexpressionOption.less");
+			module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/less-loader/index.js!./CoexpressionOption.less", function() {
+				var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/less-loader/index.js!./CoexpressionOption.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -27251,13 +25134,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7612:
+/***/ 7629:
 /*!************************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/CoexpressionOption.less ***!
   \************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -27269,7 +25152,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7613:
+/***/ 7630:
 /*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/assets/index.css ***!
   \*************************************************************************************************************/
@@ -27278,17 +25161,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../../~/css-loader!./index.css */ 7614);
+	var content = __webpack_require__(/*! !../../../../../../../~/css-loader!./index.css */ 7631);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../../node_modules/css-loader/index.js!./index.css", function() {
-				var newContent = require("!!./../../../../../../../node_modules/css-loader/index.js!./index.css");
+			module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!./index.css", function() {
+				var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!./index.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -27299,13 +25182,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7614:
+/***/ 7631:
 /*!****************************************************************************************************************************!*\
   !*** ./~/css-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/~/rc-slider/assets/index.css ***!
   \****************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -27317,7 +25200,7 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7615:
+/***/ 7632:
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/SeriesLegend.less ***!
   \***********************************************************************************************************/
@@ -27326,17 +25209,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../../~/css-loader!./../../../../../../~/less-loader!./SeriesLegend.less */ 7616);
+	var content = __webpack_require__(/*! !../../../../../../~/css-loader!../../../../../../~/less-loader!./SeriesLegend.less */ 7633);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../node_modules/css-loader/index.js!./../../../../../../node_modules/less-loader/index.js!./SeriesLegend.less", function() {
-				var newContent = require("!!./../../../../../../node_modules/css-loader/index.js!./../../../../../../node_modules/less-loader/index.js!./SeriesLegend.less");
+			module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/less-loader/index.js!./SeriesLegend.less", function() {
+				var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/less-loader/index.js!./SeriesLegend.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -27347,13 +25230,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7616:
+/***/ 7633:
 /*!******************************************************************************************************************************************!*\
   !*** ./~/css-loader!./~/less-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/show/SeriesLegend.less ***!
   \******************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -27365,13 +25248,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7617:
+/***/ 7634:
 /*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/manipulate/Manipulators.js ***!
   \***************************************************************************************************************/
-1506,
+1521,
 
-/***/ 7618:
+/***/ 7635:
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapContainer.css ***!
   \*******************************************************************************************************************/
@@ -27380,17 +25263,17 @@ webpackJsonp_name_([8],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../../~/css-loader!./HighchartsHeatmapContainer.css */ 7619);
+	var content = __webpack_require__(/*! !../../../../../~/css-loader!./HighchartsHeatmapContainer.css */ 7636);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../../../~/style-loader/addStyles.js */ 235)(content, {});
+	var update = __webpack_require__(/*! ../../../../../~/style-loader/addStyles.js */ 235)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./HighchartsHeatmapContainer.css", function() {
-				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./HighchartsHeatmapContainer.css");
+			module.hot.accept("!!../../../../../node_modules/css-loader/index.js!./HighchartsHeatmapContainer.css", function() {
+				var newContent = require("!!../../../../../node_modules/css-loader/index.js!./HighchartsHeatmapContainer.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -27401,13 +25284,13 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7619:
+/***/ 7636:
 /*!**********************************************************************************************************************************!*\
   !*** ./~/css-loader!./atlas_bundles/heatmap-highcharts/~/expression-atlas-heatmap-highcharts/src/HighchartsHeatmapContainer.css ***!
   \**********************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../../../~/css-loader/lib/css-base.js */ 234)();
+	exports = module.exports = __webpack_require__(/*! ../../../../../~/css-loader/lib/css-base.js */ 234)();
 	// imports
 	
 	
@@ -27419,9 +25302,9 @@ webpackJsonp_name_([8],{
 
 /***/ },
 
-/***/ 7632:
+/***/ 7649:
 /*!*************************************!*\
-  !*** template of 6696 referencing  ***!
+  !*** template of 6713 referencing  ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 

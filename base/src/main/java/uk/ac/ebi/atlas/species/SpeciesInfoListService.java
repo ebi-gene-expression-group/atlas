@@ -5,7 +5,10 @@ import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by barrera on 10/02/2017.
@@ -49,7 +52,7 @@ public class SpeciesInfoListService {
                         totalDifferential ++;
                     }
 
-                    if (experimentType.equals(ExperimentType.RNASEQ_MRNA_BASELINE.name())) {
+                    if (experimentType.equals(ExperimentType.RNASEQ_MRNA_BASELINE.name()) || experimentType.equals(ExperimentType.PROTEOMICS_BASELINE.name())) {
                         totalBaseline ++;
                     }
                 }
