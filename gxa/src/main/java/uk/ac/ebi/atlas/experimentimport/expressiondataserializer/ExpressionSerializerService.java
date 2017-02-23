@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -36,8 +35,8 @@ public class ExpressionSerializerService {
                 "Experiment not found in cache, refusing to serialize:" + experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, experiment.getType());
         if (experiment.getType().isRnaSeqBaseline()) {
-            return rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession,
-                    ((BaselineExperiment) experiment).getExperimentalFactors());
+            return rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession
+            );
         } else {
             return "skipped";
         }

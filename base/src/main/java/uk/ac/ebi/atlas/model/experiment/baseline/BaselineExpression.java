@@ -19,6 +19,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     private String levelString;
     @Deprecated
     private FactorGroup factorGroup;
+    private String assayGroupId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
@@ -61,6 +62,45 @@ public class BaselineExpression implements Expression, KryoSerializable {
         }
         this.factorGroup = factorGroup;
         this.quartiles = new double[]{};
+    }
+
+    public BaselineExpression(double level, String assayGroupId) {
+        this(level, assayGroupId, new double[]{});
+    }
+
+    public BaselineExpression(double[] quartiles, String assayGroupId) {
+        this(quartiles[2], assayGroupId, quartiles);
+    }
+
+    private BaselineExpression(double level, String assayGroupId, double[] quartiles) {
+        this(level);
+        this.assayGroupId = assayGroupId;
+        this.levelString = removeTrailingZero(level);
+        this.quartiles = quartiles;
+    }
+
+    public BaselineExpression(String expressionLevelString, String assayGroupId) {
+        this.levelString = expressionLevelString;
+
+        switch (expressionLevelString) {
+            case "NT":  //Non-Tissue
+                level = 0;
+                break;
+            case "NA":
+                // treat as if zero
+                level = 0;
+                break;
+            default:
+                level = Double.parseDouble(expressionLevelString);
+                break;
+        }
+        this.assayGroupId = assayGroupId;
+        this.quartiles = new double[]{};
+    }
+
+    @Override
+    public String getDataColumnDescriptorId(){
+        return assayGroupId;
     }
 
     public double[] getQuartiles() {

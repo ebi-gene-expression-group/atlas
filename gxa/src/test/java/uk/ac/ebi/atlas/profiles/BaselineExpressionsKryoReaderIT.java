@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.profiles;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
@@ -67,10 +68,6 @@ public class BaselineExpressionsKryoReaderIT {
         String[] tsvLine = csvReader.readNext();
         List<String> assaysFromTsv = Arrays.asList(tsvLine).subList(FIRST_LEVEL_INDEX, tsvLine.length);
 
-        List<String> assaysFromSerializedFile = Arrays.asList(subject.rewindAndReadAssays());
-
-        assertThat(assaysFromSerializedFile, containsInAnyOrder(assaysFromTsv.toArray()));
-
         while (subject.readLine()) {
             tsvLine = csvReader.readNext();
 
@@ -79,8 +76,10 @@ public class BaselineExpressionsKryoReaderIT {
 
             List<String> expressionLevelStrings = new ArrayList<>();
             for (BaselineExpression expression : subject.getExpressions()) {
+                Assert.assertThat(assaysFromTsv, contains(expression.getDataColumnDescriptorId()));
                 expressionLevelStrings.add(expression.getLevelAsString());
             }
+            assertThat(expressionLevelStrings.size(), is(assaysFromTsv.size()));
 
             for (String expression : Arrays.asList(tsvLine).subList(FIRST_LEVEL_INDEX, tsvLine.length)) {
                 assertTrue(expressionLevelStrings.containsAll(Arrays.asList(expression.split(","))));

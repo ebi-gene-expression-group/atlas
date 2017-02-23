@@ -50,7 +50,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
     // Kryo instance, as Kryo isn’t thread safe.
     @Override
-    public String serializeExpressionData(final String experimentAccession, ExperimentalFactors experimentalFactors) {
+    public String serializeExpressionData(final String experimentAccession) {
         Kryo kryo = new Kryo();
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
@@ -77,14 +77,6 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             // First line contains an array {"Gene ID", "Gene Name", "g1", "g2", "g3",  ...}
             String[] assays = tsvReader.readNext();
             assays = ArrayUtils.subarray(assays, FIRST_EXPRESSION_LEVEL_INDEX, assays.length);
-            kryo.writeObject(expressionsOutput, assays);
-
-            FactorGroup[] factorGroups = new FactorGroup[assays.length];
-            for (int i = 0 ; i < assays.length ; i++) {
-                factorGroups[i] = experimentalFactors.getFactorGroup(assays[i]);
-            }
-            kryo.writeObject(expressionsOutput, factorGroups);
-
             LOGGER.debug("Writing {} genes with {} assay groups each", geneCount, assays.length);
 
             long start = System.currentTimeMillis();
@@ -94,7 +86,8 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             while ((tsvLine = tsvReader.readNext()) != null) {
                 String geneId = tsvLine[GENE_ID_COLUMN_INDEX];
                 String geneName = tsvLine[GENE_NAME_COLUMN_INDEX];
-                BaselineExpression[] baselineExpressions = parseBaselineExpressions(ArrayUtils.subarray(tsvLine, FIRST_EXPRESSION_LEVEL_INDEX, tsvLine.length));
+                BaselineExpression[] baselineExpressions = parseBaselineExpressions(ArrayUtils.subarray(tsvLine,
+                        FIRST_EXPRESSION_LEVEL_INDEX, tsvLine.length), assays);
                 // Second and subsequent lines contain two strings and an array of arrays (null is interpreted as {0, 0, 0, 0, 0}
                 // e.g. "ENSG00000000003", "TSPAN6", {{0.1, 2.3, 3.4, 5.6, 7.8}, {8, 8, 8, 8, 8}, null, ...}
                 kryo.writeObject(expressionsOutput, geneId);
@@ -115,7 +108,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
         }
     }
 
-    private BaselineExpression[] parseBaselineExpressions(String[] tsvLine) {
+    private BaselineExpression[] parseBaselineExpressions(String[] tsvLine, String[] assays) {
         BaselineExpression[] baselineExpressions = new BaselineExpression[tsvLine.length];
 
         for (int i = 0; i < tsvLine.length; i++) {
@@ -123,10 +116,10 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
 
             if (expressionLevelString.contains(",")) {
                 double[] quartiles = QuartilesArrayBuilder.create(expressionLevelString);
-                baselineExpressions[i] = new BaselineExpression(quartiles, null);
+                baselineExpressions[i] = new BaselineExpression(quartiles, assays[i]);
             }
             else {
-                baselineExpressions[i] = new BaselineExpression(expressionLevelString, null);
+                baselineExpressions[i] = new BaselineExpression(expressionLevelString, assays[i]);
             }
         }
 
