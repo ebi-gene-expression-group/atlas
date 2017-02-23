@@ -17,7 +17,7 @@ public class MicroarrayProfilesTsvInputStream extends TsvInputStream<MicroarrayP
                                             ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
                                             MicroarrayProfileReusableBuilder microarrayProfileBuilder) {
 
-        super(reader, expressionsRowDeserializerMicroarrayBuilder);
+        super(reader);
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 

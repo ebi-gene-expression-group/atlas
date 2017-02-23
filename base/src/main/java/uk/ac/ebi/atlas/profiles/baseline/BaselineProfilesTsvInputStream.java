@@ -1,38 +1,30 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.Reader;
+import java.util.List;
 
-public class BaselineProfilesTsvInputStream extends TsvInputStream<OldBaselineProfile, BaselineExpression> {
+public class BaselineProfilesTsvInputStream extends TsvInputStream<BaselineProfile> {
 
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
+    private final int[] orderedAssayGroupIndices;
+
 
     public BaselineProfilesTsvInputStream(Reader reader,
-                                          ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
-                                          BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
+                                          BaselineExperiment baselineExperiment,
+                                          int[] orderedAssayGroupIndices) {
 
-        super(reader, expressionsRowDeserializerBaselineBuilder);
-        this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
+        super(reader);
+        readHeaders(); // we throw them away for baseline
+        this.orderedAssayGroupIndices = orderedAssayGroupIndices;
     }
+
 
     @Override
-    public OldBaselineProfile createProfile() {
-        OldBaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
-        return baselineProfile.isEmpty() ? null : baselineProfile;
+    protected BaselineProfile profileFromLineOfData(String[] values) {
+        return null;
     }
-
-    @Override
-    public void addExpressionToBuilder(BaselineExpression expression) {
-        baselineProfileReusableBuilder.addExpression(expression);
-    }
-
-    @Override
-    public void addGeneInfoValueToBuilder(String[] values) {
-        baselineProfileReusableBuilder.beginNewInstance(values[0], values[1]);
-    }
-
 }

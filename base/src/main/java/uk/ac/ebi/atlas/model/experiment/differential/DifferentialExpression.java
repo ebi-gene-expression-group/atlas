@@ -75,6 +75,11 @@ public class DifferentialExpression implements Expression {
     }
 
     @Override
+    public String getDataColumnDescriptorId() {
+        return getContrast().getId();
+    }
+
+    @Override
     public double getLevel() {
         return getFoldChange();
     }

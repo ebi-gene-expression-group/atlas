@@ -25,11 +25,6 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         super(geneId, geneName);
     }
 
-    public DifferentialProfile add(T expression) {
-        addExpression(expression.getContrast(), expression);
-        return this;
-    }
-
     public double getMaxUpRegulatedExpressionLevel() {
         return maxUpRegulatedExpressionLevel == null ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
@@ -108,7 +103,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     @Override
-    protected void addExpression(DifferentialExpression differentialExpression) {
+    protected void updateStateAfterAddingExpression(DifferentialExpression differentialExpression) {
         if (differentialExpression.isOverExpressed()) {
             addUpRegulatedExpression(differentialExpression.getLevel());
         } else if (differentialExpression.isUnderExpressed()) {

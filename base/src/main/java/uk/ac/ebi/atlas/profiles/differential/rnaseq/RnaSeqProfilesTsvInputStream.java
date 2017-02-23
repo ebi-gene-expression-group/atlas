@@ -14,7 +14,7 @@ public class RnaSeqProfilesTsvInputStream extends TsvInputStream<RnaSeqProfile, 
                                         ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder,
                                         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
 
-        super(reader, expressionsRowDeserializerRnaSeqBuilder);
+        super(reader);
         this.rnaSeqProfileReusableBuilder = rnaSeqProfileReusableBuilder;
     }
 

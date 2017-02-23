@@ -54,8 +54,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock1);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0.6D));
@@ -79,8 +79,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock1);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.NaN));
@@ -110,8 +110,8 @@ public class DifferentialProfileTest {
 
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2));
@@ -134,8 +134,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2));
@@ -153,7 +153,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
@@ -178,8 +178,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-5D));
@@ -204,8 +204,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
@@ -223,7 +223,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
@@ -241,7 +241,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
@@ -265,8 +265,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(5D));
@@ -283,7 +283,7 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
@@ -308,8 +308,8 @@ public class DifferentialProfileTest {
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 
         //when
-        subject.add(differentialExpressionMock1);
-        subject.add(differentialExpressionMock2);
+        subject.add(contrastMock1,differentialExpressionMock1);
+        subject.add(contrastMock1,differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));

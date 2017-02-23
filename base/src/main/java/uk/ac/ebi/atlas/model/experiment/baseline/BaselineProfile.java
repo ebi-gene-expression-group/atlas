@@ -22,12 +22,6 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
         super(geneId, geneName);
     }
 
-    public BaselineProfile add(AssayGroup assayGroup, BaselineExpression expression) {
-
-        addExpression(assayGroup, expression);
-        return this;
-    }
-
     public double getMaxExpressionLevel() {
         return maxExpressionLevel;
     }
@@ -113,7 +107,7 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
         minExpressionLevel = Double.MAX_VALUE;
     }
     @Override
-    protected void addExpression(BaselineExpression geneExpression) {
+    protected void updateStateAfterAddingExpression(BaselineExpression geneExpression) {
         maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
         minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
     }

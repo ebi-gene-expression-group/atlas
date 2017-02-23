@@ -39,8 +39,16 @@ public class DifferentialProfilesViewModelBuilderTest {
 
     private static final MicroarrayExpression CG33459_G2_G3 = new MicroarrayExpression(0.000216315773519821, 1.33047243333334, 10.7092831659167, G2_G3);
 
-    private static final MicroarrayProfile CG31624 = MicroarrayProfile.create("FBgn0051624", "CG31624", "1630811_at").add(CG31624_G2_G3).add(CG31624_G2_G1);
-    private static final MicroarrayProfile CG33459 = MicroarrayProfile.create("FBgn0053459", "CG33459", "1640410_at").add(CG33459_G2_G3);
+    private static final MicroarrayProfile CG31624 = new MicroarrayProfile("FBgn0051624", "CG31624", "1630811_at");
+    static {
+        CG31624.add(G2_G3, CG31624_G2_G3);
+        CG31624.add(G2_G1, CG31624_G2_G1);
+    }
+
+    private static final MicroarrayProfile CG33459 = new MicroarrayProfile("FBgn0053459", "CG33459", "1640410_at");
+    static {
+        CG33459.add(G2_G3, CG33459_G2_G3);
+    }
 
     private static final DifferentialProfilesList<MicroarrayProfile> diffProfiles = new DifferentialProfilesList<>(ImmutableList.of(CG31624, CG33459));
 

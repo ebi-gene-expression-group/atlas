@@ -1,33 +1,49 @@
 package uk.ac.ebi.atlas.profiles;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Predicate;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.IOException;
 import java.io.Reader;
 
-public abstract class TsvInputStream<T, K extends Expression> implements ExpressionProfileInputStream<T, K> {
+public abstract class TsvInputStream<DataColumnDescriptor extends DescribesDataColumns,
+        Expr extends Expression, Prof extends Profile<DataColumnDescriptor, Expr>> implements ObjectInputStream<Prof> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TsvInputStream.class);
 
-    private CSVReader csvReader;
+    private final CSVReader csvReader;
+    private final ExpressionsRowDeserializer<Expr> expressionsRowDeserializer;
+    private final Predicate<Expr> expressionFilter;
+    private final Experiment<DataColumnDescriptor> experiment;
+    private final int howManyColumnsOnTheLeftAreForIdentifyingDataRow;
 
-    private ExpressionsRowDeserializer<String, K> expressionsRowTsvDeserializer;
-
-    protected TsvInputStream(Reader reader, ExpressionsRowDeserializerBuilder<String, K> expressionsRowDeserializerBuilder) {
+    protected TsvInputStream(Reader reader, ExpressionsRowDeserializerBuilder<Expr>
+            expressionsRowDeserializerBuilder, Predicate<Expr> expressionFilter,
+                             Experiment<DataColumnDescriptor> experiment,
+                             int howManyColumnsOnTheLeftAreForIdentifyingDataRow) {
         this.csvReader = new CSVReader(reader, '\t');
+        this.expressionsRowDeserializer = expressionsRowDeserializerBuilder.build(readHeaders());
+        this.expressionFilter = expressionFilter;
+        this.experiment = experiment;
+        this.howManyColumnsOnTheLeftAreForIdentifyingDataRow = howManyColumnsOnTheLeftAreForIdentifyingDataRow;
+    }
 
-        String[] firstCsvLine = readCsvLine();
-        String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
-        expressionsRowTsvDeserializer = expressionsRowDeserializerBuilder.build(headersWithoutGeneIdColumn);
+    private String[] readHeaders(){
+        return getDataColumns(readCsvLine());
     }
 
     @Override
-    public T readNext() {
-        T geneProfile;
+    public Prof readNext() {
+        Prof geneProfile;
 
         do {
             String[] values = readCsvLine();
@@ -35,7 +51,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
             if (values == null) {
                 return null;
             }
-            geneProfile = buildObjectFromTsvValues(values);
+            geneProfile = profileFromLineOfData(values);
 
         } while (geneProfile == null);
 
@@ -51,32 +67,31 @@ public abstract class TsvInputStream<T, K extends Expression> implements Express
         }
     }
 
-    protected T buildObjectFromTsvValues(String[] values) {
-        addGeneInfoValueToBuilder(values);
+    // first two or first three
+    protected abstract Prof nextProfile(String... identifierColumns);
 
-        //we need to reload because the first line can only be used to extract the gene ID
-        expressionsRowTsvDeserializer.reload(removeGeneIDAndNameColumns(values));
-
-        K expression;
-
-        while ((expression = expressionsRowTsvDeserializer.next()) != null) {
-            addExpressionToBuilder(expression);
+    protected Prof profileFromLineOfData(String[] values){
+        Prof profile = nextProfile(getIdentifierColumns(values));
+        for(Expr expression: expressionsRowDeserializer.deserializeRow(getDataColumns(values))){
+            if(expressionFilter.apply(expression)){
+                profile.add(experiment.getDataColumnDescriptor(expression.getDataColumnDescriptorId()), expression);
+            }
         }
-
-        return createProfile();
+        return profile;
     }
 
-    protected ExpressionsRowDeserializer<String, K> getExpressionsRowTsvDeserializer() {
-        return expressionsRowTsvDeserializer;
-    }
 
     @Override
     public void close() throws IOException {
         csvReader.close();
     }
 
-    protected String[] removeGeneIDAndNameColumns(String[] columns) {
-        return ArrayUtils.subarray(columns, 2, columns.length);
+    protected String[] getIdentifierColumns(String[] columns){
+        return ArrayUtils.subarray(columns, 0, howManyColumnsOnTheLeftAreForIdentifyingDataRow);
+    }
+
+    protected String[] getDataColumns(String[] columns) {
+        return ArrayUtils.subarray(columns, howManyColumnsOnTheLeftAreForIdentifyingDataRow, columns.length);
     }
 
 }

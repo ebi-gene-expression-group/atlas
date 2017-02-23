@@ -2,12 +2,9 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -64,7 +61,7 @@ public abstract class Profile<Condition, T extends Expression> {
         return null;
     }
 
-    protected abstract void addExpression(T expression);
+    protected abstract void updateStateAfterAddingExpression(T expression);
 
     public boolean isExpressedOnAnyOf(Set<Condition> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
@@ -75,10 +72,9 @@ public abstract class Profile<Condition, T extends Expression> {
         return Sets.newHashSet(expressionsByCondition.keySet());
     }
 
-    protected Profile addExpression(Condition condition, T expression) {
+    public void add(Condition condition, T expression) {
         expressionsByCondition.put(condition, expression);
-        addExpression(expression);
-        return this;
+        updateStateAfterAddingExpression(expression);
     }
 
     public T getExpression(Condition condition) {

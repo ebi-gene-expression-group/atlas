@@ -23,7 +23,7 @@ public class OldBaselineProfile extends Profile<Factor, BaselineExpression> {
 
     public OldBaselineProfile add(String queryFactorType, BaselineExpression expression) {
 
-        addExpression(expression.getFactor(queryFactorType), expression);
+        updateStateAfterAddingExpression(expression.getFactor(queryFactorType), expression);
         return this;
     }
 
@@ -120,7 +120,7 @@ public class OldBaselineProfile extends Profile<Factor, BaselineExpression> {
         minExpressionLevel = Double.MAX_VALUE;
     }
     @Override
-    protected void addExpression(BaselineExpression geneExpression) {
+    protected void updateStateAfterAddingExpression(BaselineExpression geneExpression) {
         maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
         minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
     }
