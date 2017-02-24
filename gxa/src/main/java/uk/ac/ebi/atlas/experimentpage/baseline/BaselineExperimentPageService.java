@@ -60,7 +60,11 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("enableEnsemblLauncher", !isWidget&& !requestContext.getDataColumnsToReturn().isEmpty()
+        //model.addAttribute("enableEnsemblLauncher", !isWidget&& !requestContext.getDataColumnsToReturn().isEmpty()
+        //model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
+
+        model.addAttribute("enableEnsemblLauncher", !isWidget && !filteredAssayGroupFactors.isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
@@ -107,8 +111,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             result.add(e.getKey(), e.getValue());
         }
         model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(request,
-                model.asMap()));
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
 
         return result;
     }
