@@ -2,14 +2,17 @@ package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import com.google.common.base.Function;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.tsv.*;
-import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
+import uk.ac.ebi.atlas.profiles.tsv.RnaSeqDifferentialExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.TsvInputStream;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -19,7 +22,8 @@ import java.io.Reader;
 import java.util.List;
 
 @Named
-public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory<DifferentialExpression, DifferentialExperiment, DifferentialProfileStreamOptions, RnaSeqProfile> {
+public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory<DifferentialExpression,
+        DifferentialExperiment, RnaSeqRequestContext, RnaSeqProfile> {
 
     @Inject
     protected RnaSeqProfileStreamFactory(DataFileHub dataFileHub) {
@@ -27,7 +31,7 @@ public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory
     }
 
     @Override
-    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, DifferentialProfileStreamOptions
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, RnaSeqRequestContext
             options) {
 
         return new TsvInputStream<>(openDataFile(experiment.getAccession()),

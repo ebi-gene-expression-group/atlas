@@ -2,6 +2,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 
 import java.util.Collection;
 

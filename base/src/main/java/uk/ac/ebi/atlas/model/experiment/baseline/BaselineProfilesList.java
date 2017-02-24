@@ -4,12 +4,12 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import java.util.Collection;
 
-public class BaselineProfilesList extends GenericBaselineProfilesList<OldBaselineProfile> {
+public class BaselineProfilesList extends GenericBaselineProfilesList<BaselineProfile> {
 
     public BaselineProfilesList() {
     }
 
-    public BaselineProfilesList(Collection<OldBaselineProfile> collection) {
+    public BaselineProfilesList(Collection<BaselineProfile> collection) {
         super(collection);
     }
 }

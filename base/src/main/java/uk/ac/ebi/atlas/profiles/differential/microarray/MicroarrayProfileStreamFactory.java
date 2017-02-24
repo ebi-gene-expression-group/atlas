@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.differential.microarray;
 import com.google.common.base.Function;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
@@ -21,10 +22,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 import java.util.Vector;
-
 @Named
 public class MicroarrayProfileStreamFactory
-extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperiment, MicroarrayProfileStreamOptions, MicroarrayProfile> {
+extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestContext, MicroarrayProfile> {
 
     @Inject
     public MicroarrayProfileStreamFactory(DataFileHub dataFileHub) {
@@ -39,7 +39,7 @@ extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperim
     }
 
     @Override
-    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayProfileStreamOptions
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayRequestContext
             options){
         Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
         for (String arrayDesignAccession : options.getArrayDesignAccessions()) {
@@ -78,7 +78,6 @@ extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperim
     protected ExpressionsRowDeserializerBuilder<MicroarrayExpression> getExpressionsRowDeserializerBuilder(MicroarrayExperiment experiment) {
         return new MicroarrayExpressionsRowDeserializerBuilder(experiment);
     }
-
 
     static class MicroarrayExpressionsRowDeserializerBuilder extends DifferentialProfileStreamFactory
             .DifferentialExpressionsRowDeserializerBuilder<MicroarrayExpression> {

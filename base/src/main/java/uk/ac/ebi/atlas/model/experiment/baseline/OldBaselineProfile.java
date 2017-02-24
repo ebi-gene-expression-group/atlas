@@ -35,26 +35,26 @@ public class OldBaselineProfile extends Profile<Factor, BaselineExpression> {
         return minExpressionLevel;
     }
 
-    public double getAverageExpressionLevelOn(Set<Factor> factors) {
-        checkArgument(!CollectionUtils.isEmpty(factors), "This method must be invoked with a non empty set of conditions");
+    public double getAverageExpressionLevelOn(Set<Factor> conditions) {
+        checkArgument(!CollectionUtils.isEmpty(conditions), "This method must be invoked with a non empty set of conditions");
 
         double expressionLevel = 0D;
 
-        for (Factor condition : factors) {
+        for (Factor condition : conditions) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel += level;
             }
         }
-        return expressionLevel / factors.size();
+        return expressionLevel / conditions.size();
     }
 
-    public double getMaxExpressionLevelOn(Set<Factor> factors) {
-        checkArgument(!CollectionUtils.isEmpty(factors), "factors set is supposed to be not empty");
+    public double getMaxExpressionLevelOn(Set<Factor> conditions) {
+        checkArgument(!CollectionUtils.isEmpty(conditions), "factors set is supposed to be not empty");
 
         double expressionLevel = MIN_LEVEL;
 
-        for (Factor condition : factors) {
+        for (Factor condition : conditions) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, level);

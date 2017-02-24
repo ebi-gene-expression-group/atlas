@@ -30,34 +30,6 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
         return minExpressionLevel;
     }
 
-    public double getAverageExpressionLevelOn(Set<AssayGroup> assayGroups) {
-        checkArgument(!CollectionUtils.isEmpty(assayGroups), "This method must be invoked with a non empty set of conditions");
-
-        double expressionLevel = 0D;
-
-        for (AssayGroup condition : assayGroups) {
-            Double level = getExpressionLevel(condition);
-            if (level != null) {
-                expressionLevel += level;
-            }
-        }
-        return expressionLevel / assayGroups.size();
-    }
-
-    public double getMaxExpressionLevelOn(Set<AssayGroup> assayGroups) {
-        checkArgument(!CollectionUtils.isEmpty(assayGroups), "assayGroups set is supposed to be not empty");
-
-        double expressionLevel = MIN_LEVEL;
-
-        for (AssayGroup condition : assayGroups) {
-            Double level = getExpressionLevel(condition);
-            if (level != null) {
-                expressionLevel = max(expressionLevel, level);
-            }
-        }
-        return expressionLevel;
-    }
-
     public Set<AssayGroup> getAssayGroupsWithExpressionLevelAtLeast(double threshold){
         Set<AssayGroup> result = new HashSet<>();
         for(AssayGroup condition : expressionsByCondition.keySet()){

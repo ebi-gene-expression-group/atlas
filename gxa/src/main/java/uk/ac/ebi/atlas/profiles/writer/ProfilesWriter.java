@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
+import uk.ac.ebi.atlas.profiles.ProfileStreamTransforms;
 import uk.ac.ebi.atlas.profiles.ProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -25,8 +25,8 @@ public class ProfilesWriter<P extends Profile<K, ?>, K, O extends ProfileStreamO
     private ProfileStreamPipelineBuilder<P, O, K> pipelineBuilder;
     private GeneProfilesTSVWriter<P, K, O> tsvWriter;
 
-    public ProfilesWriter(ProfileStreamFilters<P,K> profileStreamFilters, GeneProfilesTSVWriter<P, K, O> tsvWriter) {
-        this.pipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamFilters);
+    public ProfilesWriter(ProfileStreamTransforms<P,K> profileStreamTransforms, GeneProfilesTSVWriter<P, K, O> tsvWriter) {
+        this.pipelineBuilder = new ProfileStreamPipelineBuilder<>(profileStreamTransforms);
         this.tsvWriter = tsvWriter;
     }
 

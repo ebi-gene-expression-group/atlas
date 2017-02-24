@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileDeserializer;
@@ -85,21 +84,21 @@ public class DifferentialProfileComparatorTest {
     @Test
     public void testGetExpressionLevelFoldChangeOn() throws Exception {
         //when
-        when(profileMock1.getStrongestExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.04);
+        when(profileMock1.getMaxExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.04);
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.025);
 
         //then
         assertThat(subject.getExpressionLevelFoldChange(profileMock1), is(1.5999999999999999));
 
         //when
-        when(profileMock1.getStrongestExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.05D);
+        when(profileMock1.getMaxExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.05D);
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.025);
 
         //then
         assertThat(subject.getExpressionLevelFoldChange(profileMock1), is(2D));
 
         //when
-        when(profileMock1.getStrongestExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.02);
+        when(profileMock1.getMaxExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.02);
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.01);
 
         //then
@@ -111,7 +110,7 @@ public class DifferentialProfileComparatorTest {
         subject = new DifferentialProfileComparator<>(true, selectedContrasts, allContrasts, Regulation.UP);
 
         //when
-        when(profileMock1.getStrongestExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.05);
+        when(profileMock1.getMaxExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.05);
         //when
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.025);
         //then

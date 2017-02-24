@@ -5,7 +5,6 @@ import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 
 import javax.inject.Named;
 
-@Named
 public class BaselineProfilesListBuilder implements GeneProfilesListBuilder<BaselineProfilesList> {
 
     @Override

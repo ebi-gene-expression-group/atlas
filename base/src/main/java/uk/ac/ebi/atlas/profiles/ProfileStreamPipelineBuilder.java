@@ -8,10 +8,10 @@ import java.util.Set;
 
 public class ProfileStreamPipelineBuilder<P extends Profile<T, ?>, O extends ProfileStreamOptions<T>, T> {
 
-    private ProfileStreamFilters<P,T> profileStreamFilters;
+    private ProfileStreamTransforms<P,T> profileStreamTransforms;
 
-    public ProfileStreamPipelineBuilder(ProfileStreamFilters<P,T> profileStreamFilters){
-        this.profileStreamFilters = profileStreamFilters;
+    public ProfileStreamPipelineBuilder(ProfileStreamTransforms<P,T> profileStreamTransforms){
+        this.profileStreamTransforms = profileStreamTransforms;
     }
 
     public Iterable<P> build(Iterable<P> profiles, O options, GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets) {
@@ -22,17 +22,17 @@ public class ProfileStreamPipelineBuilder<P extends Profile<T, ?>, O extends Pro
         Iterable<P> profilesPipeline = profiles;
 
         if (!uppercaseGeneIDs.isEmpty()) {
-            profilesPipeline = profileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
+            profilesPipeline = profileStreamTransforms.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
         }
 
         if (shouldAverageIntoGeneSets) {
-            profilesPipeline = profileStreamFilters.averageIntoGeneSets(profilesPipeline, geneQueryResponse.getQueryTermsToIds());
+            profilesPipeline = profileStreamTransforms.averageIntoGeneSets(profilesPipeline, geneQueryResponse.getQueryTermsToIds());
         }
 
         if (!queryFactors.isEmpty()) {
             profilesPipeline = options.isSpecific()
-                    ? profileStreamFilters.filterBySpecificQueryFactors(profilesPipeline, queryFactors,allQueryFactors)
-                    : profileStreamFilters.filterByQueryFactors(profilesPipeline, queryFactors);
+                    ? profileStreamTransforms.filterBySpecificQueryFactors(profilesPipeline, queryFactors,allQueryFactors)
+                    : profileStreamTransforms.filterByQueryFactors(profilesPipeline, queryFactors);
         }
 
         return profilesPipeline;

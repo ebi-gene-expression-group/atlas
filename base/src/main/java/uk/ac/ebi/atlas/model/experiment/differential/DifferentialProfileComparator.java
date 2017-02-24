@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
 import java.util.Comparator;
 import java.util.Set;
@@ -21,6 +22,14 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         this.allQueryContrasts = allQueryContrasts;
         //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
         this.regulation = regulation;
+    }
+
+    public static <Prof extends DifferentialProfile> DifferentialProfileComparator<Prof> create
+            (DifferentialProfileStreamOptions options) {
+        return new DifferentialProfileComparator<>(options.isSpecific(),
+                options.getSelectedQueryFactors(),
+                options.getAllQueryFactors(),
+                options.getRegulation());
     }
 
     @Override
@@ -100,7 +109,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
 
-        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getStrongestExpressionLevelOn(nonSelectedQueryContrasts);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMaxExpressionLevelOn(nonSelectedQueryContrasts);
 
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts);
 

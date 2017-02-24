@@ -15,11 +15,7 @@ import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
@@ -35,20 +31,20 @@ import java.util.List;
 import java.util.Map;
 
 public class DifferentialExperimentPageService
-        <E extends DifferentialExperiment,
+        <Expr extends DifferentialExpression, E extends DifferentialExperiment,
          K extends DifferentialRequestPreferences,
-         P extends DifferentialProfile<? extends DifferentialExpression>>
+         P extends DifferentialProfile<Expr>,  R extends DifferentialRequestContext<E> >
         extends ExperimentPageService {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final AtlasResourceHub atlasResourceHub;
-    private final DifferentialRequestContextBuilder<E, ? extends DifferentialRequestContext<E>, K> differentialRequestContextBuilder;
-    private final DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>> profilesHeatMap;
+    private final DifferentialRequestContextBuilder<E, R, K> differentialRequestContextBuilder;
+    private final DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap;
     private final TracksUtil tracksUtil;
 
-    public DifferentialExperimentPageService(
-            DifferentialRequestContextBuilder<E, ? extends DifferentialRequestContext<E>, K> differentialRequestContextBuilder,
-            DifferentialProfilesHeatMap<E, P, DifferentialRequestContext<E>> profilesHeatMap,
+    public  DifferentialExperimentPageService(
+            DifferentialRequestContextBuilder<E, R, K> differentialRequestContextBuilder,
+            DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
             DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
             TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
 
@@ -77,7 +73,7 @@ public class DifferentialExperimentPageService
     public JsonObject populateModelWithHeatmapData(HttpServletRequest request, E experiment, K preferences,
                                                    BindingResult bindingResult, Model model) {
         JsonObject result = new JsonObject();
-        DifferentialRequestContext<E> requestContext = initRequestContext(experiment, preferences);
+        R requestContext = initRequestContext(experiment, preferences);
         List<Contrast> contrasts = experiment.getDataColumnDescriptors();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
@@ -164,7 +160,7 @@ public class DifferentialExperimentPageService
         }
     }
 
-    private DifferentialRequestContext<E> initRequestContext(E experiment, K requestPreferences) {
+    private R initRequestContext(E experiment, K requestPreferences) {
         return differentialRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences).build();
 

@@ -7,9 +7,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.lang.Math.max;
 
 //Condition is the Condition type (i.e. Factor or Contrast),
 //T is the Expression type (Baseline Expression or DifferentialExpression)
@@ -59,6 +62,34 @@ public abstract class Profile<Condition, T extends Expression> {
             return expression.getLevel();
         }
         return null;
+    }
+
+    public double getMaxExpressionLevelOn(Set<Condition> conditions) {
+        checkArgument(!CollectionUtils.isEmpty(conditions));
+        double expressionLevel = 0D;
+
+        for (Condition condition : conditions) {
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel = max(expressionLevel, Math.abs(level));
+            }
+        }
+        return expressionLevel;
+    }
+
+    public double getAverageExpressionLevelOn(Set<Condition> conditions) {
+        checkArgument(!CollectionUtils.isEmpty(conditions));
+
+        double expressionLevel = 0D;
+
+        for (Condition condition : conditions) {
+            Double level = getExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel += Math.abs(level);
+            }
+        }
+
+        return expressionLevel / conditions.size();
     }
 
     protected abstract void updateStateAfterAddingExpression(T expression);

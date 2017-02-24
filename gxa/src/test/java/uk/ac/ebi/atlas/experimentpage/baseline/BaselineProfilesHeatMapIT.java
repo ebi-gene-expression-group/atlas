@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -62,7 +61,7 @@ public class BaselineProfilesHeatMapIT {
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         baselineRequestContext = BaselineRequestContext.createFor(baselineExperiment, requestPreferences);
 
-        subject = new BaselineProfilesHeatMap(rankProfilesFactory,inputStreamFactory);
+        subject = new BaselineProfilesHeatMap(inputStreamFactory);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1733?displayLevels=true&_specific=on&geneQuery=R-HSA-73887&geneSetMatch=true

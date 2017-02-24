@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.model.Profile;
 import java.util.Collection;
 import java.util.Set;
 
-public class IsGeneIdMatch implements Predicate<Profile> {
+public class IsGeneIdMatch<P extends Profile> implements Predicate<P> {
     private Collection<String> uppercaseGeneIDs;
 
     public IsGeneIdMatch(Set<String> geneIds) {
@@ -28,7 +28,7 @@ public class IsGeneIdMatch implements Predicate<Profile> {
     }
 
     @Override
-    public boolean apply(Profile geneProfile) {
+    public boolean apply(P geneProfile) {
         return uppercaseGeneIDs.contains(geneProfile.getId().toUpperCase());
     }
 }

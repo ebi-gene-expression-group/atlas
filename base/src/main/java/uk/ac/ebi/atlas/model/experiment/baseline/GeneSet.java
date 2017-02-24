@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class GeneSet{
 
-    private Set<OldBaselineProfile> baselineProfiles = new HashSet<>();
+    private Set<BaselineProfile> baselineProfiles = new HashSet<>();
 
     private String id;
 
@@ -13,15 +13,15 @@ public class GeneSet{
         this.id = id;
     }
 
-    public GeneSet addBaselineProfile(OldBaselineProfile baselineProfile){
+    public GeneSet addBaselineProfile(BaselineProfile baselineProfile){
         baselineProfiles.add(baselineProfile);
         return this;
     }
 
-    public OldBaselineProfile getAverageProfile(){
-        OldBaselineProfile summaryProfile = new OldBaselineProfile(null, id);
+    public BaselineProfile getAverageProfile(){
+        BaselineProfile summaryProfile = new BaselineProfile(null, id);
 
-        for(OldBaselineProfile baselineProfile: baselineProfiles){
+        for(BaselineProfile baselineProfile: baselineProfiles){
             summaryProfile.sumProfile(baselineProfile);
         }
 

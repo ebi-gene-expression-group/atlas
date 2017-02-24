@@ -1,23 +1,20 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.profiles.SelectProfiles;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.PrescribedOrderProfileSelection;
-import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Named;
 import java.util.List;
@@ -29,14 +26,9 @@ public class BaselineProfilesHeatMap {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
-    private final RankBaselineProfilesFactory rankProfilesFactory;
-    private ProfilesHeatMapSource<BaselineExperiment, OldBaselineProfile, BaselineProfilesList, BaselineProfileStreamOptions, Factor>
-            profilesHeatmapSource;
-
-    public BaselineProfilesHeatMap(RankBaselineProfilesFactory rankProfilesFactory,
-                                   @Qualifier("baselineProfileInputStreamFactory") BaselineProfileStreamFactory inputStreamFactory) {
-        this.rankProfilesFactory = rankProfilesFactory;
-        profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new BaselineProfileStreamFilters());
+    private final BaselineProfileStreamFactory baselineProfileStreamFactory;
+    public BaselineProfilesHeatMap(@Qualifier("baselineProfileInputStreamFactory") BaselineProfileStreamFactory inputStreamFactory) {
+        this.baselineProfileStreamFactory = inputStreamFactory;
     }
 
     public BaselineProfilesList fetch(BaselineExperiment experiment, BaselineProfileStreamOptions options,
@@ -44,9 +36,9 @@ public class BaselineProfilesHeatMap {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        BaselineProfilesList profiles =
-                profilesHeatmapSource.fetch(experiment,options, rankProfilesFactory.create(options), geneQueryResponse,
-                        asGeneSets);
+        BaselineProfilesList profiles = baselineProfileStreamFactory.select(experiment, options,
+                new BaselineProfileStreamTransforms(options, geneQueryResponse, asGeneSets),
+                new MinMaxProfileRanking<>(BaselineProfileComparator.create(options), new BaselineProfilesListBuilder()));
 
         stopwatch.stop();
 
@@ -60,10 +52,19 @@ public class BaselineProfilesHeatMap {
     public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder,BaselineExperiment experiment, BaselineProfileStreamOptions options,
                                                         GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
-        SelectProfiles<OldBaselineProfile, BaselineProfilesList> s =
-                new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder());
+        Stopwatch stopwatch = Stopwatch.createStarted();
 
-        return profilesHeatmapSource.fetch(experiment,options, s,geneQueryResponse, asGeneSets);
+        BaselineProfilesList profiles = baselineProfileStreamFactory.select(experiment, options,
+                new BaselineProfileStreamTransforms(options, geneQueryResponse, asGeneSets),
+                new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder()));
+
+        stopwatch.stop();
+
+        LOGGER.debug("<fetch> for [{}] (asGeneSets={}) took {} secs",
+                geneQueryResponse.getAllGeneIds().size(), asGeneSets,
+                stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+
+        return profiles;
     }
 
 }

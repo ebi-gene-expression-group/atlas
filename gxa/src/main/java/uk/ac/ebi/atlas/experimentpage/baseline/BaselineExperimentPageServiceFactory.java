@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
-import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;

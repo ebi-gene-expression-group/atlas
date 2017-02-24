@@ -7,7 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFilters;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -38,7 +38,7 @@ public class BaselineProfilesWriterServiceFactory {
     BaselineProfilesWriterService create(BaselineProfileStreamFactory inputStreamFactory){
         return new BaselineProfilesWriterService(
                 inputStreamFactory,
-                new ProfilesWriter<>(new BaselineProfileStreamFilters(), new BaselineProfilesTSVWriter(csvWriterFactory, tsvFileMastheadTemplateResource)),
+                new ProfilesWriter<>(new BaselineProfileStreamTransforms(), new BaselineProfilesTSVWriter(csvWriterFactory, tsvFileMastheadTemplateResource)),
                 solrQueryService,
                 coexpressedGenesService);
     }

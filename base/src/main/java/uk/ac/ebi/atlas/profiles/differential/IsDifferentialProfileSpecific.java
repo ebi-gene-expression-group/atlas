@@ -25,7 +25,7 @@ public class IsDifferentialProfileSpecific<P extends DifferentialProfile<? exten
 
     @Override
     public boolean apply(P differentialProfile) {
-        return differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts) > differentialProfile.getStrongestExpressionLevelOn(nonSelectedQueryContrasts);
+        return differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts) > differentialProfile.getMaxExpressionLevelOn(nonSelectedQueryContrasts);
     }
 
 }

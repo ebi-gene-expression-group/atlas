@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
+import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -29,9 +31,9 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
 
     private final ExperimentPageCallbacks experimentPageCallbacks = new ExperimentPageCallbacks();
     private final ExperimentTrader experimentTrader;
-    private final
-            DifferentialExperimentPageService<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile>
-            differentialExperimentPageService;
+    private final DifferentialExperimentPageService<DifferentialExpression, DifferentialExperiment,
+            DifferentialRequestPreferences, RnaSeqProfile, RnaSeqRequestContext> differentialExperimentPageService;
+
 
     @Inject
     public RnaSeqExperimentPageController(ExperimentTrader experimentTrader,

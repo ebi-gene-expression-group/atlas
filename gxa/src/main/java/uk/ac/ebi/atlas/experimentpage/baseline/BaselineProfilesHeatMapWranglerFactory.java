@@ -4,7 +4,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
@@ -18,7 +17,7 @@ public class BaselineProfilesHeatMapWranglerFactory {
 
     public BaselineProfilesHeatMapWranglerFactory(RankBaselineProfilesFactory rankProfilesFactory, BaselineProfileStreamFactory inputStreamFactory
             , BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder, SolrQueryService solrQueryService, CoexpressedGenesService coexpressedGenesService) {
-        this.baselineProfilesHeatMap = new BaselineProfilesHeatMap(rankProfilesFactory,inputStreamFactory);
+        this.baselineProfilesHeatMap = new BaselineProfilesHeatMap(inputStreamFactory);
 
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
         this.solrQueryService = solrQueryService;

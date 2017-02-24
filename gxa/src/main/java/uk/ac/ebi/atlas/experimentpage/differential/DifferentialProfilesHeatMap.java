@@ -1,44 +1,58 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import com.google.common.base.Stopwatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.ProfilesHeatMapSource;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamFilters;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
-public class DifferentialProfilesHeatMap<E extends DifferentialExperiment, P extends DifferentialProfile<?>, R extends
-        DifferentialRequestContext<E>> {
+import java.util.concurrent.TimeUnit;
 
+public class DifferentialProfilesHeatMap<Expr extends DifferentialExpression,
+        E extends DifferentialExperiment, Prof extends DifferentialProfile<Expr>, R extends DifferentialRequestContext<E>> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfilesHeatMap.class);
     private SolrQueryService solrQueryService;
-    private final boolean queryBySpecies;
+    private final ProfileStreamFactory<Contrast, Expr, E, R, Prof> profileStreamFactory;
 
-    private final RankProfilesFactory<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>
-            rankProfilesFactory;
+    //MicroarrayProfileStreamFactory extends DifferentialProfileStreamFactory<MicroarrayExpression,
+    // MicroarrayExperiment, MicroarrayProfileStreamOptions, MicroarrayProfile>
 
-    private ProfilesHeatMapSource<E, P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions, Contrast>
-            profilesHeatmapSource;
+    /*
+    DifferentialProfileStreamFactory<Expr extends DifferentialExpression,
+        E extends DifferentialExperiment, T extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr>>
+        extends ProfileStreamFactory<Contrast, Expr, E, T, Prof>
+     */
 
-    public DifferentialProfilesHeatMap(RankProfilesFactory<P, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>
-                                             rankProfilesFactory,
-                                       ProfileStreamFactory inputStreamFactory,
-                                     SolrQueryService solrQueryService,boolean queryBySpecies) {
-        this.rankProfilesFactory = rankProfilesFactory;
-        this.profilesHeatmapSource = new ProfilesHeatMapSource<>(inputStreamFactory, new DifferentialProfileStreamFilters<P>());
+    public DifferentialProfilesHeatMap(ProfileStreamFactory<Contrast, Expr, E, R, Prof> profileStreamFactory, SolrQueryService solrQueryService) {
+        this.profileStreamFactory = profileStreamFactory;
         this.solrQueryService = solrQueryService;
-        this.queryBySpecies = queryBySpecies;
     }
 
-    public DifferentialProfilesList<P> fetch(R requestContext)  {
+    public DifferentialProfilesList<Prof> fetch(R requestContext) {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
-                (requestContext.getGeneQuery(), queryBySpecies ? requestContext.getFilteredBySpecies(): "");
-        return profilesHeatmapSource.fetch(requestContext.getExperiment(),requestContext,
-                rankProfilesFactory.create(requestContext), geneQueryResponse, false);
+                (requestContext.getGeneQuery(), requestContext.getExperiment().getType().isMicroarray()? ""  : requestContext.getFilteredBySpecies());
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        DifferentialProfilesList<Prof> profiles = profileStreamFactory.select(requestContext.getExperiment(), requestContext,
+                new DifferentialProfileStreamTransforms<Prof>(requestContext, geneQueryResponse),
+                new MinMaxProfileRanking<>(
+                        DifferentialProfileComparator.<Prof>create(requestContext),
+                        new DifferentialProfilesListBuilder<Prof>()));
+
+        stopwatch.stop();
+
+        LOGGER.debug("<fetch> for [{}]  took {} secs",
+                geneQueryResponse.getAllGeneIds().size(),
+                stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
+
+        return profiles;
     }
 }
