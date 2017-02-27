@@ -64,18 +64,18 @@ public abstract class ExperimentDisplayDefaults {
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
-                                                   List<String> preferredOrderOfFilters){
+                                                   List<String> prescribedOrderOfFilters){
         ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
         for(Factor factor : defaultFilterFactors){
             b.put(factor.getType(), factor.getValue());
         }
-        return create(b.build(),preferredOrderOfFilters);
+        return create(b.build(),prescribedOrderOfFilters);
     }
 
 
     public static ExperimentDisplayDefaults create(Map<String, String> defaultFilterValues,
-                                                   List<String> preferredOrderOfFilters){
-        return new AutoValue_ExperimentDisplayDefaults(defaultFilterValues,preferredOrderOfFilters);
+                                                   List<String> prescribedOrderOfFilters){
+        return new AutoValue_ExperimentDisplayDefaults(defaultFilterValues,prescribedOrderOfFilters);
     }
 
 

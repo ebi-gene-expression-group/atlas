@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class FactorSet implements FactorGroup {
 
-    private final Map<String, Factor> factorsByType;
+    public final Map<String, Factor> factorsByType;
 
     public FactorSet() {
         this(new HashMap<String, Factor>());
