@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;

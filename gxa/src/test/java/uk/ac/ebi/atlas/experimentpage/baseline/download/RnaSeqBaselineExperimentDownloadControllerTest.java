@@ -17,7 +17,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
+import uk.ac.ebi.atlas.profiles.writer.DeprecatedProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.species.Species;
@@ -43,7 +43,7 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
     @Mock
-    private ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
+    private DeprecatedProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
 
     @Mock
     private HttpServletRequest requestMock;

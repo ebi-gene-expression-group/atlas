@@ -11,24 +11,17 @@ import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import java.util.concurrent.TimeUnit;
 
 public class DifferentialProfilesHeatMap<Expr extends DifferentialExpression,
-        E extends DifferentialExperiment, Prof extends DifferentialProfile<Expr>, R extends DifferentialRequestContext<E>> {
+        E extends DifferentialExperiment, Prof extends DifferentialProfile<Expr>, R extends
+        DifferentialRequestContext<E, ? extends DifferentialRequestPreferences>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DifferentialProfilesHeatMap.class);
     private SolrQueryService solrQueryService;
     private final ProfileStreamFactory<Contrast, Expr, E, R, Prof> profileStreamFactory;
-
-    //MicroarrayProfileStreamFactory extends DifferentialProfileStreamFactory<MicroarrayExpression,
-    // MicroarrayExperiment, MicroarrayProfileStreamOptions, MicroarrayProfile>
-
-    /*
-    DifferentialProfileStreamFactory<Expr extends DifferentialExpression,
-        E extends DifferentialExperiment, T extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr>>
-        extends ProfileStreamFactory<Contrast, Expr, E, T, Prof>
-     */
 
     public DifferentialProfilesHeatMap(ProfileStreamFactory<Contrast, Expr, E, R, Prof> profileStreamFactory, SolrQueryService solrQueryService) {
         this.profileStreamFactory = profileStreamFactory;

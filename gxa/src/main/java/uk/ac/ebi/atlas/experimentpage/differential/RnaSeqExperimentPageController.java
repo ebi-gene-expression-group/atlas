@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;

@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
-import uk.ac.ebi.atlas.profiles.writer.ProfileWriter;
+import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 public abstract class ProfileStreamFactory<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
@@ -42,8 +42,8 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
     }
 
     public long write(E experiment, StreamOptions streamOptions, Function<Iterable<Prof>,
-            Iterable<Prof>> transform, ProfileWriter<Prof> profileWriter){
-        return profileWriter.write(getProfiles(experiment, streamOptions, transform));
+            Iterable<Prof>> transform, ProfilesWriter<Prof> profilesWriter){
+        return profilesWriter.write(getProfiles(experiment, streamOptions, transform));
     }
 
 }

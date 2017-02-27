@@ -1,13 +1,16 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.MoreObjects;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-public class DifferentialRequestContext<E extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> implements DifferentialProfileStreamOptions {
+public class DifferentialRequestContext<E extends DifferentialExperiment, Preferences extends
+        DifferentialRequestPreferences> extends RequestContext<Contrast, Preferences> implements DifferentialProfileStreamOptions {
 
     private E experiment;
 
@@ -39,16 +42,6 @@ public class DifferentialRequestContext<E extends DifferentialExperiment> extend
     }
 
     @Override
-    protected void setRequestPreferences(DifferentialRequestPreferences requestPreferences) {
-        super.setRequestPreferences(requestPreferences);
-    }
-
-    @Override
-    protected DifferentialRequestPreferences getRequestPreferences() {
-        return super.getRequestPreferences();
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this.getClass())
                 .addValue(super.toString())
@@ -56,5 +49,4 @@ public class DifferentialRequestContext<E extends DifferentialExperiment> extend
                 .add("experiment", getExperiment())
                 .toString();
     }
-
 }

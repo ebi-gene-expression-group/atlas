@@ -39,8 +39,7 @@ extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperim
     }
 
     @Override
-    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayRequestContext
-            options){
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment, MicroarrayRequestContext options){
         Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
         for (String arrayDesignAccession : options.getArrayDesignAccessions()) {
             ObjectInputStream<MicroarrayProfile> stream = create(experiment, options, arrayDesignAccession);
@@ -60,7 +59,7 @@ extends DifferentialProfileStreamFactory<MicroarrayExpression, MicroarrayExperim
     }
 
     public ObjectInputStream<MicroarrayProfile> create(MicroarrayExperiment experiment,
-                                                   MicroarrayProfileStreamOptions options,
+                                                       MicroarrayRequestContext options,
                                                    String arrayDesignAccession){
 
         return new TsvInputStream<>(openDataFile(experiment.getAccession(), arrayDesignAccession),

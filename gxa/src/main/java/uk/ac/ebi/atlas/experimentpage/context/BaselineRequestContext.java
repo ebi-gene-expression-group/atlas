@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.MoreObjects;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -15,7 +16,8 @@ import java.util.SortedSet;
 
 @Named
 @Scope("request")
-public class BaselineRequestContext extends RequestContext<Factor, BaselineRequestPreferences> implements BaselineProfileStreamOptions {
+public class BaselineRequestContext extends RequestContext<AssayGroup, BaselineRequestPreferences> implements
+        BaselineProfileStreamOptions {
 
     private BaselineExperiment experiment;
 

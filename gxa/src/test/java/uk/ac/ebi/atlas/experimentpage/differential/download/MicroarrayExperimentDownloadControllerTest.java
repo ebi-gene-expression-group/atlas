@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
@@ -37,7 +36,7 @@ public class MicroarrayExperimentDownloadControllerTest {
     private MicroarrayRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private MicroarrayProfilesWriter profilesWriter;
+    private MicroarrayDeprecatedProfilesWriter profilesWriter;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;

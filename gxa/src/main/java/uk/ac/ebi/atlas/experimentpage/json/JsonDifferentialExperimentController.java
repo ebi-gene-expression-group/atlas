@@ -4,14 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
+import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.differential.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.differential.RnaSeqProfilesHeatMap;
@@ -45,10 +39,8 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
 
     @Inject
     public JsonDifferentialExperimentController(ExperimentTrader experimentTrader,
-                                                RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                                 RnaSeqProfilesHeatMap diffRnaSeqProfilesHeatMap,
                                                 DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                MicroarrayRequestContextBuilder microarrayRequestContextBuilder,
                                                 MicroarrayProfilesHeatMap microarrayProfilesHeatMap,
                                                 TracksUtil tracksUtil,
                                                 AtlasResourceHub atlasResourceHub,
@@ -56,12 +48,14 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
         super(experimentTrader);
 
         diffRnaSeqExperimentPageService =
-                new DifferentialExperimentPageService<>(rnaSeqRequestContextBuilder, diffRnaSeqProfilesHeatMap,
+                new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.RnaSeq(),
+                        diffRnaSeqProfilesHeatMap,
                 differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
 
         diffMicroarrayExperimentPageService =
-                new DifferentialExperimentPageService<>(microarrayRequestContextBuilder, microarrayProfilesHeatMap,
+                new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.Microarray(),
+                        microarrayProfilesHeatMap,
                         differentialProfilesViewModelBuilder,
                         tracksUtil, atlasResourceHub,applicationProperties);
     }
