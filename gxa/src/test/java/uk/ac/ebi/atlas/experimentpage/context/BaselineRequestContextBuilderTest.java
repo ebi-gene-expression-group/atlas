@@ -76,7 +76,7 @@ public class BaselineRequestContextBuilderTest {
         Factor factor1 = new Factor(FACTOR_TYPE, QUERY_FACTOR1);
         Factor factor2 = new Factor(FACTOR_TYPE, QUERY_FACTOR2);
         Factor factor3 = new Factor(FACTOR_TYPE, QUERY_FACTOR3);
-        assertThat(context.getSelectedQueryFactors(), hasItems(factor1, factor2, factor3));
-        assertThat(context.getAllQueryFactors(), hasItem(new Factor(FACTOR_TYPE, FACTOR_VALUE)));
+        assertThat(context.getDataColumnsToReturn(), hasItems(factor1, factor2, factor3));
+        assertThat(context.getAllDataColumnDescriptors(), hasItem(new Factor(FACTOR_TYPE, FACTOR_VALUE)));
     }
 }

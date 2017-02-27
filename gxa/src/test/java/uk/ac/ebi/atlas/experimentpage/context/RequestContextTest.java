@@ -55,7 +55,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetSelectedQueryFactors() throws Exception {
-        assertThat(subject.getSelectedQueryFactors(), is(nullValue()));
+        assertThat(subject.getDataColumnsToReturn(), is(nullValue()));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetAllQueryFactors() throws Exception {
-        assertThat(subject.getAllQueryFactors(), is(nullValue()));
+        assertThat(subject.getAllDataColumnDescriptors(), is(nullValue()));
     }
 
     @Test
@@ -84,13 +84,13 @@ public class RequestContextTest {
         set.add(factor1Mock);
         set.add(factor2Mock);
         subject.setAllQueryFactors(set);
-        assertThat(subject.getAllQueryFactors(), contains(factor1Mock, factor2Mock));
+        assertThat(subject.getAllDataColumnDescriptors(), contains(factor1Mock, factor2Mock));
     }
 
     @Test
     public void testSetSelectedQueryFactors() throws Exception {
         subject.setSelectedQueryFactors(Sets.newHashSet(factor1Mock, factor2Mock));
-        assertThat(subject.getSelectedQueryFactors(), hasItems(factor1Mock, factor2Mock));
+        assertThat(subject.getDataColumnsToReturn(), hasItems(factor1Mock, factor2Mock));
     }
 
     @Test

@@ -17,10 +17,9 @@ import java.util.*;
 
 public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns, K extends ExperimentPageRequestPreferences> {
     private K requestPreferences;
-    private Set<DataColumnDescriptor> selectedDataColumnDescriptors;
     private String filteredBySpecies;
     private String queryDescription;
-    private Experiment<DataColumnDescriptor> experiment;
+    protected Experiment<DataColumnDescriptor> experiment;
 
     public void setExperiment(Experiment<DataColumnDescriptor> experiment){
         this.experiment = experiment;
@@ -42,12 +41,22 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return getRequestPreferences().getHeatmapMatrixSize();
     }
 
-    public Set<DataColumnDescriptor> getSelectedQueryFactors() {
-        return selectedDataColumnDescriptors;
+    public List<DataColumnDescriptor> getDataColumnsToReturn() {
+        final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
+        if(selectedIds.isEmpty()){
+            return experiment.getDataColumnDescriptors();
+        } else {
+            return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(new Predicate<DataColumnDescriptor>() {
+                 @Override
+                 public boolean apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
+                     return selectedIds.contains(dataColumnDescriptor.getId());
+                 }
+             }).toList();
+        }
     }
 
-    public String displayNameForSelectedQueryFactor(DataColumnDescriptor dataColumnDescriptor){
-        return selectedDataColumnDescriptors.contains(dataColumnDescriptor) ? displayNamePerSelectedDataColumnDescriptor().get
+    public String displayNameForColumn(DataColumnDescriptor dataColumnDescriptor){
+        return getDataColumnsToReturn().contains(dataColumnDescriptor) ? displayNamePerSelectedDataColumnDescriptor().get
                 (dataColumnDescriptor) : "";
     }
 
@@ -65,12 +74,8 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return getRequestPreferences().isSpecific();
     }
 
-    public List<DataColumnDescriptor> getAllQueryFactors() {
+    public List<DataColumnDescriptor> getAllDataColumnDescriptors() {
         return experiment.getDataColumnDescriptors();
-    }
-
-    void setSelectedQueryFactors(Set<DataColumnDescriptor> selectedQueryFactors) {
-        this.selectedDataColumnDescriptors = selectedQueryFactors;
     }
 
     void setFilteredBySpecies(String filteredBySpecies) {
@@ -100,7 +105,7 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
     //feel free to cache this bad boy
     private Map<DataColumnDescriptor, String> displayNamePerSelectedDataColumnDescriptor(){
         Map<DataColumnDescriptor, Map<String, Factor>> factorsByTypePerId = new HashMap<>();
-        for(DataColumnDescriptor dataColumnDescriptor: selectedDataColumnDescriptors){
+        for(DataColumnDescriptor dataColumnDescriptor: getDataColumnsToReturn()){
             factorsByTypePerId.put(dataColumnDescriptor,
                     experiment.getExperimentDesign()
                             .getFactors(dataColumnDescriptor.getId())

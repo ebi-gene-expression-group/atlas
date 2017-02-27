@@ -52,7 +52,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
 
         baselineExperimentPageService.prepareRequestPreferencesAndHeaderData(
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences,model, request, false
+                preferences,model, request
         );
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));

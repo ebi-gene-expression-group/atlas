@@ -74,7 +74,7 @@ public class DifferentialExperimentPageService
                                                    BindingResult bindingResult, Model model) {
         JsonObject result = new JsonObject();
         R requestContext = differentialRequestContextFactory.create(experiment, preferences);
-        List<Contrast> contrasts = experiment.getDataColumnDescriptors();
+        List<Contrast> contrasts = requestContext.getDataColumnsToReturn();
         model.addAttribute("queryFactorName", "Comparison");
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());

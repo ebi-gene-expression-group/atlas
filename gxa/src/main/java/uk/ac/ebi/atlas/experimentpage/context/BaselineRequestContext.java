@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import com.google.common.base.MoreObjects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
@@ -12,23 +11,15 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
 
 @Named
 @Scope("request")
 public class BaselineRequestContext extends RequestContext<AssayGroup, BaselineRequestPreferences> implements
         BaselineProfileStreamOptions {
 
-    private BaselineExperiment experiment;
-
-    private SortedSet<Factor> selectedFilterFactors;
-
     public BaselineRequestContext() {
     }
 
-    public SortedSet<Factor> getSelectedFilterFactors() {
-        return selectedFilterFactors;
-    }
 
     @Override
     public Double getThresholdForPremium() {
@@ -40,33 +31,9 @@ public class BaselineRequestContext extends RequestContext<AssayGroup, BaselineR
         return getRequestPreferences().getFractionForPremium();
     }
 
-    @Override
-    public String getExperimentAccession() {
-        return experiment.getAccession();
-    }
 
     public String getQueryFactorType() {
         return getRequestPreferences().getQueryFactorType();
-    }
-
-    void setSelectedFilterFactors(SortedSet<Factor> selectedFilterFactors) {
-        this.selectedFilterFactors = selectedFilterFactors;
-    }
-
-    void setExperiment(BaselineExperiment experiment) {
-        this.experiment = experiment;
-    }
-
-    public BaselineExperiment getExperiment() {
-        return experiment;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(getClass())
-                .addValue(super.toString())
-                .add("selectedFilterFactors", selectedFilterFactors)
-                .add("experiment", experiment).toString();
     }
 
     public static BaselineRequestContext createFor(BaselineExperiment experiment, BaselineRequestPreferences preferences){
@@ -84,16 +51,15 @@ public class BaselineRequestContext extends RequestContext<AssayGroup, BaselineR
                 .build();
     }
 
+    @Deprecated
     public List<Factor> getFilterFactorsInTheSameOrderAsTheExperimentHeader(){
         List<Factor> result = new ArrayList<>();
-        for(AssayGroupFactor assayGroupFactor: getOrderedAssayGroupFactors()){
-            result.add(assayGroupFactor.getFactor());
-        }
         return result;
     }
 
+    @Deprecated
     public List<AssayGroupFactor> getOrderedAssayGroupFactors(){
-        return experiment.getExperimentalFactors().getComplementAssayGroupFactors(selectedFilterFactors);
+        return new ArrayList<>();
     }
 
 }

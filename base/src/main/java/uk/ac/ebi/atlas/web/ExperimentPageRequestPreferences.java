@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableSet;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
@@ -38,10 +39,22 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     protected ExperimentPageRequestPreferences() {
     }
 
+    Set<String> selectedColumnIds = ImmutableSet.of();
+
+    public void setSelectedColumnIds(String selectedColumnIdsJoinedByCommas){
+        this.selectedColumnIds = ImmutableSet.copyOf(selectedColumnIdsJoinedByCommas.split(","));
+    }
+
+    public Set<String> getSelectedColumnIds(){
+        return selectedColumnIds;
+    }
+
+    @Deprecated
     public Set<String> getQueryFactorValues() {
         return queryFactorValues;
     }
 
+    @Deprecated
     public void setQueryFactorValues(Set<String> queryFactorValues) {
         this.queryFactorValues = (queryFactorValues == null) ? Collections.<String>emptySet() : queryFactorValues;
     }
@@ -54,10 +67,12 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
         this.queryFactorType = type;
     }
 
+    @Deprecated
     public String getSerializedFilterFactors() {
         return serializedFilterFactors;
     }
 
+    @Deprecated
     public void setSerializedFilterFactors(String serializedFilterFactors) {
         this.serializedFilterFactors = serializedFilterFactors;
     }

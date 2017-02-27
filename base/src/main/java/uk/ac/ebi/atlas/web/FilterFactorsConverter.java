@@ -15,6 +15,7 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 
+@Deprecated
 public class FilterFactorsConverter {
 
     private static final String INTRA_SEPARATOR = ":";

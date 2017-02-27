@@ -68,8 +68,8 @@ public class DifferentialRequestContextBuilderTest {
     @Test
     public void testBuild() throws Exception {
         MicroarrayRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
-        assertThat(context.getSelectedQueryFactors(), hasItem(contrastMock1));
+        assertThat(context.getDataColumnsToReturn(), hasItem(contrastMock1));
         assertThat(context.getFilteredBySpecies(), is("homo sapiens"));
-        assertThat(context.getAllQueryFactors(), hasItems(contrastMock1, contrastMock2));
+        assertThat(context.getAllDataColumnDescriptors(), hasItems(contrastMock1, contrastMock2));
     }
 }

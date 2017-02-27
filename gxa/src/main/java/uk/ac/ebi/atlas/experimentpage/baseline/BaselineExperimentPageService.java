@@ -1,28 +1,25 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import org.springframework.ui.Model;
+import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
-import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
@@ -44,18 +41,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                                       HttpServletRequest request, boolean isWidget) {
+                                                       HttpServletRequest request) {
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
-        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
-
-        if (!isWidget) {
-            addFactorMenu(model, experiment, requestContext);
-        }
-
-        // this is currently required for the request requestPreferences filter drop-down multi-selection box
+        
+        // not sure if I still need atlasHost, old comment:
+        // this is currently required for the request requestPreferences filter  drop-down multi-selection box
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
-        model.addAttribute("allQueryFactors", requestContext.getOrderedAssayGroupFactors());
-        model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAllAttributes(experiment.getAttributes());
         model.addAllAttributes(headerAttributes(experiment));
     }
@@ -67,7 +58,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
-        List<AssayGroupFactor> filteredAssayGroupFactors =requestContext.getOrderedAssayGroupFactors();
+        List<AssayGroup> dataColumnsToReturn =requestContext.getDataColumnsToReturn();
 
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
@@ -76,16 +67,16 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
-        model.addAttribute("enableEnsemblLauncher", !isWidget&& !filteredAssayGroupFactors.isEmpty()
+        model.addAttribute("enableEnsemblLauncher", !isWidget&& !requestContext.getDataColumnsToReturn().isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
-                filteredAssayGroupFactors.get(0).getAssayGroupId()));
+                requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
         BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,experiment);
 
         result.add("columnHeaders",
-                constructColumnHeaders(filteredAssayGroupFactors,experiment));
+                constructColumnHeaders(dataColumnsToReturn,requestContext, experiment));
 
-        result.add("columnGroupings",factorGroupingService.group(filteredAssayGroupFactors));
+        result.add("columnGroupings",factorGroupingService.group(dataColumnsToReturn));
 
         try {
             result.add("profiles", heatMapResults.getJsonProfiles());
@@ -110,12 +101,9 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         result.add("anatomogram", anatomogramFactory.get(requestContext.getQueryFactorType(),
                 experiment.getSpecies(),
-                filteredAssayGroupFactors));
+                dataColumnsToReturn));
 
         model.addAttribute("isWidget", isWidget);
-        if (!isWidget) {
-            addFactorMenu(model, experiment, requestContext);
-        }
 
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
@@ -127,17 +115,20 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         return result;
     }
 
-    private JsonArray constructColumnHeaders(List<AssayGroupFactor> filteredAssayGroupFactors, BaselineExperiment experiment){
+    private JsonArray constructColumnHeaders(List<AssayGroup> dataColumnsToReturn, BaselineRequestContext
+            baselineRequestContext,
+            BaselineExperiment
+            experiment){
         JsonArray result = new JsonArray();
 
-        for(AssayGroupFactor assayGroupFactor: filteredAssayGroupFactors){
+        for(AssayGroup dataColumnDescriptor: dataColumnsToReturn){
             JsonObject o = new JsonObject();
-            o.addProperty("assayGroupId", assayGroupFactor.getAssayGroupId());
-            o.addProperty("factorValue", assayGroupFactor.getValue());
-            o.addProperty("factorValueOntologyTermId", assayGroupFactor.getValueOntologyTermId());
+            o.addProperty("assayGroupId", dataColumnDescriptor.getId());
+            o.addProperty("factorValue", baselineRequestContext.displayNameForColumn(dataColumnDescriptor));
+            o.addProperty("factorValueOntologyTermId", dataColumnDescriptor.getValueOntologyTermId()); //TODO
             o.add("assayGroupSummary",
                     new AssayGroupSummaryBuilder()
-                    .forAssayGroup(experiment.getDataColumnDescriptor(assayGroupFactor.getAssayGroupId()))
+                    .forAssayGroup(experiment.getDataColumnDescriptor(dataColumnDescriptor.getId()))
                     .withExperimentDesign(experiment.getExperimentDesign())
                     .build().toJson());
             result.add(o);
@@ -145,31 +136,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
 
         return result;
-    }
-
-    private void addFactorMenu(Model model, BaselineExperiment experiment, BaselineRequestContext requestContext) {
-
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-
-        SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
-        if (!menuFactorNames.isEmpty()) {
-            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
-
-            SortedSet<FilterFactorMenuVoice> filterFactorMenu = new FilterFactorMenuBuilder()
-                    .withExperimentalFactors(experimentalFactors)
-                    .forFilterFactors(menuFactors)
-                    .build();
-
-            model.addAttribute("filterFactorMenu", filterFactorMenu);
-            model.addAttribute("menuFactorNames", menuFactorNames);
-        }
-
-        Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
-        for (Factor selectedFilterFactor : requestContext.getSelectedFilterFactors()) {
-            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorDisplayName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
-        }
-        model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
-
     }
 
 }
