@@ -15,11 +15,15 @@ import java.util.Collections;
 public class MicroarrayRequestContext extends DifferentialRequestContext<MicroarrayExperiment, MicroarrayRequestPreferences> implements
         MicroarrayProfileStreamOptions {
 
+    public MicroarrayRequestContext(MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
+        super(requestPreferences, experiment);
+    }
+
     @Override
     public Iterable<String> getArrayDesignAccessions() {
-        String maybeChosenArrayDesign = getRequestPreferences().getArrayDesignAccession();
+        String maybeChosenArrayDesign = requestPreferences.getArrayDesignAccession();
         return StringUtils.isNotBlank(maybeChosenArrayDesign) ? Collections.singleton(maybeChosenArrayDesign) :
-        getExperiment().getArrayDesignAccessions();
+        experiment.getArrayDesignAccessions();
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
@@ -16,11 +17,14 @@ import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns, K extends ExperimentPageRequestPreferences> {
-    private K requestPreferences;
-    protected Experiment<DataColumnDescriptor> experiment;
+public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns,E extends
+        Experiment<DataColumnDescriptor>, K extends ExperimentPageRequestPreferences>
+    implements ProfileStreamOptions<DataColumnDescriptor>{
+    protected final K requestPreferences;
+    protected final E experiment;
 
-    public void setExperiment(Experiment<DataColumnDescriptor> experiment){
+    public RequestContext(K requestPreferences, E experiment){
+        this.requestPreferences = requestPreferences;
         this.experiment = experiment;
     }
 
@@ -29,11 +33,15 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
     }
 
     public SemanticQuery getGeneQuery() {
-        return getRequestPreferences().getGeneQuery();
+        return requestPreferences.getGeneQuery();
     }
 
     public Integer getHeatmapMatrixSize() {
-        return getRequestPreferences().getHeatmapMatrixSize();
+        return requestPreferences.getHeatmapMatrixSize();
+    }
+
+    public List<DataColumnDescriptor> getAllDataColumns(){
+        return experiment.getDataColumnDescriptors();
     }
 
     public List<DataColumnDescriptor> getDataColumnsToReturn() {
@@ -60,29 +68,23 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
     }
 
     public double getCutoff() {
-        return getRequestPreferences().getCutoff();
+        return requestPreferences.getCutoff();
     }
 
     public boolean isSpecific() {
-        return getRequestPreferences().isSpecific();
+        return requestPreferences.isSpecific();
     }
 
     public List<DataColumnDescriptor> getAllDataColumnDescriptors() {
         return experiment.getDataColumnDescriptors();
     }
 
-    protected void setRequestPreferences(K requestPreferences) {
-        this.requestPreferences = requestPreferences;
-    }
-
-    protected K getRequestPreferences() {
-        return requestPreferences;
-    }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(getClass())
-                .add("requestPreferences", getRequestPreferences())
+                .add("requestPreferences", requestPreferences)
+                .add("experimentAccession", experiment.getAccession())
                 .toString();
     }
 

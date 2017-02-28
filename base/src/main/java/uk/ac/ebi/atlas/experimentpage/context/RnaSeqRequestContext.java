@@ -5,4 +5,7 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 public class RnaSeqRequestContext extends DifferentialRequestContext<DifferentialExperiment, DifferentialRequestPreferences> {
 
+    public RnaSeqRequestContext(DifferentialRequestPreferences requestPreferences, DifferentialExperiment experiment) {
+        super(requestPreferences, experiment);
+    }
 }
