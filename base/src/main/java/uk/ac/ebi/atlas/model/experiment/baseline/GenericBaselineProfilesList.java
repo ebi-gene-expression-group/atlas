@@ -34,5 +34,4 @@ public class GenericBaselineProfilesList<T extends BaselineProfile> extends Gene
         }
         return minExpressionLevel;
     }
-
 }

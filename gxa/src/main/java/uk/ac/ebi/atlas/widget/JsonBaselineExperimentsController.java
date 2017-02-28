@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
+import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.profiles.json.ProfilesToJsonConverter;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
@@ -30,12 +35,14 @@ import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -90,22 +97,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                                                                BaselineExperimentSearchResult searchResult, Model model) {
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
-        //TODO does not take conditionQuery into account - but it's very hard to implement
-        try {
-
-            return resultsFromDataAndModel(ProfilesToJsonConverter.createForCrossExperimentResults(
-                    new URI(ApplicationProperties.buildServerURL(request) + "/experiments/"),
-                    ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson())
-                    ),
-                    request, species, searchResult, model);
-        } catch (URISyntaxException e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    private JsonObject resultsFromDataAndModel(ProfilesToJsonConverter<Factor, BaselineExperimentProfile> profilesToJsonConverter,
-                                               HttpServletRequest request, Species species,
-                                               BaselineExperimentSearchResult searchResult, Model model){
 
         JsonObject result = new JsonObject();
         List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
@@ -117,11 +108,17 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         }
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
+        List<DescribesDataColumns> dataColumns;
         if(!experimentProfiles.isEmpty()){
             result.add("columnHeaders", gson.toJsonTree(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
             result.add("columnGroupings", factorGroupingService.group(convert(orderedFactors)));
 
-            result.add("profiles", profilesToJsonConverter.convert(experimentProfiles, orderedFactors));
+            result.add("profiles", new ExternallyViewableProfilesList<AssayGroup, BaselineExperimentProfile>(
+                    experimentProfiles,
+                    provideLinkToProfile(request, geneQuery),
+                            dataColumns
+                    ).asJson());
+
             result.add("geneSetProfiles", JsonNull.INSTANCE);
             result.add("jsonCoexpressions", new JsonArray());
         }
@@ -132,6 +129,25 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
         result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
         return result;
+    }
+
+    private Function<BaselineExperimentProfile, URI> provideLinkToProfile(HttpServletRequest request, SemanticQuery
+            geneQuery){
+        try {
+            final URI experimentsLocation = new URI(ApplicationProperties.buildServerURL(request) + "/experiments/");
+            final Map<String, String> params = ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson());
+            return new Function<BaselineExperimentProfile, URI>() {
+                @Nullable
+                @Override
+                public URI apply(@Nullable BaselineExperimentProfile baselineExperimentProfile) {
+                    return experimentsLocation.resolve(baselineExperimentProfile.getId()+
+                            "?"+ Joiner.on("&").withKeyValueSeparator("=").join(params.entrySet())
+                    );
+                }
+            };
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {

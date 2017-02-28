@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
@@ -11,10 +12,16 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class BaselineProfilesHeatMapWrangler {
@@ -22,8 +29,6 @@ public class BaselineProfilesHeatMapWrangler {
     private GeneQueryResponse geneQueryResponseForProfiles;
 
     private BaselineProfilesList jsonProfiles;
-
-    private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
 
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
 
@@ -35,17 +40,48 @@ public class BaselineProfilesHeatMapWrangler {
 
     private final CoexpressedGenesService coexpressedGenesService;
 
+    private final Function<BaselineProfile, URI> linkToGenes;
+
+    private final Function<BaselineProfile, URI> linkToGenesets;
+
+
     public BaselineProfilesHeatMapWrangler(
             BaselineProfilesHeatMap baselineProfilesHeatMap,
-            BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder, SolrQueryService solrQueryService,
+            SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,
+            HttpServletRequest httpServletRequest,
             BaselineRequestPreferences preferences, BaselineExperiment experiment) {
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
-        this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
         this.experiment = experiment;
-        requestContext = BaselineRequestContext.createFor(experiment, preferences);
+        requestContext = new BaselineRequestContext(preferences, experiment);
+        final String serverURL = ApplicationProperties.buildServerURL(httpServletRequest);
+
+        linkToGenes = new Function<BaselineProfile, URI>() {
+            @Nullable
+            @Override
+            public URI apply(@Nullable BaselineProfile baselineProfile) {
+                try {
+                    return new URI(serverURL+"/genes/"+baselineProfile.getId());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        linkToGenesets = new Function<BaselineProfile, URI>() {
+            @Nullable
+            @Override
+            public URI apply(@Nullable BaselineProfile baselineProfile) {
+                try {
+                    return new URI(serverURL+"/genesets/"+baselineProfile.getId());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
     }
 
     private String getSpecies() {
@@ -66,17 +102,23 @@ public class BaselineProfilesHeatMapWrangler {
         }
     }
 
+
+
     public JsonObject getJsonProfiles()  {
         fetchProfilesIfMissing();
-        return baselineProfilesViewModelBuilder.build(jsonProfiles, requestContext.getFilterFactorsInTheSameOrderAsTheExperimentHeader());
+        return new ExternallyViewableProfilesList<>(jsonProfiles,linkToGenes,
+                requestContext
+                .getDataColumnsToReturn() ).asJson();
     }
 
     public Optional<JsonObject> getJsonProfilesAsGeneSets()  {
         GeneQueryResponse r = getGeneQueryResponseForProfiles();
         return r.containsGeneSets()
-                ? Optional.of(baselineProfilesViewModelBuilder.build(baselineProfilesHeatMap.fetch(experiment,requestContext,
-                r, true),
-                requestContext.getFilterFactorsInTheSameOrderAsTheExperimentHeader()))
+                ? Optional.of(new ExternallyViewableProfilesList<>(baselineProfilesHeatMap.fetch(experiment,requestContext,
+                r, true),linkToGenesets,
+                requestContext
+                        .getDataColumnsToReturn() ).asJson())
+
                 : Optional.<JsonObject>absent();
     }
 
@@ -93,15 +135,15 @@ public class BaselineProfilesHeatMapWrangler {
             o.addProperty("geneName", baselineProfile.getName());
             o.addProperty("geneId", baselineProfile.getId());
             if (coexpressedStuff.isPresent()) {
-                o.add("jsonProfiles", baselineProfilesViewModelBuilder.build
-                        (baselineProfilesHeatMap.fetchInPrescribedOrder(
+                o.add("jsonProfiles",
+                        new ExternallyViewableProfilesList<>(baselineProfilesHeatMap.fetchInPrescribedOrder(
                                 coexpressedStuff.get()
-                                .getRight(),
+                                        .getRight(),
                                 experiment,
                                 requestContext,
-                                coexpressedStuff.get().getLeft(), false),
-                                requestContext
-                                        .getFilterFactorsInTheSameOrderAsTheExperimentHeader()));
+                                coexpressedStuff.get().getLeft(), false)
+                                ,linkToGenes,
+                                requestContext.getDataColumnsToReturn() ).asJson());
             }
             result.add(o);
         }

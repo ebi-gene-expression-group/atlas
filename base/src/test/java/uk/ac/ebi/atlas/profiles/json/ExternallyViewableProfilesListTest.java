@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles.json;
 
+import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -15,20 +16,39 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSlice;
 
+import javax.annotation.Nullable;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
-public class ProfilesToJsonConverterTest {
+public class ExternallyViewableProfilesListTest {
 
     ProfilesToJsonConverter<Factor,BaselineExperimentProfile> subject;
 
     BaselineExperiment experiment = BaselineExperimentTest.mockExperiment();
 
+    private Function<BaselineExperimentProfile, URI> provideLinkToProfile;
+
     @Before
     public void setUp() throws Exception{
+
+        provideLinkToProfile = new Function<BaselineExperimentProfile, URI>(){
+
+            @Nullable
+            @Override
+            public URI apply(@Nullable BaselineExperimentProfile o) {
+                try {
+                    return new URI("https://www.ebi.ac.uk/gxa/experiments/"+o.getId());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+
         subject = ProfilesToJsonConverter
                 .createForCrossExperimentResults(
                         new URI("https://www.ebi.ac.uk/gxa/experiments"), ImmutableMap.of("geneQuery", SemanticQuery.create

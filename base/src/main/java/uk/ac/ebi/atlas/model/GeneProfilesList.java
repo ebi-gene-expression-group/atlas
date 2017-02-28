@@ -3,11 +3,9 @@ package uk.ac.ebi.atlas.model;
 
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -56,6 +54,10 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
         while ((profile = queue.poll()) != null) {
             this.add(profile);
         }
+    }
+
+    public Map<String,String> properties(){
+        return ImmutableMap.of("searchResultTotal", Integer.toString(getTotalResultCount()));
     }
 
 }

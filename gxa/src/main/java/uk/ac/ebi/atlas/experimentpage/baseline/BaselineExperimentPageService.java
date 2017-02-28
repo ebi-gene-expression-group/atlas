@@ -57,7 +57,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
-        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+        BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn =requestContext.getDataColumnsToReturn();
 
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/

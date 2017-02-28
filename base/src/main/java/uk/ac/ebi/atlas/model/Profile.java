@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -130,10 +131,7 @@ public abstract class Profile<Condition, T extends Expression> {
     }
 
     public Map<String,String> properties(){
-        Map<String,String>  result = new HashMap<>();
-        result.put("id", id);
-        result.put("name", name);
-        return result;
+        return ImmutableMap.of("id", id, "name", name);
     }
 
     public String[] identifiers(){

@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
@@ -27,6 +28,8 @@ import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +75,19 @@ public class DifferentialExperimentPageService
 
     public JsonObject populateModelWithHeatmapData(HttpServletRequest request, E experiment, K preferences,
                                                    BindingResult bindingResult, Model model) {
+        final String serverURL = ApplicationProperties.buildServerURL(request);
+        Function<P, URI> linkToGenes = new Function<P, URI>() {
+            @Nullable
+            @Override
+            public URI apply(@Nullable P differentialProfile) {
+                try {
+                    return new URI(serverURL+"/genes/"+differentialProfile.getId());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
         JsonObject result = new JsonObject();
         R requestContext = differentialRequestContextFactory.create(experiment, preferences);
         List<Contrast> contrasts = requestContext.getDataColumnsToReturn();
@@ -95,8 +111,9 @@ public class DifferentialExperimentPageService
                 if (!differentialProfiles.isEmpty()) {
                     result.add("columnGroupings", new JsonArray());
                     result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
-                    result.add("profiles",differentialProfilesViewModelBuilder.build
-                            (differentialProfiles, contrasts));
+                    result.add("profiles", new ExternallyViewableProfilesList<>(
+                            differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn()
+                    ).asJson());
 
                     //TODO remove me after old heatmap goes away, the new heatmap handles no data gracefully
                     if(differentialProfilesViewModelBuilder.build(differentialProfiles, contrasts)
