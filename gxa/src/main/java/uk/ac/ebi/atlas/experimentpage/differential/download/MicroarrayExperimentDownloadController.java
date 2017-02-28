@@ -1,9 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.GenesNotFoundException;
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -12,8 +8,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
+import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -38,9 +43,11 @@ public class MicroarrayExperimentDownloadController {
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
     private static final String QUERY_RESULTS_TSV = "-query-results.tsv";
 
-    private final MicroarrayRequestContextBuilder requestContextBuilder;
+    private final MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
 
-    private MicroarrayProfilesWriter profilesWriter;
+    private final MicroarrayProfilesWriterFactory microarrayProfilesWriterFactory;
+
+    private final SolrQueryService solrQueryService;
 
     private DataWriterFactory dataWriterFactory;
 
@@ -48,10 +55,14 @@ public class MicroarrayExperimentDownloadController {
 
     @Inject
     public MicroarrayExperimentDownloadController(ExperimentTrader experimentTrader,
-            MicroarrayRequestContextBuilder requestContextBuilder, MicroarrayProfilesWriter profilesWriter, DataWriterFactory dataWriterFactory) {
+                                                  MicroarrayProfileStreamFactory microarrayProfileStreamFactory,
+                                                  MicroarrayProfilesWriterFactory microarrayProfilesWriterFactory,
+                                                  SolrQueryService solrQueryService,
+                                                  DataWriterFactory dataWriterFactory) {
         this.experimentTrader = experimentTrader;
-        this.requestContextBuilder = requestContextBuilder;
-        this.profilesWriter = profilesWriter;
+        this.microarrayProfileStreamFactory = microarrayProfileStreamFactory;
+        this.microarrayProfilesWriterFactory = microarrayProfilesWriterFactory;
+        this.solrQueryService = solrQueryService;
         this.dataWriterFactory = dataWriterFactory;
     }
 
@@ -66,15 +77,21 @@ public class MicroarrayExperimentDownloadController {
         MicroarrayExperiment experiment =
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession,accessKey);
 
+        //TODO code is not using species for microarray experiments - I think it's wrong
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(preferences.getGeneQuery(), "");
         LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: {}", preferences);
 
         prepareResponse(response, experimentAccession, experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
-        MicroarrayRequestContext requestContext =
-                requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
-            String arrayDesign = experiment.getArrayDesignAccessions().first();
-            writeMicroarrayGeneProfiles(response.getWriter(), experimentAccession, requestContext, arrayDesign);
+            MicroarrayRequestContext context =
+                    new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
+            microarrayProfileStreamFactory.write(
+                    experiment,
+                    context,
+                    new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
+                    microarrayProfilesWriterFactory.create(response.getWriter(), context));
         } else {
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
@@ -84,7 +101,16 @@ public class MicroarrayExperimentDownloadController {
                 ZipEntry ze = new ZipEntry(filename);
                 zipOutputStream.putNextEntry(ze);
 
-                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experimentAccession, requestContext, selectedArrayDesign);
+                preferences.setArrayDesignAccession(selectedArrayDesign);
+                MicroarrayRequestContext context =
+                        new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
+
+                microarrayProfileStreamFactory.write(
+                        experiment,
+                        context,
+                        new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
+                        microarrayProfilesWriterFactory.create(new PrintWriter(zipOutputStream), context));
+
                 zipOutputStream.closeEntry();
             }
 
@@ -106,17 +132,6 @@ public class MicroarrayExperimentDownloadController {
         return "forward:" + path;
     }
 
-
-    private void writeMicroarrayGeneProfiles(PrintWriter writer, String experimentAccession,
-                                             MicroarrayRequestContext requestContext, String arrayDesign)
-    throws IOException {
-        try {
-            long genesCount = profilesWriter.write(writer, requestContext, arrayDesign);
-            LOGGER.info("<writeMicroarrayGeneProfiles> wrote {} genes for experiment {}", genesCount, experimentAccession);
-        } catch (GenesNotFoundException e) {
-            LOGGER.info("<writeMicroarrayGeneProfiles> no genes found");
-        }
-    }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadNormalizedData(@PathVariable String experimentAccession,

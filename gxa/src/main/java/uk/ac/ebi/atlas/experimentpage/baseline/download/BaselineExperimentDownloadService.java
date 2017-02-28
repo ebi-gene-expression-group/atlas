@@ -1,16 +1,14 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,10 +26,9 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
 
     private final ExperimentTrader experimentTrader;
 
-    public BaselineExperimentDownloadService(BaselineProfileStreamFactory inputStreamFactory,
-                                             BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
+    public BaselineExperimentDownloadService(BaselineProfilesWriterService baselineProfilesWriterService,
                                              ExperimentTrader experimentTrader) {
-        this.baselineProfilesWriterService = baselineProfilesWriterServiceFactory.create(inputStreamFactory);
+        this.baselineProfilesWriterService = baselineProfilesWriterService;
         this.experimentTrader = experimentTrader;
     };
 
@@ -49,14 +46,8 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
                 "Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
         response.setContentType("text/plain; charset=utf-8");
 
-        try {
-            long genesCount = baselineProfilesWriterService.write(
-                    response.getWriter(), preferences, experiment, readCoexpressionsRequested(request));
-
-            LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
-        } catch (GenesNotFoundException e) {
-            LOGGER.info("<downloadGeneProfiles> no genes found");
-        }
+        long genesCount = baselineProfilesWriterService.write(response.getWriter(), preferences, experiment, readCoexpressionsRequested(request));
+        LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
     }
 
     Map<String, Integer> readCoexpressionsRequested(HttpServletRequest request) {

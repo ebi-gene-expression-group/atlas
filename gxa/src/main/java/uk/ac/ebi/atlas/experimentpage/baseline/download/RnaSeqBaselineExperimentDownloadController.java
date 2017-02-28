@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,7 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageController;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
+import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -28,13 +30,13 @@ public class RnaSeqBaselineExperimentDownloadController extends BaselineExperime
     private final BaselineExperimentDownloadService<BaselineRequestPreferences> baselineExperimentDownloadService;
 
     @Inject
-    public RnaSeqBaselineExperimentDownloadController(@Qualifier("baselineProfileInputStreamFactory")
-                                                      BaselineProfileStreamFactory inputStreamFactory,
-                                                      BaselineProfilesWriterServiceFactory
-                                                              baselineProfilesWriterServiceFactory,
+    public RnaSeqBaselineExperimentDownloadController(RnaSeqBaselineProfileStreamFactory inputStreamFactory,
+                                                      BaselineProfilesWriterFactory baselineProfilesWriterFactory,
+                                                      SolrQueryService solrQueryService,
+                                                      CoexpressedGenesService coexpressedGenesService,
                                                       ExperimentTrader experimentTrader) {
-        this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(inputStreamFactory,
-                baselineProfilesWriterServiceFactory,experimentTrader);
+        this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(new BaselineProfilesWriterService(inputStreamFactory,
+                baselineProfilesWriterFactory, solrQueryService, coexpressedGenesService),experimentTrader);
     }
 
 

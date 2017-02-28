@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.RnaSeqDifferentialProfilesWriterFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +37,11 @@ public class RnaSeqExperimentDownloadController {
     private static final String PARAMS_TYPE_DIFFERENTIAL = "type=RNASEQ_MRNA_DIFFERENTIAL";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
 
-    private final RnaSeqRequestContextBuilder requestContextBuilder;
+    private final RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory;
 
-    private RnaSeqProfilesWriter profilesWriter;
+    private final RnaSeqDifferentialProfilesWriterFactory rnaSeqDifferentialProfilesWriterFactory;
+
+    private final SolrQueryService solrQueryService;
 
     private DataWriterFactory dataWriterFactory;
 
@@ -43,11 +49,13 @@ public class RnaSeqExperimentDownloadController {
 
     @Inject
     public RnaSeqExperimentDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, RnaSeqProfilesWriter profilesWriter
-            , DataWriterFactory dataWriterFactory, ExperimentTrader experimentTrader) {
-
-        this.requestContextBuilder = requestContextBuilder;
-        this.profilesWriter = profilesWriter;
+            RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
+            RnaSeqDifferentialProfilesWriterFactory rnaSeqDifferentialProfilesWriterFactory,
+            SolrQueryService solrQueryService,
+            DataWriterFactory dataWriterFactory, ExperimentTrader experimentTrader) {
+        this.rnaSeqProfileStreamFactory = rnaSeqProfileStreamFactory;
+        this.rnaSeqDifferentialProfilesWriterFactory = rnaSeqDifferentialProfilesWriterFactory;
+        this.solrQueryService = solrQueryService;
         this.dataWriterFactory = dataWriterFactory;
         this.experimentTrader = experimentTrader;
     }
@@ -67,17 +75,15 @@ public class RnaSeqExperimentDownloadController {
 
         response.setContentType("text/plain; charset=utf-8");
 
-
-        RnaSeqRequestContext requestContext = requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
-
-        try {
-
-            long genesCount = profilesWriter.write(response.getWriter(), requestContext);
-            LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
-
-        } catch (GenesNotFoundException e) {
-            LOGGER.info("<downloadGeneProfiles> no genes found");
-        }
+        RnaSeqRequestContext context =
+                new DifferentialRequestContextFactory.RnaSeq().create(experiment, preferences);
+        long genesCount = rnaSeqProfileStreamFactory.write(
+                experiment,
+                context,
+                new DifferentialProfileStreamTransforms<RnaSeqProfile>(context,
+                        solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
+                rnaSeqDifferentialProfilesWriterFactory.create(response.getWriter(), context));
+        LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
 
     }
 

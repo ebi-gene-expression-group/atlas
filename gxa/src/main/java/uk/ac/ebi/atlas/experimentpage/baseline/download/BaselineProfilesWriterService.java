@@ -3,10 +3,9 @@ package uk.ac.ebi.atlas.experimentpage.baseline.download;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -21,18 +20,18 @@ public class BaselineProfilesWriterService {
 
     private BaselineProfileStreamFactory inputStreamFactory;
 
-    private ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+    private BaselineProfilesWriterFactory baselineProfilesWriterFactory;
 
     private SolrQueryService solrQueryService;
 
     private CoexpressedGenesService coexpressedGenesService;
 
     public BaselineProfilesWriterService(BaselineProfileStreamFactory inputStreamFactory,
-                                         ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter,
+                                         BaselineProfilesWriterFactory baselineProfilesWriterFactory,
                                          SolrQueryService solrQueryService,
                                          CoexpressedGenesService coexpressedGenesService) {
         this.inputStreamFactory = inputStreamFactory;
-        this.profilesWriter = profilesWriter;
+        this.baselineProfilesWriterFactory = baselineProfilesWriterFactory;
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
 
@@ -46,6 +45,7 @@ public class BaselineProfilesWriterService {
         }
         final BaselineRequestContext requestContext;
         final GeneQueryResponse geneQueryResponse;
+        final boolean asGeneSets = false;
 
         if (totalCoexpressionsRequested == 0) {
             requestContext = BaselineRequestContext.createFor(experiment, preferences);
@@ -71,8 +71,9 @@ public class BaselineProfilesWriterService {
                     );
 
         }
-        return profilesWriter.write(writer, inputStreamFactory.create(requestContext.getExperiment(),requestContext),
-                requestContext, requestContext.getAllQueryFactors(), geneQueryResponse);
+        return inputStreamFactory.write(experiment, requestContext,
+                new BaselineProfileStreamTransforms(requestContext, geneQueryResponse, asGeneSets),
+                baselineProfilesWriterFactory.create(writer, requestContext, asGeneSets));
     }
 
     private String describe(SemanticQuery geneQuery, int coexpressedGenes) {

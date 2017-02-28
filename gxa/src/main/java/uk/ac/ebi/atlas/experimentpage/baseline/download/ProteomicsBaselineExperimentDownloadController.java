@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,6 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageController;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -26,12 +29,13 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
 
     private final BaselineExperimentDownloadService<ProteomicsBaselineRequestPreferences> baselineExperimentDownloadService;
     @Inject
-    public ProteomicsBaselineExperimentDownloadController(
-            BaselineProfileStreamFactory baselineProfileStreamFactory,
-            BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory,
-            ExperimentTrader experimentTrader) {
-        this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(
-                baselineProfileStreamFactory, baselineProfilesWriterServiceFactory,experimentTrader);
+    public ProteomicsBaselineExperimentDownloadController(ProteomicsBaselineProfileStreamFactory inputStreamFactory,
+                                                          BaselineProfilesWriterFactory baselineProfilesWriterFactory,
+                                                          SolrQueryService solrQueryService,
+                                                          CoexpressedGenesService coexpressedGenesService,
+                                                          ExperimentTrader experimentTrader) {
+        this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(new BaselineProfilesWriterService(inputStreamFactory,
+                baselineProfilesWriterFactory, solrQueryService, coexpressedGenesService),experimentTrader);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_PROTEOMICS_BASELINE)
