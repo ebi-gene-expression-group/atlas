@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
 import com.google.common.base.MoreObjects;
+import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
@@ -27,6 +28,11 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
                 .add("designElementName", designElementName)
                 .add("expressions", expressionsByCondition)
                 .toString();
+    }
+
+    @Override
+    public String[] identifiers(){
+        return (String[]) ArrayUtils.add(super.identifiers(), designElementName);
     }
 
 }

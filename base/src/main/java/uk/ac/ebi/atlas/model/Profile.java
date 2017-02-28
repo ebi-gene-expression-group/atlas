@@ -135,4 +135,8 @@ public abstract class Profile<Condition, T extends Expression> {
         result.put("name", name);
         return result;
     }
+
+    public String[] identifiers(){
+        return new String[]{id, name};
+    }
 }
