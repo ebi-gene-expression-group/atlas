@@ -72,7 +72,7 @@ public class BaselineRequestContextBuilderTest {
 
         assertThat(context.getSelectedFilterFactors(),
                 hasItem(new Factor(factorTypeSelectedToFilterBy,factorValueSelectedToFilterBy)));
-        assertThat(context.getFilteredBySpecies(), is(FACTOR_VALUE));
+        assertThat(context.getSpecies(), is(FACTOR_VALUE));
         Factor factor1 = new Factor(FACTOR_TYPE, QUERY_FACTOR1);
         Factor factor2 = new Factor(FACTOR_TYPE, QUERY_FACTOR2);
         Factor factor3 = new Factor(FACTOR_TYPE, QUERY_FACTOR3);

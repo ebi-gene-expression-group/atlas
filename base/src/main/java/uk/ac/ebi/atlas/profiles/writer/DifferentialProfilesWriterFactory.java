@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.search.SearchDescription;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,15 +17,15 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.apache.commons.lang3.StringUtils.wrap;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
-
 
 public abstract class DifferentialProfilesWriterFactory<Expr extends DifferentialExpression, Prof extends
         DifferentialProfile<Expr>, R extends DifferentialRequestContext<?,?>> extends
         ProfilesWriterFactory<Contrast, Expr, Prof, R, DifferentialProfilesWriterFactory.DifferentialDownLoadOptions> {
 
-    static class DifferentialDownLoadOptions implements ProfilesWriterFactory.ProfileDownloadOptions {
+    static class DifferentialDownLoadOptions extends ProfilesWriterFactory.ProfileDownloadOptions {
+        public DifferentialDownLoadOptions(String queryDescription) {
+            super(queryDescription);
+        }
         /*
         There might be options which value to actually download - foldChange, pValue, or tStat
         units will possibly vary, too
@@ -43,7 +44,7 @@ public abstract class DifferentialProfilesWriterFactory<Expr extends Differentia
     }
 
     public ProfilesWriter<Prof> create(Writer responseWriter, R requestContext){
-        return create(responseWriter, requestContext, new DifferentialDownLoadOptions());
+        return create(responseWriter, requestContext, new DifferentialDownLoadOptions(SearchDescription.get(requestContext.getGeneQuery())));
     }
 
     @Override
@@ -60,7 +61,7 @@ public abstract class DifferentialProfilesWriterFactory<Expr extends Differentia
 
     @Override
     protected String getTsvFileMasthead(R requestContext, DifferentialDownLoadOptions profileDownloadOptions) {
-        String geneQuery = isEmpty(requestContext.getGeneQuery()) ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
+        String geneQuery = profileDownloadOptions.queryDescription;
         String specific = requestContext.isSpecific() ? " specifically" : "";
         String regulation = " " + requestContext.getRegulation().getLabel();
         String selectedContrasts = formatSelectedContrasts(requestContext);

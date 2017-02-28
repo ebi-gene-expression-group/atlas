@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import javax.annotation.Nullable;
@@ -17,8 +18,6 @@ import java.util.*;
 
 public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns, K extends ExperimentPageRequestPreferences> {
     private K requestPreferences;
-    private String filteredBySpecies;
-    private String queryDescription;
     protected Experiment<DataColumnDescriptor> experiment;
 
     public void setExperiment(Experiment<DataColumnDescriptor> experiment){
@@ -27,10 +26,6 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
 
     public String getExperimentAccession() {
         return experiment.getAccession();
-    }
-
-    public String getQueryDescription(){
-        return queryDescription;
     }
 
     public SemanticQuery getGeneQuery() {
@@ -60,10 +55,8 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
                 (dataColumnDescriptor) : "";
     }
 
-    // the species for the current slice. Note: this is the mapped Ensembl species, ie: not the SDRF sample organism,
-    // but the mapped Ensembl species for the sample (usually this is the same however)
-    public String getFilteredBySpecies() {
-        return filteredBySpecies;
+    public Species getSpecies() {
+        return experiment.getSpecies();
     }
 
     public double getCutoff() {
@@ -78,14 +71,6 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return experiment.getDataColumnDescriptors();
     }
 
-    void setFilteredBySpecies(String filteredBySpecies) {
-        this.filteredBySpecies = filteredBySpecies;
-    }
-
-    void setQueryDescription(String queryDescription){
-        this.queryDescription = queryDescription;
-    }
-
     protected void setRequestPreferences(K requestPreferences) {
         this.requestPreferences = requestPreferences;
     }
@@ -98,7 +83,6 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
     public String toString() {
         return MoreObjects.toStringHelper(getClass())
                 .add("requestPreferences", getRequestPreferences())
-                .add("filteredBySpecies", filteredBySpecies)
                 .toString();
     }
 

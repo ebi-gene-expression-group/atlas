@@ -45,6 +45,6 @@ public class RnaSeqRequestContextBuilderTest {
     public void testBuild() throws Exception {
         RnaSeqRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context, is(not(nullValue())));
-        assertThat(context.getFilteredBySpecies(), is("homo sapiens"));
+        assertThat(context.getSpecies(), is("homo sapiens"));
     }
 }

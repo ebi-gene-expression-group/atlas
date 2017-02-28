@@ -1,18 +1,12 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -21,8 +15,6 @@ public class BaselineRequestContextBuilder {
     private BaselineExperiment experiment;
 
     private BaselineRequestPreferences preferences;
-
-    private Optional<String> queryDescription = Optional.absent();
 
     public BaselineRequestContextBuilder() {
     }
@@ -37,10 +29,6 @@ public class BaselineRequestContextBuilder {
         return this;
     }
 
-    public BaselineRequestContextBuilder withCustomQueryDescription(String description) {
-        this.queryDescription = Optional.of(description);
-        return this;
-    }
 
     Set<String> getQueryFactorValues() {
         return preferences.getQueryFactorValues();
@@ -53,7 +41,6 @@ public class BaselineRequestContextBuilder {
 
         requestContext.setExperiment(experiment);
         requestContext.setRequestPreferences(preferences);
-        requestContext.setQueryDescription(queryDescription.or(SearchDescription.get(preferences.getGeneQuery())));
 
         SortedSet<Factor> selectedFilterFactors = FilterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
         requestContext.setSelectedFilterFactors(selectedFilterFactors);
@@ -76,6 +63,7 @@ public class BaselineRequestContextBuilder {
         return requestContext;
     }
 
+    @Deprecated
     private String getFilteredBySpecies(Set<Factor> selectedFilterFactors) {
         List<String> candidateAnswers = new ArrayList<>();
         for (Factor selectedFilterFactor : selectedFilterFactors) {

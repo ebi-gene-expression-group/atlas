@@ -69,7 +69,7 @@ public class DifferentialRequestContextBuilderTest {
     public void testBuild() throws Exception {
         MicroarrayRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context.getDataColumnsToReturn(), hasItem(contrastMock1));
-        assertThat(context.getFilteredBySpecies(), is("homo sapiens"));
+        assertThat(context.getSpecies(), is("homo sapiens"));
         assertThat(context.getAllDataColumnDescriptors(), hasItems(contrastMock1, contrastMock2));
     }
 }

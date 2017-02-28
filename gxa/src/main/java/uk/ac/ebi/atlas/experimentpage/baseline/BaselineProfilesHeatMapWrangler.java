@@ -49,7 +49,7 @@ public class BaselineProfilesHeatMapWrangler {
     }
 
     private String getSpecies() {
-        return requestContext.getFilteredBySpecies();
+        return requestContext.getSpecies().getReferenceName();
     }
 
     private GeneQueryResponse getGeneQueryResponseForProfiles()  {

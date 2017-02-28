@@ -17,23 +17,19 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.apache.commons.lang3.StringUtils.wrap;
-import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
-
 @Named
 public class BaselineProfilesWriterFactory extends ProfilesWriterFactory<AssayGroup, BaselineExpression,
         BaselineProfile, BaselineRequestContext, BaselineProfilesWriterFactory.BaselineDownloadOptions> {
 
-    static class BaselineDownloadOptions implements ProfilesWriterFactory.ProfileDownloadOptions {
-        private final boolean isGeneSet;
+    static class BaselineDownloadOptions extends ProfilesWriterFactory.ProfileDownloadOptions {
+        public final boolean isGeneSet;
 
-        public BaselineDownloadOptions(boolean isGeneSet){
+        public BaselineDownloadOptions(String queryDescription,
+                                       boolean isGeneSet){
+            super(queryDescription);
             this.isGeneSet = isGeneSet;
         }
 
-        boolean isGeneSet(){
-            return isGeneSet;
-        }
     }
 
     private final String tsvFileMastheadTemplate;
@@ -49,16 +45,17 @@ public class BaselineProfilesWriterFactory extends ProfilesWriterFactory<AssayGr
     }
 
 
-    public ProfilesWriter<BaselineProfile> create(Writer responseWriter, BaselineRequestContext requestContext,
-                                                  boolean isGeneSet){
-        return create(responseWriter, requestContext, new BaselineDownloadOptions(isGeneSet));
+    public ProfilesWriter<BaselineProfile> create(Writer responseWriter,
+                                                  BaselineRequestContext requestContext,
+                                                  String queryDescription, boolean isGeneSet){
+        return create(responseWriter, requestContext, new BaselineDownloadOptions(queryDescription, isGeneSet));
     }
 
 
     @Override
     protected String getTsvFileMasthead(BaselineRequestContext requestContext, BaselineDownloadOptions profileDownloadOptions) {
-        String responseType = profileDownloadOptions.isGeneSet() ? "Gene sets" : "Genes";
-        String geneQuery = isEmpty(requestContext.getGeneQuery()) ? requestContext.getQueryDescription() : wrap(requestContext.getQueryDescription(), "'");
+        String responseType = profileDownloadOptions.isGeneSet ? "Gene sets" : "Genes";
+        String geneQuery = profileDownloadOptions.queryDescription;
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String selectedQueryFactors = formatSelectedQueryFactors(requestContext);
         double cutoff = requestContext.getCutoff();
@@ -80,7 +77,7 @@ public class BaselineProfilesWriterFactory extends ProfilesWriterFactory<AssayGr
 
     @Override
     protected String[] getProfileIdColumnHeaders(BaselineRequestContext requestContext, BaselineDownloadOptions profileDownloadOption) {
-        return profileDownloadOption.isGeneSet()
+        return profileDownloadOption.isGeneSet
                 ? new String[] {"Gene set ID", "Gene Name"}
                 : super.getProfileIdColumnHeaders(requestContext, profileDownloadOption);
     }

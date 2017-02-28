@@ -47,6 +47,6 @@ public class MicroarrayRequestContextBuilderTest {
     public void testBuild() throws Exception {
         MicroarrayRequestContext context = subject.forExperiment(experimentMock).withPreferences(preferencesMock).build();
         assertThat(context.getArrayDesignAccession(), is(ACCESSION));
-        assertThat(context.getFilteredBySpecies(), is("homo sapiens"));
+        assertThat(context.getSpecies(), is("homo sapiens"));
     }
 }

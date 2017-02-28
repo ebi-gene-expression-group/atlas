@@ -19,8 +19,11 @@ public abstract class ProfilesWriterFactory<DataColumnDescriptor extends Describ
         R extends RequestContext<DataColumnDescriptor, ?>,
         DownloadOptions extends ProfilesWriterFactory.ProfileDownloadOptions> {
 
-    protected interface ProfileDownloadOptions {
-
+    protected static class ProfileDownloadOptions {
+        public final String queryDescription;
+        public ProfileDownloadOptions(String queryDescription){
+            this.queryDescription = queryDescription;
+        }
     }
 
     protected abstract String getTsvFileMasthead(R requestContext, DownloadOptions profileDownloadOptions);

@@ -60,7 +60,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetFilteredBySpecies() throws Exception {
-        assertThat(subject.getFilteredBySpecies(), is(nullValue()));
+        assertThat(subject.getSpecies(), is(nullValue()));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class RequestContextTest {
     @Test
     public void testSetFilteredBySpecies() throws Exception {
         subject.setFilteredBySpecies("homo sapiens");
-        assertThat(subject.getFilteredBySpecies(), is("homo sapiens"));
+        assertThat(subject.getSpecies(), is("homo sapiens"));
     }
 
     @Test(expected = NullPointerException.class)

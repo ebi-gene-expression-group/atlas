@@ -22,7 +22,6 @@ public abstract class DifferentialRequestContextFactory<E extends DifferentialEx
 
     protected R populateCommonThings(R requestContext, E experiment, K preferences){
         requestContext.setRequestPreferences(preferences);
-        requestContext.setQueryDescription(SearchDescription.get(preferences.getGeneQuery()));
         requestContext.setSelectedQueryFactors(getSelectedQueryContrasts(experiment, preferences));
         requestContext.setFilteredBySpecies(experiment.getSpecies().getReferenceName());
         requestContext.setAllQueryFactors(new HashSet<>(experiment.getDataColumnDescriptors()));
