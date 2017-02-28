@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import org.mockito.internal.stubbing.answers.ReturnsElementsOf;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
@@ -16,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 public class BaselineCoexpressionProfileInputStreamTest {
@@ -186,7 +186,7 @@ public class BaselineCoexpressionProfileInputStreamTest {
     private void test(List<String[]> data, Map<String, ImmutableList<String>> expected, int sizeForTest) throws
             Exception {
         when(csvReader.readNext()).thenAnswer(new ReturnsElementsOf(data));
-        subject = new BaselineCoexpressionProfileInputStream(csvReader, "MockFile.txt",sizeForTest);
+        subject = new BaselineCoexpressionProfileInputStream(csvReader, sizeForTest);
 
         List<BaselineCoexpressionProfile> actual = new ArrayList<>();
         for(BaselineCoexpressionProfile profile: new IterableObjectInputStream<>(subject)){

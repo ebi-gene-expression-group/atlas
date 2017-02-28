@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.resource;
 
+import au.com.bytecode.opencsv.CSVReader;
 import com.esotericsoftware.kryo.io.UnsafeInput;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
 import com.google.gson.stream.JsonReader;
@@ -35,6 +36,7 @@ public class DataFileHub {
     final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
     final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
+    final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
 
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
@@ -107,11 +109,13 @@ public class DataFileHub {
     public class BaselineExperimentFiles extends ExperimentFiles {
         public final AtlasResource<TsvReader> main;
         public final AtlasResource<XmlReader> factors;
+        public final AtlasResource<CSVReader> coexpressions;
 
         BaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.main = new TsvFile.ReadOnly(dataFilesLocation, EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
             this.factors = new XmlFile.ReadOnly(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE, true, experimentAccession);
+            this.coexpressions = new TsvFile.ReadCompressed(dataFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }
     }
 

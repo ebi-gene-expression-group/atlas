@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.coexpression;
 
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.solr.util.BoundedTreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -22,23 +22,24 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
     private static final int GENE_ID_COLUMN_INDEX = 0;
 
     private final CSVReader csvReader;
-    private final String fileName;
     private final String[] geneIDsHeader;
     private final Queue<BaselineCoexpressionProfile> queue = new LinkedList<>();
     private int lineNumber = 0;
 
 
-    public BaselineCoexpressionProfileInputStream(CSVReader csvReader, String fileName) {
-        this(csvReader, fileName, 100);
+    public BaselineCoexpressionProfileInputStream(CSVReader csvReader) {
+        this(csvReader, 100);
     }
 
-    BaselineCoexpressionProfileInputStream(CSVReader csvReader, String fileName, int maxCoexpressionProfileSize) {
+    BaselineCoexpressionProfileInputStream(CSVReader csvReader, int maxCoexpressionProfileSize) {
         this.maxCoexpressionProfileSize = maxCoexpressionProfileSize;
-        this.fileName = fileName;
         this.csvReader = csvReader;
         this.geneIDsHeader = readCsvLine();
         checkArgument(geneIDsHeader != null && geneIDsHeader.length > 1,
                 "Could not read in the first line- possibly a malformed or empty file");
+        checkArgument(geneIDsHeader[0].length() < 3 ,
+                "The top left corner value should be empty so that the file can have gene names in rows and headers " +
+                        "and a matrix shape. Instead found: "+geneIDsHeader[0]);
     }
 
 
@@ -52,9 +53,9 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
         lineNumber++;
         try {
             return csvReader.readNext();
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", fileName, lineNumber), e);
+            throw new IllegalStateException(String.format("Exception thrown while reading line %s", lineNumber), e);
         }
     }
 

@@ -1,10 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.coexpression;
 
+import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.nio.file.NoSuchFileException;
 
 @Named
 public class BaselineCoexpressionProfileLoader {
@@ -16,7 +18,7 @@ public class BaselineCoexpressionProfileLoader {
     // http://forum.spring.io/forum/spring-projects/aop/4971-transaction-proxy-on-class-with-no-default-constructor
 
     private BaselineCoexpressionProfileDAO baselineCoexpressionProfileDAO;
-    private BaselineCoexpressionProfileInputStreamFactory baselineCoexpressionProfileInputStreamFactory;
+    private DataFileHub dataFileHub;
 
     @Inject
     public void setBaselineCoexpressionProfileDAO(BaselineCoexpressionProfileDAO baselineCoexpressionProfileDAO) {
@@ -24,17 +26,17 @@ public class BaselineCoexpressionProfileLoader {
     }
 
     @Inject
-    public void setBaselineCoexpressionProfileInputStreamFactory(BaselineCoexpressionProfileInputStreamFactory baselineCoexpressionProfileInputStreamFactory) {
-        this.baselineCoexpressionProfileInputStreamFactory = baselineCoexpressionProfileInputStreamFactory;
+    public void setDataFileHub(DataFileHub dataFileHub){
+        this.dataFileHub = dataFileHub;
     }
 
     @Transactional
     public int loadBaselineCoexpressionsProfile(String experimentAccession) {
-        try {
-            BaselineCoexpressionProfileInputStream baselineCoexpressionProfileInputStream =
-                    baselineCoexpressionProfileInputStreamFactory.create(experimentAccession);
-            return baselineCoexpressionProfileDAO.loadCoexpressionsProfile(experimentAccession, baselineCoexpressionProfileInputStream);
-        } catch (NoSuchFileException e){
+        AtlasResource<CSVReader> coexpressions = dataFileHub.getBaselineExperimentFiles(experimentAccession).coexpressions;
+        if(coexpressions.exists()){
+            return baselineCoexpressionProfileDAO.loadCoexpressionsProfile(experimentAccession, new
+                    BaselineCoexpressionProfileInputStream(coexpressions.get()));
+        } else {
             //it doesn't make sense to calculate coexpressions for all experiments and we allow the file to be missing
             return 0;
         }
