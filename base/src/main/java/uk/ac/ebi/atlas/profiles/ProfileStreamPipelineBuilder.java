@@ -15,9 +15,9 @@ public class ProfileStreamPipelineBuilder<P extends Profile<T, ?>, O extends Pro
     }
 
     public Iterable<P> build(Iterable<P> profiles, O options, GeneQueryResponse geneQueryResponse, boolean shouldAverageIntoGeneSets) {
-        Set<T> queryFactors = options.getSelectedQueryFactors();
+        Set<T> queryFactors = options.getDataColumnsToReturn();
         Set<String> uppercaseGeneIDs =  geneQueryResponse.getAllGeneIds();
-        Set<T> allQueryFactors = options.getAllQueryFactors();
+        Set<T> allQueryFactors = options.getAllDataColumns();
 
         Iterable<P> profilesPipeline = profiles;
 

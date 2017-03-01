@@ -1,15 +1,17 @@
 package uk.ac.ebi.atlas.profiles.differential;
 
-import java.util.Set;
+import uk.ac.ebi.atlas.model.DescribesDataColumns;
 
-public interface ProfileStreamOptions<T> {
+import java.util.List;
+
+public interface ProfileStreamOptions<DataColumnDescriptor extends DescribesDataColumns> {
 
     Integer getHeatmapMatrixSize();
 
     boolean isSpecific();
 
-    Set<T> getSelectedQueryFactors();
+    List<DataColumnDescriptor> getDataColumnsToReturn();
 
-    Set<T> getAllQueryFactors();
+    List<DataColumnDescriptor> getAllDataColumns();
 
 }

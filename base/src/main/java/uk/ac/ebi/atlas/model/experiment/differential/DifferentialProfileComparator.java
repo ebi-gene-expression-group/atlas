@@ -27,8 +27,8 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     public static <Prof extends DifferentialProfile> DifferentialProfileComparator<Prof> create
             (DifferentialProfileStreamOptions options) {
         return new DifferentialProfileComparator<>(options.isSpecific(),
-                options.getSelectedQueryFactors(),
-                options.getAllQueryFactors(),
+                options.getDataColumnsToReturn(),
+                options.getAllDataColumns(),
                 options.getRegulation());
     }
 

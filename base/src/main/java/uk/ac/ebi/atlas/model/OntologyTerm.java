@@ -1,7 +1,12 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Set;
 
 import static uk.ac.ebi.atlas.utils.StringUtil.splitAtLastSlash;
 
@@ -37,6 +42,11 @@ public abstract class OntologyTerm {
 
     public String uri() {
         return source().isEmpty() ? accession() : StringUtils.appendIfMissing(source(), "/") + accession();
+    }
+
+    public static JsonElement jsonForHeaders(Set<OntologyTerm> ontologyTerms){
+        return ontologyTerms.isEmpty() ? JsonNull.INSTANCE : new JsonPrimitive(ontologyTerms.iterator().next()
+                .accession());
     }
 
 }

@@ -19,7 +19,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     private String levelString;
     @Deprecated
     private FactorGroup factorGroup;
-    private String assayGroupId;
+    private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
@@ -64,22 +64,22 @@ public class BaselineExpression implements Expression, KryoSerializable {
         this.quartiles = new double[]{};
     }
 
-    public BaselineExpression(double level, String assayGroupId) {
-        this(level, assayGroupId, new double[]{});
+    public BaselineExpression(double level, String dataColumnDescriptorId) {
+        this(level, dataColumnDescriptorId, new double[]{});
     }
 
-    public BaselineExpression(double[] quartiles, String assayGroupId) {
-        this(quartiles[2], assayGroupId, quartiles);
+    public BaselineExpression(double[] quartiles, String dataColumnDescriptorId) {
+        this(quartiles[2], dataColumnDescriptorId, quartiles);
     }
 
-    private BaselineExpression(double level, String assayGroupId, double[] quartiles) {
+    private BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
         this(level);
-        this.assayGroupId = assayGroupId;
+        this.dataColumnDescriptorId = dataColumnDescriptorId;
         this.levelString = removeTrailingZero(level);
         this.quartiles = quartiles;
     }
 
-    public BaselineExpression(String expressionLevelString, String assayGroupId) {
+    public BaselineExpression(String expressionLevelString, String dataColumnDescriptorId) {
         this.levelString = expressionLevelString;
 
         switch (expressionLevelString) {
@@ -94,13 +94,13 @@ public class BaselineExpression implements Expression, KryoSerializable {
                 level = Double.parseDouble(expressionLevelString);
                 break;
         }
-        this.assayGroupId = assayGroupId;
+        this.dataColumnDescriptorId = dataColumnDescriptorId;
         this.quartiles = new double[]{};
     }
 
     @Override
     public String getDataColumnDescriptorId(){
-        return assayGroupId;
+        return dataColumnDescriptorId;
     }
 
     public double[] getQuartiles() {

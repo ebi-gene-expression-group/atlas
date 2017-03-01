@@ -75,11 +75,6 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return requestPreferences.isSpecific();
     }
 
-    public List<DataColumnDescriptor> getAllDataColumnDescriptors() {
-        return experiment.getDataColumnDescriptors();
-    }
-
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(getClass())

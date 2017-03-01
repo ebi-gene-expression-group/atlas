@@ -104,7 +104,7 @@ public class SearchController {
                                 Model model) {
         // See JsonExperimentsBaselineController for a reference implementation that takes geneQuery and conditionQuery
         // Species species = speciesInferrer.inferSpeciesForGeneQuery(query, speciesString);
-        // BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(query, species, defaultQueryFactorType);
+        // Pair<BaselineExperimentProfilesList,List<FactorAcrossExperiments>>  searchResult = baselineAnalyticsSearchService.findExpressions(query, species, defaultQueryFactorType);
         //
         // return gson.toJson(populateModelWithMultiExperimentResults(request,query, species, searchResult, model));
         return "";

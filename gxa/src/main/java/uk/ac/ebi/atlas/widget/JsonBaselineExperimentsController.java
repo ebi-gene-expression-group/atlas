@@ -2,32 +2,27 @@ package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
-import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
-import uk.ac.ebi.atlas.profiles.json.ProfilesToJsonConverter;
-import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Lists;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
-import uk.ac.ebi.atlas.model.experiment.baseline.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
+import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
+import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.species.Species;
@@ -40,7 +35,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,34 +80,29 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                 baselineAnalyticsSearchService.findExpressions(
                         geneQuery, conditionQuery, species, defaultQueryFactorType);
 
-        return gson.toJson(
-                populateModelWithMultiExperimentResults(
-                        request, geneQuery, conditionQuery, species, searchResult, model));
-
-    }
-
-    private JsonObject populateModelWithMultiExperimentResults(HttpServletRequest request,SemanticQuery geneQuery,
-                                                               SemanticQuery conditionQuery, Species species,
-                                                               BaselineExperimentSearchResult searchResult, Model model) {
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
 
         JsonObject result = new JsonObject();
-        List<Factor> orderedFactors = Lists.newArrayList(searchResult.getFactorsAcrossAllExperiments());
+        List<FactorAcrossExperiments> dataColumns = searchResult.getFactorsAcrossAllExperiments();
 
-        if (searchResult.containsFactorOfType("ORGANISM_PART")) {
-            result.add("anatomogram", anatomogramFactory.get("ORGANISM_PART", species, convert(orderedFactors)));
-        } else {
-            result.add("anatomogram", JsonNull.INSTANCE);
-        }
+        result.add("anatomogram",  anatomogramFactory.get(defaultQueryFactorType, species, FluentIterable.from
+                (dataColumns).transformAndConcat(new Function<FactorAcrossExperiments, Iterable<? extends OntologyTerm>>() {
+            @Nullable
+            @Override
+            public Iterable<? extends OntologyTerm> apply(@Nullable FactorAcrossExperiments factorAcrossExperiments) {
+                return factorAcrossExperiments.getValueOntologyTerms();
+            }
+        })));
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
-        List<DescribesDataColumns> dataColumns;
-        if(!experimentProfiles.isEmpty()){
-            result.add("columnHeaders", gson.toJsonTree(AssayGroupFactorViewModel.createList(convert(orderedFactors))));
-            result.add("columnGroupings", factorGroupingService.group(convert(orderedFactors)));
 
-            result.add("profiles", new ExternallyViewableProfilesList<AssayGroup, BaselineExperimentProfile>(
+        if(!experimentProfiles.isEmpty()){
+            result.add("columnHeaders", constructColumnHeaders(dataColumns));
+
+            result.add("columnGroupings", factorGroupingService.group(defaultQueryFactorType, dataColumns));
+
+            result.add("profiles", new ExternallyViewableProfilesList<>(
                     experimentProfiles,
                     provideLinkToProfile(request, geneQuery),
                             dataColumns
@@ -128,7 +117,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         result.add("experiment", JsonNull.INSTANCE);
 
         result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
-        return result;
+        return gson.toJson(result);
     }
 
     private Function<BaselineExperimentProfile, URI> provideLinkToProfile(HttpServletRequest request, SemanticQuery
@@ -150,13 +139,13 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         }
     }
 
-    private List<AssayGroupFactor> convert(List<Factor> orderedFactors) {
-        ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
+    private JsonArray constructColumnHeaders(List<FactorAcrossExperiments> dataColumnsToReturn){
+        JsonArray result = new JsonArray();
 
-        for (Factor factor : orderedFactors) {
-            builder.add( new AssayGroupFactor("none",factor));
+        for(FactorAcrossExperiments dataColumnDescriptor: dataColumnsToReturn){
+            result.add(dataColumnDescriptor.toJson());
         }
 
-        return new ArrayList<>(builder.build());
+        return result;
     }
 }

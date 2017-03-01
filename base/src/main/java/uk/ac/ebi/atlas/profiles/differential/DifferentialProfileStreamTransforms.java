@@ -13,11 +13,11 @@ public class DifferentialProfileStreamTransforms<Prof extends DifferentialProfil
         if (!geneQueryResponse.getAllGeneIds().isEmpty()) {
             register(keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()));
         }
-        if (!options.getSelectedQueryFactors().isEmpty()) {
+        if (!options.getDataColumnsToReturn().isEmpty()) {
             if (options.isSpecific()) {
-                register(keepOnlyProfilesOverExpressedOnColumns(options.getSelectedQueryFactors(), options.getAllQueryFactors()));
+                register(keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns()));
             } else {
-                register(keepOnlyProfilesExpressedOnColumns(options.getSelectedQueryFactors()));
+                register(keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn()));
             }
         }
     }

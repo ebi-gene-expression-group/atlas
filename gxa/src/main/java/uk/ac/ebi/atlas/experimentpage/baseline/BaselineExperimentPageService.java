@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
@@ -58,7 +59,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
-        List<AssayGroup> dataColumnsToReturn =requestContext.getDataColumnsToReturn();
+        List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
 
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
@@ -76,7 +77,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         result.add("columnHeaders",
                 constructColumnHeaders(dataColumnsToReturn,requestContext, experiment));
 
-        result.add("columnGroupings",factorGroupingService.group(dataColumnsToReturn));
+        result.add("columnGroupings",new JsonArray());
 
         try {
             result.add("profiles", heatMapResults.getJsonProfiles());
@@ -100,8 +101,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         }
 
         result.add("anatomogram", anatomogramFactory.get(requestContext.getQueryFactorType(),
-                experiment.getSpecies(),
-                dataColumnsToReturn));
+                experiment.getSpecies(), requestContext.getOntologyTermsForDataColumnsToReturn()));
 
         model.addAttribute("isWidget", isWidget);
 
@@ -125,7 +125,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             JsonObject o = new JsonObject();
             o.addProperty("assayGroupId", dataColumnDescriptor.getId());
             o.addProperty("factorValue", baselineRequestContext.displayNameForColumn(dataColumnDescriptor));
-            o.addProperty("factorValueOntologyTermId", dataColumnDescriptor.getValueOntologyTermId()); //TODO
+            o.add("factorValueOntologyTermId",
+                    OntologyTerm.jsonForHeaders(baselineRequestContext.ontologyTermsForColumn(dataColumnDescriptor)));
             o.add("assayGroupSummary",
                     new AssayGroupSummaryBuilder()
                     .forAssayGroup(experiment.getDataColumnDescriptor(dataColumnDescriptor.getId()))
@@ -135,7 +136,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         }
 
 
-        return result;
-    }
+        return result;}
+
 
 }

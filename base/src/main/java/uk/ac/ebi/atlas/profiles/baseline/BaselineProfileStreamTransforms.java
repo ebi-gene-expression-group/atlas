@@ -24,11 +24,11 @@ public class BaselineProfileStreamTransforms extends ProfileStreamTransforms<Ass
         if (asGeneSets) {
             register(averageIntoGeneSets(geneQueryResponse.getQueryTermsToIds()));
         }
-        if (!options.getSelectedQueryFactors().isEmpty()) {
+        if (!options.getDataColumnsToReturn().isEmpty()) {
             if (options.isSpecific()) {
-                register(keepOnlyProfilesOverExpressedOnColumns(options.getSelectedQueryFactors(), options.getAllQueryFactors()));
+                register(keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns()));
             } else {
-                register(keepOnlyProfilesExpressedOnColumns(options.getSelectedQueryFactors()));
+                register(keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn()));
             }
         }
     }

@@ -14,7 +14,6 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
-    private static final double MIN_LEVEL = 0D;
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 

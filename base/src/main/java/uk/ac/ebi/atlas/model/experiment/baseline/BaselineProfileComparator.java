@@ -27,8 +27,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
         return new BaselineProfileComparator(options.isSpecific(),
-                options.getSelectedQueryFactors(),
-                options.getAllQueryFactors(),
+                options.getDataColumnsToReturn(),
+                options.getAllDataColumns(),
                 options.getCutoff(), options.getThresholdForPremium(), options.getFractionForPremium());
     }
 

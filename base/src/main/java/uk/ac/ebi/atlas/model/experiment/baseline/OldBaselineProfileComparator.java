@@ -26,8 +26,8 @@ public class OldBaselineProfileComparator implements Comparator<OldBaselineProfi
 
     public static Comparator<OldBaselineProfile> create(BaselineProfileStreamOptions options) {
         return new OldBaselineProfileComparator(options.isSpecific(),
-                options.getSelectedQueryFactors(),
-                options.getAllQueryFactors(),
+                options.getDataColumnsToReturn(),
+                options.getAllDataColumns(),
                 options.getCutoff(), options.getThresholdForPremium(), options.getFractionForPremium());
     }
 

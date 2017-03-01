@@ -1,26 +1,10 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
+import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -32,6 +16,8 @@ import static com.google.common.base.Preconditions.checkState;
  *
  *  ExperimentDesign also stores factors but per _assay_. It is used to render the
  *  experiment design page.
+ *
+ *  This is currently tied up because of the widget code.
  *
  */
 @Deprecated //replaced with ExperimentDisplayDefaults

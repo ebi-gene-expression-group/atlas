@@ -1,14 +1,16 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import org.apache.commons.lang3.StringUtils;
+import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.Map;
 
-public class BaselineExperimentProfile extends OldBaselineProfile implements Comparable<BaselineExperimentProfile> {
+public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression> implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
 
@@ -21,10 +23,6 @@ public class BaselineExperimentProfile extends OldBaselineProfile implements Com
         filterFactors = experimentSlice.filterFactors();
         nonFilterFactorsSize = experimentSlice.nonFilterFactors().size();
         experimentType = experimentSlice.getExperimentType();
-    }
-
-    public FactorGroup getFilterFactors() {
-        return filterFactors;
     }
 
     @Override
@@ -43,6 +41,11 @@ public class BaselineExperimentProfile extends OldBaselineProfile implements Com
         } else {
             return (comparison != 0) ? comparison : (this.getName().compareTo(other.getName()));
         }
+    }
+
+    @Override
+    protected void updateStateAfterAddingExpression(BaselineExpression expression) {
+        // used to maintain maxes and mins but it really isn't necessary
     }
 
     @Override
@@ -85,7 +88,6 @@ public class BaselineExperimentProfile extends OldBaselineProfile implements Com
         Map<String, String> result = super.properties();
         result.put("name", getShortName());
         result.put("experimentType", experimentType.toString());
-        result.put("serializedFilterFactors",FilterFactorsConverter.serialize(getFilterFactors()));
         return result;
     }
 }

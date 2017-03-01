@@ -2,11 +2,11 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 
-import uk.ac.ebi.atlas.model.experiment.baseline.GenericBaselineProfilesList;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import java.util.Collection;
 
-public class BaselineExperimentProfilesList extends GenericBaselineProfilesList<BaselineExperimentProfile> {
+public class BaselineExperimentProfilesList extends GeneProfilesList<BaselineExperimentProfile> {
 
     public BaselineExperimentProfilesList() {
     }
