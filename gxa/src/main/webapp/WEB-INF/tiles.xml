@@ -53,6 +53,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/bioentities/foundation-bioentities.jsp"/>
     </definition>
 
+    <definition name="foundation-bioentities-search-results" extends="foundation-base">
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
+    </definition>
+
     <definition name="base.definition" template="/WEB-INF/jsp/layout.jsp">
         <put-attribute name="title" value="Expression Atlas"/>
         <put-attribute name="top-menu" value="/WEB-INF/jsp/layout/top-menu.jsp"/>

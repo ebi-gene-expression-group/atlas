@@ -30,3 +30,9 @@
 .gxaBioentityHeader .gxaBioentitySpecies::first-letter {
     text-transform: uppercase;
 }
+
+.gxaSearchTermDescription {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.7rem;
+}
