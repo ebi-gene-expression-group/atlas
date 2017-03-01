@@ -10,12 +10,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -129,13 +130,13 @@ public class BaselineExperimentSearchTest {
 
     public void assertAbout(BaselineExperimentSearchResult result){
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
-        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
+        List<FactorAcrossExperiments> factors = result.factorsAcrossAllExperiments;
 
         assertThat(factors, contains(E_MTAB_599_ALL_FACTORS.toArray()));
 
         assertThat(profiles, hasSize(1));
 
-        OldBaselineProfile baselineProfile = profiles.get(0);
+        BaselineProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_MTAB_599));
         assertThat(baselineProfile.getName(), is(E_MTAB_599_NAME));
@@ -155,13 +156,13 @@ public class BaselineExperimentSearchTest {
         BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForExpressions(expressions, CELL_LINE);
 
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
-        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
+        List<FactorAcrossExperiments> factors = result.factorsAcrossAllExperiments;
 
         assertThat(factors, contains(E_GEOD_26284_ALL_FACTORS.toArray()));
 
         assertThat(profiles, hasSize(1));
 
-        OldBaselineProfile baselineProfile = profiles.get(0);
+        BaselineProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_GEOD_26284));
         assertThat(baselineProfile.getName(), is(E_GEOD_26284_NAME));

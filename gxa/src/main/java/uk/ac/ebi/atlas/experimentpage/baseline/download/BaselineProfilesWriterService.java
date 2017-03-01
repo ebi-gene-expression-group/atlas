@@ -47,7 +47,7 @@ public class BaselineProfilesWriterService {
             totalCoexpressionsRequested += e.getValue();
         }
 
-        final BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment, preferences);
+        final BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
         GeneQueryResponse geneQueryResponse =
                 solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies().getReferenceName());
         if(totalCoexpressionsRequested>0){

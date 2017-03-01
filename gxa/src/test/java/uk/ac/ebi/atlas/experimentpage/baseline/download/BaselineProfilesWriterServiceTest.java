@@ -19,7 +19,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
+import uk.ac.ebi.atlas.profiles.writer.DeprecatedProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -41,7 +41,7 @@ public class BaselineProfilesWriterServiceTest {
     private ObjectInputStream<OldBaselineProfile> objectInputStreamMock;
 
     @Mock
-    private ProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+    private DeprecatedProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
     @Mock
     private BaselineProfileStreamFactory inputStreamFactory;
@@ -73,7 +73,7 @@ public class BaselineProfilesWriterServiceTest {
         when(assayGroupMock.getId()).thenReturn("g1");
 
         MockitoAnnotations.initMocks(this);
-        subject = new BaselineProfilesWriterService(inputStreamFactory, profilesWriter, solrQueryService, coexpressedGenesService);
+        subject = new BaselineProfilesWriterService(inputStreamFactory, profilesWriter, coexpressedGenesService);
 
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");

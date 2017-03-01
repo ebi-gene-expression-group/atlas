@@ -1,12 +1,14 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -18,8 +20,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.00000009;
 
     private boolean isSpecific;
-    private Set<AssayGroup> selectedQueryFactors;
-    private Set<AssayGroup> allQueryFactors;
+    private Collection<AssayGroup> selectedQueryFactors;
+    private Collection<AssayGroup> allQueryFactors;
     private double cutoffDivisor;
     private Double minimumExpressionLevelToQualifyAsGoodForOurRule = null;
     private Double minimumFractionOfExpressionToQualifyAsGoodForOurRule = null;
@@ -32,12 +34,12 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                 options.getCutoff(), options.getThresholdForPremium(), options.getFractionForPremium());
     }
 
-    BaselineProfileComparator(boolean isSpecific, Set<AssayGroup> selectedQueryFactors,
-                                 Set<AssayGroup> allQueryFactors, double cutoff) {
+    BaselineProfileComparator(boolean isSpecific, Collection<AssayGroup> selectedQueryFactors,
+                              Collection<AssayGroup> allQueryFactors, double cutoff) {
         this(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
     }
-    protected BaselineProfileComparator(boolean isSpecific, Set<AssayGroup> selectedQueryFactors,
-                                           Set<AssayGroup> allQueryFactors, double cutoff, Double
+    protected BaselineProfileComparator(boolean isSpecific, Collection<AssayGroup> selectedQueryFactors,
+                                        Collection<AssayGroup> allQueryFactors, double cutoff, Double
                                                    minimumExpressionLevelToQualifyAsGoodForOurRule, Double minimumFractionOfExpressionToQualifyAsGoodForOurRule ) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors;
@@ -92,7 +94,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     protected int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile
             otherBaselineProfile,
-                                                  Set<AssayGroup> assayGroups) {
+                                                  Collection<AssayGroup> assayGroups) {
 
         return Ordering.natural().reverse().
                 compare(firstBaselineProfile.getAverageExpressionLevelOn(assayGroups),
@@ -103,7 +105,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
         double averageExpressionLevelOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
 
-        Set<AssayGroup> nonSelectedQueryFactors = Sets.difference(allQueryFactors, selectedQueryFactors);
+        Set<AssayGroup> nonSelectedQueryFactors = Sets.difference(ImmutableSet.copyOf(allQueryFactors),
+                ImmutableSet.copyOf(selectedQueryFactors));
 
         double maxExpressionLevelOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
 

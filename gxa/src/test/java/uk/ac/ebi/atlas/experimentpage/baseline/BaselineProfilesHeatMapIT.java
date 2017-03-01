@@ -59,7 +59,7 @@ public class BaselineProfilesHeatMapIT {
         BaselineExperiment baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(randomAccession);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
-        baselineRequestContext = BaselineRequestContext.createFor(baselineExperiment, requestPreferences);
+        baselineRequestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
 
         subject = new BaselineProfilesHeatMap(inputStreamFactory);
     }
@@ -71,7 +71,7 @@ public class BaselineProfilesHeatMapIT {
         setGeneQuery("protein_coding");
 
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
-                (baselineRequestContext.getGeneQuery(),baselineRequestContext.getFilteredBySpecies());
+                (baselineRequestContext.getGeneQuery(),baselineRequestContext.getSpecies().getReferenceName());
 
         BaselineProfilesList profiles = subject.fetch(baselineRequestContext.getExperiment(), baselineRequestContext,
                 geneQueryResponse, true);

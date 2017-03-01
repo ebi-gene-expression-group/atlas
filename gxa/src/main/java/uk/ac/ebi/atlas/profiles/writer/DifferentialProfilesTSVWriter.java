@@ -83,10 +83,10 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     }
 
     private String formatSelectedContrasts(DifferentialRequestContext requestContext) {
-        if (requestContext.getSelectedQueryFactors().isEmpty()) {
+        if (requestContext.getDataColumnsToReturn().isEmpty()) {
             return "any contrast";
         }
-        Collection<String> selectedContrasts = Collections2.transform(requestContext.getSelectedQueryFactors(), new Function<Contrast, String>() {
+        Collection<String> selectedContrasts = Collections2.transform(requestContext.getDataColumnsToReturn(), new Function<Contrast, String>() {
             @Override
             public String apply(Contrast constrast) {
                 return constrast.getDisplayName();

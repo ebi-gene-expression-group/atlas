@@ -1,23 +1,24 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
+import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
-import uk.ac.ebi.atlas.tracks.TracksUtil;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -36,14 +37,15 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
 
     @Inject
     public RnaSeqExperimentPageController(ExperimentTrader experimentTrader,
-                                          RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
                                           DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                           TracksUtil tracksUtil,
                                           AtlasResourceHub atlasResourceHub,
                                           ApplicationProperties applicationProperties) {
         this.experimentTrader = experimentTrader;
-        differentialExperimentPageService = new DifferentialExperimentPageService<>(rnaSeqRequestContextBuilder, profilesHeatMap,
+        differentialExperimentPageService = new DifferentialExperimentPageService<>(
+                new DifferentialRequestContextFactory.RnaSeq(),
+                profilesHeatMap,
                 differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
     }

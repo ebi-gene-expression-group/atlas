@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
@@ -52,7 +51,7 @@ public class RnaSeqProfilesWriterIT {
 
     private static final int GENE_NAME_INDEX = 1;
 
-    private RnaSeqProfilesWriter subject;
+    private RnaSeqDeprecatedProfilesWriter subject;
 
     @Inject
     private RnaSeqDiffExperimentsCache experimentsCache;
@@ -98,7 +97,7 @@ public class RnaSeqProfilesWriterIT {
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
 
-        subject = new RnaSeqProfilesWriter(geneProfileTsvWriter, inputStreamFactory, solrQueryService);
+        subject = new RnaSeqDeprecatedProfilesWriter(geneProfileTsvWriter, inputStreamFactory, solrQueryService);
 
         return requestContext;
     }

@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
-import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -19,26 +18,26 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
     private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
     private final AnatomogramFactory anatomogramFactory;
-    private final FactorGroupingService factorGroupingService;
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
                                          AtlasResourceHub atlasResourceHub,
-                                         TracksUtil tracksUtil,FactorGroupingService factorGroupingService,
+                                         TracksUtil tracksUtil,
                                          HeatmapDataToJsonService heatmapDataToJsonService) {
         super(atlasResourceHub, heatmapDataToJsonService, applicationProperties);
         this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.tracksUtil = tracksUtil;
-        this.factorGroupingService = factorGroupingService;
     }
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
@@ -72,7 +71,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
-        BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create(preferences,experiment);
+        BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create
+                (request, preferences,experiment);
 
         result.add("columnHeaders",
                 constructColumnHeaders(dataColumnsToReturn,requestContext, experiment));
@@ -100,8 +100,13 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
         }
 
+        Set<OntologyTerm> ontologyTerms = new HashSet<>();
+        for(AssayGroup dataColumnDescriptor: dataColumnsToReturn){
+            ontologyTerms.addAll(requestContext.ontologyTermsForColumn(dataColumnDescriptor));
+        }
+
         result.add("anatomogram", anatomogramFactory.get(requestContext.getQueryFactorType(),
-                experiment.getSpecies(), requestContext.getOntologyTermsForDataColumnsToReturn()));
+                experiment.getSpecies(), ontologyTerms));
 
         model.addAttribute("isWidget", isWidget);
 

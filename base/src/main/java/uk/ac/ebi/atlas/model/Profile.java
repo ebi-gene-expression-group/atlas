@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,10 +16,8 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 
-//Condition is the Condition type (i.e. Factor or Contrast),
-//T is the Expression type (Baseline Expression or DifferentialExpression)
-public abstract class Profile<Condition, T extends Expression> {
-    protected Map<Condition, T> expressionsByCondition = new HashMap<>();
+public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression> {
+    protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
 
     private String id;
 
@@ -57,7 +56,7 @@ public abstract class Profile<Condition, T extends Expression> {
     }
 
     @Nullable
-    public Double getExpressionLevel(Condition condition) {
+    public Double getExpressionLevel(DataColumnDescriptor condition) {
         Expression expression = expressionsByCondition.get(condition);
         if (expression != null) {
             return expression.getLevel();
@@ -65,11 +64,11 @@ public abstract class Profile<Condition, T extends Expression> {
         return null;
     }
 
-    public double getMaxExpressionLevelOn(Set<Condition> conditions) {
+    public double getMaxExpressionLevelOn(Collection<DataColumnDescriptor> conditions) {
         checkArgument(!CollectionUtils.isEmpty(conditions));
         double expressionLevel = 0D;
 
-        for (Condition condition : conditions) {
+        for (DataColumnDescriptor condition : conditions) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, Math.abs(level));
@@ -78,12 +77,12 @@ public abstract class Profile<Condition, T extends Expression> {
         return expressionLevel;
     }
 
-    public double getAverageExpressionLevelOn(Set<Condition> conditions) {
+    public double getAverageExpressionLevelOn(Collection<DataColumnDescriptor> conditions) {
         checkArgument(!CollectionUtils.isEmpty(conditions));
 
         double expressionLevel = 0D;
 
-        for (Condition condition : conditions) {
+        for (DataColumnDescriptor condition : conditions) {
             Double level = getExpressionLevel(condition);
             if (level != null) {
                 expressionLevel += Math.abs(level);
@@ -93,23 +92,28 @@ public abstract class Profile<Condition, T extends Expression> {
         return expressionLevel / conditions.size();
     }
 
-    protected abstract void updateStateAfterAddingExpression(T expression);
+    protected abstract void updateStateAfterAddingExpression(Expr expression);
 
-    public boolean isExpressedOnAnyOf(Set<Condition> conditions) {
+    public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
-        return Sets.intersection(expressionsByCondition.keySet(), conditions).size() > 0;
+        for(DataColumnDescriptor dataColumnDescriptor : conditions){
+            if(expressionsByCondition.containsKey(dataColumnDescriptor)){
+                return true;
+            }
+        }
+        return false;
     }
 
-    public Set<Condition> getConditions() {
+    public Set<DataColumnDescriptor> getConditions() {
         return Sets.newHashSet(expressionsByCondition.keySet());
     }
 
-    public void add(Condition condition, T expression) {
+    public void add(DataColumnDescriptor condition, Expr expression) {
         expressionsByCondition.put(condition, expression);
         updateStateAfterAddingExpression(expression);
     }
 
-    public T getExpression(Condition condition) {
+    public Expr getExpression(DataColumnDescriptor condition) {
         return expressionsByCondition.get(condition);
     }
 

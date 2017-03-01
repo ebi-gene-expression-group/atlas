@@ -68,7 +68,9 @@ public abstract class ProfileStreamTransforms<DataColumnDescriptor extends Descr
         });
     }
 
-    protected Function<Iterable<Prof>, Iterable<Prof>> keepOnlyProfilesExpressedOnColumns(final Set<DataColumnDescriptor> selectedColumns){
+    protected Function<Iterable<Prof>, Iterable<Prof>> keepOnlyProfilesExpressedOnColumns(final
+                                                                                          Collection<DataColumnDescriptor>
+                                                                                                  selectedColumns){
         return fromPredicate(new Predicate<Prof>() {
             @Override
             public boolean apply(@Nullable Prof prof) {
@@ -78,8 +80,9 @@ public abstract class ProfileStreamTransforms<DataColumnDescriptor extends Descr
     }
 
     protected Function<Iterable<Prof>, Iterable<Prof>> keepOnlyProfilesOverExpressedOnColumns
-            (final Set<DataColumnDescriptor> selectedColumns, final Set<DataColumnDescriptor> allColumns){
-        final Set<DataColumnDescriptor> nonSelectedColumns = Sets.difference(selectedColumns, allColumns);
+            (final Collection<DataColumnDescriptor> selectedColumns, final Collection<DataColumnDescriptor> allColumns){
+        final Set<DataColumnDescriptor> nonSelectedColumns = Sets.difference(ImmutableSet.copyOf(selectedColumns),
+                ImmutableSet.copyOf(allColumns));
         return fromPredicate(new Predicate<Prof>() {
             @Override
             public boolean apply(@Nullable Prof prof) {

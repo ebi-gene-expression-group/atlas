@@ -75,7 +75,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetAllQueryFactors() throws Exception {
-        assertThat(subject.getAllDataColumnDescriptors(), is(nullValue()));
+        assertThat(subject.getAllDataColumns(), is(nullValue()));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class RequestContextTest {
         set.add(factor1Mock);
         set.add(factor2Mock);
         subject.setAllQueryFactors(set);
-        assertThat(subject.getAllDataColumnDescriptors(), contains(factor1Mock, factor2Mock));
+        assertThat(subject.getAllDataColumns(), contains(factor1Mock, factor2Mock));
     }
 
     @Test

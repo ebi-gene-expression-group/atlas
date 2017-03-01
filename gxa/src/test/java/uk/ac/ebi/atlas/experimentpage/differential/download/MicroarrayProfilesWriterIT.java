@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -53,7 +52,7 @@ public class MicroarrayProfilesWriterIT {
 
     private static final int GENE_NAME_INDEX = 1;
     
-    private MicroarrayProfilesWriter subject;
+    private MicroarrayDeprecatedProfilesWriter subject;
 
     @Inject
     private MicroarrayExperimentsCache microarrayExperimentsCache;
@@ -98,7 +97,7 @@ public class MicroarrayProfilesWriterIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new MicroarrayProfilesWriter(geneProfileTsvWriter, inputStreamFactory, solrQueryService);
+        subject = new MicroarrayDeprecatedProfilesWriter(geneProfileTsvWriter, inputStreamFactory, solrQueryService);
 
         return requestContext;
 

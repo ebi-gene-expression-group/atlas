@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -28,7 +27,7 @@ public class RnaSeqExperimentDownloadControllerTest {
     private RnaSeqRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private RnaSeqProfilesWriter profilesWriter;
+    private RnaSeqDeprecatedProfilesWriter profilesWriter;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;
@@ -62,7 +61,7 @@ public class RnaSeqExperimentDownloadControllerTest {
     @Before
     public void setUp() throws Exception {
         subject = new RnaSeqExperimentDownloadController(requestContextBuilderMock, profilesWriter,
-                dataWriterFactoryMock, experimentTrader);
+                dataWriterFactoryMock);
         when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,"")).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(requestContextBuilderMock.forExperiment(experimentMock)).thenReturn(requestContextBuilderMock);

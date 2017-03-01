@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.base.Objects;
-import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
@@ -9,7 +8,6 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -86,8 +84,8 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OldBaselineProfile)) return false;
-        OldBaselineProfile that = (OldBaselineProfile) o;
+        if (!(o instanceof BaselineProfile)) return false;
+        BaselineProfile that = (BaselineProfile) o;
         return super.equals(that) &&
                 Double.compare(that.getMaxExpressionLevel(), getMaxExpressionLevel()) == 0 &&
                 Double.compare(that.getMinExpressionLevel(), getMinExpressionLevel()) == 0 ;

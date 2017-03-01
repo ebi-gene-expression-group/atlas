@@ -63,9 +63,9 @@ public class BaselineProfilesTSVWriterTest {
                 createFactorValue("lung")));
 
         when(requestContextMock.getExperiment()).thenReturn(experimentMock);
-        when(requestContextMock.getAllQueryFactors()).thenReturn(organismParts);
+        when(requestContextMock.getAllDataColumns()).thenReturn(organismParts);
         when(requestContextMock.getGeneQuery()).thenReturn(SemanticQuery.create("geneQuery"));
-        when(requestContextMock.getSelectedQueryFactors()).thenReturn(
+        when(requestContextMock.getDataColumnsToReturn()).thenReturn(
                 Sets.newHashSet(new Factor("type1", "value1"), new Factor("type2", "value2")));
         when(requestContextMock.getCutoff()).thenReturn(0.5D);
 

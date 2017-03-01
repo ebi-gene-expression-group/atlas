@@ -1,22 +1,23 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.Set;
 
 public class DifferentialProfileComparator<T extends DifferentialProfile> implements Comparator<T> {
 
     private boolean isSpecific;
-    private Set<Contrast> selectedQueryContrasts;
-    private Set<Contrast> allQueryContrasts;
+    private Collection<Contrast> selectedQueryContrasts;
+    private Collection<Contrast> allQueryContrasts;
     private Regulation regulation;
 
-    public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryContrasts,
-                                         Set<Contrast> allQueryContrasts, Regulation regulation) {
+    public DifferentialProfileComparator(boolean isSpecific, Collection<Contrast> selectedQueryContrasts,
+                                         Collection<Contrast> allQueryContrasts, Regulation regulation) {
         this.isSpecific = isSpecific;
         this.selectedQueryContrasts = selectedQueryContrasts;
         this.allQueryContrasts = allQueryContrasts;
@@ -92,14 +93,14 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     }
 
-    private int compareOnAveragePValue(DifferentialProfile<?> firstProfile, DifferentialProfile<?> otherProfile, Set<Contrast> contrasts) {
+    private int compareOnAveragePValue(DifferentialProfile<?> firstProfile, DifferentialProfile<?> otherProfile, Collection<Contrast> contrasts) {
         double firstProfileAverageExpressionLevel = firstProfile.getAveragePValueOn(contrasts);
         double otherProfileAverageExpressionLevel = otherProfile.getAveragePValueOn(contrasts);
         return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
     }
 
     private int compareOnAverageExpressionLevel(DifferentialProfile<?> firstProfile, DifferentialProfile<?> otherProfile,
-                                                  Set<Contrast> contrasts) {
+                                                  Collection<Contrast> contrasts) {
         double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts);
         double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts);
         return Double.compare(otherProfileAverageExpressionLevel, firstProfileAverageExpressionLevel);
@@ -107,7 +108,8 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     public double getExpressionLevelFoldChange(DifferentialProfile<?> differentialProfile) {
 
-        Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
+        Collection<Contrast> nonSelectedQueryContrasts = Sets.difference(ImmutableSet.copyOf(allQueryContrasts),
+                ImmutableSet.copyOf(selectedQueryContrasts));
 
         double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMaxExpressionLevelOn(nonSelectedQueryContrasts);
 

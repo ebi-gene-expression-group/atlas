@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<OldBaseline
 
     private String formatSelectedQueryFactors(BaselineRequestContext requestContext) {
         String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorDisplayName(requestContext.getQueryFactorType());
-        Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
+        Set<Factor> selectedQueryFactors = requestContext.getDataColumnsToReturn();
         if (CollectionUtils.isEmpty(selectedQueryFactors)) {
             return "any " + queryFactorName;
         }

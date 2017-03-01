@@ -51,7 +51,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences = new BaselineRequestPreferences();
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         BaselineExperiment baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        requestContext = BaselineRequestContext.createFor(baselineExperiment,requestPreferences);
+        requestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
 
         subject = new BaselineProfilesTSVWriter(csvWriterFactory,tsvFileMastheadTemplateResource);
     }
@@ -95,7 +95,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet(organismPart)));
 
-        BaselineRequestContext requestContext = BaselineRequestContext.createFor(experiment,requestPreferences);
+        BaselineRequestContext requestContext = new BaselineRequestContext(requestPreferences, experiment);
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext, false).split("\n");
 

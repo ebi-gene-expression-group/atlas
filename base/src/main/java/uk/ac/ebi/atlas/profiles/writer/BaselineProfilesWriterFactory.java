@@ -70,7 +70,7 @@ public class BaselineProfilesWriterFactory extends ProfilesWriterFactory<AssayGr
         return MessageFormat.format("<formatSelectedQueryFactors TODO!> {0} selected assay groups out of {1} " +
                 "</formatSelectedQueryFactors TODO!>",
                 baselineRequestContext.getDataColumnsToReturn().size(), baselineRequestContext
-                        .getAllDataColumnDescriptors().size() );
+                        .getAllDataColumns().size() );
     }
 
 

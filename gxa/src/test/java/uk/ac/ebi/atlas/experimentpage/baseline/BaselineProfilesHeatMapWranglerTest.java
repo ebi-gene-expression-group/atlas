@@ -83,7 +83,7 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     public BaselineProfilesHeatMapWrangler fakeWrangler(BaselineRequestPreferences preferences, BaselineExperiment
             experiment){
-        return new BaselineProfilesHeatMapWrangler(baselineProfilesHeatMap, baselineProfilesViewModelBuilder,
+        return new BaselineProfilesHeatMapWrangler(baselineProfilesHeatMap,
                 solrQueryService,new CoexpressedGenesService(coexpressedGenesDao),
                 preferences,experiment);
     }

@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
 
-import java.util.Set;
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
@@ -52,7 +52,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return getSpecificity();
     }
 
-    public double getAveragePValueOn(Set<Contrast> contrasts) {
+    public double getAveragePValueOn(Collection<Contrast> contrasts) {
         checkArgument(!CollectionUtils.isEmpty(contrasts),
                 "This method must be invoked with all conditions when the set of selected conditions is empty");
 

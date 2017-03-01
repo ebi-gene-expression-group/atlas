@@ -66,7 +66,7 @@ public class MicroarrayExperimentDownloadControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentDownloadController(experimentTrader,requestContextBuilderMock, profilesWriter,dataWriterFactoryMock);
+        subject = new MicroarrayExperimentDownloadController(experimentTrader, dataWriterFactoryMock);
 
         when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,ACCESS_KEY)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
