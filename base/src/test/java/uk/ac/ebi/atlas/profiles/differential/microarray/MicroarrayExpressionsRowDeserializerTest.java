@@ -1,12 +1,10 @@
 
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
-import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializer;
 
@@ -18,18 +16,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayExpressionsRowDeserializerTest {
 
-    AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
-    AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
-    AssayGroup g3 = new AssayGroup("g3", "run_31", "run_32");
-
-    Contrast g1_g2 = new Contrast("g1_g2", "", g1, g2, "first contrast");
-    Contrast g1_g3 = new Contrast("g1_g2", "", g1, g3, "second contrast");
-
-
-
-
-    MicroarrayExpressionsRowDeserializer subject = new MicroarrayExpressionsRowDeserializer(
-            ImmutableList.of(g1_g2, g1_g3));
+    MicroarrayExpressionsRowDeserializer subject = new MicroarrayExpressionsRowDeserializer(ContrastTest.get(2));
 
 
     @Test

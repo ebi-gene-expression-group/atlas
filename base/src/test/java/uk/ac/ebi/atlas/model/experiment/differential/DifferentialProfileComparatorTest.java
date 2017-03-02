@@ -1,11 +1,8 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -13,19 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.SelectProfiles;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactoryTest;
 import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializer;
-import uk.ac.ebi.atlas.resource.MockDataFileHub;
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
-import java.io.IOException;
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -200,34 +189,10 @@ public class DifferentialProfileComparatorTest {
 
     MicroarrayExpressionsRowDeserializer microarrayExpressionsRowDeserializer = new MicroarrayExpressionsRowDeserializer(contrasts);
 
-    List<MicroarrayProfile> sequenceProfiles;
+    List<MicroarrayProfile> sequenceProfiles = MicroarrayProfileStreamFactoryTest.loadProfiles(contrasts, sequenceLines);
 
 
     private IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff().setPValueCutoff(1).setRegulation(Regulation.UP_DOWN).setFoldChangeCutOff(0);
-
-    @Before
-    public void loadProfiles() throws IOException {
-
-        MockDataFileHub dataFileHub = new MockDataFileHub();
-        dataFileHub.addTemporaryFile("/magetab/accession/accession_array-analytics.tsv", sequenceLines);
-        MicroarrayProfileStreamFactory microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
-
-        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", contrasts, ImmutableSortedSet.of("array"));
-        MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
-
-
-        MicroarrayRequestContext microarrayRequestContext = new MicroarrayRequestContext(microarrayRequestPreferences,experiment);
-
-        sequenceProfiles = microarrayProfileStreamFactory.select(experiment,
-                microarrayRequestContext, Functions
-                .<Iterable<MicroarrayProfile>>identity(), new SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>() {
-            @Override
-            public GeneProfilesList<MicroarrayProfile> select(Iterable<MicroarrayProfile> profiles, int maxSize) {
-                return new DifferentialProfilesList<>( Lists.newArrayList(profiles));
-            }
-        });
-        assertThat(sequenceProfiles.size(), is(sequenceLines.size()));
-    }
 
     @Test
     public void sequence_Specific_AllContrasts() {
