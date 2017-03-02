@@ -15,6 +15,10 @@ public class DifferentialRequestContext<E extends DifferentialExperiment, Prefer
         super(requestPreferences, experiment);
     }
 
+    public E getExperiment(){
+        return experiment;
+    }
+
     public Regulation getRegulation() {
         return requestPreferences.getRegulation();
     }
