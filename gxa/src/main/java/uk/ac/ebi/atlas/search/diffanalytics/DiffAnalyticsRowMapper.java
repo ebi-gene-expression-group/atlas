@@ -40,7 +40,7 @@ class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
                 rs.getString(DiffAnalyticsQueryBuilder.NAME),
                 experimentAccession,
                 expression,
-                rs.getString(DiffAnalyticsQueryBuilder.ORGANISM));
+                rs.getString(DiffAnalyticsQueryBuilder.ORGANISM), contrast);
     }
 
     DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic, Contrast contrast) {

@@ -45,7 +45,8 @@ public class AnalyticsIndexDocumentValidator {
                 experimentType.isDifferential() &&
                 differentialExpressionAboveDefaultCutoff.apply(new DifferentialExpression(
                         (Double) analyticsInputDocument.getFieldValue("pValue"),
-                        (Double) analyticsInputDocument.getFieldValue("foldChange"))));
+                        (Double) analyticsInputDocument.getFieldValue("foldChange"),
+                        "")));
     }
 }
 

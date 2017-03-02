@@ -29,9 +29,10 @@ public class DiffAnalyticsTSVWriterTest {
     private PrintWriter responseWriterMock;
 
     @Mock
-    private Contrast contrastMock;
+    private Contrast contrast;
 
     private static final String CONTRAST_NAME = "MY_CONSTRAST";
+
     public static final String BIOENTITY_ID = "1";
     public static final String BIOENTITY_NAME = "jane";
     public static final String EXPERIMENT_ACCESSION = "E-1";
@@ -41,16 +42,16 @@ public class DiffAnalyticsTSVWriterTest {
     public void init() {
         subject = new DiffAnalyticsTSVWriter();
         subject.setResponseWriter(responseWriterMock);
-        when(contrastMock.getDisplayName()).thenReturn(CONTRAST_NAME);
+        when(contrast.getDisplayName()).thenReturn(CONTRAST_NAME);
     }
 
     @Test
     public void testWriteDifferentialExpression() throws IOException {
         double pvalue = 0.001;
         double foldChange = 0.004;
-        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
+        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrast);
 
-        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, contrast);
 
         List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
         DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
@@ -66,9 +67,9 @@ public class DiffAnalyticsTSVWriterTest {
         double pvalue = 0.001;
         double foldChange = 0.004;
         double tstatistic = 0.007;
-        DifferentialExpression diffExpression = new MicroarrayExpression(pvalue, foldChange, tstatistic, contrastMock);
+        DifferentialExpression diffExpression = new MicroarrayExpression(pvalue, foldChange, tstatistic, contrast);
 
-        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, contrast);
 
         List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
         DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
@@ -83,9 +84,9 @@ public class DiffAnalyticsTSVWriterTest {
     public void testWritePositiveInfinity() throws IOException {
         double pvalue = 0.001;
         double foldChange = Double.POSITIVE_INFINITY;
-        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
+        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrast);
 
-        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, contrast);
 
         List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
         DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
@@ -100,9 +101,9 @@ public class DiffAnalyticsTSVWriterTest {
     public void testWriteNegativeInfinity() throws IOException {
         double pvalue = 0.001;
         double foldChange = Double.NEGATIVE_INFINITY;
-        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
+        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrast);
 
-        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, contrast);
 
         List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
         DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());

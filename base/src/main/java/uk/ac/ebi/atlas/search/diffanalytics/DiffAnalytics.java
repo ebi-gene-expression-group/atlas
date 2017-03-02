@@ -4,6 +4,7 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 
 public class DiffAnalytics {
@@ -17,15 +18,18 @@ public class DiffAnalytics {
     private DifferentialExpression expression;
 
     private String species;
+    
+    private Contrast contrast;
 
     public DiffAnalytics(String bioentityId, String bioentityName, String experimentAccession, DifferentialExpression expression,
-                         String species) {
+                         String species, Contrast contrast) {
         this.bioentityId = bioentityId;
         this.bioentityName = bioentityName;
 
         this.experimentAccession = experimentAccession;
         this.expression = expression;
         this.species = species;
+        this.contrast = contrast;
     }
 
     public String getBioentityId() {
@@ -33,11 +37,11 @@ public class DiffAnalytics {
     }
 
     public String getContrastDisplayName() {
-        return expression.getContrast().getDisplayName();
+        return contrast.getDisplayName();
     }
 
     public AssayGroup getContrastTestAssayGroup() {
-        return expression.getContrast().getTestAssayGroup();
+        return contrast.getTestAssayGroup();
     }
 
     public String getExperimentAccession() {
