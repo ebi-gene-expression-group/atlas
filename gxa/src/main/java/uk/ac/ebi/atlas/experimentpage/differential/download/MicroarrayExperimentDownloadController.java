@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -85,13 +86,7 @@ public class MicroarrayExperimentDownloadController {
 
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
-            MicroarrayRequestContext context =
-                    new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
-            microarrayProfileStreamFactory.write(
-                    experiment,
-                    context,
-                    new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
-                    microarrayProfilesWriterFactory.create(response.getWriter(), context));
+            fetchAndWrite(response.getWriter(), experiment, preferences, geneQueryResponse);
         } else {
             ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
@@ -102,14 +97,7 @@ public class MicroarrayExperimentDownloadController {
                 zipOutputStream.putNextEntry(ze);
 
                 preferences.setArrayDesignAccession(selectedArrayDesign);
-                MicroarrayRequestContext context =
-                        new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
-
-                microarrayProfileStreamFactory.write(
-                        experiment,
-                        context,
-                        new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
-                        microarrayProfilesWriterFactory.create(new PrintWriter(zipOutputStream), context));
+                fetchAndWrite(new PrintWriter(zipOutputStream), experiment, preferences, geneQueryResponse);
 
                 zipOutputStream.closeEntry();
             }
@@ -117,6 +105,24 @@ public class MicroarrayExperimentDownloadController {
             zipOutputStream.close();
         }
 
+    }
+
+    // convenience method for test
+    long fetchAndWriteGeneProfiles(Writer responseWriter, MicroarrayExperiment experiment, MicroarrayRequestPreferences
+            preferences){
+        return fetchAndWrite(responseWriter, experiment, preferences, solrQueryService.fetchResponse(preferences
+                .getGeneQuery(), ""));
+    }
+
+    long fetchAndWrite(Writer responseWriter, MicroarrayExperiment experiment, MicroarrayRequestPreferences
+            preferences, GeneQueryResponse geneQueryResponse){
+        MicroarrayRequestContext context =
+                new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
+        return microarrayProfileStreamFactory.write(
+                experiment,
+                context,
+                new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
+                microarrayProfilesWriterFactory.create(responseWriter, context));
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata",

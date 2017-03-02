@@ -3,22 +3,21 @@ package uk.ac.ebi.atlas.experimentpage.baseline.download;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.writer.DeprecatedProfilesWriter;
+import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
+import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -37,46 +36,60 @@ import static org.mockito.Mockito.when;
 public class BaselineProfilesWriterServiceTest {
 
     @Mock
-    private ObjectInputStream<BaselineProfile> objectInputStreamMock;
+    ObjectInputStream<BaselineProfile> objectInputStreamMock;
 
     @Mock
-    private DeprecatedProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+    BaselineProfilesWriterFactory baselineProfilesWriterFactory;
 
     @Mock
-    private BaselineProfileStreamFactory inputStreamFactory;
+    Writer responseWriter;
 
     @Mock
-    private SolrQueryService solrQueryService;
+    ProfilesWriter<BaselineProfile> profilesWriter;
 
     @Mock
-    private CoexpressedGenesService coexpressedGenesService;
-
-    private BaselineProfilesWriterService subject;
+    BaselineProfileStreamFactory inputStreamFactory;
 
     @Mock
-    private BaselineRequestPreferences preferencesMock;
+    SolrQueryService solrQueryService;
 
     @Mock
-    private BaselineExperiment baselineExperimentMock;
+    CoexpressedGenesService coexpressedGenesService;
+
+    BaselineProfilesWriterService subject;
 
     @Mock
-    private ExperimentalFactors experimentalFactorsMock;
+    BaselineRequestPreferences preferencesMock;
 
-    private String geneName = "some_gene";
-    private String geneId = "some_gene_id";
-    private SemanticQuery geneQuery = SemanticQuery.create(geneName);
+    @Mock
+    BaselineExperiment baselineExperimentMock;
+
+    BaselineRequestContext baselineRequestContext;
+
+    @Mock
+    ExperimentalFactors experimentalFactorsMock;
+
+    String geneName = "some_gene";
+    String geneId = "some_gene_id";
+    SemanticQuery geneQuery = SemanticQuery.create(geneName);
 
     @Before
     public void setUp() {
         AssayGroup assayGroupMock = mock(AssayGroup.class);
         when(assayGroupMock.getId()).thenReturn("g1");
 
-        MockitoAnnotations.initMocks(this);
-        subject = new BaselineProfilesWriterService(inputStreamFactory, profilesWriter, coexpressedGenesService);
+        baselineRequestContext = new BaselineRequestContext(preferencesMock, baselineExperimentMock);
+
+        when(baselineProfilesWriterFactory.create(eq(responseWriter), eq(baselineRequestContext), anyString(),
+                anyBoolean())).thenReturn(profilesWriter);
+
+        when(profilesWriter.write(anyCollection())).thenReturn(123L);
+
+
+        subject = new BaselineProfilesWriterService(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
+                coexpressedGenesService);
 
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
-        when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
-        when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
@@ -92,7 +105,7 @@ public class BaselineProfilesWriterServiceTest {
         Writer writer = mock(Writer.class);
         Map<String, Integer> coexpressions = new HashMap<>();
 
-        subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions );
+        subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
 
         Mockito.verifyNoMoreInteractions(coexpressedGenesService);
     }
@@ -110,19 +123,19 @@ public class BaselineProfilesWriterServiceTest {
         extendedResponse.addGeneIds(geneName, ImmutableSet.of(geneId));
 
         Set<String> range = new HashSet<>();
-        for(int i =0 ; i< coexpressions.get(geneId) ; i++ ){
-            range.add("coexpression_"+i);
+        for (int i = 0; i < coexpressions.get(geneId); i++) {
+            range.add("coexpression_" + i);
         }
-        extendedResponse.addGeneIds(geneName+":coexpressions", range);
+        extendedResponse.addGeneIds(geneName + ":coexpressions", range);
 
         when(solrQueryService.fetchResponse(eq(geneQuery), anyString())).thenReturn(response);
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
                 coexpressions)).thenReturn(extendedResponse);
 
-        subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions );
+        subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
 
-        Mockito.verify(coexpressedGenesService).extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,coexpressions);
+        Mockito.verify(coexpressedGenesService).extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response, coexpressions);
     }
 
     @Test
@@ -132,7 +145,7 @@ public class BaselineProfilesWriterServiceTest {
     }
 
     //TODO make this test reasonable and useful again
-    private void theFlowOfTheDataIsRightForCoexpressions(Map<String, Integer> coexpressions) throws Exception {
+    void theFlowOfTheDataIsRightForCoexpressions(Map<String, Integer> coexpressions) throws Exception {
         Writer writer = mock(Writer.class);
 
         GeneQueryResponse response = new GeneQueryResponse();
@@ -141,7 +154,7 @@ public class BaselineProfilesWriterServiceTest {
         GeneQueryResponse extendedResponse = new GeneQueryResponse();
         extendedResponse.addGeneIds(geneName, ImmutableSet.of(geneId));
 
-        if(coexpressions.containsKey(geneId)) {
+        if (coexpressions.containsKey(geneId)) {
             Set<String> range = new HashSet<>();
             for (int i = 0; i < coexpressions.get(geneId); i++) {
                 range.add("coexpresion_" + i);
@@ -154,19 +167,12 @@ public class BaselineProfilesWriterServiceTest {
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
                 baselineExperimentMock, response, coexpressions)).thenReturn(extendedResponse);
 
-        ObjectInputStream<BaselineProfile> inputStream = objectInputStreamMock;
-        when(inputStreamFactory.create(any(BaselineExperiment.class), any(BaselineProfileStreamOptions.class)))
-                .thenReturn(inputStream);
-
         when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString())).thenReturn(response);
 
         subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
 
         //query solr, create a stream, pass the results on
-        //TODO Mockito.verify(solrQueryService)
-        Mockito.verify(inputStreamFactory).create(any(BaselineExperiment.class),any(BaselineProfileStreamOptions.class));
-        Mockito.verify(profilesWriter).write(eq(writer), eq(inputStream), any(BaselineRequestContext.class),
-                anySetOf(Factor.class), any(GeneQueryResponse.class));
+        Mockito.verify(profilesWriter).write(anyCollection());
         Mockito.verifyNoMoreInteractions(/*solrQueryService,*/ inputStreamFactory, profilesWriter);
         Mockito.reset(solrQueryService, inputStreamFactory, profilesWriter);
     }
@@ -178,10 +184,9 @@ public class BaselineProfilesWriterServiceTest {
 
         long expected = 123L;
 
-        when(profilesWriter.write(eq(writer), any(objectInputStreamMock.getClass()), any(BaselineRequestContext.class),
-                anySetOf(Factor.class), any(GeneQueryResponse.class))).thenReturn(expected);
+        when(profilesWriter.write(anyCollection())).thenReturn(123L);
 
-        long returnValue = subject.write(writer, preferencesMock, baselineExperimentMock,coexpressions );
+        long returnValue = subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
 
         assertEquals(expected, returnValue);
     }

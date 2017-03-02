@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.Writer;
 import java.text.MessageFormat;
 
 @Controller
@@ -62,9 +63,9 @@ public class RnaSeqExperimentDownloadController {
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
     public void downloadGeneProfiles(@PathVariable String experimentAccession,
-                                     @RequestParam(value = "accessKey",required = false) String accessKey,
-                                     HttpServletRequest request, @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid
-                                             DifferentialRequestPreferences preferences , HttpServletResponse response) throws IOException {
+                                     @RequestParam(value = "accessKey", required = false) String accessKey,
+                                     @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid
+                                     DifferentialRequestPreferences preferences, HttpServletResponse response) throws IOException {
 
         DifferentialExperiment experiment = (DifferentialExperiment)
                 experimentTrader.getExperiment(experimentAccession,accessKey);
@@ -75,16 +76,21 @@ public class RnaSeqExperimentDownloadController {
 
         response.setContentType("text/plain; charset=utf-8");
 
+
+        long genesCount = fetchAndWriteGeneProfiles(response.getWriter(), experiment, preferences);
+        LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
+
+    }
+
+    long fetchAndWriteGeneProfiles(Writer responseWriter, DifferentialExperiment experiment, DifferentialRequestPreferences differentialRequestPreferences){
         RnaSeqRequestContext context =
-                new DifferentialRequestContextFactory.RnaSeq().create(experiment, preferences);
-        long genesCount = rnaSeqProfileStreamFactory.write(
+                new DifferentialRequestContextFactory.RnaSeq().create(experiment, differentialRequestPreferences);
+        return rnaSeqProfileStreamFactory.write(
                 experiment,
                 context,
                 new DifferentialProfileStreamTransforms<RnaSeqProfile>(context,
                         solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
-                rnaSeqDifferentialProfilesWriterFactory.create(response.getWriter(), context));
-        LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
-
+                rnaSeqDifferentialProfilesWriterFactory.create(responseWriter, context));
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = PARAMS_TYPE_DIFFERENTIAL)

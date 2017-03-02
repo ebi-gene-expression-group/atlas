@@ -4,24 +4,19 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.Set;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,12 +26,6 @@ public class MicroarrayExperimentDownloadControllerTest {
     private static final String EXPERIMENT_ACCESSION = "experimentAccession";
     private static final String ARRAY_DESIGN = "arrayDesign";
     private static final String ACCESS_KEY = "hunter2";
-
-    @Mock
-    private MicroarrayRequestContextBuilder requestContextBuilderMock;
-
-    @Mock
-    private MicroarrayDeprecatedProfilesWriter profilesWriter;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;
@@ -64,20 +53,26 @@ public class MicroarrayExperimentDownloadControllerTest {
 
     private MicroarrayExperimentDownloadController subject;
 
+    @Mock
+    MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
+
+    @Mock
+    MicroarrayProfilesWriterFactory microarrayProfilesWriterFactory;
+
+    @Mock
+    SolrQueryService solrQueryService;
+
+    @Mock
+    DataWriterFactory dataWriterFactory;
+
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentDownloadController(experimentTrader, dataWriterFactoryMock);
+        subject = new MicroarrayExperimentDownloadController(experimentTrader, microarrayProfileStreamFactory,
+                microarrayProfilesWriterFactory, solrQueryService, dataWriterFactory);
 
         when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,ACCESS_KEY)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(experimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
-        when(requestContextBuilderMock.forExperiment(experimentMock)).thenReturn(requestContextBuilderMock);
-        when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
-        when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
-        when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(profilesWriter.write(any(PrintWriter.class), Matchers.<ObjectInputStream<MicroarrayProfile>>any(),
-                any(DifferentialProfileStreamOptions.class), Matchers.<Set<Contrast>>any(), any(GeneQueryResponse.class)))
-                .thenReturn(0L);
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
     }
@@ -88,8 +83,6 @@ public class MicroarrayExperimentDownloadControllerTest {
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
-
-        verify(profilesWriter).write(printWriterMock, requestContextMock, ARRAY_DESIGN);
     }
 
     @Test

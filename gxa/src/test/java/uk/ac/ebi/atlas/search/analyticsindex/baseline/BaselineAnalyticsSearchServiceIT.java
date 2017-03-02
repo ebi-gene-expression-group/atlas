@@ -6,25 +6,23 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -34,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 public class BaselineAnalyticsSearchServiceIT {
 
     private static Species HUMAN;
-    private static final Set<Factor> organismPartFactors = new HashSet<>();
+    private static final List<FactorAcrossExperiments> organismPartFactors = new ArrayList<>();
 
     public static final String ORGANISM_PART = "ORGANISM_PART";
 
@@ -42,67 +40,68 @@ public class BaselineAnalyticsSearchServiceIT {
     private SpeciesFactory speciesFactory;
 
     static {
-        organismPartFactors.add(new Factor(ORGANISM_PART, "adipose tissue"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "adrenal gland"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "animal ovary"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "appendix"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "bladder"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "bone marrow"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "CD4-positive T cell"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "CD8-positive T cell"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "cerebral cortex"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "colon"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "duodenum"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "endometrium"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "esophagus"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "fallopian tube"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "gall bladder"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "heart"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "kidney"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "liver"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "lung"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "lymph node"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "pancreas"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "placenta"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "prostate"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "rectum"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "salivary gland"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "skeletal muscle"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "skin"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "small intestine"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "smooth muscle"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "spleen"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "stomach"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "testis"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "tonsil"));
-        organismPartFactors.add(new Factor(ORGANISM_PART, "thyroid"));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "adipose tissue")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "adrenal gland")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "animal ovary")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "appendix")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "bladder")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "bone marrow")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "CD4-positive T cell")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "CD8-positive T cell")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "cerebral cortex")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "colon")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "duodenum")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "endometrium")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "esophagus")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "fallopian tube")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "gall bladder")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "heart")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "kidney")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "liver")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "lung")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "lymph node")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "pancreas")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "placenta")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "prostate")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "rectum")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "salivary gland")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "skeletal muscle")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "skin")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "small intestine")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "smooth muscle")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "spleen")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "stomach")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "testis")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "tonsil")));
+        organismPartFactors.add(new FactorAcrossExperiments(new Factor(ORGANISM_PART, "thyroid")));
     }
 
     private static final String CELL_LINE = "CELL_LINE";
-    private static Set<Factor> cellLineFactors = new HashSet<>();
+    private static final List<FactorAcrossExperiments> cellLineFactors = new ArrayList<>();
+
     static {
-        cellLineFactors.add(new Factor(CELL_LINE, "A549"));
-        cellLineFactors.add(new Factor(CELL_LINE, "AG445"));
-        cellLineFactors.add(new Factor(CELL_LINE, "BJ"));
-        cellLineFactors.add(new Factor(CELL_LINE, "CD20-positive B cell cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "CD34-positive mobilized cell cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "GM12878"));
-        cellLineFactors.add(new Factor(CELL_LINE, "H1-hESC"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HFDPC cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HMEC cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HPC-PL cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HSMM cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HUVEC cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HeLa-S3"));
-        cellLineFactors.add(new Factor(CELL_LINE, "HepG2"));
-        cellLineFactors.add(new Factor(CELL_LINE, "hMSC-AT cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "IMR-90"));
-        cellLineFactors.add(new Factor(CELL_LINE, "K562"));
-        cellLineFactors.add(new Factor(CELL_LINE, "MCF-7"));
-        cellLineFactors.add(new Factor(CELL_LINE, "NHEK cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "NHLF cell line"));
-        cellLineFactors.add(new Factor(CELL_LINE, "SK-N-SH"));
-        cellLineFactors.add(new Factor(CELL_LINE, "SK-N-SH_RA"));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "A549")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "AG445")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "BJ")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "CD20-positive B cell cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "CD34-positive mobilized cell cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "GM12878")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "H1-hESC")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HFDPC cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HMEC cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HPC-PL cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HSMM cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HUVEC cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HeLa-S3")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "HepG2")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "hMSC-AT cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "IMR-90")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "K562")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "MCF-7")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "NHEK cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "NHLF cell line")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "SK-N-SH")));
+        cellLineFactors.add(new FactorAcrossExperiments(new Factor(CELL_LINE, "SK-N-SH_RA")));
     }
 
     @Inject
@@ -126,7 +125,6 @@ public class BaselineAnalyticsSearchServiceIT {
             assertThat(profile.getId(), not(isEmptyOrNullString()));
             assertThat(profile.getName(), not(isEmptyOrNullString()));
             assertThat(ExperimentType.get(profile.getExperimentType()).isBaseline(), is(true));
-            assertThat(profile.getMinExpressionLevel(), is(lessThanOrEqualTo(profile.getMaxExpressionLevel())));
             assertThat(profile.getConditions().size(), greaterThan(4));
             assertThat(profile.isExpressedOnAnyOf(organismPartFactors), is(true));
             assertThat(profile.isExpressedOnAnyOf(cellLineFactors), is(false));
@@ -148,7 +146,6 @@ public class BaselineAnalyticsSearchServiceIT {
 
         assertThat(baselineProfilesList.size(), greaterThan(0));
         for(BaselineExperimentProfile profile : baselineProfilesList) {
-            assertThat(profile.getMinExpressionLevel(), is(lessThanOrEqualTo(profile.getMaxExpressionLevel())));
             assertThat(profile.isExpressedOnAnyOf(organismPartFactors), is(false));
             assertThat(profile.isExpressedOnAnyOf(cellLineFactors), is(true));
         }

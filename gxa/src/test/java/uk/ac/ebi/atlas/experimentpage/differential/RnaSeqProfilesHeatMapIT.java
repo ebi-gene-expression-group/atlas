@@ -7,11 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
+import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
@@ -40,9 +36,6 @@ public class RnaSeqProfilesHeatMapIT {
     @Inject
     private RnaSeqProfilesHeatMap subject;
 
-    @Inject
-    private RnaSeqRequestContextBuilder requestContextBuilder;
-
     private DifferentialRequestPreferences requestPreferences;
 
     public void setUp(){
@@ -59,9 +52,7 @@ public class RnaSeqProfilesHeatMapIT {
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        return requestContextBuilder.forExperiment(experiment)
-                .withPreferences(requestPreferences)
-                .build();
+        return new RnaSeqRequestContext(requestPreferences, experiment);
     }
 
     @Test
@@ -191,7 +182,7 @@ public class RnaSeqProfilesHeatMapIT {
                 }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
-                assertEquals(contrast, expression.getContrast());
+                assertEquals(contrast.getId(), expression.getDataColumnDescriptorId());
                 assertThat(expression.getPValue(), greaterThan(0d));
                 assertThat(expression.getPValue(), lessThanOrEqualTo(1d));
                 assertThat(expression.getAbsoluteFoldChange(), greaterThan(0d));

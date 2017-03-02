@@ -8,6 +8,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.writer.RnaSeqDifferentialProfilesWriterFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -22,68 +25,67 @@ import static org.mockito.Mockito.when;
 public class RnaSeqExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
+    
+    @Mock
+    HttpServletRequest requestMock;
 
     @Mock
-    private RnaSeqRequestContextBuilder requestContextBuilderMock;
+    DifferentialRequestPreferences preferencesMock;
 
     @Mock
-    private RnaSeqDeprecatedProfilesWriter profilesWriter;
+    HttpServletResponse responseMock;
 
     @Mock
-    private DataWriterFactory dataWriterFactoryMock;
+    DifferentialExperiment experimentMock;
 
     @Mock
-    private HttpServletRequest requestMock;
+    RnaSeqRequestContext requestContextMock;
 
     @Mock
-    private DifferentialRequestPreferences preferencesMock;
+    PrintWriter printWriterMock;
 
     @Mock
-    private HttpServletResponse responseMock;
+    ExpressionsWriter expressionsWriterMock;
 
     @Mock
-    private DifferentialExperiment experimentMock;
+    ExperimentTrader experimentTrader;
 
     @Mock
-    private RnaSeqRequestContext requestContextMock;
-
+    RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory;
+    
     @Mock
-    private PrintWriter printWriterMock;
-
+    RnaSeqDifferentialProfilesWriterFactory rnaSeqDifferentialProfilesWriterFactory;
+    
     @Mock
-    private ExpressionsWriter expressionsWriterMock;
-
+    SolrQueryService solrQueryService;
+    
     @Mock
-    private ExperimentTrader experimentTrader;
+    DataWriterFactory dataWriterFactory;
 
-    private RnaSeqExperimentDownloadController subject;
+    RnaSeqExperimentDownloadController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RnaSeqExperimentDownloadController(requestContextBuilderMock, profilesWriter,
-                dataWriterFactoryMock);
+                
+        subject = new RnaSeqExperimentDownloadController(rnaSeqProfileStreamFactory, rnaSeqDifferentialProfilesWriterFactory,
+                solrQueryService,dataWriterFactory, experimentTrader);
         when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,"")).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(requestContextBuilderMock.forExperiment(experimentMock)).thenReturn(requestContextBuilderMock);
-        when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
-        when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(profilesWriter.write(printWriterMock, requestContextMock)).thenReturn(0L);
     }
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
-        subject.downloadGeneProfiles(EXPERIMENT_ACCESSION,"",requestMock, preferencesMock, responseMock);
+        subject.downloadGeneProfiles(EXPERIMENT_ACCESSION,"", preferencesMock, responseMock);
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
-        verify(profilesWriter).write(printWriterMock, requestContextMock);
     }
 
     @Test
     public void testDownloadRawCounts() throws Exception {
-        when(dataWriterFactoryMock.getRnaSeqRawDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactory.getRnaSeqRawDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
         when(expressionsWriterMock.write()).thenReturn(0L);
 
         subject.downloadRawCounts(EXPERIMENT_ACCESSION,"",requestMock, responseMock);
@@ -96,7 +98,7 @@ public class RnaSeqExperimentDownloadControllerTest {
     @Test
     public void testDownloadAllAnalytics() throws Exception {
 
-        when(dataWriterFactoryMock.getRnaSeqAnalyticsDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactory.getRnaSeqAnalyticsDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
         when(expressionsWriterMock.write()).thenReturn(0L);
 
         subject.downloadAllAnalytics(EXPERIMENT_ACCESSION,"",requestMock, responseMock);

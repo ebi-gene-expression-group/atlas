@@ -7,11 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
+import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
@@ -23,9 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.hamcrest.Matchers.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,9 +35,6 @@ public class MicroarrayProfilesHeatMapIT {
 
     @Inject
     private MicroarrayProfilesHeatMap subject;
-
-    @Inject
-    private MicroarrayRequestContextBuilder requestContextBuilder;
 
     private MicroarrayRequestPreferences requestPreferences;
 
@@ -61,9 +52,7 @@ public class MicroarrayProfilesHeatMapIT {
         requestPreferences.setCutoff(cutoff);
         MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        return requestContextBuilder.forExperiment(experiment)
-                .withPreferences(requestPreferences)
-                .build();
+        return new MicroarrayRequestContext(requestPreferences, experiment);
     }
 
     @Test
@@ -193,7 +182,6 @@ public class MicroarrayProfilesHeatMapIT {
                 }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
-                assertThat(contrast, is(expression.getContrast()));
                 assertThat(expression.getPValue(), greaterThan(0d));
                 assertThat(expression.getPValue(), lessThanOrEqualTo(1d));
                 assertThat(expression.getAbsoluteFoldChange(), greaterThan(0d));

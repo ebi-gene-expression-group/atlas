@@ -9,16 +9,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.writer.DeprecatedProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -41,46 +36,37 @@ import static org.mockito.Mockito.*;
 public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
-    @Mock
-    private DeprecatedProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
 
     @Mock
-    private HttpServletRequest requestMock;
+    HttpServletRequest requestMock;
 
     @Mock
-    private BaselineRequestPreferences preferencesMock;
+    BaselineRequestPreferences preferencesMock;
 
     @Mock
-    private HttpServletResponse responseMock;
+    HttpServletResponse responseMock;
 
     @Mock
-    private BaselineExperiment baselineExperimentMock;
+    BaselineExperiment baselineExperimentMock;
 
     @Mock
-    private PrintWriter printWriterMock;
+    PrintWriter printWriterMock;
 
     @Mock
-    private ExperimentalFactors experimentalFactorsMock;
+    ExperimentalFactors experimentalFactorsMock;
+
 
     @Mock
-    private BaselineProfileStreamFactory inputStreamFactoryMock;
-
+    ExperimentTrader experimentTraderMock;
+    
     @Mock
-    private ExperimentTrader experimentTraderMock;
+    BaselineProfilesWriterService baselineProfilesWriterService;
 
-    @Mock
-    private BaselineProfilesWriterServiceFactory baselineProfilesWriterServiceFactory;
-
-    @Mock
-    private BaselineProfilesWriterService baselineProfilesWriterService;
-
-    private BaselineExperimentDownloadService<BaselineRequestPreferences> subject;
+    BaselineExperimentDownloadService<BaselineRequestPreferences> subject;
 
     @Before
     public void setUp() throws Exception {
-        when(baselineProfilesWriterServiceFactory.create(inputStreamFactoryMock))
-                .thenReturn(baselineProfilesWriterService);
-        subject = new BaselineExperimentDownloadService<>(inputStreamFactoryMock, baselineProfilesWriterServiceFactory,experimentTraderMock);
+        subject = new BaselineExperimentDownloadService<>(baselineProfilesWriterService, experimentTraderMock);
 
     }
 
@@ -104,9 +90,6 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
         when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(profilesWriterMock.write(eq(printWriterMock), Matchers.<ObjectInputStream<BaselineProfile>>any(),
-                any(BaselineRequestContext.class), anySetOf(Factor.class), any(GeneQueryResponse.class))).thenReturn
-                (0L);
 
         subject.download(EXPERIMENT_ACCESSION,requestMock, preferencesMock,responseMock,"");
 

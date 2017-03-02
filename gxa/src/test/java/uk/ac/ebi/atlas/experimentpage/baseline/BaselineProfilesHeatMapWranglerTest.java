@@ -21,17 +21,12 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.TreeSet;
 
-import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfilesHeatMapWranglerTest {
@@ -39,14 +34,15 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Mock
     private BaselineProfilesHeatMap baselineProfilesHeatMap;
     @Mock
-    private BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
-    @Mock
     private SolrQueryService solrQueryService;
     @Mock
     private CoexpressedGenesDao coexpressedGenesDao;
 
     @Mock
     private BaselineExperiment experiment;
+
+    @Mock
+    HttpServletRequest httpServletRequest;
 
     @Mock
     private ExperimentalFactors experimentalFactors;
@@ -74,16 +70,13 @@ public class BaselineProfilesHeatMapWranglerTest {
         ts.add(mock(Factor.class));
         when(experimentalFactors.getComplementFactors(anySetOf(Factor.class))).thenReturn(ts);
 
-        when(baselineProfilesViewModelBuilder.build(
-                Matchers.any(BaselineProfilesList.class), anyListOf(Factor.class))).thenReturn(resultObject);
-
-        subject = fakeWrangler(baselineRequestPreferences, experiment);
+        subject = fakeWrangler(baselineRequestPreferences, experiment, httpServletRequest);
     }
 
     public BaselineProfilesHeatMapWrangler fakeWrangler(BaselineRequestPreferences preferences, BaselineExperiment
-            experiment){
+            experiment, HttpServletRequest httpServletRequest){
         return new BaselineProfilesHeatMapWrangler(baselineProfilesHeatMap,
-                solrQueryService,new CoexpressedGenesService(coexpressedGenesDao),
+                solrQueryService,new CoexpressedGenesService(coexpressedGenesDao),httpServletRequest,
                 preferences,experiment);
     }
 
@@ -109,7 +102,7 @@ public class BaselineProfilesHeatMapWranglerTest {
                 .thenReturn(response);
 
         when(response.containsGeneSets()).thenReturn(true);
-        BaselineProfilesHeatMapWrangler subject = fakeWrangler(new BaselineRequestPreferences(), experiment);
+        BaselineProfilesHeatMapWrangler subject = fakeWrangler(new BaselineRequestPreferences(), experiment,httpServletRequest);
 
         subject.getJsonProfilesAsGeneSets();
 
@@ -155,7 +148,7 @@ public class BaselineProfilesHeatMapWranglerTest {
                 , Matchers.any
                         (GeneQueryResponse.class),
                 Matchers.eq(false))).thenReturn(list);
-        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment);
+        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment,httpServletRequest);
         subjectHere.getJsonProfiles();
 
         verify(baselineProfilesHeatMap).fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
@@ -181,7 +174,7 @@ public class BaselineProfilesHeatMapWranglerTest {
 
         when(coexpressedGenesDao.coexpressedGenesFor(ACCESSION, GENE_WE_ASK_FOR)).thenReturn(ImmutableList.of("C1", "C2","C3"));
 
-        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment);
+        BaselineProfilesHeatMapWrangler subjectHere = fakeWrangler(baselineRequestPreferences, experiment,httpServletRequest);
         subjectHere.getJsonProfiles();
 
         subjectHere.getJsonCoexpressions();

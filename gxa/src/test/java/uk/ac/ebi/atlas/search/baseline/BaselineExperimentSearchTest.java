@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
-import com.google.common.primitives.Doubles;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
-import uk.ac.ebi.atlas.model.experiment.baseline.*;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -136,16 +138,15 @@ public class BaselineExperimentSearchTest {
 
         assertThat(profiles, hasSize(1));
 
-        BaselineProfile baselineProfile = profiles.get(0);
+        BaselineExperimentProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_MTAB_599));
         assertThat(baselineProfile.getName(), is(E_MTAB_599_NAME));
-        assertThat(baselineProfile.getMinExpressionLevel(), is(Doubles.min(LUNG_LEVEL, SPLEEN_LEVEL, THYMUS_LEVEL)));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(Doubles.max(LUNG_LEVEL, SPLEEN_LEVEL, THYMUS_LEVEL)));
+
         assertThat(baselineProfile.getSpecificity(), is(3));
-        assertThat(baselineProfile.getExpressionLevel(LUNG), is(LUNG_LEVEL));
-        assertThat(baselineProfile.getExpressionLevel(SPLEEN), is(SPLEEN_LEVEL));
-        assertThat(baselineProfile.getExpressionLevel(THYMUS), is(THYMUS_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(new FactorAcrossExperiments(LUNG)), is(LUNG_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(new FactorAcrossExperiments(SPLEEN)), is(SPLEEN_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(new FactorAcrossExperiments(THYMUS)), is(THYMUS_LEVEL));
     }
 
     @Test
@@ -162,14 +163,14 @@ public class BaselineExperimentSearchTest {
 
         assertThat(profiles, hasSize(1));
 
-        BaselineProfile baselineProfile = profiles.get(0);
+        BaselineExperimentProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_GEOD_26284));
         assertThat(baselineProfile.getName(), is(E_GEOD_26284_NAME));
-        assertThat(baselineProfile.getMinExpressionLevel(), is(Doubles.min(IMR_90_LEVEL)));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(Doubles.max(IMR_90_LEVEL)));
+
+
         assertThat(baselineProfile.getSpecificity(), is(1));
-        assertThat(baselineProfile.getExpressionLevel(IMR_90), is(IMR_90_LEVEL));
+        assertThat(baselineProfile.getExpressionLevel(new FactorAcrossExperiments(IMR_90)), is(IMR_90_LEVEL));
 
     }
 

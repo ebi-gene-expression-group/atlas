@@ -9,7 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.util.concurrent.ExecutionException;
 
@@ -40,14 +39,13 @@ public class BaselineProfilesHeatMapIT {
     SolrQueryService solrQueryService;
 
     @Inject
-    RankBaselineProfilesFactory rankProfilesFactory;
-
-    @Resource(name="baselineProfileInputStreamFactory")
-    BaselineProfileStreamFactory inputStreamFactory;
+    RnaSeqBaselineProfileStreamFactory inputStreamFactory;
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
     private BaselineRequestContext baselineRequestContext;
+
+    BaselineExperiment baselineExperiment;
 
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
@@ -56,7 +54,7 @@ public class BaselineProfilesHeatMapIT {
     public void initRequestContext() throws ExecutionException {
 
         String randomAccession = experimentTrader.getAllBaselineExperimentAccessions().iterator().next();
-        BaselineExperiment baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(randomAccession);
+        baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(randomAccession);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         baselineRequestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
@@ -67,13 +65,17 @@ public class BaselineProfilesHeatMapIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-1733?displayLevels=true&_specific=on&geneQuery=R-HSA-73887&geneSetMatch=true
     @Test
     public void weCanGetAnyExperimentAtAll()  {
-        setNotSpecific();
-        setGeneQuery("protein_coding");
+        if(Math.random() < 0.5) {
+            setNotSpecific();
+        }
+        if(Math.random() < 0.5) {
+            setGeneQuery("protein_coding");
+        }
 
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
                 (baselineRequestContext.getGeneQuery(),baselineRequestContext.getSpecies().getReferenceName());
 
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext.getExperiment(), baselineRequestContext,
+        BaselineProfilesList profiles = subject.fetch(baselineExperiment, baselineRequestContext,
                 geneQueryResponse, true);
 
         assertThat(profiles.size(), greaterThan(0));
