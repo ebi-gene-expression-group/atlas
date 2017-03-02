@@ -19,7 +19,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
-import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;

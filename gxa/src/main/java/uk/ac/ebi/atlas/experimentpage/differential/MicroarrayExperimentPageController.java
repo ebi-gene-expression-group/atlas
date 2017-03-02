@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
+import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
@@ -36,13 +37,13 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @Inject
     public MicroarrayExperimentPageController(ExperimentTrader experimentTrader,
-            MicroarrayRequestContextBuilder requestContextBuilder,
+            DifferentialRequestContextFactory.Microarray differentialRequestContextFactory,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                               TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
         this.experimentTrader = experimentTrader;
         differentialExperimentPageService =
-                new DifferentialExperimentPageService<>(requestContextBuilder, profilesHeatMap,
+                new DifferentialExperimentPageService<>(differentialRequestContextFactory, profilesHeatMap,
                 differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
     }

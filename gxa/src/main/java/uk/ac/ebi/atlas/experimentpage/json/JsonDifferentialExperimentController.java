@@ -6,11 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
+import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.differential.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.differential.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
@@ -30,10 +34,12 @@ import javax.validation.Valid;
 public class JsonDifferentialExperimentController extends JsonExperimentController {
 
     private final
-        DifferentialExperimentPageService<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile>
+        DifferentialExperimentPageService<DifferentialExpression, DifferentialExperiment,
+                DifferentialRequestPreferences, RnaSeqProfile, RnaSeqRequestContext>
             diffRnaSeqExperimentPageService;
     private final
-        DifferentialExperimentPageService<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile>
+        DifferentialExperimentPageService<MicroarrayExpression, MicroarrayExperiment, MicroarrayRequestPreferences,
+                MicroarrayProfile, MicroarrayRequestContext>
             diffMicroarrayExperimentPageService;
 
 
