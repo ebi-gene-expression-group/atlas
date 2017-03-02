@@ -1,32 +1,39 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
+import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.SelectProfiles;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.io.IOException;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -121,9 +128,9 @@ public class DifferentialProfileComparatorTest {
     @Test
     public void mocksequence_NonSpecific_AllContrasts() {
 
-        DifferentialProfile differentialProfileMock1 = Mockito.mock(DifferentialProfile.class);
-        DifferentialProfile differentialProfileMock2 = Mockito.mock(DifferentialProfile.class);
-        DifferentialProfile differentialProfileMock3 = Mockito.mock(DifferentialProfile.class);
+        DifferentialProfile differentialProfileMock1 = mock(DifferentialProfile.class);
+        DifferentialProfile differentialProfileMock2 = mock(DifferentialProfile.class);
+        DifferentialProfile differentialProfileMock3 = mock(DifferentialProfile.class);
 
         //given
         when(differentialProfileMock1.getName()).thenReturn("1");
@@ -185,16 +192,41 @@ public class DifferentialProfileComparatorTest {
     private String twoContrastSameFoldChangeLowPValue     = Joiner.on("\t").join(new String[] {GENE_4, GENE_4, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5});
     private String twoContrastSameFoldChangeHighPValue    = Joiner.on("\t").join(new String[] {GENE_5, GENE_5, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5});
 
-    private String sequenceLines = Joiner.on("\n").join(new String[] {specificOneContrast, twoContrastHighFoldChangeOtherContrast, twoContrastSameFoldChangeHighPValue, twoContrastSameFoldChangeLowPValue, twoContrastLowFoldChange, twoContrastHighFoldChange});
-    private ImmutableList<MicroarrayProfile> sequenceProfiles;
+    private List<String> sequenceLines = ImmutableList.of(specificOneContrast, twoContrastHighFoldChangeOtherContrast,
+            twoContrastSameFoldChangeHighPValue, twoContrastSameFoldChangeLowPValue, twoContrastLowFoldChange,
+            twoContrastHighFoldChange);
+
+    List<Contrast> contrasts = ImmutableList.of(contrastMock1, contrastMock2);
+
+    MicroarrayExpressionsRowDeserializer microarrayExpressionsRowDeserializer = new MicroarrayExpressionsRowDeserializer(contrasts);
+
+    List<MicroarrayProfile> sequenceProfiles;
+
 
     private IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff().setPValueCutoff(1).setRegulation(Regulation.UP_DOWN).setFoldChangeCutOff(0);
 
     @Before
-    public void loadProfiles() {
-        MicroarrayProfileDeserializer deserializer = new MicroarrayProfileDeserializer(ImmutableList.of(contrastMock1, contrastMock2), expressionFilter);
-        sequenceProfiles = deserializer.create(sequenceLines.split("\n"));
-        sequenceProfiles2 = deserializer.create(sequenceLines2.split("\n"));
+    public void loadProfiles() throws IOException {
+
+        MockDataFileHub dataFileHub = new MockDataFileHub();
+        dataFileHub.addTemporaryFile("/magetab/accession/accession_array-analytics.tsv", sequenceLines);
+        MicroarrayProfileStreamFactory microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
+
+        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", contrasts, ImmutableSortedSet.of("array"));
+        MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
+
+
+        MicroarrayRequestContext microarrayRequestContext = new MicroarrayRequestContext(microarrayRequestPreferences,experiment);
+
+        sequenceProfiles = microarrayProfileStreamFactory.select(experiment,
+                microarrayRequestContext, Functions
+                .<Iterable<MicroarrayProfile>>identity(), new SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>() {
+            @Override
+            public GeneProfilesList<MicroarrayProfile> select(Iterable<MicroarrayProfile> profiles, int maxSize) {
+                return new DifferentialProfilesList<>( Lists.newArrayList(profiles));
+            }
+        });
+        assertThat(sequenceProfiles.size(), is(sequenceLines.size()));
     }
 
     @Test
@@ -260,7 +292,7 @@ public class DifferentialProfileComparatorTest {
         assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_2, GENE_3));
     }
 
-    private DifferentialProfile[] sortProfiles(ImmutableList<MicroarrayProfile> sequenceProfiles, DifferentialProfileComparator<DifferentialProfile> comparator) {
+    private DifferentialProfile[] sortProfiles(List<MicroarrayProfile> sequenceProfiles, DifferentialProfileComparator<DifferentialProfile> comparator) {
         SortedSet<MicroarrayProfile> sortedProfiles = new TreeSet<>(comparator);
         sortedProfiles.addAll(sequenceProfiles);
         return sortedProfiles.toArray(new MicroarrayProfile[sequenceProfiles.size()]);

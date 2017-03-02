@@ -2,13 +2,8 @@
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -16,20 +11,14 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.tsv.DifferentialExpressionsRowDeserializer;
 import uk.ac.ebi.atlas.profiles.tsv.RnaSeqDifferentialExpressionsRowDeserializer;
 
+import java.util.Iterator;
+
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqDifferentialExpressionsRowDeserializerTest {
 
-    String P_VAL_1 = "1";
-    String FOLD_CHANGE_1 = "0.474360080385946";
-
-    String P_VAL_2 = "1";
-     String FOLD_CHANGE_2 = "-Inf";
-
-    String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
 
     AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
     AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
@@ -41,105 +30,39 @@ public class RnaSeqDifferentialExpressionsRowDeserializerTest {
     DifferentialExpressionsRowDeserializer subject = new RnaSeqDifferentialExpressionsRowDeserializer(
             ImmutableList.of(g1_g2, g1_g3));
 
-
     @Test
-    public void pollShouldReturnExpressionsInTheRightOrder() throws Exception {
-        //given we load the buffer with three expressions
-        subject.reload(TWO_CONTRASTS);
+    public void returnTheRightExpressions() {
+        String P_VAL_1 = "1";
+        String FOLD_CHANGE_1 = "0.474360080385946";
 
-        //when
-        DifferentialExpression expression = subject.next();
-        //then we expect first expression
+        String P_VAL_2 = "1";
+        String FOLD_CHANGE_2 = "-Inf";
+
+        String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
+
+        Iterator<DifferentialExpression> it = subject.deserializeRow(TWO_CONTRASTS).iterator();
+
+        DifferentialExpression expression = it.next();
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_1)));
         assertThat(expression.getFoldChange(), is(Double.valueOf(FOLD_CHANGE_1)));
-        assertThat(expression.getContrast(), is(contrast1Mock));
 
-        //given we next again
-        expression = subject.next();
+        expression = it.next();
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
-        assertThat(expression.getContrast(), is(contrast2Mock));
 
-
-        assertThat(subject.next(), is(nullValue()));
+        assertThat(it.hasNext(), is(false));
     }
+
 
     @Test
-    public void bufferShouldReturnNullWhenExhausted() throws Exception {
-        //given we load the buffer with three expressions
-        subject.reload(TWO_CONTRASTS);
+    public void skipNAValues() {
+        String P_VAL_1 = "1";
+        String FOLD_CHANGE_1 = "0.474360080385946";
 
-        //when
-        subject.next();
-        subject.next();
-        subject.next();
-        //then we expect next next to return null
-        assertThat(subject.next(), Matchers.is(nullValue()));
+        assertThat(subject.deserializeRow(new String[]{P_VAL_1, FOLD_CHANGE_1}).size(), is(1));
+        assertThat(subject.deserializeRow(new String[]{P_VAL_1, FOLD_CHANGE_1, "NA", "NA"}).size(), is(1));
+        assertThat(subject.deserializeRow(new String[]{"NA","NA", P_VAL_1, FOLD_CHANGE_1}).size(), is(1));
+        assertThat(subject.deserializeRow(new String[]{"NA","NA", P_VAL_1, FOLD_CHANGE_1, "NA", "NA", "NA", "NA"})//Batman!
+                .size(), is(1));
     }
-
-    @Test
-    public void reloadShouldRefillAnExhaustedBuffer() throws Exception {
-        //given we load the buffer with three expressions
-        subject.reload(TWO_CONTRASTS);
-
-        //when we next until exhaustion
-        DifferentialExpression run;
-        do {
-            run = subject.next();
-        } while (run != null);
-        //and we reload again with new values
-        subject.reload("1", "2");
-        //and we next
-        DifferentialExpression expression = subject.next();
-        //then we expect to find the new values
-        assertThat(expression.getPValue(), is(1d));
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void reloadShouldThrowExceptionIfBufferIsNotEmpty() throws Exception {
-        //given we load the buffer with three expressions
-        subject.reload(TWO_CONTRASTS);
-        //and we next only a single expression
-        subject.next();
-
-        //when we reload again
-        subject.reload(TWO_CONTRASTS);
-
-        //then we expect an IllegalArgumentException
-    }
-
-    @Test
-    public void skipNALines() {
-
-        subject.reload("NA", "NA");
-
-        DifferentialExpression expression = subject.next();
-
-        assertThat(expression, is(CoreMatchers.nullValue()));
-
-        subject.reload("1", "NA");
-
-        expression = subject.next();
-
-        assertThat(expression, is(CoreMatchers.nullValue()));
-
-        subject.reload("NA", "1");
-
-        expression = subject.next();
-
-        assertThat(expression, is(CoreMatchers.nullValue()));
-    }
-
-    @Test
-    public void skipNALinesKeepsCorrespondingContrasts() {
-
-        subject.reload("NA", "1", P_VAL_2, "-Inf");
-
-        DifferentialExpression expression = subject.next();
-
-        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
-        assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
-        assertThat(expression.getContrast(), is(contrast2Mock));
-    }
-
 }

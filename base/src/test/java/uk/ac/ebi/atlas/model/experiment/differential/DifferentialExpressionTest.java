@@ -5,9 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -45,11 +42,6 @@ public class DifferentialExpressionTest {
     }
 
     @Test
-    public void testGetContrast() {
-        assertThat(subject.getContrast(), is(contrastMock));
-    }
-
-    @Test
     public void testEquals() {
         assertThat(subject.equals(new DifferentialExpression(P_VALUE, FOLD_CHANGE, contrastMock)), is(true));
     }
@@ -67,7 +59,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testUnderExpressedGeneIsForRegulation() throws Exception {
         //when
-        DifferentialExpression expression = new DifferentialExpression(1.0, -1.0, null);
+        DifferentialExpression expression = new DifferentialExpression(1.0, -1.0, "");
 
         //then
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
@@ -78,7 +70,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testOverExpressedGeneIsForRegulation() throws Exception {
         //when
-        DifferentialExpression expression = new DifferentialExpression(1.0, 1.0, null);
+        DifferentialExpression expression = new DifferentialExpression(1.0, 1.0, "");
 
         //then
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
@@ -89,7 +81,7 @@ public class DifferentialExpressionTest {
     @Test
     public void testSmallPValue() {
         //when
-        DifferentialExpression expression = new DifferentialExpression(SMALL_P_VALUE, -1.0, null);
+        DifferentialExpression expression = new DifferentialExpression(SMALL_P_VALUE, -1.0, "");
 
         //then
         assertThat(expression.getPValue(), is(0D));
