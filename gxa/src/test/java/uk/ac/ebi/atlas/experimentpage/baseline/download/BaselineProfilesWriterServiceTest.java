@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesServ
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
@@ -38,10 +37,10 @@ import static org.mockito.Mockito.when;
 public class BaselineProfilesWriterServiceTest {
 
     @Mock
-    private ObjectInputStream<OldBaselineProfile> objectInputStreamMock;
+    private ObjectInputStream<BaselineProfile> objectInputStreamMock;
 
     @Mock
-    private DeprecatedProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriter;
+    private DeprecatedProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriter;
 
     @Mock
     private BaselineProfileStreamFactory inputStreamFactory;
@@ -155,7 +154,7 @@ public class BaselineProfilesWriterServiceTest {
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
                 baselineExperimentMock, response, coexpressions)).thenReturn(extendedResponse);
 
-        ObjectInputStream<OldBaselineProfile> inputStream = objectInputStreamMock;
+        ObjectInputStream<BaselineProfile> inputStream = objectInputStreamMock;
         when(inputStreamFactory.create(any(BaselineExperiment.class), any(BaselineProfileStreamOptions.class)))
                 .thenReturn(inputStream);
 

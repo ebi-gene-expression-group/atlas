@@ -1,14 +1,12 @@
-
-//ToDo: this test is too complex. It's not really unit test on GeneProfile because it tests all the chain of builder , preconditions , etc....
-
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.model.AssayGroup;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,26 +19,26 @@ import static org.mockito.Mockito.mock;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfileTest {
 
-    private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
-
     private static final String GENE_ID = "geneId_1";
     private static final String GENE_NAME = "geneName_1";
 
-    private Factor factor1 = new Factor(QUERY_FACTOR_TYPE, "nose");
-    private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
-    private Factor factor3 = new Factor(QUERY_FACTOR_TYPE, "head");
-    private Factor factor4 = new Factor(QUERY_FACTOR_TYPE, "billabong");
+    private AssayGroup g1 = new AssayGroup("g1", "run11","run12","run13");
+    private AssayGroup g2 = new AssayGroup("g2", "run21");
+    private AssayGroup g3 = new AssayGroup("g3", "run31","run32");
+    private AssayGroup g4 = new AssayGroup("g4", "g41");
 
-    private BaselineExpression expression_1 = new BaselineExpression(2.2D, new FactorSet().add(factor1));
-    private BaselineExpression expression_2 = new BaselineExpression(3D, new FactorSet().add(factor2));
-    private BaselineExpression expression_3 = new BaselineExpression(3.001D, new FactorSet().add(factor3));
+    private BaselineExpression expression_1 = new BaselineExpression(2.2D, "g1");
+    private BaselineExpression expression_2 = new BaselineExpression(3D, "g2");
+    private BaselineExpression expression_3 = new BaselineExpression(3.001D, "g3");
 
-    private OldBaselineProfile subject;
+    private BaselineProfile subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new OldBaselineProfile(GENE_ID, GENE_NAME);
-        subject.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2).add(QUERY_FACTOR_TYPE, expression_3);
+        subject = new BaselineProfile(GENE_ID, GENE_NAME);
+        subject.add(g1, expression_1);
+        subject.add(g2, expression_2);
+        subject.add(g3, expression_3);
     }
 
     @Test
@@ -50,13 +48,13 @@ public class BaselineProfileTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenQueryFactorsIsEmpty() {
-        subject.getAverageExpressionLevelOn(new HashSet<Factor>());
+        subject.getAverageExpressionLevelOn(new HashSet<AssayGroup>());
     }
 
     @Test
     public void averageExpressionLevelOnEmptyCollection() {
         //given
-        Set<Factor> queryFactors = Sets.newHashSet(mock(Factor.class));
+        Set<AssayGroup> queryFactors = ImmutableSet.of(mock(AssayGroup.class));
         //when
         double averageExpressionLevel = subject.getAverageExpressionLevelOn(queryFactors);
         //then
@@ -65,11 +63,10 @@ public class BaselineProfileTest {
 
     @Test
     public void averageExpressionLevel() {
-        double averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factor1, factor3));
+        double averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(g1, g3));
         assertThat(averageExpressionLevel, is(2.6005000000000003D));
 
-        averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(factor1, factor3,
-                new Factor(QUERY_FACTOR_TYPE, "leg")));
+        averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(g1, g3, g4));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
 
@@ -77,22 +74,23 @@ public class BaselineProfileTest {
     public void testSumProfile(){
         subject.sumProfile(buildOtherProfile());
         assertThat(subject.getId(), is(subject.getId()));
-        assertThat(subject.getExpressionLevel(factor1), is(2.2D + 1D));
-        assertThat(subject.getExpressionLevel(factor2), is(3D + 2D));
-        assertThat(subject.getExpressionLevel(factor3), is(3.001D + 3D));
-        assertThat(subject.getExpressionLevel(factor4), is(300D));
+        assertThat(subject.getExpressionLevel(g1), is(2.2D + 1D));
+        assertThat(subject.getExpressionLevel(g2), is(3D + 2D));
+        assertThat(subject.getExpressionLevel(g3), is(3.001D + 3D));
+        assertThat(subject.getExpressionLevel(g4), is(300D));
     }
 
     @Test
     public void sumProfileShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
-        OldBaselineProfile otherProfile = new OldBaselineProfile("other profile", "other name").add(QUERY_FACTOR_TYPE, expression_2);
+        BaselineProfile otherProfile = new BaselineProfile("other profile", "other name");
+        otherProfile.add(g2, expression_2);
 
         subject.sumProfile(otherProfile);
         assertThat(subject.getId(), is(GENE_ID));
-        assertThat(subject.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1)));
-        assertThat(subject.getExpressionLevel(factor2), is(6D));
-        assertThat(subject.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3)));
-        assertThat(subject.getExpressionLevel(factor4), is(nullValue()));
+        assertThat(subject.getExpressionLevel(g1), is(subject.getExpressionLevel(g1)));
+        assertThat(subject.getExpressionLevel(g2), is(6D));
+        assertThat(subject.getExpressionLevel(g3), is(subject.getExpressionLevel(g3)));
+        assertThat(subject.getExpressionLevel(g4), is(nullValue()));
     }
 
     @Test
@@ -100,7 +98,7 @@ public class BaselineProfileTest {
         assertThat(subject.getMinExpressionLevel(), is(2.2));
         assertThat(subject.getMaxExpressionLevel(), is(3.001));
 
-        subject.add(QUERY_FACTOR_TYPE, new BaselineExpression("NT", new FactorSet().add(factor1)));
+        subject.add(g4, new BaselineExpression("NT", "g4"));
 
         assertThat(subject.getMinExpressionLevel(), is(2.2));
         assertThat(subject.getMaxExpressionLevel(), is(3.001));
@@ -108,27 +106,26 @@ public class BaselineProfileTest {
 
     @Test
     public void testFold(){
-        OldBaselineProfile sumProfile = subject.foldProfile(3);
+        BaselineProfile sumProfile = subject.foldProfile(3);
         assertThat(sumProfile.getId(), is(subject.getId()));
-        assertThat(sumProfile.getExpressionLevel(factor1), is(0.7D));
-        assertThat(sumProfile.getExpressionLevel(factor2), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(factor3), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(factor4), is(nullValue()));
+        assertThat(sumProfile.getExpressionLevel(g1), is(0.7D));
+        assertThat(sumProfile.getExpressionLevel(g2), is(1.0D));
+        assertThat(sumProfile.getExpressionLevel(g3), is(1.0D));
+        assertThat(sumProfile.getExpressionLevel(g4), is(nullValue()));
     }
 
 
-    OldBaselineProfile buildOtherProfile(){
-        BaselineExpression expression_1 = new BaselineExpression(1D, new FactorSet().add(factor1));
-        BaselineExpression expression_2 = new BaselineExpression(2D, new FactorSet().add(factor2));
-        BaselineExpression expression_3 = new BaselineExpression(3D, new FactorSet().add(factor3));
-        BaselineExpression expression_4 = new BaselineExpression(300D, new FactorSet().add(factor4));
+    BaselineProfile buildOtherProfile(){
 
-        OldBaselineProfile baselineProfile = new OldBaselineProfile("OTHER_ID", "OTHER_NAME");
 
-        return baselineProfile.add(QUERY_FACTOR_TYPE, expression_1)
-                              .add(QUERY_FACTOR_TYPE, expression_2)
-                              .add(QUERY_FACTOR_TYPE, expression_3)
-                              .add(QUERY_FACTOR_TYPE, expression_4);
+        BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID", "OTHER_NAME");
+
+        baselineProfile.add(g1,new BaselineExpression(1D, "g1"));
+        baselineProfile.add(g2, new BaselineExpression(2D, "g2"));
+        baselineProfile.add(g3, new BaselineExpression(3D, "g3"));
+        baselineProfile.add(g4, new BaselineExpression(300D, "g4"));
+
+        return baselineProfile;
     }
 
 }

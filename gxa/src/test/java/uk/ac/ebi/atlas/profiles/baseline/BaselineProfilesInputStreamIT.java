@@ -9,7 +9,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -38,7 +37,7 @@ public class BaselineProfilesInputStreamIT {
     @Resource(name = "baselineProfileInputStreamFactory")
     private BaselineProfileStreamFactory inputStreamFactory;
 
-    private ObjectInputStream<OldBaselineProfile> subject;
+    private ObjectInputStream<BaselineProfile> subject;
 
     private Set<Factor> noFilterFactors = Collections.emptySet();
 

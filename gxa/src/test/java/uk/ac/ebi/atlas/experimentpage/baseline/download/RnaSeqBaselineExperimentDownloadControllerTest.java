@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
@@ -43,7 +42,7 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
     @Mock
-    private DeprecatedProfilesWriter<OldBaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
+    private DeprecatedProfilesWriter<BaselineProfile, Factor, BaselineRequestContext> profilesWriterMock;
 
     @Mock
     private HttpServletRequest requestMock;
@@ -105,7 +104,7 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
         when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(profilesWriterMock.write(eq(printWriterMock), Matchers.<ObjectInputStream<OldBaselineProfile>>any(),
+        when(profilesWriterMock.write(eq(printWriterMock), Matchers.<ObjectInputStream<BaselineProfile>>any(),
                 any(BaselineRequestContext.class), anySetOf(Factor.class), any(GeneQueryResponse.class))).thenReturn
                 (0L);
 

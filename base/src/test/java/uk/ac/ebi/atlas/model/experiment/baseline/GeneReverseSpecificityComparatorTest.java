@@ -1,14 +1,15 @@
 
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,35 +20,34 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GeneReverseSpecificityComparatorTest {
 
-    private static final String FACTOR_TYPE = "ORG";
-    private OldBaselineProfileComparator subject;
+    private BaselineProfileComparator subject;
 
     @Mock
-    private OldBaselineProfile geneWithSpecificity1;
+    private BaselineProfile geneWithSpecificity1;
 
     @Mock
-    private OldBaselineProfile geneWithSpecificity16;
+    private BaselineProfile geneWithSpecificity16;
 
     @Mock
-    private OldBaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
+    private BaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
 
-    Factor factor1 = new Factor(FACTOR_TYPE, "heart");
-    Factor factor2 = new Factor(FACTOR_TYPE, "nose");
+    AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
+    AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
 
-    private Set<Factor> selectedOrganismParts = Sets.newHashSet(factor1, factor2);
+    List<AssayGroup> assayGroups = ImmutableList.of(g1, g2);
 
     @Before
     public void initGeneExpressions() {
         when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(10D);
+        when(geneWithSpecificity16.getAverageExpressionLevelOn(assayGroups)).thenReturn(10D);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(0D);
+        when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(assayGroups)).thenReturn(0D);
     }
 
     @Before
     public void initSubject() {
-        subject = new OldBaselineProfileComparator(false, selectedOrganismParts, null, 0.5);
+        subject = new BaselineProfileComparator(false, assayGroups, null, 0.5);
     }
 
     @Test

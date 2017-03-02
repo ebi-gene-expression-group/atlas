@@ -14,7 +14,6 @@ import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -143,9 +142,9 @@ public class BaselineProfilesHeatMapWranglerTest {
         jsonCoexpressionsNotReturnedForTheseResultsBack(new BaselineProfilesList());
 
         BaselineProfilesList tooBigList = new BaselineProfilesList();
-        tooBigList.add(mock(OldBaselineProfile.class));
+        tooBigList.add(mock(BaselineProfile.class));
         for(int i= 0 ; i<10; i++) {
-            tooBigList.add(mock(OldBaselineProfile.class));
+            tooBigList.add(mock(BaselineProfile.class));
             jsonCoexpressionsNotReturnedForTheseResultsBack(tooBigList);
         }
     }
@@ -172,7 +171,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     @Test
     public void jsonCoexpressionsReturnedForOneResult() throws Exception {
         BaselineProfilesList rightList = new BaselineProfilesList();
-        OldBaselineProfile profile = mock(OldBaselineProfile.class);
+        BaselineProfile profile = mock(BaselineProfile.class);
         when(profile.getName()).thenReturn(NAME_OF_THE_GENE_WE_ASK_FOR);
         when(profile.getId()).thenReturn(GENE_WE_ASK_FOR);
         rightList.add(profile);

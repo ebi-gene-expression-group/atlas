@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import static org.apache.commons.lang3.StringUtils.wrap;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
-public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<OldBaselineProfile, Factor, BaselineRequestContext> {
+public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineRequestContext> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesTSVWriter.class);
 
@@ -56,12 +56,12 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<OldBaseline
     }
 
     @Override
-    protected String getSecondaryRowHeader(OldBaselineProfile geneProfile) {
+    protected String getSecondaryRowHeader(BaselineProfile geneProfile) {
        return null;
     }
 
     @Override
-    protected String[] extractConditionLevels(OldBaselineProfile geneProfile, Set<Factor> conditions) {
+    protected String[] extractConditionLevels(BaselineProfile geneProfile, Set<Factor> conditions) {
         String[] expressionLevels = new String[conditions.size()];
         int i = 0;
         for (Factor condition: conditions) {

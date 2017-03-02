@@ -50,12 +50,21 @@ public class BaselineExperimentTest {
 
 
 
-        subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroups);
+        subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroups, "accession");
 
     }
 
+    public static BaselineExperiment mockExperiment(String accession){
+        return mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
+                assayGroups, accession);
+    }
+
+    public static BaselineExperiment mockExperiment(){
+        return mockExperiment("accession");
+    }
+
     public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
-            experimentDesign, List<AssayGroup> assayGroups){
+            experimentDesign, List<AssayGroup> assayGroups, String accession){
             return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
                     experimentalFactors, "description", "displayName", "",
                     new Species("species",
@@ -67,10 +76,6 @@ public class BaselineExperimentTest {
 
     }
 
-    public static BaselineExperiment mockExperiment(){
-        return mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
-                assayGroups);
-    }
 
 
     @Test
@@ -101,6 +106,6 @@ public class BaselineExperimentTest {
             assayGroups.add(new AssayGroup("id_"+i, "assay_"+i));
         }
         assertThat(mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
-                assayGroups).getDataColumnDescriptors(), is(assayGroups));
+                assayGroups, "accession").getDataColumnDescriptors(), is(assayGroups));
     }
 }

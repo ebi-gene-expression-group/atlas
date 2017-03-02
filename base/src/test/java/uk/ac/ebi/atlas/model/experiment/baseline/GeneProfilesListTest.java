@@ -18,15 +18,15 @@ import static org.mockito.Mockito.when;
 public class GeneProfilesListTest {
 
     @Mock
-    OldBaselineProfile profile_1;
+    BaselineProfile profile_1;
     @Mock
-    OldBaselineProfile profile_2;
+    BaselineProfile profile_2;
     @Mock
-    OldBaselineProfile profile_3;
+    BaselineProfile profile_3;
     @Mock
-    OldBaselineProfile profile_4;
+    BaselineProfile profile_4;
     @Mock
-    OldBaselineProfile profile_5;
+    BaselineProfile profile_5;
 
     private BaselineProfilesList subject;
 
@@ -45,20 +45,20 @@ public class GeneProfilesListTest {
     @Test(expected = IllegalArgumentException.class)
     public void sublistShouldThrowIllegalArguemntExceptionWhenUpperIndexIsLessThanZero() throws Exception {
         //when
-        List<OldBaselineProfile> e = subject.subList(0, -1);
+        List<BaselineProfile> e = subject.subList(0, -1);
         assertThat(e, is(nullValue()));
     }
 
     public void sublistTest() throws Exception {
         //when
-        List<OldBaselineProfile> geneProfiles = subject.subList(0, 3);
+        List<BaselineProfile> geneProfiles = subject.subList(0, 3);
         //then
         assertThat(geneProfiles, contains(profile_5, profile_3, profile_4));
     }
 
     public void sublistShouldReturnEntireListWhenTopIndexLargerThanListSize() throws Exception {
         //when
-        List<OldBaselineProfile> geneProfiles = subject.subList(0, 7);
+        List<BaselineProfile> geneProfiles = subject.subList(0, 7);
         //then
         assertThat(geneProfiles, hasSize(5));
     }

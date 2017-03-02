@@ -13,10 +13,11 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExperimentTest {
@@ -33,15 +34,18 @@ public class DifferentialExperimentTest {
     Contrast c1 = new Contrast("g1_g2", null, referenceAssay1, testAssay1, "first contrast");
     Contrast c2 = new Contrast("g3_g4", null, referenceAssay2, testAssay2, "second contrast");
 
+    public static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts){
+        return new DifferentialExperiment(accession, new Date(), contrasts,
+                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
+                mock(ExperimentDesign.class));
+    }
+
     @Mock
     private ExperimentDesign experimentDesignMock;
 
     @Before
     public void setUp() throws Exception {
-
-
-        subject = new DifferentialExperiment("accession", new Date(), ImmutableList.of(c1, c2),
-                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID), experimentDesignMock);
+        subject = mockExperiment("accession",ImmutableList.of(c1, c2));
     }
 
     @Test
@@ -65,8 +69,4 @@ public class DifferentialExperimentTest {
         assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
     }
 
-    @Test
-    public void testGetExperimentDesign() throws Exception {
-        assertThat(subject.getExperimentDesign(), is(experimentDesignMock));
-    }
 }

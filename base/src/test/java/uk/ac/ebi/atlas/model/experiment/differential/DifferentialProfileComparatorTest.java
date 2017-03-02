@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileDeserializer;
 
 import java.util.Arrays;
 import java.util.Collections;

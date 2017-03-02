@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 
@@ -35,13 +35,13 @@ public class PrescribedOrderProfileSelectionTest {
 
     @Test
     public void useProfileIdNotTheName(){
-        OldBaselineProfile p = new OldBaselineProfile("AC197246.3_FG003", "RPL32");
+        BaselineProfile p = new BaselineProfile("AC197246.3_FG003", "RPL32");
 
-        SelectProfiles<OldBaselineProfile, BaselineProfilesList> subject = new PrescribedOrderProfileSelection<>
+        SelectProfiles<BaselineProfile, BaselineProfilesList> subject = new PrescribedOrderProfileSelection<>
                 (ImmutableList.of("AC197246.3_FG003"), new BaselineProfilesListBuilder());
 
 
-        Iterable<OldBaselineProfile> result = subject.select(ImmutableList.of(p), 1);
+        Iterable<BaselineProfile> result = subject.select(ImmutableList.of(p), 1);
 
         assertThat(result.iterator().next(), is(p));
 
@@ -49,11 +49,11 @@ public class PrescribedOrderProfileSelectionTest {
 
 
     private void test(String[] order, String[] underlying, String[] expected, int maxRows){
-        SelectProfiles<OldBaselineProfile, BaselineProfilesList> subject = new PrescribedOrderProfileSelection<>
+        SelectProfiles<BaselineProfile, BaselineProfilesList> subject = new PrescribedOrderProfileSelection<>
                 (Arrays.asList(order), new BaselineProfilesListBuilder());
 
 
-        Iterable<OldBaselineProfile> result = subject.select(ps(underlying), maxRows);
+        Iterable<BaselineProfile> result = subject.select(ps(underlying), maxRows);
 
         assertThat(result, is(ps(expected)));
     }
@@ -70,16 +70,16 @@ public class PrescribedOrderProfileSelectionTest {
         test(order, underlying, expected, 100);
     }
 
-    private Iterable<OldBaselineProfile> ps(String ... ns){
-        List<OldBaselineProfile> r = new ArrayList<>();
+    private Iterable<BaselineProfile> ps(String ... ns){
+        List<BaselineProfile> r = new ArrayList<>();
         for(String n: ns){
             r.add(p(n));
         }
         return r;
     }
 
-    private OldBaselineProfile p(String n){
-        return new OldBaselineProfile(n,n);
+    private BaselineProfile p(String n){
+        return new BaselineProfile(n,n);
     }
 
 }

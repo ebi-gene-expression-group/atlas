@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSeria
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.ObjectInputStreamer;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.OldBaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -62,7 +61,7 @@ public class BaselineProfileInputStreamFactoryIT {
 
         serializedFile.renameTo(temporaryFile);
 
-        ExpressionProfileInputStream<OldBaselineProfile, BaselineExpression> inputStream = subject
+        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = subject
                 .createBaselineProfileInputStream((BaselineExperiment) experimentTrader.getPublicExperiment(E_MTAB_513),
                         DEFAULT_QUERY_FACTOR, 0.1, new
                         HashSet<Factor>());

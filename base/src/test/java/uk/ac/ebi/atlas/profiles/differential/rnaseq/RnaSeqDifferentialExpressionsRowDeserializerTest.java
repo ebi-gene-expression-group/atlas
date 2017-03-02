@@ -1,6 +1,7 @@
 
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
@@ -9,9 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.tsv.DifferentialExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.RnaSeqDifferentialExpressionsRowDeserializer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -20,26 +23,24 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqDifferentialExpressionsRowDeserializerTest {
 
-    public static final String P_VAL_1 = "1";
-    public static final String FOLD_CHANGE_1 = "0.474360080385946";
+    String P_VAL_1 = "1";
+    String FOLD_CHANGE_1 = "0.474360080385946";
 
-    public static final String P_VAL_2 = "1";
-    public static final String FOLD_CHANGE_2 = "-Inf";
+    String P_VAL_2 = "1";
+     String FOLD_CHANGE_2 = "-Inf";
 
-    private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
+    String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
 
-    private DifferentialExpressionsRowDeserializer subject;
+    AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
+    AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
+    AssayGroup g3 = new AssayGroup("g3", "run_31", "run_32");
 
-    @Mock
-    private Contrast contrast1Mock;
-    @Mock
-    private Contrast contrast2Mock;
+    Contrast g1_g2 = new Contrast("g1_g2","", g1, g2, "first contrast");
+    Contrast g1_g3 = new Contrast("g1_g2","", g1, g3, "second contrast");
 
-    @Before
-    public void initializeSubject() {
-        subject = new DifferentialExpressionsRowDeserializer(Lists.newArrayList(contrast1Mock, contrast2Mock));
+    DifferentialExpressionsRowDeserializer subject = new RnaSeqDifferentialExpressionsRowDeserializer(
+            ImmutableList.of(g1_g2, g1_g3));
 
-    }
 
     @Test
     public void pollShouldReturnExpressionsInTheRightOrder() throws Exception {
