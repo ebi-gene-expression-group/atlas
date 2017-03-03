@@ -12,13 +12,10 @@ import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Set;
 
 public class BaselineExpression implements Expression, KryoSerializable {
     private double level;
     private String levelString;
-    @Deprecated
-    private FactorGroup factorGroup;
     private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
@@ -28,40 +25,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     public BaselineExpression(double level) {
         this.level = level;
-    }
-
-    public BaselineExpression(double level, FactorGroup factorGroup) {
-        this(level, factorGroup, new double[]{});
-    }
-
-    public BaselineExpression(double[] quartiles, FactorGroup factorGroup) {
-        this(quartiles[2], factorGroup, quartiles);
-    }
-
-    private BaselineExpression(double level, FactorGroup factorGroup, double[] quartiles) {
-        this(level);
-        this.factorGroup = factorGroup;
-        this.levelString = removeTrailingZero(level);
-        this.quartiles = quartiles;
-    }
-
-    public BaselineExpression(String expressionLevelString, FactorGroup factorGroup) {
-        this.levelString = expressionLevelString;
-
-        switch (expressionLevelString) {
-            case "NT":  //Non-Tissue
-                level = 0;
-                break;
-            case "NA":
-                // treat as if zero
-                level = 0;
-                break;
-            default:
-                level = Double.parseDouble(expressionLevelString);
-                break;
-        }
-        this.factorGroup = factorGroup;
-        this.quartiles = new double[]{};
     }
 
     public BaselineExpression(double level, String dataColumnDescriptorId) {
@@ -107,10 +70,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
         return quartiles;
     }
 
-    public FactorGroup getFactorGroup() {
-        return factorGroup;
-    }
-
     public double getLevel() {
         return level;
     }
@@ -121,19 +80,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     public boolean isGreaterThanOrEqual(double level) {
         return Double.compare(getLevel(), level) >= 0;
-    }
-
-    public void setFactorGroup(FactorGroup factorGroup) {
-        this.factorGroup = factorGroup;
-    }
-
-    public Factor getFactor(String type) {
-        for (Factor factor : factorGroup) {
-            if (factor.getType().equalsIgnoreCase(type)) {
-                return factor;
-            }
-        }
-        throw new IllegalStateException("BaselineExpression doesn't contain factor for a given type");
     }
 
     @Override
@@ -148,16 +94,12 @@ public class BaselineExpression implements Expression, KryoSerializable {
         BaselineExpression other = (BaselineExpression) object;
 
         return Objects.equal(level, other.level) &&
-                Objects.equal(factorGroup, other.factorGroup);
+                Objects.equal(dataColumnDescriptorId, other.dataColumnDescriptorId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(level, factorGroup);
-    }
-
-    public boolean containsAll(Set<Factor> factors) {
-        return factorGroup.containsAll(factors);
+        return Objects.hashCode(level, dataColumnDescriptorId);
     }
 
     static String removeTrailingZero(double value) {
@@ -168,7 +110,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("levelString", levelString)
-                .add("factorGroup", factorGroup)
+                .add("id", dataColumnDescriptorId)
                 .toString();
     }
 
@@ -177,6 +119,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     public void write(Kryo kryo, Output output) {
         output.writeDouble(level);
         output.writeString(levelString);
+        output.writeString(dataColumnDescriptorId);
         boolean hasQuartiles = !ArrayUtils.isEmpty(quartiles);
         output.writeBoolean(hasQuartiles);
         output.writeDoubles(quartiles);
@@ -186,6 +129,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     public void read(Kryo kryo, Input input) {
         level = input.readDouble();
         levelString = input.readString();
+        dataColumnDescriptorId = input.readString();
         boolean hasQuartiles = input.readBoolean();
         quartiles = hasQuartiles ? input.readDoubles(5) : input.readDoubles(0);
     }

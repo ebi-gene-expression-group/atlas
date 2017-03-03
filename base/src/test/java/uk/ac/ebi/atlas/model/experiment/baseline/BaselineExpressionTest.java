@@ -1,12 +1,9 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 public class BaselineExpressionTest {
 
@@ -17,12 +14,8 @@ public class BaselineExpressionTest {
 
     @Test
     public void expressionLevel0 () {
-        Factor factor1 = new Factor("ORGANISM_PART", "lung");
 
-        FactorSet factorGroup = new FactorSet();
-        factorGroup.add(factor1);
-
-        subject = new BaselineExpression(EXPRESSION_LEVEL_1, factorGroup);
+        subject = new BaselineExpression(EXPRESSION_LEVEL_1, "g1");
 
         assertThat(subject.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
 
@@ -30,12 +23,8 @@ public class BaselineExpressionTest {
 
     @Test
     public void expressionLevelNA () {
-        Factor factor1 = new Factor("ORGANISM_PART", "lung");
 
-        FactorSet factorGroup = new FactorSet();
-        factorGroup.add(factor1);
-
-        subject = new BaselineExpression(EXPRESSION_LEVEL_2, factorGroup);
+        subject = new BaselineExpression(EXPRESSION_LEVEL_2, "g1");
 
         assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_2));
 

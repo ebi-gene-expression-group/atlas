@@ -61,7 +61,7 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
             BaselineExpression expression = getExpression(assayGroup);
             double foldLevel = fold(expression.getLevel(), foldFactor);
             BaselineExpression foldedExpression =
-                    new BaselineExpression(foldLevel, expression.getFactorGroup());
+                    new BaselineExpression(foldLevel, expression.getDataColumnDescriptorId());
             add(assayGroup, foldedExpression);
         }
         return this;

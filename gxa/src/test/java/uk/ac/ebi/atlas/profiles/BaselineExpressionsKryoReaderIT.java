@@ -20,6 +20,8 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
 
@@ -63,7 +65,7 @@ public class BaselineExpressionsKryoReaderIT {
 
             List<String> expressionLevelStrings = new ArrayList<>();
             for (BaselineExpression expression : subject.getExpressions()) {
-                Assert.assertThat(assaysFromTsv, contains(expression.getDataColumnDescriptorId()));
+                Assert.assertThat(assaysFromTsv, hasItem(expression.getDataColumnDescriptorId()));
                 expressionLevelStrings.add(expression.getLevelAsString());
             }
             assertThat(expressionLevelStrings.size(), is(assaysFromTsv.size()));

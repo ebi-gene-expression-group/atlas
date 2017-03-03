@@ -41,6 +41,7 @@ public abstract class BaselineProfileStreamFactory extends ProfileStreamFactory<
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(options.getCutoff());
         //TODO pay attention to other options
+        // we used to only pick up expressions that will later be retrieved
         // e.g.
         // baselineExpressionFilter.setFilterFactors(filterFactors);
         return baselineExpressionFilter;
