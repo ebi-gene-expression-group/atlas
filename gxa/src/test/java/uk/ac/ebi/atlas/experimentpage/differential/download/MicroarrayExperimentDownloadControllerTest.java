@@ -10,13 +10,19 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -62,19 +68,25 @@ public class MicroarrayExperimentDownloadControllerTest {
     @Mock
     SolrQueryService solrQueryService;
 
-    @Mock
-    DataWriterFactory dataWriterFactory;
-
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentDownloadController(experimentTrader, microarrayProfileStreamFactory,
-                microarrayProfilesWriterFactory, solrQueryService, dataWriterFactory);
-
         when(experimentTrader.getExperiment(EXPERIMENT_ACCESSION,ACCESS_KEY)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(experimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
+        Species species = new Species("", SpeciesProperties.UNKNOWN);
+        when(experimentMock.getSpecies()).thenReturn(species);
+        when(responseMock.getWriter()).thenReturn(printWriterMock);
+
+        when(solrQueryService.fetchResponse(any(SemanticQuery.class), eq(species.getReferenceName())))
+                .thenReturn(new GeneQueryResponse());
+
+
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
+        when(responseMock.getWriter()).thenReturn(printWriterMock);
+
+        subject = new MicroarrayExperimentDownloadController(experimentTrader, microarrayProfileStreamFactory,
+                microarrayProfilesWriterFactory, solrQueryService, dataWriterFactoryMock);
     }
 
     @Test
