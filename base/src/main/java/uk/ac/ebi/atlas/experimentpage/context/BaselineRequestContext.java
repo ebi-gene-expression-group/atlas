@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
+import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
@@ -22,19 +23,15 @@ import java.util.*;
 @Scope("request")
 public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineExperiment, BaselineRequestPreferences>
         implements BaselineProfileStreamOptions {
-    
-    private final ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup;
-
 
     public BaselineRequestContext(BaselineRequestPreferences requestPreferences, BaselineExperiment experiment) {
         super(requestPreferences, experiment);
-        this.displayNamePerSelectedAssayGroup = displayNamePerSelectedAssayGroup();
     }
 
     @Override
     public String displayNameForColumn(AssayGroup assayGroup) {
-            return getDataColumnsToReturn().contains(assayGroup) ? displayNamePerSelectedAssayGroup.get
-                    (assayGroup) : "";
+            return getDataColumnsToReturn().contains(assayGroup) ? displayNamePerSelectedAssayGroup.get()
+                    .get(assayGroup) : "";
     }
 
     @Override
@@ -60,6 +57,13 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
 
         return b.build();
     }
+
+    LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
+        @Override
+        protected ImmutableMap<AssayGroup, String> create() throws Exception {
+            return displayNamePerSelectedAssayGroup();
+        }
+    };
 
     private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup(){
         Map<AssayGroup, Map<String, Factor>> factorsByTypePerId = new HashMap<>();
