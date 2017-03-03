@@ -59,6 +59,7 @@ public class ExperimentPageService {
 
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
+        experimentDescription.addProperty("relUrl", "experiments/"+experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
         return experimentDescription;

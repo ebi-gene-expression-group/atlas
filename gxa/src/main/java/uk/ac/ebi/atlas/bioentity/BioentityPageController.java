@@ -78,7 +78,8 @@ public abstract class BioentityPageController {
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
     public String showBioentityPage(String identifier, Species species, String entityName, Model model, Set<String>
-            experimentTypes, List<BioentityPropertyName> desiredOrderOfPropertyNames, Map<BioentityPropertyName, Set<String>>propertyValuesByType){
+            experimentTypes, List<BioentityPropertyName> desiredOrderOfPropertyNames, Map<BioentityPropertyName,
+            Set<String>>propertyValuesByType, String foundationKey){
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -107,11 +108,10 @@ public abstract class BioentityPageController {
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-        return "bioentities";
+        return foundationKey != null ? "foundation-bioentities" : "bioentities";
     }
 
-    protected abstract Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String
-            entityName);
+    protected abstract Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName);
 
 
     @ExceptionHandler(ResourceNotFoundException.class)

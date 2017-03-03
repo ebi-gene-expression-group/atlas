@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
@@ -23,6 +24,7 @@ public class GenePageController extends BioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier,
+                               @RequestParam(value = "foundation", required = false) String foundationKey,
                                Model model) {
         if(identifier.toUpperCase().startsWith("MGI")){
             Set<String> correspondingEnsemblIdentifiers = bioentityPropertyDao.fetchGeneIdsForPropertyValue
@@ -46,7 +48,7 @@ public class GenePageController extends BioentityPageController {
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
         return super.showBioentityPage(identifier, species, geneName, model, experimentTypes,
-                BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
+                BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType, foundationKey);
     }
 
     @Override

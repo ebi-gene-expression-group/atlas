@@ -21,7 +21,7 @@ class BrowseBySpecies extends React.Component {
 
             />);
 
-        const atlasBaseUrl = this.props.atlasBaseUrl + "/gxa/experiments?foundation";
+        const allExperimentsUrl = this.props.atlasBaseUrl + "/gxa/experiments?foundation";
 
         return (
             <div>
@@ -31,7 +31,7 @@ class BrowseBySpecies extends React.Component {
 
                 <div className="row">
                     <div className="small-6 small-centered columns margin-top-large">
-                        <a href={atlasBaseUrl} className="button float-center">View all species</a>
+                        <a href={allExperimentsUrl} className="button float-center">View all species</a>
                     </div>
                 </div>
             </div>
@@ -48,9 +48,9 @@ class SingleSpecies extends React.Component {
 
     render() {
 
-        const iconUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&foundation";
-        const differentialUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Differential&foundation";
-        const baselineUrl = this.props.atlasBaseUrl + "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Baseline&foundation";
+        const iconUrl = "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&foundation";
+        const differentialUrl = "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Differential&foundation";
+        const baselineUrl = "/gxa/experiments?kingdom=" + this.props.kingdom + "&organism=" + this.props.species + "&experimentType=Baseline&foundation";
 
         const speciesFirstCapitalLetter = this.props.species[0].toUpperCase() + this.props.species.substr(1);
 

@@ -1,0 +1,38 @@
+.gxaBioentityHeader {
+    background: rgba(145, 145, 145, 0.30);
+    border: 1px solid #CCCCCC;
+    margin-bottom: 20px;
+    margin-top: 35px;
+}
+
+.gxaBioentityHeader .gxaBioentityName, .gxaBioentityHeader .gxaBioentityDescription, .gxaBioentityHeader .gxaBioentitySpecies {
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    color: #5d5d5d;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.gxaBioentityHeader .gxaBioentityName {
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 14px;
+}
+
+.gxaBioentityHeader .gxaBioentityDescription, .gxaBioentityHeader .gxaBioentitySpecies {
+    font-size: 12px;
+    padding-left: 6px;
+}
+
+.gxaBioentityHeader .gxaBioentitySpecies {
+    font-style: italic;
+}
+.gxaBioentityHeader .gxaBioentitySpecies::first-letter {
+    text-transform: uppercase;
+}
+
+.gxaSearchTermDescription {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.7rem;
+}

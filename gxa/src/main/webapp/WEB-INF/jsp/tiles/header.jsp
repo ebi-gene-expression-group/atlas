@@ -75,38 +75,6 @@
             <li><a href="${pageContext.request.contextPath}/licence.html">Licence</a></li>
             <li><a href="${pageContext.request.contextPath}/about.html">About</a></li>
         </ul>
-
-        <!-- SP adding class hide-for-small-only as the right hand side takes a lot of space for small + remove text for medium-->
-        <ul class="show-for-large dropdown menu float-right" data-dropdown-menu data-description="functional">
-            <li class="functional has-submenu is-down-arrow"><a href="#" class="hide-for-small-only"><i class="icon icon-generic" data-icon="d"></i> Share this</a>
-                <ul class="menu js">
-                    <li >
-                        <a href="#">Hope we don't talk of Facebook</a>
-                    </li>
-                    <li>
-                        <a href='#'> Twitter</a>
-                        <ul class='menu'>
-                            <li><a href='#'>@EMG-metagenomics</a></li>
-                            <li><a href='#'>@Rob-FInn</a></li>
-                            <li>
-                                <a href='#'> Item 1 sub</a>
-                                <ul class='menu'>
-                                    <li><a href='#'>Item 1 subA</a></li>
-                                    <li><a href='#'>Item 1 subB</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href='#'> Item 1 sub</a>
-                                <ul class='menu'>
-                                    <li><a href='#'>Item 1 subA</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Reddit</a></li>
-                </ul>
-            </li><!-- SP Missing code -->
-        </ul>
     </nav>
     <!-- /local-nav -->
 
