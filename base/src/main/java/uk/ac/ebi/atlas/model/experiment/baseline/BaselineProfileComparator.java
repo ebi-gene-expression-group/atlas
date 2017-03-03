@@ -119,4 +119,6 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
     }
 
+
+
 }

@@ -15,6 +15,11 @@ public class DifferentialRequestContext<E extends DifferentialExperiment, Prefer
         super(requestPreferences, experiment);
     }
 
+    @Override
+    public String displayNameForColumn(Contrast contrast) {
+        return contrast.getDisplayName();
+    }
+
     public E getExperiment(){
         return experiment;
     }
