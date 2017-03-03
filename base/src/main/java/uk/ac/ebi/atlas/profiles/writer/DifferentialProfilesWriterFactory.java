@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.search.SearchDescription;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
@@ -55,8 +56,9 @@ public abstract class DifferentialProfilesWriterFactory<Expr extends Differentia
     }
 
     @Override
-    protected Iterable<String> valuesFromColumn(R requestContext, DifferentialDownLoadOptions profileDownloadOptions, Expr expression) {
-        return ImmutableList.of(Double.toString(expression.getFoldChange()), Double.toString(expression.getPValue()));
+    protected Iterable<String> valuesFromColumn(R requestContext, DifferentialDownLoadOptions profileDownloadOptions, @Nullable Expr expression) {
+        return expression == null ? ImmutableList.of("","") :
+                ImmutableList.of(Double.toString(expression.getFoldChange()), Double.toString(expression.getPValue()));
     }
 
     @Override

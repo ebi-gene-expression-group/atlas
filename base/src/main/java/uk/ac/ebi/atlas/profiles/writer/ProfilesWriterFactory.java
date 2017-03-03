@@ -36,8 +36,8 @@ public abstract class ProfilesWriterFactory<DataColumnDescriptor extends Describ
         return Collections.singleton(requestContext.displayNameForColumn(dataColumnDescriptor));
     }
 
-    protected Iterable<String> valuesFromColumn(R requestContext, DownloadOptions profileDownloadOptions, Expr expression) {
-        return Collections.singleton(Double.toString(expression.getLevel()));
+    protected Iterable<String> valuesFromColumn(R requestContext, DownloadOptions profileDownloadOptions,@Nullable Expr expression) {
+        return Collections.singleton(expression == null ? "" : Double.toString(expression.getLevel()));
     }
 
     final protected ProfilesWriter<Prof> create(Writer responseWriter, final R requestContext, final DownloadOptions profileDownloadOptions) {

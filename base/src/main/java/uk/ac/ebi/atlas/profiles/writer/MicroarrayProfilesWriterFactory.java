@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 
+import javax.annotation.Nullable;
 import javax.inject.Named;
 
 @Named
@@ -29,8 +30,10 @@ public class MicroarrayProfilesWriterFactory extends DifferentialProfilesWriterF
     }
 
     @Override
-    protected Iterable<String> valuesFromColumn(MicroarrayRequestContext requestContext, DifferentialDownLoadOptions profileDownloadOptions, MicroarrayExpression expression) {
-        return ImmutableList.of(
+    protected Iterable<String> valuesFromColumn(MicroarrayRequestContext requestContext, DifferentialDownLoadOptions
+            profileDownloadOptions,@Nullable MicroarrayExpression expression) {
+        return expression == null ? ImmutableList.of("","", "") :
+                ImmutableList.of(
                 Double.toString(expression.getFoldChange()),
                 Double.toString(expression.getPValue()),
                 Double.toString(expression.getTstatistic()));
