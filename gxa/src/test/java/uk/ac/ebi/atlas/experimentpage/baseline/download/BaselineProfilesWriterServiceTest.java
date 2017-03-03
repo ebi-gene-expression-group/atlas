@@ -5,8 +5,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -33,6 +35,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BaselineProfilesWriterServiceTest {
 
     @Mock
@@ -80,7 +83,7 @@ public class BaselineProfilesWriterServiceTest {
 
         baselineRequestContext = new BaselineRequestContext(preferencesMock, baselineExperimentMock);
 
-        when(baselineProfilesWriterFactory.create(eq(responseWriter), eq(baselineRequestContext), anyString(),
+        when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString(),
                 anyBoolean())).thenReturn(profilesWriter);
 
         when(profilesWriter.write(anyCollection())).thenReturn(123L);
@@ -94,10 +97,13 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
+        Species species = new Species("some species", SpeciesProperties.UNKNOWN);
+        when(baselineExperimentMock.getSpecies()).thenReturn(species);
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
         when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);
+
+        when(solrQueryService.fetchResponse(geneQuery, species.getReferenceName())).thenReturn(new GeneQueryResponse());
     }
 
     @Test
@@ -170,24 +176,6 @@ public class BaselineProfilesWriterServiceTest {
         when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString())).thenReturn(response);
 
         subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
-
-        //query solr, create a stream, pass the results on
-        Mockito.verify(profilesWriter).write(anyCollection());
-        Mockito.verifyNoMoreInteractions(/*solrQueryService,*/ inputStreamFactory, profilesWriter);
-        Mockito.reset(solrQueryService, inputStreamFactory, profilesWriter);
     }
 
-    @Test
-    public void returnValueComesFromTheWriter() throws Exception {
-        Writer writer = mock(Writer.class);
-        Map<String, Integer> coexpressions = new HashMap<>();
-
-        long expected = 123L;
-
-        when(profilesWriter.write(anyCollection())).thenReturn(123L);
-
-        long returnValue = subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
-
-        assertEquals(expected, returnValue);
-    }
 }
