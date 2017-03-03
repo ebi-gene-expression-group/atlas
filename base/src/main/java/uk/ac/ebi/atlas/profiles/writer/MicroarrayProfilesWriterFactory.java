@@ -16,7 +16,7 @@ public class MicroarrayProfilesWriterFactory extends DifferentialProfilesWriterF
 
     @Override
     protected String[] getProfileIdColumnHeaders(MicroarrayRequestContext requestContext, DifferentialDownLoadOptions profileDownloadOption) {
-        return new String[]{"Gene ID", "Gene Name", "Array design ID"};
+        return new String[]{"Gene ID", "Gene Name", "Design Element"};
     }
 
     @Override
