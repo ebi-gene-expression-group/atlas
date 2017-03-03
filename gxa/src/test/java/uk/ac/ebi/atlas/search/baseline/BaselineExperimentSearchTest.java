@@ -134,7 +134,9 @@ public class BaselineExperimentSearchTest {
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
         List<FactorAcrossExperiments> factors = result.factorsAcrossAllExperiments;
 
-        assertThat(factors, contains(E_MTAB_599_ALL_FACTORS.toArray()));
+        assertThat(factors.size(), is(3));
+        assertThat(factors, contains(new FactorAcrossExperiments(LUNG), new FactorAcrossExperiments(SPLEEN),new
+                FactorAcrossExperiments(THYMUS) ));
 
         assertThat(profiles, hasSize(1));
 
@@ -159,7 +161,8 @@ public class BaselineExperimentSearchTest {
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
         List<FactorAcrossExperiments> factors = result.factorsAcrossAllExperiments;
 
-        assertThat(factors, contains(E_GEOD_26284_ALL_FACTORS.toArray()));
+        assertThat(factors.size(), is(1));
+        assertThat(factors, contains(new FactorAcrossExperiments(IMR_90)));
 
         assertThat(profiles, hasSize(1));
 
