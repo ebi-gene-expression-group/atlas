@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
+import com.google.common.base.*;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -180,4 +180,17 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return experimentInfo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Experiment<?> that = (Experiment<?>) o;
+        return com.google.common.base.Objects.equal(accession, that.accession);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(accession);
+    }
+    
 }
