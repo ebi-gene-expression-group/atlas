@@ -4,7 +4,6 @@ import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
@@ -54,7 +53,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
         // A1:
-        if (isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
+        if (isSpecific && selectedQueryFactors.equals(allQueryFactors)) {
             int order = ComparisonChain
                     .start()
                     .compareTrueFirst(ourRule(firstBaselineProfile), ourRule(otherBaselineProfile))
@@ -64,7 +63,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         }
 
         // B1:
-        if (isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)) {
+        if (isSpecific && !selectedQueryFactors.equals(allQueryFactors)) {
             // reverse because we want lower values to come first
             return Ordering.natural().reverse().compare(
                     getExpressionLevelFoldChange(firstBaselineProfile),
@@ -73,11 +72,11 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
 
         // A2
-        if (!isSpecific && CollectionUtils.isEmpty(selectedQueryFactors)) {
+        if (!isSpecific && selectedQueryFactors.equals(allQueryFactors)) {
             return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
         }
 
-        //B2 - !isSpecific && !CollectionUtils.isEmpty(selectedQueryFactors)
+        //B2 - !isSpecific && !selectedQueryFactors.equals(allQueryFactors)
         return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedQueryFactors);
 
     }

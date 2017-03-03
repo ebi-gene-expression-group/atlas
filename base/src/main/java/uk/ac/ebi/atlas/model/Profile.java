@@ -95,7 +95,6 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     protected abstract void updateStateAfterAddingExpression(Expr expression);
 
     public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
-        checkArgument(CollectionUtils.isNotEmpty(conditions));
         for(DataColumnDescriptor dataColumnDescriptor : conditions){
             if(expressionsByCondition.containsKey(dataColumnDescriptor)){
                 return true;

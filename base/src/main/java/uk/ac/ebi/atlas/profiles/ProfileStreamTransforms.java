@@ -86,7 +86,10 @@ public abstract class ProfileStreamTransforms<DataColumnDescriptor extends Descr
         return fromPredicate(new Predicate<Prof>() {
             @Override
             public boolean apply(@Nullable Prof prof) {
-                return prof.getAverageExpressionLevelOn(selectedColumns) > prof.getMaxExpressionLevelOn(nonSelectedColumns);
+                return ! prof.isExpressedOnAnyOf(nonSelectedColumns) || prof.getAverageExpressionLevelOn
+                        (selectedColumns) > prof
+                        .getMaxExpressionLevelOn
+                        (nonSelectedColumns);
             }
         });
     }

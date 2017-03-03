@@ -37,7 +37,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     public int compare(T firstProfile, T otherProfile) {
 
         // A1:
-        if (isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {
+        if (isSpecific && selectedQueryContrasts.equals(allQueryContrasts)) {
             int order = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
             if (0 == order) {
                 order = compareOnAverageExpressionLevel(firstProfile, otherProfile, allQueryContrasts);
@@ -52,7 +52,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         }
 
         // B1:
-        if (isSpecific && !CollectionUtils.isEmpty(selectedQueryContrasts)) {
+        if (isSpecific && !selectedQueryContrasts.equals(allQueryContrasts)) {
             int order = Ordering.natural().compare(
                     getExpressionLevelFoldChange(firstProfile),
                     getExpressionLevelFoldChange(otherProfile));
@@ -70,7 +70,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         }
 
         // A2
-        if (!isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {
+        if (!isSpecific && selectedQueryContrasts.equals(allQueryContrasts)) {
             int order = compareOnAverageExpressionLevel(firstProfile, otherProfile, allQueryContrasts);
             if (0 == order) {
                 order = compareOnAveragePValue(firstProfile, otherProfile, allQueryContrasts);
@@ -81,7 +81,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
             return order;
         }
 
-        // B2 - !specific && !CollectionUtils.isEmpty
+        // B2 - !specific && !selectedQueryContrasts.equals(allQueryContrasts)
         int order = compareOnAverageExpressionLevel(firstProfile, otherProfile, selectedQueryContrasts);
         if (0 == order) {
             order = compareOnAveragePValue(firstProfile, otherProfile, selectedQueryContrasts);
