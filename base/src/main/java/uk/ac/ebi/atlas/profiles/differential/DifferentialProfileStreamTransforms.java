@@ -10,6 +10,7 @@ public class DifferentialProfileStreamTransforms<Prof extends DifferentialProfil
         extends ProfileStreamTransforms<Contrast, Prof> {
 
     public DifferentialProfileStreamTransforms(DifferentialProfileStreamOptions options, GeneQueryResponse geneQueryResponse){
+        register(keepOnlyProfilesExpressedOnColumns(options.getAllDataColumns()));
         if (!geneQueryResponse.getAllGeneIds().isEmpty()) {
             register(keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()));
         }

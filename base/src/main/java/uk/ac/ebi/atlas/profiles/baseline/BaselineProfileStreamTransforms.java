@@ -18,6 +18,7 @@ public class BaselineProfileStreamTransforms extends ProfileStreamTransforms<Ass
 
     public BaselineProfileStreamTransforms(BaselineProfileStreamOptions options,
                                             GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
+        register(keepOnlyProfilesExpressedOnColumns(options.getAllDataColumns()));
         if (!geneQueryResponse.getAllGeneIds().isEmpty()) {
             register(keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()));
         }
