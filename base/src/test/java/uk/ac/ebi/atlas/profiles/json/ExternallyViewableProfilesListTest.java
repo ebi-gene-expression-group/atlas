@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.profiles.json;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import junit.framework.Assert;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
@@ -17,8 +17,10 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSlice;
 
 import javax.annotation.Nullable;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -35,8 +37,8 @@ public class ExternallyViewableProfilesListTest {
             @Override
             public URI apply(@Nullable BaselineExperimentProfile o) {
                 try {
-                    return new URI("https://www.ebi.ac.uk/gxa/experiments/" + o.getId());
-                } catch (URISyntaxException e) {
+                    return new URI("https://www.ebi.ac.uk/gxa/experiments/" +URLEncoder.encode(o.getId(), "UTF-8"));
+                } catch (URISyntaxException | UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -74,16 +76,11 @@ public class ExternallyViewableProfilesListTest {
         JsonObject result = new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments).asJson();
 
 
-        assertThat(result.get("expressions").getAsJsonArray().size(),
-                is(factorsAcrossExperiments.size()));
+        assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(firstProfile, secondProfile).size()));
 
-        assertThat(result.get("expressions").getAsJsonArray().get(0).getAsJsonObject().get("value").getAsDouble(),
-                is(12.34));
-        assertThat(result.get("expressions").getAsJsonArray().get(1).getAsJsonObject().get("value").getAsDouble(),
-                is(56.78));
-        assertThat(result.get("expressions").getAsJsonArray().get(2).getAsJsonObject(), is(new JsonObject()));
-
-        Assert.fail("Look at the output and write some tests");
+        for(JsonElement row: result.get("rows").getAsJsonArray()){
+            assertThat(row.getAsJsonObject().get("expressions").getAsJsonArray().size(), is(factorsAcrossExperiments.size()));
+        }
 
     }
 
@@ -126,10 +123,11 @@ public class ExternallyViewableProfilesListTest {
         JsonObject result = new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments).asJson();
 
 
-        assertThat(result.get("expressions").getAsJsonArray().size(),
-                is(factorsAcrossExperiments.size()));
+        assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));
 
-        Assert.fail("Look at the output and write some tests");
+        for(JsonElement row: result.get("rows").getAsJsonArray()){
+            assertThat(row.getAsJsonObject().get("expressions").getAsJsonArray().size(), is(factorsAcrossExperiments.size()));
+        }
     }
 
     @Test
@@ -152,7 +150,7 @@ public class ExternallyViewableProfilesListTest {
         AssayGroup g3 = new AssayGroup("g3", "run_31", "run_32");
 
         Contrast g1_g2 = new Contrast("g1_g2","", g1, g2, "first contrast");
-        Contrast g1_g3 = new Contrast("g1_g2","", g1, g3, "second contrast");
+        Contrast g1_g3 = new Contrast("g1_g3","", g1, g3, "second contrast");
 
 
         List<Contrast> factorsAcrossExperiments = ImmutableList.of(g1_g2, g1_g3);
@@ -175,9 +173,10 @@ public class ExternallyViewableProfilesListTest {
         JsonObject result = new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments).asJson();
 
 
-        assertThat(result.get("expressions").getAsJsonArray().size(),
-                is(factorsAcrossExperiments.size()));
+        assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));
 
-        Assert.fail("Look at the output and write some tests");
+        for(JsonElement row: result.get("rows").getAsJsonArray()){
+            assertThat(row.getAsJsonObject().get("expressions").getAsJsonArray().size(), is(factorsAcrossExperiments.size()));
+        }
     }
 }

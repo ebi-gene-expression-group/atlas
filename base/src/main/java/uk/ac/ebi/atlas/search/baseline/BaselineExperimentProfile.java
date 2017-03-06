@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.Profile;
@@ -19,7 +20,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
     private ExperimentType experimentType;
     
     public BaselineExperimentProfile(BaselineExperimentSlice experimentSlice) {
-        super(experimentSlice.experimentAccession(), experimentSlice.experimentDisplayName());
+        super(experimentSlice.experimentAccession() +"-"+ FilterFactorsConverter.prettyPrint(experimentSlice.filterFactors()), experimentSlice.experimentDisplayName());
         filterFactors = experimentSlice.filterFactors();
         nonFilterFactorsSize = experimentSlice.nonFilterFactors().size();
         experimentType = experimentSlice.getExperimentType();
@@ -85,9 +86,10 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
 
     @Override
     public Map<String, String> properties() {
-        Map<String, String> result = super.properties();
-        result.put("name", getShortName());
-        result.put("experimentType", experimentType.toString());
-        return result;
+        return ImmutableMap.<String, String>builder()
+                .put("id", super.properties().get("id"))
+                .put("name", getShortName())
+                .put("experimentType", experimentType.toString())
+                .build();
     }
 }
