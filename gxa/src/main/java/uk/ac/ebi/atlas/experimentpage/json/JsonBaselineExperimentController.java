@@ -3,16 +3,12 @@ package uk.ac.ebi.atlas.experimentpage.json;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -25,15 +21,18 @@ import javax.validation.Valid;
 @Scope("request")
 public class JsonBaselineExperimentController extends JsonExperimentController {
 
-    private BaselineExperimentPageService baselineExperimentPageService;
+    private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
+    private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;
 
     @Inject
     public JsonBaselineExperimentController(
             ExperimentTrader experimentTrader,
             BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-            BaselineProfileStreamFactory baselineProfileStreamFactory) {
+            RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
+            ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory) {
         super(experimentTrader);
-        this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileStreamFactory);
+        this.rnaSeqBaselineExperimentPageService = baselineExperimentPageServiceFactory.create(rnaSeqBaselineProfileStreamFactory);
+        this.proteomicsBaselineExperimentPageService = baselineExperimentPageServiceFactory.create(proteomicsBaselineProfileStreamFactory);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -45,7 +44,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
                                          Model model, HttpServletRequest request) {
-        return gson.toJson(baselineExperimentPageService.populateModelWithHeatmapData(
+        return gson.toJson(rnaSeqBaselineExperimentPageService.populateModelWithHeatmapData(
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,
                 model, request, false));
     }
@@ -59,7 +58,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                                          @PathVariable String experimentAccession,
                                          @RequestParam(required = false) String accessKey,
                                          Model model, HttpServletRequest request    ) {
-        return gson.toJson(baselineExperimentPageService.populateModelWithHeatmapData(
+        return gson.toJson(proteomicsBaselineExperimentPageService.populateModelWithHeatmapData(
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 preferences, model, request, false));
     }

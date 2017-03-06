@@ -1,18 +1,18 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageCallbacks;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
     @Inject
     public ProteomicsBaselineExperimentPageController(
             BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
-            BaselineProfileStreamFactory baselineProfileStreamFactory) {
+            ProteomicsBaselineProfileStreamFactory baselineProfileStreamFactory) {
         this.baselineExperimentPageService =
                 baselineExperimentPageServiceFactory.create(baselineProfileStreamFactory);
     }
