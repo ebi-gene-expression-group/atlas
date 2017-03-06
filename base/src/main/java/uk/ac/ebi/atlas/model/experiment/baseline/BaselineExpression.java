@@ -46,9 +46,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
         this.levelString = expressionLevelString;
 
         switch (expressionLevelString) {
-            case "NT":  //Non-Tissue
-                level = 0;
-                break;
             case "NA":
                 // treat as if zero
                 level = 0;

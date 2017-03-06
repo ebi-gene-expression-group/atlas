@@ -92,18 +92,7 @@ public class BaselineProfileTest {
         assertThat(subject.getExpressionLevel(g3), is(subject.getExpressionLevel(g3)));
         assertThat(subject.getExpressionLevel(g4), is(nullValue()));
     }
-
-    @Test
-    public void nonTissueExpressionsDoNotAffectMinOrMax() {
-        assertThat(subject.getMinExpressionLevel(), is(2.2));
-        assertThat(subject.getMaxExpressionLevel(), is(3.001));
-
-        subject.add(g4, new BaselineExpression("NT", "g4"));
-
-        assertThat(subject.getMinExpressionLevel(), is(2.2));
-        assertThat(subject.getMaxExpressionLevel(), is(3.001));
-    }
-
+    
     @Test
     public void testFold(){
         BaselineProfile sumProfile = subject.foldProfile(3);

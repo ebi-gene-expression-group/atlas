@@ -78,9 +78,6 @@ public class BaselineExperimentSearchResultProducer {
 
             BaselineExperiment experiment = experimentSlice.experiment();
 
-
-            Set<Factor> factorDifference = Sets.difference(tissueFactorsAcrossAllExperiments, experimentSlice.nonFilterFactors());
-
             BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
 
             for (BaselineExperimentExpression baselineExpression : expressionsByExperimentSlice.get(experimentSlice)) {
@@ -89,13 +86,6 @@ public class BaselineExperimentSearchResultProducer {
                         .factorOfType(defaultQueryFactorType));
                 allFactorsAcrossAllExperiments.add(f);
                 profile.add(f, new BaselineExpression(baselineExpression.expressionLevel(), f.getId()));
-            }
-
-            // For the nonFilterFactors which don't have expression, create new expression with NT level
-            for (Factor factor : factorDifference) {
-                FactorAcrossExperiments f = new FactorAcrossExperiments(factor);
-                allFactorsAcrossAllExperiments.add(f);
-                profile.add(f, new BaselineExpression("NT", f.getId()));
             }
 
             // For the expressed factors below cutoff
