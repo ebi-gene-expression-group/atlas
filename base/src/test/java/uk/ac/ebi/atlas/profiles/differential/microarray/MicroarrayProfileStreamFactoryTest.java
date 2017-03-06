@@ -2,27 +2,22 @@ package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
-import org.hamcrest.CoreMatchers;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.experiment.differential.*;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.SelectProfiles;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializer;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -31,8 +26,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
 
 @RunWith(value = MockitoJUnitRunner.class)
 public class MicroarrayProfileStreamFactoryTest {
@@ -51,12 +44,14 @@ public class MicroarrayProfileStreamFactoryTest {
     String T_STAT_2 = "-9.36995510274818";
     String FOLD_CHANGE_2 = "-0.788061466666666";
 
+
     @Test
     public void twoRowsWithOneProfileEach(){
+        String header  = Joiner.on("\t").join(new String[] {"gene id", "gene name", "design element", "contrast_1.p-value", "contrast_1.t-stat", "contrast_1.fold-change"});
         String LINE1 = Joiner.on("\t").join(new String[] {GENE_ID, GENE_NAME, DESIGN_ELEMENT, P_VALUE, T_STAT, FOLD_CHANGE});
         String LINE2 = Joiner.on("\t").join(new String[] {GENE_ID_2, GENE_NAME_2, DESIGN_ELEMENT_2, P_VALUE_2, T_STAT_2, FOLD_CHANGE_2});
         List<Contrast> contrasts = ContrastTest.get(1);
-        List<String> LINES = ImmutableList.of(LINE1, LINE2);
+        List<String> LINES = ImmutableList.of(header, LINE1, LINE2);
         
         List<MicroarrayProfile> sequenceProfiles = loadProfiles(contrasts, LINES);
         assertThat(sequenceProfiles.size(), is(2));
@@ -72,7 +67,7 @@ public class MicroarrayProfileStreamFactoryTest {
         
         assertThat(sequenceProfiles.get(1).getId(), is(GENE_ID_2));
         assertThat(sequenceProfiles.get(1).getName(), is(GENE_NAME_2));
-        assertThat(sequenceProfiles.get(1).getConditions().size(), is(2));
+        assertThat(sequenceProfiles.get(1).getConditions().size(), is(1));
         MicroarrayExpression e10 = sequenceProfiles.get(1).getExpression(contrasts.get(0));
         assertThat(e10.getPValue(), is(Double.parseDouble(P_VALUE_2)));
         assertThat(e10.getFoldChange(), is(Double.parseDouble(FOLD_CHANGE_2)));
@@ -81,9 +76,10 @@ public class MicroarrayProfileStreamFactoryTest {
 
     @Test
     public void oneRowWithTwoProfilesEach(){
+        String header  = Joiner.on("\t").join(new String[] {"gene id", "gene name", "design element", "contrast_1.p-value", "contrast_1.t-stat", "contrast_1.fold-change",    "contrast_2.p-value", "contrast_2.t-stat", "contrast_2.fold-change"});
         String LINE_2_CONTRASTS = Joiner.on("\t").join(new String[] {GENE_ID, GENE_NAME, DESIGN_ELEMENT, P_VALUE, T_STAT, FOLD_CHANGE, P_VALUE_2, T_STAT_2, FOLD_CHANGE_2});
         List<Contrast> contrasts = ContrastTest.get(2);
-        List<String> LINES = ImmutableList.of(LINE_2_CONTRASTS);
+        List<String> LINES = ImmutableList.of(header, LINE_2_CONTRASTS);
 
         List<MicroarrayProfile> sequenceProfiles = loadProfiles(contrasts, LINES);
         assertThat(sequenceProfiles.size(), is(1));

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
@@ -18,8 +19,7 @@ public class IsDifferentialExpressionAboveCutOffTest {
 
     IsDifferentialExpressionAboveCutOff subject;
 
-    @Mock
-    Contrast contrastMock;
+    Contrast contrastMock = ContrastTest.get(1).iterator().next();
 
     DifferentialExpression expression1 = new DifferentialExpression(0.05, 40.0, contrastMock);
 

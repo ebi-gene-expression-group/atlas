@@ -55,7 +55,7 @@ public class MicroarrayExpressionsRowDeserializerTest {
         assertThat(subject.deserializeRow(new String[]{P_VAL_1, T_VAL_1, FOLD_CHANGE_1}).size(), is(1));
         assertThat(subject.deserializeRow(new String[]{P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", "NA","NA"}).size(), is(1));
         assertThat(subject.deserializeRow(new String[]{"NA","NA","NA", P_VAL_1, T_VAL_1, FOLD_CHANGE_1}).size(), is(1));
-        assertThat(subject.deserializeRow(new String[]{"NA","NA","NA", P_VAL_1, FOLD_CHANGE_1, "NA", "NA", "NA"})//Batman!
+        assertThat(subject.deserializeRow(new String[]{"NA","NA","NA", P_VAL_1, T_VAL_1, FOLD_CHANGE_1, "NA", "NA", "NA"})//Batman!
                  .size(), is(1));
     }
 }
