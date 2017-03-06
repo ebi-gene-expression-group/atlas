@@ -66,7 +66,7 @@ public class BaselineExpressionsKryoReaderIT {
             List<String> expressionLevelStrings = new ArrayList<>();
             for (BaselineExpression expression : subject.getExpressions()) {
                 Assert.assertThat(assaysFromTsv, hasItem(expression.getDataColumnDescriptorId()));
-                expressionLevelStrings.add(expression.getLevelAsString());
+                expressionLevelStrings.add(expression.getLevel()+"");
             }
             assertThat(expressionLevelStrings.size(), is(assaysFromTsv.size()));
 

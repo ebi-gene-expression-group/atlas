@@ -91,7 +91,7 @@ public class ExpressionsRowTsvDeserializerBaselineTest {
         assertThat(baselineExpression2.getLevel(), is(0.3D));
 
         assertThat(ArrayUtils.isEmpty(baselineExpression3.getQuartiles()), is(true));
-        assertThat(baselineExpression3.getLevelAsString(), is("NA"));
+        assertThat(baselineExpression3.getLevel(), is(0.0D));
     }
 
 

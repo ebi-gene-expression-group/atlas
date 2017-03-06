@@ -10,24 +10,18 @@ public class BaselineExpressionTest {
     private static final String EXPRESSION_LEVEL_1 = "0";
     private static final String EXPRESSION_LEVEL_2 = "123.4";
 
-    private BaselineExpression subject;
-
     @Test
     public void expressionLevel0 () {
 
-        subject = new BaselineExpression(EXPRESSION_LEVEL_1, "g1");
 
-        assertThat(subject.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
+        assertThat(new BaselineExpression(EXPRESSION_LEVEL_1, "g1").getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
+        assertThat(new BaselineExpression(EXPRESSION_LEVEL_2, "g1").getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_2)));
 
     }
 
     @Test
     public void expressionLevelNA () {
-
-        subject = new BaselineExpression(EXPRESSION_LEVEL_2, "g1");
-
-        assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_2));
-
+        assertThat(new BaselineExpression("0", "g1").getLevel(), is(new BaselineExpression("NA", "g1").getLevel()));
     }
 
     @Test

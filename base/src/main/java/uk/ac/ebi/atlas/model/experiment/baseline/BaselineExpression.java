@@ -15,7 +15,6 @@ import java.text.NumberFormat;
 
 public class BaselineExpression implements Expression, KryoSerializable {
     private double level;
-    private String levelString;
     private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
@@ -38,12 +37,10 @@ public class BaselineExpression implements Expression, KryoSerializable {
     private BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
         this(level);
         this.dataColumnDescriptorId = dataColumnDescriptorId;
-        this.levelString = removeTrailingZero(level);
         this.quartiles = quartiles;
     }
 
     public BaselineExpression(String expressionLevelString, String dataColumnDescriptorId) {
-        this.levelString = expressionLevelString;
 
         switch (expressionLevelString) {
             case "NA":
@@ -69,10 +66,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     public double getLevel() {
         return level;
-    }
-
-    public String getLevelAsString() {
-        return levelString;
     }
 
     public boolean isGreaterThanOrEqual(double level) {
@@ -106,7 +99,7 @@ public class BaselineExpression implements Expression, KryoSerializable {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("levelString", levelString)
+                .add("level", level)
                 .add("id", dataColumnDescriptorId)
                 .toString();
     }
@@ -115,7 +108,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
     @Override
     public void write(Kryo kryo, Output output) {
         output.writeDouble(level);
-        output.writeString(levelString);
         output.writeString(dataColumnDescriptorId);
         boolean hasQuartiles = !ArrayUtils.isEmpty(quartiles);
         output.writeBoolean(hasQuartiles);
@@ -125,7 +117,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
     @Override
     public void read(Kryo kryo, Input input) {
         level = input.readDouble();
-        levelString = input.readString();
         dataColumnDescriptorId = input.readString();
         boolean hasQuartiles = input.readBoolean();
         quartiles = hasQuartiles ? input.readDoubles(5) : input.readDoubles(0);
