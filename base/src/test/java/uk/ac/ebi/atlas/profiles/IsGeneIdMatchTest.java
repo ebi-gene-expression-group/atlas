@@ -18,7 +18,7 @@ public class IsGeneIdMatchTest {
     public void GeneIdMatchesPredicate() {
 
         //given
-        Predicate<Profile> acceptancePredicate = new IsGeneIdMatch(ImmutableSet.of("GENE1", "GENE2"));
+        Predicate<Profile> acceptancePredicate = new IsGeneIdMatch(ImmutableSet.of("GENE1_ID", "GENE2_ID"));
         //then
         assertThat(acceptancePredicate.apply(new BaselineProfile("GENE1_ID", "GENE1")), is(true));
         //and

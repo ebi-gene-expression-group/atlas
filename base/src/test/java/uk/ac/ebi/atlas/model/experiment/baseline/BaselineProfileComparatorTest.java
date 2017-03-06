@@ -72,7 +72,7 @@ public class BaselineProfileComparatorTest {
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
 
-        subject = new BaselineProfileComparator(true, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(true, allOrganismParts, allOrganismParts, cutoff);
 
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
@@ -85,7 +85,7 @@ public class BaselineProfileComparatorTest {
     @Test
     public void highSpecificityShouldPreceedLowSpecificity() {
 
-        subject = new BaselineProfileComparator(true, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(true, allOrganismParts, allOrganismParts, cutoff);
 
         //when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -98,7 +98,7 @@ public class BaselineProfileComparatorTest {
     @Test
     public void sameSpecificityShouldBeSortedByExpressionLevel() {
 
-        subject = new BaselineProfileComparator(true, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(true, allOrganismParts, allOrganismParts, cutoff);
 
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity16AndSmallerExpressionLevel);
@@ -112,7 +112,7 @@ public class BaselineProfileComparatorTest {
     @Test
     public void higherAverageAcrossAllTissues() {
 
-        subject = new BaselineProfileComparator(false, null, allOrganismParts, cutoff);
+        subject = new BaselineProfileComparator(false, allOrganismParts, allOrganismParts, cutoff);
 
         // when
         int comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
@@ -165,7 +165,7 @@ public class BaselineProfileComparatorTest {
 
     @Test
     public void averageExpressionLevelComparationIsBeingReversed(){
-        subject = new BaselineProfileComparator(false, null, null, 0);
+        subject = new BaselineProfileComparator(false, allOrganismParts, allOrganismParts, 0);
         int comparison = subject.compareOnAverageExpressionLevel(geneWithAverageExpression8,
                 geneWithAverageExpression3, ImmutableList.<AssayGroup>of());
         assertThat(comparison, is(-1));

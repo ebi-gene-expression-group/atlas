@@ -92,7 +92,7 @@ public class BaselineProfileTest {
         assertThat(subject.getExpressionLevel(g3), is(subject.getExpressionLevel(g3)));
         assertThat(subject.getExpressionLevel(g4), is(nullValue()));
     }
-    
+
     @Test
     public void testFold(){
         BaselineProfile sumProfile = subject.foldProfile(3);

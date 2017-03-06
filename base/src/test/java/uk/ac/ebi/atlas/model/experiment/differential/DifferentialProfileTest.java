@@ -4,13 +4,12 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfileTest {
@@ -18,14 +17,8 @@ public class DifferentialProfileTest {
     private static final String GENE_ID = "A_GENE_ID";
     private static final String GENE_NAME = "A_GENE_NAME";
 
-    @Mock
-    private DifferentialExpression differentialExpressionMock1;
 
-    @Mock
-    private DifferentialExpression differentialExpressionMock2;
-
-    @Mock
-    private Contrast contrastMock1;
+    private List<Contrast> fakeContrasts = ContrastTest.get(2);
 
     private DifferentialProfile<DifferentialExpression> subject;
 
@@ -46,15 +39,14 @@ public class DifferentialProfileTest {
 
     @Test
     public void addingAnOverExpressedExpressionShouldUpdateMinAndMaxUpRegulatedLevelsAndSpecificity() throws Exception {
-        //given
-        given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(0.4D);
-        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
-        given(differentialExpressionMock2.getLevel()).willReturn(0.6D);
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, 0.4D, fakeContrasts.get(0));
+        DifferentialExpression differentialExpressionMock2
+                = new DifferentialExpression(0.05, 0.6D, fakeContrasts.get(1));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0.6D));
@@ -70,15 +62,14 @@ public class DifferentialProfileTest {
 
     @Test
     public void addingUnderExpressedExpressionsShouldUpdateMinAndMaxDownRegulatedLevelsAndSpecificity() throws Exception {
-        //given
-        given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(-0.3D);
-        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
-        given(differentialExpressionMock2.getLevel()).willReturn(-0.5D);
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, -0.3D, fakeContrasts.get(0));
+        DifferentialExpression differentialExpressionMock2
+                = new DifferentialExpression(0.05, -0.5D, fakeContrasts.get(1));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.NaN));
@@ -94,58 +85,43 @@ public class DifferentialProfileTest {
 
     @Test
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfOneExpression() throws Exception {
-        //given
-        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
-
-        Contrast contrastMock1 = mock(Contrast.class);
-
-
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(false);
-        Contrast contrastMock2 = mock(Contrast.class);
-
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, -0.3D, fakeContrasts.get(0));
+        DifferentialExpression differentialExpressionMock2
+                = new DifferentialExpression(0.05, 0.3D, fakeContrasts.get(1));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
-        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2));
-        assertThat(averageExpressionLevelOn, is(0.15));
+        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(fakeContrasts));
+        assertThat(averageExpressionLevelOn, is(0.3));
     }
 
     @Test
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfBoth() throws Exception {
-        //given
-        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(-0.3D);
-
-        Contrast contrastMock1 = mock(Contrast.class);
-
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(-0.5D);
-
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, -0.3D, fakeContrasts.get(0));
+        DifferentialExpression differentialExpressionMock2
+                = new DifferentialExpression(0.05, -0.5D, fakeContrasts.get(1));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
-        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2));
+        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(fakeContrasts));
         assertThat(averageExpressionLevelOn, is(0.4D));
     }
 
     @Test
     public void getMinDownRegulatedWhen1ExpressionIsNegativeInfinity() {
-        //given
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, Double.NEGATIVE_INFINITY, fakeContrasts.get(0));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
 
         //then
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
@@ -154,61 +130,29 @@ public class DifferentialProfileTest {
 
     @Test
     public void getMinDownRegulatedWhen1of2ExpressionIsNegativeInfinity() {
-        //given
-        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
-        Contrast contrastMock1 = mock(Contrast.class);
-        given(differentialExpressionMock1.getLevel()).willReturn(-5D);
-
-
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
-
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, -5D, fakeContrasts.get(0));
+        DifferentialExpression differentialExpressionMock2
+                = new DifferentialExpression(0.05, Double.NEGATIVE_INFINITY, fakeContrasts.get(1));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
+        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-5D));
-    }
-
-
-    @Test
-    public void getMaxDownRegulatedWhen1of2ExpressionIsNegativeInfinity() {
-        //given
-        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
-        Contrast contrastMock1 = mock(Contrast.class);
-        given(differentialExpressionMock1.getLevel()).willReturn(-5D);
-
-
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
-
-        //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
-
-        //then
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
     }
 
 
+
     @Test
     public void getMaxDownRegulatedWhen1ExpressionIsNegativeInfinity() {
-        //given
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, Double.NEGATIVE_INFINITY, fakeContrasts.get(0));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
 
         //then
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
@@ -217,76 +161,14 @@ public class DifferentialProfileTest {
 
     @Test
     public void getMinUpRegulatedWhen1ExpressionIsInfinity() {
-        //given
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
-        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
+        DifferentialExpression differentialExpressionMock1
+                = new DifferentialExpression(0.05, Double.POSITIVE_INFINITY, fakeContrasts.get(0));
 
         //when
-        subject.add(contrastMock1,differentialExpressionMock2);
+        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
 
         //then
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
-    }
-
-    @Test
-    public void getMinUpRegulatedWhen1of2ExpressionsIsInfinity() {
-        //given
-        given(differentialExpressionMock1.isRegulatedLike(Regulation.UP)).willReturn(true);
-        given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(5D);
-
-        Contrast contrastMock1 = mock(Contrast.class);
-
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
-        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-
-        //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
-
-        //then
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(5D));
-    }
-
-    @Test
-    public void getMaxUpRegulatedWhen1ExpressionIsInfinity() {
-        //given
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
-        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-
-        //when
-        subject.add(contrastMock1,differentialExpressionMock2);
-
-        //then
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
-    }
-
-
-    @Test
-    public void getMaxUpRegulatedWhen1of2ExpressionsIsInfinity() {
-        //given
-        given(differentialExpressionMock1.isRegulatedLike(Regulation.UP)).willReturn(true);
-        given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
-
-        Contrast contrastMock1 = mock(Contrast.class);
-
-        given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
-        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
-        Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
-
-        //when
-        subject.add(contrastMock1,differentialExpressionMock1);
-        subject.add(contrastMock1,differentialExpressionMock2);
-
-        //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
     }
 

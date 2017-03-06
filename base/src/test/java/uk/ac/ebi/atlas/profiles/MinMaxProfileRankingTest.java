@@ -120,7 +120,9 @@ public class MinMaxProfileRankingTest {
         double min = 1000* rng.nextDouble();
         double max = min + 1000* rng.nextDouble();
 
-        List<AssayGroup> allFactors = ImmutableList.of(new AssayGroup("a"),new AssayGroup("b"),new AssayGroup("c"));
+        List<AssayGroup> allFactors =
+                ImmutableList.of(new AssayGroup("a", "run_1"),
+                        new AssayGroup("b", "run_2"),new AssayGroup("c", "run_3"));
 
         int j = rng.nextInt(10);
         for(int i =0; i< j; i++){
@@ -135,7 +137,7 @@ public class MinMaxProfileRankingTest {
         double cutoff = randDouble(min,max);
 
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(false,
-                ImmutableList.<AssayGroup>of(), allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
+                allFactors, allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
                 (l,5);
 
         assertEquals("profileWeWant",result.iterator().next().getName());
@@ -151,13 +153,15 @@ public class MinMaxProfileRankingTest {
         double min = 1000* rng.nextDouble();
         double max = min + 1000* rng.nextDouble();
 
-        List<AssayGroup> allFactors = ImmutableList.of(new AssayGroup("a"),new AssayGroup("b"),new AssayGroup("c"));
+        List<AssayGroup> allFactors =
+                ImmutableList.of(new AssayGroup("a", "run_1"),
+                        new AssayGroup("b", "run_2"),new AssayGroup("c", "run_3"));
 
         int j = rng.nextInt(1000);
         for(int i =0; i< j; i++){
             l.add(randomProfile(min,max, "profile_"+i,allFactors,false));
         }
-        l.add(randomProfile(max+1000, max+11,"profileWeWant", ImmutableList.of(new AssayGroup("a")),true));
+        l.add(randomProfile(max+1000, max+11,"profileWeWant", ImmutableList.of(new AssayGroup("a", "run_1")),true));
         for(int i =0; i< 10-j; i++){
             l.add(randomProfile(min,max, "profile_"+i,allFactors,false));
         }
@@ -165,7 +169,7 @@ public class MinMaxProfileRankingTest {
         double cutoff = randDouble(min,max);
 
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true,
-                ImmutableList.<AssayGroup>of(), allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
+                allFactors, allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
                 (l,50);
 
         if(!"profileWeWant".equals(result.iterator().next().getName())){
@@ -180,10 +184,10 @@ public class MinMaxProfileRankingTest {
         double min = 1000* rng.nextDouble();
         double max = min + 1000* rng.nextDouble();
 
-        List<AssayGroup> allFactors = ImmutableList.of();
+        List<AssayGroup> allFactors = new ArrayList<>();
         for(int i =0; i<10; i++){
             String factorValue = "factor_"+i;
-            allFactors.add(new AssayGroup(factorValue));
+            allFactors.add(new AssayGroup(factorValue, "run1", "run2"));
         }
         List<AssayGroup> selectedFactors = ImmutableList.of(allFactors.iterator().next());
 
