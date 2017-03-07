@@ -54,29 +54,32 @@ public class BaselineExperimentTest {
 
     }
 
+    public static BaselineExperiment mockExperiment(){
+        return mockExperiment("accession");
+    }
+
     public static BaselineExperiment mockExperiment(String accession){
         return mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
                 assayGroups, accession);
     }
 
-    public static BaselineExperiment mockExperiment(){
-        return mockExperiment("accession");
+    public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
+            experimentDesign, List<AssayGroup> assayGroups, String accession){
+
+        return mockExperiment(experimentalFactors, experimentDesign, assayGroups,ExperimentDisplayDefaults.create(), accession);
     }
 
     public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
-            experimentDesign, List<AssayGroup> assayGroups, String accession){
-            return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,"accession", new Date(),
-                    experimentalFactors, "description", "displayName", "",
-                    new Species("species",
-                            SpeciesProperties.create(
-                                    "ensemblName", "defaulQueryFactorType",
-                                    "kingdom", ImmutableSortedMap.<String, List<String>>of())),
-                    true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
-                    Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>(), ExperimentDisplayDefaults.create());
-
+            experimentDesign, List<AssayGroup> assayGroups, ExperimentDisplayDefaults experimentDisplayDefaults, String accession){
+        return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,accession, new Date(),
+                experimentalFactors, "description", "displayName", "",
+                new Species("species",
+                        SpeciesProperties.create(
+                                "ensemblName", "defaulQueryFactorType",
+                                "kingdom", ImmutableSortedMap.<String, List<String>>of())),
+                true, Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
+                Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>(), experimentDisplayDefaults);
     }
-
-
 
     @Test
     public void testGetExperimentRunAccessions() throws Exception {

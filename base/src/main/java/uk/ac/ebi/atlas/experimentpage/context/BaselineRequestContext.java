@@ -86,13 +86,7 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
         }
 
         List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
-                FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters())
-                        .filter(new Predicate<String>() {
-                            @Override
-                            public boolean apply(@Nullable String type) {
-                                return allValuesPerType.containsKey(type) && allValuesPerType.get(type).size() >1 ;
-                            }
-                        }).toList();
+                typesWhichWeShouldProvideToDifferentiateBetweenValues(experiment.getDisplayDefaults().prescribedOrderOfFilters(), allValuesPerType);
 
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
@@ -102,12 +96,25 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
                 @Nullable
                 @Override
                 public String apply(@Nullable String type) {
-                    return e.getValue().get(type).getValue();
+                    return e.getValue().get(Factor.normalize(type)).getValue();
                 }
             })));
         }
 
         return b.build();
+    }
+
+    private static List<String> typesWhichWeShouldProvideToDifferentiateBetweenValues(List<String> types, final Map<String, Set<String>> allValuesPerType){
+        List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
+                FluentIterable.from(types)
+                        .filter(new Predicate<String>() {
+                            @Override
+                            public boolean apply(@Nullable String type) {
+                                return allValuesPerType.containsKey(Factor.normalize(type)) && allValuesPerType.get(Factor.normalize(type)).size() >1 ;
+                            }
+                        }).toList();
+        // covers case of one column
+        return typesWhoseValuesVaryAcrossSelectedDescriptors.size() == 0 ? types : typesWhoseValuesVaryAcrossSelectedDescriptors;
     }
 
 }
