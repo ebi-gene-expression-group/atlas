@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -64,9 +67,14 @@ public abstract class ExperimentDisplayDefaults {
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
-                                                   String defaultQueryFactorType,
+                                                   final String defaultQueryFactorType,
                                                    List<String> menuFilterFactorTypes){
-        return create(defaultFilterFactors, ImmutableList.<String>builder().add(defaultQueryFactorType).addAll(menuFilterFactorTypes).build());
+        return create(defaultFilterFactors, ImmutableList.<String>builder().add(defaultQueryFactorType).addAll(Collections2.filter(menuFilterFactorTypes, new Predicate<String>() {
+            @Override
+            public boolean apply(@Nullable String s) {
+                return !s.equals(defaultQueryFactorType);
+            }
+        })).build());
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
