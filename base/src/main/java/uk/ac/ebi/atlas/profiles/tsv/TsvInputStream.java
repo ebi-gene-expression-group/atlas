@@ -24,7 +24,7 @@ public class TsvInputStream<DataColumnDescriptor extends DescribesDataColumns,
     private final ExpressionsRowDeserializer<Expr> expressionsRowDeserializer;
     private final Predicate<Expr> expressionFilter;
     private final Experiment<DataColumnDescriptor> experiment;
-    private final int howManyColumnsOnTheLeftAreForIdentifyingDataRow;
+    private final Integer howManyColumnsOnTheLeftAreForIdentifyingDataRow;
     private final Function<String[], Prof> initProfileFromIdentifiers;
 
     public TsvInputStream(Reader reader, ExpressionsRowDeserializerBuilder<Expr>
@@ -32,12 +32,12 @@ public class TsvInputStream<DataColumnDescriptor extends DescribesDataColumns,
                              Experiment<DataColumnDescriptor> experiment,
                              int howManyColumnsOnTheLeftAreForIdentifyingDataRow,
                              Function<String[], Prof> initProfileFromIdentifiers) {
-        this.csvReader = new CSVReader(reader, '\t');
-        this.expressionsRowDeserializer = expressionsRowDeserializerBuilder.build(readHeaders());
         this.expressionFilter = expressionFilter;
         this.experiment = experiment;
         this.howManyColumnsOnTheLeftAreForIdentifyingDataRow = howManyColumnsOnTheLeftAreForIdentifyingDataRow;
         this.initProfileFromIdentifiers = initProfileFromIdentifiers;
+        this.csvReader = new CSVReader(reader, '\t');
+        this.expressionsRowDeserializer = expressionsRowDeserializerBuilder.build(readHeaders());
     }
 
     private String[] readHeaders(){
