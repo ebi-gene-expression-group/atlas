@@ -37,13 +37,12 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @Inject
     public MicroarrayExperimentPageController(ExperimentTrader experimentTrader,
-            DifferentialRequestContextFactory.Microarray differentialRequestContextFactory,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                               TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
         this.experimentTrader = experimentTrader;
         differentialExperimentPageService =
-                new DifferentialExperimentPageService<>(differentialRequestContextFactory, profilesHeatMap,
+                new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.Microarray(), profilesHeatMap,
                 differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
     }
