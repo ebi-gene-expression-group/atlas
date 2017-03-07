@@ -64,6 +64,12 @@ public abstract class ExperimentDisplayDefaults {
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
+                                                   String defaultQueryFactorType,
+                                                   List<String> menuFilterFactorTypes){
+        return create(defaultFilterFactors, ImmutableList.<String>builder().add(defaultQueryFactorType).addAll(menuFilterFactorTypes).build());
+    }
+
+    public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
                                                    List<String> prescribedOrderOfFilters){
         ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
         for(Factor factor : defaultFilterFactors){
@@ -73,8 +79,14 @@ public abstract class ExperimentDisplayDefaults {
     }
 
 
-    public static ExperimentDisplayDefaults create(Map<String, String> defaultFilterValues,
+    static ExperimentDisplayDefaults create(Map<String, String> defaultFilterValues,
                                                    List<String> prescribedOrderOfFilters){
+        ImmutableList.Builder<String> b = ImmutableList.<String>builder().addAll(prescribedOrderOfFilters);
+        for(String filterType: defaultFilterValues.keySet()){
+            if(!prescribedOrderOfFilters.contains(filterType)){
+                b.add(filterType);
+            }
+        }
         return new AutoValue_ExperimentDisplayDefaults(defaultFilterValues,prescribedOrderOfFilters);
     }
 

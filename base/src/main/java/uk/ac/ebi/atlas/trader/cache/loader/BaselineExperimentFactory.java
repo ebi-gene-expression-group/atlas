@@ -85,6 +85,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                         experimentDesign,
                         factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated))
                 .withDisplayDefaults(ExperimentDisplayDefaults.create(factorsConfig.getDefaultFilterFactors(),
+                        factorsConfig.getDefaultQueryFactorType(),
                         factorsConfig.getMenuFilterFactorTypes()))
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
