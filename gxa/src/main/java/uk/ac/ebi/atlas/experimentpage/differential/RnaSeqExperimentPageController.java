@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
+@Deprecated
 @Controller
 @Scope("request")
 public class RnaSeqExperimentPageController extends DifferentialExperimentPageController {
@@ -50,7 +51,7 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
                 tracksUtil, atlasResourceHub,applicationProperties);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
+    @RequestMapping(value = "/old-experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
                                    @RequestParam Map<String, String> allParameters,
                                    @RequestParam(required = false) String accessKey,

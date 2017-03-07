@@ -32,10 +32,10 @@
 
 <c:choose>
     <c:when test="${not empty pageContext.request.getParameter(\"highcharts\")}" >
-    <%@ include file="includes/heatmap-highcharts.jsp" %>
+        <%@ include file="includes/heatmap-react.jsp" %>
     </c:when>
     <c:otherwise>
-        <%@ include file="includes/heatmap-react.jsp" %>
+        <%@ include file="includes/heatmap-highcharts.jsp" %>
     </c:otherwise>
 </c:choose>
 

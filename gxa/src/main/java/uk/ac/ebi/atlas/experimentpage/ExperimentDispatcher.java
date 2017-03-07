@@ -31,7 +31,7 @@ public final class ExperimentDispatcher {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
+    @RequestMapping(value = {"/old-experiments/{experimentAccession}", "/old-experiments/{experimentAccession}/*"})
     public String dispatch(HttpServletRequest request,
                            @PathVariable String experimentAccession,
                            @RequestParam(required = false) String accessKey) {

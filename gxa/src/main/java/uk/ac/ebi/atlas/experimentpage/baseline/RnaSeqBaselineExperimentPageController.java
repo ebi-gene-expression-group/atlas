@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
+@Deprecated
 @Controller
 @Scope("request")
 public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPageController {
@@ -39,7 +40,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         this.baselineExperimentPageService = baselineExperimentPageServiceFactory.create(baselineProfileStreamFactory);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
+    @RequestMapping(value = "/old-experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
     public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                      @PathVariable String experimentAccession,
                                      @RequestParam Map<String,String> allParameters,

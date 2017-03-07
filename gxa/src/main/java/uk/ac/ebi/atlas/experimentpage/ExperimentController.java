@@ -44,7 +44,7 @@ public class ExperimentController extends ExperimentPageController{
         this.dataFileHub = dataFileHub;
     }
 
-    @RequestMapping(value = {"/fexperiments/{experimentAccession}", "/fexperiments/{experimentAccession}/*"})
+    @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
     public String showExperimentPage(Model model,
                                      HttpServletRequest request,
                                      @PathVariable String experimentAccession,
@@ -75,9 +75,14 @@ public class ExperimentController extends ExperimentPageController{
         JsonArray availableTabs = new JsonArray();
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(groupingsForHeatmap(experiment)));
+
+        availableTabs.add(customContentTab("dummy", "Gene Expression"));
+
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(customContentTab("experiment-design", "Experiment Design"));
         }
+
+        availableTabs.add(customContentTab("dummy", "Download"));
         // and so on ! :)
 
         /*

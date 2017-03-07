@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
+@Deprecated
 @Controller
 @Scope("request")
 public class MicroarrayExperimentPageController extends DifferentialExperimentPageController{
@@ -47,7 +48,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                 tracksUtil, atlasResourceHub,applicationProperties);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
+    @RequestMapping(value = "/old-experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
                                    @RequestParam Map<String, String> allParameters,
                                    @RequestParam(required = false) String accessKey,
