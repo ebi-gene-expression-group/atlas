@@ -129,15 +129,15 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return MoreObjects.toStringHelper(this)
                 .add("expressionsByCondition", expressionsByCondition.values())
                 .add("id", id)
-                .add("name", name)
+                .add("name", getName())
                 .toString();
     }
 
     public Map<String,String> properties(){
-        return ImmutableMap.of("id", id, "name", name);
+        return ImmutableMap.of("id", id, "name", getName());
     }
 
     public String[] identifiers(){
-        return new String[]{id, name};
+        return new String[]{id, getName()};
     }
 }
