@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.LinkedListMultimap;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,6 +80,13 @@ public class ExperimentController extends ExperimentPageController{
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(customContentTab("experiment-design", "Experiment Design"));
         }
+        if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
+            availableTabs.add(customContentTab("static-table", "Analysis Methods", "data",
+                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readLine(0),
+                                dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readLine(1)
+                            )
+            ));
+        }
 
         availableTabs.add(customContentTab("dummy", "Download"));
         // and so on ! :)
@@ -97,6 +102,34 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
+    JsonArray formatTable(String [] properties, String [] values){
+        Preconditions.checkState(properties.length == values.length);
+
+        JsonArray result = new JsonArray();
+        for(int i = 0 ; i< properties.length ; i ++){
+            result.add(twoElementArray(properties[i], values[i]));
+        }
+
+        return result;
+    }
+
+    JsonArray twoElementArray(String x, String y){
+        JsonArray result = new JsonArray();
+        result.add(new JsonPrimitive(x));
+        result.add(new JsonPrimitive(y));
+        return result;
+    }
+
+    JsonObject customContentTab(String tabName, String name, String onlyPropName, JsonElement value){
+        JsonObject result = new JsonObject();
+        result.addProperty("type", tabName);
+        result.addProperty("name", name);
+        JsonObject props =  new JsonObject();
+        props.add(onlyPropName, value);
+        result.add("props", props);
+        return result;
+    }
+
     JsonObject customContentTab(String tabName, String name){
         JsonObject result = new JsonObject();
         result.addProperty("type", tabName);
@@ -106,13 +139,7 @@ public class ExperimentController extends ExperimentPageController{
     }
 
     JsonObject heatmapTab(JsonArray groups){
-        JsonObject result = new JsonObject();
-        result.addProperty("type", "heatmap");
-        result.addProperty("name", "Heatmap");
-        JsonObject props = new JsonObject();
-        props.add("groups", groups);
-        result.add("props", props);
-        return result;
+        return customContentTab("heatmap", "Heatmap", "groups", groups);
     }
 
     private JsonObject groupForFilterType(String filterType, List<String> defaultValues,
@@ -152,11 +179,6 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    /*
-    Test that:
-    - order like we specified
-    - order of columns like in the experiment
-     */
     JsonArray groupingsForHeatmap(Experiment<? extends DescribesDataColumns> experiment){
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
         ExperimentDisplayDefaults experimentDisplayDefaults = experiment.getDisplayDefaults();
@@ -203,11 +225,5 @@ public class ExperimentController extends ExperimentPageController{
 
         return result;
     }
-
-    /*
-    - arrange as specified in the defaults, then get all the other ones
-    - for each header, say what is in it and if there is a default provide one
-
-     */
 
 }
