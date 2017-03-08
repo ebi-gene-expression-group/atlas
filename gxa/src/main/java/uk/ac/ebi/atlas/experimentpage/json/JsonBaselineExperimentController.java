@@ -3,9 +3,12 @@ package uk.ac.ebi.atlas.experimentpage.json;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
+import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
@@ -20,6 +23,11 @@ import javax.validation.Valid;
 @Controller
 @Scope("request")
 public class JsonBaselineExperimentController extends JsonExperimentController {
+
+    @InitBinder("preferences")
+    void initBinder(WebDataBinder binder) {
+        binder.addValidators(new BaselineRequestPreferencesValidator());
+    }
 
     private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
     private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;

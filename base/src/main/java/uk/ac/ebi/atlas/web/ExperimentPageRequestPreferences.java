@@ -39,10 +39,10 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     protected ExperimentPageRequestPreferences() {
     }
 
-    Set<String> selectedColumnIds = ImmutableSet.of();
+    Set<String> selectedColumnIds = Collections.emptySet();
 
-    public void setSelectedColumnIds(String selectedColumnIdsJoinedByCommas){
-        this.selectedColumnIds = ImmutableSet.copyOf(selectedColumnIdsJoinedByCommas.split(","));
+    public void setSelectedColumnIds(Set<String> selectedColumnIds){
+        this.selectedColumnIds = (selectedColumnIds == null) ? Collections.<String>emptySet() : ImmutableSet.copyOf(selectedColumnIds);
     }
 
     public Set<String> getSelectedColumnIds(){

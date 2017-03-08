@@ -69,6 +69,7 @@ public class ExperimentController extends ExperimentPageController{
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
+        result.addProperty("experimentAccession", experiment.getAccession());
         result.addProperty("experimentType", experiment.getType().name());
         result.addProperty("species", experiment.getSpecies().getReferenceName());
 

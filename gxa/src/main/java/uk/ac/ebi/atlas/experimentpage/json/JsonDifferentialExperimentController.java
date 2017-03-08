@@ -4,11 +4,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialExperimentPageService;
+import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.differential.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.differential.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
@@ -32,6 +34,11 @@ import javax.validation.Valid;
 @Controller
 @Scope("request")
 public class JsonDifferentialExperimentController extends JsonExperimentController {
+
+    @InitBinder("preferences")
+    void initBinder(WebDataBinder binder) {
+        binder.addValidators(new DifferentialRequestPreferencesValidator());
+    }
 
     private final
         DifferentialExperimentPageService<DifferentialExpression, DifferentialExperiment,
