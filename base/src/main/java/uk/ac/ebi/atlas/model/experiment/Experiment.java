@@ -117,9 +117,8 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return result;
     }
 
-    //this doesn't quite match our model and is only used in experiment design
-    //and only to tell if an assay has been analysed or not
-    //possibly: move it to experiment design?
+    //this doesn't quite match our model and only used to be used in experiment design
+    @Deprecated //remove me soon!
     public Set<String> getAnalysedRowsAccessions(){
         ImmutableSet.Builder<String> b = ImmutableSet.builder();
         for(DataColumnDescriptor dataColumnDescriptor: getDataColumnDescriptors()){
@@ -159,10 +158,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         result.put("dataProviderDescription", dataProviderDescription);
         result.put("alternativeViews", alternativeViews);
         result.put("alternativeViewDescriptions", alternativeViewDescriptions);
-
-        //Experiment design related
-        result.put("runAccessions", gson.toJson(getAnalysedRowsAccessions()));
-        result.putAll(experimentDesign.getAttributes());
 
         return result;
     }

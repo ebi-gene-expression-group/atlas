@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.*;
 import com.google.gson.Gson;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -26,8 +25,6 @@ import java.util.*;
  *
  */
 public class ExperimentDesign implements Serializable {
-
-    private static final Gson gson = new Gson();
 
     private SortedSet<String> sampleHeaders = Sets.newTreeSet();
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
@@ -231,35 +228,6 @@ public class ExperimentDesign implements Serializable {
     }
 
 
-    public List<String[]> asTableData() {
-        List<String[]> tableData = Lists.newArrayList();
-        for (String runOrAssay : getAllRunOrAssay()) {
-            tableData.add(composeTableRow(runOrAssay));
-        }
-        return tableData;
-    }
-
-
-    private String[] composeTableRow(String runOrAssay) {
-        List<String> row = Lists.newArrayList(runOrAssay);
-
-        String arrayDesign = getArrayDesign(runOrAssay);
-        if (!Strings.isNullOrEmpty(arrayDesign)) {
-            row.add(arrayDesign);
-        }
-
-        for (String sampleHeader : getSampleHeaders()) {
-            row.add(getSampleCharacteristicValue(runOrAssay, sampleHeader));
-        }
-
-        for (String factorHeader : getFactorHeaders()) {
-            row.add(getFactorValue(runOrAssay, factorHeader));
-        }
-
-        return row.toArray(new String[row.size()]);
-    }
-
-
     public String getSpeciesForAssays(Set<String> assayAccessions) {
         for (String assayAccession: assayAccessions) {
             Map<String, String> assaySamples = getSampleCharacteristicsValues(assayAccession);
@@ -274,19 +242,4 @@ public class ExperimentDesign implements Serializable {
         return "";
     }
 
-
-
-    public Map<String, ?> getAttributes(){
-        Map<String, Object> result = new HashMap<>();
-
-        // does the serialisation to JSON
-        // add table data to model
-        List<String> assayHeaders = getAssayHeaders();
-        result.put("assayHeaders", gson.toJson(assayHeaders));
-        result.put("sampleHeaders", gson.toJson(getSampleHeaders()));
-        result.put("factorHeaders", gson.toJson(getFactorHeaders()));
-        result.put("tableData", gson.toJson(asTableData()));
-
-        return result;
-    }
 }
