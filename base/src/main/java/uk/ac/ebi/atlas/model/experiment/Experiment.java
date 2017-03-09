@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -192,5 +193,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     public int hashCode() {
         return Objects.hashCode(accession);
     }
-    
+
+    protected abstract JsonObject propertiesForAssay(String runOrAssay);
+
 }

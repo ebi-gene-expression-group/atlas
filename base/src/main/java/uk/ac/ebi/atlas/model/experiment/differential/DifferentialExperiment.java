@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -71,6 +72,29 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         ExperimentInfo experimentInfo = super.buildExperimentInfo();
         experimentInfo.setNumberOfContrasts(getDataColumnDescriptors().size());
         return  experimentInfo;
+    }
+
+    @Override
+    protected JsonObject propertiesForAssay(String runOrAssay) {
+        JsonObject result = new JsonObject();
+        String contrastName = "None";
+        String referenceOrTest = "";
+
+        for(Contrast contrast : getDataColumnDescriptors()){
+            if(contrast.getReferenceAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)){
+                contrastName = contrast.getDisplayName();
+                referenceOrTest = "reference";
+                break;
+            } else if(contrast.getTestAssayGroup().assaysAnalyzedForThisDataColumn().contains(runOrAssay)) {
+                contrastName = contrast.getDisplayName();
+                referenceOrTest = "test";
+                break;
+            }
+        }
+
+        result.addProperty("contrastName", contrastName);
+        result.addProperty("referenceOrTest", referenceOrTest);
+        return result;
     }
 
 }

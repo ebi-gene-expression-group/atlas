@@ -274,6 +274,8 @@ public class ExperimentDesign implements Serializable {
         return "";
     }
 
+
+
     public Map<String, ?> getAttributes(){
         Map<String, Object> result = new HashMap<>();
 

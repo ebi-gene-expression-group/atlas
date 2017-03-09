@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -78,7 +79,7 @@ public class ExperimentController extends ExperimentPageController{
         availableTabs.add(customContentTab("dummy", "Gene Expression"));
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
-            availableTabs.add(customContentTab("experiment-design", "Experiment Design"));
+            availableTabs.add(customContentTab("experiment-design", "Experiment Design", new ExperimentDesignTable(experiment).asJson()));
         }
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
             availableTabs.add(customContentTab("static-table", "Analysis Methods", "data",
@@ -120,21 +121,21 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonObject customContentTab(String tabName, String name, String onlyPropName, JsonElement value){
-        JsonObject result = new JsonObject();
-        result.addProperty("type", tabName);
-        result.addProperty("name", name);
+    JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
         JsonObject props =  new JsonObject();
         props.add(onlyPropName, value);
-        result.add("props", props);
-        return result;
+        return customContentTab(tabType, name, props);
     }
 
-    JsonObject customContentTab(String tabName, String name){
+    JsonObject customContentTab(String tabType, String name){
+        return customContentTab(tabType, name, new JsonObject());
+    }
+
+    JsonObject customContentTab(String tabType, String name, JsonObject props){
         JsonObject result = new JsonObject();
-        result.addProperty("type", tabName);
+        result.addProperty("type", tabType);
         result.addProperty("name", name);
-        result.add("props", new JsonObject());
+        result.add("props", props);
         return result;
     }
 
