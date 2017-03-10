@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
@@ -13,7 +12,6 @@ import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.annotation.Nullable;
 import java.io.OutputStream;
-import java.net.URI;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,16 +30,14 @@ public class ExternallyAvailableContentServiceTest {
         }
     };
 
-    ExternallyAvailableContent externallyAvailableContent;
-
-    ExternallyAvailableContent.Supplier<Experiment> supplier = new ExternallyAvailableContent.Supplier<Experiment>() {
+    class MockSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
-            return Collections.singleton(externallyAvailableContent);
+            return Collections.singleton(ExternallyAvailableContent.create(makeUri("test-resource"), ResourceType.EXTRA_INFO, streamFunction));
         }
-    };
+    }
 
-    ExternallyAvailableContent differentContent;
+    ExternallyAvailableContent.Supplier<Experiment> supplier = new MockSupplier();
 
     Function<OutputStream, Void> differentStreamFunction = new Function<OutputStream, Void>() {
         @Nullable
@@ -51,28 +47,28 @@ public class ExternallyAvailableContentServiceTest {
         }
     };
 
-    ExternallyAvailableContent.Supplier<Experiment> differentSupplier = new ExternallyAvailableContent.Supplier<Experiment>() {
+    class MockDifferentSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
-            return Collections.singleton(differentContent);
+            return Collections.singleton(ExternallyAvailableContent.create(makeUri("different-resource"), ResourceType.EXTRA_INFO, differentStreamFunction));
         }
-    };
+    }
 
-    ExternallyAvailableContent.Supplier<Experiment> nullSupplier = new ExternallyAvailableContent.Supplier<Experiment>() {
+    ExternallyAvailableContent.Supplier<Experiment> differentSupplier = new MockDifferentSupplier();
+
+    class MockNullSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
             return ImmutableList.of();
         }
-    };
+    }
+
+    ExternallyAvailableContent.Supplier<Experiment> nullSupplier = new MockNullSupplier();
+
+    ExternallyAvailableContent externallyAvailableContent = supplier.get(experiment).iterator().next();
+    ExternallyAvailableContent differentContent = differentSupplier.get(experiment).iterator().next();
 
     ExternallyAvailableContentService<Experiment> subject;
-
-
-    @Before
-    public void setUp() throws Exception {
-        externallyAvailableContent =  ExternallyAvailableContent.create(new URI("test-resource"), ResourceType.EXTRA_INFO, streamFunction);
-        differentContent =  ExternallyAvailableContent.create(new URI("different-resource"), ResourceType.EXTRA_INFO, differentStreamFunction);
-    }
 
     public void testNoResourcesFor(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers){
         subject = new ExternallyAvailableContentService<>(suppliers);

@@ -21,32 +21,31 @@ public class ExternallyAvailableContentService<E extends Experiment> {
         this.suppliers = suppliers;
     }
 
-
-    private FluentIterable<ExternallyAvailableContent> contentFor(final E experiment){
-        return FluentIterable.from(suppliers).transformAndConcat(new Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>>() {
+    private Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>> makeTransform(final E experiment){
+        return new Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>>() {
             @Override
             public Iterable<ExternallyAvailableContent> apply(ExternallyAvailableContent.Supplier<E> supplier) {
                 return supplier.get(experiment);
             }
-        });
+        };
     }
 
     public Function<OutputStream, Void> stream(E experiment, final URI uri){
-        return contentFor(experiment).firstMatch(new Predicate<ExternallyAvailableContent>() {
+        return FluentIterable.from(suppliers).firstMatch(new Predicate<ExternallyAvailableContent.Supplier<E>>() {
             @Override
-            public boolean apply(ExternallyAvailableContent externallyAvailableContent) {
-                return externallyAvailableContent.uri().equals(uri);
+            public boolean apply(ExternallyAvailableContent.Supplier<E> eSupplier) {
+                return eSupplier.comesFromThisSupplier(uri);
             }
-        }).or(new Supplier<ExternallyAvailableContent>() {
+        }).or(new Supplier<ExternallyAvailableContent.Supplier<E>>() {
             @Override
-            public ExternallyAvailableContent get() {
+            public ExternallyAvailableContent.Supplier<E> get() {
                 throw new ResourceNotFoundException(uri.toString());
             }
-        }).stream();
+        }).get(experiment, uri).stream();
     }
 
     List<ExternallyAvailableContent> list(final E experiment){
-        return contentFor(experiment).toList();
+        return FluentIterable.from(suppliers).transformAndConcat(makeTransform(experiment)).toList();
     }
 
     public JsonArray asJson(final E experiment){
