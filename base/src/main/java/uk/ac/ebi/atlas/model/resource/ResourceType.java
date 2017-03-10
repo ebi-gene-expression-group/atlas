@@ -2,6 +2,9 @@ package uk.ac.ebi.atlas.model.resource;
 
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 
+/*
+TODO rely on enum names everywhere!
+ */
 public enum ResourceType {
     PLOT_MA("ma-plot"), //accessed as ma-plot by old heatmap and otherwise ma-plot.png
     PLOT_GSEA_INTERPRO("gsea_interpro"),
@@ -11,9 +14,15 @@ public enum ResourceType {
 
     ResourceType(String resourceName){
         this.resourceName = resourceName;
+        this.resourceKind = Kind.PLOT;
     }
 
-    String resourceName;
+    public final Kind resourceKind;
+    final String resourceName;
+
+    public String description(){
+        return "TODO I am a resource "+resourceName;
+    }
 
     public String fileName(){
         return resourceName+".png";
@@ -27,5 +36,9 @@ public enum ResourceType {
             }
         }
         throw new ResourceNotFoundException("no matching resource for file: "+fileName);
+    }
+
+    public enum Kind {
+        PLOT;
     }
 }
