@@ -30,25 +30,6 @@ public class AtlasResourceHub {
     }
 
 
-    public JsonObject createJsonByContrastIdForTheOldHeatmap(
-            String experimentAccession, Collection<Contrast> contrasts) {
-        JsonObject result = new JsonObject();
-        for (Contrast contrast : contrasts) {
-            JsonObject valuesForThisContrast = new JsonObject();
-            valuesForThisContrast.addProperty("go",
-                    contrastImageFactory.getContrastImage(ResourceType.PLOT_GSEA_GO, experimentAccession, contrast
-                            .getId()).exists() );
-            valuesForThisContrast.addProperty("interpro",
-                    contrastImageFactory.getContrastImage(ResourceType.PLOT_GSEA_INTERPRO, experimentAccession,
-                            contrast.getId()).exists() );
-            valuesForThisContrast.addProperty("reactome",
-                    contrastImageFactory.getContrastImage(ResourceType.PLOT_GSEA_REACTOME, experimentAccession,
-                            contrast.getId()).exists() );
-            result.add(contrast.getId(), valuesForThisContrast);
-        }
-        return result;
-    }
-
     public Map<String,JsonArray> contrastImages(DifferentialExperiment differentialExperiment){
         Map<String,JsonArray>  result = new HashMap<>();
         for(Contrast contrast : differentialExperiment.getDataColumnDescriptors()){
