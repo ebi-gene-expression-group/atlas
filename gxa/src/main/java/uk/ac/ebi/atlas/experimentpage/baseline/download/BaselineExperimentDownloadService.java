@@ -5,7 +5,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.experimentpage.baseline.PreferencesForBaselineExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -37,8 +36,6 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
     throws IOException {
         BaselineExperiment experiment =
                 (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-
-        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: {}", preferences);
 

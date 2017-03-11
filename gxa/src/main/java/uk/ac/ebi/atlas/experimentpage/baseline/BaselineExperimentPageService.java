@@ -42,8 +42,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
     public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
                                                        HttpServletRequest request) {
-        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
-        
         // not sure if I still need atlasHost, old comment:
         // this is currently required for the request requestPreferences filter  drop-down multi-selection box
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
@@ -54,8 +52,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
                                              Model model, HttpServletRequest request, boolean isWidget) {
         JsonObject result = new JsonObject();
-        //we'd rather set these defaults elsewhere, and ideally not use the preferences object at all.
-        PreferencesForBaselineExperiments.setPreferenceDefaults(preferences, experiment);
 
         BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
