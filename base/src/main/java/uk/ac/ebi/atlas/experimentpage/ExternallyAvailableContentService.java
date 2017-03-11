@@ -41,7 +41,7 @@ public class ExternallyAvailableContentService<E extends Experiment> {
             public ExternallyAvailableContent.Supplier<E> get() {
                 throw new ResourceNotFoundException(uri.toString());
             }
-        }).get(experiment, uri).stream();
+        }).get(experiment, uri).stream;
     }
 
     List<ExternallyAvailableContent> list(final E experiment){

@@ -2,50 +2,91 @@ package uk.ac.ebi.atlas.model.download;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.Collection;
 
-@AutoValue
-public abstract class ExternallyAvailableContent {
+public class ExternallyAvailableContent {
 
-    public abstract URI uri();
+    public final URI uri;
 
-    public abstract ResourceType resourceType();
+    private final Description description;
 
-    public abstract Function<OutputStream, Void> stream();
+    public final Function<OutputStream, Void> stream;
 
-    public abstract String group();
 
-    public static ExternallyAvailableContent create(URI uri, ResourceType resourceType, Function<OutputStream, Void> stream){
-        return create(uri, resourceType, stream, "");
+    public ExternallyAvailableContent(URI uri, Description description, Function<OutputStream, Void> stream){
+        this.uri = uri;
+        this.description = description;
+        this.stream = stream;
     }
 
-    public static ExternallyAvailableContent create(URI uri, ResourceType resourceType, Function<OutputStream, Void> stream, String group){
-        return new AutoValue_ExternallyAvailableContent(uri, resourceType, stream, group);
-    }
 
     public JsonObject asJson(){
-        JsonObject result = new JsonObject();
-        result.addProperty("kind", resourceType().resourceKind.name());
-        //I'm imagining this to be a contrast name for resources per contrast
-        result.addProperty("group", group());
-        //how to render this content
-        result.addProperty("type", resourceType().name());
-        //maybe the description will vary for some resources - if so then the supplier should create it and pass as argument
-        result.addProperty("description", resourceType().description());
-        result.addProperty("uri", uri().toString());
-
-
-
+        JsonObject result = description.asJson();
+        result.addProperty("uri", uri.toString());
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExternallyAvailableContent that = (ExternallyAvailableContent) o;
+        return Objects.equal(uri, that.uri);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(uri);
+    }
+
+    @AutoValue
+    public abstract static class Description {
+
+        /*
+        A strong hint to developers that if they have a multi-part group or type they should use this
+         */
+        public static String join (String ... sections){
+            return Joiner.on("/").join(sections);
+        }
+        /*
+        where on the download tab this would go?
+        I'm imagining this to be plot/data/supplementary info, sometimes followed by a contrast name for resources per contrast
+        Sometimes it will be irrelevant because it is called by something else e.g. extra link for experiment design
+        */
+        public abstract String group();
+        /*
+        how to render?
+         for images where we have icons it would be icon/ma
+        for links: link
+        */
+        public abstract String type();
+
+        /*
+        the text that goes next to icon or on link
+         */
+        public abstract String description();
+
+        public static Description create(String group, String type, String description){
+            return new AutoValue_ExternallyAvailableContent_Description(group, type, description);
+        }
+
+        public JsonObject asJson(){
+            JsonObject result = new JsonObject();
+            result.addProperty("group", group());
+            result.addProperty("type", type());
+            result.addProperty("description", description());
+            return result;
+        }
     }
 
 
@@ -80,7 +121,7 @@ public abstract class ExternallyAvailableContent {
             return FluentIterable.from(get(experiment)).firstMatch(new Predicate<ExternallyAvailableContent>() {
                 @Override
                 public boolean apply(ExternallyAvailableContent externallyAvailableContent) {
-                    return externallyAvailableContent.uri().equals(uri);
+                    return externallyAvailableContent.uri.equals(uri);
                 }
             }).or(new com.google.common.base.Supplier<ExternallyAvailableContent>() {
                 @Override

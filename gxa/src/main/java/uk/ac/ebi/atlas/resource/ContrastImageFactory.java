@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.model.resource.ExternalImage;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.inject.Named;
-import java.net.URI;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
@@ -67,15 +66,23 @@ public class ContrastImageFactory extends ExternallyAvailableContent.Supplier<Di
         return getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrastId);
     }
 
+    ExternallyAvailableContent.Description description(ResourceType resourceType, Contrast contrast){
+        return ExternallyAvailableContent.Description.create(
+                ExternallyAvailableContent.Description.join("Plots",contrast.getDisplayName()),
+                resourceType.fileName(),
+                "(TODO better description) see ths funky plot of"+resourceType.name()
+        );
+    }
+
     Collection<ExternallyAvailableContent> getForRnaSeqDifferentialExperiment(String experimentAccession, List<Contrast> contrasts){
         ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
         for(Contrast contrast: contrasts){
             for(ResourceType resourceType : ContrastImage.RESOURCE_TYPES){
                 ExternalImage externalImage = getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrast.getId());
                 if(externalImage.exists()){
-                    b.add(ExternallyAvailableContent.create
-                            (URI.create(MessageFormat.format("contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),
-                                    resourceType, externalImage.get(), contrast.getDisplayName()
+                    b.add(new ExternallyAvailableContent
+                            (makeUri(MessageFormat.format("contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),
+                                    description(resourceType, contrast) , externalImage.get()
                     ));
                 }
             }
@@ -90,9 +97,9 @@ public class ContrastImageFactory extends ExternallyAvailableContent.Supplier<Di
                 for(ResourceType resourceType : ContrastImage.RESOURCE_TYPES){
                     ExternalImage externalImage = getContrastImage(resourceType, experimentAccession, Optional.of(arrayDesign), contrast.getId());
                     if(externalImage.exists()){
-                        b.add(ExternallyAvailableContent.create
-                                (URI.create(MessageFormat.format("contrast_image-{0}-{1}-{2}", resourceType.name(), contrast.getId(), arrayDesign)),
-                                        resourceType, externalImage.get(), contrast.getDisplayName()
+                        b.add(new ExternallyAvailableContent
+                                (makeUri(MessageFormat.format("contrast_image-{0}-{1}-{2}", resourceType.name(), contrast.getId(), arrayDesign)),
+                                        description(resourceType, contrast) , externalImage.get()
                                 ));
                     }
                 }

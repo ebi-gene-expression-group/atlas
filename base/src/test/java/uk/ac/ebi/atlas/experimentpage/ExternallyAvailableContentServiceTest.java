@@ -8,7 +8,6 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
-import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.annotation.Nullable;
 import java.io.OutputStream;
@@ -33,7 +32,7 @@ public class ExternallyAvailableContentServiceTest {
     class MockSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
-            return Collections.singleton(ExternallyAvailableContent.create(makeUri("test-resource"), ResourceType.EXTRA_INFO, streamFunction));
+            return Collections.singleton(new ExternallyAvailableContent(makeUri("test-resource"), ExternallyAvailableContent.Description.create("", "",""), streamFunction));
         }
     }
 
@@ -50,7 +49,7 @@ public class ExternallyAvailableContentServiceTest {
     class MockDifferentSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
-            return Collections.singleton(ExternallyAvailableContent.create(makeUri("different-resource"), ResourceType.EXTRA_INFO, differentStreamFunction));
+            return Collections.singleton(new ExternallyAvailableContent(makeUri("different-resource"), ExternallyAvailableContent.Description.create("", "",""), differentStreamFunction));
         }
     }
 
@@ -80,7 +79,7 @@ public class ExternallyAvailableContentServiceTest {
         try {
             subject = new ExternallyAvailableContentService<>(suppliers);
 
-            subject.stream(experiment, externallyAvailableContent.uri());
+            subject.stream(experiment, externallyAvailableContent.uri);
         } catch (ResourceNotFoundException e){
             return;
         }
@@ -91,9 +90,9 @@ public class ExternallyAvailableContentServiceTest {
     public void testFound(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers, ExternallyAvailableContent externallyAvailableContent){
         subject = new ExternallyAvailableContentService<>(suppliers);
 
-        Function result = subject.stream(experiment, externallyAvailableContent.uri());
+        Function result = subject.stream(experiment, externallyAvailableContent.uri);
 
-        assertSame(result, externallyAvailableContent.stream());
+        assertSame(result, externallyAvailableContent.stream);
     }
 
 
