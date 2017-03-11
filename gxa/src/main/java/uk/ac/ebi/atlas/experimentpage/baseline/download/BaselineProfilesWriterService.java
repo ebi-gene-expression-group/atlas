@@ -8,6 +8,8 @@ import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.search.SearchDescription;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -15,6 +17,8 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -27,6 +31,28 @@ import static org.apache.commons.lang3.StringUtils.wrap;
 public class BaselineProfilesWriterService extends ExternallyAvailableContent.Supplier<BaselineExperiment>{
 
 
+    @Named
+    public static class RnaSeq extends BaselineProfilesWriterService {
+        @Inject
+        RnaSeq(RnaSeqBaselineProfileStreamFactory inputStreamFactory,
+               BaselineProfilesWriterFactory baselineProfilesWriterFactory,
+               SolrQueryService solrQueryService,
+               CoexpressedGenesService coexpressedGenesService) {
+            super(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService, coexpressedGenesService);
+        }
+    }
+
+    @Named
+    public static class Proteomics extends BaselineProfilesWriterService {
+        @Inject
+        Proteomics(ProteomicsBaselineProfileStreamFactory inputStreamFactory,
+                   BaselineProfilesWriterFactory baselineProfilesWriterFactory,
+                   SolrQueryService solrQueryService,
+                   CoexpressedGenesService coexpressedGenesService) {
+            super(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService, coexpressedGenesService);
+        }
+    }
+
     private BaselineProfileStreamFactory inputStreamFactory;
 
     private BaselineProfilesWriterFactory baselineProfilesWriterFactory;
@@ -35,7 +61,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
 
     private CoexpressedGenesService coexpressedGenesService;
 
-    public BaselineProfilesWriterService(BaselineProfileStreamFactory inputStreamFactory,
+    BaselineProfilesWriterService(BaselineProfileStreamFactory inputStreamFactory,
                                          BaselineProfilesWriterFactory baselineProfilesWriterFactory,
                                          SolrQueryService solrQueryService,
                                          CoexpressedGenesService coexpressedGenesService) {
