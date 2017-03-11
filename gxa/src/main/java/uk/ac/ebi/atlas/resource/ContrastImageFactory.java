@@ -1,16 +1,25 @@
 package uk.ac.ebi.atlas.resource;
 
 
-import uk.ac.ebi.atlas.model.resource.ResourceType;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.model.resource.ExternalImage;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.resource.ContrastImage;
+import uk.ac.ebi.atlas.model.resource.ExternalImage;
+import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.inject.Named;
+import java.net.URI;
+import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.List;
 
 @Named
-public class ContrastImageFactory {
+public class ContrastImageFactory extends ExternallyAvailableContent.Supplier<DifferentialExperiment>{
 
     @Value("#{configuration['experiment.gsea-plot.path.template']}")
     String gseaPathTemplate;
@@ -57,4 +66,50 @@ public class ContrastImageFactory {
                                    String contrastId ){
         return getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrastId);
     }
+
+    Collection<ExternallyAvailableContent> getForRnaSeqDifferentialExperiment(String experimentAccession, List<Contrast> contrasts){
+        ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
+        for(Contrast contrast: contrasts){
+            for(ResourceType resourceType : ContrastImage.RESOURCE_TYPES){
+                ExternalImage externalImage = getContrastImage(resourceType, experimentAccession, Optional.<String>absent(), contrast.getId());
+                if(externalImage.exists()){
+                    b.add(ExternallyAvailableContent.create
+                            (URI.create(MessageFormat.format("contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),
+                                    resourceType, externalImage.get(), contrast.getDisplayName()
+                    ));
+                }
+            }
+        }
+        return b.build();
+    }
+
+    Collection<ExternallyAvailableContent> getForMicroarrayExperiment(String experimentAccession, List<Contrast> contrasts, Collection<String> arrayDesigns){
+        ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
+        for(String arrayDesign: arrayDesigns){
+            for(Contrast contrast: contrasts){
+                for(ResourceType resourceType : ContrastImage.RESOURCE_TYPES){
+                    ExternalImage externalImage = getContrastImage(resourceType, experimentAccession, Optional.of(arrayDesign), contrast.getId());
+                    if(externalImage.exists()){
+                        b.add(ExternallyAvailableContent.create
+                                (URI.create(MessageFormat.format("contrast_image-{0}-{1}-{2}", resourceType.name(), contrast.getId(), arrayDesign)),
+                                        resourceType, externalImage.get(), contrast.getDisplayName()
+                                ));
+                    }
+                }
+            }
+        }
+        return b.build();
+    }
+
+    //TODO maybe : have separate suppliers for the two kinds of experiments instead of putting them together here
+    @Override
+    public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
+        if(experiment instanceof MicroarrayExperiment){
+            return getForMicroarrayExperiment(experiment.getAccession(), experiment.getDataColumnDescriptors(),  ((MicroarrayExperiment) experiment).getArrayDesignAccessions());
+        } else {
+            return getForRnaSeqDifferentialExperiment(experiment.getAccession(), experiment.getDataColumnDescriptors());
+        }
+    }
+
+
 }
