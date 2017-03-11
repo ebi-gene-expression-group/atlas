@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 
 import javax.annotation.Nullable;
-import java.io.OutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -21,10 +21,10 @@ public class ExternallyAvailableContentServiceTest {
 
     Experiment experiment = BaselineExperimentTest.mockExperiment();
 
-    Function<OutputStream, Void> streamFunction = new Function<OutputStream, Void>() {
+    Function<HttpServletResponse, Void> streamFunction = new Function<HttpServletResponse, Void>() {
         @Nullable
         @Override
-        public Void apply(@Nullable OutputStream outputStream) {
+        public Void apply(@Nullable HttpServletResponse outputStream) {
             return null;
         }
     };
@@ -38,10 +38,10 @@ public class ExternallyAvailableContentServiceTest {
 
     ExternallyAvailableContent.Supplier<Experiment> supplier = new MockSupplier();
 
-    Function<OutputStream, Void> differentStreamFunction = new Function<OutputStream, Void>() {
+    Function<HttpServletResponse, Void> differentStreamFunction = new Function<HttpServletResponse, Void>() {
         @Nullable
         @Override
-        public Void apply(@Nullable OutputStream outputStream) {
+        public Void apply(@Nullable HttpServletResponse outputStream) {
             return null;
         }
     };

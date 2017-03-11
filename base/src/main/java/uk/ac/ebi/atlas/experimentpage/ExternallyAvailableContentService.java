@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
-import java.io.OutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class ExternallyAvailableContentService<E extends Experiment> {
         };
     }
 
-    public Function<OutputStream, Void> stream(E experiment, final URI uri){
+    public Function<HttpServletResponse, Void> stream(E experiment, final URI uri){
         return FluentIterable.from(suppliers).firstMatch(new Predicate<ExternallyAvailableContent.Supplier<E>>() {
             @Override
             public boolean apply(ExternallyAvailableContent.Supplier<E> eSupplier) {

@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.resource;
 
 
 import com.google.common.base.Function;
-import uk.ac.ebi.atlas.model.resource.ResourceType;
-import uk.ac.ebi.atlas.utils.ImageIOUtils;
 import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.model.resource.ResourceType;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
 
 @Controller
 public class ExternalImageController {
@@ -67,17 +64,7 @@ public class ExternalImageController {
                 contrastName).get());
     }
 
-    void streamExternalImage(HttpServletResponse response, Function<OutputStream, ?> callback) {
-        try {
-
-            response.setContentType("image/png");
-            OutputStream out = response.getOutputStream();
-            callback.apply(out);
-            out.close();
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Error loading external image");
-        }
+    void streamExternalImage(HttpServletResponse response, Function<HttpServletResponse, ?> callback) {
+        callback.apply(response);
     }
 }

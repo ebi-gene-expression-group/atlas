@@ -19,6 +19,8 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -110,10 +112,18 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
         final Map<String, Integer> coexpressionsRequested = ImmutableMap.of();
 
         return Collections.singleton(new ExternallyAvailableContent(makeUri("tsv"),
-                ExternallyAvailableContent.Description.create("data", "link", "Expression values across all genes"), new Function<OutputStream, Void>() {
+                ExternallyAvailableContent.Description.create("data", "link", "Expression values across all genes"), new Function<HttpServletResponse, Void>() {
             @Override
-            public Void apply(OutputStream outputStream) {
-                write(new PrintWriter(outputStream), preferences, experiment, coexpressionsRequested);
+            public Void apply(HttpServletResponse response) {
+                try {
+                    response.setHeader(
+                            "Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
+                    response.setContentType("text/plain; charset=utf-8");
+
+                    write(response.getWriter(), preferences, experiment, coexpressionsRequested);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 return null;
             }
         }));

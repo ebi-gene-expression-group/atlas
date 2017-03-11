@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
-import java.io.OutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.Collection;
 
@@ -20,10 +20,10 @@ public class ExternallyAvailableContent {
 
     private final Description description;
 
-    public final Function<OutputStream, Void> stream;
+    public final Function<HttpServletResponse, Void> stream;
 
 
-    public ExternallyAvailableContent(URI uri, Description description, Function<OutputStream, Void> stream){
+    public ExternallyAvailableContent(URI uri, Description description, Function<HttpServletResponse, Void> stream){
         this.uri = uri;
         this.description = description;
         this.stream = stream;
