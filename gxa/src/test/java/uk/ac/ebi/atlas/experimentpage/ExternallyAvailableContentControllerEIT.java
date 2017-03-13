@@ -49,7 +49,9 @@ public class ExternallyAvailableContentControllerEIT {
 
     @Test
     public void shouldReturnSomeResourcesForEachExperiment() throws Exception {
-        for(String accession : experimentTrader.getPublicExperimentAccessions(ExperimentType.values())){
+        for(String accession : experimentTrader.getPublicExperimentAccessions(
+                ExperimentType.RNASEQ_MRNA_BASELINE, ExperimentType.PROTEOMICS_BASELINE,
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)){
             testAllResourcesAreNonempty(accession);
         }
     }

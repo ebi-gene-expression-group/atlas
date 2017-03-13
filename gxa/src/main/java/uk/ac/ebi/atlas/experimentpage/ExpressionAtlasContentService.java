@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.resource.ContrastImageSupplier;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -34,6 +35,8 @@ public class ExpressionAtlasContentService {
     public ExpressionAtlasContentService(
             BaselineProfilesWriterService.Proteomics proteomicsBaselineProfilesWriterService,
             BaselineProfilesWriterService.RnaSeq rnaSeqBaselineProfilesWriterService,
+            ContrastImageSupplier.RnaSeq rnaSeqDifferentialContrastImageSupplier,
+            ContrastImageSupplier.Microarray microarrayContrastImageSupplier,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -47,10 +50,14 @@ public class ExpressionAtlasContentService {
                 );
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
-                        ImmutableList.<ExternallyAvailableContent.Supplier<DifferentialExperiment>>of());
+                        ImmutableList.<ExternallyAvailableContent.Supplier<DifferentialExperiment>>of(
+                                rnaSeqDifferentialContrastImageSupplier
+                        ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
-                        ImmutableList.<ExternallyAvailableContent.Supplier<MicroarrayExperiment>>of());
+                        ImmutableList.<ExternallyAvailableContent.Supplier<MicroarrayExperiment>>of(
+                                microarrayContrastImageSupplier
+                        ));
         this.experimentTrader = experimentTrader;
     }
 
