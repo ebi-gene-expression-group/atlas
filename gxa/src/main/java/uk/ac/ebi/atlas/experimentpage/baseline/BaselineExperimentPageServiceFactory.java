@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesDao;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
@@ -25,11 +23,11 @@ public class BaselineExperimentPageServiceFactory {
 
     @Inject
     public BaselineExperimentPageServiceFactory(TracksUtil tracksUtil, ApplicationProperties applicationProperties,
-                                                JdbcTemplate jdbcTemplate, SolrQueryService solrQueryService,
+                                                CoexpressedGenesService coexpressedGenesService, SolrQueryService solrQueryService,
                                                 AtlasResourceHub atlasResourceHub, HeatmapDataToJsonService heatmapDataToJsonService) {
         this.tracksUtil = tracksUtil;
         this.applicationProperties = applicationProperties;
-        this.coexpressedGenesService = new CoexpressedGenesService(new CoexpressedGenesDao(jdbcTemplate));
+        this.coexpressedGenesService = coexpressedGenesService;
         this.solrQueryService = solrQueryService;
         this.atlasResourceHub = atlasResourceHub;
         this.heatmapDataToJsonService = heatmapDataToJsonService;

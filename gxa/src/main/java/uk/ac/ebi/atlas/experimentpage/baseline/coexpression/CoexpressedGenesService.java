@@ -1,15 +1,24 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.coexpression;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import com.google.common.base.Optional;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.jdbc.core.JdbcTemplate;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
+@Named
 public class CoexpressedGenesService {
 
     final CoexpressedGenesDao coexpressedGenesDao;
+
+    @Inject
+    public CoexpressedGenesService(JdbcTemplate jdbcTemplate) {
+        this.coexpressedGenesDao =new CoexpressedGenesDao(jdbcTemplate);
+    }
 
     public CoexpressedGenesService(CoexpressedGenesDao coexpressedGenesDao) {
         this.coexpressedGenesDao =coexpressedGenesDao;

@@ -18,7 +18,7 @@ public class ExternallyAvailableContent {
 
     public final URI uri;
 
-    private final Description description;
+    public final Description description;
 
     public final Function<HttpServletResponse, Void> stream;
 
@@ -27,13 +27,6 @@ public class ExternallyAvailableContent {
         this.uri = uri;
         this.description = description;
         this.stream = stream;
-    }
-
-
-    public JsonObject asJson(){
-        JsonObject result = description.asJson();
-        result.addProperty("uri", uri.toString());
-        return result;
     }
 
     @Override

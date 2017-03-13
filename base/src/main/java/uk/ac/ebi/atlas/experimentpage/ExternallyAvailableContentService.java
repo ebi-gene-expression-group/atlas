@@ -4,7 +4,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Supplier;
 import com.google.common.collect.FluentIterable;
-import com.google.gson.JsonArray;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -44,18 +43,8 @@ public class ExternallyAvailableContentService<E extends Experiment> {
         }).get(experiment, uri).stream;
     }
 
-    List<ExternallyAvailableContent> list(final E experiment){
+    public List<ExternallyAvailableContent> list(final E experiment){
         return FluentIterable.from(suppliers).transformAndConcat(makeTransform(experiment)).toList();
     }
-
-    public JsonArray asJson(final E experiment){
-        JsonArray result = new JsonArray();
-        for(ExternallyAvailableContent externallyAvailableContent : list(experiment)){
-            result.add(externallyAvailableContent.asJson());
-        }
-        return result;
-    }
-
-
 
 }
