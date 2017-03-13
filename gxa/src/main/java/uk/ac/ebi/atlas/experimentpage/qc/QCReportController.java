@@ -1,28 +1,34 @@
 package uk.ac.ebi.atlas.experimentpage.qc;
 
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 @Controller
 @Scope("singleton")
-public class QCReportController {
+public class QCReportController extends ExternallyAvailableContent.Supplier<MicroarrayExperiment> {
 
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
@@ -38,29 +44,61 @@ public class QCReportController {
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
+    @Override
+    public Collection<ExternallyAvailableContent> get(final MicroarrayExperiment experiment) {
+        ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
+        for (final String arrayDesign : experiment.getArrayDesignAccessions()) {
+
+            if (qcReportUtil.hasQCReport(experiment.getAccession(), arrayDesign)) {
+                b.add( new ExternallyAvailableContent(
+                    makeUri(arrayDesign),
+                    ExternallyAvailableContent.Description.create(
+                            ExternallyAvailableContent.Description.join("Supplementary Information", arrayDesign),
+                            "icon-qc", "The QC report"
+                    ),
+                    new Function<HttpServletResponse, Void>() {
+                        @Nullable
+                        @Override
+                        public Void apply(@Nullable HttpServletResponse response) {
+                            try {
+                                response.sendRedirect(MessageFormat.format(
+                                        "/experiments/{0}/qc/{1}/index.html",
+                                        experiment.getAccession(), arrayDesign
+                                ));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            return null;
+                        }
+                    })
+                );
+            }
+        }
+        return b.build();
+    }
+
     /**
-     *
      * @param request
      * @param model
      * @param experimentAccession
      * @param arrayDesign
      * @param resource
      * @param preferences
-     * @param ra RedirectAttributes is needed for redirection without parameters being added to the url
-     *           DO NOT REMOVE IT
+     * @param ra                  RedirectAttributes is needed for redirection without parameters being added to the url
+     *                            DO NOT REMOVE IT
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}",
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public String getQCPage(HttpServletRequest request, Model model,
                             @PathVariable String experimentAccession,
                             @PathVariable String arrayDesign,
                             @PathVariable String resource,
-                            @RequestParam(value = "accessKey",required = false) String accessKey,
+                            @RequestParam(value = "accessKey", required = false) String accessKey,
                             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
-        if(!resource.equals("index.html")) {
+        if (!resource.equals("index.html")) {
             // NB: resources do not need access key
             // otherwise we would have to add the access key to the query string for every resource in the page
             return forwardToQcResource(experimentAccession, arrayDesign, resource);
@@ -71,7 +109,7 @@ public class QCReportController {
         prepareModel(request, model, experiment);
 
         String selectedArrayDesignName = preferences.getArrayDesignAccession();
-        if(selectedArrayDesignName != null) {
+        if (selectedArrayDesignName != null) {
             String selectedArrayDesign = arrayDesignTrader.getArrayDesignAccession(selectedArrayDesignName);
 
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
@@ -83,7 +121,7 @@ public class QCReportController {
         //otherwise the combo is not being updated.
         preferences.setArrayDesignAccession(arrayDesignTrader.getArrayDesignByName(arrayDesign));
 
-        if(!qcReportUtil.hasQCReport(experimentAccession, arrayDesign)) {
+        if (!qcReportUtil.hasQCReport(experimentAccession, arrayDesign)) {
             throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + arrayDesign);
         }
 
@@ -107,5 +145,4 @@ public class QCReportController {
 
         model.addAllAttributes(experiment.getAttributes());
     }
-
 }
