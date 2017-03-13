@@ -24,7 +24,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
     @Test
     public void testWholeQueryFlow(){
         JsonObject facets = new EndPoint("/gxa/json/search/baselineFacets", "query="+query.toUrlEncodedJson())
-                .getJsonResponse();
+                .getJsonResponse().getAsJsonObject();
 
         assertThat(facets.entrySet().size(), greaterThan(0));
 
@@ -48,7 +48,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
                 "/gxa/json/search/baselineResults",
                 MessageFormat.format("query={0}&species={1}&source={2}",query.toUrlEncodedJson(), "homo sapiens",
                         "organism_part")
-        ).getJsonResponse();
+        ).getJsonResponse().getAsJsonObject();
 
 
         assertThat(results.entrySet().size(), greaterThan(0));
@@ -70,7 +70,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
                 "/gxa/json/search/baselineResults",
                 MessageFormat.format("query={0}&species={1}&source={2}",query.toUrlEncodedJson(), "homo sapiens",
                         "organism_part")
-        ).getJsonResponse();
+        ).getJsonResponse().getAsJsonObject();
 
         assertThat(results.entrySet().size(), greaterThan(0));
 
@@ -93,7 +93,7 @@ public class RestfulLinksEIT extends RestAssuredFixture{
                 "/gxa/json/search/baselineResults",
                 MessageFormat.format("query={0}&species={1}&source={2}",query.toUrlEncodedJson(), "homo sapiens",
                         "organism_part")
-        ).getJsonResponse();
+        ).getJsonResponse().getAsJsonObject();
 
         assertThat(results.entrySet().size(), greaterThan(0));
 

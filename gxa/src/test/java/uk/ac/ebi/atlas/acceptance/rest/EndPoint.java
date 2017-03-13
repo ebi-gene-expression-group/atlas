@@ -44,14 +44,14 @@ public class EndPoint {
         return requestSpecification.get(buildURL());
     }
 
-    public JsonObject getJsonResponse(){
+    public JsonElement getJsonResponse(){
         Response response = getResponse();
 
         assertThat(response.getStatusCode(), is(200));
         //TODO does not work for experiment page endpoints
         // assertThat(response.getContentType(), is("application/json;charset=UTF-8"));
 
-        return new Gson().fromJson(response.getBody().asString(), JsonElement.class).getAsJsonObject();
+        return new Gson().fromJson(response.getBody().asString(), JsonElement.class);
     }
 
     public EndPoint auth() {

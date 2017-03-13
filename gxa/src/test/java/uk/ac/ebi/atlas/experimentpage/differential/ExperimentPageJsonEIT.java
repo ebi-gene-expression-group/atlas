@@ -13,7 +13,7 @@ public class ExperimentPageJsonEIT {
 
 
     JsonObject getExperimentHeaderSummary(String experimentAccession) {
-       return new EndPoint("/gxa/json/experiments/"+experimentAccession).getJsonResponse();
+       return new EndPoint("/gxa/json/experiments/"+experimentAccession).getJsonResponse().getAsJsonObject();
     }
 
     void assertAboutBaselineColumnHeaders(JsonObject payload){
