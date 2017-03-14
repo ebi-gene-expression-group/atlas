@@ -103,9 +103,7 @@ public class ExternallyAvailableContent {
         }
 
         public final boolean comesFromThisSupplier(URI uri){
-            // that second branch got added to make the qc report work
-            // we add an "id" that has a /, and the urls on the report page are relative so it works okay
-            return uri.resolve(".").equals(base()) ||  uri.resolve("..").equals(base());
+            return uri.resolve(".").equals(base());
         }
 
         /*

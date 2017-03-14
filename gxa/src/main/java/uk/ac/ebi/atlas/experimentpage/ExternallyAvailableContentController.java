@@ -66,7 +66,6 @@ public class ExternallyAvailableContentController {
                         .toString()
                         .replaceFirst(".*/resources/","")
                         .replaceFirst("\\?.*$", "")
-                        .replaceAll(" +", "+")
                 )
         ).apply(response);
     }

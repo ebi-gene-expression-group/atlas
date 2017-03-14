@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
-import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -38,7 +37,6 @@ public class ExpressionAtlasContentService {
             BaselineProfilesWriterService.RnaSeq rnaSeqBaselineProfilesWriterService,
             ContrastImageSupplier.RnaSeq rnaSeqDifferentialContrastImageSupplier,
             ContrastImageSupplier.Microarray microarrayContrastImageSupplier,
-            QCReportController qcReportController,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -57,14 +55,13 @@ public class ExpressionAtlasContentService {
                         ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
-                        ImmutableList.of(
-                                microarrayContrastImageSupplier,
-                                qcReportController
+                        ImmutableList.<ExternallyAvailableContent.Supplier<MicroarrayExperiment>>of(
+                                microarrayContrastImageSupplier
                         ));
         this.experimentTrader = experimentTrader;
     }
 
-    public Function<HttpServletResponse, Void> stream(String experimentAccession, String accessKey, final URI uri) {
+    public Function<HttpServletResponse, Void> stream(String experimentAccession, String accessKey, final URI uri){
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         if (experiment.getType().isProteomicsBaseline()) {
@@ -78,7 +75,7 @@ public class ExpressionAtlasContentService {
         }
     }
 
-    public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey) {
+    public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey){
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         if (experiment.getType().isProteomicsBaseline()) {
