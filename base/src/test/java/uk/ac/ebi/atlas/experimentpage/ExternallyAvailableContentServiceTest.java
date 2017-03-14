@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 public class ExternallyAvailableContentServiceTest {
@@ -64,6 +65,25 @@ public class ExternallyAvailableContentServiceTest {
 
     ExternallyAvailableContent.Supplier<Experiment> nullSupplier = new MockNullSupplier();
 
+
+    class RedirectingSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
+
+        String redirectRoot;
+
+        public RedirectingSupplier(String redirectRoot){
+            this.redirectRoot = redirectRoot;
+        }
+        @Override
+        public Collection<ExternallyAvailableContent> get(Experiment experiment) {
+            return ImmutableList.of(
+                    new ExternallyAvailableContent(redirectRoot+"/"+experiment.getAccession(),
+                            ExternallyAvailableContent.Description.create("", "",""))
+            );
+        }
+    }
+
+    ExternallyAvailableContent.Supplier<Experiment> redirectingSupplier = new RedirectingSupplier("/experiments/");
+
     ExternallyAvailableContent externallyAvailableContent = supplier.get(experiment).iterator().next();
     ExternallyAvailableContent differentContent = differentSupplier.get(experiment).iterator().next();
 
@@ -112,6 +132,7 @@ public class ExternallyAvailableContentServiceTest {
         testNotFound(ImmutableList.of(nullSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(differentSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(nullSupplier, differentSupplier), externallyAvailableContent);
+        testNotFound(ImmutableList.of(redirectingSupplier), externallyAvailableContent);
     }
 
     @Test
@@ -120,6 +141,7 @@ public class ExternallyAvailableContentServiceTest {
         testFound(ImmutableList.of(supplier, differentSupplier), externallyAvailableContent);
         testFound(ImmutableList.of(differentSupplier, supplier), externallyAvailableContent);
         testFound(ImmutableList.of(differentSupplier, nullSupplier, supplier), externallyAvailableContent);
+        testFound(ImmutableList.of(redirectingSupplier, supplier), externallyAvailableContent);
     }
 
     @Test
@@ -129,6 +151,29 @@ public class ExternallyAvailableContentServiceTest {
 
         testFound(ImmutableList.of(supplier, differentSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(supplier, nullSupplier), differentContent);
+    }
+
+    @Test
+    public void redirectingSupplier(){
+        ExternallyAvailableContent contentWithRedirect = redirectingSupplier.get(experiment).iterator().next();
+        assertThat(contentWithRedirect.uri.getScheme(), is("redirect"));
+
+        assertThat(externallyAvailableContent.uri.getScheme(), isEmptyOrNullString());
+    }
+
+    @Test
+    public void redirectsBothInternalAndExternal(){
+        assertThat(new RedirectingSupplier("/experiments").get(experiment).iterator().next().uri.getScheme(), is("redirect"));
+        assertThat(new RedirectingSupplier("www.ebi.ac.uk/gxa/experiments").get(experiment).iterator().next().uri.getScheme(), is("redirect"));
+        assertThat(new RedirectingSupplier("https://www.ebi.ac.uk/gxa/experiments").get(experiment).iterator().next().uri.getScheme(), is("redirect"));
+
+        assertThat(new RedirectingSupplier("/experiments").get(experiment).iterator().next().uri.getSchemeSpecificPart(),
+                containsString("/experiments"));
+        assertThat(new RedirectingSupplier("www.ebi.ac.uk/gxa/experiments").get(experiment).iterator().next().uri.getSchemeSpecificPart(),
+                containsString("www.ebi.ac.uk/gxa/experiments"));
+        assertThat(new RedirectingSupplier("https://www.ebi.ac.uk/gxa/experiments").get(experiment).iterator().next().uri.getSchemeSpecificPart(),
+                is("https://www.ebi.ac.uk/gxa/experiments/"+experiment.getAccession()));
+
     }
 
 

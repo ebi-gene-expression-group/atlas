@@ -7,11 +7,13 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang.NotImplementedException;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.text.MessageFormat;
 import java.util.Collection;
 
 public class ExternallyAvailableContent {
@@ -27,6 +29,19 @@ public class ExternallyAvailableContent {
         this.uri = uri;
         this.description = description;
         this.stream = stream;
+    }
+
+    public ExternallyAvailableContent(final String redirect, Description description){
+        this.uri = URI.create("redirect:"+redirect);
+        this.description = description;
+        this.stream = new Function<HttpServletResponse, Void>() {
+            @Override
+            public Void apply(HttpServletResponse response) {
+                throw new NotImplementedException(MessageFormat.format(
+                        "This content doesn't stream. This shouldn't be reachable as {0} is a redirect.", redirect)
+                );
+            }
+        };
     }
 
     @Override

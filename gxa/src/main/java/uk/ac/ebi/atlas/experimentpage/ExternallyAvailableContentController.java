@@ -12,7 +12,9 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.List;
 /*
@@ -29,12 +31,31 @@ public class ExternallyAvailableContentController {
         this.expressionAtlasContentService = expressionAtlasContentService;
     }
 
+    /*
+    I could be nicer - make me nicer when you understand the different use cases. Now:
+    - the QC report needs a redirect to another Atlas page, preserving the access key
+    - the "View in Array Express" needs an independent URL
+    */
     private JsonObject contentAsJson(ExternallyAvailableContent content,String accession,String accessKey, HttpServletRequest request){
         JsonObject result = content.description.asJson();
+        if("redirect".equals(content.uri.getScheme())){
+            try {
+                result.addProperty("uri", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
 
-        result.addProperty("uri", MessageFormat.format("{0}/experiments/{1}/resources/{2}?accessKey={3}",
-                ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), accessKey
-                ));
+            } catch (MalformedURLException e) {
+                result.addProperty("uri",
+                        MessageFormat.format("{0}/{1}?accessKey={2}",
+                                ApplicationProperties.buildServerURL(request),
+                                content.uri.getSchemeSpecificPart(), accessKey
+                        )
+                );
+            }
+
+        } else {
+            result.addProperty("uri", MessageFormat.format("{0}/experiments/{1}/resources/{2}?accessKey={3}",
+                    ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), accessKey
+            ));
+        }
         return result;
     }
 
