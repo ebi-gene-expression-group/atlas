@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
+import com.google.common.base.Function;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms;
@@ -24,24 +27,21 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @Scope("request")
-public class MicroarrayExperimentDownloadController {
+public class MicroarrayExperimentDownloadController extends CanStreamSupplier<MicroarrayExperiment> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayExperimentDownloadController.class);
 
-    private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
-    private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
-    private static final String ANALYTICS_TSV = "-analytics.tsv";
     private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY_ANY";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
-    private static final String QUERY_RESULTS_TSV = "-query-results.tsv";
 
     private final MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
 
@@ -70,65 +70,64 @@ public class MicroarrayExperimentDownloadController {
                                      HttpServletResponse response)
     throws IOException {
 
+        LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: {}", preferences);
         MicroarrayExperiment experiment =
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession,accessKey);
 
-        //TODO code is not using species for microarray experiments - I think it's wrong
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(preferences.getGeneQuery(), "");
-        LOGGER.info("<downloadMicroarrayGeneProfiles> received download request for requestPreferences: {}", preferences);
-
-        prepareResponse(response, experimentAccession, experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
-
-
-        if (experiment.getArrayDesignAccessions().size() == 1) {
-            fetchAndWrite(response.getWriter(), experiment, preferences, geneQueryResponse);
-        } else {
-            ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
-
-            for (String selectedArrayDesign : experiment.getArrayDesignAccessions()) {
-                String filename = experiment.getAccession() + "_" + selectedArrayDesign + QUERY_RESULTS_TSV;
-
-                ZipEntry ze = new ZipEntry(filename);
-                zipOutputStream.putNextEntry(ze);
-
-                preferences.setArrayDesignAccession(selectedArrayDesign);
-                fetchAndWrite(new PrintWriter(zipOutputStream), experiment, preferences, geneQueryResponse);
-
-                zipOutputStream.closeEntry();
-            }
-
-            zipOutputStream.close();
-        }
-
+        stream(experiment, preferences).apply(response);
     }
 
     // convenience method for test
-    long fetchAndWriteGeneProfiles(Writer responseWriter, MicroarrayExperiment experiment, MicroarrayRequestPreferences
+    void fetchAndWriteGeneProfiles(Writer responseWriter, MicroarrayExperiment experiment, MicroarrayRequestPreferences
             preferences){
-        return fetchAndWrite(responseWriter, experiment, preferences, solrQueryService.fetchResponse(preferences
-                .getGeneQuery(), ""));
+        fetchAndWriteGeneProfiles(experiment, preferences, solrQueryService.fetchResponse(preferences
+                .getGeneQuery(), "")).apply(responseWriter);
     }
 
-    long fetchAndWrite(Writer responseWriter, MicroarrayExperiment experiment, MicroarrayRequestPreferences
-            preferences, GeneQueryResponse geneQueryResponse){
-        MicroarrayRequestContext context =
+
+
+    Function<Writer, Void> fetchAndWriteGeneProfiles(final MicroarrayExperiment experiment,
+                                                     final MicroarrayRequestPreferences preferences,
+                                                     final GeneQueryResponse geneQueryResponse){
+        final MicroarrayRequestContext context =
                 new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
-        return microarrayProfileStreamFactory.write(
-                experiment,
-                context,
-                new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
-                microarrayProfilesWriterFactory.create(responseWriter, context));
+
+        return new Function<Writer, Void>(){
+            @Override
+            public Void apply(Writer writer) {
+                microarrayProfileStreamFactory.write(
+                        experiment,
+                        context,
+                        new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
+                        microarrayProfilesWriterFactory.create(writer, context));
+                return null;
+            }
+        };
     }
 
-    private void prepareResponse(HttpServletResponse response, String experimentAccession, Set<String> arrayDesignAccessions, String fileExtension) {
-        if (arrayDesignAccessions.size() > 1) {
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + ".zip\"");
-            response.setContentType("application/octet-stream");
-        } else {
-            String arrayDesignAccession = arrayDesignAccessions.iterator().next();
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + "_" + arrayDesignAccession + fileExtension + "\"");
-            response.setContentType("text/plain; charset=utf-8");
+    Function<HttpServletResponse, Void> stream(MicroarrayExperiment experiment, MicroarrayRequestPreferences preferences){
+        //TODO code is not using species for microarray experiments - I think it's wrong
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(preferences.getGeneQuery(), "");
+
+        List<Pair<String, Function<Writer, Void>>> documents = new ArrayList<>();
+        for(String arrayDesign: experiment.getArrayDesignAccessions()){
+            documents.add(Pair.of(
+                    MessageFormat.format("{0}-{1}-query-results.tsv", experiment.getAccession(), arrayDesign),
+                    fetchAndWriteGeneProfiles(experiment, preferences, geneQueryResponse)
+            ));
         }
+        return documents.size() == 1 ? streamFile(documents.get(0)) : streamFolder(experiment.getAccession()+"-query-results", documents);
     }
 
+    @Override
+    public Collection<ExternallyAvailableContent> get(MicroarrayExperiment experiment) {
+        MicroarrayRequestPreferences preferences = new MicroarrayRequestPreferences();
+        preferences.setFoldChangeCutOff(0.0);
+        preferences.setCutoff(1.0);
+        return Collections.singleton(new ExternallyAvailableContent(
+                makeUri("query-results"),
+                ExternallyAvailableContent.Description.create("Data", "link", "All heatmap data (tsv)"),
+                stream(experiment, preferences)
+        ));
+    }
 }
