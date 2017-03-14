@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialStaticFilesDownload;
+import uk.ac.ebi.atlas.experimentpage.differential.download.RnaSeqExperimentDownloadController;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -45,6 +46,7 @@ public class ExpressionAtlasContentService {
             DifferentialStaticFilesDownload.Microarray microarrayStaticFilesDownload,
             DifferentialSecondaryDataFiles.RnaSeq rnaSeqDifferentialSecondaryDataFiles,
             DifferentialSecondaryDataFiles.Microarray microarraySecondaryDataFiles,
+            RnaSeqExperimentDownloadController rnaSeqExperimentDownloadController,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -59,6 +61,7 @@ public class ExpressionAtlasContentService {
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
+                                rnaSeqExperimentDownloadController,
                                 rnaSeqDifferentialSecondaryDataFiles,
                                 rnaSeqDifferentialStaticFilesDownload,
                                 rnaSeqDifferentialContrastImageSupplier

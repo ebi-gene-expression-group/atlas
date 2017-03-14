@@ -82,7 +82,7 @@ public class RnaSeqExperimentDownloadControllerIT {
 
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         
-        long genesCount = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
 
@@ -106,17 +106,15 @@ public class RnaSeqExperimentDownloadControllerIT {
         }
         requestPreferences.setCutoff(1D);
         requestPreferences.setFoldChangeCutOff(0D);
-        long genesCount = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
 
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(headersAndBody.getRight());
         Set<String> geneNames = geneNameToLine.keySet();
 
-        assertThat((int) genesCount, greaterThan(0) );
-        assertEquals(genesCount, geneNames.size());
-
-
+        assertThat(headersAndBody.getRight().size(), greaterThan(0) );
+        assertEquals(headersAndBody.getRight().size(), geneNames.size());
     }
 
     public void upDownRegulationWorks(DifferentialExperiment experiment) throws Exception {
@@ -125,14 +123,14 @@ public class RnaSeqExperimentDownloadControllerIT {
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         requestPreferences.setRegulation(Regulation.UP);
 
-        long genesCountUp = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
         List<String> geneNamesUp = geneNames(headersAndBody(responseWriter).getRight());
 
         responseWriter = new StringWriter(100000);
         requestPreferences.setRegulation(Regulation.DOWN);
 
-        long genesCountDown = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
         List<String> geneNamesDown = geneNames(headersAndBody(responseWriter).getRight());
 
@@ -140,7 +138,7 @@ public class RnaSeqExperimentDownloadControllerIT {
         requestPreferences.setRegulation(Regulation.UP_DOWN);
 
 
-        long genesCountUpDown = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
         List<String> geneNamesUpDown = geneNames(headersAndBody(responseWriter).getRight());
 
@@ -149,7 +147,6 @@ public class RnaSeqExperimentDownloadControllerIT {
         resultsSeparately.addAll(geneNamesDown);
 
         assertEquals(resultsSeparately,new HashSet<>(geneNamesUpDown) );
-        assertTrue(genesCountUp+genesCountDown >= genesCountUpDown);
 
     }
 
@@ -159,9 +156,9 @@ public class RnaSeqExperimentDownloadControllerIT {
 
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         requestPreferences.setCutoff(1e-100);
-        long genesCount = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
-        assertEquals(0L, genesCount);
+        assertEquals(0L, headersAndBody(responseWriter).getRight().size());
     }
 
 
@@ -171,9 +168,9 @@ public class RnaSeqExperimentDownloadControllerIT {
 
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
         requestPreferences.setFoldChangeCutOff(50000D);
-        long genesCount = subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
-        assertEquals(0L, genesCount);
+        assertEquals(0L, headersAndBody(responseWriter).getRight().size());
     }
 
     private ImmutableMap<String, String[]> indexByGeneName(List<String> lines) {
