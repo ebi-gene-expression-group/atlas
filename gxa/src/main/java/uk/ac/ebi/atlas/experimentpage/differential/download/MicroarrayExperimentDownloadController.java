@@ -26,7 +26,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.text.MessageFormat;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -124,20 +123,6 @@ public class MicroarrayExperimentDownloadController {
                 new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
                 microarrayProfilesWriterFactory.create(responseWriter, context));
     }
-
-    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata",
-                    params = PARAMS_TYPE_MICROARRAY)
-    public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
-        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
-        return "forward:" + path;
-    }
-
-    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf", params = PARAMS_TYPE_MICROARRAY)
-    public String downloadPdf(@PathVariable String experimentAccession) throws IOException {
-        String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
-        return "forward:" + path;
-    }
-
 
     @RequestMapping(value = "/experiments/{experimentAccession}/normalized.tsv", params = PARAMS_TYPE_MICROARRAY)
     public void downloadNormalizedData(@PathVariable String experimentAccession,

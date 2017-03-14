@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
+import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialStaticFilesDownload;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -39,6 +40,8 @@ public class ExpressionAtlasContentService {
             ContrastImageSupplier.RnaSeq rnaSeqDifferentialContrastImageSupplier,
             ContrastImageSupplier.Microarray microarrayContrastImageSupplier,
             QCReportController qcReportController,
+            DifferentialStaticFilesDownload.RnaSeq rnaSeqDifferentialStaticFilesDownload,
+            DifferentialStaticFilesDownload.Microarray microarrayStaticFilesDownload,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -52,12 +55,14 @@ public class ExpressionAtlasContentService {
                 );
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
-                        ImmutableList.<ExternallyAvailableContent.Supplier<DifferentialExperiment>>of(
+                        ImmutableList.of(
+                                rnaSeqDifferentialStaticFilesDownload,
                                 rnaSeqDifferentialContrastImageSupplier
                         ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
+                                microarrayStaticFilesDownload,
                                 microarrayContrastImageSupplier,
                                 qcReportController
                         ));
