@@ -110,7 +110,9 @@ public class ExternallyAvailableContent {
         Needs to finish with the slash!
         */
         protected URI base(){
-            return URI.create(this.getClass().getSimpleName()+"/");
+            String[] xs = this.getClass().getCanonicalName().split(".");
+            String uniqueEnoughButShortName = xs.length >1 ? xs[xs.length-2]+"."+xs[xs.length-1] : xs[xs.length-1];
+            return URI.create(uniqueEnoughButShortName+"/");
         }
 
         protected final URI makeUri(String id){
