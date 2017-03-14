@@ -20,7 +20,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -43,8 +42,6 @@ public class RnaSeqExperimentDownloadController {
 
     private final SolrQueryService solrQueryService;
 
-    private DataWriterFactory dataWriterFactory;
-
     private final ExperimentTrader experimentTrader;
 
     @Inject
@@ -52,11 +49,10 @@ public class RnaSeqExperimentDownloadController {
             RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory,
             RnaSeqDifferentialProfilesWriterFactory rnaSeqDifferentialProfilesWriterFactory,
             SolrQueryService solrQueryService,
-            DataWriterFactory dataWriterFactory, ExperimentTrader experimentTrader) {
+            ExperimentTrader experimentTrader) {
         this.rnaSeqProfileStreamFactory = rnaSeqProfileStreamFactory;
         this.rnaSeqDifferentialProfilesWriterFactory = rnaSeqDifferentialProfilesWriterFactory;
         this.solrQueryService = solrQueryService;
-        this.dataWriterFactory = dataWriterFactory;
         this.experimentTrader = experimentTrader;
     }
 
@@ -91,40 +87,4 @@ public class RnaSeqExperimentDownloadController {
                         solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
                 rnaSeqDifferentialProfilesWriterFactory.create(responseWriter, context));
     }
-
-    @RequestMapping(value = "/experiments/{experimentAccession}/raw-counts.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
-    public void downloadRawCounts(@PathVariable String experimentAccession,
-                                  @RequestParam(value = "accessKey",required = false) String accessKey,
-                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment)
-                experimentTrader.getExperiment(experimentAccession,accessKey);
-        prepareResponse(response, experiment.getAccession(), RAW_COUNTS_TSV);
-
-        ExpressionsWriter rnaSeqRawDataWriter = dataWriterFactory.getRnaSeqRawDataWriter(experiment, response.getWriter());
-
-        long genesCount = rnaSeqRawDataWriter.write();
-        LOGGER.info("<download{}> streamed {} gene expression profiles", RAW_COUNTS_TSV, genesCount);
-    }
-
-    @RequestMapping(value = "/experiments/{experimentAccession}/all-analytics.tsv", params = PARAMS_TYPE_DIFFERENTIAL)
-    public void downloadAllAnalytics(@PathVariable String experimentAccession,
-                                     @RequestParam(value = "accessKey",required = false) String accessKey,
-            HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DifferentialExperiment experiment = (DifferentialExperiment)
-                experimentTrader.getExperiment(experimentAccession,accessKey);
-
-        prepareResponse(response, experiment.getAccession(), ALL_ANALYTICS_TSV);
-
-        ExpressionsWriter rnaSeqAnalyticsDataWriter = dataWriterFactory.getRnaSeqAnalyticsDataWriter(experiment, response.getWriter());
-
-        long genesCount = rnaSeqAnalyticsDataWriter.write();
-        LOGGER.info("<download{}> streamed {} gene expression profiles", ALL_ANALYTICS_TSV, genesCount);
-
-    }
-
-    private void prepareResponse(HttpServletResponse response, String experimentAccession, String fileExtension) {
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + experimentAccession + fileExtension + "\"");
-        response.setContentType("text/plain; charset=utf-8");
-    }
-
 }

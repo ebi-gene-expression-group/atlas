@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
+import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialStaticFilesDownload;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
@@ -42,6 +43,8 @@ public class ExpressionAtlasContentService {
             QCReportController qcReportController,
             DifferentialStaticFilesDownload.RnaSeq rnaSeqDifferentialStaticFilesDownload,
             DifferentialStaticFilesDownload.Microarray microarrayStaticFilesDownload,
+            DifferentialSecondaryDataFiles.RnaSeq rnaSeqDifferentialSecondaryDataFiles,
+            DifferentialSecondaryDataFiles.Microarray microarraySecondaryDataFiles,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -56,12 +59,14 @@ public class ExpressionAtlasContentService {
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
+                                rnaSeqDifferentialSecondaryDataFiles,
                                 rnaSeqDifferentialStaticFilesDownload,
                                 rnaSeqDifferentialContrastImageSupplier
                         ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
+                                microarraySecondaryDataFiles,
                                 microarrayStaticFilesDownload,
                                 microarrayContrastImageSupplier,
                                 qcReportController
