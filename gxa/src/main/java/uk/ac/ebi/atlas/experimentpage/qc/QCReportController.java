@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.qc;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Collection;
 
@@ -45,15 +51,48 @@ public class QCReportController extends ExternallyAvailableContent.Supplier<Micr
     }
 
     @Override
+    public ExternallyAvailableContent get(final MicroarrayExperiment experiment, URI uri){
+        String[] s = uri.toString().split("/");
+        final String resource = s[s.length -1].replaceAll("\\+", " ");
+
+        final String arrayDesign = s[s.length -2];
+
+        if(resource.equals("index.html")){
+            return super.get(experiment, uri);
+        } else {
+            return new ExternallyAvailableContent(
+                    uri,
+                    ExternallyAvailableContent.Description.create(
+                            "", "", "QC report - "+resource
+                    ),
+                    new Function<HttpServletResponse, Void>() {
+                        @Override
+                        public Void apply(HttpServletResponse response) {
+                            try {
+                                response.sendRedirect(MessageFormat.format(
+                                        "/gxa/experiments/{0}/qc/{1}/{2}",
+                                        experiment.getAccession(), arrayDesign, resource.replace(" ", "%20")
+                                ));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            return null;
+                        }
+                    }
+            );
+        }
+    }
+
+    @Override
     public Collection<ExternallyAvailableContent> get(final MicroarrayExperiment experiment) {
         ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
         for (final String arrayDesign : experiment.getArrayDesignAccessions()) {
 
             if (qcReportUtil.hasQCReport(experiment.getAccession(), arrayDesign)) {
                 b.add( new ExternallyAvailableContent(
-                    makeUri(arrayDesign),
+                    makeUri(arrayDesign+"/index.html"),
                     ExternallyAvailableContent.Description.create(
-                            ExternallyAvailableContent.Description.join("Supplementary Information", arrayDesign),
+                            ExternallyAvailableContent.Description.join("Supplementary Information", arrayDesign, "index.html"),
                             "icon-qc", "The QC report"
                     ),
                     new Function<HttpServletResponse, Void>() {
@@ -61,10 +100,10 @@ public class QCReportController extends ExternallyAvailableContent.Supplier<Micr
                         @Override
                         public Void apply(@Nullable HttpServletResponse response) {
                             try {
-                                response.sendRedirect(MessageFormat.format(
-                                        "/experiments/{0}/qc/{1}/index.html",
-                                        experiment.getAccession(), arrayDesign
-                                ));
+                                IOUtils.copy(Files.newBufferedReader(
+                                        Paths.get(qcReportUtil.buildQCReportIndexHtmlPath(experiment.getAccession(), arrayDesign))
+                                        , StandardCharsets.UTF_8)
+                                        , response.getWriter());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
