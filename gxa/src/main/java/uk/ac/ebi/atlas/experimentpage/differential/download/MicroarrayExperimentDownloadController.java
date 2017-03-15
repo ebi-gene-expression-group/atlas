@@ -4,7 +4,6 @@ import com.google.common.base.Function;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +34,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@Scope("request")
 public class MicroarrayExperimentDownloadController extends CanStreamSupplier<MicroarrayExperiment> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayExperimentDownloadController.class);

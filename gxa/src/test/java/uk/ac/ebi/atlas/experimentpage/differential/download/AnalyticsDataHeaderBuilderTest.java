@@ -35,12 +35,12 @@ public class AnalyticsDataHeaderBuilderTest {
         when(experimentMock.getDataColumnDescriptor("c1")).thenReturn(contrastMock1);
         when(experimentMock.getDataColumnDescriptor("c2")).thenReturn(contrastMock2);
 
-        subject = new AnalyticsDataHeaderBuilder(experimentMock);
+        subject = AnalyticsDataHeaderBuilder.rnaSeq(experimentMock);
     }
 
     @Test
     public void testBuildHeader() throws Exception {
-        String[] newHeader = subject.buildHeader(HEADER);
+        String[] newHeader = subject.apply(HEADER);
         assertThat(newHeader, is(new String[]{"Gene ID"
                 , "Gene Name"
         , "contrast1.p-value", "contrast1.t-stat", "contrast2.p-value", "contrast2.t-stat"}));

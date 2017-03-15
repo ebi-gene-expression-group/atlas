@@ -31,7 +31,7 @@ public abstract class ExperimentDesignFile<E extends Experiment> extends CanStre
                 new ExternallyAvailableContent(
                         makeUri("experiment-design"),
                         ExternallyAvailableContent.Description.create("Supplementary Information", "link", "Experiment design table in downloadable format"),
-                        streamFile(experiment.getAccession() + "experiment-design.tsv", new Function<Writer, Void>() {
+                        streamFile(experiment.getAccession() + "-experiment-design.tsv", new Function<Writer, Void>() {
                             @Nullable
                             @Override
                             public Void apply(@Nullable Writer writer) {
@@ -47,7 +47,7 @@ public abstract class ExperimentDesignFile<E extends Experiment> extends CanStre
         List<String[]> newCsvLines = getLines(analysedRowsAccessions, dataFileHub.getExperimentFiles(experimentAccession).experimentDesign.get().readAll());
 
         try {
-            CSVWriter csvWriter = new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER);
+            CSVWriter csvWriter = new CSVWriter(writer, '\t', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER);
             csvWriter.writeAll(newCsvLines);
 
             csvWriter.flush();

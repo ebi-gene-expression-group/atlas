@@ -31,7 +31,7 @@ public abstract class DifferentialStaticFilesDownload<E extends DifferentialExpe
                 experiment.getAccession()+ "-atlasExperimentSummary.Rdata");
 
         if(rData.toFile().exists()){
-            b.add(new ExternallyAvailableContent(MessageFormat.format("/experiments/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession()),
+            b.add(new ExternallyAvailableContent(MessageFormat.format("experiments/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create("Data", "link",
                             "Summary of the data for this experiment ready to view in R"
             )));
@@ -40,7 +40,7 @@ public abstract class DifferentialStaticFilesDownload<E extends DifferentialExpe
         Path heatmap = Paths.get(dataFileHub.getExperimentDataLocation(), experiment.getAccession(),
                 experiment.getAccession()+ "-heatmap.pdf");
         if(heatmap.toFile().exists()){
-            b.add(new ExternallyAvailableContent(MessageFormat.format("/experiments/{0}/{0}-heatmap.pdf", experiment.getAccession()),
+            b.add(new ExternallyAvailableContent(MessageFormat.format("experiments/{0}/{0}-heatmap.pdf", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create("Data", "link",
                             "Heatmap of aggregated expression data"
                     )));

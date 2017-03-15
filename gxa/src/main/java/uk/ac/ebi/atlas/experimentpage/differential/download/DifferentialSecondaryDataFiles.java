@@ -50,7 +50,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             AtlasResource<TsvReader> rawCounts = dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).rawCounts;
             if(rawCounts.exists()){
                 b.add(new ExternallyAvailableContent(
-                                makeUri("raw counts"),
+                                makeUri("raw-counts"),
                                 ExternallyAvailableContent.Description.create("Data", "link",
                                         "Raw counts (tsv)"
                                 ),

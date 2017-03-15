@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
@@ -44,16 +45,16 @@ public class ExternallyAvailableContentController {
 
             } catch (MalformedURLException e) {
                 result.addProperty("uri",
-                        MessageFormat.format("{0}/{1}?accessKey={2}",
+                        MessageFormat.format("{0}/{1}{2}",
                                 ApplicationProperties.buildServerURL(request),
-                                content.uri.getSchemeSpecificPart(), accessKey
+                                content.uri.getSchemeSpecificPart(), StringUtils.isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
                         )
                 );
             }
 
         } else {
-            result.addProperty("uri", MessageFormat.format("{0}/experiments/{1}/resources/{2}?accessKey={3}",
-                    ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), accessKey
+            result.addProperty("uri", MessageFormat.format("{0}/experiments/{1}/resources/{2}{3}",
+                    ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), StringUtils.isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
             ));
         }
         return result;

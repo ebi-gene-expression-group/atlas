@@ -33,10 +33,6 @@
             <map>
                 <!-- experiment-header.jsp -->
                 <entry key="applicationProperties" value-ref="applicationProperties"/>
-                <entry key="qcReportUtil" value-ref="QCReportUtil"/>
-                <entry key="fastQCReportUtil" value-ref="fastQCReportUtil"/>
-                <entry key="clusteringPdfViewHelper" value-ref="clusteringPdfViewHelper"/>
-                <entry key="rDataViewHelper" value-ref="RDataViewHelper"/>
                 <!-- request-preferences.jsp -->
                 <entry key="stringUtil" value-ref="stringUtil"/>
                 <!-- filterby-menu.jsp -->

@@ -70,7 +70,7 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             @Override
             public Void apply(Writer writer) {
                 try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t');
-                     CSVWriter csvWriter = new CSVWriter(writer, '\t')) {
+                     CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
                     String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
 
                     csvWriter.writeNext(headers);
