@@ -41,10 +41,10 @@ public class ExternallyAvailableContentController {
         JsonObject result = content.description.asJson();
         if("redirect".equals(content.uri.getScheme())){
             try {
-                result.addProperty("uri", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
+                result.addProperty("url", new URL(content.uri.getSchemeSpecificPart()).toExternalForm());
 
             } catch (MalformedURLException e) {
-                result.addProperty("uri",
+                result.addProperty("url",
                         MessageFormat.format("{0}/{1}{2}",
                                 ApplicationProperties.buildServerURL(request),
                                 content.uri.getSchemeSpecificPart(), StringUtils.isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
@@ -53,7 +53,7 @@ public class ExternallyAvailableContentController {
             }
 
         } else {
-            result.addProperty("uri", MessageFormat.format("{0}/experiments/{1}/resources/{2}{3}",
+            result.addProperty("url", MessageFormat.format("{0}/experiments/{1}/resources/{2}{3}",
                     ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), StringUtils.isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
             ));
         }

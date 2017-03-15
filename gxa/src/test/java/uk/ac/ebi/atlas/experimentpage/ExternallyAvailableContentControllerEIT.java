@@ -36,13 +36,13 @@ public class ExternallyAvailableContentControllerEIT {
         return new EndPoint(MessageFormat.format("/gxa/json/experiments/{0}/resources", accession));
     }
 
-    void testAllResourcesAreNonempty(String accession) throws Exception {
+    void testAllResourcesAreNonemptyAndContainValidLinks(String accession) throws Exception {
         JsonArray response = endPointForExperiment(accession).getJsonResponse().getAsJsonArray();
 
         assertThat(response.size(), greaterThan(0));
 
         for(JsonElement e: response){
-            String uri = e.getAsJsonObject().get("uri").getAsString();
+            String uri = e.getAsJsonObject().get("url").getAsString();
 
             if(!uri.contains("www.ebi.ac.uk")) {
                 LOGGER.info(uri);
@@ -58,7 +58,7 @@ public class ExternallyAvailableContentControllerEIT {
         for(String accession : experimentTrader.getPublicExperimentAccessions(
                 ExperimentType.RNASEQ_MRNA_BASELINE, ExperimentType.PROTEOMICS_BASELINE,
                 ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)){
-            testAllResourcesAreNonempty(accession);
+            testAllResourcesAreNonemptyAndContainValidLinks(accession);
         }
     }
 
