@@ -57,14 +57,14 @@ public class ExperimentController extends ExperimentPageController{
 
         model.addAttribute("content", gson.toJson(
                 experimentPageContentForExperiment(
-                        experiment
+                        experiment, request, accessKey
                 )
         ));
 
         return "foundation-experiment-page";
     }
 
-    JsonObject experimentPageContentForExperiment(Experiment experiment){
+    JsonObject experimentPageContentForExperiment(Experiment experiment, HttpServletRequest request, String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
@@ -89,14 +89,11 @@ public class ExperimentController extends ExperimentPageController{
             ));
         }
 
-        availableTabs.add(customContentTab("dummy", "Download"));
-        // and so on ! :)
-
-        /*
-        Some of these will be generic - ones that just show a picture.
-        Some will always be there and I'm not sure if it's not too complicated to set the order up here
-        but I like the loose coupling and simplicity.
-        */
+        availableTabs.add(
+            customContentTab("resources", "Resources", "url",
+                new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                        request, experiment.getAccession(), accessKey)))
+        );
 
         result.add("tabs", availableTabs);
 

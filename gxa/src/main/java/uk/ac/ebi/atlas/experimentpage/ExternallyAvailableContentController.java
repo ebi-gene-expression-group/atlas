@@ -18,12 +18,17 @@ import java.net.URI;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.List;
-/*
-TODO : implement refetch in the browser (or make this not be a separate component)
- */
+
 @Controller
 public class ExternallyAvailableContentController {
 
+    public static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources";
+
+    public static final String listResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey){
+        return ApplicationProperties.buildServerURL(request)+LIST_RESOURCES_URL.replace("{experimentAccession}", experimentAccession)+ (
+                org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey="+accessKey : ""
+                );
+    }
     private final ExpressionAtlasContentService expressionAtlasContentService;
     private static final Gson gson = new Gson();
 
@@ -33,9 +38,10 @@ public class ExternallyAvailableContentController {
     }
 
     /*
-    I could be nicer - make me nicer when you understand the different use cases. Now:
-    - the QC report needs a redirect to another Atlas page, preserving the access key
+    I could be nicer and maybe even have tests:
     - the "View in Array Express" needs an independent URL
+    - the QC report needs a redirect to another Atlas page, preserving the access key
+    - the typical resource needs to circle back to this page
     */
     private JsonObject contentAsJson(ExternallyAvailableContent content,String accession,String accessKey, HttpServletRequest request){
         JsonObject result = content.description.asJson();
@@ -69,7 +75,7 @@ public class ExternallyAvailableContentController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/json/experiments/{experimentAccession}/resources", method = RequestMethod.GET)
+    @RequestMapping(value = LIST_RESOURCES_URL, method = RequestMethod.GET)
     public String list(@PathVariable String experimentAccession, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
                        HttpServletRequest request) {
 
