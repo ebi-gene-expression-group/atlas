@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialStaticFi
 import uk.ac.ebi.atlas.experimentpage.differential.download.MicroarrayExperimentDownloadController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.RnaSeqExperimentDownloadController;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
+import uk.ac.ebi.atlas.experimentpage.qc.RnaSeqQCReport;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -53,16 +54,17 @@ public class ExpressionAtlasContentService {
             ExperimentDesignFile.Baseline baselineExperimentDesignFile,
             ExperimentDesignFile.RnaSeq rnaSeqDifferentialExperimentDesignFile,
             ExperimentDesignFile.Microarray microarrayExperimentDesignFile,
+            RnaSeqQCReport rnaSeqQCReport,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
-                        ImmutableList.<ExternallyAvailableContent.Supplier<BaselineExperiment>>of(
+                        ImmutableList.of(
                                 proteomicsBaselineProfilesWriterService,
                                 baselineExperimentDesignFile)
                 );
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
-                        ImmutableList.<ExternallyAvailableContent.Supplier<BaselineExperiment>>of(
+                        ImmutableList.of(
                                 rnaSeqBaselineProfilesWriterService,
                                 baselineExperimentDesignFile)
                 );
@@ -73,7 +75,8 @@ public class ExpressionAtlasContentService {
                                 rnaSeqDifferentialSecondaryDataFiles,
                                 rnaSeqDifferentialStaticFilesDownload,
                                 rnaSeqDifferentialContrastImageSupplier,
-                                rnaSeqDifferentialExperimentDesignFile
+                                rnaSeqDifferentialExperimentDesignFile,
+                                rnaSeqQCReport
                         ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(

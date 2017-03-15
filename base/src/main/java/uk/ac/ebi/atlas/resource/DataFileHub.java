@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.io.UnsafeInput;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
@@ -14,6 +15,8 @@ import uk.ac.ebi.atlas.model.resource.*;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 
 @Named
 public class DataFileHub {
@@ -33,6 +36,7 @@ public class DataFileHub {
     final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
     final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
     final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
+    final static String DIFFERENTIAL_RNASEQ_QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
     final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
     final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
@@ -122,11 +126,13 @@ public class DataFileHub {
     public class DifferentialExperimentFiles extends ExperimentFiles {
         public final AtlasResource<TsvReader> analytics;
         public final AtlasResource<TsvReader> rawCounts;
+        public final AtlasResource<Map<String, AtlasResource<TsvReader>>> qcFiles;
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.analytics = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
             this.rawCounts = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.qcFiles = new DirectoryWithTsvFiles(dataFilesLocation, DIFFERENTIAL_RNASEQ_QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
         }
     }
 

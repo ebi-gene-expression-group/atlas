@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
@@ -15,7 +13,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -23,30 +20,6 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExperiment> extends CanStreamSupplier<E> {
-
-    Function<Writer, Void> readFromResourceAndWrite(final AtlasResource<TsvReader> resource,
-                                                    final Function<String[], String[]> whatToDoWithTheHeaders){
-        return new Function<Writer, Void>() {
-            @Override
-            public Void apply(Writer writer) {
-                try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t') ;
-                     CSVWriter csvWriter = new CSVWriter(writer, '\t')) {
-                    String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
-
-                    csvWriter.writeNext(headers);
-
-                    String[] inputLine;
-                    while ((inputLine = csvReader.readNext()) != null) {
-                        csvWriter.writeNext(inputLine);
-                    }
-                    csvWriter.flush();
-                } catch (IOException e) {
-                    throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
-                }
-                return null;
-            }
-        };
-    }
 
     @Named
     public static class RnaSeq extends DifferentialSecondaryDataFiles<DifferentialExperiment> {
@@ -68,7 +41,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                                         "Analytics file (tsv)"
                                 ),
                                 streamFile(experiment.getAccession()+"-analytics.tsv",
-                                        readFromResourceAndWrite(analytics, AnalyticsDataHeaderBuilder.rnaSeq(experiment))
+                                        readFromResourceAndWriteTsv(analytics, AnalyticsDataHeaderBuilder.rnaSeq(experiment))
                                 )
                         )
                 );
@@ -82,7 +55,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                                         "Raw counts (tsv)"
                                 ),
                                 streamFile(experiment.getAccession()+"-raw-counts.tsv",
-                                        readFromResourceAndWrite(analytics, Functions.<String[]>identity())
+                                        readFromResourceAndWriteTsv(analytics, Functions.<String[]>identity())
                                 )
                         )
                 );
@@ -110,7 +83,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 if(r.exists()){
                     analytics.add(Pair.of(
                             MessageFormat.format("{0}-{1}-analytics.tsv", experiment.getAccession(), arrayDesign),
-                            readFromResourceAndWrite(r, AnalyticsDataHeaderBuilder.microarray(experiment))
+                            readFromResourceAndWriteTsv(r, AnalyticsDataHeaderBuilder.microarray(experiment))
                     ));
                 }
             }
@@ -132,7 +105,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 if(r.exists()){
                     logFoldChanges.add(Pair.of(
                             MessageFormat.format("{0}-{1}-log-fold-changes.tsv", experiment.getAccession(), arrayDesign),
-                            readFromResourceAndWrite(r, Functions.<String[]>identity())
+                            readFromResourceAndWriteTsv(r, Functions.<String[]>identity())
                     ));
                 }
             }
@@ -155,7 +128,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                 if(r.exists()){
                     normalizedExpressions.add(Pair.of(
                             MessageFormat.format("{0}-{1}-normalized-expressions.tsv", experiment.getAccession(), arrayDesign),
-                            readFromResourceAndWrite(r, Functions.<String[]>identity())
+                            readFromResourceAndWriteTsv(r, Functions.<String[]>identity())
                     ));
                 }
             }

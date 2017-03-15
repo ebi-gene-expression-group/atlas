@@ -1,9 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
+import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Function;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -54,6 +58,30 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
                     document.apply(writer);
                 } catch (IOException e){
                     throw new RuntimeException(e);
+                }
+                return null;
+            }
+        };
+    }
+
+    protected Function<Writer, Void> readFromResourceAndWriteTsv(final AtlasResource<TsvReader> resource,
+                                                                 final Function<String[], String[]> whatToDoWithTheHeaders){
+        return new Function<Writer, Void>() {
+            @Override
+            public Void apply(Writer writer) {
+                try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t');
+                     CSVWriter csvWriter = new CSVWriter(writer, '\t')) {
+                    String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
+
+                    csvWriter.writeNext(headers);
+
+                    String[] inputLine;
+                    while ((inputLine = csvReader.readNext()) != null) {
+                        csvWriter.writeNext(inputLine);
+                    }
+                    csvWriter.flush();
+                } catch (IOException e) {
+                    throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
                 }
                 return null;
             }
