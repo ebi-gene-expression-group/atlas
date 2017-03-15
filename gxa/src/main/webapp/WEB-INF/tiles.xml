@@ -86,11 +86,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/qc-template.jsp"/>
     </definition>
 
-    <definition name="fast-qc-template" extends="experiment_specific">
-        <put-attribute name="title" value="Experiment - FastQC Report"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/fast-qc-template.jsp"/>
-    </definition>
-
     <definition name="experiments" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/jsp/experiments.jsp"/>
     </definition>
