@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialStaticFilesDownload;
@@ -49,16 +50,21 @@ public class ExpressionAtlasContentService {
             DifferentialSecondaryDataFiles.Microarray microarraySecondaryDataFiles,
             RnaSeqExperimentDownloadController rnaSeqExperimentDownloadController,
             MicroarrayExperimentDownloadController microarrayExperimentDownloadController,
+            ExperimentDesignFile.Baseline baselineExperimentDesignFile,
+            ExperimentDesignFile.RnaSeq rnaSeqDifferentialExperimentDesignFile,
+            ExperimentDesignFile.Microarray microarrayExperimentDesignFile,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.<ExternallyAvailableContent.Supplier<BaselineExperiment>>of(
-                                proteomicsBaselineProfilesWriterService)
+                                proteomicsBaselineProfilesWriterService,
+                                baselineExperimentDesignFile)
                 );
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.<ExternallyAvailableContent.Supplier<BaselineExperiment>>of(
-                                rnaSeqBaselineProfilesWriterService)
+                                rnaSeqBaselineProfilesWriterService,
+                                baselineExperimentDesignFile)
                 );
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -66,7 +72,8 @@ public class ExpressionAtlasContentService {
                                 rnaSeqExperimentDownloadController,
                                 rnaSeqDifferentialSecondaryDataFiles,
                                 rnaSeqDifferentialStaticFilesDownload,
-                                rnaSeqDifferentialContrastImageSupplier
+                                rnaSeqDifferentialContrastImageSupplier,
+                                rnaSeqDifferentialExperimentDesignFile
                         ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -75,7 +82,8 @@ public class ExpressionAtlasContentService {
                                 microarraySecondaryDataFiles,
                                 microarrayStaticFilesDownload,
                                 microarrayContrastImageSupplier,
-                                qcReportController
+                                qcReportController,
+                                microarrayExperimentDesignFile
                         ));
         this.experimentTrader = experimentTrader;
     }

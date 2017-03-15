@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 import com.google.common.base.Function;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
-import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public abstract class CanStreamSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E> {
+public abstract class CanStreamSupplier<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
 
     protected Function<HttpServletResponse, Void> streamFolder(final String folderName,
                                                      final List<Pair<String, Function<Writer, Void>>> documents){

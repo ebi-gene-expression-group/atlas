@@ -12,9 +12,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ExperimentDesignDownloadServiceTest {
+public class ExperimentDesignFileTest {
 
-    ExperimentDesignDownloadService subject = new ExperimentDesignDownloadService(null);
+    ExperimentDesignFile<?> subject = new ExperimentDesignFile.Baseline(null);
 
     @Test
     public void test(){
