@@ -55,18 +55,23 @@ public class ExpressionAtlasContentService {
             ExperimentDesignFile.RnaSeq rnaSeqDifferentialExperimentDesignFile,
             ExperimentDesignFile.Microarray microarrayExperimentDesignFile,
             RnaSeqQCReport rnaSeqQCReport,
+            LinkToArrayExpress.Baseline baselineLinkToArrayExpress,
+            LinkToArrayExpress.Differential differentialLinkToArrayExpress,
+            LinkToArrayExpress.Microarray microarrayLinkToArrayExpress,
             ExperimentTrader experimentTrader) {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
                                 proteomicsBaselineProfilesWriterService,
-                                baselineExperimentDesignFile)
+                                baselineExperimentDesignFile,
+                                baselineLinkToArrayExpress)
                 );
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
                                 rnaSeqBaselineProfilesWriterService,
-                                baselineExperimentDesignFile)
+                                baselineExperimentDesignFile,
+                                baselineLinkToArrayExpress)
                 );
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -76,7 +81,8 @@ public class ExpressionAtlasContentService {
                                 rnaSeqDifferentialStaticFilesDownload,
                                 rnaSeqDifferentialContrastImageSupplier,
                                 rnaSeqDifferentialExperimentDesignFile,
-                                rnaSeqQCReport
+                                rnaSeqQCReport,
+                                differentialLinkToArrayExpress
                         ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
@@ -86,7 +92,8 @@ public class ExpressionAtlasContentService {
                                 microarrayStaticFilesDownload,
                                 microarrayContrastImageSupplier,
                                 qcReportController,
-                                microarrayExperimentDesignFile
+                                microarrayExperimentDesignFile,
+                                microarrayLinkToArrayExpress
                         ));
         this.experimentTrader = experimentTrader;
     }
