@@ -30,7 +30,7 @@ public abstract class ExperimentDesignFile<E extends Experiment> extends CanStre
         return Collections.singleton(
                 new ExternallyAvailableContent(
                         makeUri("experiment-design"),
-                        ExternallyAvailableContent.Description.create("Supplementary Information", "link", "Experiment design table in downloadable format"),
+                        ExternallyAvailableContent.Description.create("Supplementary Information", "icon-tsv", "Experiment Design as tab-separated file"),
                         streamFile(experiment.getAccession() + "-experiment-design.tsv", new Function<Writer, Void>() {
                             @Nullable
                             @Override

@@ -23,12 +23,38 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
 
 
     ExternallyAvailableContent.Description description(ResourceType resourceType, Contrast contrast){
+        String description;
+        String type;
+        switch (resourceType) {
+            case PLOT_GSEA_REACTOME:
+                description = "Reactome pathways enrichment analysis";
+                type = "icon-gsea";
+                break;
+            case PLOT_GSEA_INTERPRO:
+                description = "Interpro domains enrichment analysis";
+                type = "icon-gsea";
+                break;
+            case PLOT_GSEA_GO:
+                description = "GO terms enrichment analysis";
+                type = "icon-gsea";
+                break;
+            case PLOT_MA:
+                description = "MA plot";
+                type = "icon-ma";
+                break;
+            default:
+                description = "";
+                type = "";
+        }
+
         return ExternallyAvailableContent.Description.create(
                 ExternallyAvailableContent.Description.join("Plots",contrast.getDisplayName()),
-                resourceType.fileName(),
-                "(TODO better description) see ths funky plot of"+resourceType.name()
+                type,
+                description
         );
     }
+
+
 
     @Named
     public static class RnaSeq extends ContrastImageSupplier<DifferentialExperiment> {

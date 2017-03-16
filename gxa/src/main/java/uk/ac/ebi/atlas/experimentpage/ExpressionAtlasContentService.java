@@ -79,22 +79,22 @@ public class ExpressionAtlasContentService {
                                 rnaSeqExperimentDownloadController,
                                 rnaSeqDifferentialSecondaryDataFiles,
                                 rnaSeqDifferentialStaticFilesDownload,
-                                rnaSeqDifferentialContrastImageSupplier,
                                 rnaSeqDifferentialExperimentDesignFile,
                                 rnaSeqQCReport,
-                                differentialLinkToArrayExpress
-                        ));
+                                differentialLinkToArrayExpress,
+                                rnaSeqDifferentialContrastImageSupplier
+                                ));
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
                                 microarrayExperimentDownloadController,
                                 microarraySecondaryDataFiles,
                                 microarrayStaticFilesDownload,
-                                microarrayContrastImageSupplier,
                                 qcReportController,
                                 microarrayExperimentDesignFile,
-                                microarrayLinkToArrayExpress
-                        ));
+                                microarrayLinkToArrayExpress,
+                                microarrayContrastImageSupplier
+                                ));
         this.experimentTrader = experimentTrader;
     }
 

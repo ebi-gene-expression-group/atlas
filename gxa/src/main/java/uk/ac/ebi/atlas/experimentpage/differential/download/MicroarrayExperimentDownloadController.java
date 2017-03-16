@@ -124,7 +124,7 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
         preferences.setCutoff(1.0);
         return Collections.singleton(new ExternallyAvailableContent(
                 makeUri("query-results"),
-                ExternallyAvailableContent.Description.create("Data", "link", "All heatmap data (tsv)"),
+                ExternallyAvailableContent.Description.create("Data", "icon-tsv", "All the data presented in the heatmap"),
                 stream(experiment, preferences)
         ));
     }

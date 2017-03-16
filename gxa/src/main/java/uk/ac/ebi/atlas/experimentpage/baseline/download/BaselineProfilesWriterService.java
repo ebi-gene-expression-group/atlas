@@ -112,7 +112,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
         final Map<String, Integer> coexpressionsRequested = ImmutableMap.of();
 
         return Collections.singleton(new ExternallyAvailableContent(makeUri("tsv"),
-                ExternallyAvailableContent.Description.create("data", "link", "Expression values across all genes"), new Function<HttpServletResponse, Void>() {
+                ExternallyAvailableContent.Description.create("Data", "icon-tsv", "Expression values across all genes"), new Function<HttpServletResponse, Void>() {
             @Override
             public Void apply(HttpServletResponse response) {
                 try {

@@ -18,7 +18,7 @@ public abstract class LinkToArrayExpress<E extends Experiment> extends Externall
     public Collection<ExternallyAvailableContent> get(E experiment) {
         return Collections.singleton(new ExternallyAvailableContent("https://www.ebi.ac.uk/arrayexpress/experiments/"+experiment.getAccession(),
                 ExternallyAvailableContent.Description.create(
-                        "Supplementary Information", "icon-ae", "Page of this experiment in ArrayExpress"
+                        "Supplementary Information", "icon-ae", MessageFormat.format("ArrayExpress: experiment {0}", experiment.getAccession())
                 )));
     }
 
@@ -43,7 +43,7 @@ public abstract class LinkToArrayExpress<E extends Experiment> extends Externall
             for(String arrayDesign : experiment.getArrayDesignAccessions()){
                 b.add(new ExternallyAvailableContent("https://www.ebi.ac.uk/arrayexpress/arrays/"+arrayDesign,
                         ExternallyAvailableContent.Description.create(
-                                "Supplementary Information", "link", MessageFormat.format("Page of array design {0} in ArrayExpress", arrayDesign)
+                                "Supplementary Information", "icon-ae", MessageFormat.format("ArrayExpress: array design {0}", arrayDesign)
                )));
             }
             return b.build();
