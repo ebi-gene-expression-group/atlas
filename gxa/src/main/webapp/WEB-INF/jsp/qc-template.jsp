@@ -5,29 +5,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-<div id="arrayDesignsQc">
-    <c:if test="${fn:length(qcArrayDesigns) > 1}">
-
-        <c:if test= "${not empty qcArrayDesigns}" />
-
-        <form:form commandName="preferences" method="get" id="prefForm" >
-            <c:if test="${not empty param.accessKey}">
-                <input id="accessKey" name="accessKey" type="hidden" value="${param.accessKey}"/>
-            </c:if>
-
-            <span>Choose array design to view report for:</span>
-            <div style="display:inline">
-            <form:select path="arrayDesignAccession">
-                <form:options items="${qcArrayDesigns}" />
-             </form:select>
-            </div>
-        </form:form>
-
-    </c:if>
-</div>
-
-
+<style>
+    h1 {
+        color:cadetblue;
+    }
+</style>
 <div id="qc-content">
     <%
         // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
@@ -36,14 +18,3 @@
     %>
 </div>
 
-<script>
-    $(function () {
-        $(document).ready(function () {
-
-            $('#arrayDesignAccession').change(function () {
-                $('#prefForm').submit();
-            });
-
-        });
-    });
-</script>

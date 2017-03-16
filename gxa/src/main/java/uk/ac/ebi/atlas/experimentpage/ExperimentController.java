@@ -76,8 +76,6 @@ public class ExperimentController extends ExperimentPageController{
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(groupingsForHeatmap(experiment)));
 
-        availableTabs.add(customContentTab("dummy", "Gene Expression"));
-
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(customContentTab("experiment-design", "Experiment Design", new ExperimentDesignTable(experiment).asJson()));
         }

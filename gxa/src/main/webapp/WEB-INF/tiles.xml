@@ -81,8 +81,9 @@
         <put-attribute name="body" value="/WEB-INF/jsp/experiment-analysis-methods.jsp"/>
     </definition>
 
-    <definition name="qc-template" extends="experiment_specific">
+    <definition name="qc-template" extends="foundation-base">
         <put-attribute name="title" value="Experiment - QC Report"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/qc-template.jsp"/>
     </definition>
 
