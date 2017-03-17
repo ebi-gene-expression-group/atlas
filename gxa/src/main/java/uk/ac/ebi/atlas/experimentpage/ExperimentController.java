@@ -85,8 +85,7 @@ public class ExperimentController extends ExperimentPageController{
         }
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
             availableTabs.add(customContentTab("static-table", "Analysis Methods", "data",
-                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readLine(0),
-                                dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readLine(1)
+                    formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()
                             )
             ));
         }
@@ -102,12 +101,14 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonArray formatTable(String [] properties, String [] values){
-        Preconditions.checkState(properties.length == values.length);
+    JsonArray formatTable(List<String []> rows){
 
         JsonArray result = new JsonArray();
-        for(int i = 0 ; i< properties.length ; i ++){
-            result.add(twoElementArray(properties[i], values[i]));
+        for(int i = 0 ; i< rows.size() ; i ++){
+            //skip empty rows and other unexpected input
+            if(rows.get(i).length == 2) {
+                result.add(twoElementArray(rows.get(i)[0], rows.get(i)[1]));
+            }
         }
 
         return result;
