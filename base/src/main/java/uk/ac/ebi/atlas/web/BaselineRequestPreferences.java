@@ -49,4 +49,11 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
         this.fractionForPremium = fractionForPremium;
     }
 
+    public static BaselineRequestPreferences requestAllData(){
+        BaselineRequestPreferences preferences = new BaselineRequestPreferences();
+        preferences.setCutoff(0.0d);
+        preferences.setGeneQuery(SemanticQuery.create());
+        return preferences;
+    }
+
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -74,7 +75,10 @@ public class ExperimentController extends ExperimentPageController{
 
         JsonArray availableTabs = new JsonArray();
         // everything wants to have a heatmap
-        availableTabs.add(heatmapTab(groupingsForHeatmap(experiment)));
+        availableTabs.add(heatmapTab(
+                groupingsForHeatmap(experiment),
+                BaselineBarChartController.geneDistributionUrl(request, experiment.getAccession(), accessKey))
+        );
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(customContentTab("experiment-design", "Experiment Design", new ExperimentDesignTable(experiment).asJson()));
@@ -134,8 +138,11 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonObject heatmapTab(JsonArray groups){
-        return customContentTab("heatmap", "Heatmap", "groups", groups);
+    JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl){
+        JsonObject props = new JsonObject();
+        props.add("groups", groups);
+        props.addProperty("genesDistributedByCutoffUrl", geneDistributionUrl);
+        return customContentTab("heatmap", "Heatmap", props);
     }
 
     private JsonObject groupForFilterType(String filterType, List<String> defaultValues,

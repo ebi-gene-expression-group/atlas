@@ -21,8 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
@@ -106,9 +104,6 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
 
     @Override
     public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
-        final BaselineRequestPreferences preferences = new BaselineRequestPreferences();
-        preferences.setCutoff(0.0d);
-        preferences.setGeneQuery(SemanticQuery.create());
         final Map<String, Integer> coexpressionsRequested = ImmutableMap.of();
 
         return Collections.singleton(new ExternallyAvailableContent(makeUri("tsv"),
@@ -120,7 +115,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
                             "Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
                     response.setContentType("text/plain; charset=utf-8");
 
-                    write(response.getWriter(), preferences, experiment, coexpressionsRequested);
+                    write(response.getWriter(), BaselineRequestPreferences.requestAllData(), experiment, coexpressionsRequested);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

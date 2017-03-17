@@ -35,8 +35,6 @@
                 <entry key="applicationProperties" value-ref="applicationProperties"/>
                 <!-- request-preferences.jsp -->
                 <entry key="stringUtil" value-ref="stringUtil"/>
-                <!-- filterby-menu.jsp -->
-                <entry key="filterFactorMenuBuilder" value-ref="filterFactorMenuBuilder"/>
             </map>
         </property>
     </bean>
