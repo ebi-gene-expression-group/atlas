@@ -6,8 +6,9 @@ import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import java.util.Map;
 
@@ -18,9 +19,10 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
     private final Integer nonFilterFactorsSize;
 
     private ExperimentType experimentType;
-    
+
     public BaselineExperimentProfile(BaselineExperimentSlice experimentSlice) {
-        super(experimentSlice.experimentAccession() +"-"+ FilterFactorsConverter.prettyPrint(experimentSlice.filterFactors()), experimentSlice.experimentDisplayName());
+        super(joinIntoText(experimentSlice.experimentAccession(), experimentSlice.filterFactors()),
+                experimentSlice.experimentDisplayName());
         filterFactors = experimentSlice.filterFactors();
         nonFilterFactorsSize = experimentSlice.nonFilterFactors().size();
         experimentType = experimentSlice.getExperimentType();
@@ -51,33 +53,57 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
 
     @Override
     public String getName() {
+        return joinIntoText(super.getName(), filterFactors);
+    }
+
+    private static String joinIntoText(String core, FactorGroup filterFactors) {
         StringBuilder sb = new StringBuilder();
-        sb.append(super.getName());
+        sb.append(core);
         if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
-            sb.append(" - ").append(FilterFactorsConverter.prettyPrint(filterFactors));
+            sb.append(" - ").append(factorsAsText(filterFactors));
         }
         return sb.toString();
     }
 
-    String getShortName() {
-        StringBuilder sb = new StringBuilder();
-        String name = super.getName();
-        if(StringUtils.startsWithAny(name, new String[]{"Tissues - ", "Cell Type - ", "Cell Lines - ", "Individual - ",
-                                                        "Developmental Stages - ", "Strains - ", "Cultivars - ", "Ecotypes - "})) {
-            String shortenName = name.substring(0, name.indexOf("-") + 2);
-            name = name.replace(shortenName, "");
-            sb.append(name);
-        } else if (StringUtils.startsWith(name, "Proteomics - Tissues - ")) {
-            name = name.replace("Proteomics - Tissues - ", "");
-            sb.append(name);
-        } else {
-            sb.append(name);
+    static String factorsAsText(Iterable<Factor> factors) {
+        if (!factors.iterator().hasNext()) {
+            return "";
         }
 
-        if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
-            sb.append(" - ").append(FilterFactorsConverter.prettyPrint(filterFactors));
+        StringBuilder sb = new StringBuilder();
+
+        for (Factor factor : factors) {
+            sb.append(factor.getValue()).append(", ");
         }
+
+        sb.delete(sb.length() - 2, sb.length());
         return sb.toString();
+    }
+
+    static String shorten(String name) {
+        if (StringUtils.startsWithAny(name,
+                new String[]{
+                        "Tissues - ",
+                        "Cell Type - ",
+                        "Cell Lines - ",
+                        "Individual - ",
+                        "Developmental Stages - ",
+                        "Strains - ",
+                        "Cultivars - ",
+                        "Ecotypes - "})) {
+            String shortenName = name.substring(0, name.indexOf("-") + 2);
+            return name.replace(shortenName, "");
+        } else if (StringUtils.startsWith(name, "Proteomics - Tissues - ")) {
+            return name.replace("Proteomics - Tissues - ", "");
+        } else {
+            return name;
+        }
+    }
+
+    String getShortName() {
+        return joinIntoText(shorten(super.getName()),
+                filterFactors.containsOnlyOrganism() ? new FactorSet() : filterFactors
+                );
     }
 
     public String getExperimentType() {
