@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.gson.*;
 import org.springframework.stereotype.Controller;
@@ -8,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
@@ -81,7 +81,10 @@ public class ExperimentController extends ExperimentPageController{
         );
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
-            availableTabs.add(customContentTab("experiment-design", "Experiment Design", new ExperimentDesignTable(experiment).asJson()));
+            availableTabs.add(
+                    experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
+                            ExperimentDesignFile.makeUrl(request,experiment.getAccession(), accessKey))
+            );
         }
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
             availableTabs.add(customContentTab("static-table", "Analysis Methods", "data",
@@ -127,10 +130,6 @@ public class ExperimentController extends ExperimentPageController{
         return customContentTab(tabType, name, props);
     }
 
-    JsonObject customContentTab(String tabType, String name){
-        return customContentTab(tabType, name, new JsonObject());
-    }
-
     JsonObject customContentTab(String tabType, String name, JsonObject props){
         JsonObject result = new JsonObject();
         result.addProperty("type", tabType);
@@ -144,6 +143,13 @@ public class ExperimentController extends ExperimentPageController{
         props.add("groups", groups);
         props.addProperty("genesDistributedByCutoffUrl", geneDistributionUrl);
         return customContentTab("heatmap", "Heatmap", props);
+    }
+
+    JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
+        JsonObject props = new JsonObject();
+        props.add("table", table);
+        props.addProperty("downloadUrl", downloadUrl);
+        return customContentTab("experiment-design", "Experiment Design", props);
     }
 
     private JsonObject groupForFilterType(String filterType, List<String> defaultValues,

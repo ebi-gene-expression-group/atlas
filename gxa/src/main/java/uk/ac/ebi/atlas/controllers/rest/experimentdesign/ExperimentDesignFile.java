@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.controllers.rest.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Function;
+import uk.ac.ebi.atlas.experimentpage.ExternallyAvailableContentController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.CanStreamSupplier;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
@@ -15,15 +16,28 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 
 public abstract class ExperimentDesignFile<E extends Experiment> extends CanStreamSupplier<E> {
 
+
+
     private final DataFileHub dataFileHub;
     public ExperimentDesignFile(DataFileHub dataFileHub){
         this.dataFileHub = dataFileHub;
+    }
+
+
+    @Override
+    protected Collection<String> reservedUris(){
+        return Collections.singleton("experiment-design");
+    }
+
+    public static String makeUrl(HttpServletRequest request, String experimentAccession, String accessKey){
+        return ExternallyAvailableContentController.streamResourcesUrl(request, experimentAccession, accessKey, "experiment-design");
     }
 
     public Collection<ExternallyAvailableContent> get(final E experiment){

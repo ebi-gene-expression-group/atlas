@@ -6,6 +6,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.NotImplementedException;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
@@ -116,12 +117,20 @@ public class ExternallyAvailableContent {
             return URI.create(uniqueEnoughButShortName+"/");
         }
 
+        protected Collection<String> reservedUris() {
+            return ImmutableSet.of();
+        }
+
+        private final boolean matchesReservedUri(URI uri){
+            return reservedUris().contains(uri.toString().toLowerCase());
+        }
+
         protected final URI makeUri(String id){
             return base().resolve(id);
         }
 
         public final boolean comesFromThisSupplier(URI uri){
-            return uri.resolve(".").equals(base());
+            return uri.resolve(".").equals(base()) || matchesReservedUri(uri);
         }
 
         /*
@@ -132,7 +141,7 @@ public class ExternallyAvailableContent {
             return FluentIterable.from(get(experiment)).firstMatch(new Predicate<ExternallyAvailableContent>() {
                 @Override
                 public boolean apply(ExternallyAvailableContent externallyAvailableContent) {
-                    return externallyAvailableContent.uri.equals(uri);
+                    return externallyAvailableContent.uri.equals(uri) || matchesReservedUri(uri);
                 }
             }).or(new com.google.common.base.Supplier<ExternallyAvailableContent>() {
                 @Override

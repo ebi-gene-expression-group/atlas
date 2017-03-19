@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
@@ -19,15 +18,27 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @Controller
 public class ExternallyAvailableContentController {
 
-    public static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources";
+    private static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources";
+    private static final String STREAM_RESOURCES_URL = "/experiments/{experimentAccession}/resources/**";
 
     public static final String listResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey){
-        return ApplicationProperties.buildServerURL(request)+LIST_RESOURCES_URL.replace("{experimentAccession}", experimentAccession)+ (
-                org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey="+accessKey : ""
-                );
+        return ApplicationProperties.buildServerURL(request)
+                + LIST_RESOURCES_URL
+                .replace("{experimentAccession}", experimentAccession)
+                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
+    }
+
+    public static final String streamResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey, String resourceName){
+        return ApplicationProperties.buildServerURL(request)
+                + STREAM_RESOURCES_URL
+                .replace("{experimentAccession}", experimentAccession)
+                .replace("**", resourceName)
+                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
     }
     private final ExpressionAtlasContentService expressionAtlasContentService;
     private static final Gson gson = new Gson();
@@ -53,14 +64,14 @@ public class ExternallyAvailableContentController {
                 result.addProperty("url",
                         MessageFormat.format("{0}/{1}{2}",
                                 ApplicationProperties.buildServerURL(request),
-                                content.uri.getSchemeSpecificPart(), StringUtils.isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
+                                content.uri.getSchemeSpecificPart(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
                         )
                 );
             }
 
         } else {
             result.addProperty("url", MessageFormat.format("{0}/experiments/{1}/resources/{2}{3}",
-                    ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), StringUtils.isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
+                    ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
             ));
         }
         return result;
@@ -85,7 +96,7 @@ public class ExternallyAvailableContentController {
                 ));
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/resources/**", method = RequestMethod.GET)
+    @RequestMapping(value = STREAM_RESOURCES_URL, method = RequestMethod.GET)
     public void get(@PathVariable String experimentAccession, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
                     HttpServletRequest request, HttpServletResponse response) {
 
