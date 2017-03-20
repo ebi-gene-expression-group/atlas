@@ -6,11 +6,18 @@ table.table-striped tr:nth-child(odd) {
     background: #FFF;
 }
 
+table.gxaDifferentialFacetedSearchResults, table.gxaDifferentialFacetedSearchResults td {
+    border: none;
+    width: inherit;
+}
+
 table.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {
     font-weight: bold;
 }
 
 table.gxaDifferentialFacetedSearchResults th {
+    background: transparent;
+    text-align: center;
     font-size: 90%;
     border: 0 solid #ddd;
     border-bottom-width: 2px;
@@ -21,7 +28,9 @@ table.gxaDifferentialFacetedSearchResults tr td {
     padding: 8px;
     line-height: 1.42857143;
     vertical-align: middle;
-    border-top: 1px solid #ddd
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 90%;
 }
 
 table.gxaDifferentialFacetedSearchResults tr td.col_species .react-ebi-species-icon {
