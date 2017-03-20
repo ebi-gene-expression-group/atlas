@@ -5,7 +5,6 @@ import com.esotericsoftware.kryo.io.UnsafeInput;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
@@ -15,7 +14,6 @@ import uk.ac.ebi.atlas.model.resource.*;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Map;
 
 @Named
@@ -94,7 +92,7 @@ public class DataFileHub {
 
         ExperimentFiles(String experimentAccession){
             this.analysisMethods = new TsvFile.ReadOnly(dataFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.configuration = new XmlFile.ReadOnly(dataFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, false, experimentAccession);
+            this.configuration = new XmlFile.ReadOnly(dataFilesLocation, CONFIGURATION_FILE_PATH_TEMPLATE, experimentAccession);
 
             this.experimentDesign = new TsvFile.ReadOnly(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
             this.experimentDesignWrite = new TsvFile.Overwrite(dataFilesLocation, EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, experimentAccession);
@@ -118,7 +116,7 @@ public class DataFileHub {
         BaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.main = new TsvFile.ReadOnly(dataFilesLocation, EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
-            this.factors = new XmlFile.ReadOnly(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE, true, experimentAccession);
+            this.factors = new XmlFile.ReadOnly(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
             this.coexpressions = new TsvFile.ReadCompressed(dataFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }
     }
