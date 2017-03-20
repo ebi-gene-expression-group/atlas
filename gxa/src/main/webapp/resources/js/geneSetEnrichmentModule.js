@@ -9,7 +9,7 @@ var geneSetEnrichmentModule = (function ($) {
     //http://stackoverflow.com/a/26655674
     function formatPValue(num) {
         try{
-            return (+num).toExponential(4).replace("e","x10<sup>")+"</sup>"
+            return (+num).toExponential(3).replace("e","x10<sup>")+"</sup>"
         }
         catch ( e) {
             return num;
@@ -29,11 +29,11 @@ var geneSetEnrichmentModule = (function ($) {
             "columns":[
                 { "title":"Experiment", "data":"experiment", "className":"center", "type":"center",
                     "render": function (data, type, full) {
-                        return formatExperimentDescription(data);
+                        return data;
                     } },
                 { "title":"Comparison", "data":"comparison_title", "className":"center", "type":"center",
                     "render": function (data, type, full) {
-                        return data;
+                        return formatExperimentDescription(data);
                     } },
                 { "title":"P-Value", "data":"p-value", "className":"center", "type":"title-numeric", "width":"10%",
                     "render": function (data, type, full) {

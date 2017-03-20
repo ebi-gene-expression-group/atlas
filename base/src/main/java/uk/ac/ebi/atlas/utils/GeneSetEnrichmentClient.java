@@ -104,8 +104,8 @@ public class GeneSetEnrichmentClient {
                 Double.parseDouble(line[5]));
         result.addProperty("effect size",
                 Double.parseDouble(line[6]));
-        result.addProperty("comparison_title", ""); // enriched later
-        result.add("experiment", new JsonObject()); // enriched later
+        result.add("comparison_title", new JsonObject()); // enriched later
+        result.addProperty("experiment", ""); // enriched later
 
         // line 7 offered by the API is the url - we reconstruct that later
         return result;

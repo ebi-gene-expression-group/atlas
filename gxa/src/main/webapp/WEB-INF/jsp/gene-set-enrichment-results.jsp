@@ -9,20 +9,23 @@
     <h3>Gene set enrichment results</h3>
     <h4>Species: <i> ${species} </i></h4>
     <h4>Genes: </h4>
-    <div id="query-short">
+    <div style="margin-bottom: 30px">
+        <div id="query-short">
+            <span>
+        ${queryShort}
+            </span>
+            <a role="button" style="cursor: pointer;" onclick="$('#query-short').hide() ; $('#query-full').show()" >
+                … (show all)</a>
+        </div>
+        <div id="query-full" style="display:none">
         <span>
-    ${queryShort}
+            ${query}
         </span>
-        <a role="button" style="cursor: pointer;" onclick="$('#query-short').hide() ; $('#query-full').show()" >
-            … (show all)</a>
+        <a role="button" style="cursor: pointer;" onclick="$('#query-full').hide() ; $('#query-short').show()" >
+            (show fewer)</a>
+        </div>
     </div>
-    <div id="query-full" style="display:none">
-    <span>
-        ${query}
-    </span>
-    <a role="button" style="cursor: pointer;" onclick="$('#query-full').hide() ; $('#query-short').show()" >
-        (show fewer)</a>
-    </div>
+
 
     <table id="gene-set-enrichment-results-table">
         <thead></thead>
