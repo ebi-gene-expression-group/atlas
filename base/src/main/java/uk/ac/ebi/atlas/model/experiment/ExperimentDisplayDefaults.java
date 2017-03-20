@@ -15,8 +15,14 @@ import java.util.Map;
 @AutoValue
 public abstract class ExperimentDisplayDefaults {
 
-    /*
-    The UI treats it as entirely reasonable that there can be multiple defaults, but the curators aren't ready yet.
+    /*TODO FIXME
+    The UI treats it as entirely reasonable that there can be multiple defaults.
+    The curators sometimes specify multiple factor values - or at least, the code allows them to - separating them by commas.
+    Every now and then there is a field in the SDRF naturally containing a comma,
+    e.g. <value>skin-derived, feeder-free conditions</value>
+     and stuff doesn't work.
+
+    So this should probably be a map - for a type, there can be multiple defaults - but discuss with curators first.
      */
     abstract Map<String, String> defaultFilterValues();
     public abstract List<String> prescribedOrderOfFilters();
