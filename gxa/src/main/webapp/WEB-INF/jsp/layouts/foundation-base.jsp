@@ -76,7 +76,7 @@
 
 </head>
 
-<body class="level2"><!-- add any of your classes or IDs -->
+<body class="level2 full-width"><!-- add any of your classes or IDs -->
 <div id="skip-to">
     <ul>
         <li><a href="#content">Skip to main content</a></li>
