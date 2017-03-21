@@ -22,6 +22,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -53,7 +54,12 @@ public class ExperimentController extends ExperimentPageController{
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
-        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
+        model.addAttribute("pathToFolderWithBundledResources", MessageFormat.format(
+                "{0}/versioned-resources-{1}/js-bundles/",
+                ApplicationProperties.buildServerURL(request),
+                env.getProperty("resources.version")
+        ));
         model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
 
         model.addAttribute("content", gson.toJson(
@@ -65,7 +71,8 @@ public class ExperimentController extends ExperimentPageController{
         return "foundation-experiment-page";
     }
 
-    JsonObject experimentPageContentForExperiment(Experiment experiment, HttpServletRequest request, String accessKey){
+    JsonObject experimentPageContentForExperiment(Experiment experiment, HttpServletRequest request,
+                                                  String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
