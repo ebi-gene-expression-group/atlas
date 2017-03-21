@@ -22,14 +22,13 @@ public class SpeciesInfoListService {
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
 
-    private List<SpeciesInfo> speciesInfoList = new ArrayList<>();
-
     public SpeciesInfoListService(SpeciesPropertiesTrader speciesPropertiesTrader, ExperimentInfoListService experimentInfoListService) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.experimentInfoListService = experimentInfoListService;
     }
 
     private List<SpeciesInfo> getNumberExperimentsBySpecies() {
+        List<SpeciesInfo> speciesInfoList = new ArrayList<>();
 
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
             String species = speciesProperties.referenceName();
@@ -62,12 +61,7 @@ public class SpeciesInfoListService {
             speciesInfoList.add(speciesInfo);
         }
 
-        return speciesInfoList;
-    }
-
-    private List<SpeciesInfo> getMostRelevantSpecies (List<SpeciesInfo> speciesList) {
-
-        Collections.sort(speciesList, new Comparator<SpeciesInfo>() {
+        Collections.sort(speciesInfoList, new Comparator<SpeciesInfo>() {
 
             @Override
             public int compare(SpeciesInfo o1, SpeciesInfo o2) {
@@ -80,10 +74,17 @@ public class SpeciesInfoListService {
 
         });
 
+        return speciesInfoList;
+
+    }
+
+    private List<SpeciesInfo> getMostRelevantSpecies (List<SpeciesInfo> speciesList) {
+
         return speciesList.subList(0, Math.min(6, speciesList.size()));
     }
 
     private List<SpeciesInfo> filterListByKingdom(String kingdom) {
+        List<SpeciesInfo> speciesInfoList = getNumberExperimentsBySpecies();
         List<SpeciesInfo> kingdomSubList = new ArrayList<>();
 
         for (SpeciesInfo info : speciesInfoList) {
@@ -96,7 +97,7 @@ public class SpeciesInfoListService {
     }
 
     public List<SpeciesInfo> getBrowseBySpecies() {
-        speciesInfoList = getNumberExperimentsBySpecies();
+        List<SpeciesInfo> speciesInfoList = getNumberExperimentsBySpecies();
 
         return getMostRelevantSpecies(speciesInfoList);
     }
