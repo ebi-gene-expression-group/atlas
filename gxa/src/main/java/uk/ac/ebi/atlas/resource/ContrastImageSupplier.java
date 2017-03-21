@@ -28,18 +28,18 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
         switch (resourceType) {
             case PLOT_GSEA_REACTOME:
                 description = "Reactome pathways enrichment analysis";
-                type = "icon-gsea";
+                type = "icon-gsea-reactome";
                 break;
             case PLOT_GSEA_INTERPRO:
                 description = "Interpro domains enrichment analysis";
-                type = "icon-gsea";
+                type = "icon-gsea-interpro";
                 break;
             case PLOT_GSEA_GO:
                 description = "GO terms enrichment analysis";
-                type = "icon-gsea";
+                type = "icon-gsea-go";
                 break;
             case PLOT_MA:
-                description = "MA plot";
+                description = "MA plot for the contrast across all genes";
                 type = "icon-ma";
                 break;
             default:
