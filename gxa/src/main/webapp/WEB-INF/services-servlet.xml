@@ -31,7 +31,7 @@
     <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
         <property name="attributes">
             <map>
-                <!-- experiment-header.jsp -->
+                <!-- not sure if still needed -->
                 <entry key="applicationProperties" value-ref="applicationProperties"/>
                 <!-- request-preferences.jsp -->
                 <entry key="stringUtil" value-ref="stringUtil"/>

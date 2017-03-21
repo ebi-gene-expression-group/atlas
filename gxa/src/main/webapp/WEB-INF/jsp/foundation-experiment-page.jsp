@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
 <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 
-<%@ include file="includes/experiment-header.jsp" %>
+<%@ include file="includes/experiment-description.jsp" %>
 
 <script src="${pathToFolderWithBundledResources}vendorCommons.bundle.js"></script>
 <script src="${pathToFolderWithBundledResources}experimentPage.bundle.js"></script>
@@ -15,7 +15,7 @@
 <script type="text/javascript">
     experimentPage.render({
         atlasHost: "${not empty atlasHost? atlasHost: "https://www.ebi.ac.uk"}",
-        pathToFolderWithBundledResources: ${pathToFolderWithBundledResources},
+        pathToFolderWithBundledResources: "${pathToFolderWithBundledResources}",
         content:${content},
         target: "experiment-page"
     });

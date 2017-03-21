@@ -10,7 +10,7 @@
         <put-attribute name="header"/>
         <put-attribute name="body"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
-        <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
+        <put-attribute name="news" value=""/>
         <put-attribute name="mega-footer" value="/WEB-INF/jsp/tiles/mega-footer.jsp"/>
     </definition>
 
@@ -26,6 +26,7 @@
                 <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
             </definition>
         </put-attribute>
+        <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
     </definition>
 
     <definition name="foundation-static" extends="foundation-base">
@@ -64,21 +65,6 @@
         <put-attribute name="header" value=""/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp"/>
-    </definition>
-
-    <definition name="experiment_specific" extends="base.definition">
-        <put-attribute name="title" value="Experiment"/>
-        <put-attribute name="header" value="/WEB-INF/jsp/includes/experiment-header.jsp"/>
-        <put-attribute name="body" value=""/>
-    </definition>
-
-    <definition name="experiment" extends="experiment_specific">
-        <put-attribute name="body" value="/WEB-INF/jsp/experiment.jsp"/>
-    </definition>
-
-    <definition name="experiment-analysis-methods" extends="experiment_specific">
-        <put-attribute name="title" value="Experiment - analysis methods"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/experiment-analysis-methods.jsp"/>
     </definition>
 
     <definition name="qc-template" extends="foundation-base">
