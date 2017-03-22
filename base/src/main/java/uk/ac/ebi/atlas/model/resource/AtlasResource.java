@@ -10,12 +10,20 @@ public abstract class AtlasResource<T> {
 
     protected final Path path;
 
-    AtlasResource(Path path){
+    AtlasResource(Path path) {
         this.path = path;
     }
 
-    public boolean exists(){
+    public boolean exists() {
         return Files.exists(path);
+    }
+
+    public boolean existsAndIsNonEmpty() {
+        return exists() && (
+                path.toFile().isDirectory()
+                        ? path.toFile().list().length > 0
+                        : path.toFile().length() > 0
+        );
     }
 
     public boolean isReadable() {
@@ -33,8 +41,8 @@ public abstract class AtlasResource<T> {
     }
 
     @Override
-    public String toString(){
-        return this.getClass().getName()+" with path "+path.toString();
+    public String toString() {
+        return this.getClass().getName() + " with path " + path.toString();
     }
 
 }

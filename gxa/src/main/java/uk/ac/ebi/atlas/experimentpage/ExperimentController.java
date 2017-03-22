@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.gson.*;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
+import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
+import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -71,8 +76,8 @@ public class ExperimentController extends ExperimentPageController{
         return "foundation-experiment-page";
     }
 
-    JsonObject experimentPageContentForExperiment(Experiment experiment, HttpServletRequest request,
-                                                  String accessKey){
+    JsonObject experimentPageContentForExperiment(final Experiment experiment, final HttpServletRequest request,
+                                                  final String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
@@ -99,6 +104,27 @@ public class ExperimentController extends ExperimentPageController{
                             )
             ));
         }
+        if(experiment.getType().isMicroarray() &&
+                dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()){
+            availableTabs.add(customContentTab("qc-report", "QC Report",
+                    "reports",
+                    pairsToArrayOfObjects("name", "url",
+                            FluentIterable.from(new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
+                                    .getArrayDesignsThatHaveQcReports())
+                            .transform(new Function<String, Pair<String, String>>() {
+                                @Override
+                                public Pair<String, String> apply(String arrayDesign) {
+                                    return Pair.of(
+                                            "QC for array design " +arrayDesign,
+                                            QCReportController.getQcReportUrl(
+                                                    request,experiment.getAccession(), arrayDesign, accessKey
+                                            )
+                                    );
+                                }
+                            }).toList()
+                    )
+            ));
+        }
 
         availableTabs.add(
             customContentTab("resources", "Resources", "url",
@@ -121,6 +147,17 @@ public class ExperimentController extends ExperimentPageController{
             }
         }
 
+        return result;
+    }
+
+    JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
+        JsonArray result = new JsonArray();
+        for(Pair<String, String> p : pairs){
+            JsonObject o = new JsonObject();
+            o.addProperty(leftName, p.getLeft());
+            o.addProperty(rightName, p.getRight());
+            result.add(o);
+        }
         return result;
     }
 

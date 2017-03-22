@@ -32,21 +32,22 @@ public class RnaSeqQCReport extends CanStreamSupplier<DifferentialExperiment> {
 
     @Override
     public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
-        AtlasResource<Map<String, AtlasResource<TsvReader>>> r = dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).qcFiles;
 
-        if(r.exists()){
-            List<Pair<String, Function<Writer, Void>>> documents = FluentIterable.from(r.get().entrySet()).transform(
-                    new Function<Map.Entry<String,AtlasResource<TsvReader>>, Pair<String, Function<Writer, Void>>>() {
-                        @Nullable
-                        @Override
-                        public Pair<String, Function<Writer, Void>> apply(@Nullable Map.Entry<String, AtlasResource<TsvReader>> stringAtlasResourceEntry) {
-                            return Pair.of(
-                                    stringAtlasResourceEntry.getKey(),
-                                    readFromResourceAndWriteTsv(stringAtlasResourceEntry.getValue(), Functions.<String[]>identity())
-                            );
-                        }
-                    }).toList();
+        List<Pair<String, Function<Writer, Void>>> documents = FluentIterable.from(
+                new RnaSeqQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder).get().entrySet()).transform(
+                new Function<Map.Entry<String,AtlasResource<TsvReader>>, Pair<String, Function<Writer, Void>>>() {
+                    @Nullable
+                    @Override
+                    public Pair<String, Function<Writer, Void>> apply(@Nullable Map.Entry<String, AtlasResource<TsvReader>> stringAtlasResourceEntry) {
+                        return Pair.of(
+                                stringAtlasResourceEntry.getKey(),
+                                readFromResourceAndWriteTsv(stringAtlasResourceEntry.getValue(), Functions.<String[]>identity())
+                        );
+                    }
+                }).toList();
 
+
+        if(! documents.isEmpty()){
             return Collections.singleton(new ExternallyAvailableContent(
                     makeUri("qc"),
                     ExternallyAvailableContent.Description.create("Supplementary Information", "link",

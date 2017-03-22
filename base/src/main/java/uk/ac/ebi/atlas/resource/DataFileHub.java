@@ -13,8 +13,9 @@ import uk.ac.ebi.atlas.model.resource.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
+import java.util.Set;
 
 @Named
 public class DataFileHub {
@@ -34,7 +35,7 @@ public class DataFileHub {
     final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
     final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
     final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
-    final static String DIFFERENTIAL_RNASEQ_QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
+    final static String QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
     final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
     final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
@@ -89,6 +90,7 @@ public class DataFileHub {
         public final AtlasResource<TsvReader> adminOpLog;
         public final AtlasResource<TsvWriter> adminOpLogWrite;
         public final AtlasResource<TsvWriter> adminOpLogAppend;
+        public final AtlasResource<Set<Path>> qcFolder;
 
         ExperimentFiles(String experimentAccession){
             this.analysisMethods = new TsvFile.ReadOnly(dataFilesLocation, ANALYSIS_METHODS_FILE_PATH_TEMPLATE, experimentAccession);
@@ -104,6 +106,7 @@ public class DataFileHub {
             this.adminOpLog = new TsvFile.ReadOnly(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
             this.adminOpLogWrite = new TsvFile.Overwrite(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
             this.adminOpLogAppend = new TsvFile.Appendable(dataFilesLocation, OP_LOG_FILE_PATH_TEMPLATE, experimentAccession);
+            this.qcFolder = new Directory(dataFilesLocation, QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
         }
 
     }
@@ -124,13 +127,11 @@ public class DataFileHub {
     public class DifferentialExperimentFiles extends ExperimentFiles {
         public final AtlasResource<TsvReader> analytics;
         public final AtlasResource<TsvReader> rawCounts;
-        public final AtlasResource<Map<String, AtlasResource<TsvReader>>> qcFiles;
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
             this.analytics = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
             this.rawCounts = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.qcFiles = new DirectoryWithTsvFiles(dataFilesLocation, DIFFERENTIAL_RNASEQ_QC_DIRECTORY_PATH_TEMPLATE, experimentAccession);
         }
     }
 
