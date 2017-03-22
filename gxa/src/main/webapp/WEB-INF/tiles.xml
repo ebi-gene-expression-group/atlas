@@ -69,8 +69,12 @@
 
     <definition name="qc-template" extends="foundation-base">
         <put-attribute name="title" value="Experiment - QC Report"/>
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value=""/>
         <put-attribute name="body" value="/WEB-INF/jsp/qc-template.jsp"/>
+        <put-attribute name="top-menu" value=""/>
+        <put-attribute name="footer" value=""/>
+        <put-attribute name="news" value=""/>
+        <put-attribute name="mega-footer" value=""/>
     </definition>
 
     <definition name="experiments" extends="base.definition">
