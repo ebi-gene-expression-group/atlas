@@ -22,14 +22,12 @@ public class SpeciesInfoListService {
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
 
-
     public SpeciesInfoListService(SpeciesPropertiesTrader speciesPropertiesTrader, ExperimentInfoListService experimentInfoListService) {
         this.speciesPropertiesTrader = speciesPropertiesTrader;
         this.experimentInfoListService = experimentInfoListService;
     }
 
-    public List<SpeciesInfo> getNumberExperimentsBySpecies() {
-
+    private List<SpeciesInfo> getNumberExperimentsBySpecies() {
         List<SpeciesInfo> speciesInfoList = new ArrayList<>();
 
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
@@ -76,7 +74,38 @@ public class SpeciesInfoListService {
 
         });
 
-        return speciesInfoList.subList(0, Math.min(6, speciesInfoList.size()));
+        return speciesInfoList;
+
+    }
+
+    private List<SpeciesInfo> getMostRelevantSpecies (List<SpeciesInfo> speciesList) {
+
+        return speciesList.subList(0, Math.min(6, speciesList.size()));
+    }
+
+    private List<SpeciesInfo> filterListByKingdom(String kingdom) {
+        List<SpeciesInfo> speciesInfoList = getNumberExperimentsBySpecies();
+        List<SpeciesInfo> kingdomSubList = new ArrayList<>();
+
+        for (SpeciesInfo info : speciesInfoList) {
+            if (info.getKingdom().equals(kingdom)) {
+                kingdomSubList.add(info);
+            }
+        }
+
+        return kingdomSubList;
+    }
+
+    public List<SpeciesInfo> getBrowseBySpecies() {
+        List<SpeciesInfo> speciesInfoList = getNumberExperimentsBySpecies();
+
+        return getMostRelevantSpecies(speciesInfoList);
+    }
+
+    public List<SpeciesInfo> getFilterByKingdom (String kingdom) {
+        List<SpeciesInfo> filteredKingdomList = filterListByKingdom(kingdom);
+
+        return filteredKingdomList.size() > 6 ? getMostRelevantSpecies(filteredKingdomList) : filteredKingdomList;
     }
 
     private class SpeciesInfo {
@@ -98,16 +127,8 @@ public class SpeciesInfoListService {
             return species;
         }
 
-        public void setSpecies(String species) {
-            this.species = species;
-        }
-
         public String getKingdom() {
             return kingdom;
-        }
-
-        public void setKingdom(String kingdom) {
-            this.kingdom = kingdom;
         }
 
         Integer getTotalExperiments() {

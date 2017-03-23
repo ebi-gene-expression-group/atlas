@@ -60,7 +60,7 @@ const BaselineFacetsTree = React.createClass({
                     <input type="checkbox" checked={this.props.showAnatomograms} onChange={this.props.toggleAnatomograms} disabled={this.props.disableAnatomogramsCheckbox}/>
                     <span className={this.props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
                 </h5>
-                <h3>Filter your results</h3>
+                <h3 className="filterTitle">Filter your results</h3>
                 {facets}
             </div>
         );

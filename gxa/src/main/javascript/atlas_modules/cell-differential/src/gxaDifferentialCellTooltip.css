@@ -10,6 +10,7 @@
     background-color: white;
     border: 1px solid lightgrey;
     border-collapse: collapse;
+    display: inline-block;
 }
 
 .gxaDifferentialCellTooltip th {

@@ -15,7 +15,7 @@
     </definition>
 
     <definition name="foundation-home" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/jsp/layouts/foundation-home-body.jsp">
                 <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/home/hero.jsp"/>
@@ -30,32 +30,42 @@
     </definition>
 
     <definition name="foundation-static" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/foundation-static-template.jsp"/>
     </definition>
 
     <definition name="foundation-experiments" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/foundation-experiments.jsp"/>
     </definition>
 
     <definition name="foundation-experiment-page" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/foundation-experiment-page.jsp"/>
     </definition>
 
+    <definition name="foundation-baseline-experiments" extends="foundation-base">
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/foundation-baseline-experiments.jsp"/>
+    </definition>
+
+    <definition name="foundation-plants-experiments" extends="foundation-base">
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/foundation-plants-experiments.jsp"/>
+    </definition>
+
     <definition name="gene-set-enrichment-results" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/gene-set-enrichment-results.jsp"/>
     </definition>
 
     <definition name="foundation-bioentities" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/bioentities/foundation-bioentities.jsp"/>
     </definition>
 
     <definition name="foundation-bioentities-search-results" extends="foundation-base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="header" value="/WEB-INF/jsp/tiles/foundation-header.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
     </definition>
 

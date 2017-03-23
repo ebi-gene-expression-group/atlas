@@ -1,28 +1,29 @@
-.gxaFacetsContainer {
-    padding: 0 10px;
-}
+/*.gxaFacetsContainer {*/
+    /*padding: 0 10px;*/
+/*}*/
 
-.gxaFacetsContainer h3 {
-    padding-left: 0;
-    margin: 0;
-}
+/*.gxaFacetsContainer h3 {*/
+    /*padding-left: 0;*/
+    /*margin: 0;*/
+/*}*/
 
-.gxaFacetsContainer input {
-    margin-right: 0.5em;
-    vertical-align: middle;
-}
+/*.gxaFacetsContainer input {*/
+    /*margin-right: 0.5em;*/
+    /*vertical-align: middle;*/
+/*}*/
 
 .gxaBaselineHeatmap h5 {
     margin: 0;
     padding: 5px 0;
 }
 
-table.gxaDifferentialFacetedSearchResults, table.gxaDifferentialFacetedSearchResults td {
-    border: none;
-}
+/*table.gxaDifferentialFacetedSearchResults, table.gxaDifferentialFacetedSearchResults td {*/
+    /*border: none;*/
+    /*width: inherit;*/
+/*}*/
 
-table.gxaDifferentialFacetedSearchResults th {
-    background: transparent;
-    text-align: center;
+/*table.gxaDifferentialFacetedSearchResults th {*/
+    /*background: transparent;*/
+    /*text-align: center;*/
 
-}
+/*}*/

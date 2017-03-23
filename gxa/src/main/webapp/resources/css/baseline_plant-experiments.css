@@ -18,3 +18,34 @@
         margin-right: 0;
     } */
 }
+
+/* FOUNDATION
+ * browse baseline/plant experiments */
+.fspecies-nav .fspecies_item {min-height: 300px; text-align: center;}
+.fspecies-nav .fspecies_item h4 {text-align: center;}
+.fspecies-nav .fspecies_item ul li {text-align: center;font-size: 94%;}
+.fspecies-nav .fspecies_item span {font-size: 700%;/*fallback*/font-size: 5.1vw}
+.fspecies-nav .fspecies_item span.red:before {color:#d9534f;} /*animal*/
+.fspecies-nav .fspecies_item span.green:before {color:#5cb85c;}/*plants*/
+.fspecies-nav .fspecies_item span.blue:before {color:#5bc0de;}/*other*/
+.show_more_buttons {text-align: center; margin-top:9px;}
+
+
+.foundation_grid_24 {
+    width: 100%;
+}
+
+.foundation_grid_8 {
+    width: 33%;
+    float: left;
+}
+
+.foundation_grid_4 {
+    width: 11%;
+    float: left;
+    min-height: 150px;
+}
+
+.foundation_p {
+    font-size: small;
+}

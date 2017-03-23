@@ -56,7 +56,10 @@ public class HomeController {
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-        model.addAttribute("speciesList", gson.toJson(speciesInfoListService.getNumberExperimentsBySpecies()));
+        model.addAttribute("speciesList", gson.toJson(speciesInfoListService.getBrowseBySpecies()));
+        model.addAttribute("animalsList", gson.toJson(speciesInfoListService.getFilterByKingdom("animals")));
+        model.addAttribute("plantsList", gson.toJson(speciesInfoListService.getFilterByKingdom("plants")));
+        model.addAttribute("fungiList", gson.toJson(speciesInfoListService.getFilterByKingdom("fungi")));
 
         return "foundation-home";
     }

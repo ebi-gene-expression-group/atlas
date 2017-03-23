@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.controllers.page;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -38,7 +39,8 @@ public class BaselineExperimentsController {
     }
 
     @RequestMapping("/baseline/experiments")
-    public String getBaselineExperimentsPage(Model model) {
+    public String getBaselineExperimentsPage(Model model,
+                                             @RequestParam(value = "foundation", required = false) String foundationKey) {
 
         loadExperimentAccessionsBySpecies();
 
@@ -48,7 +50,7 @@ public class BaselineExperimentsController {
 
         model.addAttribute("mainTitle", "Baseline expression experiments ");
 
-        return "baseline-experiments";
+        return foundationKey == null ? "baseline-experiments" : "foundation-baseline-experiments";
     }
 
     @PostConstruct

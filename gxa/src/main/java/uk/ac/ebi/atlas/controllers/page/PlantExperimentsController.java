@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
@@ -41,7 +42,8 @@ public class PlantExperimentsController {
     }
 
     @RequestMapping("/plant/experiments")
-    public String getBaselineExperimentsPage(Model model) {
+    public String getBaselineExperimentsPage(Model model,
+                                             @RequestParam(value = "foundation", required = false) String foundationKey) {
 
         loadExperimentAccessionsBySpecies();
 
@@ -53,7 +55,7 @@ public class PlantExperimentsController {
 
         model.addAttribute("mainTitle", "Plant experiments ");
 
-        return "plant-experiments";
+        return foundationKey == null ? "plant-experiments" : "foundation-plants-experiments";
     }
 
     @PostConstruct
