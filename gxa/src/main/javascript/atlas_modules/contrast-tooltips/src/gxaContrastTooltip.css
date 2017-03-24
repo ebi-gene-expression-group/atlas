@@ -12,6 +12,7 @@
     background-color: white;
     border: 1px solid lightgrey;
     border-collapse: collapse;
+    font-size: 0.8em;
 }
 
 .gxaContrastTooltip th {
@@ -26,4 +27,12 @@
 .gxaContrastTooltip td, .gxaContrastTooltip th {
     vertical-align: middle;
     padding: 8px;
+}
+
+#contrastExperimentDescription {
+    font-size: small;
+}
+
+#contrastExperimentDescription {
+    font-size:small;
 }

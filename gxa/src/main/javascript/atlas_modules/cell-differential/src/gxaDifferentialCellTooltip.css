@@ -1,4 +1,6 @@
 .gxaDifferentialCellTooltip {
+    width: 23%;
+    left: 300px;
     border: solid transparent;
     color: darkslategray;
     padding: 2px;
@@ -10,7 +12,6 @@
     background-color: white;
     border: 1px solid lightgrey;
     border-collapse: collapse;
-    display: inline-block;
 }
 
 .gxaDifferentialCellTooltip th {
@@ -24,4 +25,11 @@
     vertical-align: middle;
     padding: 8px;
     width: 25px;
+}
+.gxaDifferentialCellTooltip thead {
+    font-size: 0.9em;
+}
+
+.gxaDifferentialCellTooltip tbody {
+    font-size: smaller;
 }

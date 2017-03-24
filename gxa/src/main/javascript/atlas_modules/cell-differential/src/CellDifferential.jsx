@@ -52,22 +52,22 @@ const CellDifferential = React.createClass({
 
         function buildHeatmapCellTooltip (pValue, tStatistic, foldChange) {
             return (
-                <table>
-                    <thead>
-                        <tr>
-                            {pValue ? <th>Adjusted <em>p</em>-value</th> : null}
-                            {tStatistic ? <th><em>t</em>-statistic</th> : null}
-                            <th>Log<sub>2</sub>-fold change</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {pValue ? <td>{NumberFormat.scientificNotation(pValue)}</td> : null}
-                            {tStatistic ? <td>{Math.floor(tStatistic * 1e4) / 1e4}</td> : null}
-                            <td>{foldChange}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                {pValue ? <th>Adjusted <em>p</em>-value</th> : null}
+                                {tStatistic ? <th><em>t</em>-statistic</th> : null}
+                                <th>Log<sub>2</sub>-fold change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {pValue ? <td>{NumberFormat.scientificNotation(pValue)}</td> : null}
+                                {tStatistic ? <td>{Math.floor(tStatistic * 1e4) / 1e4}</td> : null}
+                                <td>{foldChange}</td>
+                            </tr>
+                        </tbody>
+                    </table>
             );
         }
 
