@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.condensedSdrf;
 
 import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
@@ -28,7 +29,7 @@ public class IdfParser {
 
         ImmutableSet.Builder<String> pubmedIdsBuilder = new ImmutableSet.Builder<>();
         for (String tsvLine[]: idfReader.readAll()) {
-            if (tsvLine[0].equalsIgnoreCase(INVESTIGATION_TITLE_ID)) {
+            if (INVESTIGATION_TITLE_ID.equalsIgnoreCase(StringUtils.trim(tsvLine[0]))) {
                 title = tsvLine[1];
             } else if (tsvLine[0].equalsIgnoreCase(PUBMED_ID)) {
                 for (int i = 1 ; i < tsvLine.length ; i++) {

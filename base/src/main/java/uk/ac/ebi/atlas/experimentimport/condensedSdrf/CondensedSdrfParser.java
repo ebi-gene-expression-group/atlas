@@ -85,9 +85,9 @@ public class CondensedSdrfParser {
 
         addArraysToExperimentDesign(experimentDesign, assayRunToTsvLines);
 
-        Pair<String, ImmutableSet<String>> idfParserOutput = idfParser.parse(experimentAccession);
+        Pair<String, ImmutableSet<String>> titleAndPubMedIds = idfParser.parse(experimentAccession);
 
-        return new CondensedSdrfParserOutput(experimentAccession, experimentType, idfParserOutput.getLeft(), idfParserOutput.getRight(), experimentDesign);
+        return new CondensedSdrfParserOutput(experimentAccession, experimentType, titleAndPubMedIds.getLeft(), titleAndPubMedIds.getRight(), experimentDesign);
     }
 
 

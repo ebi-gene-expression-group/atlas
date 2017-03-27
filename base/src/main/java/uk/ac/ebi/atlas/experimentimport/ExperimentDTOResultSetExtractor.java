@@ -45,7 +45,7 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
         Date lastUpdate = resultSet.getTimestamp("last_update");
         boolean isPrivate = "T".equals(resultSet.getString("private"));
         String accessKeyUUID = resultSet.getString("access_key");
-        String title = resultSet.getString("title");
+        String title = StringUtils.isEmpty(resultSet.getString("title")) ? "" : resultSet.getString("title");
 
         String pubMedIdsString = resultSet.getString("pubmed_Ids");
         Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString)? new HashSet<String>() : Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
