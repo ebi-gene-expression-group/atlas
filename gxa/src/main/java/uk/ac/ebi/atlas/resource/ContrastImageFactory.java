@@ -46,7 +46,7 @@ public class ContrastImageFactory{
                 :"/external-resources/{0}/{1}/")+resourceType.fileName();
 
 
-        return arrayDesign.isPresent()
+        return arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)
         ?   new ContrastImage(resourceType,pathTemplate,uriTemplate,
                 experimentAccession,arrayDesign.get(), contrastId)
                 :new ContrastImage(resourceType,pathTemplate,uriTemplate,
