@@ -2,6 +2,8 @@ import React from 'react';
 
 const EbiSpeciesIcon = require('react-ebi-species').Icon;
 
+require('./gxaBrowseBySpecies.css');
+
 class BrowseBySpecies extends React.Component {
 
     constructor(props) {
