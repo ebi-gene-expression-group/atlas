@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,30 +24,13 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.regex.Pattern;
+import java.util.*;
 
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentOpsTest {
@@ -67,7 +50,7 @@ public class ExperimentOpsTest {
     @Mock
     private Experiment experimentMock;
 
-    private final Map<String, List<Pair<String, Pair<Long, Long>>>> fileSystem = new HashMap<>();
+    private final Map<String, ImmutableList<OpLogEntry>> fileSystem = new HashMap<>();
 
     private String accession = "E-EXAMPLE-1";
 
@@ -100,14 +83,14 @@ public class ExperimentOpsTest {
         }).when(experimentCrud).findExperiment(Matchers.anyString());
 
 
-        Mockito.doAnswer(new Answer<List<Pair<String, Pair<Long, Long>>>>() {
+        Mockito.doAnswer(new Answer<ImmutableList<OpLogEntry>>() {
             @Override
-            public List<Pair<String, Pair<Long, Long>>> answer(InvocationOnMock invocationOnMock) throws Throwable {
+            public ImmutableList<OpLogEntry> answer(InvocationOnMock invocationOnMock) throws Throwable {
                 String accession = (String) invocationOnMock.getArguments()[0];
                 if (fileSystem.containsKey(accession)) {
                     return fileSystem.get(accession);
                 } else {
-                    return new ArrayList<>();
+                    return ImmutableList.of();
                 }
             }
         }).when(experimentOpLogWriter).getCurrentOpLog(Matchers.anyString());
@@ -117,13 +100,13 @@ public class ExperimentOpsTest {
             public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
                 String accession = (String)
                         invocationOnMock.getArguments()[0];
-                List<Pair<String, Pair<Long, Long>>> opLog =
-                        (List<Pair<String, Pair<Long, Long>>>) invocationOnMock.getArguments()[1];
+                ImmutableList<OpLogEntry> opLog =
+                        (ImmutableList<OpLogEntry>) invocationOnMock.getArguments()[1];
                 fileSystem.put(accession, opLog);
                 return null;
             }
         }).when(experimentOpLogWriter)
-                .persistOpLog(Matchers.anyString(), Matchers.<List<Pair<String, Pair<Long, Long>>>>any());
+                .persistOpLog(Matchers.anyString(), Matchers.<List<OpLogEntry>>any());
     }
 
     @Test
@@ -214,9 +197,9 @@ public class ExperimentOpsTest {
         for (Op op : Op.values()) {
             subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
         }
-        for (Pair<String, Pair<Long, Long>> p : fileSystem.get(accession)) {
-            Long start = p.getRight().getLeft();
-            Long finish = p.getRight().getRight();
+        for (OpLogEntry p : fileSystem.get(accession)) {
+            Long start = Long.valueOf(p.toArray()[1]);
+            Long finish = Long.valueOf(p.toArray()[2]);
             assertThat(finish - start >= 0, is (true));
             Assert.assertNotEquals(ExperimentOps.UNFINISHED, start);
             Assert.assertNotEquals(ExperimentOps.UNFINISHED, finish);
@@ -236,7 +219,7 @@ public class ExperimentOpsTest {
         assertThat(result.get("result"), is(nullValue()));
         assertThat(result.get("error"), is(not(nullValue())));
 
-        assertThat(Pattern.matches("^FAILED.*", fileSystem.get(accession).iterator().next().getLeft()), is(true));
+        assertThat(fileSystem.get(accession).iterator().next().toJson().has("error"), is(true));
 
     }
 
