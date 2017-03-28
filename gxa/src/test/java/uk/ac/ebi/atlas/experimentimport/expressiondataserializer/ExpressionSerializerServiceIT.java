@@ -21,6 +21,7 @@ import java.nio.file.Path;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -53,7 +54,7 @@ public class ExpressionSerializerServiceIT {
         Path tmp = Files.createTempDirectory("serialized_expression");
         serializedExpressionsFileTemplate = tmp.toString() + "/{0}.kryo";
 
-        subject = new ExpressionSerializerService(experimentTrader, new RnaSeqBaselineExpressionKryoSerializer(dataFileHub,
+        subject = new ExpressionSerializerService(new RnaSeqBaselineExpressionKryoSerializer(dataFileHub,
                 serializedExpressionsFileTemplate),
                 experimentChecker);
     }
@@ -63,19 +64,27 @@ public class ExpressionSerializerServiceIT {
         assertThat(dataFileHub.getBaselineExperimentFiles(accession).main.exists(), is(true));
         assertThat(fileExists(serializedExpressionsFileTemplate, accession), is(false));
 
-        subject.kryoSerializeExpressionData(accession);
+        subject.kryoSerializeExpressionData(accession, ExperimentType.RNASEQ_MRNA_BASELINE);
 
         assertThat(fileExists(serializedExpressionsFileTemplate, accession), is(true));
     }
 
     @Test
     public void weCheckTheFileExistsBeforeWeAttemptToSerializeIt(){
-        subject.kryoSerializeExpressionData(accession);
+        subject.kryoSerializeExpressionData(accession, ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentChecker).checkAllFiles(eq(accession), any(ExperimentType.class));
     }
 
     private boolean fileExists(String template, String experimentAccession) {
         return Files.exists(FileSystems.getDefault().getPath(template.replaceAll("\\{0\\}", experimentAccession)));
+    }
+
+    @Test
+    public void skipIffNotRnaSeqBaseline(){
+        for(ExperimentType experimentType : ExperimentType.values()){
+            String result = subject.kryoSerializeExpressionData(accession, experimentType);
+            assertEquals(result=="skipped", experimentType == ExperimentType.RNASEQ_MRNA_BASELINE);
+        }
     }
 
 }
