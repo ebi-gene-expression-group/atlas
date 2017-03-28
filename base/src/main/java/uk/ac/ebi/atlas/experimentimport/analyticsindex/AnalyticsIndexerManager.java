@@ -34,7 +34,9 @@ public class AnalyticsIndexerManager extends Observable {
     private AnalyticsIndexerService analyticsIndexerService;
     protected final ExperimentTrader experimentTrader;
 
-    public AnalyticsIndexerManager(ExperimentSorter experimentSorter, AnalyticsIndexerMonitor analyticsIndexerMonitor, BioentityIdentifiersReader bioentityIdentifiersReader, AnalyticsIndexerService analyticsIndexerService, ExperimentTrader experimentTrader, BioentityPropertiesDao bioentityPropertiesDao) {
+    public AnalyticsIndexerManager(ExperimentSorter experimentSorter, AnalyticsIndexerMonitor analyticsIndexerMonitor,
+                                   BioentityIdentifiersReader bioentityIdentifiersReader, AnalyticsIndexerService analyticsIndexerService,
+                                   ExperimentTrader experimentTrader, BioentityPropertiesDao bioentityPropertiesDao) {
         this.experimentSorter = experimentSorter;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
         this.bioentityIdentifiersReader = bioentityIdentifiersReader;
@@ -44,8 +46,12 @@ public class AnalyticsIndexerManager extends Observable {
     }
 
     public int addToAnalyticsIndex(String experimentAccession) {
-        return addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
+        int result = addToAnalyticsIndex(experimentAccession, bioentityPropertiesDao.getMap
                 (bioentityIdentifiersReader.getBioentityIdsFromExperiment(experimentAccession)), 8000);
+
+        analyticsIndexerService.commitAfterAdd();
+
+        return result;
     }
 
     public void deleteFromAnalyticsIndex(String experimentAccession) {

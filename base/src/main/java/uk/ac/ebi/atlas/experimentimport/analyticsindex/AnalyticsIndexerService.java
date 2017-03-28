@@ -95,6 +95,16 @@ public class AnalyticsIndexerService {
         LOGGER.info("Done deleting all documents");
     }
 
+    public synchronized void commitAfterAdd() {
+        LOGGER.info("Committing the index");
+        try {
+            solrClient.commit();
+        } catch (IOException | SolrServerException e) {
+            rollBackAndPropagateException(e);
+        }
+        LOGGER.info("Index committed successfully");
+    }
+
     public synchronized void optimize() {
         LOGGER.info("Optimizing index");
         try {
