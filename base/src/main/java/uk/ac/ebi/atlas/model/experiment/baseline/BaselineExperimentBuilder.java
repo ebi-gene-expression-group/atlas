@@ -127,10 +127,10 @@ public class BaselineExperimentBuilder {
     public BaselineExperiment create() {
         validate();
 
-        return new BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, disclaimer, species, hasRData,
-                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription, alternativeViews,
-                alternativeViewDescriptions , experimentDisplayDefaults);
+        return new
+                BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
+                displayName, disclaimer, species, hasRData, pubMedIds, experimentDesign, assayGroups, dataProviderURL,
+                dataProviderDescription, alternativeViews, alternativeViewDescriptions , experimentDisplayDefaults);
     }
 
     private void validate() {
@@ -138,8 +138,7 @@ public class BaselineExperimentBuilder {
         checkState(experimentType.isBaseline());
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkNotNull(species, "Please provide a species name");
-        checkState(CollectionUtils.isNotEmpty(assayGroups),
-                "Please provide a non empty set of AssayGroup objects");
+        checkState(CollectionUtils.isNotEmpty(assayGroups), "Please provide a non empty set of AssayGroup objects");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");

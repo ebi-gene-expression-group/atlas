@@ -48,13 +48,15 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                     produces = "application/json;charset=UTF-8",
                     params = "type=RNASEQ_MRNA_BASELINE")
     @ResponseBody
-    public String baselineRnaSeqExperimentData(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                         @PathVariable String experimentAccession,
-                                         @RequestParam(required = false) String accessKey,
-                                         Model model, HttpServletRequest request) {
-        return gson.toJson(rnaSeqBaselineExperimentPageService.populateModelWithHeatmapData(
-                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,
-                model, request, false));
+    public String baselineRnaSeqExperimentData(
+            @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+            @PathVariable String experimentAccession,
+            @RequestParam(required = false) String accessKey,
+            Model model, HttpServletRequest request) {
+        return gson.toJson(
+                rnaSeqBaselineExperimentPageService.populateModelWithHeatmapData(
+                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,
+                        model, request, false));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -62,12 +64,14 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                     produces = "application/json;charset=UTF-8",
                     params = "type=PROTEOMICS_BASELINE")
     @ResponseBody
-    public String baselineProteomicsExperimentData(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
-                                         @PathVariable String experimentAccession,
-                                         @RequestParam(required = false) String accessKey,
-                                         Model model, HttpServletRequest request    ) {
-        return gson.toJson(proteomicsBaselineExperimentPageService.populateModelWithHeatmapData(
-                (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, model, request, false));
+    public String baselineProteomicsExperimentData(
+            @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
+            @PathVariable String experimentAccession,
+            @RequestParam(required = false) String accessKey,
+            Model model, HttpServletRequest request    ) {
+        return gson.toJson(
+                proteomicsBaselineExperimentPageService.populateModelWithHeatmapData(
+                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                        preferences, model, request, false));
     }
 }
