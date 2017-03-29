@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.widget;
 
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import org.springframework.context.annotation.Scope;
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 
 @Controller
 @Scope("request")
-public final class ExpressionDataController {
+public final class ExpressionDataController extends JsonExceptionHandlingController {
 
     private AnalyticsSearchService analyticsSearchService;
     private SpeciesPropertiesTrader speciesTrader;
