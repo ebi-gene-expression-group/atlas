@@ -21,7 +21,9 @@ public class ExperimentPageService {
     protected final ApplicationProperties applicationProperties;
     protected final Gson gson = new Gson();
 
-    public ExperimentPageService(AtlasResourceHub atlasResourceHub,HeatmapDataToJsonService heatmapDataToJsonService, ApplicationProperties applicationProperties){
+    public ExperimentPageService(AtlasResourceHub atlasResourceHub,
+                                 HeatmapDataToJsonService heatmapDataToJsonService,
+                                 ApplicationProperties applicationProperties) {
         this.atlasResourceHub = atlasResourceHub;
         this.heatmapDataToJsonService = heatmapDataToJsonService;
         this.applicationProperties = applicationProperties;
@@ -32,34 +34,36 @@ public class ExperimentPageService {
         result.put("hasExtraInfo", atlasResourceHub.hasExtraInfo(experiment));
         return result;
     }
+
     protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
-                                               ExperimentPageRequestPreferences requestPreferences){
+                                               ExperimentPageRequestPreferences requestPreferences) {
         Map<String, JsonElement> result = new HashMap<>();
 
-        result.put("jsonExperiment", prepareExperimentDescription(experiment, requestPreferences));
+        result.put("experiment", prepareExperimentDescription(experiment, requestPreferences));
         return result;
     }
 
-    protected String downloadURL(SemanticQuery geneQuery, HttpServletRequest request){
+    protected String downloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
         return applicationProperties.buildDownloadURL(geneQuery, request);
     }
 
-    private JsonElement prepareExperimentDescription(Experiment experiment, ExperimentPageRequestPreferences
-            requestPreferences){
-        return prepareExperimentDescription(experiment, requestPreferences.getGeneQuery(), requestPreferences
-                .getSerializedFilterFactors());
+    private JsonElement prepareExperimentDescription(Experiment experiment,
+                                                     ExperimentPageRequestPreferences requestPreferences) {
+        return prepareExperimentDescription(
+                experiment, requestPreferences.getGeneQuery(), requestPreferences.getSerializedFilterFactors());
     }
 
     //used when external parties include our widget and also to pass header summary to heatmap tooltips
-    private JsonElement prepareExperimentDescription(Experiment experiment, SemanticQuery geneQuery, String
-            serializedFilterFactors) {
+    private JsonElement prepareExperimentDescription(Experiment experiment, SemanticQuery geneQuery,
+                                                     String serializedFilterFactors) {
         String additionalQueryOptionsString =
-                "?geneQuery="+geneQuery.toUrlEncodedJson()+
-                        "&serializedFilterFactors="+serializedFilterFactors;
+                "?geneQuery=" + geneQuery.toUrlEncodedJson() + "&serializedFilterFactors=" + serializedFilterFactors;
 
         JsonObject experimentDescription = new JsonObject();
-        experimentDescription.addProperty("URL", "/experiments/"+experiment.getAccession()+additionalQueryOptionsString);
-        experimentDescription.addProperty("relUrl", "experiments/"+experiment.getAccession()+additionalQueryOptionsString);
+        experimentDescription.addProperty("accession", experiment.getAccession());
+        experimentDescription.addProperty("type", experiment.getType().getDescription());
+        experimentDescription.addProperty(
+                "relUrl", "experiments/" + experiment.getAccession()+additionalQueryOptionsString);
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
         return experimentDescription;
