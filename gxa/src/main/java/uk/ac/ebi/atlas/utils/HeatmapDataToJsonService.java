@@ -32,13 +32,11 @@ public class HeatmapDataToJsonService {
         JsonObject config = new JsonObject();
         config.addProperty("atlasHost", applicationProperties.buildAtlasHostURL(request));
         config.addProperty("contextRoot", request.getContextPath());
-        config.addProperty("experimentAccession", get(model, "experimentAccession"));
-        config.addProperty("experimentType", get(model, "type"));
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("accessKey", request.getParameter("accessKey"));
-        config.addProperty("species", get(model, "speciesReferenceName"));
-        config.add("resources", getAsJsonSerializable(model, "resources", new JsonArray()));
+        config.addProperty("species", get(model, "species"));
+        config.add("resources", getAsJsonSerializable(model, "resources", new JsonObject()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
         config.addProperty("enableEnsemblLauncher",
                 model.containsKey("enableEnsemblLauncher") &&
