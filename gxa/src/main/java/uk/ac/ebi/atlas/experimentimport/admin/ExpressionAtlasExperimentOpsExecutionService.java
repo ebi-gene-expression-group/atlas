@@ -132,7 +132,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
                 break;
             case SERIALIZE:
-                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(accession));
+                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(experimentCrud.findExperiment(accession)));
                 break;
             case DELETE:
                 experimentTrader.removeExperimentFromCache(accession);

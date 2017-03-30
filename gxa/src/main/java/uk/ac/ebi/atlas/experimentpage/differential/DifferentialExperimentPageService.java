@@ -120,8 +120,6 @@ public class DifferentialExperimentPageService
                             .get("rows").getAsJsonArray().size() == 0 ){
                         return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
                     }
-                    result.add("geneSetProfiles", JsonNull.INSTANCE);
-                    result.add("jsonCoexpressions", new JsonArray());
                     model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
 
                     JsonObject heatmapConfig = heatmapDataToJsonService.configAsJsonObject(request, model.asMap());

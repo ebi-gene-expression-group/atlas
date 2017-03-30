@@ -1,20 +1,20 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
-import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
-import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.text.MessageFormat;
-
+/*
+Consider moving me to ExperimentCrud, I am coupled to it anyway - through accepting ExperimentDTO in API
+ */
 @Named
 public class ExpressionSerializerService {
 
-    private final ExperimentTrader experimentTrader;
     private final RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer;
     private final ExperimentChecker experimentChecker;
 
@@ -22,19 +22,19 @@ public class ExpressionSerializerService {
     String serializedExpressionsFileTemplate;
 
     @Inject
-    public ExpressionSerializerService(ExperimentTrader experimentTrader, RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer,
+    public ExpressionSerializerService(RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer,
                                        ExperimentChecker experimentChecker) {
-        this.experimentTrader = experimentTrader;
         this.rnaSeqBaselineExpressionKryoSerializer = rnaSeqBaselineExpressionKryoSerializer;
         this.experimentChecker = experimentChecker;
     }
 
-    public String kryoSerializeExpressionData(String experimentAccession) {
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-        Preconditions.checkState(experiment != null,
-                "Experiment not found in cache, refusing to serialize:" + experimentAccession);
-        experimentChecker.checkAllFiles(experimentAccession, experiment.getType());
-        if (experiment.getType().isRnaSeqBaseline()) {
+    public String kryoSerializeExpressionData(ExperimentDTO experimentDTO){
+        return kryoSerializeExpressionData(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
+    }
+
+    String kryoSerializeExpressionData(String experimentAccession, ExperimentType experimentType) {
+        experimentChecker.checkAllFiles(experimentAccession, experimentType);
+        if (experimentType.isRnaSeqBaseline()) {
             return rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession
             );
         } else {

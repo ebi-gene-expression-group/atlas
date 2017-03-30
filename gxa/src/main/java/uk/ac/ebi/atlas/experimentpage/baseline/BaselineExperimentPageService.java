@@ -49,8 +49,9 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAllAttributes(headerAttributes(experiment));
     }
 
-    public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment, BaselineRequestPreferences preferences,
-                                             Model model, HttpServletRequest request, boolean isWidget) {
+    public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,
+                                                   BaselineRequestPreferences preferences,
+                                                   Model model, HttpServletRequest request, boolean isWidget) {
         JsonObject result = new JsonObject();
 
         BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
@@ -59,6 +60,9 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
+
+        //model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
+        //model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
         model.addAttribute("enableEnsemblLauncher", !isWidget&& !requestContext.getDataColumnsToReturn().isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
@@ -74,23 +78,13 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         try {
             result.add("profiles", heatMapResults.getJsonProfiles());
-            //TODO remove me after old heatmap goes away, the new heatmap handles no data gracefully
-            if(heatMapResults.getJsonProfiles().get("rows").getAsJsonArray().size() == 0 ){
-                return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+
+            JsonArray jsonCoexpressions = heatMapResults.getJsonCoexpressions();
+            if (jsonCoexpressions.size() > 0) {
+                result.add("coexpressions", heatMapResults.getJsonCoexpressions());
             }
-
-            result.add("jsonCoexpressions", heatMapResults.getJsonCoexpressions());
-
-            // Optional<JsonObject> geneSets = heatMapResults.getJsonProfilesAsGeneSets();
-            result.add("jsonGeneSetProfiles", new JsonArray());
-                /* We decided to disable the feature because it has a performance cost and isn't
-                very useful..
-                TODO remove (or make more useful)
-                geneSets.isPresent()
-                ? viewModelAsJson(geneSets.get())
-                : "null");*/
         } catch (GenesNotFoundException e){
-            return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
+            return heatmapDataToJsonService.jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
         }
 
         Set<OntologyTerm> ontologyTerms = new HashSet<>();
@@ -107,8 +101,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             result.add(e.getKey(), e.getValue());
         }
         model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(request,
-                model.asMap()));
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
 
         return result;
     }

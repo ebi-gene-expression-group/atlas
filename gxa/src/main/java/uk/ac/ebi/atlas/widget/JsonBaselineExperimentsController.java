@@ -60,7 +60,10 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
-    @RequestMapping(value = "/widgets/heatmap/baselineAnalytics", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(
+            value = "/widgets/heatmap/baselineAnalytics",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
     @Deprecated
     public String analyticsJson() {
         return "forward:/json/baseline_experiments";
@@ -68,11 +71,12 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
     @RequestMapping(value = "/json/baseline_experiments", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String jsonBaselineExperiments(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
-                                          @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-                                          @RequestParam(value = "source", required = false) String defaultQueryFactorType,
-                                          @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
-                                          HttpServletRequest request, Model model) {
+    public String jsonBaselineExperiments(
+            @RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
+            @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
+            @RequestParam(value = "source", required = false) String defaultQueryFactorType,
+            @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
+            HttpServletRequest request, Model model) {
 
         Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
 
@@ -114,7 +118,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
         model.addAttribute("species", species.getReferenceName());
         model.addAttribute("isWidget", true);
-        result.add("experiment", JsonNull.INSTANCE);
 
         result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
         return gson.toJson(result);

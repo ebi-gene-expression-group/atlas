@@ -4,10 +4,9 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Supplier;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -232,84 +231,52 @@ public class ExperimentOps {
 
     private Pair<OpResult,JsonPrimitive> performStatefulOp(String accession, Op op) {
         Pair<OpResult,JsonPrimitive> result;
-        List<Pair<String, Pair<Long, Long>>> opRecords = experimentOpLogWriter.getCurrentOpLog(accession);
+        ImmutableList<OpLogEntry> opRecords = experimentOpLogWriter.getCurrentOpLog(accession);
 
-        Pair<String, Pair<Long, Long>> lastOp = opRecords.isEmpty() ? null : opRecords.get(opRecords.size() - 1);
-        if (lastOp != null && lastOp.getRight().getRight().equals(UNFINISHED)) {
-            StringBuilder sb = new StringBuilder("Operation ");
-            sb.append(lastOp.getLeft());
-            sb.append(" started at ");
-            sb.append(new DateTime(lastOp.getRight().getLeft()).toString());
-            sb.append(" and not finished. Refusing to start ");
-            sb.append(op);
-            result= Pair.of(OpResult.FAILURE, new JsonPrimitive(sb.toString()));
+        OpLogEntry lastOp = opRecords.isEmpty() ? null : opRecords.get(opRecords.size() - 1);
+        if (lastOp != null && lastOp.isInProgress()) {
+            result= Pair.of(OpResult.FAILURE, new JsonPrimitive(
+                    lastOp.statusMessage()+" Refusing to start "+op
+            ));
         } else {
-            Pair<String, Pair<Long, Long>> newOpRecord = Pair.of(op.name(), Pair.of(System.currentTimeMillis(), UNFINISHED));
-            opRecords.add(newOpRecord);
-            experimentOpLogWriter.persistOpLog(accession, opRecords);
+            OpLogEntry newOpRecord = OpLogEntry.newlyStartedOp(op);
+            experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord).build());
             try {
                 result = Pair.of(OpResult.SUCCESS,
                         experimentOpsExecutionService
                                 .attemptExecuteStatefulOp(accession, op));
-                updateOpRecordsWithNewOp(OpResult.SUCCESS, opRecords, newOpRecord);
+                experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toSuccess()).build());
+
             } catch (Exception e) {
                 String text = e.getMessage()!=null? e.getMessage() : e.toString();
                 LOGGER.error(text,e);
                 result = Pair.of(OpResult.FAILURE, new JsonPrimitive(text));
-                updateOpRecordsWithNewOp(OpResult.FAILURE, opRecords, newOpRecord);
-            } finally {
-                experimentOpLogWriter.persistOpLog(accession, opRecords);
+                experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>builder().addAll(opRecords).add(newOpRecord.toFailure(text)).build());
             }
         }
         return result;
     }
 
-    private void updateOpRecordsWithNewOp(OpResult result, List<Pair<String, Pair<Long, Long>>> opRecords,
-                                          Pair<String, Pair<Long, Long>> newOpRecord){
-        if (!opRecords.isEmpty()) {
-            opRecords.remove(opRecords.size() - 1);
-        }
-        opRecords.add(Pair.of((result.equals(OpResult.FAILURE)?"FAILED: ":"")
-                +newOpRecord.getLeft(), Pair.of(newOpRecord.getRight().getLeft(),
-                System.currentTimeMillis())));
-    }
-
     private JsonElement clearOpLog(String accession) {
-        experimentOpLogWriter.persistOpLog(accession, new ArrayList<Pair<String, Pair<Long, Long>>>());
+        experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>of());
         return DEFAULT_SUCCESS_RESULT;
     }
 
     private JsonElement getCurrentOpLogAsJson(String accession) {
         JsonArray opsArray = new JsonArray();
-        for (Pair<String, Pair<Long, Long>> opLogEntry : experimentOpLogWriter.getCurrentOpLog(accession)) {
-            JsonObject opObject = new JsonObject();
-            opObject.add("op", new JsonPrimitive(opLogEntry.getLeft()));
-            opObject.add("started", new JsonPrimitive(opLogEntry.getRight().getLeft()));
-            opObject.add("finished", new JsonPrimitive(opLogEntry.getRight().getRight()));
-            opsArray.add(opObject);
+        for (OpLogEntry opLogEntry : experimentOpLogWriter.getCurrentOpLog(accession)) {
+            opsArray.add(opLogEntry.toJson());
         }
         return opsArray;
     }
 
     private JsonElement readStatusFromOpLog(String accession) {
-        JsonObject result = new JsonObject();
-        List<Pair<String, Pair<Long, Long>>> currentOpLog = experimentOpLogWriter.getCurrentOpLog(accession);
+        List<OpLogEntry> currentOpLog = experimentOpLogWriter.getCurrentOpLog(accession);
         if (currentOpLog.isEmpty()) {
-            return result;
+            return new JsonPrimitive("");
+        } else {
+            return new JsonPrimitive(currentOpLog.get(0).statusMessage());
         }
-        Pair<String, Pair<Long, Long>> lastEntry = currentOpLog.get(currentOpLog.size() - 1);
-        result.add("op", new JsonPrimitive(lastEntry.getLeft()));
-        Long started = lastEntry.getRight().getLeft();
-        Long finished = lastEntry.getRight().getRight();
-        result.add("started", new JsonPrimitive(new DateTime(started).toString()));
-        result.add("in-progress", new JsonPrimitive(finished.equals(UNFINISHED)));
-        result.add("elapsed", new JsonPrimitive(
-                new Period((
-                        finished.equals(UNFINISHED)
-                                ? System.currentTimeMillis()
-                                : finished)
-                        - started).toStandardSeconds().getSeconds() + "s"));
-        return result;
     }
 
 }

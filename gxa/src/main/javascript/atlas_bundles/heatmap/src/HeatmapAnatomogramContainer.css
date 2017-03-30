@@ -9,11 +9,6 @@
     visibility: hidden;
 }
 
-.gxaInnerHeatmap {
-    position: relative;
-    overflow: hidden;
-}
-
 .gxaAside {
     float: left;
 }

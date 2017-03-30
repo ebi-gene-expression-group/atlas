@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -239,6 +240,9 @@ public class ExperimentController extends ExperimentPageController{
 
         LinkedListMultimap<String, LinkedListMultimap<String, String>> filtersByType = LinkedListMultimap.create();
 
+        if(experiment.getType().isDifferential()){
+            filtersByType.put("Comparison Name", LinkedListMultimap.<String, String>create());
+        }
         //populate the keys in the order we want later (Linked map preserves insertion order)
         for(String factorHeader: experimentDisplayDefaults.prescribedOrderOfFilters()){
             filtersByType.put(Factor.normalize(factorHeader), LinkedListMultimap.<String, String>create());
@@ -256,6 +260,10 @@ public class ExperimentController extends ExperimentPageController{
 
         // add the information about which headers go to which categories
         for(DescribesDataColumns dataColumnDescriptor: experiment.getDataColumnDescriptors()){
+            if(experiment.getType().isDifferential()){
+                filtersByType.get("Comparison Name").get(0)
+                        .put(((Contrast) dataColumnDescriptor).getDisplayName(), dataColumnDescriptor.getId());
+            }
             for(String assayAnalyzedForThisDataColumn : dataColumnDescriptor.assaysAnalyzedForThisDataColumn()){
                 for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)){
                     filtersByType.get(Factor.normalize(factor.getHeader())).get(0)

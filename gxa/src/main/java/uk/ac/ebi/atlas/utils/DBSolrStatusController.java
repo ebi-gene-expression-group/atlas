@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 
 import javax.inject.Inject;
@@ -38,7 +39,7 @@ Andrea
 
 @Controller
 @Scope("request")
-public final class DBSolrStatusController {
+public final class DBSolrStatusController extends JsonExceptionHandlingController {
 
     private ExperimentDAO experimentDAO;
     private SolrClient solrClient;

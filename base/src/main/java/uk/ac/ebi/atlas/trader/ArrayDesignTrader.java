@@ -23,7 +23,7 @@ public class ArrayDesignTrader {
     }
 
     public String getArrayDesignByName(String arrayDesignAccession) {
-        return arrayDesignMap.get(arrayDesignAccession);
+        return arrayDesignMap.containsKey(arrayDesignAccession) ? arrayDesignMap.get(arrayDesignAccession) : arrayDesignAccession;
     }
 
     public String getArrayDesignAccession(String value) {

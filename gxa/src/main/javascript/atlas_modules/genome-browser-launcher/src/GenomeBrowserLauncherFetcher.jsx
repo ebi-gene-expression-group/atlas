@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect, PromiseState } from 'react-refetch';
-import EventEmitter from 'events';
 import GenomeBrowserLauncher from './GenomeBrowserLauncher.jsx';
 
 class GenomeBrowserLauncherFetcher extends React.Component {

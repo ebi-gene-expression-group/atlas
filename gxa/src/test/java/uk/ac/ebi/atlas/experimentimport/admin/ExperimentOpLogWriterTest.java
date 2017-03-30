@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -40,7 +39,8 @@ public class ExperimentOpLogWriterTest {
 
     @Test
     public void writeAndThenReadTheLog() {
-        List<Pair<String, Pair<Long, Long>>> opLog = ImmutableList.of(Pair.of("update", Pair.of(100L, 150L)));
+        List<OpLogEntry> opLog = ImmutableList.of(
+                OpLogEntry.successfulOp(Op.UPDATE_PUBLIC, 100L, 150L));
 
         assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), hasSize(0));
 
@@ -52,19 +52,18 @@ public class ExperimentOpLogWriterTest {
     @Test
     public void writeManyExperimentsAndPersistJustTheTail() {
         assertThat(subject.getCurrentOpLog(DUMMY_ACCESSION), hasSize(0));
-        List<Pair<String, Pair<Long, Long>>> opLog = new ArrayList<>();
+        List<OpLogEntry> opLog = new ArrayList<>();
 
         int ourMax = ExperimentOpLogWriter.MAX_LENGTH + 10;
         for (int i = 0; i < ourMax; i++) {
-            opLog.add(Pair.of("update", Pair.of(100L * i, 100L * i + 50)));
-
+            opLog.add(OpLogEntry.successfulOp(Op.UPDATE_PUBLIC, 100L*i, 100L * i + 50));
             if (i % 10 == 0) {
                 subject.persistOpLog(DUMMY_ACCESSION, opLog);
             }
         }
         subject.persistOpLog(DUMMY_ACCESSION, opLog);
 
-        List<Pair<String, Pair<Long, Long>>> opLogNow = subject.getCurrentOpLog(DUMMY_ACCESSION);
+        List<OpLogEntry> opLogNow = subject.getCurrentOpLog(DUMMY_ACCESSION);
 
         assertThat(opLogNow, hasSize(ExperimentOpLogWriter.MAX_LENGTH));
 

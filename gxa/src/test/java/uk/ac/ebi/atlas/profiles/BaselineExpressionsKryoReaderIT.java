@@ -8,7 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDTOTest;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -19,8 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
@@ -45,7 +45,7 @@ public class BaselineExpressionsKryoReaderIT {
 
     @Before
     public void setUp() {
-        expressionSerializerService.kryoSerializeExpressionData(accession);
+        expressionSerializerService.kryoSerializeExpressionData(ExperimentDTOTest.mockDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE));
         subject = BaselineExpressionsKryoReader.create(dataFileHub.getKryoFileForReading(accession));
     }
 

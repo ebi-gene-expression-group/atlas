@@ -97,7 +97,8 @@ public class BaselineProfilesHeatMapWrangler {
 
     private void fetchProfilesIfMissing()   {
         if (jsonProfiles == null) {
-            jsonProfiles = baselineProfilesHeatMap.fetch(experiment,requestContext, getGeneQueryResponseForProfiles(), false);
+            jsonProfiles =
+                    baselineProfilesHeatMap.fetch(experiment,requestContext, getGeneQueryResponseForProfiles(), false);
         }
     }
 
@@ -129,11 +130,15 @@ public class BaselineProfilesHeatMapWrangler {
             BaselineProfile baselineProfile = jsonProfiles.get(0);
 
             Optional<Pair<GeneQueryResponse, List<String>>> coexpressedStuff =
-                    coexpressedGenesService.tryGetRelatedCoexpressions(experiment, getGeneQueryResponseForProfiles(), ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
-            JsonObject o = new JsonObject();
-            o.addProperty("geneName", baselineProfile.getName());
-            o.addProperty("geneId", baselineProfile.getId());
+                    coexpressedGenesService.tryGetRelatedCoexpressions(
+                            experiment, getGeneQueryResponseForProfiles(),
+                            ImmutableMap.of(baselineProfile.getId().toUpperCase(), 49));
+
             if (coexpressedStuff.isPresent()) {
+                JsonObject o = new JsonObject();
+                o.addProperty("geneName", baselineProfile.getName());
+                o.addProperty("geneId", baselineProfile.getId());
+
                 o.add("jsonProfiles",
                         new ExternallyViewableProfilesList<>(baselineProfilesHeatMap.fetchInPrescribedOrder(
                                 coexpressedStuff.get()
@@ -143,8 +148,9 @@ public class BaselineProfilesHeatMapWrangler {
                                 coexpressedStuff.get().getLeft(), false)
                                 ,linkToGenes,
                                 requestContext.getDataColumnsToReturn() ).asJson());
+
+                result.add(o);
             }
-            result.add(o);
         }
 
         return result;
