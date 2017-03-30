@@ -14,7 +14,7 @@
 <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 <%@ include file="includes/bootstrap.jsp" %>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bioentities/bioentities.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
 
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
@@ -37,7 +37,7 @@
 
         <c:if test="${hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation">
             <a href="${requestScope['javax.servlet.forward.request_uri']}&foundation#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
-        <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation">Differential expression</li></c:if>
+        <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation"><a href="">Differential expression</a></li></c:if>
     </ul>
 
     <!-- Tab panes -->

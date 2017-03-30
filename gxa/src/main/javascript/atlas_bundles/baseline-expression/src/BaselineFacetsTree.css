@@ -41,7 +41,7 @@
 }
 
 .gxaFacetsContainer h5 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: rgba(34,34,34,0.84);
 }
 
@@ -67,5 +67,10 @@
 }
 
 #gxaBaselineFacetsContainerDiv {
-    float:left;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#gxaBaselineResultsContainerDiv {
+    display: inline-block;
 }
