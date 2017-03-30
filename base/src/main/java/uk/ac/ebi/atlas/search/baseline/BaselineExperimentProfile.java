@@ -15,17 +15,25 @@ import java.util.Map;
 public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression> implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
-
     private final Integer nonFilterFactorsSize;
 
+    private String experimentAccession;
     private ExperimentType experimentType;
 
     public BaselineExperimentProfile(BaselineExperimentSlice experimentSlice) {
-        super(joinIntoText(experimentSlice.experimentAccession(), experimentSlice.filterFactors()),
+        super(joinIntoText(
+                experimentSlice.experimentAccession(),
+                experimentSlice.filterFactors()),
                 experimentSlice.experimentDisplayName());
         filterFactors = experimentSlice.filterFactors();
         nonFilterFactorsSize = experimentSlice.nonFilterFactors().size();
+        experimentAccession = experimentSlice.experimentAccession();
         experimentType = experimentSlice.getExperimentType();
+    }
+
+    @Override
+    public String getId() {
+        return experimentAccession;
     }
 
     @Override
