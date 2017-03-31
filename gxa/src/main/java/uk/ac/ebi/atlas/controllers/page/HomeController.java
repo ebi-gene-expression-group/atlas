@@ -61,6 +61,8 @@ public class HomeController {
         model.addAttribute("plantsList", gson.toJson(speciesInfoListService.getFilterByKingdom("plants")));
         model.addAttribute("fungiList", gson.toJson(speciesInfoListService.getFilterByKingdom("fungi")));
 
+        model.addAttribute("organismPath", ""); // Required by Spring form tag
+
         return "foundation-home";
     }
 
