@@ -46,10 +46,7 @@ public class ExperimentCrudIT {
     private ExpressionAtlasExperimentChecker experimentCheckerSpy;
 
     @Mock
-    ConditionsIndexingService conditionsIndexingService;
-
-    @Captor
-    ArgumentCaptor<Collection<Condition>> collectionConditionCaptor;
+    private ConditionsIndexingService conditionsIndexingService;
 
     // Used to check the DB
     @Inject
@@ -59,28 +56,22 @@ public class ExperimentCrudIT {
     public ExpectedException thrown = ExpectedException.none();
 
     @Inject
-    AnalyticsLoaderFactory analyticsLoaderFactory;
+    private AnalyticsLoaderFactory analyticsLoaderFactory;
 
     @Mock
-    ExpressionSerializerService expressionSerializerService;
-
-    @Mock
-    ExperimentDesignFileWriterService experimentDesignFileWriterService;
+    private ExperimentDesignFileWriterService experimentDesignFileWriterService;
 
     @Inject
-    DataFileHub dataFileHub;
+    private DataFileHub dataFileHub;
+
     @Inject
-    ExperimentDAO experimentDAO;
+    private ExperimentDAO experimentDAO;
+
     @Inject
-    ExpressionAtlasExperimentTrader experimentTrader;
+    private CondensedSdrfParser condensedSdrfParser;
+
     @Inject
-    CondensedSdrfParser condensedSdrfParser;
-    @Inject
-    EFOLookupService efoParentsLookupService;
-    @Inject
-    AnalyticsIndexerManager analyticsIndexerManager;
-    @Inject
-    ConfigurationTrader configurationTrader;
+    private ConfigurationTrader configurationTrader;
 
     private ExperimentCrud subject;
 
@@ -125,7 +116,7 @@ public class ExperimentCrudIT {
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-RNASEQ-BASELINE", ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentCheckerSpy, times(2)).checkBaselineFiles("TEST-RNASEQ-BASELINE");
+        verify(experimentCheckerSpy, times(4)).checkBaselineFiles("TEST-RNASEQ-BASELINE");
     }
 
     @Test
@@ -151,7 +142,7 @@ public class ExperimentCrudIT {
     @Test
     public void importReloadDeleteProteomicsBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-PROTEOMICS-BASELINE", ExperimentType.PROTEOMICS_BASELINE);
-        verify(experimentCheckerSpy, times(2)).checkBaselineFiles("TEST-PROTEOMICS-BASELINE");
+        verify(experimentCheckerSpy, times(4)).checkBaselineFiles("TEST-PROTEOMICS-BASELINE");
     }
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {
@@ -169,14 +160,19 @@ public class ExperimentCrudIT {
 
         subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
-        assertThat(expressionsCount(experimentAccession, experimentType), is(1));
+        if (experimentType.isDifferential()) {
+            assertThat(expressionsCount(experimentAccession, experimentType), is(1));
+        }
     }
 
     public void importExistingExperimentUpdatesDB(String experimentAccession, ExperimentType experimentType) throws IOException {
         ExperimentDTO originalExperimentDTO = subject.findExperiment(experimentAccession);
         subject.importExperiment(experimentAccession, false);
         assertThat(experimentCount(experimentAccession), is(1));
-        assertThat(expressionsCount(experimentAccession, experimentType), is(1));
+
+        if (experimentType.isDifferential()) {
+            assertThat(expressionsCount(experimentAccession, experimentType), is(1));
+        }
 
         ExperimentDTO newExperimentDTO = subject.findExperiment(experimentAccession);
         assertThat(originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
@@ -199,10 +195,7 @@ public class ExperimentCrudIT {
     }
 
     private int expressionsCount(String accession, ExperimentType experimentType) {
-        if (experimentType.isBaseline()) {
-            return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_EXPRESSIONS WHERE EXPERIMENT = ?", Integer.class, accession);
-        }
-        else if (experimentType.isMicroarray()) {
+        if (experimentType.isMicroarray()) {
             return jdbcTemplate.queryForObject("select COUNT(*) from MICROARRAY_DIFF_ANALYTICS WHERE EXPERIMENT = ?", Integer.class, accession);
         }
         else { //if (experimentType.isDifferential()) {

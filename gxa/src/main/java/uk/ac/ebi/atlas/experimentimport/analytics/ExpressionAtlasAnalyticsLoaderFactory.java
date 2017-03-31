@@ -21,8 +21,6 @@ public class ExpressionAtlasAnalyticsLoaderFactory implements AnalyticsLoaderFac
         this.microarrayDifferentialAnalyticsLoader = microarrayDifferentialAnalyticsLoader;
     }
 
-
-
     @Override
     public AnalyticsLoader getLoader(ExperimentType experimentType) {
         if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
