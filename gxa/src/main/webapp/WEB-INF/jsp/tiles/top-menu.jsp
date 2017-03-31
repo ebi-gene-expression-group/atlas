@@ -9,8 +9,8 @@
             <ul id="global-nav" class="menu">
                 <!-- set active class as appropriate -->
                 <li id="home-mobile" class=""><a href="https://www.ebi.ac.uk/"></a></li>
-                <li id="home" class="active"><a href="https://www.ebi.ac.uk/"><i class="icon icon-generic" data-icon="H"></i> EMBL-EBI</a></li>
-                <li id="services"><a href="https://www.ebi.ac.uk/services"><i class="icon icon-generic" data-icon="("></i> Services</a></li>
+                <li id="home"><a href="https://www.ebi.ac.uk/"><i class="icon icon-generic" data-icon="H"></i> EMBL-EBI</a></li>
+                <li id="services"  class="active"><a href="https://www.ebi.ac.uk/services"><i class="icon icon-generic" data-icon="("></i> Services</a></li>
                 <li id="research"><a href="https://www.ebi.ac.uk/research"><i class="icon icon-generic" data-icon=")"></i> Research</a></li>
                 <li id="training"><a href="https://www.ebi.ac.uk/training"><i class="icon icon-generic" data-icon="t"></i> Training</a></li>
                 <li id="about"><a href="https://www.ebi.ac.uk/about"><i class="icon icon-generic" data-icon="i"></i> About us</a></li>
