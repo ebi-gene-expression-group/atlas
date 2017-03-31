@@ -125,9 +125,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                     provideLinkToProfile(request, geneQuery),
                             dataColumns
                     ).asJson());
-
-            result.add("geneSetProfiles", JsonNull.INSTANCE);
-            result.add("jsonCoexpressions", new JsonArray());
         }
 
         model.addAttribute("species", species.getReferenceName());
