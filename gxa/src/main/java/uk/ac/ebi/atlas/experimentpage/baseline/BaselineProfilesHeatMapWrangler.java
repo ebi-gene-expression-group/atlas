@@ -114,10 +114,10 @@ public class BaselineProfilesHeatMapWrangler {
     public Optional<JsonObject> getJsonProfilesAsGeneSets()  {
         GeneQueryResponse r = getGeneQueryResponseForProfiles();
         return r.containsGeneSets()
-                ? Optional.of(new ExternallyViewableProfilesList<>(baselineProfilesHeatMap.fetch(experiment,requestContext,
-                r, true),linkToGenesets,
-                requestContext
-                        .getDataColumnsToReturn() ).asJson())
+                ? Optional.of(
+                        new ExternallyViewableProfilesList<>(
+                                baselineProfilesHeatMap.fetch(experiment,requestContext, r, true),
+                                linkToGenesets, requestContext.getDataColumnsToReturn()).asJson())
 
                 : Optional.<JsonObject>absent();
     }
@@ -140,14 +140,13 @@ public class BaselineProfilesHeatMapWrangler {
                 o.addProperty("geneId", baselineProfile.getId());
 
                 o.add("jsonProfiles",
-                        new ExternallyViewableProfilesList<>(baselineProfilesHeatMap.fetchInPrescribedOrder(
-                                coexpressedStuff.get()
-                                        .getRight(),
-                                experiment,
-                                requestContext,
-                                coexpressedStuff.get().getLeft(), false)
-                                ,linkToGenes,
-                                requestContext.getDataColumnsToReturn() ).asJson());
+                        new ExternallyViewableProfilesList<>(
+                                baselineProfilesHeatMap.fetchInPrescribedOrder(
+                                        coexpressedStuff.get().getRight(), experiment, requestContext,
+                                        coexpressedStuff.get().getLeft(), false),
+                                linkToGenes,
+                                requestContext.getDataColumnsToReturn())
+                                .asJson());
 
                 result.add(o);
             }

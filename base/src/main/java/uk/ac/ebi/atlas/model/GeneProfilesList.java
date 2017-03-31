@@ -1,11 +1,13 @@
-
 package uk.ac.ebi.atlas.model;
-
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 

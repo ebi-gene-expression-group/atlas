@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.profiles.json;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.Expression;
