@@ -21,7 +21,7 @@
 
 /* FOUNDATION
  * browse baseline/plant experiments */
-.fspecies-nav .fspecies_item {min-height: 300px; text-align: center;}
+.fspecies-nav .fspecies_item {min-height: 425px; text-align: center;}
 .fspecies-nav .fspecies_item h4 {text-align: center;}
 .fspecies-nav .fspecies_item ul li {text-align: center;font-size: 94%;}
 .fspecies-nav .fspecies_item span {font-size: 700%;/*fallback*/font-size: 5.1vw}

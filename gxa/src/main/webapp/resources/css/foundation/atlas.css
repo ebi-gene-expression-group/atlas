@@ -59,6 +59,38 @@ a.clear {
     font-weight: bold;
 }
 
+/** Foundation **/
+.callout {
+    position: relative;
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    border: 1px solid rgba(10, 10, 10, 0.25);
+    border-radius: 0;
+    color: #222;
+    background-color: white; }
+.callout > :first-child {
+    margin-top: 0; }
+.callout > :last-child {
+    margin-bottom: 0; }
+.callout.primary {
+    background-color: #c6fcff; }
+.callout.secondary {
+    background-color: #f0f0f0; }
+.callout.success {
+    background-color: #e1faea; }
+.callout.warning {
+    background-color: #fff3d9; }
+.callout.alert {
+    background-color: #fce6e2; }
+.callout.small {
+    padding: 0.5rem;
+}
+.callout.large {
+    padding: 3rem
+}
+
+/** End Foundation **/
+
 .combo:hover, .publication-list .media-object:hover {
     color: #0A0A0A;
     background-color: aliceblue;

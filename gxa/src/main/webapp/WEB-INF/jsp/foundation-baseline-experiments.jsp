@@ -174,8 +174,8 @@
 
                 <c:if test="${total > 5}">
                     <div class="show_more_buttons">
-                        <a class="button small show_button" href=""> See more…</a>
-                        <a class="button small hide_button" href=""> Hide…</a>
+                        <Button class="button small show_button"> See more…</Button>
+                        <Button class="button small hide_button"> Hide…</Button>
                     </div>
                 </c:if>
 
