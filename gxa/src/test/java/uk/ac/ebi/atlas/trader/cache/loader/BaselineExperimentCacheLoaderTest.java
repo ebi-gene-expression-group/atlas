@@ -94,6 +94,7 @@ public class BaselineExperimentCacheLoaderTest {
         subject = new Loader(experimentalFactorsFactory,experimentType, configurationTrader, speciesFactoryMock, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
+        when(baselineConfiguration.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
 
         when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
@@ -148,10 +149,10 @@ public class BaselineExperimentCacheLoaderTest {
     public void alternativeViews() throws Exception {
         String alternativeViewAccession = "E-MOCK-2";
         when(baselineConfiguration.getAlternativeViews()).thenReturn(ImmutableList.of(alternativeViewAccession));
-        BaselineExperimentConfiguration alternativeViewBaselineConfiguration = mock(BaselineExperimentConfiguration
-                .class);
-        when(configurationTrader.getBaselineFactorsConfiguration(alternativeViewAccession)).thenReturn
-                (alternativeViewBaselineConfiguration);
+        BaselineExperimentConfiguration alternativeViewBaselineConfiguration =
+                mock(BaselineExperimentConfiguration.class);
+        when(configurationTrader.getBaselineFactorsConfiguration(alternativeViewAccession))
+                .thenReturn(alternativeViewBaselineConfiguration);
         String s = "default query factor of other experiment";
         when(alternativeViewBaselineConfiguration.getDefaultQueryFactorType()).thenReturn(s);
 
