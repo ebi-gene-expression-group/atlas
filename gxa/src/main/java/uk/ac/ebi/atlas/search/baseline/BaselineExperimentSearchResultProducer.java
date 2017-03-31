@@ -24,9 +24,11 @@ public class BaselineExperimentSearchResultProducer {
         this.experimentTrader = experimentTrader;
     }
 
-    public BaselineExperimentSearchResult buildProfilesForExperiments(List<Map<String, Object>> response, String defaultQueryFactorType) {
+    public BaselineExperimentSearchResult buildProfilesForExperiments(List<Map<String, Object>> response,
+                                                                      String defaultQueryFactorType) {
 
         return buildProfilesForExpressions(extractAverageExpressionLevel(response), defaultQueryFactorType);
+
     }
 
     static List<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
@@ -47,21 +49,26 @@ public class BaselineExperimentSearchResultProducer {
                 double sumExpressionLevel;
                 sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
 
-                double expression = BaselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
-                BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
+                double expression =
+                        BaselineExpressionLevelRounder.round(
+                                sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
+                BaselineExperimentExpression bslnExpression =
+                        BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                 builder.add(bslnExpression);
             }
         }
 
         return builder.build();
+
     }
 
 
     BaselineExperimentSearchResult buildProfilesForExpressions(List<BaselineExperimentExpression> expressions,
                                                                   String defaultQueryFactorType) {
 
-        ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice = filter(groupByExperimentSlice(expressions), defaultQueryFactorType);
+        ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice =
+                filter(groupByExperimentSlice(expressions), defaultQueryFactorType);
 
         SortedSet<Factor> tissueFactorsAcrossAllExperiments = extractAllNonFilterFactors(expressionsByExperimentSlice);
 
@@ -69,15 +76,15 @@ public class BaselineExperimentSearchResultProducer {
         SortedSet<FactorAcrossExperiments> allFactorsAcrossAllExperiments = new TreeSet<>();
 
         for (BaselineExperimentSlice experimentSlice : expressionsByExperimentSlice.keySet()) {
-
             BaselineExperiment experiment = experimentSlice.experiment();
-
             BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
 
             for (BaselineExperimentExpression baselineExpression : expressionsByExperimentSlice.get(experimentSlice)) {
                 String assayGroupId = baselineExpression.assayGroupId();
-                FactorAcrossExperiments f = new FactorAcrossExperiments(experiment.getExperimentalFactors().getFactorGroup(assayGroupId)
-                        .factorOfType(defaultQueryFactorType));
+                FactorAcrossExperiments f =
+                        new FactorAcrossExperiments(experiment.getExperimentalFactors()
+                                .getFactorGroup(assayGroupId)
+                                .factorOfType(defaultQueryFactorType));
                 allFactorsAcrossAllExperiments.add(f);
                 profile.add(f, new BaselineExpression(baselineExpression.expressionLevel(), f.getId()));
             }
@@ -89,6 +96,14 @@ public class BaselineExperimentSearchResultProducer {
                 if (profile.getExpression(f) == null) {
                     profile.add(f, new BaselineExpression("NA", f.getId()));
                 }
+            }
+
+            Set<Factor> factorDifference = Sets.difference(tissueFactorsAcrossAllExperiments, experimentSlice.nonFilterFactors());
+            // Factors not studied in the experiment
+            for (Factor factor : factorDifference) {
+                FactorAcrossExperiments f = new FactorAcrossExperiments(factor);
+                allFactorsAcrossAllExperiments.add(f);
+                profile.add(f, new BaselineExpression("NT", f.getId()));
             }
 
             profiles.add(profile);
