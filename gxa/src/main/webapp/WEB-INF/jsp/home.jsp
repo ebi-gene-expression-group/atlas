@@ -152,7 +152,7 @@
         geneQueryTagEditorModule.init('#geneQuery', '', function onChangeUpdateState(field, editor, tags){
             geneSearchBoxes.setGeneSearchEmpty(tags.length == 0);
         });
-        conditionAutocompleteModule.init('${arrayexpressUrl}', function onChangeUpdateState(field, editor, tags){
+        conditionAutocompleteModule.init('#conditionQuery', '${arrayexpressUrl}', function onChangeUpdateState(field, editor, tags){
             geneSearchBoxes.setConditionSearchEmpty(tags.length == 0);
         });
 

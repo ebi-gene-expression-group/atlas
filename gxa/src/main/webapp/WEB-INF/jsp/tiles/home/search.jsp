@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row">
@@ -12,9 +13,19 @@
                 <!-- Grid Example -->
                 <form method="get" action="search" id="home-search-atlas-form">
                     <div class="row">
-                        <div class="small-12 columns">
-                            <label>Gene, tissue or biological condition</label>
-                            <input id="home-search-atlas-input" type="text" placeholder="Enter your search" name="query"/>
+                        <div class="small-4 columns">
+                            <label>Gene / Gene properties</label>
+                            <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query" name="query"/>
+                        </div>
+                        <div class="small-2 columns">
+                            <label>Organism</label>
+                            <form:select id="organism" name="organism" path="organismPath">
+                                <form:options items="${organisms}" />
+                            </form:select>
+                        </div>
+                        <div class="small-4 columns">
+                            <label>Sample properties</label>
+                            <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />
                         </div>
                     </div>
 
