@@ -7,7 +7,7 @@ module.exports = {
     // define the bundles we want
     entry: {
         expressionAtlasHeatmap: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap'],
-        expressionAtlasHeatmapHighcharts: ['babel-polyfill', './atlas_bundles/heatmap-highcharts'],
+        expressionAtlasHeatmapHighcharts: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap-highcharts'],
         experimentPageHeatmap: ['babel-polyfill', './atlas_bundles/heatmap/src/experimentPageHeatmapAnatomogramRenderer.js'],
         experimentPage: ['babel-polyfill', './atlas_bundles/experiment-page'],
         expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
@@ -30,13 +30,14 @@ module.exports = {
             // 'expression-atlas-legend',
             // 'expression-atlas-number-format',
             'babel-polyfill',
-            // Required by: expressionAtlasHeatmapHighcharts
 
+            // Required by: expressionAtlasHeatmapHighcharts
             'color',
             'downloadjs',
+            'expression-atlas-number-format',
             'he',
+            'highcharts',
             'highcharts-custom-events',
-            'highcharts-heatmap',
             'jquery',
             'lodash',
             'object-hash',
@@ -46,6 +47,7 @@ module.exports = {
             'react-dom',
             'react-highcharts',
             'react-tooltip',
+            'urijs',
 
             // Required by: anatomogram
             'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
@@ -76,7 +78,6 @@ module.exports = {
             // 'react-dom',
             'react-dom/server',
             'react-radio-group',
-            'urijs',
             'events',
 
             // anatomogram
@@ -100,7 +101,6 @@ module.exports = {
 
             // baseline-cell
             // 'react-highcharts',
-            'highcharts-more',
             'react-addons-css-transition-group',
 
             //
@@ -143,7 +143,7 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.js$/, loader: 'babel', query: {presets: ['es2015']}, exclude: /node_modules\/(?!(expression-atlas|anatomogram|react-ebi-species))/},
+            {test: /\.js$/, loader: 'babel', query: {presets: ['es2015'], plugins:['transform-object-rest-spread']}, exclude: /node_modules\/(?!(expression-atlas|anatomogram|react-ebi-species))/},
             {test: /\.jsx$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
