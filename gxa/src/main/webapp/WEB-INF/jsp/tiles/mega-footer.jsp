@@ -8,8 +8,8 @@
 
     <div class="small-3 columns small-offset-2">
         <h5>Experiments</h5>
-        <a href="${pageContext.request.contextPath}/experiments?experimentType=baseline" target="_blank">Baseline experiments</a>
-        <a href="${pageContext.request.contextPath}/experiments?experimentType=differential" target="_blank">Differential experiments</a><br/>
+        <a href="${pageContext.request.contextPath}/experiments?experimentType=baseline" target="_blank">Baseline experiments</a><br/>
+        <a href="${pageContext.request.contextPath}/experiments?experimentType=differential" target="_blank">Differential experiments</a>
     </div>
 
     <div class="small-3 columns">
