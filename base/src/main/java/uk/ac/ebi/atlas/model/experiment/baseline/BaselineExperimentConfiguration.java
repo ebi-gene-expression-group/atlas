@@ -51,7 +51,7 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getMenuFilterFactorTypes() {
-        return xmlReader.getList("menuFilterFactorTypes");
+        return Arrays.asList(xmlReader.getString("menuFilterFactorTypes").split("\\W*,\\W*"));
     }
 
     public Map<String, String> getSpeciesMapping() {
