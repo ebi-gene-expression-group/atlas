@@ -52,6 +52,14 @@ public class HomeController {
 
     @RequestMapping(value = "/fhome")
     public String getFoundationHomePage(Model model) {
+        ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
+        organismSelectBuilder.put("", "Any");
+        for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
+            organismSelectBuilder.put(speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
+        }
+        model.addAttribute("organisms", organismSelectBuilder.build());
+        model.addAttribute("organismPath", ""); // Required by Spring form tag
+
         model.addAllAttributes(experimentInfoListService.getLatestExperimentsListAttributes());
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
