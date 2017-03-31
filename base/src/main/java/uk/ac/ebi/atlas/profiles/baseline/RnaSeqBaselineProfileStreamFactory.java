@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
@@ -26,25 +24,27 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
     }
 
     @Override
-    protected ExpressionsRowDeserializerBuilder<BaselineExpression> getExpressionsRowDeserializerBuilder(BaselineExperiment experiment) {
+    protected ExpressionsRowDeserializerBuilder<BaselineExpression>
+    getExpressionsRowDeserializerBuilder(BaselineExperiment experiment) {
         return new RnaSeqBaselineExpressionsRowDeserializerBuilder(experiment);
     }
 
     @Override
-    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, BaselineProfileStreamOptions
-            baselineProfileStreamOptions){
+    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
+                                                     BaselineProfileStreamOptions baselineProfileStreamOptions) {
         AtlasResource<UnsafeInput> kryoFile = dataFileHub.getKryoFileForReading(experiment.getAccession());
-        if(kryoFile.exists()){
+        if (kryoFile.exists()) {
             return new BaselineProfileKryoInputStream(
-                    BaselineExpressionsKryoReader.create(kryoFile), experiment, filterExpressions(experiment,
-                    baselineProfileStreamOptions));
+                    BaselineExpressionsKryoReader.create(kryoFile), experiment,
+                    filterExpressions(experiment, baselineProfileStreamOptions));
         } else {
             return super.create(experiment, baselineProfileStreamOptions);
         }
     }
 
 
-    static class RnaSeqBaselineExpressionsRowDeserializerBuilder implements ExpressionsRowDeserializerBuilder<BaselineExpression> {
+    static class RnaSeqBaselineExpressionsRowDeserializerBuilder
+            implements ExpressionsRowDeserializerBuilder<BaselineExpression> {
 
         protected final BaselineExperiment baselineExperiment;
 

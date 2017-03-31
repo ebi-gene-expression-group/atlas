@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 
 public class BaselineExpression implements Expression, KryoSerializable {
     private double level;
+    private boolean known = true;
     private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
@@ -43,12 +44,17 @@ public class BaselineExpression implements Expression, KryoSerializable {
     public BaselineExpression(String expressionLevelString, String dataColumnDescriptorId) {
 
         switch (expressionLevelString) {
-            case "NA":
-                // treat as if zero
+            case "NT": // For factors not studied in the multiexperiment heatmap
+                level = 0.0;
+                known = false;
+                break;
+            case "NA": // Treat as if zero
                 level = 0;
+                known = true;
                 break;
             default:
                 level = Double.parseDouble(expressionLevelString);
+                known = true;
                 break;
         }
         this.dataColumnDescriptorId = dataColumnDescriptorId;
@@ -62,6 +68,11 @@ public class BaselineExpression implements Expression, KryoSerializable {
 
     public double[] getQuartiles() {
         return quartiles;
+    }
+
+    @Override
+    public boolean isKnown() {
+        return known;
     }
 
     public double getLevel() {

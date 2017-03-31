@@ -9,7 +9,6 @@ public class DifferentialExpression implements Expression {
     public static final double WEAKEST_LEVEL = 0;
 
     private double pValue;
-
     private double foldChange;
 
     private String dataColumnDescriptorId;
@@ -47,6 +46,11 @@ public class DifferentialExpression implements Expression {
 
     private boolean isLikeDownRegulation(Regulation regulation) {
         return Regulation.DOWN.equals(regulation) && isUnderExpressed();
+    }
+
+    @Override
+    public boolean isKnown() {
+        return true;
     }
 
     @Override

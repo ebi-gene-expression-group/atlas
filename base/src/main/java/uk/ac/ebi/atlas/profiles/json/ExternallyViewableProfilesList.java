@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.json;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.Expression;
@@ -53,7 +54,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         JsonArray expressions = new JsonArray();
         for(DataColumnDescriptor c: prescribedOrderOfColumns){
             if(profile.isExpressedOnAnyOf(ImmutableSet.of(c))){
-                expressions.add(profile.getExpression(c).toJson());
+                expressions.add(profile.getExpression(c).isKnown() ? profile.getExpression(c).toJson() : new JsonObject());
             } else {
                 expressions.add(new JsonObject());
             }
