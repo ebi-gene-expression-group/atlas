@@ -29,12 +29,6 @@ public class BaselineExperimentSearchResultProducer {
         return buildProfilesForExpressions(extractAverageExpressionLevel(response), defaultQueryFactorType);
     }
 
-    @Deprecated //stop producing BaselineExperimentExpression outside this class, and remove me!
-    public BaselineExperimentSearchResult buildProfilesForTissueExperiments(List<BaselineExperimentExpression> expressions) {
-        return buildProfilesForExpressions(expressions, "ORGANISM_PART");
-
-    }
-
     static List<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
 
         ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
