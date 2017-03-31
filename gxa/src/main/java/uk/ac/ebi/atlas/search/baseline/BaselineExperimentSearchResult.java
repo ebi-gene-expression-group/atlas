@@ -1,18 +1,15 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.List;
-import java.util.SortedSet;
 
 public class BaselineExperimentSearchResult {
-    final BaselineExperimentProfilesList experimentProfiles;
-    final List<FactorAcrossExperiments> factorsAcrossAllExperiments;
+    private final BaselineExperimentProfilesList experimentProfiles;
+    private final List<FactorAcrossExperiments> factorsAcrossAllExperiments;
 
-    public BaselineExperimentSearchResult(BaselineExperimentProfilesList experimentProfiles, List<FactorAcrossExperiments>
-            factorsAcrossAllExperiments) {
+    public BaselineExperimentSearchResult(BaselineExperimentProfilesList experimentProfiles,
+                                          List<FactorAcrossExperiments> factorsAcrossAllExperiments) {
         this.experimentProfiles = experimentProfiles;
         this.factorsAcrossAllExperiments = factorsAcrossAllExperiments;
     }
@@ -28,5 +25,4 @@ public class BaselineExperimentSearchResult {
     public List<FactorAcrossExperiments> getFactorsAcrossAllExperiments() {
         return factorsAcrossAllExperiments;
     }
-
 }
