@@ -2,7 +2,7 @@
 
 var conditionAutocompleteModule = (function ($) {
 
-    function initConditionAutocomplete (contextPath, onChange) {
+    function initConditionAutocomplete (element, contextPath, onChange) {
 
         var autoCompleteFixSet = function() {
             $(this).attr('arrayExpressAutocomplete', 'off');
@@ -12,7 +12,7 @@ var conditionAutocompleteModule = (function ($) {
             $(this).removeAttr('arrayExpressAutocomplete');
         };
 
-        $('#conditionQuery')
+        $(element)
             // don't navigate away from the field on tab when selecting an item
             .bind( 'keydown', function( event ) {
                 if (event.keyCode === $.ui.keyCode.TAB &&
