@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html lang="en">
 
@@ -146,6 +147,11 @@
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
 <!--! end of JSON Tag Editor -->
 
+<!-- Condition AUTOCOMPLETE -->
+<spring:eval var="arrayexpressUrl" expression="@configuration['arrayexpress.autocomplete.url']" />
+<%@ include file="../includes/condition-autocomplete-js.jsp" %>
+<!-- end of Condition AUTOCOMPLETE -->
+
 <!-- Google Analytics details... -->
 <!-- Change UA-XXXXX-X to be your site's ID -->
 <!--
@@ -161,24 +167,41 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 
 <script>
-    geneQueryTagEditorModule.init('#home-search-atlas-input', '', function(){}, 'Enter your search');
+    geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, 'Enter gene query...');
+    conditionAutocompleteModule.init('#home-search-condition-query-input', '${arrayexpressUrl}', function(){});
+
     $('#home-search-atlas-clear-button').on('click' , function () {
         // Remove all tags
-        var $atlasSearchInput = $('#home-search-atlas-input'),
+        const $atlasSearchInput = $('#home-search-gene-query-input'),
             atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
         atlasSearchTags.forEach(function (searchTag) {
             $atlasSearchInput.jsonTagEditor('removeTag', searchTag.value);
-        })
+        });
+
+        const $conditionQuery = $('#home-search-condition-query-input'),
+            conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
+        conditionQueryTags.forEach(function (searchTag) {
+            $conditionQuery.jsonTagEditor('removeTag', searchTag.value);
+        });
     });
 
     $('#home-search-atlas-form').submit(function(event) {
-        var $atlasSearchInput = $('#home-search-atlas-input'),
+        const $atlasSearchInput = $('#home-search-gene-query-input'),
             atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
         console.log(JSON.stringify(atlasSearchTags));
         $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
+
+        const $conditionQuery = $('#home-search-condition-query-input'),
+            conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
+        $conditionQuery.val(JSON.stringify(conditionQueryTags));
     });
 
     geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
+
+    /* This is to prevent overlapping between boxes in home page */
+    $(window).load(function(){
+        Foundation.reInit('equalizer');
+    });
 </script>
 
 </body>

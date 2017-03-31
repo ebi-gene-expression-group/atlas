@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
@@ -6,9 +7,9 @@
 <div class="callout browse-by" data-equalizer-watch>
     <ul class="tabs" data-tabs id="browse-by-tabs">
         <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>
-        <li class="tabs-title"><a href="#by-animals">By animals</a></li>
-        <li class="tabs-title"><a href="#by-plants">By plants</a></li>
-        <li class="tabs-title"><a href="#by-fungi">By fungi</a></li>
+        <li class="tabs-title"><a href="#by-animals">Animals</a></li>
+        <li class="tabs-title"><a href="#by-plants">Plants</a></li>
+        <li class="tabs-title"><a href="#by-fungi">Fungi</a></li>
     </ul>
 
     <div class="tabs-content" data-tabs-content="browse-by-tabs">
