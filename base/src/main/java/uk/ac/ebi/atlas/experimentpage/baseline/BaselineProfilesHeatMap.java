@@ -64,6 +64,7 @@ public class BaselineProfilesHeatMap {
                 geneQueryResponse.getAllGeneIds().size(), asGeneSets,
                 stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D);
 
+        profiles.setTotalResultCount(profiles.size());
         return profiles;
     }
 
