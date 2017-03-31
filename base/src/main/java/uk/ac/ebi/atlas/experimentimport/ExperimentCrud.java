@@ -71,7 +71,10 @@ public class ExperimentCrud {
             deleteExperiment(experimentAccession);
         }
 
-        analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
+        // We only insert in the DB differential experiments expressions
+        if (experimentConfiguration.getExperimentType().isDifferential()) {
+            analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
+        }
 
         updateExperimentDesign(experimentAccession, experimentConfiguration.getExperimentType(),
                 isPrivate,
@@ -112,12 +115,15 @@ public class ExperimentCrud {
 
     public String deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
+        ExperimentConfiguration experimentConfiguration = loadExperimentConfiguration(experimentAccession);
 
-        AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
-        analyticsLoader.deleteAnalytics(experimentAccession);
+        // We only insert in the DB differential experiments expressions
+        if (experimentConfiguration.getExperimentType().isDifferential()) {
+            AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
+            analyticsLoader.deleteAnalytics(experimentAccession);
+        }
 
         checkNotNull(experimentDTO);
-
 
         if (!experimentDTO.isPrivate()) {
             conditionsIndexingService.removeConditions(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());

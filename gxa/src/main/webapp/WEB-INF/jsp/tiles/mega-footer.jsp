@@ -8,32 +8,24 @@
 
     <div class="small-3 columns small-offset-2">
         <h5>Experiments</h5>
-        <a href="#">By name (A-z)</a><br/>
-        <a href="#">By tissues (A-Z)</a><br/>
-        <a href="#">By genes/species (A-Z)</a><br/>
-        <a href="#">By diseases (A-Z)</a><br/>
-        <a href="#">By experimental variables (A-Z)</a><br/>
-        <a href="#">By differential experiments</a><br/>
-        <a href="#">By baseline experiments</a>
+        <a href="${pageContext.request.contextPath}/experiments?experimentType=baseline" target="_blank">Baseline experiments</a>
+        <a href="${pageContext.request.contextPath}/experiments?experimentType=differential" target="_blank">Differential experiments</a><br/>
     </div>
 
     <div class="small-3 columns">
         <h5>Atlas</h5>
-        <a href="#">Search</a><br/>
-        <a href="#">Release notes</a><br/>
-        <a href="#">Download</a><br/>
-        <a href="#">Help</a><br/>
-        <a href="#">Faqs</a><br/>
-        <a href="#">About Atlas</a>
+        <a href="${pageContext.request.contextPath}/release-notes.html" target="_blank">Release notes</a><br/>
+        <a href="${pageContext.request.contextPath}/download.html" target="_blank">Download</a><br/>
+        <a href="${pageContext.request.contextPath}/help/index.html" target="_blank">Help</a><br/>
+        <a href="${pageContext.request.contextPath}/FAQ.html" target="_blank">FAQ</a><br/>
+        <a href="${pageContext.request.contextPath}/about.html" target="_blank">About Atlas</a>
     </div>
 
     <div class="small-3 columns end">
         <h5>Follow us</h5>
-        <a href="#">Articles</a><br/>
-        <a href="#">Blog</a><br/>
-        <a href="#">Tweets</a><br/>
-        <a href="#">Feedback</a><br/>
-        <a href="#">Contact</a>
+        <a href="https://twitter.com/ExpressionAtlas" target="_blank">Twitter</a><br/>
+        <a href="${pageContext.request.contextPath}/feedback-form" target="_blank">Feedback</a><br/>
+        <a href="mailto:arrayexpress-atlas@ebi.ac.uk" target="_blank">Contact</a>
     </div>
 
 </div>

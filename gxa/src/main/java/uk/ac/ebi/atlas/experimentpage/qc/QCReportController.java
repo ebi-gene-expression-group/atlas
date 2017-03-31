@@ -27,7 +27,6 @@ import java.text.MessageFormat;
 import java.util.Collection;
 
 @Controller
-@Scope("singleton")
 public class QCReportController extends ExternallyAvailableContent.Supplier<MicroarrayExperiment> {
 
     private static final String QC_REPORT_URL = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";

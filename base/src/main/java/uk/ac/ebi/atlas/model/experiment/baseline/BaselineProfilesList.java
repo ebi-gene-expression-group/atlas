@@ -1,6 +1,4 @@
-
 package uk.ac.ebi.atlas.model.experiment.baseline;
-
 
 import java.util.Collection;
 
