@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,20 +70,26 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         return "forward:/json/baseline_experiments";
     }
 
-    @RequestMapping(value = "/json/baseline_experiments", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(
+            value = "/json/baseline_experiments",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String jsonBaselineExperiments(
             @RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
             @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
-            @RequestParam(value = "source", required = false) String defaultQueryFactorType,
+            @RequestParam(value = "source", required = false) String source,
             @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
             HttpServletRequest request, Model model) {
 
         Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
 
+        if (!species.isUnknown() && StringUtils.isBlank(source)) {
+            source = species.getDefaultQueryFactorType();
+        }
+
         BaselineExperimentSearchResult searchResult =
-                baselineAnalyticsSearchService.findExpressions(
-                        geneQuery, conditionQuery, species, defaultQueryFactorType);
+                baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, source);
 
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
@@ -90,21 +97,28 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         JsonObject result = new JsonObject();
         List<FactorAcrossExperiments> dataColumns = searchResult.getFactorsAcrossAllExperiments();
 
-        result.add("anatomogram",  anatomogramFactory.get(defaultQueryFactorType, species, FluentIterable.from
-                (dataColumns).transformAndConcat(new Function<FactorAcrossExperiments, Iterable<? extends OntologyTerm>>() {
-            @Nullable
-            @Override
-            public Iterable<? extends OntologyTerm> apply(@Nullable FactorAcrossExperiments factorAcrossExperiments) {
-                return factorAcrossExperiments.getValueOntologyTerms();
-            }
-        })));
+        result.add(
+                "anatomogram",
+                anatomogramFactory.get(source, species,
+                        FluentIterable.from(dataColumns).transformAndConcat(
+                                new Function<FactorAcrossExperiments, Iterable<? extends OntologyTerm>>() {
+                                    @Nullable
+                                    @Override
+                                    public Iterable<? extends OntologyTerm>
+                                    apply(@Nullable FactorAcrossExperiments factorAcrossExperiments) {
+                                        return factorAcrossExperiments.getValueOntologyTerms();
+                                    }
+                                }
+                        )
+                )
+        );
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
 
         if(!experimentProfiles.isEmpty()){
             result.add("columnHeaders", constructColumnHeaders(dataColumns));
 
-            result.add("columnGroupings", factorGroupingService.group(defaultQueryFactorType, dataColumns));
+            result.add("columnGroupings", factorGroupingService.group(source, dataColumns));
 
             result.add("profiles", new ExternallyViewableProfilesList<>(
                     experimentProfiles,
