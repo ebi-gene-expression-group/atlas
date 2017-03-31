@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,11 +22,7 @@ public class ConfigurationTraderIT {
 
     @Test
     public void EProtOneHasTwoMenuFilterFactors() throws Exception {
-
         BaselineExperimentConfiguration bc = subject.getBaselineFactorsConfiguration("E-PROT-1");
-
         assertThat(bc.getMenuFilterFactorTypes().size(), greaterThan(1));
-
-
     }
 }
