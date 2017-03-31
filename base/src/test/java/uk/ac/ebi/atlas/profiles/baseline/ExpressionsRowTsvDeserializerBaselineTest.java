@@ -18,15 +18,13 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionsRowTsvDeserializerBaselineTest {
 
-    AssayGroup g1 = new AssayGroup("g1", "run11","run12","run13");
-    AssayGroup g2 = new AssayGroup("g2", "run21");
-    AssayGroup g3 = new AssayGroup("g3", "run31","run32");
+    private AssayGroup g1 = new AssayGroup("g1", "run11","run12","run13");
+    private AssayGroup g2 = new AssayGroup("g2", "run21");
+    private AssayGroup g3 = new AssayGroup("g3", "run31","run32");
 
-    List<AssayGroup> headers = ImmutableList.of(g1, g2, g3);
+    private List<AssayGroup> headers = ImmutableList.of(g1, g2, g3);
 
-
-    ExpressionsRowTsvDeserializerBaseline subject = new ExpressionsRowTsvDeserializerBaseline(headers);
-
+    private ExpressionsRowTsvDeserializerBaseline subject = new ExpressionsRowTsvDeserializerBaseline(headers);
 
     @Test
     public void pollShouldReturnExpressionsInTheRightOrder() throws Exception {
@@ -93,7 +91,5 @@ public class ExpressionsRowTsvDeserializerBaselineTest {
         assertThat(ArrayUtils.isEmpty(baselineExpression3.getQuartiles()), is(true));
         assertThat(baselineExpression3.getLevel(), is(0.0D));
     }
-
-
 
 }

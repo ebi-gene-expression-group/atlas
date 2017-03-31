@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Joiner;
@@ -18,8 +17,8 @@ public class ExpressionsRowTsvDeserializerBaseline implements ExpressionsRowDese
     private static final String ZERO_CODE = "-";
     private static final double[] ZERO_QUARTILES = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 
-    final List<AssayGroup> assayGroups;
-    final int[] indicesForDataPoints;
+    private final List<AssayGroup> assayGroups;
+    private final int[] indicesForDataPoints;
 
     public ExpressionsRowTsvDeserializerBaseline(List<AssayGroup> assayGroups) {
         this.assayGroups = assayGroups;
