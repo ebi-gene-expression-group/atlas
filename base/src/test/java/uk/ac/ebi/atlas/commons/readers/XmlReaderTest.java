@@ -33,21 +33,6 @@ public class XmlReaderTest {
             "</factors-definition>"
     );
 
-    private static String E_PROT_3 = "E-PROT-3";
-    private static List<String> E_PROT_3_CONFIGURATION_XML = Lists.newArrayList(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-            "",
-            "<configuration experimentType=\"proteomics_baseline\" r_data=\"0\">",
-            "    <analytics>",
-            "        <assay_groups>",
-            "            <assay_group id=\"g8\" label=\"cervix, uterine\">",
-            "                <assay>squamous epithelial cells from cervix, uterine</assay>",
-            "                <assay>glandular cells from cervix, uterine</assay>",
-            "        </assay_groups>",
-            "    </analytics>",
-            "</configuration>"
-    );
-
     private static MockDataFileHub dataFileHub;
 
     private XmlReader subject;
@@ -60,30 +45,15 @@ public class XmlReaderTest {
     }
 
     @Test
-    public void readFactorTypes() {
-        subject = dataFileHub.getBaselineExperimentFiles(E_MTAB_2812).factors.get();
-        assertThat(subject.read().get("menuFilterFactorTypes").size(), is(3));
-    }
-
-    @Test
     public void readDefaultFilterFactors(){
         subject = dataFileHub.getBaselineExperimentFiles(E_MTAB_2812).factors.get();
         assertThat(subject.getMap("defaultFilterFactors", "type", "value").size(), is(2));
     }
-
-
 
     @Test
     public void readConfiguration() {
 //        subject = dataFileHub.getBaselineExperimentFiles(E_MTAB_2812).factors.get();
 //        assertThat(subject.read().get("menuFilterFactorTypes").size(), is(3));
     }
-
-
-//
-//    @Test
-//    public void readWholeDocument() throws Exception {
-//        assertThat(subject.read(), is("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\\\"no\\\"?>" + BLAH));
-//    }
 
 }
