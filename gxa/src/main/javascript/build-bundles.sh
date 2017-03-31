@@ -37,6 +37,9 @@ do
             rm -rf node_modules/$module
         done
     npm install
+    
+    ../../patch-highcharts.sh
+    
     popd > /dev/null
 done
 
@@ -51,4 +54,7 @@ done
 
 npm install
 
+./patch-highcharts.sh
+
 npm run $1
+
