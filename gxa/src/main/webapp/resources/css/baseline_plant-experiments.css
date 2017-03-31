@@ -21,7 +21,7 @@
 
 /* FOUNDATION
  * browse baseline/plant experiments */
-.fspecies-nav .fspecies_item {min-height: 425px; text-align: center;}
+.fspecies-nav .fspecies_item {min-height: 250px; text-align: center; width: 33%;}
 .fspecies-nav .fspecies_item h4 {text-align: center;}
 .fspecies-nav .fspecies_item ul li {text-align: center;font-size: 94%;}
 .fspecies-nav .fspecies_item span {font-size: 700%;/*fallback*/font-size: 5.1vw}
@@ -30,20 +30,8 @@
 .fspecies-nav .fspecies_item span.blue:before {color:#5bc0de;}/*other*/
 .fshow_more_buttons {text-align: center; margin-top:9px;}
 
-
-.foundation_grid_24 {
-    width: 100%;
-}
-
-.foundation_grid_8 {
-    width: 33%;
+.column:last-child:not(:first-child), .columns:last-child:not(:first-child) {
     float: left;
-}
-
-.foundation_grid_4 {
-    width: 11%;
-    float: left;
-    min-height: 150px;
 }
 
 .foundation_p {

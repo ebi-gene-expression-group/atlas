@@ -7,35 +7,37 @@
 <section>
     <h3>Browse plant experiments</h3>
 
-    <div class="foundation_grid_4">
-        <p><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></p>
-        <p><div class="icon icon-functional" data-icon="1"><a href="/gxa/home">Search Atlas</a></div></p>
-    </div>
+    <div class="row">
+        <div class="columns small-1">
+            <p><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></p>
+            <p><div class="icon icon-functional" data-icon="1"><a href="/gxa/home">Search Atlas</a></div></p>
+        </div>
 
-    <div class="grid_20" style="padding-bottom: 20px">
-        <p class="foundation_p">
-            Thanks to funding from the <a href="http://www.gramene.org/">Gramene</a> project,
-            Expression Atlas contains <b>${numberOfPlantExperiments}</b> <a href="/gxa/experiments?kingdom=plants">plant experiments</a>, studying e.g. <a href="/gxa/experiments?organism=Arabidopsis+thaliana">Arabidopsis</a>, <a href="/gxa/experiments?organism=Oryza+sativa">rice</a>, and <a href="/gxa/experiments?organism=Zea+mays">maize</a>.
-        </p>
-        <p class="foundation_p">
-            The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of gene products under 'normal' conditions (e.g. normal rice tissues).
-            Each experiment is manually curated to a high standard, and RNA expression levels are calculated using the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
-        </p>
-        <p class="foundation_p">
-            The <i>differential</i> experiments in Atlas, containing both microarray and RNA-seq data, allows users to query which genes are up-/down-regulated
-            in different experimental conditions, e.g. 'in Arabidopsis shoots, what genes are upregulated in plants treated by X?'
-        </p>
+        <div class="columns medium-10" style="padding-bottom: 20px">
+            <p class="foundation_p">
+                Thanks to funding from the <a href="http://www.gramene.org/">Gramene</a> project,
+                Expression Atlas contains <b>${numberOfPlantExperiments}</b> <a href="/gxa/experiments?kingdom=plants">plant experiments</a>, studying e.g. <a href="/gxa/experiments?organism=Arabidopsis+thaliana">Arabidopsis</a>, <a href="/gxa/experiments?organism=Oryza+sativa">rice</a>, and <a href="/gxa/experiments?organism=Zea+mays">maize</a>.
+            </p>
+            <p class="foundation_p">
+                The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of gene products under 'normal' conditions (e.g. normal rice tissues).
+                Each experiment is manually curated to a high standard, and RNA expression levels are calculated using the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
+            </p>
+            <p class="foundation_p">
+                The <i>differential</i> experiments in Atlas, containing both microarray and RNA-seq data, allows users to query which genes are up-/down-regulated
+                in different experimental conditions, e.g. 'in Arabidopsis shoots, what genes are upregulated in plants treated by X?'
+            </p>
+        </div>
     </div>
 
 
     <h3 style="width: 400px; margin-top: 20px;">Baseline experiments</h3>
-    <div class="foundation_grid_24 fspecies-nav" style="padding-bottom: 20px">
+    <div class="row fspecies-nav" style="padding-bottom: 20px">
 
         <c:set var="speciesCount" value="0"/>
         <c:forEach items="${baselineExperimentAccessionsBySpecies.keySet()}" var="species">
 
             <c:if test="${speciesCount %3 == 0}">
-                <div class="foundation_grid_24 fspecies-nav">
+                <div class="row fspecies-nav">
             </c:if>
 
             <c:choose>
@@ -78,7 +80,7 @@
                 </c:otherwise>
             </c:choose>
 
-            <div class="foundation_grid_8 fspecies_item">
+            <div class="columns fspecies_item">
                 <h4>${species}</h4>
                 <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul class="show_more" style="list-style:none;padding-left:0; margin-left:0;">
@@ -112,13 +114,13 @@
     </div>
 
     <h3 style="width: 400px;">Differential experiments</h3>
-    <div class="foundation_grid_24 fspecies-nav">
+    <div class="row fspecies-nav">
 
         <c:set var="speciesCount" value="0"/>
         <c:forEach items="${numDifferentialExperimentsBySpecies.keySet()}" var="species">
 
             <c:if test="${speciesCount %3 == 0}">
-                <div class="foundation_grid_24 fspecies-nav">
+                <div class="row fspecies-nav">
             </c:if>
 
             <c:choose>
@@ -164,7 +166,7 @@
                 </c:otherwise>
             </c:choose>
 
-            <div class="foundation_grid_8 fspecies_item">
+            <div class="columns fspecies_item">
                 <h4>${species}</h4>
                 <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul style="list-style:none;padding-left:0; margin-left:0;">

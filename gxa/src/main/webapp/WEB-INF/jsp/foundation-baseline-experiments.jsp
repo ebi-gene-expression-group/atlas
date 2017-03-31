@@ -17,7 +17,7 @@
     <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="species">
 
         <c:if test="${speciesCount %3 == 0}">
-            <div class="foundation_grid_24 fspecies-nav">
+            <div class="row fspecies-nav">
         </c:if>
 
         <c:choose>
@@ -159,7 +159,7 @@
             </c:otherwise>
         </c:choose>
 
-        <div class="foundation_grid_8 fspecies_item">
+        <div class="columns fspecies_item">
             <h4>${species}</h4>
             <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
             <ul class="show_more" style="list-style:none;padding-left:0; margin-left:0;">
