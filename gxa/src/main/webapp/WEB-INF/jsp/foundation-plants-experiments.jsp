@@ -95,8 +95,8 @@
 
                     <c:if test="${total > 5}">
                         <div class="show_more_buttons">
-                            <button class="show_button"> See more…</button>
-                            <button class="hide_button"> Hide…</button>
+                            <button class="button small show_button">> See more…</button>
+                            <button class="button small hide_button"> Hide…</button>
                         </div>
                     </c:if>
                 </ul>
@@ -191,7 +191,7 @@
 <script>
     //hide/show when there is more than 5 items in the list
     $(function() {
-        var $ul = $(".species_item ul");
+        var $ul = $(".fspecies_item ul");
         $ul.find(".hide_button").hide();//temp - to add in css by default
         $ul.find("li:gt(4)").hide();//hide extra list item
 
