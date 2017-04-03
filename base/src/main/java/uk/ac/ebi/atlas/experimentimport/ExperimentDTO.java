@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+/*
+Note the title is what's found in the IDF file. For display, we only use it as fallback, preferring Array Express titles.
+See ArrayExpressClient.java .
+ */
 public class ExperimentDTO {
 
     private final String experimentAccession;

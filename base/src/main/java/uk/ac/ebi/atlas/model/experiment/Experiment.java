@@ -18,9 +18,13 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/*
+The displayName is a bit confusing - it's used for baseline landing page and I think only there.
+There's also a title which is fetched from ArrayExpress or (as fallback) from the IDF file.
+
+ */
 public abstract class Experiment<DataColumnDescriptor extends DescribesDataColumns> implements Serializable {
 
-    private static final Gson gson = new Gson();
     private ExperimentType type;
     protected ExperimentDesign experimentDesign;
     private Species species;
