@@ -5,3 +5,26 @@
 .gxaNoTextButton .ui-button-text {
     padding: 2px;
 }
+
+.gxaDownloadButton {
+    background-color: white;
+}
+
+.button:hover, .button:focus, .button:active {
+    background-color: transparent;
+}
+
+.button {
+    padding-left: 1em;
+    padding-top:0;
+    padding-bottom:0;
+    margin:0;
+}
+
+html.fontface a.gxaDownloadButton.button .icon-functional:before {
+    color: #454545;
+}
+
+a.gxaDownloadButton.button:hover, a.gxaDownloadButton.button:active, a.gxaDownloadButton.button:focus{
+    border-bottom: transparent 1px solid;
+}

@@ -72,7 +72,7 @@ const DownloadDifferentialButton = React.createClass({
     },
 
     render () {
-        let downloadImgSrcURL = this.props.hostUrl + '/gxa/resources/images/download_blue_small.png';
+        // let downloadImgSrcURL = this.props.hostUrl + '/gxa/resources/images/download_blue_small.png';
 
         let tsvString = this._convertJsonToTsv(this.props.results);
         let uri = 'data:text/tsv;charset=utf-8,' + encodeURI(tsvString);
@@ -80,11 +80,10 @@ const DownloadDifferentialButton = React.createClass({
 
         return (
             <div style={{display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px'}}>
-                <a ref={c => {this._downloadProfilesLinkRef = c;}} className="gxaNoTextButton"
+                <a ref={c => {this._downloadProfilesLinkRef = c;}} className="button large gxaDownloadButton"
                    href={uri} download={fileName} target="_blank"
                    onClick={this._downloadDifferentialProfiles}>
-                    <img id="download-profiles" alt="Download query results" style={{width: '20px'}}
-                         src={downloadImgSrcURL} />
+                    <span className="icon icon-functional" data-icon="="></span>
                 </a>
             </div>
         );
@@ -93,7 +92,6 @@ const DownloadDifferentialButton = React.createClass({
     componentDidMount () {
         let $downloadProfilesLink = $(ReactDOM.findDOMNode(this._downloadProfilesLinkRef));
         $downloadProfilesLink.tooltip();
-        $downloadProfilesLink.button();
     }
 
 });
