@@ -3,6 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/baseline_plant-experiments.css">
+<script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
 
 <section>
     <h3>Browse plant experiments</h3>
@@ -95,7 +97,7 @@
 
                     <c:if test="${total > 5}">
                         <div class="show_more_buttons">
-                            <button class="button small show_button">> See more…</button>
+                            <button class="button small show_button"> See more…</button>
                             <button class="button small hide_button"> Hide…</button>
                         </div>
                     </c:if>
@@ -191,11 +193,11 @@
 <script>
     //hide/show when there is more than 5 items in the list
     $(function() {
-        var $ul = $(".fspecies_item ul");
+        const $ul = $(".fspecies_item ul");
         $ul.find(".hide_button").hide();//temp - to add in css by default
         $ul.find("li:gt(4)").hide();//hide extra list item
 
-        var $ulShowMore = $("ul.show_more");
+        const $ulShowMore = $("ul.show_more");
         $ulShowMore.find(".show_button").click(function() {
             $(this).parent().parent().find("li:gt(4)").show();
             $(this).hide();
