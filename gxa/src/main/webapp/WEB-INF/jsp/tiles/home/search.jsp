@@ -21,7 +21,7 @@
                             <label>Organism</label>
                             <form:select id="organism" name="organism" path="organismPath">
                                 <form:options items="${topSixByExperimentCount}"/>
-                                <form:option value="(╯°□°）╯︵ ┻━┻" disabled="true"/>
+                                <form:option value="${separator}" disabled="true"/>
                                 <form:options items="${organisms}" />
                             </form:select>
                         </div>

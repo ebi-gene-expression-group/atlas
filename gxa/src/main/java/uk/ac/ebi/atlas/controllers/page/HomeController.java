@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.controllers.page;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
@@ -18,10 +17,14 @@ import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
+import java.util.Random;
 
 @Controller
 public class HomeController {
 
+    private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
+    private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
+    private static final Random RANDOM = new Random();
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
     private final SpeciesInfoListService speciesInfoListService;
@@ -58,6 +61,8 @@ public class HomeController {
             topSixSelectBuilder.put(speciesName, StringUtils.capitalize(speciesName));
         }
         model.addAttribute("topSixByExperimentCount", topSixSelectBuilder.build());
+
+        model.addAttribute("separator", RANDOM.nextDouble() < 0.001 ? BEST_SEPARATOR : NORMAL_SEPARATOR);
 
         ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
         organismSelectBuilder.put("", "Any");
