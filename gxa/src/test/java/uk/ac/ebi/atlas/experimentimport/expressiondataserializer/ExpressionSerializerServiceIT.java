@@ -11,7 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -21,7 +20,6 @@ import java.nio.file.Path;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -31,10 +29,7 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
 public class ExpressionSerializerServiceIT {
 
-    private static final String accession = "E-MTAB-513";
-
-    @Inject
-    public ExperimentTrader experimentTrader;
+    static final String accession = "E-MTAB-513";
 
     @Mock
     ExperimentChecker experimentChecker;
@@ -42,9 +37,9 @@ public class ExpressionSerializerServiceIT {
     @Inject
     DataFileHub dataFileHub;
 
-    private String serializedExpressionsFileTemplate;
+    String serializedExpressionsFileTemplate;
 
-    private ExpressionSerializerService subject;
+    ExpressionSerializerService subject;
 
 
     @Before
@@ -83,7 +78,7 @@ public class ExpressionSerializerServiceIT {
     public void skipIffNotRnaSeqBaseline(){
         for(ExperimentType experimentType : ExperimentType.values()){
             String result = subject.kryoSerializeExpressionData(accession, experimentType);
-            assertEquals(result=="skipped", experimentType == ExperimentType.RNASEQ_MRNA_BASELINE);
+            assertThat("skipped".equals(result), is(experimentType != ExperimentType.RNASEQ_MRNA_BASELINE));
         }
     }
 

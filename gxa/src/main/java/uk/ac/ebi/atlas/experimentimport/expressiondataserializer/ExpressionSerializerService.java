@@ -9,9 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.text.MessageFormat;
-/*
-Consider moving me to ExperimentCrud, I am coupled to it anyway - through accepting ExperimentDTO in API
- */
+
+// Consider moving me to ExperimentCrud, I am coupled to it anyway - through accepting ExperimentDTO in API
 @Named
 public class ExpressionSerializerService {
 
@@ -35,8 +34,7 @@ public class ExpressionSerializerService {
     String kryoSerializeExpressionData(String experimentAccession, ExperimentType experimentType) {
         experimentChecker.checkAllFiles(experimentAccession, experimentType);
         if (experimentType.isRnaSeqBaseline()) {
-            return rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession
-            );
+            return rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession);
         } else {
             return "skipped";
         }
@@ -44,7 +42,7 @@ public class ExpressionSerializerService {
 
     public void removeKryoFile(String experimentAccession) {
         File f = new File(MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession));
-        if(f.exists()){
+        if (f.exists()) {
             f.delete();
         }
     }
