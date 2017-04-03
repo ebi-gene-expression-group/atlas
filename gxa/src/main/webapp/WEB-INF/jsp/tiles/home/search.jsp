@@ -20,6 +20,8 @@
                         <div class="small-2 columns">
                             <label>Organism</label>
                             <form:select id="organism" name="organism" path="organismPath">
+                                <form:options items="${topSixByExperimentCount}"/>
+                                <form:option value="(╯°□°）╯︵ ┻━┻" disabled="true"/>
                                 <form:options items="${organisms}" />
                             </form:select>
                         </div>
