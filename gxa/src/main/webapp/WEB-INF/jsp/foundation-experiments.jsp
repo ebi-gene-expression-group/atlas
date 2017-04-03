@@ -23,6 +23,7 @@
 
     <table id="experiments-table">
         <thead></thead>
+        <tbody></tbody>
         <tfoot>
         <tr>
             <th rowspan="1" colspan="1">
@@ -51,7 +52,6 @@
             <th><input type="hidden" class="search_init"></th>
         </tr>
         </tfoot>
-        <tbody/>
     </table>
 </section>
 
@@ -64,7 +64,7 @@
 <script>
     (function ($) {
         $(document).ready(function () {
-            foundationExperimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}");
+            foundationExperimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}", "${experimentSet}");
         });
     })(jQuery);
 </script>

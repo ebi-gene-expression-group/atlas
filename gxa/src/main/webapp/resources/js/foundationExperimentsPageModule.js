@@ -57,7 +57,7 @@ var foundationExperimentsPageModule = (function ($) {
 
     var asInitVals = [];
 
-    function _init(experimentType, kingdom, organism) {
+    function _init(experimentType, kingdom, organism, experimentSet) {
 
         /* Sort on the 'alt' tags of images in a column */
         $.extend($.fn.dataTableExt.oSort, {
@@ -105,13 +105,13 @@ var foundationExperimentsPageModule = (function ($) {
 
                 /*month*/
                 var month = eu_date[1];
-                if (month.length == 1) {
+                if (month.length === 1) {
                     month = 0 + month;
                 }
 
                 /*day*/
                 var day = eu_date[0];
-                if (day.length == 1) {
+                if (day.length === 1) {
                     day = 0 + day;
                 }
 
@@ -213,14 +213,14 @@ var foundationExperimentsPageModule = (function ($) {
          * Filter by experiment type
          */
         var hiddenTypeSelected = $("#hiddenTypeSelected").val();
-        if(experimentType.toLowerCase()!= "") {
+        if(experimentType.toLowerCase() !== "") {
             hiddenTypeSelected = experimentType.toLowerCase();
         }
 
         $experimentsTableTypeSelect.change(function () {
             var selected = $experimentsTableTypeSelect.find(":selected").val();
 
-            if(hiddenTypeSelected != selected) {
+            if(hiddenTypeSelected !== selected) {
                 hiddenTypeSelected = selected;
                 $("#hiddenTypeSelected").val(selected);
                 $experimentsTableTypeSelect.val(hiddenTypeSelected);
@@ -229,7 +229,7 @@ var foundationExperimentsPageModule = (function ($) {
         });
 
         $experimentsTableTypeSelect.val(hiddenTypeSelected);
-        if(hiddenTypeSelected != undefined) {
+        if(hiddenTypeSelected !== undefined) {
             filterByExperimentType(hiddenTypeSelected, $experimentsTableTypeSelect);
         }
 
@@ -244,14 +244,14 @@ var foundationExperimentsPageModule = (function ($) {
          * Filter by kingdom
          */
         var hiddenKingdomSelected = $("#hiddenKingdomSelected").val();
-        if(kingdom.toLowerCase()!= "") {
+        if(kingdom.toLowerCase() !== "") {
             hiddenKingdomSelected = kingdom.toLowerCase();
         }
 
         $experimentsTableKingdomSelect.change(function () {
             var selected = $experimentsTableKingdomSelect.find(":selected").val();
 
-            if(hiddenKingdomSelected != selected) {
+            if(hiddenKingdomSelected !== selected) {
                 hiddenKingdomSelected = selected;
                 $("#hiddenKingdomSelected").val(selected);
                 $("#gxaExperimentsTableKingdomSelect").val(hiddenKingdomSelected);
@@ -260,7 +260,7 @@ var foundationExperimentsPageModule = (function ($) {
         });
 
         $experimentsTableKingdomSelect.val(hiddenKingdomSelected);
-        if(hiddenKingdomSelected != undefined) {
+        if(hiddenKingdomSelected !== undefined) {
             filterByKingdom();
         }
 
@@ -322,6 +322,8 @@ var foundationExperimentsPageModule = (function ($) {
         if (organism) {
             $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
         }
+
+        oTable.search(experimentSet);
     }
 
     return {
