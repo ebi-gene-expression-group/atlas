@@ -1,10 +1,13 @@
 .gxaHelpTooltip {
+    width: 33% !important;
+    left: 700px;
+    font-size: 14px !important;
     background: white;
     border-width: 1px !important;
     border: solid cornflowerblue;
     padding: 4px;
     color: cornflowerblue;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    /*font: 10px Verdana, Helvetica, Arial, sans-serif;*/
 }
 
 a.help-icon {
