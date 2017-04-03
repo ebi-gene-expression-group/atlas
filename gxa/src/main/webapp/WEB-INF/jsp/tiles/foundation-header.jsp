@@ -68,9 +68,9 @@
     <nav>
         <ul class="dropdown menu float-left" data-description="navigational">
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/release-notes.html">Release notes</a></li>
-            <li><a href="${pageContext.request.contextPath}/FAQ.html">Browse experiments</a></li>
             <li><a href="${pageContext.request.contextPath}/download.html">Download</a></li>
+            <li><a href="${pageContext.request.contextPath}/release-notes.html">Release notes</a></li>
+            <li><a href="${pageContext.request.contextPath}/FAQ.html">FAQ</a></li>
             <li><a href="${pageContext.request.contextPath}/help/index.html">Help</a></li>
             <li><a href="${pageContext.request.contextPath}/licence.html">Licence</a></li>
             <li><a href="${pageContext.request.contextPath}/about.html">About</a></li>
