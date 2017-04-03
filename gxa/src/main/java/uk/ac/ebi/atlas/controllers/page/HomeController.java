@@ -17,10 +17,14 @@ import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
+import java.util.Random;
 
 @Controller
 public class HomeController {
 
+    private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
+    private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
+    private static final Random RANDOM = new Random();
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
     private final SpeciesInfoListService speciesInfoListService;
@@ -52,11 +56,20 @@ public class HomeController {
 
     @RequestMapping(value = "/fhome")
     public String getFoundationHomePage(Model model) {
+        ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
+        for (String speciesName: speciesInfoListService.getTopSixSpecies()) {
+            topSixSelectBuilder.put(speciesName, StringUtils.capitalize(speciesName));
+        }
+        model.addAttribute("topSixByExperimentCount", topSixSelectBuilder.build());
+
+        model.addAttribute("separator", RANDOM.nextDouble() < 0.001 ? BEST_SEPARATOR : NORMAL_SEPARATOR);
+
         ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
         organismSelectBuilder.put("", "Any");
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
             organismSelectBuilder.put(speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
         }
+
         model.addAttribute("organisms", organismSelectBuilder.build());
         model.addAttribute("organismPath", ""); // Required by Spring form tag
 
@@ -64,7 +77,7 @@ public class HomeController {
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-        model.addAttribute("speciesList", gson.toJson(speciesInfoListService.getBrowseBySpecies()));
+        model.addAttribute("speciesList", gson.toJson(speciesInfoListService.getTopSixSpeciesByExperimentCount()));
         model.addAttribute("animalsList", gson.toJson(speciesInfoListService.getFilterByKingdom("animals")));
         model.addAttribute("plantsList", gson.toJson(speciesInfoListService.getFilterByKingdom("plants")));
         model.addAttribute("fungiList", gson.toJson(speciesInfoListService.getFilterByKingdom("fungi")));

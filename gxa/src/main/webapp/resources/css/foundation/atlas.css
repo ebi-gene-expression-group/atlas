@@ -182,11 +182,6 @@ a.baseline {
     background-color: #2D3E51;
 }
 
-.list-project-l {
-    overflow-y: scroll;
-    height: 400px;
-}
-
 .publication-list .icon-conceptual:before {
     color: #5688B3;
 }

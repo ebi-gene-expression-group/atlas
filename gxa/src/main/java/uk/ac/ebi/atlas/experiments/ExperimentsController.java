@@ -17,11 +17,13 @@ public class ExperimentsController {
             @RequestParam(value = "kingdom", required = false) String kingdom,
             @RequestParam(value = "organism", required = false) String organism,
             @RequestParam(value = "foundation", required = false) String foundationKey,
+            @RequestParam(value = "experimentSet", required = false) String experimentSet,
             Model model) {
 
         model.addAttribute("experimentType", experimentType);
         model.addAttribute("kingdom", kingdom);
         model.addAttribute("organism", organism);
+        model.addAttribute("experimentSet", experimentSet);
 
         model.addAttribute("mainTitle", "Experiments ");
 
