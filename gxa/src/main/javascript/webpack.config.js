@@ -6,9 +6,7 @@ var WebpackShellPlugin = require('webpack-shell-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-        expressionAtlasHeatmap: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap'],
         expressionAtlasHeatmapHighcharts: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap-highcharts'],
-        experimentPageHeatmap: ['babel-polyfill', './atlas_bundles/heatmap/src/experimentPageHeatmapAnatomogramRenderer.js'],
         experimentPage: ['babel-polyfill', './atlas_bundles/experiment-page'],
         expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
         expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
@@ -51,34 +49,6 @@ module.exports = {
 
             // Required by: anatomogram
             'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-
-            // Required by: heatmap
-            // Core dependencies
-            // 'anatomogram',
-            // 'atlas-modernizr',
-            // 'expression-atlas-cell-differential',
-            // 'expression-atlas-contrast-tooltips',
-            // 'expression-atlas-display-levels-button',
-            // 'expression-atlas-download-profiles-button',
-            // 'expression-atlas-feedback',
-            // 'expression-atlas-genome-browser-launcher',
-            // 'expression-atlas-heatmap-baseline-cell-variance',
-            // 'expression-atlas-help-tooltips',
-            // 'expression-atlas-legend',
-            // 'expression-atlas-number-format',
-            'fancybox',
-            // 'jquery',
-            'jquery-hc-sticky',
-            'jquery-toolbar',
-            'jquery-ui-bundle',
-            'jquery.browser',
-            // 'rc-slider',
-            // 'react',
-            'react-addons-shallow-compare',
-            // 'react-dom',
-            'react-dom/server',
-            'react-radio-group',
-            'events',
 
             // anatomogram
             // 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
