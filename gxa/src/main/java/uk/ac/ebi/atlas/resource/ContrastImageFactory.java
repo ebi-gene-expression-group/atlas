@@ -42,8 +42,8 @@ public class ContrastImageFactory{
         }
 
         String uriTemplate = (arrayDesign.isPresent()
-                ? "/external-resources/{0}/{1}/{2}/"
-                :"/external-resources/{0}/{1}/")+resourceType.fileName();
+                ? "external-resources/{0}/{1}/{2}/"
+                :"external-resources/{0}/{1}/")+resourceType.fileName();
 
 
         return arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)
