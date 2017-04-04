@@ -41,7 +41,7 @@
     </c:if>
 </div>
 <div id="experimentOrganisms">Organism:
-    <span style="font-style:italic">${species.name}</span>
+    <span style="font-style:italic">${species}</span>
 </div>
 <c:if test="${allArrayDesigns!=null}">
     <div id="experimentArrayDesigns">Array Design(s):
