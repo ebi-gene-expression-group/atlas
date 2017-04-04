@@ -135,9 +135,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
         result.put("experimentHasRData", hasRData);
-        result.put("speciesReferenceName", species.getReferenceName());
-        result.put("species", species);
-        result.put("resources", species.getResources());
+        result.putAll(species.getAttributes());
         result.put("experimentDescription", description);
         result.put("pubMedIds", pubMedIds);
         result.put("experimentAccession", accession);
