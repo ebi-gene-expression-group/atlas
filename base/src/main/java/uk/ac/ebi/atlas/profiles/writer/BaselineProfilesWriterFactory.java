@@ -57,20 +57,20 @@ public class BaselineProfilesWriterFactory extends ProfilesWriterFactory<AssayGr
         String responseType = profileDownloadOptions.isGeneSet ? "Gene sets" : "Genes";
         String geneQuery = profileDownloadOptions.queryDescription;
         String specific = requestContext.isSpecific() ? "specifically " : "";
-        String selectedQueryFactors = formatSelectedQueryFactors(requestContext);
+        String selectedQueryFactors = selectedAssayGroups(requestContext);
         double cutoff = requestContext.getCutoff();
         String experimentAccession = requestContext.getExperimentAccession();
-        String selectedFilterFactors = "<formatSelectedFilterFactors TODO I don't think I need this, edit template/>";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, responseType, geneQuery, specific, selectedQueryFactors, cutoff,
-                experimentAccession, selectedFilterFactors, timeStamp);
+        return MessageFormat.format(tsvFileMastheadTemplate, responseType, geneQuery, specific, cutoff, experimentAccession,selectedQueryFactors, timeStamp);
     }
 
-    private String formatSelectedQueryFactors(BaselineRequestContext baselineRequestContext){
-        return MessageFormat.format("<formatSelectedQueryFactors TODO!> {0} selected assay groups out of {1} " +
-                "</formatSelectedQueryFactors TODO!>",
-                baselineRequestContext.getDataColumnsToReturn().size(), baselineRequestContext
-                        .getAllDataColumns().size() );
+    private String selectedAssayGroups(BaselineRequestContext requestContext){
+        if(requestContext.getDataColumnsToReturn().size() == requestContext.getAllDataColumns().size()){
+            return MessageFormat.format("{0} (all)", requestContext.getDataColumnsToReturn().size() );
+        } else {
+            return MessageFormat.format("{0}/{1} ", requestContext.getDataColumnsToReturn().size() ,
+                    requestContext.getAllDataColumns().size());
+        }
     }
 
 
