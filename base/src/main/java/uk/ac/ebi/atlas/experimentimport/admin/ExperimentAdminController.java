@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.gson.*;
 import org.slf4j.Logger;
@@ -56,15 +57,30 @@ public class ExperimentAdminController {
     @ResponseBody
     public String doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter) {
         try {
-            Optional<Collection<String>> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
+            final Optional<Collection<String>> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
                     ? Optional.<Collection<String>>absent()
                     : Optional.of(readAccessions(accessionParameter));
 
-            return gson.toJson(experimentOps.perform(accessions, Op.opsForParameter(opParameter)));
-        } catch (IllegalArgumentException e) {
-            return gson.toJson(usageMessage(opParameter));
+
+            return gson.toJson(
+                    maybeOps(opParameter)
+                    .transform(new Function<List<Op>, JsonElement>() {
+                        @Override
+                        public JsonElement apply(List<Op> ops) {
+                            return experimentOps.perform(accessions, ops);
+                        }
+                    }).or(usageMessage(opParameter))
+            );
         } catch (Exception e) {
             return gson.toJson(errorMessage(accessionParameter, e));
+        }
+    }
+
+    private Optional<List<Op>> maybeOps(String opParameter){
+        try{
+            return Optional.of(Op.opsForParameter(opParameter));
+        } catch (IllegalArgumentException e){
+            return Optional.absent();
         }
     }
 
