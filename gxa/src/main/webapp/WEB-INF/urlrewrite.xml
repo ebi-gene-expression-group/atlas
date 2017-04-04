@@ -29,4 +29,9 @@
         <from>/arrayexpress/(.*)</from>
         <to type="proxy">http://www.ebi.ac.uk/arrayexpress/$1?%{query-string}</to>
     </rule>
+    <rule>
+        <note>Redirect old GTEx accession to new GTEx</note>
+        <from>/experiments/E-MTAB-2919</from>
+        <to type="permanent-redirect">/gxa/experiments/E-MTAB-5214</to>
+    </rule>
 </urlrewrite>
