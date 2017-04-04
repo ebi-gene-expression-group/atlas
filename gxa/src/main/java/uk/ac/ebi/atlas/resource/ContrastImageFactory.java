@@ -41,16 +41,13 @@ public class ContrastImageFactory{
                 break;
         }
 
-        String uriTemplate = (arrayDesign.isPresent()
-                ? "external-resources/{0}/{1}/{2}/"
-                :"external-resources/{0}/{1}/")+resourceType.fileName();
-
-
-        return arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)
-        ?   new ContrastImage(resourceType,pathTemplate,uriTemplate,
-                experimentAccession,arrayDesign.get(), contrastId)
-                :new ContrastImage(resourceType,pathTemplate,uriTemplate,
-                experimentAccession, contrastId);
+        if(arrayDesign.isPresent() && resourceType.equals(ResourceType.PLOT_MA)){
+            return new ContrastImage(resourceType,pathTemplate,"external-resources/{0}/{1}/{2}/"+resourceType.fileName(),
+                    experimentAccession,arrayDesign.get(), contrastId);
+        } else {
+            return new ContrastImage(resourceType,pathTemplate,"external-resources/{0}/{1}/"+resourceType.fileName(),
+                    experimentAccession, contrastId);
+        }
     }
 
     ExternalImage getContrastImage(ResourceType resourceType, String experimentAccession,
