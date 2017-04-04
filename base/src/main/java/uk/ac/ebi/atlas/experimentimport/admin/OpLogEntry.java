@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -94,14 +95,18 @@ public class OpLogEntry {
 
 
     static OpLogEntry fromArray(String[] lines){
-        Preconditions.checkState(lines.length >=3);
-        return new OpLogEntry(
-          lines[0].startsWith(FAILED),
-          Op.valueOf(lines[0].replace(FAILED, "").trim()),
-                Long.parseLong(lines[1]),
-                Long.parseLong(lines[2]),
-                Joiner.on(" ").join(ArrayUtils.subarray(lines, 3, lines.length))
-        );
+        try {
+            Preconditions.checkArgument(lines.length >=3);
+            return new OpLogEntry(
+                    lines[0].startsWith(FAILED),
+                    Op.valueOf(lines[0].replace(FAILED, "").trim()),
+                    Long.parseLong(lines[1]),
+                    Long.parseLong(lines[2]),
+                    Joiner.on(" ").join(ArrayUtils.subarray(lines, 3, lines.length))
+            );
+        } catch (IllegalArgumentException e){
+            return new OpLogEntry.NULL("Invalid op log entry, could not read: "+ Joiner.on("\t").join(lines));
+        }
     }
 
     String[] toArray(){
@@ -151,5 +156,12 @@ public class OpLogEntry {
     @Override
     public int hashCode() {
         return Objects.hashCode(failed, op, start, finish, message);
+    }
+
+    public static class NULL extends OpLogEntry {
+
+        private NULL(String message) {
+            super(true, Op.LIST, 0L, 0L, message);
+        }
     }
 }
