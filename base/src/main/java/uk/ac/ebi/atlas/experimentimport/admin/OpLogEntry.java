@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +67,10 @@ public class OpLogEntry {
         );
     }
 
+    static OpLogEntry NULL(String message) {
+        return new OpLogEntry(true, Op.LIST, 0L, 0L, message);
+    }
+
     public boolean isInProgress(){
         return finish.equals(UNFINISHED);
     }
@@ -105,7 +108,7 @@ public class OpLogEntry {
                     Joiner.on(" ").join(ArrayUtils.subarray(lines, 3, lines.length))
             );
         } catch (IllegalArgumentException e){
-            return new OpLogEntry.NULL("Invalid op log entry, could not read: "+ Joiner.on("\t").join(lines));
+            return NULL("Invalid op log entry, could not read: "+ Joiner.on("\t").join(lines));
         }
     }
 
@@ -158,10 +161,4 @@ public class OpLogEntry {
         return Objects.hashCode(failed, op, start, finish, message);
     }
 
-    public static class NULL extends OpLogEntry {
-
-        private NULL(String message) {
-            super(true, Op.LIST, 0L, 0L, message);
-        }
-    }
 }

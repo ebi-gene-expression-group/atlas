@@ -21,6 +21,7 @@ public class OpLogEntryTest {
             toArrayAndFromArrayAreOpposites(OpLogEntry.newlyStartedOp(op).toFailure(""));
             toArrayAndFromArrayAreOpposites(OpLogEntry.newlyStartedOp(op).toFailure(new NullPointerException().toString()));
             toArrayAndFromArrayAreOpposites(OpLogEntry.newlyStartedOp(op).toSuccess());
+            toArrayAndFromArrayAreOpposites(OpLogEntry.NULL("banana\tplease"));
 
         }
     }
