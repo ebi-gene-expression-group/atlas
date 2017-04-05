@@ -69,7 +69,7 @@ public class ExperimentPageRequestPreferencesPropertyNamesTest {
                 ImmutableList.<String>builder()
                         .addAll(commonProperties)
                         .add("regulation")
-                        .add("foldChangeCutOff")
+                        .add("foldChangeCutoff")
                         .build();
 
         Set<String> differentialRequestPreferencesProperties =
