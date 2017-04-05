@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
+
+import java.util.Map;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
 
@@ -13,12 +16,6 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
     public MicroarrayProfile(String geneId, String geneName, String designElementName) {
         super(geneId, geneName);
         this.designElementName = designElementName;
-    }
-
-    //It's used in jsp EL as well as serialization
-    @Override
-    public String getDesignElementName() {
-        return designElementName;
     }
 
     @Override
@@ -33,6 +30,11 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
     @Override
     public String[] identifiers(){
         return (String[]) ArrayUtils.add(super.identifiers(), designElementName);
+    }
+
+    @Override
+    public Map<String,String> properties(){
+        return ImmutableMap.of("id", getId(), "name", getName(), "designElement", designElementName);
     }
 
 }
