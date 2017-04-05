@@ -7,7 +7,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -192,5 +194,44 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     }
 
     protected abstract JsonObject propertiesForAssay(String runOrAssay);
+
+    public abstract JsonArray groupingsForHeatmap();
+
+    protected JsonObject groupForFilterType(String filterType, List<String> defaultValues,
+                                          Map<String, Collection<String>> groupingValuesPerGrouping){
+        JsonObject result = new JsonObject();
+        result.addProperty("name", filterType);
+        result.add("selected",
+                defaultValues.size() == 0
+                        ? new JsonPrimitive("all")
+                        : new Gson().toJsonTree(defaultValues)
+        );
+
+        JsonArray groupings = new JsonArray();
+        for(Map.Entry<String, Collection<String>> e: groupingValuesPerGrouping.entrySet()){
+            JsonArray grouping = new JsonArray();
+            grouping.add(new JsonPrimitive(e.getKey()));
+            JsonArray groupingValues = new JsonArray();
+            for(String groupingValue : uniqueSublist(e.getValue())){
+                groupingValues.add(new JsonPrimitive(groupingValue));
+            }
+            grouping.add(groupingValues);
+            groupings.add(grouping);
+        }
+
+        result.add("groupings", groupings);
+
+        return result;
+    }
+
+    private List<String> uniqueSublist(Collection<String> collection){
+        List<String> result = new ArrayList<>();
+        for(String element: collection){
+            if(!result.contains(element)){
+                result.add(element);
+            }
+        }
+        return result;
+    }
 
 }

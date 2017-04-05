@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage;
+package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -25,10 +25,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
-public class ExperimentControllerIT {
-
-    @Inject
-    ExperimentController subject;
+public class ExperimentGroupingsForHeatmapIT {
 
     @Inject
     ExperimentTrader experimentTrader;
@@ -63,7 +60,7 @@ public class ExperimentControllerIT {
                     }
                 }).toList();
 
-        JsonArray result = subject.groupingsForHeatmap(experiment);
+        JsonArray result = experiment.groupingsForHeatmap();
 
         assertThat(result.size(), greaterThan(0));
 
