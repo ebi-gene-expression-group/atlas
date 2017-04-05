@@ -13,9 +13,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpres
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.NumberFormat;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Named
 @Scope("prototype")
