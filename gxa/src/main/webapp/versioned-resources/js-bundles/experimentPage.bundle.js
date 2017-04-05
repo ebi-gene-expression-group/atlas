@@ -8178,26 +8178,16 @@ webpackJsonp_name_([1],[
 	  })) {
 	    return (0, _pluralize2.default)(prettyName(group.name));
 	  } else {
-	    return "Data columns";
+	    return "";
 	  }
 	};
 	
-	var HeaderWithHint = function HeaderWithHint(_ref3) {
-	  var header = _ref3.header,
-	      hint = _ref3.hint;
+	var Header = function Header(_ref3) {
+	  var text = _ref3.text;
 	  return _react2.default.createElement(
-	    'div',
+	    'h4',
 	    null,
-	    _react2.default.createElement(
-	      'h4',
-	      { style: { marginBottom: "0rem" } },
-	      header
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { style: { fontSize: "smaller", fontStyle: "italic" } },
-	      '(' + hint + ')'
-	    )
+	    text
 	  );
 	};
 	
@@ -8225,17 +8215,22 @@ webpackJsonp_name_([1],[
 	
 	    var showRegulation = ["UP", "DOWN", "UP_DOWN"].indexOf(this.props.queryObjects.regulation) > -1;
 	    var availableColumnIds = determineAvailableColumns(this.props.columnGroups);
-	    var columnsName = this.props.isDifferential ? "Comparisons" : determineColumnNameFromFirstGroup(availableColumnIds, this.props.columnGroups[0]);
+	    var columnsName = this.props.isDifferential ? "Comparisons" : determineColumnNameFromFirstGroup(availableColumnIds, this.props.columnGroups[0]) || "Sample properties";
 	
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(HeaderWithHint, { header: 'Genes', hint: 'Y Axis' }),
+	      _react2.default.createElement(Header, { text: 'Genes' }),
 	      _react2.default.createElement(_geneAutocomplete2.default, {
 	        suggesterUrlTemplate: this.props.geneSuggesterUrlTemplate,
-	        values: this.props.queryObjects.geneQuery,
+	        values: this.props.queryObjects.geneQuery.map(function (_ref4) {
+	          var value = _ref4.value;
+	          return value;
+	        }),
 	        onChangeValues: function onChangeValues(newValues) {
-	          _this.props.onChangeQueryObjects(Object.assign({}, _this.props.queryObjects, { geneQuery: newValues }));
+	          _this.props.onChangeQueryObjects(Object.assign({}, _this.props.queryObjects, { geneQuery: newValues.map(function (value) {
+	              return { value: value };
+	            }) }));
 	        } }),
 	      _react2.default.createElement(_Specificity2.default, {
 	        specific: this.props.queryObjects.specific,
@@ -8286,7 +8281,7 @@ webpackJsonp_name_([1],[
 	        )
 	      ),
 	      _react2.default.createElement('br', null),
-	      _react2.default.createElement(HeaderWithHint, { header: columnsName, hint: 'X Axis' }),
+	      _react2.default.createElement(Header, { text: columnsName }),
 	      _react2.default.createElement(OpenerButton, { onClickButton: function onClickButton() {
 	          return _this.setState({ showModal: "columns" });
 	        } }),
@@ -12675,7 +12670,11 @@ webpackJsonp_name_([1],[
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'sectionBody' },
-	    groupings.map(function (grouping) {
+	    groupings.map(function (e) {
+	      return e;
+	    }).sort(function (g1, g2) {
+	      return g1[0].localeCompare(g2[0]);
+	    }).map(function (grouping) {
 	      return _react2.default.createElement(CheckboxGrouping, makeGroupingProps({ selectedIds: selectedIds, onNewSelectedIds: onNewSelectedIds }, grouping));
 	    })
 	  );
@@ -12762,7 +12761,9 @@ webpackJsonp_name_([1],[
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sectionBody' },
-	        filterGroupingsBySelections({ selectedIds: selectedIds }, [].concat(showUnselected ? [SELECTION.UNSELECTED] : [], showPartiallySelected ? [SELECTION.PARTIAL] : [], [SELECTION.SELECTED]), groupings).map(function (grouping) {
+	        filterGroupingsBySelections({ selectedIds: selectedIds }, [].concat(showUnselected ? [SELECTION.UNSELECTED] : [], showPartiallySelected ? [SELECTION.PARTIAL] : [], [SELECTION.SELECTED]), groupings).sort(function (g1, g2) {
+	          return g1[0].localeCompare(g2[0]);
+	        }).map(function (grouping) {
 	          return _react2.default.createElement(CheckboxGrouping, makeGroupingProps({ selectedIds: selectedIds, onNewSelectedIds: onNewSelectedIds }, grouping));
 	        }),
 	        !!unselectedGroupingsCount && _react2.default.createElement(
@@ -12921,7 +12922,7 @@ webpackJsonp_name_([1],[
 	
 	
 	// module
-	exports.push([module.id, ".oneProperty {\n  font-style: italic;\n}\n.oneProperty .unselected {\n  color: grey;\n}\n.gxaSection .title {\n  margin-right: 0.5rem;\n  display: inline-block;\n}\n.gxaSection .title.openable {\n  cursor: pointer;\n}\n.gxaSection .title.openable:hover {\n  text-decoration: underline;\n}\n.readOnlyGrouping {\n  font-style: italic;\n}\n.readOnlyGrouping.unselected {\n  color: grey;\n}\n.checkboxGrouping input {\n  margin: 0.2rem;\n  cursor: pointer;\n}\n.checkboxGrouping.unselected {\n  color: grey;\n}\n.checkboxGrouping.partiallySelected {\n  color: #444;\n}\n.checkboxGrouping.partiallySelected input {\n  opacity: 0.6;\n}\n.sectionBody {\n  padding-left: 15px;\n  font-size: 85%;\n  -webkit-column-width: 180px;\n  -moz-column-width: 180px;\n  column-width: 180px;\n}\n.sectionBody .linkForToggleShow {\n  cursor: pointer;\n  font-style: italic;\n}\n", ""]);
+	exports.push([module.id, ".oneProperty {\n  font-style: italic;\n}\n.oneProperty .unselected {\n  color: grey;\n}\n.gxaSection .title {\n  margin-right: 0.5rem;\n  display: inline-block;\n}\n.gxaSection .title.openable {\n  cursor: pointer;\n}\n.gxaSection .title.openable:hover {\n  text-decoration: underline;\n}\n.readOnlyGrouping {\n  font-style: italic;\n}\n.readOnlyGrouping.unselected {\n  color: grey;\n}\n.checkboxGrouping input {\n  margin: 0.2rem;\n  cursor: pointer;\n}\n.checkboxGrouping.partiallySelected input {\n  opacity: 0.6;\n}\n.sectionBody {\n  padding-left: 15px;\n  font-size: 85%;\n  -webkit-column-width: 180px;\n  -moz-column-width: 180px;\n  column-width: 180px;\n}\n.sectionBody .linkForToggleShow {\n  cursor: pointer;\n  font-style: italic;\n}\n", ""]);
 	
 	// exports
 
@@ -12954,13 +12955,36 @@ webpackJsonp_name_([1],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var settingsFor = function settingsFor(cutoffName) {
-	  return Object.assign(cutoffName === 'foldChange' ? {} : { min: 0 }, cutoffName === 'pValue' ? { step: 0.01 } : cutoffName === 'foldChange' ? { step: 5.0 } : { step: 1.5 }, cutoffName === 'pValue' ? { precision: 2 } : { precision: 1 }, cutoffName === 'pValue' ? { max: 1 } : {});
+	  return Object.assign(cutoffName === 'foldChange' ? {} : { min: 0 }, cutoffName === 'pValue' ? { step: 0.01 } : { step: 1.0 }, cutoffName === 'pValue' ? { precision: 2 } : { precision: 1 }, cutoffName === 'pValue' ? { max: 1 } : {});
 	};
 	
 	var keyValuePair = function keyValuePair(key, value) {
 	  var result = {};
 	  result[key] = value;
 	  return result;
+	};
+	
+	var cutoffDisplayName = function cutoffDisplayName(cutoffName) {
+	  switch (cutoffName) {
+	    case "value":
+	      return "Expression value";
+	    case "pValue":
+	      return "Adjusted p-value";
+	    case "foldChange":
+	      return _react2.default.createElement(
+	        'span',
+	        null,
+	        'Log',
+	        _react2.default.createElement(
+	          'sub',
+	          null,
+	          '2'
+	        ),
+	        '-fold change'
+	      );
+	    default:
+	      return cutoffName;
+	  }
 	};
 	
 	var Cutoff = function Cutoff(_ref) {
@@ -12976,7 +13000,7 @@ webpackJsonp_name_([1],[
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          'Above ' + cutoffName + ':'
+	          cutoffDisplayName(cutoffName)
 	        ),
 	        _react2.default.createElement(_reactNumericInput2.default, _extends({
 	          className: 'form-control',
@@ -15603,7 +15627,7 @@ webpackJsonp_name_([1],[
 	      onChangeRegulation = _ref.onChangeRegulation;
 	  return _react2.default.createElement(_Fieldset2.default, { value: regulation,
 	    onChangeValue: onChangeRegulation,
-	    options: [["UP_DOWN", "Any regulation"], ["UP", "Up-regulated only"], ["DOWN", "Down-regulated only"]] });
+	    options: [["UP_DOWN", "Up- or downregulated"], ["UP", "Upregulated only"], ["DOWN", "Downregulated only"]] });
 	};
 	
 	Regulation.propTypes = {
@@ -17741,8 +17765,8 @@ webpackJsonp_name_([1],[
 	      regulation = _ref7.regulation;
 	  return Object.assign({
 	    specific: specific,
-	    geneQuery: geneQuery,
-	    selectedColumnIds: selectedColumnIds
+	    geneQuery: JSON.stringify(geneQuery),
+	    selectedColumnIds: "[" + selectedColumnIds.join(",") + "]"
 	  }, isDifferential && regulation !== "OFF" ? { regulation: regulation } : {}, isDifferential ? {
 	    cutoff: cutoff.pValue,
 	    foldChangeCutoff: cutoff.foldChange
