@@ -33,13 +33,10 @@ public class ExperimentGroupingsForHeatmapIT {
     @Test
     public void testSomeGoodExperiments() throws Exception {
 
+        outputInFineFormatForExperiment("E-MTAB-513");
         outputInFineFormatForExperiment("E-MTAB-2706");
         outputInFineFormatForExperiment("E-GEOD-54705");
         outputInFineFormatForExperiment("E-MTAB-4260");
-        outputInFineFormatForExperiment("E-MTAB-513");
-
-
-
 
     }
 
@@ -67,8 +64,10 @@ public class ExperimentGroupingsForHeatmapIT {
         for(JsonElement element: result){
             assertTrue(element.getAsJsonObject().has("name"));
             assertTrue(element.getAsJsonObject().has("selected"));
+            assertThat(element.getAsJsonObject().get("groupings").getAsJsonArray().size(), greaterThan(0));
             for(JsonElement grouping: element.getAsJsonObject().get("groupings").getAsJsonArray()){
                 assertThat(grouping.getAsJsonArray().size(), is(2));
+                assertThat(grouping.getAsJsonArray().get(1).getAsJsonArray().size(), greaterThan(0));
                 for(JsonElement groupingValue : grouping.getAsJsonArray().get(1).getAsJsonArray()){
                     assertTrue(allDescriptorIds.contains(groupingValue.getAsString()));
                 }
