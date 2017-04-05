@@ -6,6 +6,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 public interface DifferentialProfileStreamOptions extends ProfileStreamOptions<Contrast> {
     Regulation getRegulation();
     String getExperimentAccession();
-    double getPValueCutOff();
-    double getFoldChangeCutOff();
+    double getPValueCutoff();
+    double getFoldChangeCutoff();
 }

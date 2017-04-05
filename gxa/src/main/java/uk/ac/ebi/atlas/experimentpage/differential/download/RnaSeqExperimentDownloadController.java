@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 import com.google.common.base.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -110,7 +109,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
     @Override
     public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
         DifferentialRequestPreferences preferences = new DifferentialRequestPreferences();
-        preferences.setFoldChangeCutOff(0.0);
+        preferences.setFoldChangeCutoff(0.0);
         preferences.setCutoff(1.0);
         return Collections.singleton(new ExternallyAvailableContent(
                 makeUri("query-results"),

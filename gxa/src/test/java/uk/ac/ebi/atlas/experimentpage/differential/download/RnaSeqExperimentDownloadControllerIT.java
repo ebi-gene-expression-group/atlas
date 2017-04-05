@@ -105,7 +105,7 @@ public class RnaSeqExperimentDownloadControllerIT {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(1D);
-        requestPreferences.setFoldChangeCutOff(0D);
+        requestPreferences.setFoldChangeCutoff(0D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
 
@@ -169,7 +169,7 @@ public class RnaSeqExperimentDownloadControllerIT {
         StringWriter responseWriter = new StringWriter(100000);
 
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
-        requestPreferences.setFoldChangeCutOff(50000D);
+        requestPreferences.setFoldChangeCutoff(50000D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
         assertEquals(1, headersAndBody(responseWriter).getRight().size());

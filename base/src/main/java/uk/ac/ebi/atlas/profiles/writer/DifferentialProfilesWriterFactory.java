@@ -68,7 +68,7 @@ public abstract class DifferentialProfilesWriterFactory<Expr extends Differentia
         String regulation = " " + requestContext.getRegulation().getLabel();
         String selectedContrasts = formatSelectedContrasts(requestContext);
         double pValueCutoff = requestContext.getCutoff();
-        double foldChangeCutoff = requestContext.getFoldChangeCutOff();
+        double foldChangeCutoff = requestContext.getFoldChangeCutoff();
         String experimentAccession = requestContext.getExperimentAccession();
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, specific, regulation, selectedContrasts, pValueCutoff, foldChangeCutoff,

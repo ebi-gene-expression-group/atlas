@@ -106,7 +106,7 @@ public class MicroarrayExperimentDownloadControllerIT {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(1D);
-        requestPreferences.setFoldChangeCutOff(0D);
+        requestPreferences.setFoldChangeCutoff(0D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
 
@@ -170,7 +170,7 @@ public class MicroarrayExperimentDownloadControllerIT {
         StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
-        requestPreferences.setFoldChangeCutOff(50000D);
+        requestPreferences.setFoldChangeCutoff(50000D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
         assertEquals(1, headersAndBody(responseWriter).getRight().size());

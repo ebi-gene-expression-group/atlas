@@ -112,7 +112,7 @@ public class MicroarrayProfileStreamFactoryTest {
 
         MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", contrasts, ImmutableSortedSet.of("array"));
         MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
-        microarrayRequestPreferences.setFoldChangeCutOff(0.0);
+        microarrayRequestPreferences.setFoldChangeCutoff(0.0);
         microarrayRequestPreferences.setCutoff(1.0);
 
 
