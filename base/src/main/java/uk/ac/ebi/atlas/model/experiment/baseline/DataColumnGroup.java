@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 
@@ -20,12 +19,15 @@ public class DataColumnGroup<DataColumnDescriptor extends DescribesDataColumns> 
 
     private final String name;
 
+    private final boolean primary;
+
     private final ImmutableList<String> defaultSelectionSpecifiedByCurators;
 
     private final Multimap<String, DataColumnDescriptor> groupingValuesPerGrouping;
 
-    public DataColumnGroup(String name, List<String> defaultValues){
+    public DataColumnGroup(String name, List<String> defaultValues, boolean primary){
         this.name = name;
+        this.primary = primary;
         this.defaultSelectionSpecifiedByCurators = ImmutableList.copyOf(defaultValues);
         this.groupingValuesPerGrouping = LinkedListMultimap.create();
     }
@@ -37,6 +39,7 @@ public class DataColumnGroup<DataColumnDescriptor extends DescribesDataColumns> 
     public JsonObject asJson(){
         JsonObject result = new JsonObject();
         result.addProperty("name", name);
+        result.addProperty("primary", primary);
         result.add("selected", defaultSelectionSpecifiedByCurators.size() == 0
                 ? new JsonPrimitive("all")
                 : gson.toJsonTree(defaultSelectionSpecifiedByCurators));
@@ -80,10 +83,10 @@ public class DataColumnGroup<DataColumnDescriptor extends DescribesDataColumns> 
             this.dataColumnGroupsByType = new LinkedHashMap<>();
         }
 
-        public void addDataColumnGroupIfNotPresent(String factorOrSampleHeaderFromTheDesignFileOrFactorsXml){
+        public void addDataColumnGroupIfNotPresent(String factorOrSampleHeaderFromTheDesignFileOrFactorsXml, boolean primary){
             String name = Factor.normalize(factorOrSampleHeaderFromTheDesignFileOrFactorsXml);
             if(!dataColumnGroupsByType.containsKey(name)){
-                dataColumnGroupsByType.put(name, new DataColumnGroup<DataColumnDescriptor>(name, experimentDisplayDefaults.defaultFilterValuesForFactor(name)));
+                dataColumnGroupsByType.put(name, new DataColumnGroup<DataColumnDescriptor>(name, experimentDisplayDefaults.defaultFilterValuesForFactor(name), primary));
             }
         }
 

@@ -1,12 +1,10 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -111,12 +109,12 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         DataColumnGroup.DataColumnGroupList dataColumnGroupList = new DataColumnGroup.DataColumnGroupList(experimentDisplayDefaults);
 
         //populate the keys in the order we want later
-        dataColumnGroupList.addDataColumnGroupIfNotPresent("Comparison Name");
+        dataColumnGroupList.addDataColumnGroupIfNotPresent("Comparison Name", true);
         for(String factorHeader: experimentDesign.getFactorHeaders()){
-            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader);
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, false);
         }
         for(String sampleHeader: experimentDesign.getSampleHeaders()){
-            dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader);
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader, false);
         }
 
         // add the information about which headers go to which categories

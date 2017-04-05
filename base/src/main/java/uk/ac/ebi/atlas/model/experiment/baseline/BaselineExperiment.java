@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.collect.LinkedListMultimap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -10,7 +9,6 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.species.Species;
 
 import java.util.*;
@@ -63,13 +61,13 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
 
         //populate the keys in the order we want later
         for(String factorHeader: experimentDisplayDefaults.prescribedOrderOfFilters()){
-            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader);
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, true);
         }
         for(String factorHeader: experimentDesign.getFactorHeaders()){
-            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader);
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, true);
         }
         for(String sampleHeader: experimentDesign.getSampleHeaders()){
-            dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader);
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader, false);
         }
 
         // add the information about which headers go to which categories
