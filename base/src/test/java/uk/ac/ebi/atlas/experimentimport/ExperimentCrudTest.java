@@ -43,15 +43,6 @@ public class ExperimentCrudTest {
     private ExperimentCrud subject;
 
     @Mock
-    private ExperimentDesignFileWriter experimentDesignFileWriterMock;
-
-    @Mock
-    private CSVWriter csvWriterMock;
-
-    @Mock
-    private ArrayDesignDAO arrayDesignDAOMock;
-
-    @Mock
     private ExperimentDAO experimentDAOMock;
 
     @Mock
@@ -73,9 +64,6 @@ public class ExperimentCrudTest {
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
 
     @Mock
-    private AnalyticsIndexerManager analyticsIndexerManagerMock;
-
-    @Mock
     private ExperimentDTO experimentDTOMock;
 
     @Mock
@@ -95,9 +83,6 @@ public class ExperimentCrudTest {
 
     @Mock
     ConfigurationTrader configurationTrader;
-
-    @Captor
-    private ArgumentCaptor<String> experimentAccessionCaptor;
 
     private ImmutableSetMultimap<String,String> allOntologyTermIdsByAssayAccession = ImmutableSetMultimap.of
             (EXPERIMENT_ASSAY,EFO_0000761);

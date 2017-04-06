@@ -3,16 +3,10 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import com.google.common.base.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
-import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
 

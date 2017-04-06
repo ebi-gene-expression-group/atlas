@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.commons;
 
 import com.google.common.base.Predicate;
