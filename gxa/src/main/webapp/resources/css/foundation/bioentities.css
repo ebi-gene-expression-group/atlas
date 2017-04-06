@@ -3,6 +3,6 @@
     padding: 5px 0;
 }
 
-#gxaBaselineTab {
+#gxaBaselineTab, #gxaDifferentialTab {
     display: inline-flex;
 }
