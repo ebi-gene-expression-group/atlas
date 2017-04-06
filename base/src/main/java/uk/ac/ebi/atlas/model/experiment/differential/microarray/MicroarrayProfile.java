@@ -19,15 +19,6 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
     }
 
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("geneName", getName())
-                .add("designElementName", designElementName)
-                .add("expressions", expressionsByCondition)
-                .toString();
-    }
-
-    @Override
     public String[] identifiers(){
         return (String[]) ArrayUtils.add(super.identifiers(), designElementName);
     }

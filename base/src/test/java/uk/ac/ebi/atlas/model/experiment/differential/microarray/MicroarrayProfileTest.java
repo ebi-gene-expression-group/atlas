@@ -1,12 +1,10 @@
-
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.junit.Assert.assertThat;
 
 public class MicroarrayProfileTest {
 
@@ -22,7 +20,13 @@ public class MicroarrayProfileTest {
     }
 
     @Test
-    public void testGetDesignElementName() throws Exception {
-        assertThat(subject.getDesignElementName(), is(DESIGN_ELEMENT_NAME));
+    public void hasDefaultProperties() {
+        assertThat(subject.properties(), hasEntry("id", GENE_ID));
+        assertThat(subject.properties(), hasEntry("name", GENE_NAME));
+    }
+
+    @Test
+    public void hasDesignElementProperty() throws Exception {
+        assertThat(subject.properties(), hasEntry("designElement", DESIGN_ELEMENT_NAME));
     }
 }
