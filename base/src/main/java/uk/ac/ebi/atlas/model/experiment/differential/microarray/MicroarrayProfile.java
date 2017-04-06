@@ -34,7 +34,7 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
 
     @Override
     public Map<String,String> properties(){
-        return ImmutableMap.of("id", getId(), "name", getName(), "designElement", designElementName);
+        return ImmutableMap.<String,String>builder().putAll(super.properties()).put("designElement", designElementName).build();
     }
 
 }
