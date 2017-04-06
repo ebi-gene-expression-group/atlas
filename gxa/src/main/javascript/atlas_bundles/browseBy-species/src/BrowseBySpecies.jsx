@@ -23,7 +23,7 @@ class BrowseBySpecies extends React.Component {
 
             />);
 
-        const allExperimentsUrl = this.props.atlasBaseUrl + "/gxa/experiments?foundation";
+        const allExperimentsUrl = this.props.atlasBaseUrl + "/gxa/experiments";
 
         return (
             <div>

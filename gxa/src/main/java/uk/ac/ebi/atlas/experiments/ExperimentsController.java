@@ -27,7 +27,7 @@ public class ExperimentsController {
 
         model.addAttribute("mainTitle", "Experiments ");
 
-        return foundationKey == null ? "experiments" : "foundation-experiments";
+        return "foundation-experiments";
     }
 
 }

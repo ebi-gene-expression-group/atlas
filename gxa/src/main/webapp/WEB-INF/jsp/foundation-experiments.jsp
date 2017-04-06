@@ -57,8 +57,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/dataTables-1.10.13/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/dataTables-1.10.13/media/js/dataTables.foundation.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/dataTables-1.10.13/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/dataTables-1.10.13/media/js/dataTables.foundation.min.js"></script>
 <script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/foundationExperimentsPageModule.js"></script>
 
 <script>
