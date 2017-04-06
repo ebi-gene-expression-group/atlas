@@ -46,8 +46,8 @@
                         <div class="small-12 columns">
                             <input id="home-search-atlas-search-button" class="button" type="submit" value="Search"/>
 
-                            <label for="file-upload" class="button">Upload file</label>
-                            <input type="file" id="file-upload" class="show-for-sr">
+                            <%--<label for="file-upload" class="button">Upload file</label>--%>
+                            <%--<input type="file" id="file-upload" class="show-for-sr">--%>
 
                             <input id="home-search-atlas-clear-button" class="secondary hollow button" type="button" value="Clear"/>
                         </div>
