@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -39,7 +38,6 @@ public class DifferentialExperimentPageService
          P extends DifferentialProfile<Expr>,  R extends DifferentialRequestContext<E, K> >
         extends ExperimentPageService {
 
-    private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final AtlasResourceHub atlasResourceHub;
     private final DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory;
     private final DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap;
@@ -48,13 +46,11 @@ public class DifferentialExperimentPageService
     public  DifferentialExperimentPageService(
             DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
             DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
-            DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
             TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
 
         super(atlasResourceHub, new HeatmapDataToJsonService(applicationProperties), applicationProperties);
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
-        this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.tracksUtil = tracksUtil;
         this.atlasResourceHub = atlasResourceHub;
 
@@ -115,11 +111,6 @@ public class DifferentialExperimentPageService
                             differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn()
                     ).asJson());
 
-                    //TODO remove me after old heatmap goes away, the new heatmap handles no data gracefully
-                    if(differentialProfilesViewModelBuilder.build(differentialProfiles, contrasts)
-                            .get("rows").getAsJsonArray().size() == 0 ){
-                        return heatmapDataToJsonService.jsonError("No genes found matching query: '" + preferences.getGeneQuery() + "'");
-                    }
                     model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
 
                     JsonObject heatmapConfig = heatmapDataToJsonService.configAsJsonObject(request, model.asMap());

@@ -19,7 +19,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -53,7 +52,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     @Inject
     public JsonDifferentialExperimentController(ExperimentTrader experimentTrader,
                                                 RnaSeqProfilesHeatMap diffRnaSeqProfilesHeatMap,
-                                                DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                                 MicroarrayProfilesHeatMap microarrayProfilesHeatMap,
                                                 TracksUtil tracksUtil,
                                                 AtlasResourceHub atlasResourceHub,
@@ -63,13 +61,11 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
         diffRnaSeqExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.RnaSeq(),
                         diffRnaSeqProfilesHeatMap,
-                differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
 
         diffMicroarrayExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.Microarray(),
                         microarrayProfilesHeatMap,
-                        differentialProfilesViewModelBuilder,
                         tracksUtil, atlasResourceHub,applicationProperties);
     }
 

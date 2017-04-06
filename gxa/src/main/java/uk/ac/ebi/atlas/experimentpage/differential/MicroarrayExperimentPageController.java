@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -39,12 +38,10 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     @Inject
     public MicroarrayExperimentPageController(ExperimentTrader experimentTrader,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
-                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                               TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
         this.experimentTrader = experimentTrader;
         differentialExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.Microarray(), profilesHeatMap,
-                differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
     }
 

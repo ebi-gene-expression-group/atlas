@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -39,7 +38,6 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     @Inject
     public RnaSeqExperimentPageController(ExperimentTrader experimentTrader,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
-                                          DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
                                           TracksUtil tracksUtil,
                                           AtlasResourceHub atlasResourceHub,
                                           ApplicationProperties applicationProperties) {
@@ -47,7 +45,6 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
         differentialExperimentPageService = new DifferentialExperimentPageService<>(
                 new DifferentialRequestContextFactory.RnaSeq(),
                 profilesHeatMap,
-                differentialProfilesViewModelBuilder,
                 tracksUtil, atlasResourceHub,applicationProperties);
     }
 
