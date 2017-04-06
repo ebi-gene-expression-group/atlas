@@ -26,22 +26,30 @@ a.special { background-color: #7cd17c; }
 .tabs-title > a:hover,
 .button,
 .button.primary {
-    background-color: rgb(0,124,130);
+    background-color: #3497c5;
 }
 a.tag:hover { color: #fff; }
 
-.tabs-title > a:hover,
+.tabs-title > a:hover {
+    background: aliceblue;
+    color: #0a0a0a;
+}
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
+    color: #0a0a0a;
+    background: #e6e6e6;
+}
+
 .button.primary:hover,
 .button.primary:focus,
 .button.hover,
 .button:hover,
 .button:focus,
-.button:active { background: rgba(0,124,130,.9); }
+.button:active {
+    background: #2f5767;
+    /*color: #0a0a0a;*/
+}
 
-.tabs-title > a:focus,
-.tabs-title > a[aria-selected='true'] {
-    color: #fff;
-    background: #666; }
 
 div#local-masthead { background-color: rgb(0,124,130); }
 
