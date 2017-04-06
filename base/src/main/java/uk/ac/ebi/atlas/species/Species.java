@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.species;
 
+import com.google.common.collect.ImmutableMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +47,13 @@ public class Species {
 
     public boolean isUnknown() {
         return mappedProperties == SpeciesProperties.UNKNOWN;
+    }
+
+    public Map<String, Object> getAttributes(){
+        return ImmutableMap.<String, Object>builder()
+                .put("species",name)
+                .put("speciesReferenceName", getReferenceName())
+                .put("resources",getResources())
+                .build();
     }
 }

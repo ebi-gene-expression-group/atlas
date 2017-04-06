@@ -106,16 +106,17 @@ public class MicroarrayExperimentDownloadControllerIT {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(1D);
-        requestPreferences.setFoldChangeCutOff(0D);
+        requestPreferences.setFoldChangeCutoff(0D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
 
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(headersAndBody.getRight());
+        List<String> dataColumns = headersAndBody.getRight().subList(1, headersAndBody.getRight().size());
+        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(dataColumns);
         Set<String> geneNames = geneNameToLine.keySet();
 
-        assertThat(headersAndBody.getRight().size(), greaterThan(0) );
-        assertEquals(headersAndBody.getRight().size(), geneNames.size());
+        assertThat(dataColumns.size(), greaterThan(0) );
+        assertEquals(dataColumns.size(), geneNames.size());
 
 
     }
@@ -160,7 +161,7 @@ public class MicroarrayExperimentDownloadControllerIT {
         requestPreferences.setCutoff(1e-100);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
-        assertEquals(0L, headersAndBody(responseWriter).getRight().size());
+        assertEquals(1, headersAndBody(responseWriter).getRight().size());
     }
 
 
@@ -169,20 +170,17 @@ public class MicroarrayExperimentDownloadControllerIT {
         StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
-        requestPreferences.setFoldChangeCutOff(50000D);
+        requestPreferences.setFoldChangeCutoff(50000D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
-        assertEquals(0L, headersAndBody(responseWriter).getRight().size());
+        assertEquals(1, headersAndBody(responseWriter).getRight().size());
     }
 
     private ImmutableMap<String, String[]> indexByGeneName(List<String> lines) {
         ImmutableMap.Builder<String, String[]> builder = ImmutableMap.builder();
         for (String l : lines) {
             String[] line = l.split("\t", -1);
-            String geneName = line[GENE_NAME_INDEX];
-            if (!"Gene Name".equals(geneName)) {
-                builder.put(line[GENE_NAME_INDEX-1]+" "+ line[GENE_NAME_INDEX]+" "+ line[GENE_NAME_INDEX+1], line);
-            }
+            builder.put(line[GENE_NAME_INDEX-1]+" "+ line[GENE_NAME_INDEX]+" "+ line[GENE_NAME_INDEX+1], line);
         }
 
         return builder.build();
@@ -192,10 +190,7 @@ public class MicroarrayExperimentDownloadControllerIT {
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (String l : lines) {
             String[] line = l.split("\t" ,-1);
-            String geneName = line[GENE_NAME_INDEX];
-            if (!"Gene Name".equals(geneName)) {
-                builder.add(line[GENE_NAME_INDEX]);
-            }
+            builder.add(line[GENE_NAME_INDEX]);
         }
 
         return builder.build();

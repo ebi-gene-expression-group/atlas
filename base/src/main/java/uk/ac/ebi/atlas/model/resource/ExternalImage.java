@@ -27,10 +27,9 @@ public abstract class ExternalImage extends ExternalResource<Function<HttpServle
             @Override
             public Void apply(@Nullable HttpServletResponse response) {
                 response.setContentType("image/"+formatName);
-                try(InputStream inputStream = Files.newInputStream(path)){
-                    OutputStream out = response.getOutputStream();
+                try(InputStream inputStream = Files.newInputStream(path);
+                    OutputStream out = response.getOutputStream()){
                     ImageIO.write(ImageIO.read(inputStream), formatName, out);
-                    out.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

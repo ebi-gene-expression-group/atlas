@@ -105,16 +105,18 @@ public class RnaSeqExperimentDownloadControllerIT {
             requestPreferences.setSpecific(false);
         }
         requestPreferences.setCutoff(1D);
-        requestPreferences.setFoldChangeCutOff(0D);
+        requestPreferences.setFoldChangeCutoff(0D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
         Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
 
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(headersAndBody.getRight());
+        List<String> dataColumns = headersAndBody.getRight().subList(1, headersAndBody.getRight().size());
+
+        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(dataColumns);
         Set<String> geneNames = geneNameToLine.keySet();
 
-        assertThat(headersAndBody.getRight().size(), greaterThan(0) );
-        assertEquals(headersAndBody.getRight().size(), geneNames.size());
+        assertThat(dataColumns.size(), greaterThan(0) );
+        assertEquals(dataColumns.size(), geneNames.size());
     }
 
     public void upDownRegulationWorks(DifferentialExperiment experiment) throws Exception {
@@ -158,7 +160,7 @@ public class RnaSeqExperimentDownloadControllerIT {
         requestPreferences.setCutoff(1e-100);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
-        assertEquals(0L, headersAndBody(responseWriter).getRight().size());
+        assertEquals(1, headersAndBody(responseWriter).getRight().size());
     }
 
 
@@ -167,10 +169,10 @@ public class RnaSeqExperimentDownloadControllerIT {
         StringWriter responseWriter = new StringWriter(100000);
 
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
-        requestPreferences.setFoldChangeCutOff(50000D);
+        requestPreferences.setFoldChangeCutoff(50000D);
         subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
 
-        assertEquals(0L, headersAndBody(responseWriter).getRight().size());
+        assertEquals(1, headersAndBody(responseWriter).getRight().size());
     }
 
     private ImmutableMap<String, String[]> indexByGeneName(List<String> lines) {

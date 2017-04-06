@@ -67,6 +67,10 @@ public class OpLogEntry {
         );
     }
 
+    static OpLogEntry NULL(String message) {
+        return new OpLogEntry(true, Op.LIST, 0L, 0L, message);
+    }
+
     public boolean isInProgress(){
         return finish.equals(UNFINISHED);
     }
@@ -94,14 +98,18 @@ public class OpLogEntry {
 
 
     static OpLogEntry fromArray(String[] lines){
-        Preconditions.checkState(lines.length >=3);
-        return new OpLogEntry(
-          lines[0].startsWith(FAILED),
-          Op.valueOf(lines[0].replace(FAILED, "").trim()),
-                Long.parseLong(lines[1]),
-                Long.parseLong(lines[2]),
-                Joiner.on(" ").join(ArrayUtils.subarray(lines, 3, lines.length))
-        );
+        try {
+            Preconditions.checkArgument(lines.length >=3);
+            return new OpLogEntry(
+                    lines[0].startsWith(FAILED),
+                    Op.valueOf(lines[0].replace(FAILED, "").trim()),
+                    Long.parseLong(lines[1]),
+                    Long.parseLong(lines[2]),
+                    Joiner.on(" ").join(ArrayUtils.subarray(lines, 3, lines.length))
+            );
+        } catch (IllegalArgumentException e){
+            return NULL("Invalid op log entry, could not read: "+ Joiner.on("\t").join(lines));
+        }
     }
 
     String[] toArray(){
@@ -152,4 +160,5 @@ public class OpLogEntry {
     public int hashCode() {
         return Objects.hashCode(failed, op, start, finish, message);
     }
+
 }

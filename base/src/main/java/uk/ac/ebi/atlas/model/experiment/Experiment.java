@@ -7,7 +7,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -18,9 +20,13 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/*
+The displayName is a bit confusing - it's used for baseline landing page and I think only there.
+There's also a title which is fetched from ArrayExpress or (as fallback) from the IDF file.
+
+ */
 public abstract class Experiment<DataColumnDescriptor extends DescribesDataColumns> implements Serializable {
 
-    private static final Gson gson = new Gson();
     private ExperimentType type;
     protected ExperimentDesign experimentDesign;
     private Species species;
@@ -131,9 +137,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
         result.put("experimentHasRData", hasRData);
-        result.put("speciesReferenceName", species.getReferenceName());
-        result.put("species", species);
-        result.put("resources", species.getResources());
+        result.putAll(species.getAttributes());
         result.put("experimentDescription", description);
         result.put("pubMedIds", pubMedIds);
         result.put("experimentAccession", accession);
@@ -191,4 +195,5 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
 
     protected abstract JsonObject propertiesForAssay(String runOrAssay);
 
+    public abstract JsonArray groupingsForHeatmap();
 }

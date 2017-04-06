@@ -3,10 +3,12 @@
 
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
+
 <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-
+<br/>
 <%@ include file="includes/experiment-description.jsp" %>
-
+<br/>
 <script src="${pathToFolderWithBundledResources}vendorCommons.bundle.js"></script>
 <script src="${pathToFolderWithBundledResources}experimentPage.bundle.js"></script>
 

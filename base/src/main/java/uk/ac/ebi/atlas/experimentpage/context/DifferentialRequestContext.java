@@ -29,13 +29,13 @@ public class DifferentialRequestContext<E extends DifferentialExperiment, Prefer
     }
 
     @Override
-    public double getPValueCutOff() {
+    public double getPValueCutoff() {
         return requestPreferences.getCutoff();
     }
 
     @Override
-    public double getFoldChangeCutOff() {
-        return requestPreferences.getFoldChangeCutOff();
+    public double getFoldChangeCutoff() {
+        return requestPreferences.getFoldChangeCutoff();
     }
 
     @Override

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.LinkedListMultimap;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
@@ -14,14 +13,8 @@ import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
-import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -29,10 +22,7 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ExperimentController extends ExperimentPageController{
@@ -89,7 +79,7 @@ public class ExperimentController extends ExperimentPageController{
         JsonArray availableTabs = new JsonArray();
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(
-                groupingsForHeatmap(experiment),
+                experiment.groupingsForHeatmap(),
                 BaselineBarChartController.geneDistributionUrl(request, experiment.getAccession(), accessKey))
         );
 
@@ -195,97 +185,6 @@ public class ExperimentController extends ExperimentPageController{
         props.add("table", table);
         props.addProperty("downloadUrl", downloadUrl);
         return customContentTab("experiment-design", "Experiment Design", props);
-    }
-
-    private JsonObject groupForFilterType(String filterType, List<String> defaultValues,
-                                          Map<String, Collection<String>> groupingValuesPerGrouping){
-        JsonObject result = new JsonObject();
-        result.addProperty("name", filterType);
-        result.add("selected",
-                defaultValues.size() == 0
-                        ? new JsonPrimitive("all")
-                        : gson.toJsonTree(defaultValues)
-        );
-
-        JsonArray groupings = new JsonArray();
-        for(Map.Entry<String, Collection<String>> e: groupingValuesPerGrouping.entrySet()){
-            JsonArray grouping = new JsonArray();
-            grouping.add(new JsonPrimitive(e.getKey()));
-            JsonArray groupingValues = new JsonArray();
-            for(String groupingValue : uniqueSublist(e.getValue())){
-                groupingValues.add(new JsonPrimitive(groupingValue));
-            }
-            grouping.add(groupingValues);
-            groupings.add(grouping);
-        }
-
-        result.add("groupings", groupings);
-
-        return result;
-    }
-
-    private List<String> uniqueSublist(Collection<String> collection){
-        List<String> result = new ArrayList<>();
-        for(String element: collection){
-            if(!result.contains(element)){
-                result.add(element);
-            }
-        }
-        return result;
-    }
-
-    JsonArray groupingsForHeatmap(Experiment<? extends DescribesDataColumns> experiment){
-        ExperimentDesign experimentDesign = experiment.getExperimentDesign();
-        ExperimentDisplayDefaults experimentDisplayDefaults = experiment.getDisplayDefaults();
-
-        LinkedListMultimap<String, LinkedListMultimap<String, String>> filtersByType = LinkedListMultimap.create();
-
-        if(experiment.getType().isDifferential()){
-            filtersByType.put("Comparison Name", LinkedListMultimap.<String, String>create());
-        }
-        //populate the keys in the order we want later (Linked map preserves insertion order)
-        for(String factorHeader: experimentDisplayDefaults.prescribedOrderOfFilters()){
-            filtersByType.put(Factor.normalize(factorHeader), LinkedListMultimap.<String, String>create());
-        }
-        for(String factorHeader: experimentDesign.getFactorHeaders()){
-            if(! experimentDisplayDefaults.prescribedOrderOfFilters().contains(Factor.normalize(factorHeader))){
-                filtersByType.put(Factor.normalize(factorHeader), LinkedListMultimap.<String, String>create());
-            }
-        }
-        for(String sampleHeader: experimentDesign.getSampleHeaders()){
-            if(! experimentDesign.getFactorHeaders().contains(sampleHeader)){
-                filtersByType.put(Factor.normalize(sampleHeader), LinkedListMultimap.<String, String>create());
-            }
-        }
-
-        // add the information about which headers go to which categories
-        for(DescribesDataColumns dataColumnDescriptor: experiment.getDataColumnDescriptors()){
-            if(experiment.getType().isDifferential()){
-                filtersByType.get("Comparison Name").get(0)
-                        .put(((Contrast) dataColumnDescriptor).getDisplayName(), dataColumnDescriptor.getId());
-            }
-            for(String assayAnalyzedForThisDataColumn : dataColumnDescriptor.assaysAnalyzedForThisDataColumn()){
-                for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)){
-                    filtersByType.get(Factor.normalize(factor.getHeader())).get(0)
-                            .put(factor.getValue(), dataColumnDescriptor.getId());
-                }
-                for(SampleCharacteristic sampleCharacteristic
-                        : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)){
-                    if(filtersByType.containsKey(Factor.normalize(sampleCharacteristic.header()))){
-                        filtersByType.get(Factor.normalize(sampleCharacteristic.header())).get(0)
-                                .put(sampleCharacteristic.value(), dataColumnDescriptor.getId());
-                    }
-                }
-            }
-        }
-        JsonArray result = new JsonArray();
-        for(Map.Entry<String, LinkedListMultimap<String, String>> e : filtersByType.entries()){
-            result.add(groupForFilterType(e.getKey(), experimentDisplayDefaults.defaultFilterValuesForFactor(e.getKey
-                    ()), e.getValue().asMap()));
-        }
-
-
-        return result;
     }
 
 }

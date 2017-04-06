@@ -9,8 +9,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -30,8 +28,8 @@ public abstract class DifferentialProfileStreamFactory<Expr extends Differential
     protected Predicate<Expr> filterExpressions(E experiment, T
             options) {
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setPValueCutoff(options.getPValueCutOff());
-        expressionFilter.setFoldChangeCutOff(options.getFoldChangeCutOff());
+        expressionFilter.setPValueCutoff(options.getPValueCutoff());
+        expressionFilter.setFoldChangeCutOff(options.getFoldChangeCutoff());
         expressionFilter.setRegulation(options.getRegulation());
         return expressionFilter;
     }

@@ -2,12 +2,16 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.DataColumnGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
@@ -95,6 +99,41 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         result.addProperty("contrastName", contrastName);
         result.addProperty("referenceOrTest", referenceOrTest);
         return result;
+    }
+
+    @Override
+    public JsonArray groupingsForHeatmap() {
+        ExperimentDesign experimentDesign = getExperimentDesign();
+        ExperimentDisplayDefaults experimentDisplayDefaults = getDisplayDefaults();
+
+        DataColumnGroup.DataColumnGroupList dataColumnGroupList = new DataColumnGroup.DataColumnGroupList(experimentDisplayDefaults);
+
+        //populate the keys in the order we want later
+        dataColumnGroupList.addDataColumnGroupIfNotPresent("Comparison Name", true);
+        for(String factorHeader: experimentDesign.getFactorHeaders()){
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(factorHeader, false);
+        }
+        for(String sampleHeader: experimentDesign.getSampleHeaders()){
+            dataColumnGroupList.addDataColumnGroupIfNotPresent(sampleHeader, false);
+        }
+
+        // add the information about which headers go to which categories
+        for(Contrast dataColumnDescriptor: getDataColumnDescriptors()){
+            dataColumnGroupList.addValueToGroupingInGroup("Comparison Name",dataColumnDescriptor.getDisplayName(), dataColumnDescriptor);
+
+
+            for(String assayAnalyzedForThisDataColumn : dataColumnDescriptor.assaysAnalyzedForThisDataColumn()){
+                for(Factor factor : experimentDesign.getFactors(assayAnalyzedForThisDataColumn)){
+                    dataColumnGroupList.addValueToGroupingInGroup(factor.getHeader(), factor.getValue(), dataColumnDescriptor);
+                }
+                for(SampleCharacteristic sampleCharacteristic
+                        : experimentDesign.getSampleCharacteristics(assayAnalyzedForThisDataColumn)){
+                    dataColumnGroupList.addValueToGroupingInGroup(sampleCharacteristic.header(), sampleCharacteristic.value(), dataColumnDescriptor);
+                }
+            }
+        }
+        return dataColumnGroupList.asJson();
+
     }
 
 }

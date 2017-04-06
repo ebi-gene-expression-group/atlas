@@ -15,7 +15,7 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
     private Regulation regulation = Regulation.UP_DOWN;
 
     @Min(value = 0, message = "Log2-fold change cut off is an absolute amount, and so must be greater than zero")
-    private double foldChangeCutOff = DEFAULT_FOLD_CHANGE_CUTOFF;
+    private double foldChangeCutoff = DEFAULT_FOLD_CHANGE_CUTOFF;
 
     @Override
     public double getDefaultCutoff() {
@@ -23,7 +23,7 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
     }
 
     // exposed as JavaBean getter so JSP can read it
-    public double getDefaultFoldChangeCutOff() {
+    public double getDefaultFoldChangeCutoff() {
         return DEFAULT_FOLD_CHANGE_CUTOFF;
     }
 
@@ -35,14 +35,14 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
         this.regulation = regulation;
     }
 
-    public Double getFoldChangeCutOff() {
-        return foldChangeCutOff;
+    public Double getFoldChangeCutoff() {
+        return foldChangeCutoff;
     }
 
-    public void setFoldChangeCutOff(Double foldChangeCutOff) {
+    public void setFoldChangeCutoff(Double foldChangeCutoff) {
         // handle no value case, eg: when textbox is left empty
-        if (foldChangeCutOff != null) {
-            this.foldChangeCutOff = foldChangeCutOff;
+        if (foldChangeCutoff != null) {
+            this.foldChangeCutoff = foldChangeCutoff;
         }
     }
 }

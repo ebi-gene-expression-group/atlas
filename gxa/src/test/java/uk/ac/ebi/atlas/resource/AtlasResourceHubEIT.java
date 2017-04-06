@@ -62,7 +62,7 @@ public class AtlasResourceHubEIT {
 
     void testResourceExists(String resourceURI) {
 
-       Response response =  new EndPoint("/gxa" + resourceURI).getResponse();
+       Response response =  new EndPoint("/gxa/" + resourceURI).getResponse();
 
 
         assertThat(response.getStatusCode(), is(200));

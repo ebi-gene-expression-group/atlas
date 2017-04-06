@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
+import com.google.gson.JsonObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -20,6 +21,7 @@ public class OpLogEntryTest {
             toArrayAndFromArrayAreOpposites(OpLogEntry.newlyStartedOp(op).toFailure(""));
             toArrayAndFromArrayAreOpposites(OpLogEntry.newlyStartedOp(op).toFailure(new NullPointerException().toString()));
             toArrayAndFromArrayAreOpposites(OpLogEntry.newlyStartedOp(op).toSuccess());
+            toArrayAndFromArrayAreOpposites(OpLogEntry.NULL("banana\tplease"));
 
         }
     }
@@ -44,6 +46,17 @@ public class OpLogEntryTest {
 
     void toArrayAndFromArrayAreOpposites(OpLogEntry opLogEntry){
         assertThat(OpLogEntry.fromArray(opLogEntry.toArray()), is(opLogEntry));
+    }
 
+    @Test
+    public void weDoNotBreakOnNonsenseLines(){
+        badLinesReturnNullObject("OLD_OP_NAME 1465303135292 1465303135663");
+        badLinesReturnNullObject("banana");
+        badLinesReturnNullObject("");
+    }
+
+    void badLinesReturnNullObject(String line){
+        JsonObject result = OpLogEntry.fromArray(line.split(" ")).toJson();
+        assertThat(result.has("error"), is(true));
     }
 }

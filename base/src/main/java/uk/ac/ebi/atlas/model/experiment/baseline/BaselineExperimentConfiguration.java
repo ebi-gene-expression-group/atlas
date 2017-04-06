@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
@@ -39,9 +41,7 @@ public class BaselineExperimentConfiguration {
     public String getDefaultQueryFactorType() {
 
         String defaultQueryFactorType = xmlReader.getString("defaultQueryFactorType");
-        if (defaultQueryFactorType == null || defaultQueryFactorType.trim().length() == 0) {
-            throw new IllegalStateException("No defaultQueryFactorType found in factors file.");
-        }
+        Preconditions.checkState(StringUtils.isNotEmpty(defaultQueryFactorType), "defaultQueryFactorType missing from factors file!");
 
         return defaultQueryFactorType;
     }
@@ -51,7 +51,12 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getMenuFilterFactorTypes() {
-        return Arrays.asList(xmlReader.getString("menuFilterFactorTypes").split("\\W*,\\W*"));
+        String s = xmlReader.getString("menuFilterFactorTypes");
+        if(StringUtils.isEmpty(s)){
+            return ImmutableList.of();
+        } else {
+            return ImmutableList.copyOf(Arrays.asList(s.split("\\W*,\\W*")));
+        }
     }
 
     public Map<String, String> getSpeciesMapping() {

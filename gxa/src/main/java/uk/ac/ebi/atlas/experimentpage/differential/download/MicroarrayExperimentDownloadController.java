@@ -120,7 +120,7 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
     @Override
     public Collection<ExternallyAvailableContent> get(MicroarrayExperiment experiment) {
         MicroarrayRequestPreferences preferences = new MicroarrayRequestPreferences();
-        preferences.setFoldChangeCutOff(0.0);
+        preferences.setFoldChangeCutoff(0.0);
         preferences.setCutoff(1.0);
         return Collections.singleton(new ExternallyAvailableContent(
                 makeUri("query-results"),

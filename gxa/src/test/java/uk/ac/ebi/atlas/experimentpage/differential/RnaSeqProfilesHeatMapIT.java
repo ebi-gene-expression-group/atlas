@@ -48,7 +48,7 @@ public class RnaSeqProfilesHeatMapIT {
 
     private RnaSeqRequestContext populateRequestContext(
             String experimentAccession, double cutoff, double logFoldCutoff) throws Exception {
-        requestPreferences.setFoldChangeCutOff(logFoldCutoff);
+        requestPreferences.setFoldChangeCutoff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 

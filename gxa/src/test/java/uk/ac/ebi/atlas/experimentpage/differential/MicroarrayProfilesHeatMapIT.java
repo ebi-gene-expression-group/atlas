@@ -48,7 +48,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     private MicroarrayRequestContext populateRequestContext(
             String experimentAccession, double cutoff, double logFoldCutoff) throws Exception {
-        requestPreferences.setFoldChangeCutOff(logFoldCutoff);
+        requestPreferences.setFoldChangeCutoff(logFoldCutoff);
         requestPreferences.setCutoff(cutoff);
         MicroarrayExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
