@@ -48,9 +48,9 @@
                                 </div>
                                 <div class="columns small-8">
                                     <h5>
-                                        <a href="${pageContext.request.contextPath}/experiments/E-PROT-5">Proteomics - Cell Lines - HipSci</a><br/>
+                                        <a href="${pageContext.request.contextPath}/experiments/E-PROT-5">Proteomics – Cell Lines</a><br/>
                                         <%--HipSci project pilot submission for 18 IPS cell lines--%>
-                                        <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4748">Cell lines - 196 HipSci</a>
+                                        <a href="${pageContext.request.contextPath}/experiments/E-MTAB-4748">RNA – Cell lines</a>
                                         <%--RNA-seq of coding RNA in human fibroblasts, PBMCs and induced pluripotent stem cells (iPS cells) as part of the HipSci project--%>
                                     </h5>
                                 </div>
