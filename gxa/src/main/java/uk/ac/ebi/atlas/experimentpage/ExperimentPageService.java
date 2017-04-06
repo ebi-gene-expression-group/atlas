@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,21 +50,12 @@ public class ExperimentPageService {
 
     private JsonElement prepareExperimentDescription(Experiment experiment,
                                                      ExperimentPageRequestPreferences requestPreferences) {
-        return prepareExperimentDescription(
-                experiment, requestPreferences.getGeneQuery(), requestPreferences.getSerializedFilterFactors());
-    }
-
-    //used when external parties include our widget and also to pass header summary to heatmap tooltips
-    private JsonElement prepareExperimentDescription(Experiment experiment, SemanticQuery geneQuery,
-                                                     String serializedFilterFactors) {
-        String additionalQueryOptionsString =
-                "?geneQuery=" + geneQuery.toUrlEncodedJson() + "&serializedFilterFactors=" + serializedFilterFactors;
 
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("accession", experiment.getAccession());
         experimentDescription.addProperty("type", experiment.getType().getDescription());
-        experimentDescription.addProperty(
-                "relUrl", "experiments/" + experiment.getAccession()+additionalQueryOptionsString);
+        experimentDescription.addProperty("relUrl",
+                MessageFormat.format("experiments/{0}?geneQuery={1}", experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson() ));
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
         return experimentDescription;
