@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -12,13 +11,11 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 public class BaselineExperiment extends Experiment<AssayGroup> {
-
-    private final Map<AssayGroup, FactorGroup> experimentalFactors;
-
-
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                        String description, String displayName, String disclaimer, Species species,
@@ -29,16 +26,10 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
         super(experimentType, accession, lastUpdate, displayName, description, disclaimer, hasRData, species,
               pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
               alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
-
-        ImmutableMap.Builder<AssayGroup, FactorGroup> b = ImmutableMap.builder();
-        for(AssayGroup assayGroup: assayGroups){
-            b.put(assayGroup, experimentDesign.getFactors(assayGroup.getFirstAssayAccession()));
-        }
-        experimentalFactors = b.build();
     }
 
     public FactorGroup getFactors(AssayGroup assayGroup){
-        return experimentalFactors.get(assayGroup);
+        return experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
     }
 
     @Override

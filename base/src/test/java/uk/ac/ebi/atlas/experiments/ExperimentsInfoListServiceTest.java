@@ -33,7 +33,7 @@ public class ExperimentsInfoListServiceTest {
           "      \"numberOfContrasts\": \\d+,\n" +
           "      \"species\": \"species\",\n" +
           "      \"kingdom\": \"kingdom\",\n" +
-          "      \"experimentalFactors\": [],\n" +
+          "      \"experimentalFactors\": [\"type1\",\"type2\"],\n" +
           "      \"arrayDesigns\": [],\n" +
           "      \"arrayDesignNames\": []\n" +
           "    }\n" +

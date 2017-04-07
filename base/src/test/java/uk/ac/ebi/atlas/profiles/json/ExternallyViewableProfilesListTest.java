@@ -8,7 +8,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
 public class ExternallyViewableProfilesListTest {
 
@@ -46,15 +44,17 @@ public class ExternallyViewableProfilesListTest {
 
         String defaultQueryFactorType = "type1";
 
+
+
         BaselineExperimentProfile firstProfile = new BaselineExperimentProfile(BaselineExperimentSlice.create
-                (BaselineExperimentTest.mockExperiment("experiment_1"),
+                (BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
                         AssayGroupsFake.get().get(0)));
 
         FactorAcrossExperiments f11 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "11"));
         firstProfile.add(f11, new BaselineExpression(12.34, "11"));
 
         BaselineExperimentProfile secondProfile = new BaselineExperimentProfile(BaselineExperimentSlice.create(
-                BaselineExperimentTest.mockExperiment("experiment_2"),
+                BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_2"),
                 AssayGroupsFake.get().get(0)));
         FactorAcrossExperiments f21 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "21"));
 
@@ -99,10 +99,6 @@ public class ExternallyViewableProfilesListTest {
         AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
 
         List<AssayGroup> factorsAcrossExperiments = ImmutableList.of(g1, g2);
-
-
-        BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(
-                mock(ExperimentDesign.class), factorsAcrossExperiments, "accession");
 
         BaselineProfile p1 = new BaselineProfile("gene_1_id", "gene_1_name");
         p1.add(g1, new BaselineExpression(1000, "g1"));

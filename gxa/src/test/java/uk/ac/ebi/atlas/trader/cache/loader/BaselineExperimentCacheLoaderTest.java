@@ -39,19 +39,9 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
 
-    class Loader extends BaselineExperimentFactory {
-
-        protected Loader(ExperimentType experimentType,
-                         ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
-            super(experimentType, configurationTrader, speciesFactory);
-        }
-    }
-
     private String experimentAccession = "E-MOCK-1";
 
-    private ExperimentType experimentType = ExperimentType.RNASEQ_MRNA_BASELINE;
-
-    private ExperimentDTO dto = new ExperimentDTO(experimentAccession, experimentType, "homo_sapiens", Collections
+    private ExperimentDTO dto = new ExperimentDTO(experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE, "homo_sapiens", Collections
             .<String>emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
     @Mock
     private ConfigurationTrader configurationTrader ;
@@ -85,7 +75,7 @@ public class BaselineExperimentCacheLoaderTest {
 
         when(experimentDesign.getFactors(Matchers.anyString())).thenReturn(mock(FactorSet.class));
 
-        subject = new Loader(experimentType, configurationTrader, speciesFactoryMock);
+        subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
         when(baselineConfiguration.getDefaultQueryFactorType()).thenReturn("ORGANISM_PART");

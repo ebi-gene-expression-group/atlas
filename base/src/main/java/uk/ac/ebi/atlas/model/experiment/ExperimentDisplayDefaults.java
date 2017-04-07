@@ -83,7 +83,7 @@ public abstract class ExperimentDisplayDefaults {
         })).build());
     }
 
-    public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
+    static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
                                                    List<String> prescribedOrderOfFilters){
         ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
         for(Factor factor : defaultFilterFactors){
