@@ -67,7 +67,7 @@ public class ExperimentalFactorsBuilder {
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
         return new ExperimentalFactors(buildFactorsByType(), factorNamesByType, orderedFactorGroups,
-                menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+                orderedFactorGroupsByAssayGroupId, defaultQueryType);
     }
 
     public ExperimentalFactors createFromXML() {
@@ -76,7 +76,7 @@ public class ExperimentalFactorsBuilder {
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
         return new ExperimentalFactors(buildXmlFactorsByType(), factorNamesByType, orderedFactorGroups,
-                menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+                orderedFactorGroupsByAssayGroupId, defaultQueryType);
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {

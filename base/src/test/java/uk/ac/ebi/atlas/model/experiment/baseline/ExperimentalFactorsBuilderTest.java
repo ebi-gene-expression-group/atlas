@@ -67,22 +67,8 @@ public class ExperimentalFactorsBuilderTest {
     }
 
     @Test
-    public void testCoOccurringFactors() {
-        subject.create();
-
-        SetMultimap<Factor, Factor> coOccurringFactors = ExperimentalFactors.createCoOccurringFactors(factorGroups);
-
-        assertThat(coOccurringFactors.get(factorWithType1), contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
-    }
-
-    @Test
     public void testDefaultQueryType() {
         assertThat(subject.create().getDefaultQueryFactorType(), is(DEFAULT_QUERY_TYPE));
-    }
-
-    @Test
-    public void testDefaultFilterFactors() {
-        assertThat(subject.create().getDefaultFilterFactors(), contains(FACTOR1));
     }
 
     @Test(expected = IllegalStateException.class)

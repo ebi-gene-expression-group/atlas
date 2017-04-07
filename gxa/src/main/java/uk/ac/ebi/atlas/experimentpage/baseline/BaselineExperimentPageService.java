@@ -61,9 +61,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
 
-        //model.addAttribute("queryFactorName", experiment.getExperimentalFactors().getFactorDisplayName(preferences.getQueryFactorType()));
-        //model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
-
         model.addAttribute("enableEnsemblLauncher", !isWidget&& !requestContext.getDataColumnsToReturn().isEmpty()
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 requestContext.getDataColumnsToReturn().iterator().next().getId()));

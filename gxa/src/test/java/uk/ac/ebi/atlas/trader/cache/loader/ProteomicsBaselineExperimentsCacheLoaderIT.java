@@ -121,7 +121,6 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     public void experimentalFactors() throws Exception {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
-        //ImmutableList<FactorGroup> allFactors = experiment.getExperimentalFactors().getFactorGroupsInOrder();
         //System.out.println("\"" + Joiner.on("\", \"").join(allFactors));
 
         FactorGroup adultAdrenal = new FactorSet().add(new Factor(DEVELOPMENTAL_STAGE, "adult")).add( new Factor

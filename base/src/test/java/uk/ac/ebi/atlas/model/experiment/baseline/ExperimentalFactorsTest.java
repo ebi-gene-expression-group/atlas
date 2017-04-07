@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.experiment.baseline.*;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import java.util.*;
@@ -33,11 +32,6 @@ public class ExperimentalFactorsTest {
     @Mock
     private Factor defaultFilterFactorMock;
 
-    @Mock
-    private ExperimentRun experimentRun1Mock;
-    @Mock
-    private ExperimentRun experimentRun2Mock;
-
     private ExperimentalFactors subject;
 
     private Factor factorWithType1 = new Factor("TYPE1",  "VALUE1");
@@ -58,9 +52,6 @@ public class ExperimentalFactorsTest {
     public void initSubject() {
         when(defaultFilterFactorMock.getType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
 
-        when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1);
-        when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2);
-
         Map<String, String> factorNameByType = new HashMap<>();
         factorNameByType.put("TYPE1", "NAME1");
         factorNameByType.put("TYPE2", "NAME2");
@@ -80,39 +71,6 @@ public class ExperimentalFactorsTest {
     }
 
     @Test
-    public void getFactorNameShouldSucceedForValidType() {
-        //when
-        String factorName = subject.getFactorDisplayName("TYPE2");
-        //then
-        assertThat(factorName, is("NAME2"));
-    }
-
-    @Test
-    public void getFactorsWithGivenNameCooccurringWithGivenFactorTest() {
-        //when
-        Set<Factor> factors = subject.getCoOccurringFactors(factorWithType2);
-        //then
-        assertThat(factors, contains(factorWithType1, factorWithType3));
-
-        //when
-        factors = subject.getCoOccurringFactors(factorWithType1);
-        //then
-        assertThat(factors, contains(factorWithType2DifferentValue, factorWithType2, factorWithType3DifferentValue, factorWithType3));
-
-        //when
-        factors = subject.getCoOccurringFactors(factorWithType3);
-        //then
-        assertThat(factors, contains(factorWithType1, factorWithType2));
-
-    }
-
-    @Test
-    public void getMenuFactorNames() {
-        assertThat(subject.getMenuFilterFactorNames(), contains("NAME1", "NAME2"));
-    }
-
-
-    @Test
     public void getComplementFactors() {
         SortedSet<Factor> complement = subject.getComplementFactors(Sets.newHashSet(factorWithType1, factorWithType2));
         assertThat(complement, contains(factorWithType3));
@@ -129,31 +87,4 @@ public class ExperimentalFactorsTest {
         assertThat(complement.isEmpty(), is(true));
     }
 
-    @Test
-    public void getComplementAssayGroupFactors() {
-        List<AssayGroupFactor> complement = subject.getComplementAssayGroupFactors(Sets.newHashSet(factorWithType1,
-                factorWithType2));
-
-        assertThat(complement, contains(new AssayGroupFactor(G1, factorWithType3)));
-        assertThat(complement, not(hasItem(new AssayGroupFactor(G2, factorWithType3DifferentValue))));
-    }
-
-    @Test
-    public void getComplementAssayGroupFactors2() {
-        List<AssayGroupFactor> complement = subject.getComplementAssayGroupFactors(Sets.newHashSet(factorWithType1,
-                factorWithType3));
-
-        assertThat(complement, contains(new AssayGroupFactor(G1, factorWithType2)));
-        assertThat(complement, not(hasItem(new AssayGroupFactor(G2, factorWithType3DifferentValue))));
-    }
-
-    @Test
-    public void getFactorGroupedByAssayGroupId() {
-        ImmutableMap<String, Factor> type2ByAssayGroupId = subject.getFactorGroupedByAssayGroupId("TYPE2");
-
-        assertThat(type2ByAssayGroupId.size(), is(2));
-        assertThat(type2ByAssayGroupId, hasEntry(G1, factorWithType2));
-        assertThat(type2ByAssayGroupId, hasEntry(G2, factorWithType2DifferentValue));
-
-    }
 }

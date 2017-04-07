@@ -40,21 +40,6 @@ public class FactorSetTest {
     }
 
     @Test
-    public void testContainsAll() throws Exception {
-        assertThat(subject.containsAll(Sets.newHashSet(factorOne, factorThree)), is(true));
-        assertThat(subject.containsAll(Sets.newHashSet(factorTwo)), is(true));
-
-        Factor factorX = new Factor("typeX", "valueX");
-        assertThat(subject.containsAll(Sets.newHashSet(factorTwo, factorX)), is(false));
-
-        Factor factorEqualsToFactor2 = new Factor("type2", "value2");
-        assertThat(subject.containsAll(Sets.newHashSet(factorEqualsToFactor2)), is(true));
-
-        assertThat(subject.containsAll(Sets.newHashSet(factorEqualsToFactor2, factorTwo, factorThree)), is(true));
-
-    }
-
-    @Test
     public void equalsShouldSucceed() {
 
         FactorSet equalsToSubject = new FactorSet().add(factorTwo).add(factorOne).add(factorThree);
@@ -88,50 +73,9 @@ public class FactorSetTest {
     }
 
     @Test
-    public void overlapShouldSucceed() throws Exception {
-
-        List<Factor> overlappingFactors = Lists.newArrayList(factorTwo, new Factor("typeX", "valueX"));
-
-        assertThat(subject.overlapsWith(overlappingFactors), is(true));
-
-        overlappingFactors = Lists.newArrayList(factorTwo);
-
-        assertThat(subject.overlapsWith(overlappingFactors), is(true));
-
-        overlappingFactors = Lists.newArrayList(factorTwo, factorOne, factorThree,
-                factorTwo, new Factor("typeX", "valueX"));
-
-        assertThat(subject.overlapsWith(overlappingFactors), is(true));
-
-    }
-
-    @Test
-    public void overlapShouldFail() throws Exception {
-
-        FactorSet overlappingFactorSet = new FactorSet().add(new Factor("typeX", "valueX"));
-
-        assertThat(subject.equals(overlappingFactorSet), is(false));
-
-        overlappingFactorSet = new FactorSet();
-
-        assertThat(subject.equals(overlappingFactorSet), is(false));
-    }
-
-
-    @Test
     public void testRemove() throws Exception {
         List<Factor> afterRemoval = Lists.newArrayList(factorThree);
         assertThat(subject.without(Lists.newArrayList(factorOne, factorTwo)), is(afterRemoval));
-    }
-
-    @Test
-    public void containsShouldSucceed() throws Exception {
-        assertThat(subject.contains(factorOne), is(true));
-    }
-
-    @Test
-    public void containsShouldFail() throws Exception {
-        assertThat(subject.contains(new Factor("typeX", "valueX")), is(false));
     }
 
     @Test

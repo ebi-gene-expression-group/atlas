@@ -9,12 +9,10 @@ import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class FactorSet implements FactorGroup {
 
@@ -50,11 +48,6 @@ public class FactorSet implements FactorGroup {
     @Override
     public Factor factorOfType(String type) {
         return factorsByType.get(type);
-    }
-
-    @Override
-    public boolean containsAll(Set<Factor> factors) {
-        return factorsByType.values().containsAll(factors);
     }
 
     @Override
@@ -104,11 +97,6 @@ public class FactorSet implements FactorGroup {
     }
 
     @Override
-    public boolean overlapsWith(Collection<Factor> factors) {
-        return !Collections.disjoint(factorsByType.values(), factors);
-    }
-
-    @Override
     public List<Factor> without(Collection<Factor> factors) {
         ArrayList<Factor> allFactors = Lists.newArrayList(factorsByType.values());
 
@@ -122,11 +110,6 @@ public class FactorSet implements FactorGroup {
         HashMap<String, Factor> factorsByTypeClone = new HashMap<>(factorsByType);
         factorsByTypeClone.remove(factorType);
         return new FactorSet(factorsByTypeClone);
-    }
-
-    @Override
-    public boolean contains(Factor factor) {
-        return factorsByType.containsValue(factor);
     }
 
     // Map <type, value>

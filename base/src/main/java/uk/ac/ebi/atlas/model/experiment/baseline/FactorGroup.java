@@ -11,13 +11,7 @@ public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
     Factor factorOfType(String type);
 
-    boolean containsAll(Set<Factor> factors);
-
-    boolean overlapsWith(Collection<Factor> factors);
-
     List<Factor> without(Collection<Factor> factors);
-
-    boolean contains(Factor factor);
 
     FactorGroup withoutType(String factorType);
 
