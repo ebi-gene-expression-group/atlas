@@ -3,14 +3,13 @@ package uk.ac.ebi.atlas.species;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
+import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +28,7 @@ public class SpeciesInfoListService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifiersReader.class);
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
+    private List<SpeciesInfo> speciesInfoList;
 
     private final LazyReference<List<SpeciesInfo>> topSixSpeciesByExperimentCount = new LazyReference<List<SpeciesInfo>>() {
         @Override
@@ -63,38 +63,37 @@ public class SpeciesInfoListService {
         this.experimentInfoListService = experimentInfoListService;
     }
 
-    private List<SpeciesInfo> getSpeciesByExperimentCount() {
-        List<SpeciesInfo> speciesInfoList = new ArrayList<>();
+    private void populateSpeciesByExperimentCount() {
+        speciesInfoList = new ArrayList<>();
 
+        List<ExperimentInfo> experimentInfos = experimentInfoListService.listPublicExperiments();
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
             String species = speciesProperties.referenceName();
 
-            JsonObject experimentsJson = experimentInfoListService.getExperimentsJson();
-            JsonArray data = experimentsJson.getAsJsonArray("aaData");
-
-            String kingdom="";
+            String kingdom = "";
             int totalExperiments = 0;
             int totalBaseline = 0;
             int totalDifferential = 0;
-            for (int i=0; i<data.size(); i++) {
-                if (data.get(i).getAsJsonObject().get("species").getAsString().toLowerCase().equals(species)) {
-                    totalExperiments ++;
 
-                    kingdom = data.get(i).getAsJsonObject().get("kingdom").getAsString();
-                    String experimentType = data.get(i).getAsJsonObject().get("experimentType").getAsString();
-                    if (experimentType.equals(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL.name()) || experimentType.equals(ExperimentType.MICROARRAY_ANY.name())) {
+            for (ExperimentInfo experimentInfo : experimentInfos) {
+
+                if (experimentInfo.getSpecies().toLowerCase().equals(species)) {
+                    totalExperiments++;
+
+                    kingdom = experimentInfo.getKingdom();
+                    ExperimentType experimentType = experimentInfo.getExperimentType();
+                    if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL || experimentType == ExperimentType.MICROARRAY_ANY) {
                         totalDifferential ++;
                     }
-
-                    if (experimentType.equals(ExperimentType.RNASEQ_MRNA_BASELINE.name()) || experimentType.equals(ExperimentType.PROTEOMICS_BASELINE.name())) {
+                    if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE || experimentType == ExperimentType.PROTEOMICS_BASELINE) {
                         totalBaseline ++;
                     }
                 }
             }
 
             SpeciesInfo speciesInfo = new SpeciesInfo(species, kingdom, totalExperiments, totalBaseline, totalDifferential);
-
             speciesInfoList.add(speciesInfo);
+
         }
 
         Collections.sort(speciesInfoList, new Comparator<SpeciesInfo>() {
@@ -110,7 +109,6 @@ public class SpeciesInfoListService {
 
         });
 
-        return speciesInfoList;
     }
 
     private List<SpeciesInfo> getFirstSixSpecies(List<SpeciesInfo> speciesList) {
@@ -118,7 +116,6 @@ public class SpeciesInfoListService {
     }
 
     private List<SpeciesInfo> filterListByKingdom(String kingdom) {
-        List<SpeciesInfo> speciesInfoList = getSpeciesByExperimentCount();
         List<SpeciesInfo> kingdomSubList = new ArrayList<>();
 
         for (SpeciesInfo info : speciesInfoList) {
@@ -135,12 +132,16 @@ public class SpeciesInfoListService {
         stopWatch.start();
         LOGGER.info("Sorting species by experiment count (normal mode)...");
 
-        List<SpeciesInfo> speciesInfoList = getFirstSixSpecies(getSpeciesByExperimentCount());
+        if(speciesInfoList == null) {
+            populateSpeciesByExperimentCount();
+        }
+
+        List<SpeciesInfo> speciesInfos = getFirstSixSpecies(speciesInfoList);
 
         stopWatch.stop();
         LOGGER.info("Sorting species by experiment count (normal mode): {} seconds", stopWatch.getTotalTimeSeconds());
 
-        return speciesInfoList;
+        return speciesInfos;
     }
 
     public List<SpeciesInfo> getFilterByKingdom (String kingdom) {
