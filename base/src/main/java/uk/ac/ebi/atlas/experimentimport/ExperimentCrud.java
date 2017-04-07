@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
@@ -9,6 +11,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParserOutput;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -84,13 +87,19 @@ public class ExperimentCrud {
                 condensedSdrfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
-                        .getSpeciesForAssays(experimentConfiguration.getAssayAccessions()), isPrivate), accessKey);
+                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(new Function<AssayGroup, Iterable<String>>() {
+                            @Override
+                            public Iterable<String> apply(AssayGroup assayGroup) {
+                                return assayGroup.assaysAnalyzedForThisDataColumn();
+                            }
+                        }).toSet()), isPrivate), accessKey);
 
     }
 
     private void crossValidateExperimentFiles(ExperimentConfiguration experimentConfiguration,
                                               CondensedSdrfParserOutput condensedSdrfParserOutput){
-        for(String assayGroupId : experimentConfiguration.getAssayAccessions()){
+        for(AssayGroup assayGroup : experimentConfiguration.getAssayGroups()){
+            String assayGroupId = assayGroup.getId();
             checkState(! condensedSdrfParserOutput.getExperimentDesign().getFactorValues(assayGroupId).isEmpty(),
                     MessageFormat.format("Factor values for assay id {0} missing from experiment design file!",
                             assayGroupId));
