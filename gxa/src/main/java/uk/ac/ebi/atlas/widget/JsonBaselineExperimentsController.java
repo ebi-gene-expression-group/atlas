@@ -110,7 +110,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                                     }
                                 }
                         )
-                )
+                ).or(JsonNull.INSTANCE)
         );
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();

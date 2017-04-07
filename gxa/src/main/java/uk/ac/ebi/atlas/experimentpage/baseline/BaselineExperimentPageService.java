@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
@@ -18,10 +19,8 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
@@ -84,13 +83,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             return heatmapDataToJsonService.jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
         }
 
-        Set<OntologyTerm> ontologyTerms = new HashSet<>();
-        for(AssayGroup dataColumnDescriptor: dataColumnsToReturn){
-            ontologyTerms.addAll(requestContext.ontologyTermsForColumn(dataColumnDescriptor));
-        }
-
-        result.add("anatomogram", anatomogramFactory.get(requestContext.getQueryFactorType(),
-                experiment.getSpecies(), ontologyTerms));
+        result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).or(JsonNull.INSTANCE));
 
         model.addAttribute("isWidget", isWidget);
 
