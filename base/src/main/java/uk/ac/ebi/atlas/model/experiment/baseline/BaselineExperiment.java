@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -15,9 +16,13 @@ import java.util.*;
 
 public class BaselineExperiment extends Experiment<AssayGroup> {
 
-    private ExperimentalFactors experimentalFactors;
+    private ExperimentalFactors experimentalFactorsDeprecated;
 
-    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
+    private final Map<AssayGroup, FactorGroup> experimentalFactors;
+
+
+
+    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactorsDeprecated,
                        String description, String displayName, String disclaimer, Species species,
                        boolean hasRData, Collection<String> pubMedIds, ExperimentDesign experimentDesign,
                        List<AssayGroup> assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription,
@@ -27,15 +32,21 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
               pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
               alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
 
-        this.experimentalFactors = experimentalFactors;
+        this.experimentalFactorsDeprecated = experimentalFactorsDeprecated;
+
+        ImmutableMap.Builder<AssayGroup, FactorGroup> b = ImmutableMap.builder();
+        for(AssayGroup assayGroup: assayGroups){
+            b.put(assayGroup, experimentDesign.getFactors(assayGroup.getFirstAssayAccession()));
+        }
+        experimentalFactors = b.build();
     }
 
     public ExperimentalFactors getExperimentalFactors() {
-        return experimentalFactors;
+        return experimentalFactorsDeprecated;
     }
 
-    public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
-        return getExperimentalFactors().getFactors(assayGroupIds, factorType);
+    public FactorGroup getFactors(AssayGroup assayGroup){
+        return experimentalFactors.get(assayGroup);
     }
 
     @Override

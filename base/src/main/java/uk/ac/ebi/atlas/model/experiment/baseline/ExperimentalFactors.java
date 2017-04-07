@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkState;
  *  This is currently tied up because of the widget code.
  *
  */
-@Deprecated //replaced with ExperimentDisplayDefaults
+@Deprecated //replaced with ExperimentDisplayDefaults and a AssayGroup->FactorGroup map
 public class ExperimentalFactors implements Serializable {
 
     private String defaultQueryFactorType;
