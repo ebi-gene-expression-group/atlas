@@ -15,7 +15,6 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
@@ -101,7 +100,6 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineExperimentMock.getSpecies()).thenReturn(species);
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
-        when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);
 
         when(solrQueryService.fetchResponse(geneQuery, species.getReferenceName())).thenReturn(new GeneQueryResponse());
     }

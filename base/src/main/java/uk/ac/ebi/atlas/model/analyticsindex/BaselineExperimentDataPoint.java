@@ -11,7 +11,7 @@ public class BaselineExperimentDataPoint extends ExperimentDataPoint{
     public BaselineExperimentDataPoint
             (BaselineExperiment experiment, BaselineAnalytics baselineAnalytics, String conditionSearch) {
         super(baselineAnalytics.getGeneId(), experiment, conditionSearch);
-        propertyMap.put("defaultQueryFactorType", experiment.getExperimentalFactors().getDefaultQueryFactorType());
+        propertyMap.put("defaultQueryFactorType", experiment.getDisplayDefaults().defaultQueryFactorType());
         propertyMap.put("assayGroupId", baselineAnalytics.getAssayGroupId());
         propertyMap.put("expressionLevel", baselineAnalytics.getExpressionLevel());
 

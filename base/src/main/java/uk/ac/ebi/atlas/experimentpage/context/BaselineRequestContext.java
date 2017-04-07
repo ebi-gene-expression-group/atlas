@@ -6,7 +6,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -50,12 +49,13 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
     }
 
     public Set<OntologyTerm> ontologyTermsForColumn(AssayGroup assayGroup){
-        ImmutableSet.Builder<OntologyTerm> b = ImmutableSet.builder();
-        for(Factor factor : experiment.getExperimentalFactors().getFactorGroup(assayGroup.getId())){
-            b.addAll(factor.getValueOntologyTerms());
-        }
-
-        return b.build();
+        return FluentIterable.from(experiment.getFactors(assayGroup)).transformAndConcat(new Function<Factor, Iterable<OntologyTerm>>() {
+            @Nullable
+            @Override
+            public Iterable<OntologyTerm> apply(@Nullable Factor factor) {
+                return factor.getValueOntologyTerms();
+            }
+        }).toSet();
     }
 
     LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {

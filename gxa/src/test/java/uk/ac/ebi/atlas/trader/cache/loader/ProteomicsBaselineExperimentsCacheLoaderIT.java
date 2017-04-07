@@ -127,8 +127,8 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
                 (ORGANISM_PART, "adrenal gland"));
         FactorGroup fetusTestis = new FactorSet().add(new Factor(DEVELOPMENTAL_STAGE, "fetus")).add( new Factor
                 (ORGANISM_PART, "testis"));
-        assertThat(experiment.getExperimentalFactors().getFactorGroup("g1"), is(adultAdrenal));
-        assertThat(experiment.getExperimentalFactors().getFactorGroup("g30"), is(fetusTestis));
+        assertThat(experiment.getFactors(experiment.getDataColumnDescriptor("g1")), is(adultAdrenal));
+        assertThat(experiment.getFactors(experiment.getDataColumnDescriptor("g30")), is(fetusTestis));
     }
 
     @Test

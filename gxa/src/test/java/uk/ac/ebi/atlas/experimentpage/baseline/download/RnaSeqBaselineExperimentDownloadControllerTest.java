@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
@@ -28,7 +27,6 @@ import java.util.TreeSet;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -87,7 +85,6 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
         when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
-        when(experimentalFactorsMock.getComplementFactors(anySetOf(Factor.class))).thenReturn(t);
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
 

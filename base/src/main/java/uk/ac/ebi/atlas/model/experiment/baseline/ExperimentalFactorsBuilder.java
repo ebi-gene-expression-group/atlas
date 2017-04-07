@@ -66,8 +66,7 @@ public class ExperimentalFactorsBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
-        return new ExperimentalFactors(
-                orderedFactorGroupsByAssayGroupId, defaultQueryType);
+        return null;
     }
 
     public ExperimentalFactors createFromXML() {
@@ -75,8 +74,7 @@ public class ExperimentalFactorsBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
-        return new ExperimentalFactors(
-                orderedFactorGroupsByAssayGroupId, defaultQueryType);
+        return null;
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {

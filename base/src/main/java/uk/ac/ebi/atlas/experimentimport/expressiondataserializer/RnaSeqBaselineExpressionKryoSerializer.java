@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 

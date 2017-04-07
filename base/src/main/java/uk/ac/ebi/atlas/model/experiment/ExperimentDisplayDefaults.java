@@ -39,7 +39,7 @@ public abstract class ExperimentDisplayDefaults {
 
     Note that for gene page, this what will go in the columns, and experiment + other factors will go on rows
      */
-    String defaultQueryFactorType() {
+    public String defaultQueryFactorType() {
         for(String filter: prescribedOrderOfFilters()){
             if(! defaultFilterValues().keySet().contains(filter)){
                 return filter;

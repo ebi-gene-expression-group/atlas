@@ -69,7 +69,6 @@ public class BaselineProfilesHeatMapWranglerTest {
 
         TreeSet<Factor> ts = new TreeSet<>();
         ts.add(mock(Factor.class));
-        when(experimentalFactors.getComplementFactors(anySetOf(Factor.class))).thenReturn(ts);
 
         subject = fakeWrangler(baselineRequestPreferences, experiment, httpServletRequest);
     }

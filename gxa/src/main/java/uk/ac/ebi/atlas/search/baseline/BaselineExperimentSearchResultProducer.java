@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Function;
 import com.google.common.collect.*;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
@@ -80,10 +81,9 @@ public class BaselineExperimentSearchResultProducer {
             BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
 
             for (BaselineExperimentExpression baselineExpression : expressionsByExperimentSlice.get(experimentSlice)) {
-                String assayGroupId = baselineExpression.assayGroupId();
+                AssayGroup assayGroup = experiment.getDataColumnDescriptor(baselineExpression.assayGroupId());
                 FactorAcrossExperiments f =
-                        new FactorAcrossExperiments(experiment.getExperimentalFactors()
-                                .getFactorGroup(assayGroupId)
+                        new FactorAcrossExperiments(experiment.getFactors(assayGroup)
                                 .factorOfType(defaultQueryFactorType));
                 allFactorsAcrossAllExperiments.add(f);
                 profile.add(f, new BaselineExpression(baselineExpression.expressionLevel(), f.getId()));
@@ -120,7 +120,7 @@ public class BaselineExperimentSearchResultProducer {
 
         for (Map.Entry<BaselineExperimentSlice, Collection<BaselineExperimentExpression>> baselineExperimentSliceCollectionEntry : expressionsByExperimentSlice.asMap().entrySet()) {
             BaselineExperiment experiment = baselineExperimentSliceCollectionEntry.getKey().experiment();
-            if (experiment.getExperimentalFactors().getDefaultQueryFactorType().equalsIgnoreCase(defaultQueryFactorType)) {
+            if (experiment.getDisplayDefaults().defaultQueryFactorType().equalsIgnoreCase(defaultQueryFactorType)) {
                 builder.putAll(baselineExperimentSliceCollectionEntry.getKey(), baselineExperimentSliceCollectionEntry.getValue());
             }
         }
@@ -143,12 +143,10 @@ public class BaselineExperimentSearchResultProducer {
         Function<BaselineExperimentExpression, BaselineExperimentSlice> createExperimentSlice = new Function<BaselineExperimentExpression, BaselineExperimentSlice>() {
             public BaselineExperimentSlice apply(BaselineExperimentExpression input) {
                 String experimentAccession = input.experimentAccession();
-                String assayGroupId = input.assayGroupId();
 
                 BaselineExperiment experiment = (BaselineExperiment) (experimentTrader.getPublicExperiment(experimentAccession));
-                FactorGroup filterFactors = experiment.getExperimentalFactors().getNonDefaultFactors(assayGroupId);
 
-                return BaselineExperimentSlice.create(experiment, filterFactors);
+                return BaselineExperimentSlice.create(experiment, experiment.getDataColumnDescriptor(input.assayGroupId()));
             }
         };
 
