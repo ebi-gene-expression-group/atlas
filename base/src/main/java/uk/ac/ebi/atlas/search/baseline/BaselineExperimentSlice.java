@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import com.google.auto.value.AutoValue;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 
-import java.util.SortedSet;
+import java.util.Set;
 
 @AutoValue
 public abstract class BaselineExperimentSlice {
@@ -19,7 +19,7 @@ public abstract class BaselineExperimentSlice {
     public abstract FactorGroup filterFactors();
 
     // these will typically be the tissue (ie: ORGANISM_PART) factors for the slice
-    public SortedSet<Factor> nonFilterFactors() {
+    public Set<Factor> nonFilterFactors() {
         return experiment().getExperimentalFactors().getComplementFactors(filterFactors());
     }
 

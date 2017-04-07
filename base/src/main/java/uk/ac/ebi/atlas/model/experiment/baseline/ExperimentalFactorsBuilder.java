@@ -66,7 +66,7 @@ public class ExperimentalFactorsBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
-        return new ExperimentalFactors(buildFactorsByType(), factorNamesByType, orderedFactorGroups,
+        return new ExperimentalFactors(
                 orderedFactorGroupsByAssayGroupId, defaultQueryType);
     }
 
@@ -75,7 +75,7 @@ public class ExperimentalFactorsBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
-        return new ExperimentalFactors(buildXmlFactorsByType(), factorNamesByType, orderedFactorGroups,
+        return new ExperimentalFactors(
                 orderedFactorGroupsByAssayGroupId, defaultQueryType);
     }
 
