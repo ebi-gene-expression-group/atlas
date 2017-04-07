@@ -5,7 +5,7 @@
     <div class="row atlas-row">
         <!-- local-title -->
         <div class="columns small-8" id="local-title">
-            <h1><a href="https://www.ebi.ac.uk/gxa/home" title="Back to Expression Atlas homepage"><div class="atlas-logo"></div>Expression Atlas</a></h1>
+            <h1><a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage"><div class="atlas-logo"></div>Expression Atlas</a></h1>
             <!-- <img src="${pageContext.request.contextPath}/resources/images/logos/logo_atlas_transparent.png" alt="Expression Atlas logo"> -->
             <h4 class="show-for-large">Gene expression across species and biological conditions</h4>
         </div>
