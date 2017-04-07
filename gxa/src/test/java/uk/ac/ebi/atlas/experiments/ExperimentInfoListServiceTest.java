@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -20,6 +21,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -69,6 +71,8 @@ public class ExperimentInfoListServiceTest {
         Date lastUpdateStub = new GregorianCalendar(39 + 1900, 12, 12).getTime();
 
         List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("RUN", ASSAY_1, ASSAY_2));
+
+        when(experimentDesignMock.getFactors(Matchers.anyString())).thenReturn(mock(FactorSet.class));
 
         baselineExperiment = Mockito.spy(new BaselineExperimentBuilder()
                 .forSpecies(new Species(SPECIES, SpeciesProperties.UNKNOWN))
