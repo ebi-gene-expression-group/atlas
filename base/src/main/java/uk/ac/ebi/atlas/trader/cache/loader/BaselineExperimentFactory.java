@@ -11,8 +11,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.atlas.model.experiment.baseline.ExperimentalFactorsFactory;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
@@ -24,23 +22,12 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
 
     private final ExperimentType experimentType;
     private final ConfigurationTrader configurationTrader;
-    private final ExperimentalFactorsFactory experimentalFactorsFactory;
     private final SpeciesFactory speciesFactory;
-    private final DataFileHub dataFileHub;
 
-    protected BaselineExperimentFactory(ExperimentType experimentType, ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
-        this(new ExperimentalFactorsFactory(), experimentType, configurationTrader,
-                speciesFactory,dataFileHub);
-    }
-
-    BaselineExperimentFactory(ExperimentalFactorsFactory experimentalFactorsFactory, ExperimentType experimentType,
-                              ConfigurationTrader configurationTrader,
-                              SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
-        this.experimentalFactorsFactory = experimentalFactorsFactory;
+    protected BaselineExperimentFactory(ExperimentType experimentType, ConfigurationTrader configurationTrader, SpeciesFactory speciesFactory) {
         this.experimentType = experimentType;
         this.configurationTrader = configurationTrader;
         this.speciesFactory = speciesFactory;
-        this.dataFileHub = dataFileHub;
     }
 
 
@@ -55,21 +42,6 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
 
         List<AssayGroup> assayGroups = configuration.getAssayGroups();
 
-        String[] orderedAssayGroupIds;
-        boolean orderCurated;
-
-        if (factorsConfig.orderCurated()) {
-            orderCurated = true;
-            orderedAssayGroupIds = new String[assayGroups.size()];
-            for(int i = 0 ; i < assayGroups.size() ; i++){
-                orderedAssayGroupIds[i] = assayGroups.get(i).getId();
-            }
-
-        } else {
-            orderCurated = false;
-            orderedAssayGroupIds = readOrderedAssayGroupIds(experimentAccession, experimentDTO.getExperimentType());
-        }
-
         return new BaselineExperimentBuilder()
                 .ofType(experimentType)
                 .forSpecies(speciesFactory.create(experimentDTO.getSpecies()))
@@ -81,9 +53,6 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                 .withPubMedIds(experimentDTO.getPubmedIds())
                 .withAssayGroups(assayGroups)
                 .withExperimentDesign(experimentDesign)
-                .withExperimentalFactors(experimentalFactorsFactory.createExperimentalFactors(experimentAccession,
-                        experimentDesign,
-                        factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated))
                 .withDisplayDefaults(ExperimentDisplayDefaults.create(factorsConfig.getDefaultFilterFactors(),
                         factorsConfig.getDefaultQueryFactorType(),
                         factorsConfig.getMenuFilterFactorTypes()))
@@ -104,10 +73,6 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                     (alternativeViewAccession).getDefaultQueryFactorType().toLowerCase());
         }
         return Pair.of(accessions, descriptions);
-    }
-
-    private String[] readOrderedAssayGroupIds(String experimentAccession , ExperimentType experimentType){
-        return readOrderedAssayGroupIds(dataFileHub.getBaselineExperimentFiles(experimentAccession).main.get().readLine(0), experimentType);
     }
 
     String[] readOrderedAssayGroupIds(String[] experimentRunHeaders, ExperimentType experimentType){

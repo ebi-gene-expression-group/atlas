@@ -68,9 +68,6 @@ public class BaselineProfilesWriterServiceTest {
 
     BaselineRequestContext baselineRequestContext;
 
-    @Mock
-    ExperimentalFactors experimentalFactorsMock;
-
     String geneName = "some_gene";
     String geneId = "some_gene_id";
     SemanticQuery geneQuery = SemanticQuery.create(geneName);
@@ -95,7 +92,6 @@ public class BaselineProfilesWriterServiceTest {
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
-        when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         Species species = new Species("some species", SpeciesProperties.UNKNOWN);
         when(baselineExperimentMock.getSpecies()).thenReturn(species);
         TreeSet<Factor> t = new TreeSet<>();

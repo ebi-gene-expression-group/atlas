@@ -6,10 +6,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
-import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
@@ -48,18 +48,14 @@ public class ExternallyViewableProfilesListTest {
 
         BaselineExperimentProfile firstProfile = new BaselineExperimentProfile(BaselineExperimentSlice.create
                 (BaselineExperimentTest.mockExperiment("experiment_1"),
-                new FactorSet()
-                .add(new Factor(defaultQueryFactorType, "11"))
-                .add(new Factor("type2", "12"))
-                .add(new Factor("type3", "13"))));
+                        AssayGroupsFake.get().get(0)));
 
         FactorAcrossExperiments f11 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "11"));
         firstProfile.add(f11, new BaselineExpression(12.34, "11"));
 
         BaselineExperimentProfile secondProfile = new BaselineExperimentProfile(BaselineExperimentSlice.create(
                 BaselineExperimentTest.mockExperiment("experiment_2"),
-                new FactorSet()
-                        .add(new Factor(defaultQueryFactorType, "21"))));
+                AssayGroupsFake.get().get(0)));
         FactorAcrossExperiments f21 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "21"));
 
         secondProfile.add(f21, new BaselineExpression(56.78, "21"));
@@ -105,7 +101,7 @@ public class ExternallyViewableProfilesListTest {
         List<AssayGroup> factorsAcrossExperiments = ImmutableList.of(g1, g2);
 
 
-        BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(mock(ExperimentalFactors.class),
+        BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(
                 mock(ExperimentDesign.class), factorsAcrossExperiments, "accession");
 
         BaselineProfile p1 = new BaselineProfile("gene_1_id", "gene_1_name");

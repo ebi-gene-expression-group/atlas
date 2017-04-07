@@ -81,7 +81,6 @@ public class ExperimentInfoListServiceTest {
                 .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroups)
-                .withExperimentalFactors(mock(ExperimentalFactors.class))
                 .withPubMedIds(ImmutableSet.<String>of())
                 .create());
 

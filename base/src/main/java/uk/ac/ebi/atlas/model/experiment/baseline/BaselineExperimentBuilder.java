@@ -35,7 +35,6 @@ public class BaselineExperimentBuilder {
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
     private List<AssayGroup> assayGroups;
-    private ExperimentalFactors experimentalFactors;
     private ExperimentDisplayDefaults experimentDisplayDefaults;
     private ExperimentType experimentType;
     private List<String> alternativeViews = Collections.emptyList();
@@ -68,11 +67,6 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDataProviderDescription(List<String> dataProviderDescription) {
         this.dataProviderDescription = dataProviderDescription;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withExperimentalFactors(ExperimentalFactors experimentalFactors) {
-        this.experimentalFactors = experimentalFactors;
         return this;
     }
 
@@ -128,7 +122,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new
-                BaselineExperiment(experimentType, experimentAccession, lastUpdate, experimentalFactors, description,
+                BaselineExperiment(experimentType, experimentAccession, lastUpdate, description,
                 displayName, disclaimer, species, hasRData, pubMedIds, experimentDesign, assayGroups, dataProviderURL,
                 dataProviderDescription, alternativeViews, alternativeViewDescriptions , experimentDisplayDefaults);
     }
@@ -139,7 +133,6 @@ public class BaselineExperimentBuilder {
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkNotNull(species, "Please provide a species name");
         checkState(CollectionUtils.isNotEmpty(assayGroups), "Please provide a non empty set of AssayGroup objects");
-        checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
         checkState(pubMedIds != null, "Please provide a pubMedIds object");
 

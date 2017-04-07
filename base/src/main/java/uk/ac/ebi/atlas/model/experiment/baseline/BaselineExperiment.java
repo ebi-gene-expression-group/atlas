@@ -16,13 +16,11 @@ import java.util.*;
 
 public class BaselineExperiment extends Experiment<AssayGroup> {
 
-    private ExperimentalFactors experimentalFactorsDeprecated;
-
     private final Map<AssayGroup, FactorGroup> experimentalFactors;
 
 
 
-    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactorsDeprecated,
+    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                        String description, String displayName, String disclaimer, Species species,
                        boolean hasRData, Collection<String> pubMedIds, ExperimentDesign experimentDesign,
                        List<AssayGroup> assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription,
@@ -32,17 +30,11 @@ public class BaselineExperiment extends Experiment<AssayGroup> {
               pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
               alternativeViews, alternativeViewDescriptions, assayGroups, experimentDisplayDefaults);
 
-        this.experimentalFactorsDeprecated = experimentalFactorsDeprecated;
-
         ImmutableMap.Builder<AssayGroup, FactorGroup> b = ImmutableMap.builder();
         for(AssayGroup assayGroup: assayGroups){
             b.put(assayGroup, experimentDesign.getFactors(assayGroup.getFirstAssayAccession()));
         }
         experimentalFactors = b.build();
-    }
-
-    public ExperimentalFactors getExperimentalFactors() {
-        return experimentalFactorsDeprecated;
     }
 
     public FactorGroup getFactors(AssayGroup assayGroup){

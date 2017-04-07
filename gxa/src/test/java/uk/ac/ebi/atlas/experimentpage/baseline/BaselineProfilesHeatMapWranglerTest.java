@@ -45,11 +45,6 @@ public class BaselineProfilesHeatMapWranglerTest {
 
     HttpServletRequest httpServletRequest = new MockHttpServletRequest("GET", "https://www.ebi.ac.uk/gxa");
 
-    @Mock
-    private ExperimentalFactors experimentalFactors;
-
-    private JsonObject resultObject = new JsonObject();
-
     private BaselineProfilesHeatMapWrangler subject;
 
     private BaselineRequestPreferences baselineRequestPreferences;
@@ -62,7 +57,6 @@ public class BaselineProfilesHeatMapWranglerTest {
     public void setUp(){
         when(experiment.getAccession()).thenReturn(ACCESSION);
         when(experiment.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
-        when(experiment.getExperimentalFactors()).thenReturn(experimentalFactors);
 
         baselineRequestPreferences = new BaselineRequestPreferences();
         baselineRequestPreferences.setGeneQuery(SemanticQuery.create(GENE_WE_ASK_FOR));

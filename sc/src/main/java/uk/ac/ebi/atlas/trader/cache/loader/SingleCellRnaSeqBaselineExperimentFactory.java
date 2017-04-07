@@ -14,6 +14,6 @@ public class SingleCellRnaSeqBaselineExperimentFactory extends BaselineExperimen
     @Inject
     public SingleCellRnaSeqBaselineExperimentFactory(ConfigurationTrader configurationTrader,
                                                      SpeciesFactory speciesFactory, DataFileHub dataFileHub) {
-        super(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE, configurationTrader, speciesFactory, dataFileHub);
+        super(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE, configurationTrader, speciesFactory);
     }
 }

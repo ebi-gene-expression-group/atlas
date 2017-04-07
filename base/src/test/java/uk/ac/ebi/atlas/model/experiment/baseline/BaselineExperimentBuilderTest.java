@@ -40,9 +40,6 @@ public class BaselineExperimentBuilderTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
-    @Mock
-    private ExperimentalFactors experimentalFactors;
-
     @Test
     public void testCreate() throws Exception {
 
@@ -54,7 +51,6 @@ public class BaselineExperimentBuilderTest {
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
-                .withExperimentalFactors(experimentalFactors)
                 .withAssayGroups(AssayGroupsFake.get())
                 .withDataProviderURL(PROVIDER_URL)
                 .withDataProviderDescription(PROVIDER_DESCRIPTION)

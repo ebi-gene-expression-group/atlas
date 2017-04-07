@@ -32,9 +32,6 @@ public class BaselineExperimentTest {
     private static final String PUBMEDID = "PUBMEDID";
 
     @Mock
-    private ExperimentalFactors experimentalFactorsMock;
-
-    @Mock
     private ExperimentDesign experimentDesignMock;
 
 
@@ -50,7 +47,7 @@ public class BaselineExperimentTest {
 
 
 
-        subject = mockExperiment(experimentalFactorsMock, experimentDesignMock, assayGroups, "accession");
+        subject = mockExperiment(experimentDesignMock, assayGroups, "accession");
 
     }
 
@@ -59,20 +56,20 @@ public class BaselineExperimentTest {
     }
 
     public static BaselineExperiment mockExperiment(String accession){
-        return mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
+        return mockExperiment(mock(ExperimentDesign.class),
                 assayGroups, accession);
     }
 
-    public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
-            experimentDesign, List<AssayGroup> assayGroups, String accession){
+    public static BaselineExperiment mockExperiment(ExperimentDesign
+                                                            experimentDesign, List<AssayGroup> assayGroups, String accession){
 
-        return mockExperiment(experimentalFactors, experimentDesign, assayGroups,ExperimentDisplayDefaults.create(), accession);
+        return mockExperiment(experimentDesign, assayGroups,ExperimentDisplayDefaults.create(), accession);
     }
 
-    public static BaselineExperiment mockExperiment(ExperimentalFactors experimentalFactors, ExperimentDesign
-            experimentDesign, List<AssayGroup> assayGroups, ExperimentDisplayDefaults experimentDisplayDefaults, String accession){
+    public static BaselineExperiment mockExperiment(ExperimentDesign
+                                                            experimentDesign, List<AssayGroup> assayGroups, ExperimentDisplayDefaults experimentDisplayDefaults, String accession){
         return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,accession, new Date(),
-                experimentalFactors, "description", "displayName", "",
+                "description", "displayName", "",
                 new Species("species",
                         SpeciesProperties.create(
                                 "ensemblName", "defaulQueryFactorType",
@@ -84,11 +81,6 @@ public class BaselineExperimentTest {
     @Test
     public void testGetExperimentRunAccessions() throws Exception {
         assertThat(subject.getAnalysedRowsAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
-    }
-
-    @Test
-    public void testGetExperimentalFactors() throws Exception {
-        assertThat(subject.getExperimentalFactors(), is(experimentalFactorsMock));
     }
 
     @Test
@@ -108,7 +100,7 @@ public class BaselineExperimentTest {
         for(int i = 0 ; i< num; i++){
             assayGroups.add(new AssayGroup("id_"+i, "assay_"+i));
         }
-        assertThat(mockExperiment(mock(ExperimentalFactors.class), mock(ExperimentDesign.class),
+        assertThat(mockExperiment(mock(ExperimentDesign.class),
                 assayGroups, "accession").getDataColumnDescriptors(), is(assayGroups));
     }
 }

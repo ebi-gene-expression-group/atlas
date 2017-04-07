@@ -51,10 +51,6 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
     PrintWriter printWriterMock;
 
     @Mock
-    ExperimentalFactors experimentalFactorsMock;
-
-
-    @Mock
     ExperimentTrader experimentTraderMock;
     
     @Mock
@@ -81,7 +77,6 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
-        when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
