@@ -51,7 +51,7 @@
 <c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
     <div id="dataProvider">Raw Data Provider:
         <c:forEach var="dataProvider" items="${dataProviderURL}" varStatus="i">
-            <a id="goto-dataprovider" class="thick-link" title="Experiment Data Provider"
+            <a class="thick-link" title="Experiment Data Provider"
         href="${dataProvider}">${dataProviderDescription.get(i.index)}</a>
         </c:forEach>
     </div>
@@ -59,7 +59,7 @@
 <c:if test="${not empty alternativeViews and not empty alternativeViewDescriptions}">
     <div id="alternativeViews">See also:
         <c:forEach var="alternativeViewAccession" items="${alternativeViews}" varStatus="i">
-            <a id="goto-alternativeView" class="thick-link" title="Alternative view"
+            <a class="thick-link" title="Alternative view"
                href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
                     ${alternativeViewDescriptions.get(i.index)}
             </a>
@@ -80,11 +80,7 @@
         $(document).ready(function () {
 
             var $pubmedGeneQueries = $('.pubmed-genequery');
-
-            $pubmedGeneQueries.tooltip({
-                tooltipClass: "gxaHelpTooltip"
-            });
-
+            
             $pubmedGeneQueries.click(function (event) {
                 var pubmedId = $(event.target).attr("data-pubmed-id");
 
