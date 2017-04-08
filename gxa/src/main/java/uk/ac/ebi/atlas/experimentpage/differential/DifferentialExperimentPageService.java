@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
@@ -11,7 +10,6 @@ import com.google.gson.JsonObject;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import uk.ac.ebi.atlas.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
@@ -48,25 +46,12 @@ public class DifferentialExperimentPageService
             DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
             TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
 
-        super(atlasResourceHub, new HeatmapDataToJsonService(applicationProperties), applicationProperties);
+        super(new HeatmapDataToJsonService(applicationProperties), applicationProperties);
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
         this.tracksUtil = tracksUtil;
         this.atlasResourceHub = atlasResourceHub;
 
-    }
-
-    // called from sub classes
-    public void prepareRequestPreferencesAndHeaderData(E experiment, K preferences, Model model, HttpServletRequest request) {
-
-        initRequestPreferences(preferences, experiment);
-        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
-        model.addAttribute("queryFactorName", "Comparison");
-        model.addAttribute("allQueryFactors", experiment.getDataColumnDescriptors());
-        model.addAllAttributes(experiment.getAttributes());
-        model.addAllAttributes(experiment.getDifferentialAttributes());
-        model.addAllAttributes(new DownloadURLBuilder(experiment.getAccession()).dataDownloadUrls(request.getRequestURI()));
-        model.addAllAttributes(headerAttributes(experiment));
     }
 
     public JsonObject populateModelWithHeatmapData(HttpServletRequest request, E experiment, K preferences,
@@ -156,14 +141,6 @@ public class DifferentialExperimentPageService
             result.add(o);
         }
         return result;
-    }
-
-    private void initRequestPreferences(K requestPreferences, E experiment) {
-        //if there is only one contrast we want to preselect it... from Robert feedback
-        if (experiment.getDataColumnDescriptors().size() == 1) {
-            requestPreferences.setQueryFactorValues(ImmutableSet.of(
-                    experiment.getDataColumnDescriptors().iterator().next().getId()));
-        }
     }
 
 }

@@ -5,12 +5,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
+import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
@@ -35,6 +34,11 @@ import java.util.List;
 
 @Controller
 public class MicroarrayExperimentDownloadController extends CanStreamSupplier<MicroarrayExperiment> {
+
+    @InitBinder("preferences")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new DifferentialRequestPreferencesValidator());
+    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MicroarrayExperimentDownloadController.class);
 

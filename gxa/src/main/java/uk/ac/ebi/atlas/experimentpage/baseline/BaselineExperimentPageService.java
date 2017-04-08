@@ -30,22 +30,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
     public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
                                          ApplicationProperties applicationProperties,
-                                         AtlasResourceHub atlasResourceHub,
                                          TracksUtil tracksUtil,
                                          HeatmapDataToJsonService heatmapDataToJsonService) {
-        super(atlasResourceHub, heatmapDataToJsonService, applicationProperties);
+        super(heatmapDataToJsonService, applicationProperties);
         this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
         this.tracksUtil = tracksUtil;
-    }
-
-    public void prepareRequestPreferencesAndHeaderData(BaselineExperiment experiment, BaselineRequestPreferences preferences, Model model,
-                                                       HttpServletRequest request) {
-        // not sure if I still need atlasHost, old comment:
-        // this is currently required for the request requestPreferences filter  drop-down multi-selection box
-        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
-        model.addAllAttributes(experiment.getAttributes());
-        model.addAllAttributes(headerAttributes(experiment));
     }
 
     public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,

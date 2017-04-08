@@ -36,7 +36,7 @@ public class BaselineExperimentPageServiceFactory {
     public BaselineExperimentPageService create(BaselineProfileStreamFactory inputStreamFactory){
         return new BaselineExperimentPageService(new BaselineProfilesHeatMapWranglerFactory(
                 inputStreamFactory, solrQueryService, coexpressedGenesService),
-                applicationProperties,atlasResourceHub,
+                applicationProperties,
                 tracksUtil, heatmapDataToJsonService
         );
     }

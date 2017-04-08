@@ -17,23 +17,14 @@ import java.util.Map;
 
 public class ExperimentPageService {
 
-    private final AtlasResourceHub atlasResourceHub;
     protected final HeatmapDataToJsonService heatmapDataToJsonService;
     protected final ApplicationProperties applicationProperties;
     protected final Gson gson = new Gson();
 
-    public ExperimentPageService(AtlasResourceHub atlasResourceHub,
-                                 HeatmapDataToJsonService heatmapDataToJsonService,
+    public ExperimentPageService(HeatmapDataToJsonService heatmapDataToJsonService,
                                  ApplicationProperties applicationProperties) {
-        this.atlasResourceHub = atlasResourceHub;
         this.heatmapDataToJsonService = heatmapDataToJsonService;
         this.applicationProperties = applicationProperties;
-    }
-
-    protected Map<String, ?> headerAttributes(Experiment experiment) {
-        Map<String, Object> result = new HashMap<>();
-        result.put("hasExtraInfo", atlasResourceHub.hasExtraInfo(experiment));
-        return result;
     }
 
     protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
