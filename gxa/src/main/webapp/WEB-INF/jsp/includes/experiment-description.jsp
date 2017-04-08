@@ -13,25 +13,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:if test="${not empty param.accessKey}">
-    <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"/>
-</c:if>
-
-<c:if test="${isWidget && not empty param.accessKey}">
-    <c:set var="additionalQueryOptionsString"
-           value="&geneQuery=${preferences.geneQuery.toUrlEncodedJson()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
-</c:if>
-
-<c:if test="${isWidget && empty param.accessKey}">
-    <c:set var="additionalQueryOptionsString"
-           value="?geneQuery=${preferences.geneQuery.toUrlEncodedJson()}&serializedFilterFactors=${preferences.serializedFilterFactors}"/>
-</c:if>
-
-<c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"/>
-
-
 <div id="experimentDescription">
-    <a id="goto-experiment" class="thick-link" href="${experimentURL}">${experimentDescription}</a>
+    <h3 id="goto-experiment">
+        ${experimentDescription}
+    </h3>
     <c:if test="${hasExtraInfo}">
         <a id="extra-info"
            href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
