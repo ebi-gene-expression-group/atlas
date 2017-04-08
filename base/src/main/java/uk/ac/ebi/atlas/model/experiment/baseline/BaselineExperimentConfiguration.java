@@ -20,11 +20,11 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getDataProviderURL() {
-        return xmlReader.getList("dataProviderURL");
+        return commaSeparatedStringToList(xmlReader.getString("dataProviderURL"));
     }
 
     public List<String> getDataProviderDescription() {
-        return xmlReader.getList("dataProviderDescription");
+        return commaSeparatedStringToList(xmlReader.getString("dataProviderDescription"));
     }
 
     public Set<Factor> getDefaultFilterFactors() {
@@ -51,12 +51,7 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getMenuFilterFactorTypes() {
-        String s = xmlReader.getString("menuFilterFactorTypes");
-        if(StringUtils.isEmpty(s)){
-            return ImmutableList.of();
-        } else {
-            return ImmutableList.copyOf(Arrays.asList(s.split("\\W*,\\W*")));
-        }
+        return commaSeparatedStringToList(xmlReader.getString("menuFilterFactorTypes"));
     }
 
     public Map<String, String> getSpeciesMapping() {
@@ -85,5 +80,13 @@ public class BaselineExperimentConfiguration {
 
     public boolean isFortLauderdale() {
         return "true".equals(xmlReader.getString("fortLauderdale"));
+    }
+
+    static List<String> commaSeparatedStringToList(String s){
+        if(StringUtils.isEmpty(s)){
+            return ImmutableList.of();
+        } else {
+            return ImmutableList.copyOf(Arrays.asList(s.split("\\W*,\\W*")));
+        }
     }
 }

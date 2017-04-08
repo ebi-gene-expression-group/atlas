@@ -63,6 +63,30 @@ public class ConfigurationTraderTest {
 
     }
 
+    @Test
+    public void dataProviderUrlAndDescriptionCanBeCommaSeparated(){
+        mockDataFileHub.addFactorsFile(experimentAccession, Lists.newArrayList(
+        "<factors-definition>\n" +
+                "        <defaultFilterFactors>\n" +
+                "                <filterFactor>\n" +
+                "                        <type>DEVELOPMENTAL_STAGE</type>\n" +
+                "                        <value>adult</value>\n" +
+                "                </filterFactor>\n" +
+                "        </defaultFilterFactors>\n" +
+                "    <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>\n" +
+                "    <menuFilterFactorTypes>DEVELOPMENTAL_STAGE,ORGANISM_PART</menuFilterFactorTypes>\n" +
+                "    <landingPageDisplayName>Proteomics - Tissues - Human Proteome Map</landingPageDisplayName>\n" +
+                "    <dataProviderURL>http://www.nature.com/nature/journal/v509/n7502/full/nature13302.html,http://www.ebi.ac.uk/pride/archive/projects/PXD000561</dataProviderURL>\n" +
+                "    <dataProviderDescription>A draft map of the human proteome,PRIDE Archive</dataProviderDescription>\n" +
+                "    <speciesMapping/>\n" +
+                "</factors-definition>"));
+
+        BaselineExperimentConfiguration result = subject.getBaselineFactorsConfiguration(experimentAccession);
+
+        assertThat(result.getDataProviderURL().size(), is(2));
+        assertThat(result.getDataProviderDescription().size(), is(2));
+    }
+
 
 
 
