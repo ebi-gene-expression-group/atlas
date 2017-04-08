@@ -142,7 +142,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         result.put("pubMedIds", pubMedIds);
         result.put("experimentAccession", accession);
         result.put("disclaimer", disclaimer);
-        result.put("isFortLauderdale", "fortLauderdale".equalsIgnoreCase(disclaimer));//Deprecated,remove
 
         //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
         List<String> keywords = ImmutableList.<String>builder()

@@ -45,7 +45,6 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         Map<String, Object> result = new HashMap<>();
         result.putAll(super.getAttributes());
         result.put("regulationValues", Regulation.values());
-        result.put("isFortLauderdale", false);
         result.put("contrasts", this.getDataColumnDescriptors());
 
         return result;

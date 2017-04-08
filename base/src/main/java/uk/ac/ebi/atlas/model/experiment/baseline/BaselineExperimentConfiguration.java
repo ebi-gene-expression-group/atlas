@@ -78,10 +78,6 @@ public class BaselineExperimentConfiguration {
         }
     }
 
-    public boolean isFortLauderdale() {
-        return "true".equals(xmlReader.getString("fortLauderdale"));
-    }
-
     static List<String> commaSeparatedStringToList(String s){
         if(StringUtils.isEmpty(s)){
             return ImmutableList.of();

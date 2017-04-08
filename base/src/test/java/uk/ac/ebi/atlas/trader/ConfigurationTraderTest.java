@@ -52,7 +52,7 @@ public class ConfigurationTraderTest {
         BaselineExperimentConfiguration result = subject.getBaselineFactorsConfiguration(experimentAccession);
 
         assertThat(result.getDataProviderURL().get(0), Matchers.containsString("blueprint-epigenome.eu"));
-        assertEquals(true,result.isFortLauderdale());
+        assertEquals(true,result.disclaimer().equals("fortLauderdale"));
         assertThat(result.getDefaultFilterFactors(), Matchers.<Factor>empty());
         assertThat(result.getDataProviderDescription().get(0), Matchers.containsString("BLUEPRINT"));
         assertThat(result.getExperimentDisplayName(), Matchers.containsString("BLUEPRINT rare"));
