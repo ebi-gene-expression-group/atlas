@@ -24,6 +24,11 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     @Inject
     private DataFileHub dataFileHub;
 
+    private static final String urlBase = "/experiments/{experimentAccession}/{experimentAccession}";
+    private static final String rDataUrl = urlBase + "-atlasExperimentSummary.Rdata";
+    private static final String heatmapUrl = urlBase + "-heatmap.pdf";
+
+
 
     @Override
     public Collection<ExternallyAvailableContent> get(E experiment) {
@@ -33,7 +38,8 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
                 experiment.getAccession()+ "-atlasExperimentSummary.Rdata");
 
         if(rData.toFile().exists()){
-            b.add(new ExternallyAvailableContent(MessageFormat.format("experiments/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession()),
+            b.add(new ExternallyAvailableContent(
+                    rDataUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create("Data", "icon-Rdata",
                             "Summary of the data for this experiment ready to view in R"
             )));
@@ -42,7 +48,8 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
         Path heatmap = Paths.get(dataFileHub.getExperimentDataLocation(), experiment.getAccession(),
                 experiment.getAccession()+ "-heatmap.pdf");
         if(heatmap.toFile().exists()){
-            b.add(new ExternallyAvailableContent(MessageFormat.format("experiments/{0}/{0}-heatmap.pdf", experiment.getAccession()),
+            b.add(new ExternallyAvailableContent(
+                    heatmapUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create("Data", "icon-pdf",
                             "Heatmap of aggregated expression data"
                     )));
@@ -53,13 +60,13 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
 
     @Controller
     public static class Forwarder {
-        @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata")
+        @RequestMapping(value = rDataUrl)
         public String downloadRdataURL(@PathVariable String experimentAccession) throws IOException {
             String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experimentAccession);
             return "forward:" + path;
         }
 
-        @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-heatmap.pdf")
+        @RequestMapping(value = heatmapUrl)
         public String downloadPdf(@PathVariable String experimentAccession) throws IOException {
             String path = MessageFormat.format("/expdata/{0}/{0}-heatmap.pdf", experimentAccession);
             return "forward:" + path;
