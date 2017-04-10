@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
-import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialStaticFilesDownload;
 import uk.ac.ebi.atlas.experimentpage.differential.download.MicroarrayExperimentDownloadController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.RnaSeqExperimentDownloadController;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
@@ -45,8 +44,9 @@ public class ExpressionAtlasContentService {
             ContrastImageSupplier.RnaSeq rnaSeqDifferentialContrastImageSupplier,
             ContrastImageSupplier.Microarray microarrayContrastImageSupplier,
             QCReportController qcReportController,
-            DifferentialStaticFilesDownload.RnaSeq rnaSeqDifferentialStaticFilesDownload,
-            DifferentialStaticFilesDownload.Microarray microarrayStaticFilesDownload,
+            StaticFilesDownload.Baseline baselineStaticFilesDownload,
+            StaticFilesDownload.RnaSeq rnaSeqDifferentialStaticFilesDownload,
+            StaticFilesDownload.Microarray microarrayStaticFilesDownload,
             DifferentialSecondaryDataFiles.RnaSeq rnaSeqDifferentialSecondaryDataFiles,
             DifferentialSecondaryDataFiles.Microarray microarraySecondaryDataFiles,
             RnaSeqExperimentDownloadController rnaSeqExperimentDownloadController,
@@ -63,6 +63,7 @@ public class ExpressionAtlasContentService {
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
                                 proteomicsBaselineProfilesWriterService,
+                                baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
                                 baselineLinkToArrayExpress)
                 );
@@ -70,6 +71,7 @@ public class ExpressionAtlasContentService {
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
                                 rnaSeqBaselineProfilesWriterService,
+                                baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
                                 baselineLinkToArrayExpress)
                 );

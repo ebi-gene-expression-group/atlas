@@ -62,7 +62,7 @@ public class ExperimentController extends ExperimentPageController{
         this.dataFileHub = dataFileHub;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}")
+    @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"})
     public String showExperimentPage(Model model,
                                      HttpServletRequest request,
                                      @PathVariable String experimentAccession,

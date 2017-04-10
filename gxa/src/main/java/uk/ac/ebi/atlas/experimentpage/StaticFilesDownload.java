@@ -1,10 +1,12 @@
-package uk.ac.ebi.atlas.experimentpage.differential.download;
+package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.collect.ImmutableList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -17,7 +19,7 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Collection;
 
-public abstract class DifferentialStaticFilesDownload<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E> {
+public abstract class StaticFilesDownload<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
 
     @Inject
     private DataFileHub dataFileHub;
@@ -65,8 +67,11 @@ public abstract class DifferentialStaticFilesDownload<E extends DifferentialExpe
     }
 
     @Named
-    public static class RnaSeq extends DifferentialStaticFilesDownload<DifferentialExperiment> {}
+    public static class Baseline extends StaticFilesDownload<BaselineExperiment> {}
 
     @Named
-    public static class Microarray extends DifferentialStaticFilesDownload<MicroarrayExperiment> {}
+    public static class RnaSeq extends StaticFilesDownload<DifferentialExperiment> {}
+
+    @Named
+    public static class Microarray extends StaticFilesDownload<MicroarrayExperiment> {}
 }
