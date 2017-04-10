@@ -29,7 +29,7 @@ import java.util.Collection;
 @Controller
 public class QCReportController extends ExternallyAvailableContent.Supplier<MicroarrayExperiment> {
 
-    private static final String QC_REPORT_URL = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
+    private static final String QC_REPORT_URL = "/experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
     public static final String getQcReportUrl(HttpServletRequest request, String experimentAccession,
                                               String arrayDesign, String accessKey) {
@@ -62,9 +62,11 @@ public class QCReportController extends ExternallyAvailableContent.Supplier<Micr
         for (final String arrayDesign : new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
                 .getArrayDesignsThatHaveQcReports()) {
             b.add(new ExternallyAvailableContent(
-                    MessageFormat.format("experiments/{0}/qc/{1}/index.html",
-                            experiment.getAccession(), arrayDesign
-                    ),
+                    QC_REPORT_URL
+                    .replace("{experimentAccession}", experiment.getAccession())
+                    .replace("{arrayDesign}", arrayDesign)
+                    .replace("{resource:.*}", "index.html")
+                    ,
                     ExternallyAvailableContent.Description.create(
                             ExternallyAvailableContent.Description.join("Supplementary Information",
                                     arrayDesignTrader.getArrayDesignByName(arrayDesign)),

@@ -24,7 +24,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class ExternallyAvailableContentController {
 
     private static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources";
-    private static final String STREAM_RESOURCES_URL = "/experiments/{experimentAccession}/resources/**";
+    private static final String STREAM_RESOURCES_URL = "/experiments-content/{experimentAccession}/resources/**";
 
     public static final String listResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey){
         return ApplicationProperties.buildServerURL(request)

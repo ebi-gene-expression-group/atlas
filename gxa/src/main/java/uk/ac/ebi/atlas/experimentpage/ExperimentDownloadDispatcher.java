@@ -24,7 +24,7 @@ import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.buildForw
 @Controller
 public final class ExperimentDownloadDispatcher {
 
-    public static final String url = "/experiments-content/download/{experimentAccession}";
+    public static final String url = "/experiments-content/{experimentAccession}/download";
 
     private ExperimentTrader experimentTrader;
 
