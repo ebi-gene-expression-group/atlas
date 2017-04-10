@@ -177,7 +177,7 @@ public class ExperimentController extends ExperimentPageController{
         JsonObject props = new JsonObject();
         props.add("groups", groups);
         props.addProperty("genesDistributedByCutoffUrl", geneDistributionUrl);
-        return customContentTab("heatmap", "Heatmap", props);
+        return customContentTab("heatmap", "Results", props);
     }
 
     JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
