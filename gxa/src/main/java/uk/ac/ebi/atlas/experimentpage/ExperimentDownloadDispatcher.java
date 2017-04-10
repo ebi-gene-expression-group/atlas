@@ -18,20 +18,22 @@ import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.alreadyFo
 import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.buildForwardURL;
 
 /**
- * This is a global router for the experiment page.
- * It looks up the kind of experiment and sends the request to the right controller.
+ * This is what used to be a global router for the experiment page.
+ * We only use it for redirecting downloads now.
  */
 @Controller
-public final class ExperimentDispatcher {
+public final class ExperimentDownloadDispatcher {
+
+    public static final String url = "/experiments-content/download/{experimentAccession}";
 
     private ExperimentTrader experimentTrader;
 
     @Inject
-    private ExperimentDispatcher(ExperimentTrader experimentTrader) {
+    private ExperimentDownloadDispatcher(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = {"/old-experiments/{experimentAccession}", "/old-experiments/{experimentAccession}/*"})
+    @RequestMapping(value = url)
     public String dispatch(HttpServletRequest request,
                            @PathVariable String experimentAccession,
                            @RequestParam(required = false) String accessKey) {

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDownloadDispatcher;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageController;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -30,7 +31,7 @@ public class ProteomicsBaselineExperimentDownloadController extends BaselineExpe
         this.baselineExperimentDownloadService = new BaselineExperimentDownloadService<>(baselineProfilesWriterService,experimentTrader);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_PROTEOMICS_BASELINE)
+    @RequestMapping(value = ExperimentDownloadDispatcher.url, params = PARAMS_TYPE_PROTEOMICS_BASELINE)
     public void downloadGeneProfiles(HttpServletRequest request, @PathVariable String experimentAccession
             ,@RequestParam(value = "accessKey",required = false) String accessKey
             , @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences

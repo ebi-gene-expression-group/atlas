@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDownloadDispatcher;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
@@ -64,7 +65,7 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
         this.solrQueryService = solrQueryService;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = PARAMS_TYPE_MICROARRAY)
+    @RequestMapping(value = ExperimentDownloadDispatcher.url, params = PARAMS_TYPE_MICROARRAY)
     public void downloadGeneProfiles(@PathVariable String experimentAccession,
                                      @RequestParam(value = "accessKey", required = false) String accessKey,
                                      @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES)
