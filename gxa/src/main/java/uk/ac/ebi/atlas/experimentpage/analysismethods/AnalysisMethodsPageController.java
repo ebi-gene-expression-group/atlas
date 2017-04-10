@@ -14,6 +14,10 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.text.MessageFormat;
 
+/*
+I only know of E-PROT-1 that has this - and it's linked in the analysis methods tsv so can't change the url easily :(
+It seems to "win" against the all-grabbing /experiments/{experimentAccession}/** but it's fragile!
+ */
 @Controller
 @Scope("request")
 public class AnalysisMethodsPageController {
