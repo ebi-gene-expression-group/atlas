@@ -26,8 +26,9 @@ import java.util.List;
 public class SpeciesInfoListService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifiersReader.class);
-    private final SpeciesPropertiesTrader speciesPropertiesTrader;
-    private final ExperimentInfoListService experimentInfoListService;
+
+    private SpeciesPropertiesTrader speciesPropertiesTrader;
+    private ExperimentInfoListService experimentInfoListService;
     private List<SpeciesInfo> speciesInfoList;
 
     private final LazyReference<List<SpeciesInfo>> topSixSpeciesByExperimentCount = new LazyReference<List<SpeciesInfo>>() {
@@ -145,11 +146,15 @@ public class SpeciesInfoListService {
     }
 
     public List<SpeciesInfo> getFilterByKingdom (String kingdom) {
+        if(speciesInfoList == null) {
+            populateSpeciesByExperimentCount();
+        }
+
         List<SpeciesInfo> filteredKingdomList = filterListByKingdom(kingdom);
         return filteredKingdomList.size() > 6 ? getFirstSixSpecies(filteredKingdomList) : filteredKingdomList;
     }
 
-    private class SpeciesInfo {
+    protected class SpeciesInfo {
         String species;
         String kingdom;
         Integer totalExperiments;
@@ -174,6 +179,14 @@ public class SpeciesInfoListService {
 
         Integer getTotalExperiments() {
             return totalExperiments;
+        }
+
+        Integer getBaselineExperiments() {
+            return baselineExperiments;
+        }
+
+        Integer getDifferentialExperiments() {
+            return differentialExperiments;
         }
 
         @Override
