@@ -24,7 +24,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
     @Inject
     private DataFileHub dataFileHub;
 
-    private static final String urlBase = "/experiments-content/{experimentAccession}/static/{experimentAccession}";
+    private static final String urlBase = "experiments-content/{experimentAccession}/static/{experimentAccession}";
     private static final String rDataUrl = urlBase + "-atlasExperimentSummary.Rdata";
     private static final String heatmapUrl = urlBase + "-heatmap.pdf";
 
