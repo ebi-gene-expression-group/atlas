@@ -70,7 +70,7 @@ public class ExternallyAvailableContentController {
             }
 
         } else {
-            result.addProperty("url", MessageFormat.format("{0}/experiments/{1}/resources/{2}{3}",
+            result.addProperty("url", MessageFormat.format("{0}/experiments-content/{1}/resources/{2}{3}",
                     ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
             ));
         }
