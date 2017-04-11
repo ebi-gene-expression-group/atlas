@@ -90,18 +90,17 @@
 <div data-sticky-container>
     <div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="235">
         <header>
-
             <tiles:insertAttribute name="top-menu" />
 
             <tiles:insertAttribute name="header" />
-
         </header>
-
     </div>
 </div>
 
 <div id="content" role="main" class="row">
-    <tiles:insertAttribute name="body"/>
+    <div class="small-12 columns">
+        <tiles:insertAttribute name="body"/>
+    </div>
 </div>
 
 <div class="text-center jumbo-news-container padding-top-xlarge padding-bottom-xlarge">
@@ -172,13 +171,13 @@
 
     $('#home-search-atlas-clear-button').on('click' , function () {
         // Remove all tags
-        const $atlasSearchInput = $('#home-search-gene-query-input'),
+        var $atlasSearchInput = $('#home-search-gene-query-input'),
             atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
         atlasSearchTags.forEach(function (searchTag) {
             $atlasSearchInput.jsonTagEditor('removeTag', searchTag.value);
         });
 
-        const $conditionQuery = $('#home-search-condition-query-input'),
+        var $conditionQuery = $('#home-search-condition-query-input'),
             conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
         conditionQueryTags.forEach(function (searchTag) {
             $conditionQuery.jsonTagEditor('removeTag', searchTag.value);
@@ -186,12 +185,12 @@
     });
 
     $('#home-search-atlas-form').submit(function(event) {
-        const $atlasSearchInput = $('#home-search-gene-query-input'),
+        var $atlasSearchInput = $('#home-search-gene-query-input'),
             atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
         console.log(JSON.stringify(atlasSearchTags));
         $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
 
-        const $conditionQuery = $('#home-search-condition-query-input'),
+        var $conditionQuery = $('#home-search-condition-query-input'),
             conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
         $conditionQuery.val(JSON.stringify(conditionQueryTags));
     });

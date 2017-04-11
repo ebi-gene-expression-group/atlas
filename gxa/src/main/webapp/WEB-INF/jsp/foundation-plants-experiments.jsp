@@ -1,3 +1,9 @@
+<%--@elvariable id="numberOfPlantExperiments" type="int"--%>
+<%--@elvariable id="baselineExperimentAccessionsBySpecies" type="com.google.common.collect.SortedSetMultimap<String, String>"--%>
+<%--@elvariable id="numDifferentialExperimentsBySpecies" type="java.util.SortedMap<String, Integer>"--%>
+<%--@elvariable id="experimentDisplayNames" type="java.util.Map<String, Integer>"--%>
+<%--@elvariable id="experimentLinks" type="java.util.Map<String, Integer>"--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -5,41 +11,51 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/baseline_plant-experiments.css">
 <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 
+<div class="row">
+    <div class="small-12 columns">
+        <h3>Browse plant experiments</h3>
 
-<section>
-    <h3>Browse plant experiments</h3>
+        <div class="row">
+            <div class="small-1 column">
+                <p><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></p>
+            </div>
 
-    <div class="row">
-        <div class="columns small-1">
-            <p><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></p>
-            <p><div class="icon icon-functional" data-icon="1"><a href="/gxa/home">Search Atlas</a></div></p>
-        </div>
-
-        <div class="columns medium-10" style="padding-bottom: 20px">
-            <p class="foundation_p">
-                Thanks to funding from the <a href="http://www.gramene.org/">Gramene</a> project,
-                Expression Atlas contains <b>${numberOfPlantExperiments}</b> <a href="/gxa/experiments?kingdom=plants">plant experiments</a>, studying e.g. <a href="/gxa/experiments?organism=Arabidopsis+thaliana">Arabidopsis</a>, <a href="/gxa/experiments?organism=Oryza+sativa">rice</a>, and <a href="/gxa/experiments?organism=Zea+mays">maize</a>.
-            </p>
-            <p class="foundation_p">
-                The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of gene products under 'normal' conditions (e.g. normal rice tissues).
-                Each experiment is manually curated to a high standard, and RNA expression levels are calculated using the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
-            </p>
-            <p class="foundation_p">
-                The <i>differential</i> experiments in Atlas, containing both microarray and RNA-seq data, allows users to query which genes are up-/down-regulated
-                in different experimental conditions, e.g. 'in Arabidopsis shoots, what genes are upregulated in plants treated by X?'
-            </p>
+            <div class="small-11 columns">
+                <p>
+                    Thanks to funding from the <a href="http://www.gramene.org/">Gramene</a> project,
+                    Expression Atlas contains <b>${numberOfPlantExperiments}</b>
+                    <a href="${pageContext.request.contextPath}/experiments?kingdom=plants">plant experiments</a>, studying
+                    e.g.
+                    <a href="${pageContext.request.contextPath}/experiments?organism=Arabidopsis+thaliana">Arabidopsis</a>,
+                    <a href="${pageContext.request.contextPath}/experiments?organism=Oryza+sativa">rice</a>, and
+                    <a href="${pageContext.request.contextPath}/experiments?organism=Zea+mays">maize</a>.
+                </p>
+                <p>
+                    The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of
+                    gene products under 'normal' conditions (e.g. normal rice tissues). Each experiment is manually curated
+                    to a high standard, and RNA expression levels are calculated using the
+                    <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
+                </p>
+                <p>
+                    The <i>differential</i> experiments in Atlas, containing both microarray and RNA-seq data, allows users
+                    to query which genes are up-/down-regulatedin different experimental conditions, e.g. 'in Arabidopsis
+                    shoots, what genes are upregulated in plants treated by X?'
+                </p>
+            </div>
         </div>
     </div>
+</div>
 
+<div class="row">
+    <div class="small-12 columns">
+        <h3>Baseline experiments</h3>
 
-    <h3 style="width: 400px; margin-top: 20px;">Baseline experiments</h3>
-    <div class="row fspecies-nav" style="padding-bottom: 20px">
-
-        <c:set var="speciesCount" value="0"/>
+        <c:set var="speciesIndex" value="0"/>
+        <c:set var="speciesCount" value="${baselineExperimentAccessionsBySpecies.keySet().size()}"/>
         <c:forEach items="${baselineExperimentAccessionsBySpecies.keySet()}" var="species">
 
-            <c:if test="${speciesCount %3 == 0}">
-                <div class="row fspecies-nav">
+            <c:if test="${speciesIndex % 3 == 0}">
+            <div class="row">
             </c:if>
 
             <c:choose>
@@ -82,7 +98,8 @@
                 </c:otherwise>
             </c:choose>
 
-            <div class="columns fspecies_item">
+                <c:if test="${speciesIndex == speciesCount - 1}"><c:set value=" end" var="endClass"/></c:if>
+                <div class="small-4 columns species_item${endClass}">
                 <h4>${species}</h4>
                 <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul class="show_more" style="list-style:none;padding-left:0; margin-left:0;">
@@ -90,8 +107,7 @@
                     <c:forEach items="${baselineExperimentAccessionsBySpecies.get(species)}" begin="0" var="experimentAccession">
                         <c:set var="key" value="${experimentAccession}${species}"/>
                         <li>
-                            <a href="experiments/${experimentAccession}${experimentLinks.get(key)}" style="color:#337ab7; border-bottom: none;">
-                                    ${experimentDisplayNames.get(experimentAccession)}</a>
+                            <a href="${pageContext.request.contextPath}/experiments/${experimentAccession}${experimentLinks.get(key)}" style="color:#337ab7; border-bottom: none;">${experimentDisplayNames.get(experimentAccession)}</a>
                         </li>
                     </c:forEach>
 
@@ -104,25 +120,25 @@
                 </ul>
             </div>
 
-            <c:set var="speciesCount" value="${speciesCount + 1}"/>
-            <c:if test="${speciesCount %3 == 0}">
-                </div>
+            <c:set var="speciesIndex" value="${speciesIndex + 1}"/>
+
+            <c:if test="${speciesIndex == speciesCount || speciesIndex % 3 == 0}">
+            </div>
             </c:if>
         </c:forEach>
-
-        <c:if test="${speciesCount %3 != 0}">
     </div>
-    </c:if>
-    </div>
+</div>
 
-    <h3 style="width: 400px;">Differential experiments</h3>
-    <div class="row fspecies-nav">
+<div class="row">
+    <div class="small-12 columns">
+        <h3>Differential experiments</h3>
 
-        <c:set var="speciesCount" value="0"/>
+        <c:set var="speciesIndex" value="0"/>
+        <c:set var="speciesCount" value="${numDifferentialExperimentsBySpecies.size()}"/>
         <c:forEach items="${numDifferentialExperimentsBySpecies.keySet()}" var="species">
 
-            <c:if test="${speciesCount %3 == 0}">
-                <div class="row fspecies-nav">
+            <c:if test="${speciesIndex % 3 == 0}">
+                <div class="row">
             </c:if>
 
             <c:choose>
@@ -168,36 +184,35 @@
                 </c:otherwise>
             </c:choose>
 
-            <div class="columns fspecies_item">
+            <c:if test="${speciesIndex == speciesCount - 1}"><c:set value=" end" var="endClass"/></c:if>
+            <div class="small-4 columns species_item${endClass}">
                 <h4>${species}</h4>
                 <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul style="list-style:none;padding-left:0; margin-left:0;">
                     <li>
-                        <a href="/gxa/experiments?organism=${species}&experimentType=differential" style="color:#337ab7; border-bottom: none;">
-                                ${numDifferentialExperimentsBySpecies.get(species)} experiment${numDifferentialExperimentsBySpecies.get(species) > 1 ? "s" : "" }</a>
+                        <a href="${pageContext.request.contextPath}/experiments?organism=${species}&experimentType=differential" style="color:#337ab7; border-bottom: none;">${numDifferentialExperimentsBySpecies.get(species)} experiment${numDifferentialExperimentsBySpecies.get(species) > 1 ? "s" : "" }</a>
                     </li>
                 </ul>
+
             </div>
 
-            <c:set var="speciesCount" value="${speciesCount + 1}"/>
-            <c:if test="${speciesCount %3 == 0}">
+            <c:set var="speciesIndex" value="${speciesIndex + 1}"/>
+            <c:if test="${speciesIndex == speciesCount || speciesIndex % 3 == 0}">
                 </div>
             </c:if>
         </c:forEach>
-
-        <c:if test="${speciesCount %3 != 0}">
     </div>
-    </c:if>
-</section>
+</div>
+
 
 <script>
     //hide/show when there is more than 5 items in the list
     $(function() {
-        const $ul = $(".fspecies_item ul");
+        var $ul = $(".species_item ul");
         $ul.find(".hide_button").hide();//temp - to add in css by default
         $ul.find("li:gt(4)").hide();//hide extra list item
 
-        const $ulShowMore = $("ul.show_more");
+        var $ulShowMore = $("ul.show_more");
         $ulShowMore.find(".show_button").click(function() {
             $(this).parent().parent().find("li:gt(4)").show();
             $(this).hide();

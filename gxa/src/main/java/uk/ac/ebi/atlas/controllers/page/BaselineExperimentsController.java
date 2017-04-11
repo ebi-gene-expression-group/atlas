@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.controllers.page;
 
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -19,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-// if we make it singleton it gets initialized during deployment, that means deployment become slow
 @Scope("request")
 public class BaselineExperimentsController {
 
@@ -28,9 +26,7 @@ public class BaselineExperimentsController {
     private ExpressionAtlasExperimentTrader experimentTrader;
 
     private SortedSetMultimap<String, String> experimentAccessionsBySpecies;
-
     private Map<String, String> experimentLinks = new HashMap<>();
-
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
@@ -39,8 +35,7 @@ public class BaselineExperimentsController {
     }
 
     @RequestMapping("/baseline/experiments")
-    public String getBaselineExperimentsPage(Model model,
-                                             @RequestParam(value = "foundation", required = false) String foundationKey) {
+    public String getBaselineExperimentsPage(Model model) {
 
         loadExperimentAccessionsBySpecies();
 
@@ -50,7 +45,7 @@ public class BaselineExperimentsController {
 
         model.addAttribute("mainTitle", "Baseline expression experiments ");
 
-        return foundationKey == null ? "baseline-experiments" : "foundation-baseline-experiments";
+        return "foundation-baseline-experiments";
     }
 
     @PostConstruct
@@ -113,6 +108,5 @@ public class BaselineExperimentsController {
         }
 
     }
-
 
 }
