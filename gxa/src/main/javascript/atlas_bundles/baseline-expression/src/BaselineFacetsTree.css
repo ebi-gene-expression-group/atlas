@@ -1,8 +1,3 @@
-/*Responsive*/
-@media (max-width: 768px) {
-    .hidden-xs {display: none!important;} /*remove column like filter for small devices*/
-}
-
 /* Facets-tree container */
 .gxaFacetsContainer {
     padding: 0 10px 0 10px;
@@ -31,15 +26,6 @@
     text-transform: capitalize;
 }
 
-/* Responsive */
-@media print, screen and (min-width: 40em) {
-    .gxaFacetsContainer .gxaFacetItem h4 {
-        color: #333;
-        font-size: 100%;
-        padding: 0;
-    }
-}
-
 .gxaFacetsContainer h5 {
     font-size: 1.1rem;
     color: rgba(34,34,34,0.84);
@@ -64,13 +50,4 @@
 
 .gxaSpeciesFacet li span {
     font-style: italic;
-}
-
-#gxaBaselineFacetsContainerDiv {
-    display: inline-block;
-    vertical-align: top;
-}
-
-#gxaBaselineResultsContainerDiv {
-    display: inline-block;
 }

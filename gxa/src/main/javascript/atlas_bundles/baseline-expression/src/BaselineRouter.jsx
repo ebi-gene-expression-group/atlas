@@ -80,8 +80,8 @@ const BaselineRouter = React.createClass({
 
     render () {
         return (
-            <div>
-                <div id="gxaBaselineFacetsContainerDiv">
+            <div className="row">
+                <div className="small-3 columns">
                     <Facets
                         facets = {this.state.facetsTreeData}
                         setChecked = {this._setChecked}
@@ -90,7 +90,7 @@ const BaselineRouter = React.createClass({
                         disableAnatomogramsCheckbox = {!this._organismPartInQuerySelect()}
                     />
                 </div>
-                <div id="gxaBaselineResultsContainerDiv">
+                <div className="small-9 columns">
                     <BaselineHeatmaps
                         hostUrl = {this.props.hostUrl}
                         query = {this.props.query}
