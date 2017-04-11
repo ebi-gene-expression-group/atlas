@@ -3,12 +3,8 @@ package uk.ac.ebi.atlas.species;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.utils.BioentityIdentifiersReader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.ArrayList;
@@ -25,26 +21,25 @@ import java.util.List;
  */
 public class SpeciesInfoListService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIdentifiersReader.class);
-
-    private SpeciesPropertiesTrader speciesPropertiesTrader;
-    private ExperimentInfoListService experimentInfoListService;
-    private List<SpeciesInfo> speciesInfoList;
-
-    private final LazyReference<List<SpeciesInfo>> topSixSpeciesByExperimentCount = new LazyReference<List<SpeciesInfo>>() {
+    private final SpeciesPropertiesTrader speciesPropertiesTrader;
+    private final ExperimentInfoListService experimentInfoListService;
+    private final LazyReference<List<SpeciesInfo>> speciesInfoList = new LazyReference<List<SpeciesInfo>>() {
         @Override
         protected List<SpeciesInfo> create() throws Exception {
-            return getTopSixSpeciesByExperimentCount();
+            return populateSpeciesByExperimentCount();
+        }
+    };
+
+    private final LazyReference<List<SpeciesInfo>> topSixSpeciesByExperimentCountReference =
+            new LazyReference<List<SpeciesInfo>>() {
+        @Override
+        protected List<SpeciesInfo> create() throws Exception {
+            return getFirstSix(speciesInfoList.get());
         }
     };
 
     public List<String> getTopSixSpecies() {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-        LOGGER.info("Sorting species by experiment count (lazy ref mode)...");
-
-        List<String> topSix =
-                FluentIterable.from(topSixSpeciesByExperimentCount.get()).transform(
+        return FluentIterable.from(topSixSpeciesByExperimentCountReference.get()).transform(
                         new Function<SpeciesInfo, String>() {
                             @Override
                             public String apply(SpeciesInfo speciesInfo) {
@@ -52,11 +47,6 @@ public class SpeciesInfoListService {
                             }
                         }
                 ).toList();
-
-        stopWatch.stop();
-        LOGGER.info("Sorting species by experiment count (lazy ref mode): {} seconds", stopWatch.getTotalTimeSeconds());
-
-        return topSix;
     }
 
     public SpeciesInfoListService(SpeciesPropertiesTrader speciesPropertiesTrader, ExperimentInfoListService experimentInfoListService) {
@@ -64,8 +54,8 @@ public class SpeciesInfoListService {
         this.experimentInfoListService = experimentInfoListService;
     }
 
-    private void populateSpeciesByExperimentCount() {
-        speciesInfoList = new ArrayList<>();
+    private List<SpeciesInfo> populateSpeciesByExperimentCount() {
+        List<SpeciesInfo> speciesInfoList = new ArrayList<>();
 
         List<ExperimentInfo> experimentInfos = experimentInfoListService.listPublicExperiments();
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
@@ -110,16 +100,17 @@ public class SpeciesInfoListService {
 
         });
 
+        return speciesInfoList;
     }
 
-    private List<SpeciesInfo> getFirstSixSpecies(List<SpeciesInfo> speciesList) {
-        return speciesList.subList(0, Math.min(6, speciesList.size()));
+    private <A> List<A> getFirstSix(List<A> l) {
+        return l.subList(0, Math.min(6, l.size()));
     }
 
     private List<SpeciesInfo> filterListByKingdom(String kingdom) {
         List<SpeciesInfo> kingdomSubList = new ArrayList<>();
 
-        for (SpeciesInfo info : speciesInfoList) {
+        for (SpeciesInfo info : speciesInfoList.get()) {
             if (info.getKingdom().equals(kingdom)) {
                 kingdomSubList.add(info);
             }
@@ -129,29 +120,11 @@ public class SpeciesInfoListService {
     }
 
     public List<SpeciesInfo> getTopSixSpeciesByExperimentCount() {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-        LOGGER.info("Sorting species by experiment count (normal mode)...");
-
-        if(speciesInfoList == null) {
-            populateSpeciesByExperimentCount();
-        }
-
-        List<SpeciesInfo> speciesInfos = getFirstSixSpecies(speciesInfoList);
-
-        stopWatch.stop();
-        LOGGER.info("Sorting species by experiment count (normal mode): {} seconds", stopWatch.getTotalTimeSeconds());
-
-        return speciesInfos;
+        return topSixSpeciesByExperimentCountReference.get();
     }
 
     public List<SpeciesInfo> getFilterByKingdom (String kingdom) {
-        if(speciesInfoList == null) {
-            populateSpeciesByExperimentCount();
-        }
-
-        List<SpeciesInfo> filteredKingdomList = filterListByKingdom(kingdom);
-        return filteredKingdomList.size() > 6 ? getFirstSixSpecies(filteredKingdomList) : filteredKingdomList;
+        return getFirstSix(filterListByKingdom(kingdom));
     }
 
     protected class SpeciesInfo {
