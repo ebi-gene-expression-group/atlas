@@ -147,8 +147,8 @@ const DifferentialRouter = React.createClass({
         let filteredResults = this._filteredResults();
 
         return (
-            <div>
-                <div className="grid_6 alpha" id="gxaDifferentialFacetsContainerDiv">
+            <div className="row">
+                <div className="small-3 columns" id="gxaDifferentialFacetsContainerDiv">
                     {Object.keys(this.state.facetsTreeData).length
                         ? <Facets
                               facets = {this._prepareFacetTreeData(filteredResults)}
@@ -157,7 +157,7 @@ const DifferentialRouter = React.createClass({
                         : <div/>
                     }
                 </div>
-                <div className="grid_18 omega" id="gxaDifferentialResultsContainerDiv">
+                <div className="small-9 columns" id="gxaDifferentialResultsContainerDiv">
                     {this.state.results && this.state.results.length
                         ? <Results
                             results = {filteredResults}
