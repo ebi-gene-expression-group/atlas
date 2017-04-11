@@ -11,11 +11,11 @@
         <div class="tabs-content" data-tabs-content="search-tabs">
             <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
                 <!-- Grid Example -->
-                <form method="get" action="search" id="home-search-atlas-form">
+                <form method="get" action="${pageContext.request.contextPath}/query" id="home-search-atlas-form">
                     <div class="row">
-                        <div class="small-4 columns">
+                        <div class="small-5 columns">
                             <label>Gene / Gene properties</label>
-                            <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query" name="query"/>
+                            <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query" name="geneQuery"/>
                         </div>
                         <div class="small-2 columns">
                             <label>Organism</label>
@@ -25,7 +25,7 @@
                                 <form:options items="${organisms}" />
                             </form:select>
                         </div>
-                        <div class="small-4 columns">
+                        <div class="small-5 columns">
                             <label>Sample properties</label>
                             <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />
                         </div>
