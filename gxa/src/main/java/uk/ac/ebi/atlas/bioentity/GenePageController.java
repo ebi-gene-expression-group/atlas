@@ -23,9 +23,7 @@ import java.util.Set;
 public class GenePageController extends BioentityPageController {
 
     @RequestMapping(value = "/genes/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier,
-                               @RequestParam(value = "foundation", required = false) String foundationKey,
-                               Model model) {
+    public String showGenePage(@PathVariable String identifier, Model model) {
         if(identifier.toUpperCase().startsWith("MGI")){
             Set<String> correspondingEnsemblIdentifiers = bioentityPropertyDao.fetchGeneIdsForPropertyValue
                     (BioentityPropertyName.MGI_ID, identifier);
@@ -48,7 +46,7 @@ public class GenePageController extends BioentityPageController {
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
         return super.showBioentityPage(identifier, species, geneName, model, experimentTypes,
-                BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType, foundationKey);
+                BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
     }
 
     @Override

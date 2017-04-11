@@ -62,7 +62,6 @@ public class SearchController {
     public String showGeneQueryResultPage(@RequestParam(value = "query", defaultValue = "") SemanticQuery geneQuery,
                                           @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                           @RequestParam(value = "organism", required = false, defaultValue = "") String speciesString,
-                                          @RequestParam(value = "foundation", required = false) String foundationKey,
                                           Model model, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
 
         checkArgument(isNotEmpty(geneQuery), "Please specify a search term, a gene query or a condition query.");
@@ -121,7 +120,7 @@ public class SearchController {
 
             model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-            return foundationKey != null ? "foundation-bioentities-search-results" : "bioentities-search-results";
+            return "foundation-bioentities-search-results";
         }
     }
 

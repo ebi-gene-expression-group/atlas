@@ -2,7 +2,7 @@
 
 <div class="masthead row masthead-atlas">
 
-    <div class="row atlas-row">
+    <div class="row" style="margin-left: 4rem">
         <!-- local-title -->
         <div class="columns small-8" id="local-title">
             <h1><a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage"><div class="atlas-logo"></div>Expression Atlas</a></h1>

@@ -10,10 +10,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-<script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.4.0.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
-<%@ include file="includes/bootstrap.jsp" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
 
@@ -50,10 +47,10 @@
 
 <script>
 
-    let hasBaselineResults = ${hasBaselineResults},
+    var hasBaselineResults = ${hasBaselineResults},
         hasDifferentialResults = ${hasDifferentialResults};
 
-    let $baselineTabLink = $("#baselineTabLink"),
+    var $baselineTabLink = $("#baselineTabLink"),
         $differentialTabLink = $("#differentialTabLink");
 
     $baselineTabLink.click(function() {

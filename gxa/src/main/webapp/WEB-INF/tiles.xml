@@ -87,28 +87,6 @@
         <put-attribute name="mega-footer" value=""/>
     </definition>
 
-    <definition name="home" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/home.jsp"/>
-    </definition>
-
-    <definition name="baseline-experiments" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/baseline-experiments.jsp"/>
-    </definition>
-
-    <definition name="plant-experiments" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/plant-experiments.jsp"/>
-    </definition>
-
-    <definition name="bioentities-search-results" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/bioentities/new-bioentities-search-results.jsp"/>
-    </definition>
-
-    <definition name="bioentities" extends="base.definition">
-        <put-attribute name="title" value="Expression Atlas > Gene information"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/bioentities/bioentities.jsp"/>
-    </definition>
-
-
 
     <!-- error pages -->
     <definition name="error-page" extends="base.definition">
@@ -129,11 +107,6 @@
 
     <definition name="empty-search-page" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/jsp/error/empty-search-page.jsp"/>
-    </definition>
-
-    <!-- static pages, eg: about, help -->
-    <definition name="static-template" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/static-template.jsp"/>
     </definition>
 
     <definition name="widget-error" template="/WEB-INF/jsp/error/widget-error.jsp">

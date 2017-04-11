@@ -25,10 +25,12 @@ public class HomeController {
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
     private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
     private static final Random RANDOM = new Random();
+
+    private static final Gson gson = new Gson();
+
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
     private final SpeciesInfoListService speciesInfoListService;
-    private Gson gson = new Gson();
 
     @Autowired
     private Environment env;
@@ -43,19 +45,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/home")
-    public String getHomePage(Model model) {
-        ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
-        organismSelectBuilder.put("", "Any");
-        for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
-            organismSelectBuilder.put(speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
-        }
-        model.addAttribute("organisms", organismSelectBuilder.build());
-        model.addAttribute("organismPath", ""); // Required by Spring form tag
-        return "home";
-    }
-
-    @RequestMapping(value = "/fhome")
-    public String getFoundationHomePage(Model model) {
+    public String getHome(Model model) {
         ImmutableMap.Builder<String, String> topSixSelectBuilder = ImmutableMap.builder();
         for (String speciesName: speciesInfoListService.getTopSixSpecies()) {
             topSixSelectBuilder.put(speciesName, StringUtils.capitalize(speciesName));

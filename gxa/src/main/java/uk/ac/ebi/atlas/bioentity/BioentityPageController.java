@@ -79,7 +79,7 @@ public abstract class BioentityPageController {
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
     public String showBioentityPage(String identifier, Species species, String entityName, Model model, Set<String>
             experimentTypes, List<BioentityPropertyName> desiredOrderOfPropertyNames, Map<BioentityPropertyName,
-            Set<String>>propertyValuesByType, String foundationKey){
+            Set<String>> propertyValuesByType) {
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -108,7 +108,7 @@ public abstract class BioentityPageController {
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-        return foundationKey != null ? "foundation-bioentities" : "bioentities";
+        return "foundation-bioentities";
     }
 
     protected abstract Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName);

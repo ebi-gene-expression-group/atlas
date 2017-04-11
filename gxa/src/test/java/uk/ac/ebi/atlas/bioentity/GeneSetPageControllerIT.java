@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 import static org.junit.Assert.assertTrue;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
@@ -22,9 +21,6 @@ public class GeneSetPageControllerIT {
 
     @Inject
     GeneSetPageController subject;
-
-
-
 
     @Test
     public void bioentityPropertiesOfVariousTypes() throws Exception {
@@ -38,10 +34,11 @@ public class GeneSetPageControllerIT {
 
     private void bioentityProperties(String bioentityIdentifier){
         Model model = new BindingAwareModelMap();
-        subject.showGeneSetPage(bioentityIdentifier,"", "",model);
+        subject.showGeneSetPage(bioentityIdentifier, "",model);
 
         JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
 
         assertTrue(bioentityIdentifier+" should have one sad property" , bioentityProperties.size()==1);
     }
+
 }

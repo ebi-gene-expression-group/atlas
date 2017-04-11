@@ -25,44 +25,18 @@ public class StaticPageController {
 
     @RequestMapping("/{pageName}.html")
     public String getStaticPage(HttpServletRequest request,
-                                @PathVariable String pageName,
-                                @RequestParam(value = "foundation", required = false) String foundationKey) throws IOException {
-        String path;
-
-        if( foundationKey != null ) {
-            path = String.format("/resources/html/foundation/%s.html", pageName);
-            request.setAttribute("contentResource", fetchResource(path));
-
-            return "foundation-static";
-
-        } else {
-            path = String.format("/resources/html/%s.html", pageName);
-            request.setAttribute("contentResource", fetchResource(path));
-            request.setAttribute("nav", pageName.replace(" ","_").replace("-","_").toLowerCase());
-
-            return "static-template";
-        }
+                                @PathVariable String pageName) throws IOException {
+        String path = String.format("/resources/html/foundation/%s.html", pageName);
+        request.setAttribute("contentResource", fetchResource(path));
+        return "foundation-static";
     }
 
     @RequestMapping("/help/{pageName}.html")
     public String getHelpPage(HttpServletRequest request,
-                              @PathVariable String pageName,
-                              @RequestParam(value = "foundation", required = false) String foundationKey) throws IOException {
-        String path;
-
-        if( foundationKey != null ) {
-            path = String.format("/resources/html/help-foundation/%s.html", pageName);
-            request.setAttribute("contentResource", fetchResource(path));
-
-            return "foundation-static";
-
-        } else {
-            path = String.format("/resources/html/help/%s.html", pageName);
-            request.setAttribute("contentResource", fetchResource(path));
-            request.setAttribute("nav", "help");
-
-            return "static-template";
-        }
+                              @PathVariable String pageName) throws IOException {
+        String path = String.format("/resources/html/help-foundation/%s.html", pageName);
+        request.setAttribute("contentResource", fetchResource(path));
+        return "foundation-static";
     }
 
     @RequestMapping("/{pageName}.hhhh")

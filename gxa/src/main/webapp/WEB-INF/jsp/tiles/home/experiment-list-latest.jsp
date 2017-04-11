@@ -17,13 +17,13 @@
             <div class="list-project-l">
                 <ul>
                     <li>
-                        <a href="${pageContext.request.contextPath}/experiments?experimentType=baseline">
+                        <a href="${pageContext.request.contextPath}/baseline/experiments">
                             <div class="row">
                                 <div class="columns small-4">
                                     <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/baseline.png"/>
                                 </div>
                                 <div class="columns small-8">
-                                    <h5 style="line-height: 65px"><a href="${pageContext.request.contextPath}/experiments?experimentType=baseline">All baseline experiments</a></h5>
+                                    <h5 style="line-height: 65px"><a href="${pageContext.request.contextPath}/baseline/experiments">All baseline experiments</a></h5>
                                 </div>
                             </div>
                         </a>

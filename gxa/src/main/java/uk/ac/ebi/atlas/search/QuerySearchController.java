@@ -61,7 +61,6 @@ public class QuerySearchController {
     public String showGeneQueryResultPage(@RequestParam(value = "geneQuery", required = false, defaultValue = "") SemanticQuery geneQuery,
                                           @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
                                           @RequestParam(value = "organism", required = false, defaultValue = "") String speciesString,
-                                          @RequestParam(value = "foundation", required = false) String foundationKey,
                                           Model model, RedirectAttributes redirectAttributes){
 
         checkArgument(isNotEmpty(geneQuery) || isNotEmpty(conditionQuery), "Please specify a gene query or a condition.");
@@ -123,7 +122,7 @@ public class QuerySearchController {
 
             model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-            return foundationKey != null ? "foundation-bioentities-search-results" : "bioentities-search-results";
+            return "foundation-bioentities-search-results";
         }
 
     }
