@@ -197,10 +197,6 @@
 
     geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
 
-    /* This is to prevent overlapping between boxes in home page */
-    $(window).load(function(){
-        Foundation.reInit('equalizer');
-    });
 </script>
 
 </body>
