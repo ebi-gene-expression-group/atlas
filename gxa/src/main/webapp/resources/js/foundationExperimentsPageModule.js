@@ -136,11 +136,11 @@ var foundationExperimentsPageModule = (function ($) {
             "processing": true,
             "ajax":"json/experiments",
             "columns":[
-                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string",
+                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string", "width": "8%",
                     "render": function (data, type, full) {
                         return formatExperimentType(data);
                     } },
-                { "title":"Loaded", "data":"lastUpdate", "className":"center nowrap", 'type': 'date-eu',
+                { "title":"Loaded", "data":"lastUpdate", "className":"center nowrap", 'type': 'date-eu', "width": "6%",
                     "render": function (data, type, full) {
                         return formatLastUpdate(data);
                     } },
@@ -152,7 +152,7 @@ var foundationExperimentsPageModule = (function ($) {
                     "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "title":"Comparisons", "data":"numberOfContrasts", "className":"center", "type":"title-numeric",
+                { "title":"Comparisons", "data":"numberOfContrasts", "className":"center", "type":"title-numeric", "width":"5%",
                     "render": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, full);
                     } },

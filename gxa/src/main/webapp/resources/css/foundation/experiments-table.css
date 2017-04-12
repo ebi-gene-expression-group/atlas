@@ -1,31 +1,10 @@
-#experiments-table {
-    border-width: 1px;
-    border-color: lightgrey;
-    margin-top: 20px !important;
-}
-
 #experiments-table th {
-    padding: 3px 18px 3px 10px;
     text-align: center;
     font-size: small;
-    font-style: normal;
-}
-
-#experiments-table tr.odd {
-    background-color: #FAFAFA;
-}
-
-#experiments-table tr.even {
-    background-color: #FFFFFF;
 }
 
 #experiments-table td {
-    vertical-align: middle;
     text-align: center;
-    border-left: 0;
-    border-right: 0;
-    border-bottom-color: lightgrey;
-    border-top-color: lightgrey;
     font-size: small;
 }
 
@@ -33,45 +12,24 @@
     font-style: italic;
 }
 
-#experiments-table_wrapper select {
-    height: 33px;
-    width: 60px;
-    font-size: small;
-}
-
 #experiments-table_filter input {
-    height: 33px;
+    /* After inspecting Data Tables own inputs... */
+    height: 39px;
 }
 
 #experiments-table select {
-    text-align: center;
-    font-size: small;
     margin: 0;
-    height: 15px;
+    width: 75%;
+    height: 21px;
+    font-size: small;
 }
 
 #experiments-table tfoot input {
-    margin: 0.5em 0;
-    width: 100%;
+    margin: 0;
     font-size: small;
-    height: 33px;
-    /*color: grey;*/
 }
 
 #experiments-table tfoot input.search_init {
     color: grey;
     font-style: italic;
-}
-
-#experiments-table_kingdom {
-    float:left;
-    font-size: 14px;
-    padding: 10px;
-    margin-top: 6px;
-}
-
-#experiments-table_kingdom select {
-    font-size: small;
-    width: 180px;
-    height: 33px;
 }
