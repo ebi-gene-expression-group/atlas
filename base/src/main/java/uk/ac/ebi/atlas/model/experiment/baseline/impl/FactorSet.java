@@ -26,11 +26,6 @@ public class FactorSet implements FactorGroup {
         this.factorsByType = factorsByType;
     }
 
-    public FactorSet(Factor factor) {
-        this(new HashMap<String, Factor>());
-        add(factor);
-    }
-
     public FactorSet add(Factor factor) {
         /*Preconditions.checkArgument(!factorsByType.containsKey(factor.getType()));
         Sadly this does sometimes happen.

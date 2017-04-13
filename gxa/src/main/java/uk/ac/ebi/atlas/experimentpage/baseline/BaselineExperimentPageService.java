@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -97,7 +98,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             o.addProperty("assayGroupId", dataColumnDescriptor.getId());
             o.addProperty("factorValue", baselineRequestContext.displayNameForColumn(dataColumnDescriptor));
             o.add("factorValueOntologyTermId",
-                    OntologyTerm.jsonForHeaders(baselineRequestContext.ontologyTermsForColumn(dataColumnDescriptor)));
+                    OntologyTerm.jsonForHeaders(new RichFactorGroup(experiment.getFactors(dataColumnDescriptor)).getOntologyTerms()));
             o.add("assayGroupSummary",
                     new AssayGroupSummaryBuilder()
                     .forAssayGroup(experiment.getDataColumnDescriptor(dataColumnDescriptor.getId()))

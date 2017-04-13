@@ -6,11 +6,13 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -48,16 +50,6 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
         return requestPreferences.getQueryFactorType();
     }
 
-    public Set<OntologyTerm> ontologyTermsForColumn(AssayGroup assayGroup){
-        return FluentIterable.from(experiment.getFactors(assayGroup)).transformAndConcat(new Function<Factor, Iterable<OntologyTerm>>() {
-            @Nullable
-            @Override
-            public Iterable<OntologyTerm> apply(@Nullable Factor factor) {
-                return factor.getValueOntologyTerms();
-            }
-        }).toSet();
-    }
-
     LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
         @Override
         protected ImmutableMap<AssayGroup, String> create() throws Exception {
@@ -66,55 +58,33 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
     };
 
     private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup(){
-        Map<AssayGroup, Map<String, Factor>> factorsByTypePerId = new HashMap<>();
-        for(AssayGroup assayGroup: getDataColumnsToReturn()){
-            factorsByTypePerId.put(assayGroup,
-                    experiment.getExperimentDesign()
-                            .getFactors(assayGroup.getFirstAssayAccession())
-                            .factorsByType
-            );
-        }
-        final Map<String, Set<String>> allValuesPerType = new HashMap<>();
 
-        for(Map.Entry<AssayGroup, Map<String, Factor>> e: factorsByTypePerId.entrySet()){
-            for(Map.Entry<String, Factor> ee : e.getValue().entrySet()){
-                if(!allValuesPerType.containsKey(ee.getKey())){
-                    allValuesPerType.put(ee.getKey(), new HashSet<String>());
-                }
-                allValuesPerType.get(ee.getKey()).add(ee.getValue().getValue());
-            }
-        }
-
-        List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
-                typesWhichWeShouldProvideToDifferentiateBetweenValues(experiment.getDisplayDefaults().prescribedOrderOfFilters(), allValuesPerType);
+        List<String> typesWhoseValuesVaryAcrossSelectedDescriptors = RichFactorGroup.filterOutTypesWithCommonValues(
+        experiment.getDisplayDefaults().prescribedOrderOfFilters(),
+               FluentIterable.from(getDataColumnsToReturn()).transform(new Function<AssayGroup, FactorGroup>() {
+                    @Override
+                    public FactorGroup apply(AssayGroup assayGroup) {
+                        return experiment.getFactors(assayGroup);
+                    }
+                })
+        );
 
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
-        for(final Map.Entry<AssayGroup, Map<String, Factor>> e : factorsByTypePerId.entrySet()){
-            b.put(e.getKey(), Joiner.on(", ").join(FluentIterable.from
+        for(AssayGroup assayGroup: getDataColumnsToReturn()){
+            final FactorGroup factorGroup = experiment.getFactors(assayGroup);
+
+            b.put(assayGroup, FluentIterable.from
                     (typesWhoseValuesVaryAcrossSelectedDescriptors).transform(new Function<String, String>() {
-                @Nullable
                 @Override
-                public String apply(@Nullable String type) {
-                    return e.getValue().get(Factor.normalize(type)).getValue();
+                public String apply(String type) {
+                    return factorGroup.factorOfType(Factor.normalize(type)).getValue();
                 }
-            })));
+            }).join(Joiner.on(", ")));
         }
 
         return b.build();
     }
 
-    private static List<String> typesWhichWeShouldProvideToDifferentiateBetweenValues(List<String> types, final Map<String, Set<String>> allValuesPerType){
-        List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
-                FluentIterable.from(types)
-                        .filter(new Predicate<String>() {
-                            @Override
-                            public boolean apply(@Nullable String type) {
-                                return allValuesPerType.containsKey(Factor.normalize(type)) && allValuesPerType.get(Factor.normalize(type)).size() >1 ;
-                            }
-                        }).toList();
-        // covers case of one column
-        return typesWhoseValuesVaryAcrossSelectedDescriptors.size() == 0 ? types : typesWhoseValuesVaryAcrossSelectedDescriptors;
-    }
 
 }
