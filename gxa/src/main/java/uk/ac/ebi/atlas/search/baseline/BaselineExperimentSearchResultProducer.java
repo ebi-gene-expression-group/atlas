@@ -1,13 +1,16 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Function;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -64,93 +67,58 @@ public class BaselineExperimentSearchResultProducer {
 
     }
 
+    Map<String, FactorAcrossExperiments> factorsPerColumnId(BaselineExperiment experiment, String factorType){
+        Map<String, FactorAcrossExperiments> result = new HashMap<>();
+        for(AssayGroup assayGroup: experiment.getDataColumnDescriptors()){
+            result.put(assayGroup.getId(), new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType)));
+        }
+        return result;
+    }
+
 
     BaselineExperimentSearchResult buildProfilesForExpressions(List<BaselineExperimentExpression> expressions,
                                                                   String defaultQueryFactorType) {
+        BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
+        SortedSet<FactorAcrossExperiments> resultHeaders = new TreeSet<>();
 
-        ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice =
-                filter(groupByExperimentSlice(expressions), defaultQueryFactorType);
+        Multimap<String, BaselineExperimentExpression> expressionsPerExperiment = Multimaps.index(expressions, new Function<BaselineExperimentExpression, String>() {
+            @Override
+            public String apply(BaselineExperimentExpression baselineExperimentExpression) {
+                return baselineExperimentExpression.experimentAccession();
+            }
+        });
 
-        SortedSet<Factor> tissueFactorsAcrossAllExperiments = extractAllNonFilterFactors(expressionsByExperimentSlice);
+        for(String experimentAccession: expressionsPerExperiment.keySet()){
+            BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+            Map<String, FactorAcrossExperiments> columnIdsByFactorValue = factorsPerColumnId(experiment, defaultQueryFactorType);
 
-        BaselineExperimentProfilesList profiles = new BaselineExperimentProfilesList();
-        SortedSet<FactorAcrossExperiments> allFactorsAcrossAllExperiments = new TreeSet<>();
-
-        for (BaselineExperimentSlice experimentSlice : expressionsByExperimentSlice.keySet()) {
-            BaselineExperiment experiment = experimentSlice.experiment();
-            BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
-
-            for (BaselineExperimentExpression baselineExpression : expressionsByExperimentSlice.get(experimentSlice)) {
-                AssayGroup assayGroup = experiment.getDataColumnDescriptor(baselineExpression.assayGroupId());
-                FactorAcrossExperiments f =
-                        new FactorAcrossExperiments(experiment.getFactors(assayGroup)
-                                .factorOfType(defaultQueryFactorType));
-                allFactorsAcrossAllExperiments.add(f);
-                profile.add(f, new BaselineExpression(baselineExpression.expressionLevel(), f.getId()));
+            Multimap<FactorGroup, BaselineExperimentExpression> rowsForThisExperiment = LinkedListMultimap.create();
+            for(BaselineExperimentExpression baselineExperimentExpression: expressionsPerExperiment.get(experimentAccession)){
+                AssayGroup assayGroup = experiment.getDataColumnDescriptor(baselineExperimentExpression.assayGroupId());
+                rowsForThisExperiment.put(experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(defaultQueryFactorType)), baselineExperimentExpression);
             }
 
-            // For the expressed factors below cutoff
-            for (Factor factor : tissueFactorsAcrossAllExperiments) {
-                FactorAcrossExperiments f = new FactorAcrossExperiments(factor);
-                allFactorsAcrossAllExperiments.add(f);
-                if (profile.getExpression(f) == null) {
-                    profile.add(f, new BaselineExpression("NA", f.getId()));
+            Set<String> commonFactorTypes = RichFactorGroup.typesWithCommonValues(rowsForThisExperiment.keySet());
+
+            for(Map.Entry<FactorGroup, Collection<BaselineExperimentExpression>> e: rowsForThisExperiment.asMap().entrySet()){
+                BaselineExperimentProfile baselineExperimentProfile =
+                        new BaselineExperimentProfile(experiment,
+                                e.getKey().withoutTypes(commonFactorTypes));
+                for(BaselineExperimentExpression baselineExperimentExpression: e.getValue()){
+                    FactorAcrossExperiments f = columnIdsByFactorValue.get(baselineExperimentExpression.assayGroupId());
+                    baselineExperimentProfile.add(f, new BaselineExpression(baselineExperimentExpression.expressionLevel(), f.getId()));
+                    resultHeaders.add(f);
                 }
+                resultRows.add(baselineExperimentProfile);
             }
 
-            Set<Factor> factorDifference = Sets.difference(tissueFactorsAcrossAllExperiments, experimentSlice.nonFilterFactors());
-            // Factors not studied in the experiment
-            for (Factor factor : factorDifference) {
-                FactorAcrossExperiments f = new FactorAcrossExperiments(factor);
-                allFactorsAcrossAllExperiments.add(f);
-                profile.add(f, new BaselineExpression("NT", f.getId()));
-            }
-
-            profiles.add(profile);
         }
 
-        Collections.sort(profiles);
 
-        profiles.setTotalResultCount(profiles.size());
-        return new BaselineExperimentSearchResult(profiles, ImmutableList.copyOf(allFactorsAcrossAllExperiments));
-    }
+        Collections.sort(resultRows);
+        resultRows.setTotalResultCount(resultRows.size());
 
-    private static ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> filter(ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice, String defaultQueryFactorType) {
-        ImmutableListMultimap.Builder<BaselineExperimentSlice, BaselineExperimentExpression> builder = ImmutableListMultimap.builder();
-
-        for (Map.Entry<BaselineExperimentSlice, Collection<BaselineExperimentExpression>> baselineExperimentSliceCollectionEntry : expressionsByExperimentSlice.asMap().entrySet()) {
-            BaselineExperiment experiment = baselineExperimentSliceCollectionEntry.getKey().experiment();
-            if (experiment.getDisplayDefaults().defaultQueryFactorType().equalsIgnoreCase(defaultQueryFactorType)) {
-                builder.putAll(baselineExperimentSliceCollectionEntry.getKey(), baselineExperimentSliceCollectionEntry.getValue());
-            }
-        }
-
-        return builder.build();
-    }
-
-    private SortedSet<Factor> extractAllNonFilterFactors(ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> expressionsByExperimentSlice) {
-        ImmutableSortedSet.Builder<Factor> factors = ImmutableSortedSet.naturalOrder();
-
-        for (BaselineExperimentSlice experimentSlice : expressionsByExperimentSlice.keySet()) {
-            factors.addAll(experimentSlice.nonFilterFactors());
-        }
-
-        return factors.build();
-    }
-
-
-    private ImmutableListMultimap<BaselineExperimentSlice, BaselineExperimentExpression> groupByExperimentSlice(List<BaselineExperimentExpression> expressions) {
-        Function<BaselineExperimentExpression, BaselineExperimentSlice> createExperimentSlice = new Function<BaselineExperimentExpression, BaselineExperimentSlice>() {
-            public BaselineExperimentSlice apply(BaselineExperimentExpression input) {
-                String experimentAccession = input.experimentAccession();
-
-                BaselineExperiment experiment = (BaselineExperiment) (experimentTrader.getPublicExperiment(experimentAccession));
-
-                return BaselineExperimentSlice.create(experiment, experiment.getDataColumnDescriptor(input.assayGroupId()));
-            }
-        };
-
-        return Multimaps.index(expressions, createExperimentSlice);
+        return new BaselineExperimentSearchResult(resultRows, ImmutableList.copyOf(resultHeaders));
     }
 
 }

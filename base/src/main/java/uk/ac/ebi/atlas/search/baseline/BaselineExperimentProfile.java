@@ -1,10 +1,12 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
@@ -15,20 +17,18 @@ import java.util.Map;
 public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression> implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
-    private final Integer nonFilterFactorsSize;
 
     private String experimentAccession;
     private ExperimentType experimentType;
 
-    public BaselineExperimentProfile(BaselineExperimentSlice experimentSlice) {
+    public BaselineExperimentProfile(BaselineExperiment experiment, FactorGroup filterFactors) {
         super(joinIntoText(
-                experimentSlice.experimentAccession(),
-                experimentSlice.filterFactors()),
-                experimentSlice.experimentDisplayName());
-        filterFactors = experimentSlice.filterFactors();
-        nonFilterFactorsSize = experimentSlice.nonFilterFactors().size();
-        experimentAccession = experimentSlice.experimentAccession();
-        experimentType = experimentSlice.getExperimentType();
+                experiment.getAccession(),
+                filterFactors),
+                experiment.getDisplayName());
+        this.filterFactors = filterFactors;
+        experimentAccession = experiment.getAccession();
+        experimentType = experiment.getType();
     }
 
     @Override
@@ -43,15 +43,11 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
      * If the number of conditions with expression is the same, the sorting should be alphabetic - by the experiment display name.
      */
     public int compareTo(BaselineExperimentProfile other) {
-        int experimentTypeComparison =
-                this.experimentType == other.experimentType ?
-                        0 : (this.experimentType == ExperimentType.RNASEQ_MRNA_BASELINE ? -1 : 1);
-        int comparison = (other.nonFilterFactorsSize).compareTo(this.nonFilterFactorsSize);
-        if (experimentTypeComparison != 0) {
-            return experimentTypeComparison;
-        } else {
-            return (comparison != 0) ? comparison : (this.getName().compareTo(other.getName()));
-        }
+        return ComparisonChain.start()
+                .compareFalseFirst(other.experimentType.isRnaSeqBaseline(),this.experimentType.isRnaSeqBaseline())
+                .compare(other.expressionsByCondition.size(), this.expressionsByCondition.size())
+                .compare(other.getName(), this.getName())
+                .result();
     }
 
     @Override

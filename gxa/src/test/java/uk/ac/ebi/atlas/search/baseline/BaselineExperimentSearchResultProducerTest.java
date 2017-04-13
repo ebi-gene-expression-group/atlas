@@ -2,8 +2,10 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchDao;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCacheTest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,4 +33,5 @@ public class BaselineExperimentSearchResultProducerTest {
 
         return JsonPath.read(in, BaselineAnalyticsSearchDao.EXPERIMENTS_PATH);
     }
+
 }

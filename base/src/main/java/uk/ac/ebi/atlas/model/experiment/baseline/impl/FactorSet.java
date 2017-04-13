@@ -7,12 +7,7 @@ import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FactorSet implements FactorGroup {
 
@@ -101,11 +96,16 @@ public class FactorSet implements FactorGroup {
     }
 
     @Override
-    public FactorSet withoutType(String factorType) {
-        HashMap<String, Factor> factorsByTypeClone = new HashMap<>(factorsByType);
-        factorsByTypeClone.remove(factorType);
-        return new FactorSet(factorsByTypeClone);
+    public FactorGroup withoutTypes(Collection<String> factorTypes) {
+        HashMap<String, Factor> result = new HashMap<>();
+        for(String type : factorsByType.keySet()){
+            if(!factorTypes.contains(type)){
+                result.put(type, factorsByType.get(type));
+            }
+        }
+        return new FactorSet(result);
     }
+
 
     // Map <type, value>
     public static FactorSet create(Map<String, String> factorValueByType) {

@@ -9,11 +9,11 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroupsFake;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.*;
+import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSlice;
 
 import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
@@ -46,16 +46,15 @@ public class ExternallyViewableProfilesListTest {
 
 
 
-        BaselineExperimentProfile firstProfile = new BaselineExperimentProfile(BaselineExperimentSlice.create
-                (BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
-                        AssayGroupsFake.get().get(0)));
+        BaselineExperimentProfile firstProfile = new BaselineExperimentProfile(BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_1"),
+                        new FactorSet());
 
         FactorAcrossExperiments f11 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "11"));
         firstProfile.add(f11, new BaselineExpression(12.34, "11"));
 
-        BaselineExperimentProfile secondProfile = new BaselineExperimentProfile(BaselineExperimentSlice.create(
+        BaselineExperimentProfile secondProfile = new BaselineExperimentProfile(
                 BaselineExperimentTest.mockExperiment(AssayGroupsFake.get(), "experiment_2"),
-                AssayGroupsFake.get().get(0)));
+                new FactorSet());
         FactorAcrossExperiments f21 = new FactorAcrossExperiments(new Factor(defaultQueryFactorType, "21"));
 
         secondProfile.add(f21, new BaselineExpression(56.78, "21"));

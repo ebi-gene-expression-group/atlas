@@ -13,7 +13,7 @@ public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
     List<Factor> without(Collection<Factor> factors);
 
-    FactorGroup withoutType(String factorType);
+    FactorGroup withoutTypes(Collection<String> factorTypes);
 
     int size();
 

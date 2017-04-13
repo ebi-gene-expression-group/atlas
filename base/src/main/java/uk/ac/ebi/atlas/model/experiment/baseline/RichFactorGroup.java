@@ -29,7 +29,7 @@ public class RichFactorGroup {
         }).toSet();
     }
 
-    static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups){
+    public static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups){
         Multimap<String, String> allValuesPerType = LinkedListMultimap.create();
         for(FactorGroup factorGroup: factorGroups){
             for(Factor factor: factorGroup){
