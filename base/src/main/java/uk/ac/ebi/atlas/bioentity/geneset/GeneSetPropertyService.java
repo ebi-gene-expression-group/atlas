@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.geneset;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

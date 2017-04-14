@@ -9,13 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.bioentity.geneset.GeneSetPropertyService;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 
 import javax.inject.Inject;
 import java.util.Map;
 
-import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.matchesReactomeID;
+import static uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil.matchesReactomeID;
 
 @Controller
 @Scope("request")

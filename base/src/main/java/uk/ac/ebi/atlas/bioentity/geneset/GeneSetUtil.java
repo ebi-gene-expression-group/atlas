@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.geneset;
 
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;

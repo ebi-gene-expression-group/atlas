@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.geneset;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static uk.ac.ebi.atlas.bioentity.GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession;
+import static uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession;
 
 public class GeneSetUtilTest {
 
