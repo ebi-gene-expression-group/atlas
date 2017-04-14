@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,4 +33,8 @@ public class InterProTraderIT {
         assertThat(subject.getTermName(IPR029787), is(NUCLEOTIDE_CYCLASE_DOMAIN));
     }
 
+    @Test
+    public void unknownTermsReturnNull() {
+        assertThat(subject.getTermName("IPRFOOBAR"), is(nullValue()));
+    }
 }
