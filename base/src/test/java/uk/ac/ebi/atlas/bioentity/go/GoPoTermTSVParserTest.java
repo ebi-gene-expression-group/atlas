@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,7 +35,7 @@ public class GoPoTermTSVParserTest {
     }
 
     @Test
-    public void parseLineWithDepthField() throws IOException {
+    public void parseLineWithDepthField() throws Exception {
         //given
         given(tsvReaderMock.readNext())
                 .willReturn(new String[] {GO_0000001, MITOCHONDRION_INHERITANCE, "biological_process", Integer.toString(DEPTH_6)})
