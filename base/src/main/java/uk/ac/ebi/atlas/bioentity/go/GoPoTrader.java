@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
-import org.springframework.stereotype.Component;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import au.com.bytecode.opencsv.CSVReader;
@@ -11,9 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 
-@Component
+@Named
 public class GoPoTrader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GoPoTrader.class);
