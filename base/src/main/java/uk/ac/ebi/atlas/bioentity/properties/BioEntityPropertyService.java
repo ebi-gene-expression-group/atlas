@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Named("bioEntityPropertyService")
+@Named
 public class BioEntityPropertyService {
 
     private UniProtClient uniProtClient;
