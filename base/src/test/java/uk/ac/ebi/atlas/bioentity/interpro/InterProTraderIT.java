@@ -12,7 +12,7 @@ import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
-public class InterProTermTraderIT {
+public class InterProTraderIT {
 
     private static final String IPR000001 = "IPR000001";
     private static final String KRINGLE_DOMAIN = "Kringle (domain)";
@@ -23,12 +23,12 @@ public class InterProTermTraderIT {
     InterProTrader subject;
 
     @Test
-    public void hasIPR000001() {
+    public void hasFirstTerm() {
         assertThat(subject.getTermName(IPR000001), is(KRINGLE_DOMAIN));
     }
 
     @Test
-    public void hasIPR029787() {
+    public void hasLastTerm() {
         assertThat(subject.getTermName(IPR029787), is(NUCLEOTIDE_CYCLASE_DOMAIN));
     }
 
