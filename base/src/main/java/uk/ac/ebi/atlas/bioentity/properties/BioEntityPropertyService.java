@@ -11,7 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
@@ -35,13 +35,13 @@ public class BioEntityPropertyService {
     private UniProtClient uniProtClient;
     private ArrayDesignDAO arrayDesignDAO;
     private final BioEntityPropertyLinkBuilder linkBuilder;
-    private final GoPoTermTrader goPoTermTrader;
+    private final GoPoTrader goPoTermTrader;
     private final Gson gson = new Gson();
 
     @Inject
     public BioEntityPropertyService(UniProtClient uniProtClient,
                                     BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO,
-                                    GoPoTermTrader goPoTermTrader) {
+                                    GoPoTrader goPoTermTrader) {
 
         this.uniProtClient = uniProtClient;
         this.arrayDesignDAO = arrayDesignDAO;

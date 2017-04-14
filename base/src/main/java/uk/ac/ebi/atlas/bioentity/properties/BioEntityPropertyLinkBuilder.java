@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.bioentity.properties;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import com.google.common.base.Optional;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -21,13 +21,13 @@ public class BioEntityPropertyLinkBuilder {
     private SpeciesLookupService speciesLookupService;
     private BioEntityPropertyDao bioEntityPropertyDao;
     private ReactomeClient reactomeClient;
-    private GoPoTermTrader goPoTermTrader;
+    private GoPoTrader goPoTermTrader;
     private InterProTrader interProTermTrader;
 
     @Inject
     public BioEntityPropertyLinkBuilder(SpeciesLookupService speciesLookupService,
                                         BioEntityPropertyDao bioEntityPropertyDao, ReactomeClient reactomeClient,
-                                        GoPoTermTrader goPoTermTrader, InterProTrader interProTermTrader) {
+                                        GoPoTrader goPoTermTrader, InterProTrader interProTermTrader) {
 
         this.speciesLookupService = speciesLookupService;
         this.bioEntityPropertyDao = bioEntityPropertyDao;

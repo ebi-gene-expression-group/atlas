@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.bioentity;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.bioentity.go.GoPoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -19,12 +19,12 @@ import static uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName.*;
 @Named
 public class GeneSetPropertyService {
 
-    private final GoPoTermTrader goPoTermTrader;
+    private final GoPoTrader goPoTermTrader;
     private final InterProTrader interProTermTrader;
     private final ReactomeClient reactomeClient;
 
     @Inject
-    public GeneSetPropertyService(GoPoTermTrader goPoTermTrader,
+    public GeneSetPropertyService(GoPoTrader goPoTermTrader,
                                   InterProTrader interProTermTrader,
                                   ReactomeClient reactomeClient) {
         this.goPoTermTrader = goPoTermTrader;

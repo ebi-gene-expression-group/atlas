@@ -25,14 +25,14 @@ public class GoPoTermTSVParserTest {
     private final static String PO_0000001 = "PO:0000001";
     private final static String EMBRYO_PROPER = "embryo proper";
 
-    private GoPoTermTSVParser subject;
+    private GoPoTSVParser subject;
 
     @Mock
     private CSVReader tsvReaderMock;
 
     @Before
     public void setUp() {
-        subject = new GoPoTermTSVParser(tsvReaderMock);
+        subject = new GoPoTSVParser(tsvReaderMock);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class GoPoTermTSVParserTest {
         //then
         assertThat(map.get(PO_0000001).accession(), is(PO_0000001));
         assertThat(map.get(PO_0000001).name(), is(EMBRYO_PROPER));
-        assertThat(map.get(PO_0000001).depth(), is(GoPoTermTSVParser.DEFAULT_DEPTH));
+        assertThat(map.get(PO_0000001).depth(), is(GoPoTSVParser.DEFAULT_DEPTH));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class GoPoTermTSVParserTest {
         //then
         assertThat(map.size(), is(1));
         assertThat(map.get(GO_0000001).name(), is(""));
-        assertThat(map.get(GO_0000001).depth(), is(GoPoTermTSVParser.DEFAULT_DEPTH));
+        assertThat(map.get(GO_0000001).depth(), is(GoPoTSVParser.DEFAULT_DEPTH));
     }
 
 

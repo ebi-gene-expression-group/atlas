@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableMultimap;
 import java.io.IOException;
 import java.util.Collection;
 
-public class GoPoTermTSVParser {
+public class GoPoTSVParser {
 
     private static final String[] VALID_PREFIXES = {"GO:", "PO:"};
 
@@ -20,7 +20,7 @@ public class GoPoTermTSVParser {
 
     private final CSVReader csvReader;
 
-    public GoPoTermTSVParser(CSVReader csvReader) {
+    public GoPoTSVParser(CSVReader csvReader) {
         this.csvReader = csvReader;
     }
 

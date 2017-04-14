@@ -26,7 +26,7 @@ public class    GoPoTermTraderIT {
     private static final OntologyTerm PO_0030087_TERM = OntologyTerm.create(PO_0030087, "non-vascular leaf initial cell");
 
     @Inject
-    private GoPoTermTrader subject;
+    private GoPoTrader subject;
 
     @Test
     public void hasGO_0000001() throws Exception {

@@ -14,17 +14,17 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 @Component
-public class GoPoTermTrader {
+public class GoPoTrader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GoPoTermTrader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GoPoTrader.class);
 
     private final ImmutableMap<String, OntologyTerm> accessionToTerm;
 
     @Inject
-    public GoPoTermTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath) {
+    public GoPoTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath) {
 
         try (CSVReader tsvReader = CsvReaderFactory.createForTsv(goPoTSVFilePath)) {
-            accessionToTerm = new GoPoTermTSVParser(tsvReader).parse();
+            accessionToTerm = new GoPoTSVParser(tsvReader).parse();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
