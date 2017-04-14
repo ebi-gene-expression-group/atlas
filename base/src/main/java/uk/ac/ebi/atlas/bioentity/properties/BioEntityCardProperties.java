@@ -41,7 +41,7 @@ public class BioEntityCardProperties {
         .put(MGI_ID,
                 "http://www.emouseatlas.org/emagewebapp/pages/emage_general_query_result.jsf?genes={0}")
         .put(GENE_BIOTYPE,
-                "http://www.ensembl.org/Help/Glossary?id=275" /*seems wrong*/)
+                "http://www.ensembl.org/Help/Glossary?id=275")
         .put(REACTOME,
                 "http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID={0}")
         .put(MIRBASE_ACCESSION,
