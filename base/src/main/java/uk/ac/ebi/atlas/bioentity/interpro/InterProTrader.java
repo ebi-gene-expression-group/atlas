@@ -20,15 +20,11 @@ public class InterProTrader {
     private final ImmutableMap<String, String> interProAccessionToTerm;
 
     @Inject
-    public InterProTrader(@Value("#{configuration['interpro.terms.file']}") String interProTSVFilePath) {
-
+    public InterProTrader(@Value("#{configuration['interpro.terms.file']}") String interProTSVFilePath)
+    throws IOException {
         try (CSVReader tsvReader = CsvReaderFactory.createForTsv(interProTSVFilePath)) {
             interProAccessionToTerm = new InterProTSVParser(tsvReader).parse();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException(e);
         }
-
     }
 
     @Nullable
@@ -36,6 +32,7 @@ public class InterProTrader {
         try {
             return interProAccessionToTerm.get(accession);
         } catch (NullPointerException e) {
+            LOGGER.warn("Unknown name for InterPro term with ID {}", accession);
             return null;
         }
 

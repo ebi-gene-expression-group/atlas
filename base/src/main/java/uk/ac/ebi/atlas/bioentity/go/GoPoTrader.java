@@ -21,15 +21,11 @@ public class GoPoTrader {
     private final ImmutableMap<String, OntologyTerm> accessionToTerm;
 
     @Inject
-    public GoPoTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath) {
-
+    public GoPoTrader(@Value("#{configuration['go.terms.file']}") String goPoTSVFilePath)
+    throws IOException {
         try (CSVReader tsvReader = CsvReaderFactory.createForTsv(goPoTSVFilePath)) {
             accessionToTerm = new GoPoTSVParser(tsvReader).parse();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException(e);
         }
-
     }
 
     @Nullable
@@ -42,6 +38,7 @@ public class GoPoTrader {
         try {
             return accessionToTerm.get(accession).name();
         } catch (NullPointerException e) {
+            LOGGER.warn("Unknown name for GO/PO term with ID {}", accession);
             return null;
         }
     }
