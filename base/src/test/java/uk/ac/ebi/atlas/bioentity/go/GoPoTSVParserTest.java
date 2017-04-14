@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GoPoTermTSVParserTest {
+public class GoPoTSVParserTest {
 
     private final static String GO_0000001 = "GO:0000001";
     private final static String MITOCHONDRION_INHERITANCE = "mitochondrion inheritance";
