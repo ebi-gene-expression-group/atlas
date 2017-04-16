@@ -435,6 +435,29 @@
         </profile>
 
         <profile>
+            <id>dev.pg</id>
+            <properties>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <db.context>pgContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url>
+                <jdbc.username>atlas3dev</jdbc.username>
+                <jdbc.password>YxyR9PKvOAtY</jdbc.password>
+                <solr.host>lime</solr.host>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
+        <profile>
             <id>dev.local.vm</id>
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
