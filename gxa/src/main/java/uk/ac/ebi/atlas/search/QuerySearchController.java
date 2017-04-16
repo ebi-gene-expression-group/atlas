@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
+import uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
