@@ -12,10 +12,10 @@
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
-        <property name="URL" value="${filtered.oracle.jdbc.url}"/>
-        <property name="user" value="${filtered.oracle.jdbc.username}"/>
-        <property name="password" value="${filtered.oracle.jdbc.password}"/>
+    <bean id="dataSource" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
+        <property name="URL" value="${filtered.jdbc.url}"/>
+        <property name="user" value="${filtered.jdbc.username}"/>
+        <property name="password" value="${filtered.jdbc.password}"/>
         <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
         <property name="initialPoolSize" value="3"/>
         <property name="minPoolSize" value="3"/>
@@ -23,17 +23,17 @@
         <property name="maxIdleTime" value="1800"/>
     </bean>
 
-    <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSourceOracle"/>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
     </bean>
-    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSourceOracle"/>
+    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
     </bean>
 
     <!-- Enables @Transactional -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSourceOracle"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
 </beans>

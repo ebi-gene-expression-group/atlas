@@ -12,22 +12,30 @@
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <bean id="dataSource" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
-        <property name="connectionPoolName" value="gxa_sc"/>
-        <property name="URL" value="${filtered.jdbc.url}"/>
-        <property name="user" value="${filtered.jdbc.username}"/>
-        <property name="password" value="${filtered.jdbc.password}"/>
-        <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
-        <property name="initialPoolSize" value="3"/>
-        <property name="minPoolSize" value="3"/>
-        <property name="maxPoolSize" value="20"/>
-        <property name="maxIdleTime" value="1800"/>
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="connectionTestQuery" value="SELECT 1" />
+        <property name="dataSourceClassName" value="org.postgresql.ds.PGSimpleDataSource" />
+        <!--<property name="maximumPoolSize" value="10" />-->
+        <!--<property name="idleTimeout" value="600000" />-->
+
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="url">${filtered.jdbc.url}</prop>
+                <prop key="user">${filtered.jdbc.username}</prop>
+                <prop key="password">${filtered.jdbc.password}</prop>
+            </props>
+        </property>
     </bean>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <!-- HikariCP configuration -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig" />
+    </bean>
+
+    <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
-    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
 

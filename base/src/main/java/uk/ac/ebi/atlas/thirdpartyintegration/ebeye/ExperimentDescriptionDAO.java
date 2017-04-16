@@ -16,7 +16,7 @@ public class ExperimentDescriptionDAO {
     private final ExperimentDescriptionRowMapper experimentDescriptionRowMapper;
 
     @Inject
-    public ExperimentDescriptionDAO(@Qualifier("dataSourceOracle") DataSource dataSource, ExperimentDescriptionRowMapper experimentDescriptionRowMapper) {
+    public ExperimentDescriptionDAO(DataSource dataSource, ExperimentDescriptionRowMapper experimentDescriptionRowMapper) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.experimentDescriptionRowMapper = experimentDescriptionRowMapper;
     }

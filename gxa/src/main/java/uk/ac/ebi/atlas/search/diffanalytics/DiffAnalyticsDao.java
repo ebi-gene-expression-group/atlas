@@ -30,7 +30,7 @@ public class DiffAnalyticsDao {
     private final OracleObjectFactory oracleObjectFactory;
 
     @Inject
-    public DiffAnalyticsDao(@Qualifier("dataSourceOracle") DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper, OracleObjectFactory oracleObjectFactory) {
+    public DiffAnalyticsDao(DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper, OracleObjectFactory oracleObjectFactory) {
         this(new JdbcTemplate(dataSource), dbeRowMapper, oracleObjectFactory) ;
     }
 

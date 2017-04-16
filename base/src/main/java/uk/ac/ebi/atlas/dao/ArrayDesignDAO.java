@@ -16,7 +16,7 @@ public class ArrayDesignDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public ArrayDesignDAO(@Qualifier("dataSourceOracle") DataSource dataSource) {
+    public ArrayDesignDAO(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
