@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage.context;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -130,7 +129,7 @@ public class BaselineRequestContextTest {
         assertThat(subject.displayNameForColumn(ag2), (is("other type value 2, name for g2")));
     }
 
-    @Ignore
+    @Test
     public void whenSomeTypesAreTheSameAcrossTheSetTheyDoNotGoIntoTheName() throws Exception {
         String defaultQueryFactorType = "defaultQueryFactorType";
         String otherType = "otherQueryFactorType";
