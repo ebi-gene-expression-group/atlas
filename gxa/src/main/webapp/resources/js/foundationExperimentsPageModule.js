@@ -136,7 +136,7 @@ var foundationExperimentsPageModule = (function ($) {
             "processing": true,
             "ajax":"json/experiments",
             "columns":[
-                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string", "width": "8%",
+                { "title":"Type", "data":"experimentType", "className":"center", "type":"alt-string", "width": "9%",
                     "render": function (data, type, full) {
                         return formatExperimentType(data);
                     } },
