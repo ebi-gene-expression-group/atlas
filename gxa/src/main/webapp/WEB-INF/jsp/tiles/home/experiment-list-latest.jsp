@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<div class="callout experiment-list-latest" data-equalizer-watch>
+<div class="callout experiment-list-latest padding-bottom-for-button" data-equalizer-watch>
     <ul class="tabs" data-tabs id="experiments-tabs">
         <li class="tabs-title is-active"><a href="#featured-experiments">Featured</a></li>
         <li class="tabs-title"><a href="#latest-experiments" aria-selected="true">Latest experiments</a></li>
@@ -20,7 +20,7 @@
                         <a href="${pageContext.request.contextPath}/baseline/experiments">
                             <div class="row">
                                 <div class="columns small-4">
-                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/baseline.png"/>
+                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/baseline.png" class="float-center"/>
                                 </div>
                                 <div class="columns small-8">
                                     <h5 style="line-height: 65px"><a href="${pageContext.request.contextPath}/baseline/experiments">All baseline experiments</a></h5>
@@ -32,7 +32,7 @@
                         <a href="${pageContext.request.contextPath}/plant/experiments">
                             <div class="row align-middle">
                                 <div class="columns small-4">
-                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/gramene_logo_big.png"/>
+                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/gramene_logo_big.png" class="float-center"/>
                                 </div>
                                 <div class="columns small-8">
                                     <h5 style="line-height: 65px"><a href="${pageContext.request.contextPath}/plant/experiments">Plant experiments</a></h5>
@@ -44,7 +44,7 @@
                         <a href="${pageContext.request.contextPath}/experiments?experimentSet=HipSci">
                             <div class="row align-middle">
                                 <div class="columns small-4">
-                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/hipsci_logo.png"/>
+                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/hipsci_logo.png" class="float-center"/>
                                 </div>
                                 <div class="columns small-8">
                                     <h5>
@@ -61,7 +61,7 @@
                         <a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">
                             <div class="row align-middle">
                                 <div class="columns small-4">
-                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/gtex_logo.png"/>
+                                    <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/gtex_logo.png" class="float-center"/>
                                 </div>
                                 <div class="columns small-8">
                                     <h5><a href="${pageContext.request.contextPath}/experiments/E-MTAB-5214">RNA-seq from 53 human tissue samples from the Genotype-Tissue Expression (GTEx) Project</a></h5>
@@ -108,7 +108,7 @@
 
     </div>
 
-    <div class="row">
+    <div class="row align-row-to-bottom">
         <div class="small-6 small-centered columns margin-top-large">
             <a href='${pageContext.request.contextPath}/experiments' class="button float-center">View all experiments</a>
         </div>

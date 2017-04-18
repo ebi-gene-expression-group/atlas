@@ -1,3 +1,14 @@
+/*Until flex grid is part of the EBI framework we use these two classes as a hack...*/
+.padding-bottom-for-button {
+    padding-bottom: 5rem !important;
+}
+
+.align-row-to-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 a:hover {
     border-bottom: 1px solid rgb(0,124,130);
 }
@@ -91,15 +102,6 @@ a.clear {
 
 .combo a {
     border-bottom: none;
-}
-
-div.single-box {
-    height: 266px;
-}
-
-h5.species {
-    position: relative;
-    min-height: 56px;
 }
 
 p.experiments {
