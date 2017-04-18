@@ -20,7 +20,7 @@ export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
 
 atlas_modules=`ls atlas_modules`
 atlas_bundles=`ls atlas_bundles`
-npm_packages=(expression-atlas-heatmap-highcharts anatomogram expression-atlas-experiment-page)
+npm_packages=(expression-atlas-heatmap-highcharts anatomogram expression-atlas-experiment-page react-ebi-species)
 
 all_packages=("${atlas_modules[@]}" "${atlas_bundles[@]}")
 
