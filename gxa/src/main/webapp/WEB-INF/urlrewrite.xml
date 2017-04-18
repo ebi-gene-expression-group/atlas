@@ -34,4 +34,9 @@
         <from>/experiments/E-MTAB-2919</from>
         <to type="permanent-redirect">/gxa/experiments/E-MTAB-5214</to>
     </rule>
+    <rule>
+        <note>Redirect old experiment design to new experiment page</note>
+        <from>/experiments/(.*)/experiments/(.*)/experiment-design</from>
+        <to type="permanent-redirect">/gxa/experiments/$1/Experiment Design</to>
+    </rule>
 </urlrewrite>
