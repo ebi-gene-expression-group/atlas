@@ -11,7 +11,7 @@ module.exports = {
         expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
         expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
         expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
-        expressionAtlasBrowseBySpecies: ['babel-polyfill', './atlas_bundles/browseBy-species'],
+        expressionAtlasBrowseBySpecies: ['babel-polyfill', './atlas_bundles/browse-by-species'],
         dependencies: [
             // Bundled dependencies: expressionAtlasHeatmapHighcharts, heatmap
             'anatomogram',
