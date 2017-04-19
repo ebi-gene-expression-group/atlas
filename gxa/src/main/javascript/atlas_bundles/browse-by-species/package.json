@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "15.3.2",
     "react-dom": "15.3.2",
-    "react-ebi-species": "^0.1.0",
+    "react-ebi-species": "latest",
     "urijs": "^1.18.10"
   },
   "devDependencies": {
