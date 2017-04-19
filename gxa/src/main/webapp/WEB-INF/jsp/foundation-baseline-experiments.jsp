@@ -21,14 +21,8 @@
             calculated using the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
         </p>
 
-        <c:set var="speciesCount" value="${experimentAccessionsBySpecies.keySet().size()}"/>
-        <c:set var="speciesIndex" value="0"/>
+        <div class="row small-up-1 medium-up-2 large-up-3">
         <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="species">
-
-            <c:if test="${speciesIndex % 3 == 0}">
-            <div class="row">
-            </c:if>
-
             <c:choose>
                 <c:when test="${species == 'Anolis carolinensis'}">
                     <c:set var="speciesIconCode" value="7"/>
@@ -168,8 +162,7 @@
                 </c:otherwise>
             </c:choose>
 
-            <c:if test="${speciesIndex == speciesCount - 1}"><c:set value=" end" var="endClass"/></c:if>
-            <div class="small-4 columns species_item${endClass}">
+            <div class="column column-block species_item margin-top-xxlarge">
                 <h4>${species}</h4>
                 <span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul class="show_more" style="list-style:none;padding-left:0; margin-left:0;">
@@ -189,12 +182,8 @@
                     </c:if>
                 </ul>
             </div>
-
-            <c:set var="speciesIndex" value="${speciesIndex + 1}"/>
-            <c:if test="${speciesIndex == speciesCount || speciesIndex % 3 == 0}">
-            </div>
-            </c:if>
         </c:forEach>
+        </div>
     </div>
 </div>
 
