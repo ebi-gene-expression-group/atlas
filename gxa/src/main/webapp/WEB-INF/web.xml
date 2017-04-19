@@ -12,7 +12,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml classpath:solrContext.xml classpath:${db.context}</param-value>
+        <param-value>classpath:applicationContext.xml classpath:solrContext.xml classpath:dbContext.xml</param-value>
     </context-param>
 
     <filter>
