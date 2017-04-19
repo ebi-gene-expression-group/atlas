@@ -11,7 +11,7 @@ const SpeciesItem = props =>
     const speciesFirstCapitalLetter = props.species[0].toUpperCase() + props.species.substr(1);
 
     return (
-        <div className={"columns small-4 text-center combo" + (props.last ? " end" : "")}>
+        <div className="column column-block text-center combo">
             <a href={allExperimentsUrl}>
                 <span className="large-species-icon">
                     <EbiSpeciesIcon species={props.species}/>
@@ -23,11 +23,11 @@ const SpeciesItem = props =>
             <p className="experiments">
                 {props.totalExperiments} experiments<br/>
                 <a href={differentialExperimentsUrl} className="differential">
-                    <span data-tooltip aria-haspopup="true" className="differential tiny button-rd" title="Differential experiments">D</span>
+                    <span data-tooltip className="differential tiny button-rd" title="Differential experiments">D</span>
                     {props.baselineExperiments}
                 </a>
                 <a href={baselineExperimentsUrl} className="baseline padding-left-medium">
-                    <span data-tooltip aria-haspopup="true" className="baseline tiny button-rd" title="Baseline experiments">B</span>
+                    <span data-tooltip className="baseline tiny button-rd" title="Baseline experiments">B</span>
                     {props.differentialExperiments}
                 </a>
             </p>
@@ -41,7 +41,6 @@ SpeciesItem.propTypes = {
     totalExperiments: React.PropTypes.number.isRequired,
     baselineExperiments: React.PropTypes.number.isRequired,
     differentialExperiments: React.PropTypes.number.isRequired,
-    last: React.PropTypes.bool.isRequired
 };
 
 export default SpeciesItem;

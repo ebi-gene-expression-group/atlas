@@ -1,32 +1,18 @@
 import React from 'react';
 
-import SpeciesRow from './SpeciesRow.jsx';
-
-// Split an array into chunks of length `size`. Or just use lodash: _.chunk(arr, size)
-const splitArray = (arr, size) =>
-{
-    if (size === 0) {
-        return [];
-    }
-
-    return arr.reduce((partition, element, index) => {
-        index % size === 0 ? partition.push([element]) : partition[Math.floor(index / size)].push(element);
-        return partition;
-    }, []);
-};
+import SpeciesItem from './SpeciesItem.jsx';
 
 const BrowseBySpecies = props =>
 {
-    const columns = 3;
-    // Split into chunks and add last for incomplete columns in Foundation
-    const splitSpeciesInfoList = splitArray(props.speciesInfoList, columns);
-
-    const speciesRows = splitSpeciesInfoList.map(
-        (speciesInfo, index) => <SpeciesRow key={index} atlasUrl={props.atlasUrl} speciesInfoArray={speciesInfo} />);
+    const speciesItems = props.speciesInfoList.map(speciesInfo =>
+        <SpeciesItem key={speciesInfo.species}
+                     atlasUrl={props.atlasUrl}
+                     {...speciesInfo}
+        />);
 
     return (
-        <div>
-            {speciesRows}
+        <div className="row small-up-2 medium-up-3">
+            {speciesItems}
         </div>
     );
 };
