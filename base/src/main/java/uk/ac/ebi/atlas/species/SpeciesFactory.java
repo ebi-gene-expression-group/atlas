@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.species;
 
-import org.apache.commons.lang.StringUtils;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,6 +14,10 @@ public class SpeciesFactory {
     }
 
     public Species create(String name) {
-        return StringUtils.isNotEmpty(name) ? new Species(name, speciesPropertiesTrader.get(name)) : new Species("", SpeciesProperties.UNKNOWN);
+        return new Species(name, speciesPropertiesTrader.get(name));
+    }
+
+    public Species createUnknownSpecies() {
+        return new Species("", SpeciesProperties.UNKNOWN);
     }
 }
