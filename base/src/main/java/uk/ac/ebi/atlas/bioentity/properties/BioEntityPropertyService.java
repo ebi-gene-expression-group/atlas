@@ -32,8 +32,8 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyService {
 
-    private UniProtClient uniProtClient;
-    private ArrayDesignDAO arrayDesignDAO;
+    private final UniProtClient uniProtClient;
+    private final ArrayDesignDAO arrayDesignDAO;
     private final BioEntityPropertyLinkBuilder linkBuilder;
     private final GoPoTrader goPoTermTrader;
     private final Gson gson = new Gson();
@@ -51,27 +51,31 @@ public class BioEntityPropertyService {
     }
 
     public Map<String, Object> modelAttributes(String identifier, Species species,
-                                               List<BioentityPropertyName> desiredOrderOfPropertyNames,
-                                               String entityName,
+                                               List<BioentityPropertyName> orderedPropertyNames, String entityName,
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
         addReactomePropertyValues(propertyValuesByType);
         addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
+
         result.put("entityBriefName",
                 StringUtils.isEmpty(entityName)
                         ? identifier
                         : entityName);
+
         result.put("entityFullName",
                 StringUtils.isEmpty(entityName)
                         ? identifier
                         : MessageFormat.format("{0} ({1})", identifier, entityName));
+
         result.put("bioEntityDescription",getBioEntityDescription(propertyValuesByType));
-        result.put("propertyNames", propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType));
+
+        result.put("propertyNames", propertiesWeWillDisplay(orderedPropertyNames, propertyValuesByType));
+
         result.put("bioentityProperties",
-                gson.toJson(
-                        bioentityProperties(identifier, species, desiredOrderOfPropertyNames,propertyValuesByType)));
+                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames,propertyValuesByType)));
+
         return result;
 
     }
@@ -186,13 +190,11 @@ public class BioEntityPropertyService {
         Collection<String> uniProtIds = propertyValuesByType.get(BioentityPropertyName.UNIPROT);
 
         Set<String> reactomeIds = new HashSet<>();
-        if (CollectionUtils.isNotEmpty(uniProtIds)) {
-            for (String uniprotId : uniProtIds) {
-                reactomeIds.addAll(uniProtClient.fetchReactomeIds(uniprotId));
-            }
+        for (String uniProtId : uniProtIds) {
+            reactomeIds.addAll(uniProtClient.fetchReactomeIds(uniProtId));
         }
 
-        if(reactomeIds.size()>0){
+        if (reactomeIds.size() > 0) {
             propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
         }
 
