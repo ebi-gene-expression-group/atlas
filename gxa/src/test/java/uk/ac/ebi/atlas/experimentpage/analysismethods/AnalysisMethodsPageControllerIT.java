@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
 public class AnalysisMethodsPageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-PROT-1";

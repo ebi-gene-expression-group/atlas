@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
 public class SpeciesFactoryIT {
 
     @Inject
@@ -27,11 +27,11 @@ public class SpeciesFactoryIT {
         assertThat(oryzaIndica.isUnknown(), is(false));
 
         assertThat(oryzaJaponica.getName(), is(not(oryzaIndica.getName())));
-
         assertThat(oryzaJaponica.getReferenceName(), is(oryzaIndica.getReferenceName()));
         assertThat(oryzaJaponica.getEnsemblName(), is(oryzaIndica.getEnsemblName()));
         assertThat(oryzaJaponica.getDefaultQueryFactorType(), is(oryzaIndica.getDefaultQueryFactorType()));
         assertThat(oryzaJaponica.getKingdom(), is(oryzaIndica.getKingdom()));
+
         assertThat(oryzaJaponica.isPlant(), is(true));
         assertThat(oryzaIndica.isPlant(), is(true));
     }
@@ -51,4 +51,8 @@ public class SpeciesFactoryIT {
         assertThat(subject.create(null).isUnknown(), is(true));
     }
 
+    @Test
+    public void createUnknownSpecies() {
+        assertThat(subject.createUnknownSpecies().isUnknown(), is(true));
+    }
 }

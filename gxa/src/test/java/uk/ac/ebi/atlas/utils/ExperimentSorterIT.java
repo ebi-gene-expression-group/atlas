@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
 public class ExperimentSorterIT {
 
     @Inject

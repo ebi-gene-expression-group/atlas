@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
 public class ConditionsIndexingServiceIT {
 
     private SolrClient baselineConditionsCore;

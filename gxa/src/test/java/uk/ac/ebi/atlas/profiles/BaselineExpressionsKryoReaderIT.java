@@ -33,7 +33,7 @@ import static org.hamcrest.core.Is.is;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
 public class BaselineExpressionsKryoReaderIT {
 
     private static final String accession = "E-MTAB-513";

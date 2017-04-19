@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
 public class HeatmapDataToJsonServiceIT {
 
     @Inject

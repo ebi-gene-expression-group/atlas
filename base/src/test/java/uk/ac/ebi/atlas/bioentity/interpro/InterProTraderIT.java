@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/oracleContext.xml"})
+@ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
 public class InterProTraderIT {
 
     private static final String IPR000001 = "IPR000001";
