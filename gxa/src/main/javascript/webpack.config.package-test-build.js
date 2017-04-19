@@ -23,7 +23,7 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.js$/, loader: 'babel', query: {presets: ['es2015']},
+            {test: /\.js$/, loader: 'babel', query: {presets: ['es2015'], plugins:['transform-object-rest-spread']},
                 // Place here all the packages that we own
                 exclude: /node_modules\/(?!(expression-atlas|anatomogram|react-ebi-species))/},
             {test: /\.jsx$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
