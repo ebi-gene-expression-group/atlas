@@ -22,22 +22,24 @@ public class SpeciesInferrer {
         this.speciesFactory = speciesFactory;
     }
 
-    public Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String speciesString) {
-        if (isEmpty(geneQuery) && isEmpty(conditionQuery) && isBlank(speciesString)) {
-            return speciesFactory.create("");
+    public Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
+        if (isEmpty(geneQuery) && isEmpty(conditionQuery)) {
+            return speciesFactory.createUnknownSpecies();
         }
 
-        ImmutableList<String> speciesCandidates = analyticsSearchService.findSpecies(geneQuery, conditionQuery, speciesString);
+        ImmutableList<String> speciesCandidates = analyticsSearchService.findSpecies(geneQuery, conditionQuery);
 
-        return speciesCandidates.isEmpty() ? speciesFactory.create("") : speciesFactory.create(speciesCandidates.get(0));
+        return speciesCandidates.isEmpty() ?
+                speciesFactory.createUnknownSpecies() :
+                speciesFactory.create(speciesCandidates.get(0));
     }
 
-    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery, String speciesString) {
-        return inferSpecies(geneQuery, SemanticQuery.create(), speciesString);
+    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery) {
+        return inferSpecies(geneQuery, SemanticQuery.create());
     }
 
-    public Species inferSpeciesForConditionQuery(SemanticQuery conditionQuery, String speciesString) {
-        return inferSpecies(SemanticQuery.create(), conditionQuery, speciesString);
+    public Species inferSpeciesForConditionQuery(SemanticQuery conditionQuery) {
+        return inferSpecies(SemanticQuery.create(), conditionQuery);
     }
 
 }

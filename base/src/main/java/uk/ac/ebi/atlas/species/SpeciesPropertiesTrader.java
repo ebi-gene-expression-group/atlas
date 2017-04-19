@@ -84,7 +84,7 @@ public class SpeciesPropertiesTrader {
      */
     public SpeciesProperties get(String speciesName) {
         SpeciesProperties result = nameToSpecies.get(normalise(speciesName));
-        return result!= null ? result : SpeciesProperties.UNKNOWN;
+        return result != null ? result : SpeciesProperties.UNKNOWN;
     }
 
     public Collection<SpeciesProperties> getAll() {

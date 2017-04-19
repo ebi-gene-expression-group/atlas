@@ -56,12 +56,11 @@ public class MiscellaneousAnalyticsSearchDao {
                         .fetch();
     }
 
-    String getSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+    String getSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
         return analyticsQueryClient.queryBuilder()
                 .speciesFacets()
                 .queryIdentifierSearch(geneQuery)
                 .queryConditionsSearch(conditionQuery)
-                .ofSpecies(species)
                 .fetch();
     }
 

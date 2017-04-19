@@ -79,8 +79,8 @@ public class AnalyticsSearchService {
         return ! readBuckets(response).isEmpty();
     }
 
-    public ImmutableList<String> findSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
-        return readSpecies(miscellaneousAnalyticsSearchDao.getSpecies(geneQuery, conditionQuery, species));
+    public ImmutableList<String> findSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
+        return readSpecies(miscellaneousAnalyticsSearchDao.getSpecies(geneQuery, conditionQuery));
     }
 
     private static ImmutableList<String> readSpecies(String response){
