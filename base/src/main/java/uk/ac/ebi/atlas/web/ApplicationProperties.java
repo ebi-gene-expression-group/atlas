@@ -84,10 +84,6 @@ public class ApplicationProperties {
         return configurationProperties.getProperty("feedback.email");
     }
 
-    public String getResourcesVersion() {
-        return configurationProperties.getProperty("resources.version");
-    }
-
     public Set<String> getArrayDesignAccessions() {
         return Sets.newHashSet(configurationProperties.getProperty("arraydesign.accessions").trim().split(","));
     }
