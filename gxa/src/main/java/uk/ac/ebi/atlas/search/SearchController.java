@@ -46,21 +46,18 @@ public class SearchController {
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     private final SpeciesInferrer speciesInferrer;
-    private final SpeciesFactory speciesFactory;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
                             BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                             DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
-                            SpeciesInferrer speciesInferrer,
-                            SpeciesFactory speciesFactory) {
+                            SpeciesInferrer speciesInferrer) {
 
         this.analyticsSearchService = analyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
         this.speciesInferrer = speciesInferrer;
-        this.speciesFactory = speciesFactory;
 
     }
 
@@ -78,9 +75,7 @@ public class SearchController {
                 isNotEmpty(geneQuery) && isNotEmpty(conditionQuery),
                 "Please specify a gene query or a condition query.");
 
-        Species species = isBlank(speciesString) ?
-                speciesInferrer.inferSpecies(geneQuery, conditionQuery) :
-                speciesFactory.create(speciesString);
+        Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
 
         model.addAttribute("searchDescription", SearchDescription.get(geneQuery));
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());

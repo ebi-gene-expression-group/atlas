@@ -22,7 +22,23 @@ public class SpeciesInferrer {
         this.speciesFactory = speciesFactory;
     }
 
-    public Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
+    public Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery, String speciesString) {
+        if (isBlank(speciesString)) {
+            return inferSpecies(geneQuery, conditionQuery);
+        }
+
+        return speciesFactory.create(speciesString);
+    }
+
+    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery) {
+        return inferSpecies(geneQuery, SemanticQuery.create());
+    }
+
+    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery, String speciesString) {
+        return inferSpecies(geneQuery, SemanticQuery.create(), speciesString);
+    }
+
+    private Species inferSpecies(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
         if (isEmpty(geneQuery) && isEmpty(conditionQuery)) {
             return speciesFactory.createUnknownSpecies();
         }
@@ -32,14 +48,6 @@ public class SpeciesInferrer {
         return speciesCandidates.isEmpty() ?
                 speciesFactory.createUnknownSpecies() :
                 speciesFactory.create(speciesCandidates.get(0));
-    }
-
-    public Species inferSpeciesForGeneQuery(SemanticQuery geneQuery) {
-        return inferSpecies(geneQuery, SemanticQuery.create());
-    }
-
-    public Species inferSpeciesForConditionQuery(SemanticQuery conditionQuery) {
-        return inferSpecies(SemanticQuery.create(), conditionQuery);
     }
 
 }

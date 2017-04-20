@@ -17,39 +17,55 @@ import static org.junit.Assert.*;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
 public class SpeciesInferrerIT {
 
-    private static final SemanticQueryTerm HUMAN_REACTOME_TERM = SemanticQueryTerm.create("R-HSA-597592", "pathwayid");
-    private static final SemanticQueryTerm LEAF_TERM = SemanticQueryTerm.create("leaf");
+    static final String HOMO_SAPIENS = "homo sapiens";
+    static final String ARABIDOPSIS_THALIANA = "arabidopsis thaliana";
 
-    private static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
-    private static final SemanticQuery PLANT_CONDITION_QUERY = SemanticQuery.create(LEAF_TERM);
-    private static final SemanticQuery HUMAN_GENE_QUERY = SemanticQuery.create(HUMAN_REACTOME_TERM);
+    static final SemanticQueryTerm HUMAN_REACTOME_TERM = SemanticQueryTerm.create("R-HSA-597592", "pathwayid");
+    static final SemanticQueryTerm LEAF_TERM = SemanticQueryTerm.create("leaf");
+
+    static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
+    static final SemanticQuery PLANT_CONDITION_QUERY = SemanticQuery.create(LEAF_TERM);
+    static final SemanticQuery HUMAN_GENE_QUERY = SemanticQuery.create(HUMAN_REACTOME_TERM);
 
     @Inject
-    private SpeciesInferrer subject;
+    SpeciesInferrer subject;
 
     @Test
     public void inferSpeciesForGeneQuery() throws Exception {
-        Species species = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY);
-        assertThat(species.getReferenceName(), is("homo sapiens"));
-    }
+        Species species1 = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY);
+        Species species2 = subject.inferSpeciesForGeneQuery(HUMAN_GENE_QUERY, "");
 
-    @Test
-    public void inferSpeciesForConditionQuery() throws Exception {
-        Species species = subject.inferSpeciesForConditionQuery(PLANT_CONDITION_QUERY);
-        assertThat(species.isPlant(), is(true));
+        assertThat(species1.getReferenceName(), is(HOMO_SAPIENS));
+        assertThat(species2.getReferenceName(), is(HOMO_SAPIENS));
     }
 
     @Test
     public void conflictingSearch() throws Exception {
-        assertThat(subject.inferSpecies(HUMAN_GENE_QUERY, PLANT_CONDITION_QUERY).isUnknown(), is(true));
+        assertThat(subject.inferSpecies(HUMAN_GENE_QUERY, EMPTY_QUERY, "").isUnknown(), is(false));
+        assertThat(subject.inferSpecies(EMPTY_QUERY, PLANT_CONDITION_QUERY, "").isUnknown(), is(false));
+        assertThat(subject.inferSpecies(HUMAN_GENE_QUERY, PLANT_CONDITION_QUERY, "").isUnknown(), is(true));
     }
 
     @Test
     public void emptyQuery() throws Exception {
-        assertThat(subject.inferSpecies(EMPTY_QUERY, EMPTY_QUERY).isUnknown(), is(true));
-        assertThat(subject.inferSpecies(null, EMPTY_QUERY).isUnknown(), is(true));
-        assertThat(subject.inferSpecies(EMPTY_QUERY, null).isUnknown(), is(true));
-        assertThat(subject.inferSpecies(null, null).isUnknown(), is(true));
+        assertThat(subject.inferSpecies(EMPTY_QUERY, EMPTY_QUERY, "").isUnknown(), is(true));
+        assertThat(subject.inferSpecies(null, EMPTY_QUERY, "").isUnknown(), is(true));
+        assertThat(subject.inferSpecies(EMPTY_QUERY, null, "").isUnknown(), is(true));
+        assertThat(subject.inferSpecies(null, null, "").isUnknown(), is(true));
+        assertThat(subject.inferSpecies(EMPTY_QUERY, EMPTY_QUERY, null).isUnknown(), is(true));
+        assertThat(subject.inferSpecies(null, EMPTY_QUERY, null).isUnknown(), is(true));
+        assertThat(subject.inferSpecies(EMPTY_QUERY, null, null).isUnknown(), is(true));
+        assertThat(subject.inferSpecies(null, null, null).isUnknown(), is(true));
+
+    }
+
+    @Test
+    public void speciesStringOverridesQueryFields() throws Exception {
+        Species species1 = subject.inferSpecies(HUMAN_GENE_QUERY, EMPTY_QUERY, null);
+        Species species2 = subject.inferSpecies(HUMAN_GENE_QUERY, EMPTY_QUERY, ARABIDOPSIS_THALIANA);
+
+        assertThat(species1.getReferenceName(), is(HOMO_SAPIENS));
+        assertThat(species2.getReferenceName(), is(ARABIDOPSIS_THALIANA));
     }
 
 }
