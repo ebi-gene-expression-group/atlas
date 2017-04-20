@@ -134,6 +134,18 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         return gson.toJson(result);
     }
 
+    @RequestMapping(value = "/json/baseline_facets",
+            method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getJsonBaselineFacets(@RequestParam(value = "geneQuery", required = false, defaultValue = "")
+                                        SemanticQuery geneQuery,
+                                        @RequestParam(value = "conditionQuery", required = false, defaultValue = "")
+                                        SemanticQuery conditionQuery,
+                                        @RequestParam(value = "organism", required = false, defaultValue = "")
+                                        Species species) {
+        return gson.toJson(baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery, conditionQuery, species));
+    }
+
     private Function<BaselineExperimentProfile, URI> provideLinkToProfile(HttpServletRequest request, SemanticQuery
             geneQuery){
         try {
