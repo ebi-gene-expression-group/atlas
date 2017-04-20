@@ -3,54 +3,36 @@ import React from 'react';
 import EventEmitter from 'events';
 import {ExpressionAtlasHeatmap} from 'expression-atlas-heatmap-highcharts';
 
-class BaselineHeatmapWidget extends React.Component {
+const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-    render () {
-        const speciesLabel = this._capitalize(this.props.species);
-        const header = <h5>{(this.props.showHeatmapLabel ? `${speciesLabel} — ` : '') + this.props.factor.value}</h5>;
+const BaselineHeatmapWidget = props =>
+    <div>
+        <h5>{(props.showHeatmapLabel ? `${capitalizeFirstLetter(props.species)} — ` : '') + props.factor.value}</h5>
+        <ExpressionAtlasHeatmap atlasUrl={props.atlasUrl}
+                                query={{
+                                    gene: props.geneQuery,
+                                    condition: props.conditionQuery,
+                                    species: props.species,
+                                    source: props.factor.name
+                                }}
+                                isWidget={false}
+                                showAnatomogram={props.showAnatomogram}
+                                anatomogramDataEventEmitter={props.anatomogramDataEventEmitter}
+        />
+    </div>;
 
-        return(
-            <div>
-                {header}
-                <ExpressionAtlasHeatmap atlasUrl={this.props.atlasUrl}
-                                        query={{
-                                            gene: this.props.geneQuery,
-                                            condition: this.props.conditionQuery,
-                                            species: this.props.species,
-                                            source: this.props.factor.name
-                                        }}
-                                        isWidget={false}
-                                        showAnatomogram={this.props.showAnatomogram}
-                                        anatomogramDataEventEmitter={this.props.anatomogramDataEventEmitter}
-                />
-            </div>
-        );
-    }
-
-    _capitalize (str) {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    }
-
-    _removeUnderScore (str) {
-        return str.replace(/[-_.]/g, ` `);
-    }
-
-}
-
-const RequiredString = React.PropTypes.string.isRequired;
-const RequiredBool = React.PropTypes.bool.isRequired;
 
 BaselineHeatmapWidget.propTypes = {
-    atlasUrl: RequiredString,
-    geneQuery: RequiredString,
-    conditionQuery: RequiredString,
-    species: RequiredString,
+    atlasUrl: React.PropTypes.string.isRequired,
+    geneQuery: React.PropTypes.string.isRequired,
+    conditionQuery: React.PropTypes.string.isRequired,
+    species: React.PropTypes.string.isRequired,
     factor: React.PropTypes.shape({
-        name: RequiredString,
-        value: RequiredString
+        name: React.PropTypes.string.isRequired,
+        value: React.PropTypes.string.isRequired
     }).isRequired,
-    showAnatomogram: RequiredBool,
-    showHeatmapLabel: RequiredBool,
+    showAnatomogram: React.PropTypes.bool.isRequired,
+    showHeatmapLabel: React.PropTypes.bool.isRequired,
     anatomogramDataEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired
 };
 
