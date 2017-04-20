@@ -45,19 +45,19 @@ public class SearchController {
     private final AnalyticsSearchService analyticsSearchService;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
-    private final SpeciesInferrer speciesInferrer;
+    private final SpeciesFactory speciesFactory;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
                             BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                             DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
-                            SpeciesInferrer speciesInferrer) {
+                            SpeciesFactory speciesFactory) {
 
         this.analyticsSearchService = analyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
-        this.speciesInferrer = speciesInferrer;
+        this.speciesFactory = speciesFactory;
 
     }
 
@@ -72,10 +72,10 @@ public class SearchController {
             throws UnsupportedEncodingException {
 
         checkArgument(
-                isNotEmpty(geneQuery) && isNotEmpty(conditionQuery),
+                isNotEmpty(geneQuery) || isNotEmpty(conditionQuery),
                 "Please specify a gene query or a condition query.");
 
-        Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
+        Species species = speciesFactory.create(speciesString);
 
         model.addAttribute("searchDescription", SearchDescription.get(geneQuery));
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
