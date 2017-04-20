@@ -23,31 +23,40 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Controller
 @Scope("request")
-public class JsonBaselineRefExperiment extends JsonExceptionHandlingController {
+public class JsonBaselineRefExperimentController extends JsonExceptionHandlingController {
 
     private SpeciesInferrer speciesInferrer;
 
     @Inject
-    public JsonBaselineRefExperiment(SpeciesInferrer speciesInferrer) {
+    public JsonBaselineRefExperimentController(SpeciesInferrer speciesInferrer) {
         this.speciesInferrer = speciesInferrer;
     }
 
-    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+
+    @RequestMapping(
+            value = "/widgets/heatmap/referenceExperiment",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
     @Deprecated
     public String oldReferenceExperiment() {
         return "forward:/json/baseline_refexperiment";
     }
 
-    @RequestMapping(value = "/json/baseline_refexperiment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public String jsonBaselineRefExperiment(@RequestParam(value = "geneQuery") SemanticQuery geneQuery,
-                                            @RequestParam(value = "species", required = false) String speciesString,
-                                            @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
+
+    @RequestMapping(
+            value = "/json/baseline_refexperiment",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
+    public String jsonBaselineRefExperiment(
+            @RequestParam(value = "geneQuery") SemanticQuery geneQuery,
+            @RequestParam(value = "species", required = false) String speciesString,
+            @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences) {
 
         Species species = speciesInferrer.inferSpeciesForGeneQuery(geneQuery, speciesString);
         String experimentAccession = ApplicationProperties.getBaselineReferenceExperimentAccession(species);
 
         if (isBlank(experimentAccession)) {
-            throw new ResourceNotFoundException("No baseline experiment for species " + speciesString);
+            throw new ResourceNotFoundException("No reference baseline experiment for species " + speciesString);
         }
 
         return MessageFormat.format("forward:/json/experiments/{0}", experimentAccession);
