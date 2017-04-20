@@ -1,73 +1,39 @@
-const React = require('react');
+import React from 'react';
+import $ from 'jquery';
+import 'jquery.browser';
 
-const $ = require('jquery');
-require('jquery.browser');
+import EventEmitter from 'events';
 
-const EventEmitter = require('events');
+import BaselineHeatmapWidget from './BaselineHeatmapWidget.jsx';
 
-//*------------------------------------------------------------------*
-
-const BaselineHeatmapWidget = require('./BaselineHeatmapWidget.jsx');
 const AtlasFeedback = require('expression-atlas-feedback');
 
-//*------------------------------------------------------------------*
+class BaselineHeatmaps extends React.Component {
 
-const RequiredString = React.PropTypes.string.isRequired;
-const OptionalString = React.PropTypes.string;
-const RequiredBool = React.PropTypes.bool.isRequired;
-const RequiredEventEmitter = React.PropTypes.instanceOf(EventEmitter).isRequired;
+    componentDidMount() {
+        if (window.ga === `undefined`) {
+            window.ga = () => {};
+        }
+    }
 
-const BaselineHeatmaps = React.createClass({
-    propTypes: {
-        hostUrl: RequiredString,
-        query: RequiredString,
-        geneQuery: RequiredString,
-        conditionQuery: OptionalString,
-        /*
-         [{"species":"Homo sapiens", "factor":"CELL_LINE"},
-          {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
-         */
-        showAnatomograms: RequiredBool,
-        heatmaps: React.PropTypes.arrayOf(
-            React.PropTypes.shape({
-                species: RequiredString,
-                factor: React.PropTypes.shape({
-                    name: RequiredString,
-                    value: RequiredString
-                })
-            }).isRequired
-        ).isRequired,
-        anatomogramDataEventEmitter: RequiredEventEmitter
-    },
-
-    getInitialState () {
-        return {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : () => {}}
-    },
-
-    componentDidMount () {
-        $(document).ready(() => {
-            this.setState({googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : () => {}})
-        });
-    },
-
-    render () {
-        let atlasFeedback = $.browser.msie ? null
+    render() {
+        const atlasFeedback = $.browser.msie ? null
             : <AtlasFeedback
-                  collectionCallback = {(score,comment) => {
-                    this.state.googleAnalyticsCallback('send','event','BaselineHeatmaps', 'feedback', comment, score);
+                  collectionCallback = {(score, comment) => {
+                    window.ga('send','event','BaselineHeatmaps', 'feedback', comment, score);
                   }}
               />;
-        
+
         return (
             <div>
                 {this.props.heatmaps.map(heatmap =>
                     <BaselineHeatmapWidget
-                        key = {heatmap.species + '_' + heatmap.factor.name}
+                        key = {`${heatmap.species}_${heatmap.factor.name}`}
                         showAnatomogram = {this.props.showAnatomograms}
                         showHeatmapLabel = {this._hasMoreThanOneSpecies()}
                         species = {heatmap.species}
                         factor = {heatmap.factor}
-                        hostUrl = {this.props.hostUrl}
+                        atlasUrl = {this.props.atlasUrl}
                         query = {this.props.query}
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery}
@@ -77,15 +43,32 @@ const BaselineHeatmaps = React.createClass({
                 {atlasFeedback}
             </div>
         );
-    },
+    }
 
     _hasMoreThanOneSpecies () {
-        let uniqueSpecies = new Set();
-        this.props.heatmaps.map(el => { uniqueSpecies.add(el.species) });
+        const uniqueSpecies = new Set();
+        this.props.heatmaps.forEach(el => { uniqueSpecies.add(el.species) });
         return uniqueSpecies.size > 1;
     }
-});
+}
 
-//*------------------------------------------------------------------*
+BaselineHeatmaps.propTypes = {
+    atlasUrl: React.PropTypes.string.isRequired,
+    geneQuery: React.PropTypes.string.isRequired,
+    conditionQuery: React.PropTypes.string,
+    /*
+     [{"species":"Homo sapiens", "factor":"CELL_LINE"},
+     {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
+     */
+    showAnatomograms: React.PropTypes.bool.isRequired,
+    heatmaps: React.PropTypes.arrayOf(React.PropTypes.shape({
+        species: React.PropTypes.string.isRequired,
+        factor: React.PropTypes.shape({
+            name: React.PropTypes.string.isRequired,
+            value: React.PropTypes.string.isRequired
+        })
+    })).isRequired,
+    anatomogramDataEventEmitter: React.PropTypes.instanceOf(EventEmitter).isRequired
+};
 
-module.exports = BaselineHeatmaps;
+export default BaselineHeatmaps;

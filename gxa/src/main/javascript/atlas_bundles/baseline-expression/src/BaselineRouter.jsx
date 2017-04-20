@@ -1,47 +1,26 @@
-const React = require('react');
+import React from 'react';
 
-const EventEmitter = require('events');
+import EventEmitter from 'events';
 
-//*------------------------------------------------------------------*
-
-const Facets = require('./BaselineFacetsTree.jsx');
-const BaselineHeatmaps = require('./BaselineHeatmaps.jsx');
+import BaselineFacetsTree from './facets-tree/BaselineFacetsTree.jsx';
+import BaselineHeatmaps from './BaselineHeatmaps.jsx';
 const UrlManager = require('./urlManager.js');
 
-//*------------------------------------------------------------------*
+class BaselineRouter extends React.Component {
 
-const RequiredString = React.PropTypes.string.isRequired;
-const RequiredObject = React.PropTypes.object.isRequired;
+    constructor(props) {
+        super(props);
 
-const BaselineRouter = React.createClass({
-    propTypes: {
-        hostUrl: RequiredString,
-        /*
-         {
-             "homo sapiens": [{ "name": "ORGANISM_PART", "value": "Organism part"},
-                              { "name": "CELL_LINE", "value": "Cell line"}],
-             "macaca mulatta": [{ "name": "ORGANISM_PART", "value": "Organism part"}]
-         }
-         */
-        facetsTreeData: RequiredObject,
-        query: RequiredString,
-        geneQuery: RequiredString,
-        conditionQuery: RequiredString,
-        species: RequiredString
-    },
-
-    getInitialState () {
-        let anatomogramDataEventEmitter = new EventEmitter();
+        const anatomogramDataEventEmitter = new EventEmitter();
         anatomogramDataEventEmitter.setMaxListeners(0);
 
-        let newQuerySelect = UrlManager.parseBaselineUrlParameter(),
-            newShowAnatomograms = false;
+        const newQuerySelect = UrlManager.parseBaselineUrlParameter();
+        let newShowAnatomograms = false;
 
         if (Object.keys(newQuerySelect).length === 0) {
             Object.keys(this.props.facetsTreeData).forEach(species => {
-                let factorToPreselect =
-                    this.props.facetsTreeData[species]
-                    .find(factor => factor.name.toLowerCase() === 'organism_part');
+                const factorToPreselect =
+                    this.props.facetsTreeData[species].find(factor => factor.name.toLowerCase() === 'organism_part');
                 if (factorToPreselect) {
                     this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name);
                     newShowAnatomograms = true;
@@ -54,60 +33,63 @@ const BaselineRouter = React.createClass({
 
         UrlManager.baselinePush(newQuerySelect, true);
 
-        return {
-            // In this case, transforming props to state isn’t an anti-pattern because state can be mutated when facets
-            // are clicked in _setChecked
+        this.state = {
             facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect),
             querySelect: newQuerySelect,
             anatomogramDataEventEmitter: anatomogramDataEventEmitter,
             showAnatomograms: newShowAnatomograms
-        }
-    },
+        };
+
+        this.setChecked = this._setChecked.bind(this);
+        this.toggleAnatomograms = this._toggleAnatomograms.bind(this);
+    }
 
     componentDidMount () {
         // TODO Consider using https://github.com/reactjs/react-router
         window.addEventListener(
             'popstate',
             () => {
-                let newQuerySelect = UrlManager.parseBaselineUrlParameter();
+                const newQuerySelect = UrlManager.parseBaselineUrlParameter();
                 this.setState({
                     querySelect: newQuerySelect,
                     facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect)
                 });
             },
             false);
-    },
+    }
 
     render () {
+        const organismPartInQuerySelect = this._organismPartInQuerySelect();
+        const heatmaps = this._querySelectToHeatmaps();
+
         return (
             <div className="row">
                 <div className="small-3 columns">
-                    <Facets
+                    <BaselineFacetsTree
                         facets = {this.state.facetsTreeData}
-                        setChecked = {this._setChecked}
+                        setChecked = {this.setChecked}
                         showAnatomograms = {this.state.showAnatomograms}
-                        toggleAnatomograms = {this._toggleAnatomograms}
-                        disableAnatomogramsCheckbox = {!this._organismPartInQuerySelect()}
+                        toggleAnatomograms = {this.toggleAnatomograms}
+                        disableAnatomogramsCheckbox = {!organismPartInQuerySelect}
                     />
                 </div>
                 <div className="small-9 columns">
                     <BaselineHeatmaps
-                        hostUrl = {this.props.hostUrl}
-                        query = {this.props.query}
+                        atlasUrl = {this.props.atlasUrl}
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery}
-                        heatmaps = {this._querySelectToHeatmaps()}
+                        heatmaps = {heatmaps}
                         showAnatomograms = {this.state.showAnatomograms}
                         anatomogramDataEventEmitter = {this.state.anatomogramDataEventEmitter}
                     />
                 </div>
             </div>
         )
-    },
+    }
 
     _setChecked (species, factorName, checked) {
-        let newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));
-        let newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData));
+        const newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));
+        const newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData));
 
         if (checked) {
             this._addElementToObjectOfArrays(newQuerySelect, species, factorName);
@@ -124,34 +106,34 @@ const BaselineRouter = React.createClass({
             facetsTreeData: newFacetsTreeData,
             querySelect: newQuerySelect
         });
-    },
+    }
 
     _addElementToObjectOfArrays (obj, arrayName, element) {
         if (!obj[arrayName]) {
             obj[arrayName] = [];
         }
         obj[arrayName].push(element);
-    },
+    }
 
     _removeElementFromObjectOfArrays (obj, arrayName, element) {
         delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1);
         if (obj[arrayName].length === 0) {
             delete obj[arrayName];
         }
-    },
+    }
 
-    _toggleAnatomograms () {
+    _toggleAnatomograms() {
         let newShowAnatomograms = !this.state.showAnatomograms;
 
         this.setState({
             showAnatomograms: newShowAnatomograms
         })
-    },
+    }
 
-    _organismPartInQuerySelect (querySelect = this.state.querySelect) {
+    _organismPartInQuerySelect(querySelect = this.state.querySelect) {
         return Object.keys(querySelect)
                .some(species => querySelect[species].some(facetItem => facetItem.toLowerCase() === 'organism_part'));
-    },
+    }
 
     // Also syncs this.state.facetsTreeData with querySelect
     _transformPropsFacetsObjectToArray (querySelect) {
@@ -167,7 +149,7 @@ const BaselineRouter = React.createClass({
                 })
             };
         });
-    },
+    }
 
     _querySelectToHeatmaps () {
         /*
@@ -198,8 +180,21 @@ const BaselineRouter = React.createClass({
 
         return heatmaps;
     }
-});
+}
 
-//*------------------------------------------------------------------*
+BaselineRouter.propTypes = {
+    atlasUrl: React.PropTypes.string.isRequired,
+    /*
+    {
+        "homo sapiens": [{ "name": "ORGANISM_PART", "value": "Organism part"},
+        { "name": "CELL_LINE", "value": "Cell line"}],
+        "macaca mulatta": [{ "name": "ORGANISM_PART", "value": "Organism part"}]
+    }
+     */
+    facetsTreeData: React.PropTypes.object.isRequired,
+    geneQuery: React.PropTypes.string.isRequired,
+    conditionQuery: React.PropTypes.string.isRequired,
+    species: React.PropTypes.string.isRequired
+};
 
-module.exports = BaselineRouter;
+export default BaselineRouter;

@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = Object.assign(require('../../webpack.config.package-test-build.js'),
     {
         entry: {
@@ -8,5 +10,12 @@ module.exports = Object.assign(require('../../webpack.config.package-test-build.
                 // 'events', 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
                 // 'highcharts-more', 'react-highcharts'
             ]
+        },
+        resolve: {
+            alias: {
+                "react": path.resolve('./node_modules/react'),
+                "react-dom": path.resolve('./node_modules/react-dom')
+            },
         }
-    });
+    }
+);

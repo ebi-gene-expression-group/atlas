@@ -2,52 +2,44 @@
 <html lang="en" class="fontface">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/css/compliance/develop/embl-petrol-colours.css">
 
-    <link rel="stylesheet" href="css/jquery-ui/css/jquery-ui.min.css">
+    <title>Highcharts heatmap demo</title>
 
-    <!--<link rel="stylesheet" href="css/atlas-content.css">-->
+    <meta charset="utf-8">
+    <title>Expression Atlas &lt; Demo pages</title>
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
 
+    <!-- CSS: implied media=all -->
+    <!-- CSS concatenated and minified via ant build script-->
     <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all">
+
+    <!-- Use this CSS file for any custom styling -->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+
+    <!-- also inform ES so we can host your colour palette file -->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
 
     <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/customized-bootstrap-3.3.5.css">
-
-    <script src="../dist/vendorCommons.bundle.js"></script>
-    <script src="../dist/baselineExpression.bundle.js"></script>
-
-    <style>
-        .ui-button-text {
-            text-align: center;
-        }
-        a.help-icon {
-            border: 0;
-        }
-        a.gxaNoTextButton {
-            border: 1px solid #ccc;
-        }
-        a.gxaButtonImage .ui-button-text {
-            padding: 2px !important;
-        }
-    </style>
 </head>
 
 <body>
-
-<div id="wrapper" class="container_24">
-    <div id="content" class="grid_24">
-        <div id="atlas-content">
+    <div id="wrapper" class="container_24">
+        <div id="content" class="grid_24">
+            <div id="atlas-content">
+            </div>
         </div>
     </div>
-</div>
-
 </body>
 
-<script>
+<script src="../dist/vendorCommons.bundle.js"></script>
+<script src="../dist/baselineExpression.bundle.js"></script>
 
+<script>
     var facetsData = {
         "homo sapiens":
                 [{"name":"ORGANISM_PART","value":"Organism part"},
@@ -60,8 +52,13 @@
                 [{"name":"ORGANISM_PART","value":"Organism part"}]
     };
 
-    baselineExpression({atlasHostUrl: 'http://localhost:8080', target: 'atlas-content', facetsTreeData: facetsData,query:'', geneQuery: '[{"value":"GO:0008150"}]', conditionQuery: '', species: ''})
-
+    baselineExpression.render({
+        atlasUrl: 'https://localhost:8443/gxa/',
+        target: 'atlas-content',
+        facetsTreeData: facetsData,
+        geneQuery: '[{"value":"GO:0008150"}]',
+        conditionQuery: '',
+        species: ''})
 </script>
 
 </html>

@@ -1,1 +1,2 @@
-module.exports = require('./src/baselineRenderer.js');
+import render from './src/baselineRenderer.jsx';
+export {render};
