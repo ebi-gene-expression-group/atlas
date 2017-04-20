@@ -9,7 +9,7 @@
 <div class="tabs-content" data-tabs-content="search-tabs">
     <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
         <!-- Grid Example -->
-        <form method="get" action="${pageContext.request.contextPath}/query" id="home-search-atlas-form">
+        <form method="get" action="${pageContext.request.contextPath}/search" id="home-search-atlas-form">
             <div class="row">
                 <div class="small-5 columns">
                     <label>Gene / Gene properties</label>
@@ -31,12 +31,12 @@
 
             <div class="row">
                 <div class="small-12 columns small">
-                    Examples: <a href='${pageContext.request.contextPath}/query?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-                    <a href='${pageContext.request.contextPath}/query?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
-                    <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"lung"}]'>lung</a>,
-                    <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
-                    <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
-                    <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
+                    Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
+                    <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
+                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
+                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
+                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
                 </div>
             </div>
 
