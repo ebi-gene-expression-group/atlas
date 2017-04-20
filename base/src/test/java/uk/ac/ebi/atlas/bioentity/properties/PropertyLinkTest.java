@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.assertThat;
 
 public class PropertyLinkTest {
@@ -14,9 +12,7 @@ public class PropertyLinkTest {
     public void constructorWithoutUrl() {
         PropertyLink subject = new PropertyLink("foobar", 0);
 
-        // Although equivalent to matching "", we explicitly state that we don’t want url to be null
-        assertThat(subject.getUrl(), isEmptyOrNullString());
-        assertThat(subject.getUrl(), is(not(nullValue())));
+        assertThat(subject.getUrl(), isEmptyString());
     }
 
     @Test
