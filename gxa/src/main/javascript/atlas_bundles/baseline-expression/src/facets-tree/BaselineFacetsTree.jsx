@@ -2,8 +2,6 @@ import React from 'react';
 
 import Facet from './Facet.jsx';
 
-// import './BaselineFacetsTree.css';
-
 const BaselineFacetsTree = props => {
     const facets = props.facets.map(facet =>
         <Facet
@@ -16,11 +14,10 @@ const BaselineFacetsTree = props => {
 
     return (
         <div>
-            <h5>
-                <input type="checkbox" checked={props.showAnatomograms} onChange={props.toggleAnatomograms} disabled={props.disableAnatomogramsCheckbox}/>
-                <span className={props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : ""}>Show anatomograms</span>
-            </h5>
-            <h3>Filter your results</h3>
+            <input type="checkbox" checked={props.showAnatomograms} onChange={props.toggleAnatomograms} disabled={props.disableAnatomogramsCheckbox}/>
+            <label className={props.disableAnatomogramsCheckbox ? "gxaDisabledCheckbox" : ""}>Show anatomograms</label>
+
+            <h4>Filter your results</h4>
             {facets}
         </div>
     );

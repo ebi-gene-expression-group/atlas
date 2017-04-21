@@ -2,6 +2,8 @@ import React from 'react';
 
 import FacetItem from './FacetItem.jsx';
 
+const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
 const Facet = props => {
     const facetItems = props.facetItems.map(facetItem =>
         <FacetItem
@@ -14,11 +16,9 @@ const Facet = props => {
     );
 
     return (
-        <div>
-            <h4>{props.facetName}</h4>
-            <ul>
-                {facetItems}
-            </ul>
+        <div className="margin-top-large">
+            <h5>{capitalizeFirstLetter(props.facetName)}</h5>
+            {facetItems}
         </div>
     );
 };
