@@ -10,6 +10,9 @@
     </div>
 </div>
 
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBioentityInformation.bundle.js"></script>
+
 <script>
     expressionAtlasBioentityInformation.render({
         target: 'bioentityInformationTab',

@@ -9,15 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
-<script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
-
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBaselineExpression.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasDifferentialExpression.bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
-
 
 <section>
     <h3 class="gxaSearchTermDescription">
@@ -43,6 +35,7 @@
     </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 <script>
 
@@ -59,12 +52,6 @@
     $differentialTabLink.click(function() {
         $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
         window.location.hash = "#differential";
-    });
-
-    $baselineTabLink.on("shown.bs.tab", function() {
-        // Hack to resize Highcharts heat maps to container width
-        // Use CustomEvent instead of Event to be compatible with IE (we’re using a polyfill)
-        window.dispatchEvent(new CustomEvent("resize"));
     });
 
     setInitialHash();

@@ -64,17 +64,14 @@
     <%--<link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
 
-    <!-- for production the above can be replaced with -->
-    <!--
-    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/mini/ebi-fluid-embl.css">
-    -->
-
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
     <!-- end CSS-->
-
 
     <!-- All JavaScript at the bottom, except for Modernizr -->
     <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
 
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
 <body class="level2 full-width"><!-- add any of your classes or IDs -->
@@ -118,20 +115,14 @@
 
 
 <!-- JavaScript -->
-
-<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-<!--
-<script>window.jQuery || document.write('<script src="../js/libs/jquery-1.10.2.min.js"><\/script>')</script>
--->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <!-- Your custom JavaScript file scan go here... change names accordingly -->
 <!--
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
 -->
-<script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
-<script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
-<script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
 
 <!-- The Foundation theme JavaScript -->
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
@@ -140,7 +131,6 @@
 <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 
 <!-- JSON Tag Editor -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.caret.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
@@ -163,7 +153,6 @@
 -->
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 
 <script>
     geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, 'Enter gene query...');

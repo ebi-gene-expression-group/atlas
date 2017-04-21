@@ -13,6 +13,9 @@
 
 <div id="gxaDifferentialTab"></div>
 
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasDifferentialExpression.bundle.js"></script>
+
 <script>
     <c:if test="${hasDifferentialResults}">
     expressionAtlasDifferentialExpression({

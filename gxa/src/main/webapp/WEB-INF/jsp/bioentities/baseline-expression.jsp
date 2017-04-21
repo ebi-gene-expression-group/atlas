@@ -13,17 +13,23 @@
 
 <div id="gxaBaselineTab"></div>
 
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBaselineExpression.bundle.js"></script>
+
 <script>
     // function ({atlasHostUrl : hostUrl = "https://www.ebi.ac.uk", target = 'gxaBaselineTab', facetsTreeData, geneQuery, conditionQuery, species})
     <c:if test="${hasBaselineResults}">
         var baselineFacetsData = ${jsonFacets};
-        expressionAtlasBaselineExpression.render({
-            atlasUrl: "${pageContext.request.contextPath}/",
-            target: 'gxaBaselineTab',
-            facetsTreeData: baselineFacetsData,
-            geneQuery: "${geneQuery}",
-            conditionQuery: "${conditionQuery}",
-            species: "${species}"
+        // Running within $(document).ready() ensures that the heatmap stretches to the tab container width
+        $(function() {
+            expressionAtlasBaselineExpression.render({
+                atlasUrl: "${pageContext.request.contextPath}/",
+                target: 'gxaBaselineTab',
+                facetsTreeData: baselineFacetsData,
+                geneQuery: "${geneQuery}",
+                conditionQuery: "${conditionQuery}",
+                species: "${species}"
+            });
         });
     </c:if>
 </script>
