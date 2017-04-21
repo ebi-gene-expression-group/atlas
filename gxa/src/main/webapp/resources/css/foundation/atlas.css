@@ -35,10 +35,6 @@ a.clear {
     background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url("../../../resources/images/foundation/backgrounds/blurry.png");
 }
 
-.masthead-atlas {
-    padding: 1.5rem 1rem 0rem;
-}
-
 .button-rd {
     text-align: center;
     line-height: 1;
@@ -176,22 +172,13 @@ a.baseline {
     background-color: #EEE;
 }
 
-.mega-footer {
+#local-footer {
     background-image: linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url("../../../resources/images/foundation/backgrounds/blurry.png");
 }
 
-.mega-footer a, .mega-footer h5 {
+#local-footer a, #local-footer h1, #local-footer h2, #local-footer h3, #local-footer h4, #local-footer h5, #local-footer h6 {
     color: white;
-    border: none;
 }
-
-.mega-footer a:hover,
-.mega-footer a.dark-bg:focus,
-.mega-footer a.dark-bg:active {
-    color: white;
-    text-decoration: underline;
-}
-
 
 /*Dynamic magnifying glass search follows... it doesn’t seem very responsive (absolute positioning)*/
 /*.local-site-search {position: absolute; top: 113px;  right: 10px; }!*let the text field appear with no size problem*!*/
