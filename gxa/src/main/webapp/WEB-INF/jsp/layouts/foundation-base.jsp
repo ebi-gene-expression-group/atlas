@@ -7,22 +7,24 @@
 <head>
     <meta charset="utf-8">
     <title>Expression Atlas &lt; EMBL-EBI</title>
-    <meta name="description" content="EMBL-EBI"><!-- Describe what this page is about -->
-    <meta name="keywords" content="bioinformatics, europe, institute"><!-- A few keywords that relate to the content of THIS PAGE (not the whol project) -->
-    <meta name="author" content="EMBL-EBI"><!-- Your [project-name] here -->
+    <meta name="description" content="EMBL-EBI Expression Atlas, an open public repository of gene expression pattern data under different biological conditions">
+    <meta name="keywords" content="expression atlas, gene expression, baseline expression, differential expression, functional genomics, public repository, repository, bioinformatics, europe, institute">
+    <meta name="author" content="EMBL-EBI Expression Atlas development team: github.com/gxa/atlas/graphs/contributors">
     <meta name="HandheldFriendly" content="true" />
     <meta name="MobileOptimized" content="width" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
 
     <!-- Add information on the life cycle of this page -->
-    <meta name="ebi:owner" content="John Doe"> <!-- Who should be contacted about changes -->
-    <meta name="ebi:review-cycle" content="30"> <!-- In days, how often should the content be reviewed -->
-    <meta name="ebi:last-review" content="2015-12-20"> <!-- The last time the content was reviewed -->
-    <meta name="ebi:expiry" content="2016-01-20"> <!-- When this content is no longer relevant -->
+    <meta name="ebi:owner" content="Irene Papatheodorou <irenep@ebi.ac.u>">
+    <meta name="ebi:review-cycle" content="60">
+    <meta name="ebi:last-review" content="2017-02-01">
+    <meta name="ebi:expiry" content="2017-06-01">
 
     <!-- If you link to any other sites frequently, consider optimising performance with a DNS prefetch -->
     <link rel="dns-prefetch" href="https://embl.de/">
+    <link rel="dns-prefetch" href="https://www.ebi.ac.uk/">
+    <link rel="dns-prefetch" href="https://www.ebi.ac.uk/arrayexpress/">
 
     <!-- favicons generated at realfavicongenerator.net, and merged with https://github.com/ebiwd/EBI-Pattern-library/blob/gh-pages/sample-site/boilerplate/blank.html -->
     <meta name="theme-color" content="#ffffff">
@@ -34,6 +36,7 @@
     <link rel="icon" type="image/png" sizes="192×192" href="${pageContext.request.contextPath}/resources/favicons/android-chrome-192x192.png" /> <!-- Android (192px) -->
     <link rel="manifest" href="${pageContext.request.contextPath}/resources/favicons/manifest.json" />
 
+    <!-- Apple icons -->
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-114x114.png" /> <!-- For iPhone 4 Retina display (114px) -->
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-72x72.png" /> <!-- For iPad (72px) -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/resources/favicons/apple-icon-144x144.png" /> <!-- For iPad retina (144px) -->
@@ -41,7 +44,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/resources/favicons/apple-touch-icon.png" />
     <link rel="mask-icon" href="${pageContext.request.contextPath}/resources/favicons/safari-pinned-tab.svg" color="#5bbad5" /> <!-- Safari icon for pinned tab -->
 
-    <meta name="msapplication-TileColor" content="#da532c" /> <!-- MS Icons -->
+    <!-- MS icons -->
+    <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="msapplication-TileImage" content="${pageContext.request.contextPath}/resources/favicons/mstile-144x144.png" />
     <meta name="msapplication-config" content="${pageContext.request.contextPath}/resources/favicons/browserconfig.xml" />
 
@@ -68,13 +72,14 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
     <!-- end CSS-->
 
-    <!-- All JavaScript at the bottom, except for Modernizr -->
+    <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
     <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
-
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
-<body class="level2 full-width"><!-- add any of your classes or IDs -->
+
+
+<body class="level2 full-width">
 <div id="skip-to">
     <ul>
         <li><a href="#content">Skip to main content</a></li>
@@ -111,15 +116,10 @@
 <footer>
     <tiles:insertAttribute name="footer"/>
 </footer>
-<!--! end of #wrapper -->
+
 
 
 <!-- JavaScript -->
-<!-- Your custom JavaScript file scan go here... change names accordingly -->
-<!--
-<script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
-<script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
--->
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
@@ -134,12 +134,10 @@
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.caret.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
-<!--! end of JSON Tag Editor -->
 
 <!-- Condition AUTOCOMPLETE -->
 <spring:eval var="arrayexpressUrl" expression="@configuration['arrayexpress.autocomplete.url']" />
 <%@ include file="../includes/condition-autocomplete-js.jsp" %>
-<!-- end of Condition AUTOCOMPLETE -->
 
 <!-- Google Analytics details... -->
 <!-- Change UA-XXXXX-X to be your site's ID -->
@@ -153,6 +151,13 @@
 -->
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+
+<script>
+    /* This is to prevent overlapping between boxes in home page */
+    $(window).load(function(){
+        Foundation.reInit('equalizer');
+    });
+</script>
 
 <script>
     geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, 'Enter gene query...');
@@ -185,11 +190,6 @@
     });
 
     geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
-
-    /* This is to prevent overlapping between boxes in home page */
-    $(window).load(function(){
-        Foundation.reInit('equalizer');
-    });
 </script>
 
 </body>
