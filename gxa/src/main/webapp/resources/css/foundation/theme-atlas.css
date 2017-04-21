@@ -1,0 +1,8 @@
+.button.primary:hover,
+.button.primary:focus,
+.button.hover,
+.button:hover,
+.button:focus,
+.button:active {
+    background: #2f5767;
+}
