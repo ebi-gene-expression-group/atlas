@@ -13,21 +13,12 @@ module.exports = {
         expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
         expressionAtlasBrowseBySpecies: ['babel-polyfill', './atlas_bundles/browse-by-species'],
         dependencies: [
-            // Bundled dependencies: expressionAtlasHeatmapHighcharts, heatmap
+            // Bundled dependencies: expressionAtlasHeatmapHighcharts
+            'expression-atlas-heatmap-highcharts',
             'anatomogram',
-            // 'expression-atlas-number-format',
-            // 'atlas-modernizr',
-            // 'expression-atlas-cell-differential',
-            // 'expression-atlas-contrast-tooltips',
-            // 'expression-atlas-display-levels-button',
-            // 'expression-atlas-download-profiles-button',
             'expression-atlas-feedback',
-            // 'expression-atlas-genome-browser-launcher',
-            // 'expression-atlas-heatmap-baseline-cell-variance',
-            // 'expression-atlas-help-tooltips',
-            // 'expression-atlas-legend',
-            // 'expression-atlas-number-format',
-            'babel-polyfill',
+            'react-refetch',
+            'react-ebi-species',
 
             // Required by: expressionAtlasHeatmapHighcharts
             'color',
@@ -64,18 +55,6 @@ module.exports = {
             'react-emojione',
             'react-localstorage',
             'react-timer-mixin',
-
-            // genome-browser-launcher
-            'react-refetch',
-            'whatwg-fetch',
-
-            // baseline-cell
-            // 'react-highcharts',
-            'react-addons-css-transition-group',
-
-            //
-            'expression-atlas-heatmap-highcharts',
-            'react-ebi-species'
         ]
     },
 
