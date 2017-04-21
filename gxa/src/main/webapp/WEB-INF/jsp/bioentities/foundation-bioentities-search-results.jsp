@@ -11,7 +11,6 @@
 
 <script language="javascript" type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
 
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
@@ -74,11 +73,11 @@
     window.addEventListener("popstate", showTabOnHash);
 
     function showTabOnHash() {
-        if (window.location.hash === "#baseline") {
-            $baselineTabLink.tab("show");
-        } else  {
-            $differentialTabLink.tab("show");
-        }
+//        if (window.location.hash === "#baseline") {
+//            $baselineTabLink.tab("show");
+//        } else  {
+//            $differentialTabLink.tab("show");
+//        }
     }
 
     function setInitialHash() {
