@@ -9,16 +9,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/alt-customized-bootstrap-3.3.5.css"/>
+
 <div id="gxaBaselineTab"></div>
 
 <script>
     // function ({atlasHostUrl : hostUrl = "https://www.ebi.ac.uk", target = 'gxaBaselineTab', facetsTreeData, geneQuery, conditionQuery, species})
     <c:if test="${hasBaselineResults}">
         var baselineFacetsData = ${jsonFacets};
-        expressionAtlasBaselineExpression({
+        expressionAtlasBaselineExpression.render({
+            atlasUrl: "${pageContext.request.contextPath}/",
             target: 'gxaBaselineTab',
             facetsTreeData: baselineFacetsData,
-            query: "${query}",
             geneQuery: "${geneQuery}",
             conditionQuery: "${conditionQuery}",
             species: "${species}"
