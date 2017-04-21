@@ -10,19 +10,16 @@ const AtlasFeedback = require('expression-atlas-feedback');
 
 class BaselineHeatmaps extends React.Component {
 
-    componentDidMount() {
-        if (window.ga === `undefined`) {
-            window.ga = () => {};
-        }
-    }
-
     render() {
-        const atlasFeedback = $.browser.msie ? null
-            : <AtlasFeedback
-                  collectionCallback = {(score, comment) => {
-                    window.ga('send','event','BaselineHeatmaps', 'feedback', comment, score);
-                  }}
-              />;
+        const atlasFeedback = $.browser.msie ?
+            null :
+            <AtlasFeedback
+                collectionCallback = {
+                    typeof window.ga === `function` ?
+                        (score, comment) => { window.ga('send','event','BaselineHeatmaps', 'feedback', comment, score) } :
+                        () => {}
+                }
+            />;
 
         return (
             <div>
@@ -34,7 +31,6 @@ class BaselineHeatmaps extends React.Component {
                         species = {heatmap.species}
                         factor = {heatmap.factor}
                         atlasUrl = {this.props.atlasUrl}
-                        query = {this.props.query}
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery}
                         anatomogramDataEventEmitter = {this.props.anatomogramDataEventEmitter}
@@ -47,7 +43,7 @@ class BaselineHeatmaps extends React.Component {
 
     _hasMoreThanOneSpecies () {
         const uniqueSpecies = new Set();
-        this.props.heatmaps.forEach(el => { uniqueSpecies.add(el.species) });
+        this.props.heatmaps.forEach(heatmap => { uniqueSpecies.add(heatmap.species) });
         return uniqueSpecies.size > 1;
     }
 }
@@ -57,8 +53,7 @@ BaselineHeatmaps.propTypes = {
     geneQuery: React.PropTypes.string.isRequired,
     conditionQuery: React.PropTypes.string,
     /*
-     [{"species":"Homo sapiens", "factor":"CELL_LINE"},
-     {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
+     [{"species":"Homo sapiens", "factor":"CELL_LINE"}, {"species":"Mus musculus", "factor":"ORGANISM_PART"}]
      */
     showAnatomograms: React.PropTypes.bool.isRequired,
     heatmaps: React.PropTypes.arrayOf(React.PropTypes.shape({
