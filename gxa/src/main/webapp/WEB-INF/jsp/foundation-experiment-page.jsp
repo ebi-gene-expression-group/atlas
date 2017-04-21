@@ -1,7 +1,6 @@
 <%--@elvariable id="accessKey" type="java.lang.String"--%>
 <%--@elvariable id="type" type="atlas.model.ExperimentType"--%>
 
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
 

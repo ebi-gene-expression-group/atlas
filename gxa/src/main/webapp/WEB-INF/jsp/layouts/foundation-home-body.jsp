@@ -30,3 +30,9 @@
         <tiles:insertAttribute name="publications-box"/>
     </div>
 </div>
+
+<div class="text-center jumbo-news-container padding-top-xlarge padding-bottom-xlarge">
+    <tiles:insertAttribute name="news"/>
+</div>
+
+

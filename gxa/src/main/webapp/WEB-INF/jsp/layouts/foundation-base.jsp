@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title><tiles:insertAttribute name="title"/> &lt; Expression Atlas &lt; EMBL-EBI</title>
+    <title><tiles:insertAttribute name="title"/>Expression Atlas &lt; EMBL-EBI</title>
     <meta name="description" content="EMBL-EBI Expression Atlas, an open public repository of gene expression pattern data under different biological conditions">
     <meta name="keywords" content="expression atlas, gene expression, baseline expression, differential expression, functional genomics, public repository, repository, bioinformatics, europe, institute">
     <meta name="author" content="EMBL-EBI Expression Atlas development team: github.com/gxa/atlas/graphs/contributors">
@@ -59,6 +59,8 @@
     <!-- <link rel="stylesheet" href="css/custom.css" type="text/css" media="all"> -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/atlas.css" type="text/css" media="all">
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
+
     <!-- If you have a custom header image or colour -->
     <!-- <meta name="ebi:localmasthead-color" content="#000"> -->
     <!-- <meta name="ebi:localmasthead-image" content="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/images/backgrounds/embl-ebi-background.jpg"> -->
@@ -72,8 +74,6 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
-
-
 <body class="level2 full-width">
 <div id="skip-to">
     <ul>
@@ -84,34 +84,28 @@
     </ul>
 </div>
 
+<%-- #local-masthead --%>
 <div data-sticky-container>
     <div id="local-masthead" data-sticky data-sticky-on="large" data-top-anchor="235">
         <header>
-            <tiles:insertAttribute name="top-menu" />
-
-            <tiles:insertAttribute name="header" />
+            <tiles:insertAttribute name="global-masthead" />
+            <tiles:insertAttribute name="local-masthead" />
         </header>
     </div>
 </div>
 
+<%--#content--%>
 <div id="content" role="main" class="row">
     <div class="small-12 columns">
-        <tiles:insertAttribute name="body"/>
+        <tiles:insertAttribute name="content"/>
     </div>
 </div>
 
-<div class="text-center jumbo-news-container padding-top-xlarge padding-bottom-xlarge">
-    <tiles:insertAttribute name="news"/>
-</div>
+<%-- #local-footer --%>
+<tiles:insertAttribute name="local-footer"/>
 
-<div class="mega-footer padding-top-xlarge padding-bottom-xlarge">
-    <tiles:insertAttribute name="mega-footer"/>
-</div>
-
-<footer>
-    <tiles:insertAttribute name="footer"/>
-</footer>
-
+<%-- #global-footer --%>
+<tiles:insertAttribute name="global-footer"/>
 
 
 <!-- JavaScript -->
