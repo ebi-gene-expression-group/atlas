@@ -28,11 +28,11 @@
 <section class="gxaSection">
     <ul class="tabs" data-tabs role="tablist" id="experiments-tabs">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" class="tabs-title is-active" role="presentation">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}&foundation#base" role="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
+            <a href="${requestScope['javax.servlet.forward.request_uri']}#base" role="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="tabs-title" role="presentation">Baseline expression</li></c:if>
 
         <c:if test="${hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}&foundation#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
+            <a href="${requestScope['javax.servlet.forward.request_uri']}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
         <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation"><a href="">Differential expression</a></li></c:if>
     </ul>
 
