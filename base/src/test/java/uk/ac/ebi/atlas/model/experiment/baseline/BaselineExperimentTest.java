@@ -68,8 +68,10 @@ public class BaselineExperimentTest {
         return mockExperiment(experimentDesign, assayGroups,ExperimentDisplayDefaults.create(), accession);
     }
 
-    public static BaselineExperiment mockExperiment(ExperimentDesign
-                                                            experimentDesign, List<AssayGroup> assayGroups, ExperimentDisplayDefaults experimentDisplayDefaults, String accession){
+    public static BaselineExperiment mockExperiment(ExperimentDesign experimentDesign,
+                                                    List<AssayGroup> assayGroups,
+                                                    ExperimentDisplayDefaults experimentDisplayDefaults,
+                                                    String accession){
         return new BaselineExperiment(ExperimentType.RNASEQ_MRNA_BASELINE,accession, new Date(),
                 "description", "displayName", "",
                 new Species("species",

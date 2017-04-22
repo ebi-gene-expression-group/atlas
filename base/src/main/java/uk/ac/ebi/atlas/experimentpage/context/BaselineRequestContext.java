@@ -31,8 +31,9 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
 
     @Override
     public String displayNameForColumn(AssayGroup assayGroup) {
-            return getDataColumnsToReturn().contains(assayGroup) ? displayNamePerSelectedAssayGroup.get()
-                    .get(assayGroup) : "";
+            return getDataColumnsToReturn().contains(assayGroup) ?
+                    displayNamePerSelectedAssayGroup.get().get(assayGroup) :
+                    "";
     }
 
     @Override
@@ -59,15 +60,21 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
 
     private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup(){
 
-        List<String> typesWhoseValuesVaryAcrossSelectedDescriptors = RichFactorGroup.filterOutTypesWithCommonValues(
-        experiment.getDisplayDefaults().prescribedOrderOfFilters(),
-               FluentIterable.from(getDataColumnsToReturn()).transform(new Function<AssayGroup, FactorGroup>() {
-                    @Override
-                    public FactorGroup apply(AssayGroup assayGroup) {
-                        return experiment.getFactors(assayGroup);
-                    }
-                })
-        );
+        List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
+                RichFactorGroup.filterOutTypesWithCommonValues(
+                        FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters()).transform(new Function<String, String>() {
+                            public String apply(String factorHeader) {
+                                return Factor.normalize(factorHeader);
+                            }
+                        }).toList(),
+
+                        FluentIterable.from(getDataColumnsToReturn()).transform(new Function<AssayGroup, FactorGroup>() {
+                            @Override
+                            public FactorGroup apply(AssayGroup assayGroup) {
+                                return experiment.getFactors(assayGroup);
+                            }
+                        })
+                );
 
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
