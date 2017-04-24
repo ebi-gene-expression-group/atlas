@@ -16,7 +16,7 @@
     <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
 
     <!-- Add information on the life cycle of this page -->
-    <meta name="ebi:owner" content="Irene Papatheodorou <irenep@ebi.ac.u>">
+    <meta name="ebi:owner" content="Irene Papatheodorou <irenep@ebi.ac.uk>">
     <meta name="ebi:review-cycle" content="60">
     <meta name="ebi:last-review" content="2017-02-01">
     <meta name="ebi:expiry" content="2017-06-01">
