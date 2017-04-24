@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
 
@@ -23,6 +24,11 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
 public class DifferentialAnalyticsSearchServiceIT {
 
+    static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
+
+    @Inject
+    SpeciesFactory speciesFactory;
+
     @Inject
     DifferentialAnalyticsSearchService subject;
 
@@ -33,36 +39,36 @@ public class DifferentialAnalyticsSearchServiceIT {
 
     @Test
     public void fetchDifferentialFacetsForSearch() {
-        JsonObject result = subject.fetchDifferentialFacetsForSearch(query);
+        JsonObject result = subject.fetchFacets(query, EMPTY_QUERY);
         assertAboutFacets(result);
     }
 
     @Test
     public void fetchDifferentialResultsForSearch() {
-        JsonObject result = subject.fetchDifferentialResultsForSearch(query);
+        JsonObject result = subject.fetchResults(query, EMPTY_QUERY);
         assertAboutResults(result);
     }
 
     @Test
     public void fetchDifferentialFacetsForQuery1() {
-        JsonObject result = subject.fetchDifferentialFacetsForQuery(query);
+        JsonObject result = subject.fetchFacets(query, EMPTY_QUERY);
         assertAboutFacets(result);
     }
 
     @Test
     public void fetchDifferentialFacetsForQuery3() {
-        JsonObject result = subject.fetchDifferentialFacetsForQuery(query,condition, species);
+        JsonObject result = subject.fetchFacets(query,condition, speciesFactory.create(species));
         assertAboutFacets(result);
     }
 
     @Test
     public void fetchDifferentialResultsForQuery1() {
-        JsonObject result = subject.fetchDifferentialResultsForQuery(query);
+        JsonObject result = subject.fetchResults(query, EMPTY_QUERY);
         assertAboutResults(result);
     }
     @Test
     public void fetchDifferentialResultsForQuery() {
-        JsonObject result = subject.fetchDifferentialResultsForQuery(query, condition, species);
+        JsonObject result = subject.fetchResults(query, condition, speciesFactory.create(species));
         assertAboutResults(result);
     }
 
