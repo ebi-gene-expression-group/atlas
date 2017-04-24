@@ -37,24 +37,7 @@ public class BaselineAnalyticsSearchService {
                 baselineAnalyticsSearchDao.
                         fetchExpressionLevelFaceted(geneQuery, conditionQuery, species.getReferenceName(), queryFactorType);
 
-
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(response, queryFactorType);
-    }
-
-//    public BaselineExperimentSearchResult findExpressions(SemanticQuery query, Species species,
-//                                                          String queryFactorType) {
-//        List<Map<String, Object>> response =
-//                baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(
-//                        query, species.getReferenceName(), queryFactorType.toUpperCase());
-//
-//        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(response, queryFactorType);
-//    }
-
-    public JsonObject findFacets(SemanticQuery geneQuery) {
-        List<Map<String, Object>> results =
-                baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
-
-        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(results);
     }
 
     public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {
