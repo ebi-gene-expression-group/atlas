@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,16 +20,13 @@ import uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
-import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
@@ -44,19 +39,16 @@ public class SearchController {
 
     private final AnalyticsSearchService analyticsSearchService;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
-    private final DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     private final SpeciesFactory speciesFactory;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Inject
     public SearchController(AnalyticsSearchService analyticsSearchService,
                             BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                            DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
                             SpeciesFactory speciesFactory) {
 
         this.analyticsSearchService = analyticsSearchService;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
-        this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
         this.speciesFactory = speciesFactory;
 
     }
@@ -146,21 +138,6 @@ public class SearchController {
             redirectAttributes.addFlashAttribute(attributeName, model.asMap().get(attributeName));
         }
     }
-
-    @RequestMapping(value = "/json/search/differentialFacets",
-                    method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String getDifferentialJsonFacets(@RequestParam(value = "query", defaultValue = "") SemanticQuery query) {
-        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialFacetsForSearch(query));
-    }
-
-    @RequestMapping(value = "/json/search/differentialResults",
-                    method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String getDifferentialJsonResults(@RequestParam(value = "query", defaultValue = "") SemanticQuery query) {
-        return gson.toJson(differentialAnalyticsSearchService.fetchDifferentialResultsForSearch(query));
-    }
-
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
