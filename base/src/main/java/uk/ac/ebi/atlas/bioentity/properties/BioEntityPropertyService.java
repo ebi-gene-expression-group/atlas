@@ -187,15 +187,19 @@ public class BioEntityPropertyService {
 
     private void addReactomePropertyValues(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-        Collection<String> uniProtIds = propertyValuesByType.get(BioentityPropertyName.UNIPROT);
+        // When we update to Java 1.8 we’ll be able to use .getOrDefault instead of having this check
+        if (propertyValuesByType.get(BioentityPropertyName.UNIPROT) != null) {
+            Set<String> reactomeIds = new HashSet<>();
 
-        Set<String> reactomeIds = new HashSet<>();
-        for (String uniProtId : uniProtIds) {
-            reactomeIds.addAll(uniProtClient.fetchReactomeIds(uniProtId));
-        }
+            Collection<String> uniProtIds = propertyValuesByType.get(BioentityPropertyName.UNIPROT);
 
-        if (reactomeIds.size() > 0) {
-            propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
+            for (String uniProtId : uniProtIds) {
+                reactomeIds.addAll(uniProtClient.fetchReactomeIds(uniProtId));
+            }
+
+            if (reactomeIds.size() > 0) {
+                propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
+            }
         }
 
     }
