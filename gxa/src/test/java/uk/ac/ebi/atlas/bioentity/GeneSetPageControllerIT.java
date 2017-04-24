@@ -12,7 +12,8 @@ import org.springframework.validation.support.BindingAwareModelMap;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -24,21 +25,16 @@ public class GeneSetPageControllerIT {
 
     @Test
     public void bioentityPropertiesOfVariousTypes() throws Exception {
-
-
         bioentityProperties("GO:0016746");
         bioentityProperties("R-HSA-73887");
         bioentityProperties("PO:0009025");
-
     }
 
     private void bioentityProperties(String bioentityIdentifier){
         Model model = new BindingAwareModelMap();
-        subject.showGeneSetPage(bioentityIdentifier, "",model);
-
+        subject.showGeneSetPage(bioentityIdentifier, "", model);
         JsonArray bioentityProperties = new Gson().fromJson((String) model.asMap().get("bioentityProperties"), JsonArray.class);
-
-        assertTrue(bioentityIdentifier+" should have one sad property" , bioentityProperties.size()==1);
+        assertThat(bioentityProperties.size(), is(1));
     }
 
 }
