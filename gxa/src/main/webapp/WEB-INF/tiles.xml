@@ -67,4 +67,6 @@
         <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
     </definition>
 
+    <definition name="das-features" template="/WEB-INF/jsp/das-features.jsp">
+    </definition>
 </tiles-definitions>
