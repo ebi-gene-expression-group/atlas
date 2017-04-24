@@ -35,16 +35,6 @@ public class BaselineAnalyticsSearchDao {
         return JsonPath.read(response, FACET_TREE_PATH);
     }
 
-    public List<Map<String, Object>> fetchFacetsThatHaveExpression(SemanticQuery query) {
-
-        String response =
-                analyticsQueryClient.queryBuilder()
-                        .baselineFacets()
-                        .queryIdentifierOrConditionsSearch(query)
-                        .fetch();
-        return JsonPath.read(response, FACET_TREE_PATH);
-    }
-
     public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species, String defaultQueryFactorType) {
         String response = analyticsQueryClient.queryBuilder()
                 .baselineFacets()
@@ -53,16 +43,6 @@ public class BaselineAnalyticsSearchDao {
                 .ofSpecies(species)
                 .withFactorType(defaultQueryFactorType)
                 .fetch();
-
-        return JsonPath.read(response,EXPERIMENTS_PATH);
-    }
-
-    public List<Map<String, Object>> fetchExpressionLevelFaceted(SemanticQuery query, String species, String defaultQueryFactorType) {
-        String response = analyticsQueryClient.queryBuilder()
-                .baselineFacets()
-                .queryIdentifierOrConditionsSearch(query)
-                .ofSpecies(species)
-                .withFactorType(defaultQueryFactorType).fetch();
 
         return JsonPath.read(response,EXPERIMENTS_PATH);
     }
