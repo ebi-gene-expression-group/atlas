@@ -31,6 +31,8 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
 public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixture {
 
+    static final SemanticQuery EMPTY_QUERY = SemanticQuery.create();
+
     public static final String BASELINE_GENE = "ENSG00000000003";
     public static final String DIFFERENTIAL_GENE = "ENSSSCG00000000024";
     public static final String NON_EXISTENT_GENE = "FOOBAR";
@@ -57,8 +59,8 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(DIFFERENTIAL_GENE), SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN)),
                 is(new JsonObject()));
         assertThat(
-                differentialAnalyticsSearchService.fetchDifferentialFacetsForQuery(SemanticQuery.create
-                        (DIFFERENTIAL_GENE)).entrySet(), not(Matchers.<Map.Entry<String,JsonElement>>empty()));
+                differentialAnalyticsSearchService.fetchFacets(SemanticQuery.create(DIFFERENTIAL_GENE), EMPTY_QUERY)
+                        .entrySet(), not(Matchers.<Map.Entry<String,JsonElement>>empty()));
     }
 
     @Test
@@ -67,14 +69,14 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
                 baselineAnalyticsSearchService.findFacetsForTreeSearch(SemanticQuery.create(NON_EXISTENT_GENE), SemanticQuery.create(), new Species("Foous baris", SpeciesProperties.UNKNOWN)),
                 is(new JsonObject()));
         assertThat(
-                differentialAnalyticsSearchService.fetchDifferentialResultsForQuery(SemanticQuery.create
-                        (NON_EXISTENT_GENE)).get("results").getAsJsonArray().size(),
+                differentialAnalyticsSearchService.fetchResults(SemanticQuery.create(NON_EXISTENT_GENE), EMPTY_QUERY)
+                        .get("results").getAsJsonArray().size(),
                 is(0));
     }
 
     @Test
     public void differentialAnalyticsSearchServiceHasTheRightReturnFormat(){
-        JsonObject result = differentialAnalyticsSearchService.fetchDifferentialResultsForQuery(SemanticQuery.create("GO:0008150"));
+        JsonObject result = differentialAnalyticsSearchService.fetchResults(SemanticQuery.create("GO:0008150"), EMPTY_QUERY);
         testDifferentialResultsAreInRightFormat(result);
     }
 
