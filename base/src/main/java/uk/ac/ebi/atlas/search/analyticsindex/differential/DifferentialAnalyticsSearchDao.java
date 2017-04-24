@@ -16,15 +16,8 @@ public class DifferentialAnalyticsSearchDao {
         this.analyticsQueryClient = analyticsQueryClient;
     }
 
-
-    public String fetchFacetsAboveDefaultFoldChangeForSearch(SemanticQuery query) {
-        return analyticsQueryClient.queryBuilder()
-                        .differentialFacets()
-                        .queryIdentifierOrConditionsSearch(query)
-                        .fetch();
-    }
-
-    public String fetchFacetsAboveDefaultFoldChangeForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+    public String fetchFacetsAboveDefaultFoldChange(
+            SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         return analyticsQueryClient.queryBuilder()
                         .differentialFacets()
                         .queryIdentifierSearch(geneQuery)
@@ -33,14 +26,16 @@ public class DifferentialAnalyticsSearchDao {
                         .fetch();
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForSearch(SemanticQuery query) {
+    public String fetchFacetsAboveDefaultFoldChange(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
         return analyticsQueryClient.queryBuilder()
-                        .differentialResults()
-                        .queryIdentifierOrConditionsSearch(query)
-                        .fetch();
+                .differentialFacets()
+                .queryIdentifierSearch(geneQuery)
+                .queryConditionsSearch(conditionQuery)
+                .fetch();
     }
 
-    public String fetchDifferentialResultsAboveDefaultFoldChangeForQuery(SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
+    public String fetchResultsAboveDefaultFoldChange(
+            SemanticQuery geneQuery, SemanticQuery conditionQuery, String species) {
         return analyticsQueryClient.queryBuilder()
                         .differentialResults()
                         .queryIdentifierSearch(geneQuery)
@@ -48,4 +43,13 @@ public class DifferentialAnalyticsSearchDao {
                         .ofSpecies(species)
                         .fetch();
     }
+
+    public String fetchResultsAboveDefaultFoldChange(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
+        return analyticsQueryClient.queryBuilder()
+                .differentialResults()
+                .queryIdentifierSearch(geneQuery)
+                .queryConditionsSearch(conditionQuery)
+                .fetch();
+    }
+
 }
