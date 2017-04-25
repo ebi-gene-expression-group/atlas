@@ -33,8 +33,6 @@
             <map>
                 <!-- not sure if still needed -->
                 <entry key="applicationProperties" value-ref="applicationProperties"/>
-                <!-- request-preferences.jsp -->
-                <entry key="stringUtil" value-ref="stringUtil"/>
             </map>
         </property>
     </bean>
