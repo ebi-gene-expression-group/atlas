@@ -114,6 +114,11 @@ public class BaselineAnalyticsSearchServiceIT {
         HUMAN = speciesFactory.create("homo sapiens");
     }
 
+    @Test
+    public void placeholder() {
+
+    }
+
     @Ignore
     public void singleSpeciesGeneAccessionTissues() {
         //"ENSG00000006062" seems to be a famous enough gene
