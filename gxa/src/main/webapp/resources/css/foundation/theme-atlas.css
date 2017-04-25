@@ -1,3 +1,21 @@
+.menu .active > a,
+.tag,
+.tabs-title > a:hover,
+.button,
+.button.primary {
+    background-color: #3497c5;
+}
+
+.tabs-title > a:hover {
+    background: aliceblue;
+    color: #0a0a0a;
+}
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
+    color: #0a0a0a;
+    background: #e6e6e6;
+}
+
 .button.primary:hover,
 .button.primary:focus,
 .button.hover,
@@ -5,4 +23,8 @@
 .button:focus,
 .button:active {
     background: #2f5767;
+    /*color: #0a0a0a;*/
 }
+
+
+/* end */
