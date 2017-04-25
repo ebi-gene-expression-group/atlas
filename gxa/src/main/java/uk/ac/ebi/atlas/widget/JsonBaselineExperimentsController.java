@@ -120,11 +120,10 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
             result.add("columnGroupings", factorGroupingService.group(source, dataColumns));
 
-            result.add("profiles", new ExternallyViewableProfilesList<>(
-                    experimentProfiles,
-                    provideLinkToProfile(request, geneQuery),
-                            dataColumns
-                    ).asJson());
+            result.add(
+                    "profiles",
+                    new ExternallyViewableProfilesList<>(
+                            experimentProfiles, provideLinkToProfile(request, geneQuery), dataColumns).asJson());
         }
 
         model.addAttribute("species", species.getReferenceName());
