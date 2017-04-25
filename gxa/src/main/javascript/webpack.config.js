@@ -6,13 +6,15 @@ var WebpackShellPlugin = require('webpack-shell-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-        expressionAtlasHeatmapHighcharts: ['babel-polyfill', 'whatwg-fetch', './atlas_bundles/heatmap-highcharts'],
-        experimentPage: ['babel-polyfill', './atlas_bundles/experiment-page'],
-        expressionAtlasBaselineExpression: ['babel-polyfill', './atlas_bundles/baseline-expression'],
-        expressionAtlasDifferentialExpression: ['babel-polyfill', './atlas_bundles/differential-expression'],
-        expressionAtlasBioentityInformation: ['babel-polyfill', './atlas_bundles/bioentity-information'],
-        expressionAtlasBrowseBySpecies: ['babel-polyfill', './atlas_bundles/browse-by-species'],
+        expressionAtlasHeatmapHighcharts: './atlas_bundles/heatmap-highcharts',
+        experimentPage: './atlas_bundles/experiment-page',
+        expressionAtlasBaselineExpression: './atlas_bundles/baseline-expression',
+        expressionAtlasDifferentialExpression: './atlas_bundles/differential-expression',
+        expressionAtlasBioentityInformation: './atlas_bundles/bioentity-information',
+        expressionAtlasBrowseBySpecies: './atlas_bundles/browse-by-species',
         dependencies: [
+            'babel-polyfill', 'whatwg-fetch',
+
             // Bundled dependencies: expressionAtlasHeatmapHighcharts
             'expression-atlas-heatmap-highcharts',
             'anatomogram',
