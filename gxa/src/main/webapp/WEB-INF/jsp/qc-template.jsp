@@ -27,7 +27,7 @@
     }
 </style>
 
-<div id="qc-content" class="row">
+<div id="qc-content" class="row expanded">
     <div class="small-12 columns">
         <%
             // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
