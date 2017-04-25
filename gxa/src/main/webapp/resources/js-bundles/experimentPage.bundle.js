@@ -21692,7 +21692,7 @@ webpackJsonp_name_([1],[
 	
 	var aggregateText = function aggregateText(name, vals) {
 	  var xs = (0, _lodash.uniq)(vals);
-	  return xs.length == 1 || xs.length < 5 && xs.join(", ").length < 30 ? xs.join(", ") : (0, _pluralize2.default)(name.toLowerCase(), xs.length, true);
+	  return xs.length === 1 || xs.length < 5 && xs.join(", ").length < 30 ? xs.join(", ") : (0, _pluralize2.default)(name.toLowerCase(), xs.length, true);
 	};
 	
 	var ExperimentDesign = function ExperimentDesign(_ref) {
@@ -23947,7 +23947,7 @@ webpackJsonp_name_([1],[
 	
 	
 	// module
-	exports.push([module.id, ".rt-td:hover {\n  overflow: visible;\n  white-space: normal;\n  width: auto;\n}\n", ""]);
+	exports.push([module.id, ".rt-td:hover {\n  overflow: visible;\n  white-space: normal;\n  width: auto;\n}\n\n.select-wrap select {\n  height: unset;\n  margin: unset;\n}\n\n.-pageJump input {\n  display: inline-block;\n  height: unset;\n  margin: unset;\n}", ""]);
 	
 	// exports
 
