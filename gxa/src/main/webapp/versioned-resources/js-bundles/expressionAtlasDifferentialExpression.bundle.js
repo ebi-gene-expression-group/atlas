@@ -8159,7 +8159,7 @@ webpackJsonp_name_([5],{
 	        differentialFacetsUrlObject.pathname = 'gxa/json/search/differential_facets';
 	        differentialResultsUrlObject.pathname = 'gxa/json/search/differential_results';
 	
-	        var queryParams = { geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, organism: this.props.species };
+	        var queryParams = { geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, species: this.props.species };
 	        differentialFacetsUrlObject.query = queryParams;
 	        differentialResultsUrlObject.query = queryParams;
 	
