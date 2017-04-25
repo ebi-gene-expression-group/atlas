@@ -4,11 +4,16 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
@@ -25,7 +30,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 @Controller
-public class ExperimentController extends ExperimentPageController{
+public class ExperimentController extends ExperimentPageController {
 
     private final ExperimentTrader experimentTrader;
     private final ApplicationProperties applicationProperties;
@@ -67,7 +72,7 @@ public class ExperimentController extends ExperimentPageController{
         return "foundation-experiment-page";
     }
 
-    JsonObject experimentPageContentForExperiment(final Experiment experiment, final HttpServletRequest request,
+    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final HttpServletRequest request,
                                                   final String accessKey){
         JsonObject result = new JsonObject();
 
@@ -128,7 +133,7 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonArray formatTable(List<String []> rows){
+    private JsonArray formatTable(List<String []> rows){
 
         JsonArray result = new JsonArray();
         for(int i = 0 ; i< rows.size() ; i ++){
@@ -141,7 +146,7 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
+    private JsonArray pairsToArrayOfObjects(String leftName, String rightName, List<Pair<String, String>> pairs){
         JsonArray result = new JsonArray();
         for(Pair<String, String> p : pairs){
             JsonObject o = new JsonObject();
@@ -152,20 +157,20 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonArray twoElementArray(String x, String y){
+    private JsonArray twoElementArray(String x, String y){
         JsonArray result = new JsonArray();
         result.add(new JsonPrimitive(x));
         result.add(new JsonPrimitive(y));
         return result;
     }
 
-    JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
+    private JsonObject customContentTab(String tabType, String name, String onlyPropName, JsonElement value){
         JsonObject props =  new JsonObject();
         props.add(onlyPropName, value);
         return customContentTab(tabType, name, props);
     }
 
-    JsonObject customContentTab(String tabType, String name, JsonObject props){
+    private JsonObject customContentTab(String tabType, String name, JsonObject props){
         JsonObject result = new JsonObject();
         result.addProperty("type", tabType);
         result.addProperty("name", name);
@@ -173,14 +178,14 @@ public class ExperimentController extends ExperimentPageController{
         return result;
     }
 
-    JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl){
+    private JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl){
         JsonObject props = new JsonObject();
         props.add("groups", groups);
         props.addProperty("genesDistributedByCutoffUrl", geneDistributionUrl);
         return customContentTab("heatmap", "Results", props);
     }
 
-    JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
+    private JsonObject experimentDesignTab(JsonObject table, String downloadUrl){
         JsonObject props = new JsonObject();
         props.add("table", table);
         props.addProperty("downloadUrl", downloadUrl);

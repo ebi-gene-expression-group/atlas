@@ -52,15 +52,15 @@ public class JsonSearchController extends JsonExceptionHandlingController {
                                             @RequestParam(value = "conditionQuery", required = false, defaultValue = "")
                                             SemanticQuery conditionQuery,
                                             @RequestParam(value = "species", required = false, defaultValue = "")
-                                            String speciesParameter) {
+                                            String species) {
 
-        if (isBlank(speciesParameter)) {
+        if (isBlank(species)) {
             return gson.toJson(differentialAnalyticsSearchService.fetchFacets(geneQuery, conditionQuery));
         }
 
         return gson.toJson(
                 differentialAnalyticsSearchService.fetchFacets(
-                        geneQuery, conditionQuery, speciesFactory.create(speciesParameter)));
+                        geneQuery, conditionQuery, speciesFactory.create(species)));
     }
 
     @RequestMapping(value = "/json/search/differential_results",
@@ -71,14 +71,14 @@ public class JsonSearchController extends JsonExceptionHandlingController {
                                              @RequestParam(value = "conditionQuery", required = false, defaultValue = "")
                                              SemanticQuery conditionQuery,
                                              @RequestParam(value = "species", required = false, defaultValue = "")
-                                             String speciesParameter) {
+                                             String species) {
 
-        if (isBlank(speciesParameter)) {
+        if (isBlank(species)) {
             return gson.toJson(differentialAnalyticsSearchService.fetchResults(geneQuery, conditionQuery));
         }
 
         return gson.toJson(
                 differentialAnalyticsSearchService.fetchResults(
-                        geneQuery, conditionQuery, speciesFactory.create(speciesParameter)));
+                        geneQuery, conditionQuery, speciesFactory.create(species)));
     }
 }

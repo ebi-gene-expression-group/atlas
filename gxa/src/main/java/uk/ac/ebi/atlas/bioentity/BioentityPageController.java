@@ -85,7 +85,8 @@ public abstract class BioentityPageController {
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
 
         if (!hasDifferentialResults && !hasBaselineResults) {
-            return "empty-search-page";
+            model.addAttribute("searchDescription", identifier);
+            return "no-results";
         }
 
         model.addAttribute("hasBaselineResults", hasBaselineResults);
@@ -117,7 +118,7 @@ public abstract class BioentityPageController {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("search-error");
+        ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
     }

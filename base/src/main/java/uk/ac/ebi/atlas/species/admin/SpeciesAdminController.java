@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
@@ -24,7 +25,7 @@ import java.io.IOException;
 @Controller
 @Scope("request")
 @RequestMapping("/admin/species")
-public class SpeciesAdminController {
+public class SpeciesAdminController extends JsonExceptionHandlingController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesAdminController.class);
 
@@ -83,11 +84,4 @@ public class SpeciesAdminController {
         return errorMessage + "\n\n" + HELP_MESSAGE;
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public String handleResourceNotFoundException(Exception e) throws IOException {
-        LOGGER.error(e.getMessage(), e);
-        return e.getClass().getSimpleName() + ": " + e.getMessage();
-    }
 }

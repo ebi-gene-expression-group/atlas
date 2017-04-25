@@ -1,7 +1,6 @@
-
 package uk.ac.ebi.atlas.controllers.rest;
 
-
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
@@ -39,11 +38,12 @@ public class DASFeaturesController {
     }
 
 
-    @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    @ResponseBody
-    public String handleException(Exception e) {
-        return e.getMessage();
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView InternalServerHandleException(Exception e) {
+        ModelAndView mav = new ModelAndView("error-page");
+        mav.addObject("exceptionMessage", e.getMessage());
+        return mav;
     }
 
     @RequestMapping(value = "/das/s4/features")

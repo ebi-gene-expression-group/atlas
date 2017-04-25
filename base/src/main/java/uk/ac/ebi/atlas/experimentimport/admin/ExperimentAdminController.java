@@ -2,27 +2,22 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.gson.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class ExperimentAdminController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminController.class);
+public class ExperimentAdminController extends JsonExceptionHandlingController {
 
     private final ExperimentOps experimentOps;
     private final ExperimentAdminHelpPage helpPage = new ExperimentAdminHelpPage();
-    private final Gson gson= new GsonBuilder().setPrettyPrinting().create();
 
     public ExperimentAdminController(ExperimentOps experimentOps) {
         this.experimentOps = experimentOps;
@@ -113,14 +108,6 @@ public class ExperimentAdminController {
         } else {
             return Arrays.asList(accessionParameter.split(","));
         }
-    }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public String handleResourceNotFoundException(Exception e) throws IOException {
-        LOGGER.error(e.getMessage(), e);
-        return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
 }

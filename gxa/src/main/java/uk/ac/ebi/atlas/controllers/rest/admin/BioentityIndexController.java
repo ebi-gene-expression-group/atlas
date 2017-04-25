@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.controllers.rest.admin;
 
 import uk.ac.ebi.atlas.solr.admin.BioentityIndexAdmin;

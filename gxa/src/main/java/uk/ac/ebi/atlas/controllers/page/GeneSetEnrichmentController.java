@@ -75,7 +75,6 @@ public class GeneSetEnrichmentController {
     public ModelAndView InternalServerHandleException(Exception e) {
         ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
-
         return mav;
     }
 

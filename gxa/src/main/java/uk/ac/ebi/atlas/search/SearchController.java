@@ -69,7 +69,7 @@ public class SearchController {
 
         Species species = speciesFactory.create(speciesString);
 
-        model.addAttribute("searchDescription", SearchDescription.get(geneQuery));
+        model.addAttribute("searchDescription", SearchDescription.get(geneQuery, conditionQuery, speciesString));
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
         model.addAttribute("species", species.getReferenceName());
@@ -95,7 +95,7 @@ public class SearchController {
 
         // No gene IDs -> empty results page
         if (geneIds.size() == 0) {
-            return "empty-search-page";
+            return "no-results";
         }
 
         // Resolves to a single Gene ID -> Gene page
@@ -113,7 +113,7 @@ public class SearchController {
             boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
 
             if (!hasDifferentialResults && !hasBaselineResults) {
-                return "empty-search-page";
+                return "no-results";
             }
 
             // TODO Should BaselineFacetsTree.jsx do a request to the endpoint in JsonBaselineExperimentsController?
@@ -142,7 +142,7 @@ public class SearchController {
     @ExceptionHandler(value = {IllegalArgumentException.class})
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("query-error-page");
+        ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
     }
@@ -150,7 +150,7 @@ public class SearchController {
     @ExceptionHandler(value = {SolrException.class, UnsupportedEncodingException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView handleSolrException(Exception e) {
-        ModelAndView mav = new ModelAndView("query-error-page");
+        ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
     }
