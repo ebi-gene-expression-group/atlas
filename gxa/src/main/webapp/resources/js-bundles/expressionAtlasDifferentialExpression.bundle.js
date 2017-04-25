@@ -7947,14 +7947,13 @@ webpackJsonp_name_([5],{
 	module.exports = function (_ref) {
 	    var _ref$atlasHostUrl = _ref.atlasHostUrl,
 	        hostUrl = _ref$atlasHostUrl === undefined ? window.location.protocol + "//" + window.location.host : _ref$atlasHostUrl,
-	        query = _ref.query,
 	        geneQuery = _ref.geneQuery,
 	        conditionQuery = _ref.conditionQuery,
 	        species = _ref.species,
 	        _ref$target = _ref.target,
 	        target = _ref$target === undefined ? 'gxaDifferentialTab' : _ref$target;
 	
-	    ReactDOM.render(React.createElement(DifferentialRouter, { hostUrl: hostUrl, query: query, geneQuery: geneQuery, conditionQuery: conditionQuery, species: species }), document.getElementById(target));
+	    ReactDOM.render(React.createElement(DifferentialRouter, { hostUrl: hostUrl, geneQuery: geneQuery, conditionQuery: conditionQuery, species: species }), document.getElementById(target));
 	};
 
 /***/ },
@@ -7998,7 +7997,6 @@ webpackJsonp_name_([5],{
 	
 	    propTypes: {
 	        hostUrl: RequiredString,
-	        query: RequiredString,
 	        geneQuery: RequiredString,
 	        conditionQuery: RequiredString,
 	        species: RequiredString
