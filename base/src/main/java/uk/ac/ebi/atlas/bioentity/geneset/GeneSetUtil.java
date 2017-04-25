@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 
-public final class GeneSetUtil {
+public class GeneSetUtil {
 
     private static final Pattern GO_REGEX = Pattern.compile("GO:\\d+", Pattern.CASE_INSENSITIVE);
     private static final Pattern PO_REGEX = Pattern.compile("PO:\\d+", Pattern.CASE_INSENSITIVE);
@@ -42,14 +42,17 @@ public final class GeneSetUtil {
     }
 
     public static boolean matchesGeneSetAccession(String identifier) {
-        return matchesReactomeID(identifier) || matchesInterProAccession(identifier) || matchesGeneOntologyAccession(identifier) || matchesPlantOntologyAccession(identifier) || matchesPlantReactomeID(identifier);
+        return matchesReactomeID(identifier) || matchesInterProAccession(identifier) ||
+                matchesGeneOntologyAccession(identifier) || matchesPlantOntologyAccession(identifier) ||
+                matchesPlantReactomeID(identifier);
     }
 
-    private static boolean isGeneSetSource(String source) {
-        return source.equalsIgnoreCase(GO_CATEGORY) || source.equalsIgnoreCase(PO_CATEGORY) || source.equalsIgnoreCase(REACTOME_CATEGORY) || source.equalsIgnoreCase(INTERPRO_CATEGORY);
+    private static boolean hasGeneSetCategory(String category) {
+        return category.equalsIgnoreCase(GO_CATEGORY) || category.equalsIgnoreCase(PO_CATEGORY) ||
+                category.equalsIgnoreCase(REACTOME_CATEGORY) || category.equalsIgnoreCase(INTERPRO_CATEGORY);
     }
 
-    public static boolean isGeneSetCategoryOrMatchesGeneSetAccession(SemanticQuery geneQuery) {
+    public static boolean matchesGeneSetCategoryOrGeneSetValue(SemanticQuery geneQuery) {
         if (isEmpty(geneQuery) || geneQuery.size() > 1) {
             return false;
         }
@@ -59,7 +62,7 @@ public final class GeneSetUtil {
             if (!matchesGeneSetAccession(term.value())) {
                 return false;
             }
-        } else if (!isGeneSetSource(term.category())) {
+        } else if (!hasGeneSetCategory(term.category())) {
             return false;
         }
 

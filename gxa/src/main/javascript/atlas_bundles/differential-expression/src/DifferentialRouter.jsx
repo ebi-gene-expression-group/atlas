@@ -25,7 +25,6 @@ const RequiredString = React.PropTypes.string.isRequired;
 const DifferentialRouter = React.createClass({
     propTypes: {
         hostUrl: RequiredString,
-        query: RequiredString,
         geneQuery: RequiredString,
         conditionQuery : RequiredString,
         species: RequiredString
@@ -177,18 +176,14 @@ const DifferentialRouter = React.createClass({
         let differentialFacetsUrlObject = Url.parse(this.props.hostUrl),
             differentialResultsUrlObject = Url.parse(this.props.hostUrl);
 
-        differentialFacetsUrlObject.pathname = this.props.query ?
-            'gxa/json/search/differentialFacets' :
-            'gxa/json/query/differentialFacets';
-        differentialResultsUrlObject.pathname = this.props.query ?
-            'gxa/json/search/differentialResults' :
-            'gxa/json/query/differentialResults';
+        differentialFacetsUrlObject.pathname = 'gxa/json/search/differential_facets';
+        differentialResultsUrlObject.pathname = 'gxa/json/search/differential_results';
 
-        let queryParams = {geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, organism: this.props.species};
+        const queryParams = {geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, species: this.props.species};
         differentialFacetsUrlObject.query = queryParams;
         differentialResultsUrlObject.query = queryParams;
 
-        let onAjaxFailure = (jqXHR, textStatus, errorThrown) => {
+        const onAjaxFailure = (jqXHR, textStatus, errorThrown) => {
             console.log("ERROR");
             console.log("Status: " + textStatus);
             console.log("Error thrown: " + errorThrown);

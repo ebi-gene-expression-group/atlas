@@ -76,7 +76,7 @@ public class SearchController {
 
         // Matches gene set ID -> Gene set page
         // TODO We decide it’s a gene set because of how the query *looks*, and things like GO:FOOBAR will be incorrectly redirected to /genesets/GO:FOOBAR
-        if (isEmpty(conditionQuery) && GeneSetUtil.isGeneSetCategoryOrMatchesGeneSetAccession(geneQuery)) {
+        if (isEmpty(conditionQuery) && GeneSetUtil.matchesGeneSetCategoryOrGeneSetValue(geneQuery)) {
             String geneSetId = geneQuery.terms().iterator().next().value();
 
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
