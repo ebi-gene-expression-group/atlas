@@ -156,7 +156,7 @@
 //        // include tissue expressions which should be filtered out
 //        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 //
-//        BaselineExperimentSearchResult result = searchResultProducer.buildProfilesForExpressions(expressions, CELL_LINE);
+//        BaselineExperimentSearchResult result = searchResultProducer.profilesForExpressions(expressions, CELL_LINE);
 //
 //        BaselineExperimentProfilesList profiles = result.experimentProfiles;
 //        List<FactorAcrossExperiments> factors = result.factorsAcrossAllExperiments;

@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ public class BaselineExperimentSearchResultProducer {
 
     public BaselineExperimentProfilesList buildProfilesForExperiments(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
                                                                       String factorType) {
-        return trimAndSort(buildProfilesForExpressions(expressionsPerColumnPerExperiment, factorType));
+        return trimAndSort(profilesForExpressions(expressionsPerColumnPerExperiment, factorType));
     }
 
     BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
@@ -45,8 +44,8 @@ public class BaselineExperimentSearchResultProducer {
         return result;
     }
 
-    Collection<BaselineExperimentProfile> buildProfilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
-                                                               final String factorType) {
+    Collection<BaselineExperimentProfile> profilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
+                                                                 final String factorType) {
         BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
 
         for(Map.Entry<String, Map<String, Double>> e: expressionsPerColumnPerExperiment.entrySet()) {
