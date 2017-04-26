@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.bioentity.geneset.GeneSetPropertyService;
+import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 
@@ -41,6 +42,10 @@ public class GeneSetPageController extends BioentityPageController {
         ImmutableSet<String> experimentTypes =
                 analyticsSearchService.fetchExperimentTypes(
                         SemanticQuery.create(identifier), species.getReferenceName());
+
+        if (experimentTypes.isEmpty()) {
+            throw new BioentityNotFoundException("Gene set <em>" + identifier + "</em> not found.");
+        }
 
         return super.showBioentityPage(identifier, species, identifier, model, experimentTypes,
                 GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier));
