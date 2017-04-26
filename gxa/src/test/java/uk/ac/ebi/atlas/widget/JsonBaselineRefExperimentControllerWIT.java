@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
-public class JsonBaselineRefExperimentControllerIT {
+public class JsonBaselineRefExperimentControllerWIT {
 
     @Autowired
     WebApplicationContext wac;
