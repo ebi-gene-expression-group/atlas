@@ -31,7 +31,7 @@ public class IdfParser {
         for (String tsvLine[]: idfReader.readAll()) {
             if (INVESTIGATION_TITLE_ID.equalsIgnoreCase(StringUtils.trim(tsvLine[0]))) {
                 title = tsvLine[1];
-            } else if (tsvLine[0].equalsIgnoreCase(PUBMED_ID)) {
+            } else if (PUBMED_ID.equalsIgnoreCase(tsvLine[0])) {
                 for (int i = 1 ; i < tsvLine.length ; i++) {
                     if (!tsvLine[i].isEmpty()) {
                         pubmedIdsBuilder.add(tsvLine[i]);
