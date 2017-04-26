@@ -2,7 +2,10 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.*;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import java.util.*;
@@ -66,5 +69,14 @@ public class RichFactorGroup {
         }
 
         return list;
+    }
+
+    public static boolean isSubgroup(FactorGroup moreSpecificGroup, FactorGroup moreGeneralGroup){
+        for(Factor factor: moreGeneralGroup){
+            if(! moreSpecificGroup.factorOfType(factor.getType()).equals(factor)){
+                return false;
+            }
+        }
+        return true;
     }
 }

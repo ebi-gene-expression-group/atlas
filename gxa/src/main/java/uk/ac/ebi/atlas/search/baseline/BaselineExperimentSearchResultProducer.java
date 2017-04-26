@@ -1,12 +1,10 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.LinkedListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -33,13 +31,13 @@ public class BaselineExperimentSearchResultProducer {
     public BaselineExperimentSearchResult buildProfilesForExperiments(List<Map<String, Object>> response,
                                                                       String factorType) {
 
-        return buildProfilesForExpressions(extractAverageExpressionLevel(response), factorType);
+        return buildProfilesForExpressions(extractAverageExpressionForEachColumnInExperiment(response), factorType);
 
     }
 
-    static List<BaselineExperimentExpression> extractAverageExpressionLevel(List<Map<String, Object>> results) {
+    static Map<String, Map<String, Double>> extractAverageExpressionForEachColumnInExperiment(List<Map<String, Object>> results) {
 
-        ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
+        Map<String, Map<String, Double>> result = new HashMap<>();
 
         for (Map<String, Object> experiment : results) {
             String experimentAccession = (String) experiment.get("val");
@@ -58,81 +56,63 @@ public class BaselineExperimentSearchResultProducer {
                 double expression =
                         BaselineExpressionLevelRounder.round(
                                 sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
-                BaselineExperimentExpression bslnExpression =
-                        BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
-                builder.add(bslnExpression);
+                if(!result.containsKey(experimentAccession)){
+                    result.put(experimentAccession, new HashMap<String, Double>());
+                }
+                result.get(experimentAccession).put(assayGroupId, expression);
             }
         }
 
-        return builder.build();
-
-    }
-
-    private Map<String, FactorAcrossExperiments> factorsPerColumnId(BaselineExperiment experiment, String factorType) {
-        Map<String, FactorAcrossExperiments> result = new HashMap<>();
-        for(AssayGroup assayGroup: experiment.getDataColumnDescriptors()) {
-            result.put(
-                    assayGroup.getId(),
-                    new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType)));
-        }
         return result;
+
     }
 
 
-    BaselineExperimentSearchResult buildProfilesForExpressions(List<BaselineExperimentExpression> expressions,
-                                                               String factorType) {
+    BaselineExperimentSearchResult buildProfilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
+                                                               final String factorType) {
 
 
         BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
         SortedSet<FactorAcrossExperiments> resultHeaders = new TreeSet<>();
 
-        Multimap<String, BaselineExperimentExpression> expressionsPerExperiment =
-                Multimaps.index(expressions, new Function<BaselineExperimentExpression, String>() {
-                    @Override
-                    public String apply(BaselineExperimentExpression baselineExperimentExpression) {
-                        return baselineExperimentExpression.experimentAccession();
-                    }
-                });
 
-        for(String experimentAccession: expressionsPerExperiment.keySet()) {
-            BaselineExperiment experiment =
-                    (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            Map<String, FactorAcrossExperiments> columnIdsByFactorValue = factorsPerColumnId(experiment, factorType);
 
-            Multimap<FactorGroup, BaselineExperimentExpression>
-                    rowsWithExpressionAboveCutoffForThisExperiment = LinkedListMultimap.create();
+        for(Map.Entry<String, Map<String, Double>> e: expressionsPerColumnPerExperiment.entrySet()) {
+            final BaselineExperiment experiment =
+                    (BaselineExperiment) experimentTrader.getPublicExperiment(e.getKey());
+            Map<String, Double> assayGroupIdAndExpression = e.getValue();
 
-            for(BaselineExperimentExpression baselineExperimentExpression :
-                    expressionsPerExperiment.get(experimentAccession)) {
-                AssayGroup assayGroup = experiment.getDataColumnDescriptor(baselineExperimentExpression.assayGroupId());
+            final Set<String> commonFactorTypes =
+                    RichFactorGroup.typesWithCommonValues(FluentIterable.from(assayGroupIdAndExpression.keySet()).transform(new Function<String, FactorGroup>() {
+                        @Override
+                        public FactorGroup apply(String idOfAssayGroupWithExpression) {
+                            return experiment.getFactors(experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression)).withoutTypes(ImmutableList.of(factorType));
+                        }
+                    }));
 
-                rowsWithExpressionAboveCutoffForThisExperiment.put(
-                        experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType)),
-                        baselineExperimentExpression);
-            }
-            
-            Multimap<FactorGroup, BaselineExperimentExpression> rowsForThisExperimentWithAllExpressions =
-                    addExpressionsBelowCutOffToRows(
-                            rowsWithExpressionAboveCutoffForThisExperiment, factorType, experiment);
-
-            Set<String> commonFactorTypes =
-                    RichFactorGroup.typesWithCommonValues(rowsForThisExperimentWithAllExpressions.keySet());
-
-            for(Map.Entry<FactorGroup, Collection<BaselineExperimentExpression>> e:
-                    rowsForThisExperimentWithAllExpressions.asMap().entrySet()) {
-
-                BaselineExperimentProfile baselineExperimentProfile =
-                        new BaselineExperimentProfile(experiment,
-                                e.getKey().withoutTypes(commonFactorTypes));
-
-                for(BaselineExperimentExpression baselineExperimentExpression: e.getValue()){
-                    FactorAcrossExperiments f = columnIdsByFactorValue.get(baselineExperimentExpression.assayGroupId());
-                    baselineExperimentProfile.add(
-                            f, new BaselineExpression(baselineExperimentExpression.expressionLevel(), f.getId()));
-                    resultHeaders.add(f);
+            for(final FactorGroup factorGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).transform(new Function<AssayGroup, FactorGroup>() {
+                @Override
+                public FactorGroup apply(AssayGroup assayGroup) {
+                    return experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType)).withoutTypes(commonFactorTypes);
                 }
+            }).toSet()){
+                BaselineExperimentProfile baselineExperimentProfile =
+                        new BaselineExperimentProfile(experiment,factorGroup);
+                for(AssayGroup assayGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).filter(new Predicate<AssayGroup>() {
+                    @Override
+                    public boolean apply(AssayGroup assayGroup) {
+                        return RichFactorGroup.isSubgroup(experiment.getFactors(assayGroup), factorGroup);
+                    }
+                })){
+                    FactorAcrossExperiments f = new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType));
+                    baselineExperimentProfile.add(
+                            f,
+                            new BaselineExpression(Optional.fromNullable(assayGroupIdAndExpression.get(assayGroup.getId())).or(0.0d), assayGroup.getId())
+                    );
+                    resultHeaders.add(f);
 
+                }
                 resultRows.add(baselineExperimentProfile);
             }
         }
@@ -141,40 +121,6 @@ public class BaselineExperimentSearchResultProducer {
         resultRows.setTotalResultCount(resultRows.size());
 
         return new BaselineExperimentSearchResult(resultRows, ImmutableList.copyOf(resultHeaders));
-    }
-
-    private Multimap<FactorGroup, BaselineExperimentExpression> addExpressionsBelowCutOffToRows(
-            Multimap<FactorGroup, BaselineExperimentExpression> rowsWithExpressionsAboveCutoff,
-            String factorType, BaselineExperiment experiment) {
-
-        Multimap<FactorGroup, BaselineExperimentExpression>
-                rowsWithAllExpressions = LinkedListMultimap.create(rowsWithExpressionsAboveCutoff);
-
-        for (AssayGroup assayGroup :
-                removeAssayGroupsInExpressionsFromAssayGroupsInExperiment(
-                        experiment, rowsWithExpressionsAboveCutoff.values())) {
-            rowsWithAllExpressions.put(
-                    experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType)),
-                    BaselineExperimentExpression.create(experiment.getAccession(), assayGroup.getId(), 0.0D));
-        }
-
-        return rowsWithAllExpressions;
-
-    }
-
-    private Set<AssayGroup> removeAssayGroupsInExpressionsFromAssayGroupsInExperiment(
-            BaselineExperiment experiment, Collection<BaselineExperimentExpression> baselineExperimentExpressions) {
-
-        ImmutableSet<AssayGroup> allAssayGroups = ImmutableSet.copyOf(experiment.getDataColumnDescriptors());
-
-        ImmutableSet.Builder<AssayGroup>  assayGroupsInExpressions = ImmutableSet.builder();
-        for (BaselineExperimentExpression baselineExperimentExpression : baselineExperimentExpressions) {
-            assayGroupsInExpressions.add(
-                    experiment.getDataColumnDescriptor(baselineExperimentExpression.assayGroupId()));
-        }
-
-        return Sets.difference(allAssayGroups, assayGroupsInExpressions.build());
-
     }
 
 }

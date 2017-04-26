@@ -11,7 +11,9 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -35,13 +37,16 @@ public class BaselineExperimentSearchResultProducerIT {
     public void weHaveTwoColumnsCorrespondingToAdultAndFetus(){
         BaselineExperiment E_PROT_1 = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
 
-        List<BaselineExperimentExpression> fakeResults = new ArrayList<>();
+
+        Map<String, Map<String, Double>> expressionsPerColumnPerExperiment = new HashMap<>();
+
+        Map<String, Double> fakeResults = new HashMap<>();
         for(AssayGroup assayGroup: E_PROT_1.getDataColumnDescriptors()) {
-            fakeResults.add(BaselineExperimentExpression.create(E_PROT_1.getAccession(), assayGroup.getId(), Math.random()* 10000));
-
+            fakeResults.put(assayGroup.getId(), Math.random()* 10000);
         }
+        expressionsPerColumnPerExperiment.put(E_PROT_1.getAccession(), fakeResults);
 
-        BaselineExperimentSearchResult result = subject.buildProfilesForExpressions(fakeResults, "ORGANISM_PART");
+        BaselineExperimentSearchResult result = subject.buildProfilesForExpressions(expressionsPerColumnPerExperiment, "ORGANISM_PART");
         assertThat(result.getFactorsAcrossAllExperiments().size(), lessThan(E_PROT_1.getDataColumnDescriptors().size()));
         assertThat(result.getExperimentProfiles().size(), is(2));
 

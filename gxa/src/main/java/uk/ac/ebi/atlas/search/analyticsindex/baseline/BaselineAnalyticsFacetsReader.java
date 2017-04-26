@@ -1,13 +1,10 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.TreeMultimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
 import java.util.Comparator;
 import java.util.List;

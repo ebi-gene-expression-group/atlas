@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.not;
 public class RichFactorGroupTest {
 
     @Test
-    public void smallCase() throws Exception {
+    public void smallCase()  {
         FactorGroup fg1 = new FactorSet().add(new Factor("T1", "v1"));
         FactorGroup fg2 = new FactorSet().add(new Factor("T1", "v2"));
 
@@ -35,7 +35,7 @@ public class RichFactorGroupTest {
     }
 
     @Test
-    public void twoFactorCase() throws Exception {
+    public void twoFactorCase()  {
         FactorGroup fg1 = new FactorSet().add(new Factor("T1", "v1")).add(new Factor("T2", "v2"));
         FactorGroup fg2 = new FactorSet().add(new Factor("T1", "v1")).add(new Factor("T2", "v3"));
 
@@ -47,7 +47,7 @@ public class RichFactorGroupTest {
     }
 
     @Test
-    public void factorTypesMustBeNormalized() throws Exception {
+    public void factorTypesMustBeNormalized()  {
         FactorGroup fg1 = new FactorSet().add(new Factor("type 1", "v1")).add(new Factor("type 2", "v2"));
         FactorGroup fg2 = new FactorSet().add(new Factor("type 1", "v1")).add(new Factor("type 2", "v3"));
 
@@ -57,6 +57,22 @@ public class RichFactorGroupTest {
         assertThat(RichFactorGroup.filterOutTypesWithCommonValues(
                 ImmutableList.of(Factor.normalize("type 1"), Factor.normalize("type 2")), ImmutableList.of(fg1, fg2)),
                 is((List<String>)ImmutableList.of(Factor.normalize("type 2"))));
+
+    }
+    
+    
+    @Test
+    public void isSubgroup() {
+        FactorGroup generalGroup = new FactorSet().add(new Factor("T1", "v1"));
+        FactorGroup moreSpecificGroup = new FactorSet().add(new Factor("T1", "v1")).add(new Factor("T2", "v2"));
+        FactorGroup differentSpecificGroup = new FactorSet().add(new Factor("T1", "different value")).add(new Factor("T2", "v2"));
+
+        assertThat(RichFactorGroup.isSubgroup(moreSpecificGroup, generalGroup), is(true));
+        assertThat(RichFactorGroup.isSubgroup(differentSpecificGroup, generalGroup), is(false));
+
+        assertThat(RichFactorGroup.isSubgroup(generalGroup, generalGroup), is(true));
+        assertThat(RichFactorGroup.isSubgroup(moreSpecificGroup, new FactorSet()), is(true));
+        assertThat(RichFactorGroup.isSubgroup(differentSpecificGroup, new FactorSet()), is(true));
 
     }
 }
