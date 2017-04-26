@@ -28,7 +28,7 @@
                         <form:options items="${organisms}" />
                     </form:select>
                 </div>
-                <div class="small-12 medium-4 large-5 columns">
+                <div id="sample-properties-section" class="small-12 medium-4 large-5 columns">
                     <div class="row column">
                         <label>Sample properties</label>
                         <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />

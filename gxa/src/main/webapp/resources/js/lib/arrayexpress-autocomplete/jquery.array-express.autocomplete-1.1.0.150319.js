@@ -13,6 +13,8 @@
 
 (function($) {
 
+var parentInputId = '#sample-properties-section .json-tag-editor';
+
 $.fn.extend({
 	arrayExpressAutocomplete: function(options) {
 		var urlOrData = options.urlOrData;
@@ -133,7 +135,20 @@ $.Autocompleter = function(input, options) {
                         input.click();
                     }
 					else {
-						hideResultsNow();
+						// hideResultsNow();
+                        if( selectCurrent() ) {
+                            // stop default to prevent a form submit, Opera needs special handling
+                            event.preventDefault();
+                            blockSubmit = true;
+
+                            select.expandTree() ? config.isTreeControlHit = true : config.isTreeControlHit = false;
+                            input.click();
+
+                            ed = $(parentInputId);
+                            ed.click();
+
+                            return false;
+                        }
 					}
 				}
 				break;
@@ -166,7 +181,7 @@ $.Autocompleter = function(input, options) {
                     select.expandTree() ? config.isTreeControlHit = true : config.isTreeControlHit = false;
                     input.click();
 
-                    ed = $('#conditionSection .json-tag-editor');
+                    ed = $(parentInputId);
                     ed.click();
 
 					return false;
@@ -199,7 +214,7 @@ $.Autocompleter = function(input, options) {
             onChange(0, true);
         }
 
-        ed = $('#conditionSection .json-tag-editor');
+        ed = $(parentInputId);
 
 		if(!config.isTreeControlHit) {
             ed.trigger('onTreeNoExpansionHit');
@@ -239,9 +254,9 @@ $.Autocompleter = function(input, options) {
 		$(input.form).unbind(".arrayExpressAutocomplete");
 	});
 
-    ed = $('#conditionSection .json-tag-editor');
+    ed = $(parentInputId);
     ed.on('onBlurHideResults', function (e) {
-        if (!config.mouseDownOnSelect && !config.isTreeControlHit) {
+        if (!config.mouseDownOnSelect) {
             hideResults();
         }
     });

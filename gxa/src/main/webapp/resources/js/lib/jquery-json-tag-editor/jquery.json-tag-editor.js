@@ -420,6 +420,15 @@
                 updateGlobals();
             }
 
+            // Events emitted by ArrayExpress Autocomplete
+            var isTreeExpansionHit = false;
+            ed.on('onTreeExpansionHit', function (e) {
+                isTreeExpansionHit = true;
+            });
+            ed.on('onTreeNoExpansionHit', function (e) {
+                isTreeExpansionHit = false;
+            });
+
             ed.on('blur', 'input', function(e) {
                 e.stopPropagation();
 
@@ -464,6 +473,9 @@
                         }
                     }
                 }
+
+                // Emit event to hide ArrayExpress Autocomplete
+                ed.trigger('onBlurHideResults');
 
                 // Replace <input> with its escaped value. E.g.:
                 // <div class="json-tag-editor-tag"><input value="tag < text"></div>  -->  <div class="json-tag-editor-tag">tag &lt; text</div>
@@ -537,7 +549,7 @@
                     if (nextTag.length) {
                         nextTag.click().find('input').caret(0);
                     }
-                    else if ($this.val()) {
+                    else if ($this.val() && !isTreeExpansionHit) {
                         ed.click();
                     }
 
