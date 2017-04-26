@@ -4,30 +4,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 
 import javax.inject.Inject;
-import java.io.IOException;
 
 @Controller
 @Scope("request")
 @RequestMapping("/admin/species")
 public class SpeciesAdminController extends JsonExceptionHandlingController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpeciesAdminController.class);
 
     private static final String HELP_MESSAGE =
             "Species admin - list of operations\n" +

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentimport;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
@@ -20,11 +19,10 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /*
  * Responsible for:
