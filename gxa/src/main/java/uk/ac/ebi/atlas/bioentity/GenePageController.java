@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.species.Species;
@@ -22,7 +21,7 @@ import java.util.Set;
 @Scope("request")
 public class GenePageController extends BioentityPageController {
 
-    @RequestMapping(value = "/genes/{identifier:.*}")
+    @RequestMapping(value = "/genes/{identifier:.*}", produces = "text/html;charset=UTF-8")
     public String showGenePage(@PathVariable String identifier, Model model) {
         if(identifier.toUpperCase().startsWith("MGI")){
             Set<String> correspondingEnsemblIdentifiers = bioentityPropertyDao.fetchGeneIdsForPropertyValue

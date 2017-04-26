@@ -29,7 +29,7 @@ public class GeneSetPageController extends BioentityPageController {
         this.geneSetPropertyService = geneSetPropertyService;
     }
 
-    @RequestMapping(value = "/genesets/{identifier:.*}")
+    @RequestMapping(value = "/genesets/{identifier:.*}", produces = "text/html;charset=UTF-8")
     public String showGeneSetPage(@PathVariable String identifier,
                                   @RequestParam(value = "organism", required = false) String speciesString,
                                   Model model) {
