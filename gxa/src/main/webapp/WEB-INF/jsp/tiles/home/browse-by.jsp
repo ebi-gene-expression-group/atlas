@@ -17,7 +17,7 @@
 
     <div class="row align-row-to-bottom">
         <div class="small-6 small-centered columns margin-top-large">
-            <a href='${pageContext.request.contextPath}/experiments' class="button float-center">View all species</a>
+            <a id="viewAllLink" href='${pageContext.request.contextPath}/experiments' class="button float-center">View all species</a>
         </div>
     </div>
 </div>
@@ -26,6 +26,24 @@
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/expressionAtlasBrowseBySpecies.bundle.js"></script>
 
 <script>
+    var $viewAllLink = $('#viewAllLink');
+    $('#browse-by-tabs').on('change.zf.tabs', function() {
+        switch ($('#browse-by-tabs .tabs-title.is-active').text()) {
+            case 'Animals':
+                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=animals');
+                break;
+            case 'Plants':
+                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=plants');
+                break;
+            case 'Fungi':
+                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments?kingdom=fungi');
+                break;
+            default:
+                $viewAllLink.attr('href','${pageContext.request.contextPath}/experiments');
+                break;
+        }
+    });
+
     expressionAtlasBrowseBySpecies.render({
         atlasUrl: "${pageContext.request.contextPath}/",
         speciesInfoList: ${speciesList},
