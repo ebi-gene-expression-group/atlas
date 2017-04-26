@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
@@ -52,7 +54,11 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     }
 
     public int getSpecificity() {
-        return expressionsByCondition.size();
+        return FluentIterable.from(expressionsByCondition.values()).filter(new Predicate<Expr>() {
+            public boolean apply(Expr expr) {
+                return expr.getLevel() != 0;
+            }
+        }).size();
     }
 
     @Nullable

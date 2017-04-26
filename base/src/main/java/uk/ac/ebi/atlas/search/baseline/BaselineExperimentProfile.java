@@ -45,7 +45,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
     public int compareTo(BaselineExperimentProfile other) {
         return ComparisonChain.start()
                 .compareFalseFirst(other.experimentType.isRnaSeqBaseline(),this.experimentType.isRnaSeqBaseline())
-                .compare(other.expressionsByCondition.size(), this.expressionsByCondition.size())
+                .compare(other.getSpecificity(), this.getSpecificity())
                 .compare(other.getName(), this.getName())
                 .result();
     }
