@@ -2,20 +2,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <ul class="tabs" data-tabs id="search-tabs">
-    <li class="tabs-title is-active"><a href="#search-atlas" aria-selected="true">Search Expression Atlas</a></li>
+    <li class="tabs-title is-active"><a href="#search-atlas" aria-selected="true">Search</a></li>
     <li class="tabs-title"><a href="#search-gene-set-enrichment">Gene set enrichment</a></li>
 </ul>
 
 <div class="tabs-content" data-tabs-content="search-tabs">
     <div class="tabs-panel is-active " id="search-atlas" style="background-color: #e6e6e6;">
-        <!-- Grid Example -->
         <form method="get" action="${pageContext.request.contextPath}/search" id="home-search-atlas-form">
             <div class="row">
-                <div class="small-5 columns">
-                    <label>Gene / Gene properties</label>
-                    <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query" name="geneQuery"/>
+                <div class="small-12 medium-4 large-5 columns">
+                    <div class="row column">
+                        <label>Gene / Gene properties</label>
+                        <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query" name="geneQuery"/>
+                    </div>
+                    <div class="row column small">
+                        Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+                    </div>
                 </div>
-                <div class="small-2 columns">
+                <div class="small-12 medium-4 large-2 columns">
                     <label>Organism</label>
                     <form:select id="organism" name="organism" path="organismPath">
                         <form:options items="${topSixByExperimentCount}"/>
@@ -23,20 +28,17 @@
                         <form:options items="${organisms}" />
                     </form:select>
                 </div>
-                <div class="small-5 columns">
-                    <label>Sample properties</label>
-                    <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="small-12 columns small">
-                    Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-                    <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
-                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
-                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
-                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
-                    <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
+                <div class="small-12 medium-4 large-5 columns">
+                    <div class="row column">
+                        <label>Sample properties</label>
+                        <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />
+                    </div>
+                    <div class="row column small margin-top-small">
+                        Examples: <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
+                        <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
+                        <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
+                        <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
+                    </div>
                 </div>
             </div>
 
