@@ -27,6 +27,15 @@ public abstract class HtmlExceptionHandlingController {
         return mav;
     }
 
+    @ExceptionHandler(value = {UnparseableSemanticQueryException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ModelAndView handleBadJsonException(Exception e) {
+        ModelAndView mav = new ModelAndView("error-page");
+        mav.addObject("exceptionMessage", e.getMessage());
+        return mav;
+    }
+
+
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {

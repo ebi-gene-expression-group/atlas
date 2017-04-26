@@ -1,8 +1,10 @@
 package uk.ac.ebi.atlas.search;
 
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.ac.ebi.atlas.controllers.UnparseableSemanticQueryException;
 
 import java.beans.PropertyEditorSupport;
 import java.io.UnsupportedEncodingException;
@@ -15,9 +17,9 @@ public class SemanticQueryPropertyEditor extends PropertyEditorSupport {
     public void setAsText(String text)  {
         try {
             setValue(SemanticQuery.fromUrlEncodedJson(text));
-        } catch (UnsupportedEncodingException | MalformedJsonException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException | MalformedJsonException | JsonSyntaxException e) {
+            LOGGER.warn(e.getMessage(), e);
+            throw new UnparseableSemanticQueryException("Your query <em>" + text + "</em> could not be understood. It should be a JSON-formatted query or a plain text string.");
         }
     }
 

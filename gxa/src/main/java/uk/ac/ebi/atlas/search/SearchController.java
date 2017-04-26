@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.geneset.GeneSetUtil;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
@@ -32,7 +33,7 @@ import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
 
 @Controller
 @Scope("prototype")
-public class SearchController {
+public class SearchController extends HtmlExceptionHandlingController {
 
     @Autowired
     private Environment env;
