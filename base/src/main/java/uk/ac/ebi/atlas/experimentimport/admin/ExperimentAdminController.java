@@ -5,7 +5,10 @@ import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
 import java.util.ArrayList;
@@ -33,16 +36,23 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
     }
 
     @RequestMapping(
-            value = "/{accessions}",
-            method = RequestMethod.GET,
-            produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String listExperiments(@PathVariable("accessions") String accessions) {
-        if(accessions.equalsIgnoreCase("help")){
-            return helpPage.getMessage();
+            value = "/{accessionsOrCryForHelp}",
+            method = RequestMethod.GET)
+    public String listExperiments(@PathVariable("accessionsOrCryForHelp") String accessionsOrCryForHelp) {
+        if("help".equalsIgnoreCase(accessionsOrCryForHelp)) {
+            return "forward:/admin/experiments/help";
         } else {
-            return doOp(accessions, "list");
+            return "forward:/admin/experiments/" + accessionsOrCryForHelp + "/list";
         }
+    }
+
+    @RequestMapping(
+            value = "/help",
+            method = RequestMethod.GET,
+            produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String help() {
+        return helpPage.getMessage();
     }
 
     @RequestMapping(
