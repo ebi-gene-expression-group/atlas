@@ -2,16 +2,10 @@ package uk.ac.ebi.atlas.bioentity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -27,19 +21,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class BioentityPageController {
-
-    @Autowired
-    private Environment env;
+public abstract class BioentityPageController extends HtmlExceptionHandlingController {
 
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+    private BioEntityPropertyService bioEntityPropertyService;
 
+    protected SpeciesFactory speciesFactory;
     protected AnalyticsSearchService analyticsSearchService;
-    protected BioEntityPropertyService bioEntityPropertyService;
     protected SpeciesLookupService speciesLookupService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     protected BioEntityPropertyDao bioentityPropertyDao;
-    protected SpeciesFactory speciesFactory;
 
     @Inject
     public void setAnalyticsSearchService(AnalyticsSearchService analyticsSearchService) {
@@ -114,12 +105,4 @@ public abstract class BioentityPageController {
 
     protected abstract Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName);
 
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("error-page");
-        mav.addObject("exceptionMessage", e.getMessage());
-        return mav;
-    }
 }

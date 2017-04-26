@@ -4,16 +4,12 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
@@ -30,7 +26,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 @Controller
-public class ExperimentController extends ExperimentPageController {
+public class ExperimentController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
     private final ApplicationProperties applicationProperties;

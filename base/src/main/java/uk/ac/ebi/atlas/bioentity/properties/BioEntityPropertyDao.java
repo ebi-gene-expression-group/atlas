@@ -4,7 +4,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.BioentityType;
-import uk.ac.ebi.atlas.solr.query.BioentityNotFoundException;
+import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 
 import javax.inject.Inject;
@@ -45,7 +45,7 @@ public class BioEntityPropertyDao {
     public Map<BioentityPropertyName, Set<String>> fetchGenePageProperties(String identifier) {
         Map<BioentityPropertyName, Set<String>> propertiesByName = solrClient.getMap(identifier, BioEntityCardProperties.bioentityPropertyNames);
         if (propertiesByName.isEmpty()) {
-            throw new BioentityNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
+            throw new BioentityNotFoundException("Gene/protein <em>" + identifier + "</em> not found.");
         }
         return propertiesByName;
     }
