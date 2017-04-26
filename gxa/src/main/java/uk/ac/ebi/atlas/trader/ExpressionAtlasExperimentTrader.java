@@ -62,11 +62,11 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
             return getExperimentFromCache(experimentAccession, experimentType);
         } catch (ExecutionException e) {
             LOGGER.error(e.getMessage());
-            throw new ResourceNotFoundException("Failed to load " + experimentAccession);
+            throw new ResourceNotFoundException("Failed to load <em>" + experimentAccession + "</em>.");
         }
         catch (UncheckedExecutionException | NullPointerException e) {
             LOGGER.error(e.getMessage());
-            throw new ResourceNotFoundException("Experiment " + experimentAccession + " not found");
+            throw new ResourceNotFoundException("Experiment <em>" + experimentAccession + "</em> not found.");
         }
     }
 
