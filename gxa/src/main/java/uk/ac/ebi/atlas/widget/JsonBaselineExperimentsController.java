@@ -88,14 +88,14 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             source = species.getDefaultQueryFactorType();
         }
 
-        BaselineExperimentSearchResult searchResult =
+        BaselineExperimentProfilesList experimentProfiles =
                 baselineAnalyticsSearchService.findExpressions(geneQuery, conditionQuery, species, source);
 
         model.addAttribute("geneQuery", geneQuery.toUrlEncodedJson());
         model.addAttribute("conditionQuery", conditionQuery.toUrlEncodedJson());
 
         JsonObject result = new JsonObject();
-        List<FactorAcrossExperiments> dataColumns = searchResult.getFactorsAcrossAllExperiments();
+        List<FactorAcrossExperiments> dataColumns = experimentProfiles.getFactorsAcrossExperiments();
 
         result.add(
                 "anatomogram",
@@ -112,8 +112,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                         )
                 ).or(JsonNull.INSTANCE)
         );
-
-        BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
 
         if(!experimentProfiles.isEmpty()){
             result.add("columnHeaders", constructColumnHeaders(dataColumns));

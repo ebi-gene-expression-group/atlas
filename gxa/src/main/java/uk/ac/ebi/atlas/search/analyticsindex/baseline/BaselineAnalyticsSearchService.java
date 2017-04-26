@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultProducer;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -27,17 +27,14 @@ public class BaselineAnalyticsSearchService {
         this.baselineExperimentSearchResultProducer = new BaselineExperimentSearchResultProducer(experimentTrader);
     }
 
-    public BaselineExperimentSearchResult findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,
+    public BaselineExperimentProfilesList findExpressions(SemanticQuery geneQuery, SemanticQuery conditionQuery,
                                                           Species species, String queryFactorTypeOrBlank) {
         String queryFactorType = isBlank(queryFactorTypeOrBlank) ?
                 species.getDefaultQueryFactorType() :
                 queryFactorTypeOrBlank.toUpperCase();
 
-        List<Map<String, Object>> response =
-                baselineAnalyticsSearchDao.
-                        fetchExpressionLevelFaceted(geneQuery, conditionQuery, species.getReferenceName(), queryFactorType);
-
-        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(response, queryFactorType);
+        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(baselineAnalyticsSearchDao.
+                fetchExpressionLevels(geneQuery, conditionQuery, species.getReferenceName(), queryFactorType), queryFactorType);
     }
 
     public JsonObject findFacetsForTreeSearch(SemanticQuery geneQuery, Species species) {

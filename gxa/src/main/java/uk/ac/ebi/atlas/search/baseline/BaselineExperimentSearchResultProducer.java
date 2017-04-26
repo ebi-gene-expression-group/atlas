@@ -28,55 +28,26 @@ public class BaselineExperimentSearchResultProducer {
         this.experimentTrader = experimentTrader;
     }
 
-    public BaselineExperimentSearchResult buildProfilesForExperiments(List<Map<String, Object>> response,
+    public BaselineExperimentProfilesList buildProfilesForExperiments(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
                                                                       String factorType) {
-
-        return buildProfilesForExpressions(extractAverageExpressionForEachColumnInExperiment(response), factorType);
-
+        return trimAndSort(buildProfilesForExpressions(expressionsPerColumnPerExperiment, factorType));
     }
 
-    static Map<String, Map<String, Double>> extractAverageExpressionForEachColumnInExperiment(List<Map<String, Object>> results) {
-
-        Map<String, Map<String, Double>> result = new HashMap<>();
-
-        for (Map<String, Object> experiment : results) {
-            String experimentAccession = (String) experiment.get("val");
-            int numberOfGenesExpressedAcrossAllAssayGroups = (int) experiment.get("uniqueIdentifiers");
-
-            @SuppressWarnings("unchecked")
-            Map<String, Object> assayGroupIdRoot = (Map<String, Object>) experiment.get("assayGroupId");
-            @SuppressWarnings("unchecked")
-            List<Map<String, Object>> buckets = (List<Map<String, Object>>) assayGroupIdRoot.get("buckets");
-
-            for(Map<String, Object> assayGroup : buckets)  {
-                String assayGroupId = (String) assayGroup.get("val");
-                double sumExpressionLevel;
-                sumExpressionLevel = ((Number) assayGroup.get("sumExpressionLevel")).doubleValue();
-
-                double expression =
-                        BaselineExpressionLevelRounder.round(
-                                sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
-
-                if(!result.containsKey(experimentAccession)){
-                    result.put(experimentAccession, new HashMap<String, Double>());
-                }
-                result.get(experimentAccession).put(assayGroupId, expression);
-            }
+    BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
+        BaselineExperimentProfilesList result = new BaselineExperimentProfilesList();
+        for(BaselineExperimentProfile profile: profiles){
+            //if(!profile.hasAllExpressionsEqualZero()){
+                result.add(profile);
+            //}
         }
-
+        Collections.sort(result);
+        result.setTotalResultCount(result.size());
         return result;
-
     }
 
-
-    BaselineExperimentSearchResult buildProfilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
+    Collection<BaselineExperimentProfile> buildProfilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
                                                                final String factorType) {
-
-
         BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
-        SortedSet<FactorAcrossExperiments> resultHeaders = new TreeSet<>();
-
-
 
         for(Map.Entry<String, Map<String, Double>> e: expressionsPerColumnPerExperiment.entrySet()) {
             final BaselineExperiment experiment =
@@ -105,22 +76,14 @@ public class BaselineExperimentSearchResultProducer {
                         return RichFactorGroup.isSubgroup(experiment.getFactors(assayGroup), factorGroup);
                     }
                 })){
-                    FactorAcrossExperiments f = new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType));
                     baselineExperimentProfile.add(
-                            f,
+                            new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType)),
                             new BaselineExpression(Optional.fromNullable(assayGroupIdAndExpression.get(assayGroup.getId())).or(0.0d), assayGroup.getId())
                     );
-                    resultHeaders.add(f);
-
                 }
                 resultRows.add(baselineExperimentProfile);
             }
         }
-
-        Collections.sort(resultRows);
-        resultRows.setTotalResultCount(resultRows.size());
-
-        return new BaselineExperimentSearchResult(resultRows, ImmutableList.copyOf(resultHeaders));
+        return resultRows;
     }
-
 }

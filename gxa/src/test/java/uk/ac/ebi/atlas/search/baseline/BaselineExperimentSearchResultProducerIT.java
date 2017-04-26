@@ -46,9 +46,9 @@ public class BaselineExperimentSearchResultProducerIT {
         }
         expressionsPerColumnPerExperiment.put(E_PROT_1.getAccession(), fakeResults);
 
-        BaselineExperimentSearchResult result = subject.buildProfilesForExpressions(expressionsPerColumnPerExperiment, "ORGANISM_PART");
-        assertThat(result.getFactorsAcrossAllExperiments().size(), lessThan(E_PROT_1.getDataColumnDescriptors().size()));
-        assertThat(result.getExperimentProfiles().size(), is(2));
+        BaselineExperimentProfilesList result = subject.buildProfilesForExperiments(expressionsPerColumnPerExperiment, "ORGANISM_PART");
+        assertThat(result.getFactorsAcrossExperiments().size(), lessThan(E_PROT_1.getDataColumnDescriptors().size()));
+        assertThat(result.size(), is(2));
 
     }
 }
