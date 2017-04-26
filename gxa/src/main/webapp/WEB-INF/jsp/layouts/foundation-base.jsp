@@ -72,6 +72,7 @@
     <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
     <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 </head>
 
 <body class="level2 full-width">
