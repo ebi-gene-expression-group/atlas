@@ -16,6 +16,10 @@
     background: #e6e6e6;
 }
 
+h2 {
+    color: rgb(0,124,130);
+}
+
 .button.primary:hover,
 .button.primary:focus,
 .button.hover,

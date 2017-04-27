@@ -1,13 +1,11 @@
 <section>
     <div class="columns small-10">
 
-        <h3>Frequently Asked Questions</h3>
+        <h2>Frequently Asked Questions</h2>
 
         <!-- Beginning of main text section -->
-        <div class="grid_18">
-
-            <h4><a name="general">General questions</a></h4>
-
+        <div>
+            <h3><a name="general">General questions</a></h3><br>
             <h5><a name="whatIsAtlas">What is Expression Atlas</a></h5>
             <p>Expression Atlas is a resource to query gene and protein expression data across species and biological conditions and to visualise down-stream analysis results to explore co-expression. Queries can be either in a <strong>baseline context</strong>, e.g. <a href="https://www.ebi.ac.uk/gxa/query?geneQuery=%5B%5D&organism=Macaca%20mulatta&conditionQuery=%5B%7B%22value%22%3A%22brain%22%7D%5D&bs=%7B%22macaca%20mulatta%22%3A%5B%22organism_part%22%5D%7D#baseline">find genes expressed in the macaque brain</a>, or in a <strong>differential context</strong>, e.g. <a href="https://www.ebi.ac.uk/gxa/query?geneQuery=%5B%5D&organism=Arabidopsis%20thaliana&conditionQuery=%5B%7B%22value%22%3A%22auxin%22%7D%5D&ds=%7B%22kingdom%22%3A%5B%22plants%22%5D%7D#differential">find genes that are up or downregulated in response to auxin in Arabidopsis</a>. Expression Atlas contains thousands of selected microarray and RNA-sequencing data that are manually curated and annotated with ontology terms, checked for high quality and re-analysed using standardised methods.</p>
 
@@ -66,7 +64,7 @@
             <p>Yes! The anatomical diagrams (anatomograms) that you see alongside the baseline data are available from <a href="https://github.com/gxa/anatomogram/">GitHub</a>. The anatomograms are licenced under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution (CC BY)</a>; if you'd like to use them, all we ask is that you attribute <a href="https://www.ebi.ac.uk/gxa">Expression Atlas</a> when you do.</p>
 
 
-            <h4><a name="searching">Searching</a></h4>
+            <h3><a name="searching">Searching</a></h3><br>
 
 
             <h5><a name="conditionSearch">How do I find out what genes are expressed in a particular condition (e.g. in my favourite tissue, cell line, developmental stage)?</a></h5>
@@ -135,10 +133,7 @@
             </table>
             <p></p>
 
-
-
-
-            <h4><a name="results">Results</a></h4>
+            <h3><a name="results">Results</a></h3><br/>
 
 
             <h5><a name="blResults">When I search in Expression Atlas, what do the Baseline Expression results show?</a></h5>
@@ -166,7 +161,7 @@
             <p>Expression levels are displayed in the heatmap by colour intensity, according to the gradient bar above the heatmap. Click on the <img alt="DisplayLevels button" src="resources/images/help/displayLevels_btn.png" align="bottom"> button in the top left corner of the heatmap to show the numerical values corresponding to each colour.</p>
 
 
-            <h3><a name="blDownloadAnalytics">Can I download the baseline expression results?</a></h3>
+            <h5><a name="blDownloadAnalytics">Can I download the baseline expression results?</a></h5>
             <p>Yes, click on the <img alt="Download All Results button" src="resources/images/help/downloadAllResults_btn.png" align="bottom"> button above the heatmap to download the data corresponding to your query. For example, if you select 'flower' in the <strong>Organism part</strong> box, use the <strong>Download all results</strong> button to download expression data for the <a href="https://www.ebi.ac.uk/gxa/experiments/E-MTAB-552?accessKey=&serializedFilterFactors=&queryFactorType=ORGANISM_PART&rootContext=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=%5B%7B%22value%22%3A%22protein_coding%22%2C%22category%22%3A%22gene_biotype%22%7D%5D&queryFactorValues=flower&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5">subset of genes specifically expressed in flower</a> in tab-delimited format with no ordering.</p>
             <p>On the other hand, by clicking on the <img alt="Download button" src="resources/images/help/download_button.png" align="bottom"> button in the top left corner of the Experiment page you will download expression data for all genes and all conditions studied in the experiment.</p>
 
@@ -202,7 +197,7 @@
             <p>The two bars above the Differential expression results table show the red and blue colour intensities for the <strong>top 50</strong> genes shown on the page. The colour intensities represent the log<sub>2</sub> fold-changes for the genes shown.</p>
 
 
-            <h3><a name="displayLogFoldChanges">How do I see the actual log<sub>2</sub> fold-changes in the Differential expression results table?</a></h3>
+            <h5><a name="displayLogFoldChanges">How do I see the actual log<sub>2</sub> fold-changes in the Differential expression results table?</a></h5>
             <p>Click on the <img alt="Display Log2 Fold-Change button" src="resources/images/help/displayLog2FC_btn.png" align="bottom"> button to the top left corner of the table to see the numerical values of the log<sub>2</sub> fold-change per each gene in each comparison.</p>
 
 
@@ -227,7 +222,7 @@
 <!-- End of main text section -->
 
 <!-- This part is for the navigation section at the right-hand side -->
-<aside class="grid_6">
+<aside>
     <h4>Jump to...</h4>
     <h5><a href="FAQ.html#general">General</a></h5>
     <ul>
