@@ -35,4 +35,10 @@
     <tiles:insertAttribute name="news"/>
 </div>
 
+<script>
+    /* This is to prevent overlapping between boxes in home page */
+    $(document).ready(function() {
+        Foundation.reInit('equalizer');
+    });
+</script>
 

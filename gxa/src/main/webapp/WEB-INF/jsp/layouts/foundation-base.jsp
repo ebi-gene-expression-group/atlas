@@ -142,12 +142,6 @@
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 
-<script>
-    /* This is to prevent overlapping between boxes in home page */
-    $(window).load(function(){
-        Foundation.reInit('equalizer');
-    });
-</script>
 
 <script>
     geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, 'Enter gene query...');
