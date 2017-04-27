@@ -13,16 +13,15 @@ import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
-@Named
 public class BaselineExperimentSearchResultProducer {
 
     private final ExperimentTrader experimentTrader;
 
-    @Inject
     public BaselineExperimentSearchResultProducer(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,12 +24,15 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
 public class BaselineExperimentSearchResultProducerIT {
 
-
-    @Inject
     BaselineExperimentSearchResultProducer subject;
 
     @Inject
     ExperimentTrader experimentTrader;
+
+    @Before
+    public void setUp(){
+        subject = new BaselineExperimentSearchResultProducer(experimentTrader);
+    }
 
 
     @Test
