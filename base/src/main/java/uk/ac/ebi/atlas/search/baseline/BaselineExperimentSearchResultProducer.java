@@ -35,9 +35,9 @@ public class BaselineExperimentSearchResultProducer {
     BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
         BaselineExperimentProfilesList result = new BaselineExperimentProfilesList();
         for(BaselineExperimentProfile profile: profiles){
-            //if(!profile.hasAllExpressionsEqualZero()){
+            if(!profile.hasAllExpressionsEqualZero()){
                 result.add(profile);
-            //}
+            }
         }
         Collections.sort(result);
         result.setTotalResultCount(result.size());
