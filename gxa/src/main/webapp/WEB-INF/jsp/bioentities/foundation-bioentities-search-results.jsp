@@ -17,7 +17,7 @@
 </section>
 
 <section class="gxaSection">
-    <ul class="tabs" data-tabs role="tablist" id="experiments-tabs">
+    <ul class="tabs" data-tabs role="tablist" data-deep-link="true" id="experiments-tabs">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" class="tabs-title is-active" role="presentation">
             <a href="${requestScope['javax.servlet.forward.request_uri']}#base" role="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
         <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="tabs-title" role="presentation">Baseline expression</li></c:if>
@@ -42,49 +42,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 <script>
+    $(document).ready(function() {
+        var hasBaselineResults = ${hasBaselineResults},
+            hasDifferentialResults = ${hasDifferentialResults};
 
-    var hasBaselineResults = ${hasBaselineResults},
-        hasDifferentialResults = ${hasDifferentialResults};
+        var $baselineTabLink = $("#baselineTabLink"),
+            $differentialTabLink = $("#differentialTabLink");
 
-    var $baselineTabLink = $("#baselineTabLink"),
-        $differentialTabLink = $("#differentialTabLink");
+        $baselineTabLink.click(function() {
+            $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
+            window.location.hash = "#baseline";
+        });
+        $differentialTabLink.click(function() {
+            $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
+            window.location.hash = "#differential";
+        });
 
-    $baselineTabLink.click(function() {
-        $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
-        window.location.hash = "#baseline";
-    });
-    $differentialTabLink.click(function() {
-        $(".gxaContrastTooltip").add(".gxaWebpackHelpTooltip").remove();
-        window.location.hash = "#differential";
-    });
+        setInitialHash();
+        showTabOnHash();
 
-    setInitialHash();
-    showTabOnHash();
+        window.addEventListener("popstate", showTabOnHash);
 
-    window.addEventListener("popstate", showTabOnHash);
-
-    function showTabOnHash() {
-//        if (window.location.hash === "#baseline") {
-//            $baselineTabLink.tab("show");
-//        } else  {
-//            $differentialTabLink.tab("show");
-//        }
-    }
-
-    function setInitialHash() {
-        if (window.location.hash != "#differential" && window.location.hash != "#information") {
-            var hash;
-
-            if (hasBaselineResults) {
-                hash = "#baseline";
+        function showTabOnHash() {
+            if (window.location.hash === "#baseline") {
+                $('#experiments-tabs').foundation('selectTab', '${requestScope['javax.servlet.forward.request_uri']}#base');
+            } else {
+                $('#experiments-tabs').foundation('selectTab', '${requestScope['javax.servlet.forward.request_uri']}#diff');
             }
-            else if (hasDifferentialResults) {
-                hash = "#differential";
-            }
-
-            var newURL = new URI(window.location).hash(hash);
-            history.replaceState(null, "", newURL);
         }
-    }
+
+        function setInitialHash() {
+            if (window.location.hash != "#differential" && window.location.hash != "#information") {
+                var hash;
+
+                if (hasBaselineResults) {
+                    hash = "#baseline";
+                }
+                else if (hasDifferentialResults) {
+                    hash = "#differential";
+                }
+
+                var newURL = new URI(window.location).hash(hash);
+                history.replaceState(null, "", newURL);
+            }
+        }
+    });
 
 </script>
