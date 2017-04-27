@@ -482,7 +482,7 @@
                 var $tagEditorTag = input.parent(),
                     tagObject = validate(tag);
 
-                if (tagObject) {
+                if (tagObject && !isTreeExpansionHit) {
                     var tagProperties = Object.keys(tagObject);
                     for (var i = 0 ; i < tagProperties.length ; i++) {
                         $tagEditorTag.get(0).dataset[tagProperties[i]] = tagObject[tagProperties[i]];

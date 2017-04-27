@@ -215,7 +215,6 @@ $.Autocompleter = function(input, options) {
         }
 
         ed = $(parentInputId);
-
 		if(!config.isTreeControlHit) {
             ed.trigger('onTreeNoExpansionHit');
         } else {
@@ -256,8 +255,11 @@ $.Autocompleter = function(input, options) {
 
     ed = $(parentInputId);
     ed.on('onBlurHideResults', function (e) {
+        hasFocus = 0;
+        config.isTreeControlHit = false;
         if (!config.mouseDownOnSelect) {
             hideResults();
+            select.collapseTree();
         }
     });
 
@@ -486,7 +488,7 @@ $.Autocompleter = function(input, options) {
     }
 
 	function hideResults() {
-		clearTimeout(timeout);
+        clearTimeout(timeout);
 		timeout = setTimeout(hideResultsNow, 200);
 	}
 
