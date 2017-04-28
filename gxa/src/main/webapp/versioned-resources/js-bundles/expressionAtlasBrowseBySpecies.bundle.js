@@ -170,21 +170,21 @@ webpackJsonp_name_([4],{
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	                'a',
-	                { href: differentialExperimentsUrl, className: 'differential' },
+	                { href: baselineExperimentsUrl, className: 'baseline' },
 	                _react2.default.createElement(
 	                    'span',
-	                    { 'data-tooltip': true, className: 'differential tiny button-rd', title: 'Differential experiments' },
-	                    'D'
+	                    { 'data-tooltip': true, className: 'baseline tiny button-rd', title: 'Baseline experiments' },
+	                    'B'
 	                ),
 	                props.baselineExperiments
 	            ),
 	            _react2.default.createElement(
 	                'a',
-	                { href: baselineExperimentsUrl, className: 'baseline padding-left-medium' },
+	                { href: differentialExperimentsUrl, className: 'differential padding-left-medium' },
 	                _react2.default.createElement(
 	                    'span',
-	                    { 'data-tooltip': true, className: 'baseline tiny button-rd', title: 'Baseline experiments' },
-	                    'B'
+	                    { 'data-tooltip': true, className: 'differential tiny button-rd', title: 'Differential experiments' },
+	                    'D'
 	                ),
 	                props.differentialExperiments
 	            )

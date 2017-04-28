@@ -1501,7 +1501,8 @@ webpackJsonp_name_([1],[
 	          _react2.default.createElement(
 	            _reactRouterDom.NavLink,
 	            {
-	              to: { pathname: '/' + tabName, search: location.search, hash: location.hash } },
+	              to: { pathname: '/' + tabName, search: location.search, hash: location.hash },
+	              activeStyle: { color: "#0a0a0a", background: "#e6e6e6" } },
 	            tabName
 	          )
 	        );
@@ -5899,7 +5900,7 @@ webpackJsonp_name_([1],[
 	            title: "Cutoff - distribution of genes",
 	            show: this.state.showModal == "cutoff",
 	            onCloseModal: function onCloseModal() {
-	              return _this.setState({ showModal: "" });
+	              return _this.setState(_this.getInitialState());
 	            } },
 	          _react2.default.createElement(_CutoffDistribution2.default, {
 	            cutoff: this.props.queryObjects.cutoff,
@@ -5925,7 +5926,7 @@ webpackJsonp_name_([1],[
 	          title: columnsName,
 	          show: this.state.showModal == "columns",
 	          onCloseModal: function onCloseModal() {
-	            return _this.setState({ showModal: "" });
+	            return _this.setState(_this.getInitialState());
 	          },
 	          onClickApply: function onClickApply() {
 	            _this.setState({ showModal: "" });
@@ -8671,10 +8672,14 @@ webpackJsonp_name_([1],[
 	        checkbox ? checkbox.indeterminate = selection === SELECTION.PARTIAL : null;
 	      }
 	    }),
-	    _react2.default.createElement(
+	    text ? _react2.default.createElement(
 	      'span',
 	      null,
 	      text
+	    ) : _react2.default.createElement(
+	      'span',
+	      { style: { opacity: 0.5, fontStyle: "italic" } },
+	      'missing'
 	    )
 	  );
 	};
@@ -20341,7 +20346,7 @@ webpackJsonp_name_([1],[
 	        header: headerGroup.name,
 	        columns: headerGroup.values.map(function (header, jx) {
 	          return {
-	            aggregate: (0, _lodash.curry)(aggregateText, 2)(headerGroup.name || "value"),
+	            aggregate: (0, _lodash.curry)(aggregateText, 2)(header),
 	            header: header,
 	            id: ix * 1000 + jx + 1,
 	            accessor: function accessor(r) {
