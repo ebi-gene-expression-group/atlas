@@ -3,10 +3,8 @@ package uk.ac.ebi.atlas.experimentpage.context;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.collections.ListUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -16,9 +14,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
-import javax.annotation.Nullable;
 import javax.inject.Named;
-import java.util.*;
+import java.util.List;
 
 @Named
 @Scope("request")
@@ -46,7 +43,6 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
         return requestPreferences.getFractionForPremium();
     }
 
-
     public String getQueryFactorType() {
         return requestPreferences.getQueryFactorType();
     }
@@ -58,7 +54,7 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
         }
     };
 
-    private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup(){
+    private List<String> typesWhoseValuesToDisplay() {
 
         List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
                 RichFactorGroup.filterOutTypesWithCommonValues(
@@ -75,14 +71,20 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
                             }
                         })
                 );
+        return typesWhoseValuesVaryAcrossSelectedDescriptors.isEmpty()
+                ? experiment.getDisplayDefaults().prescribedOrderOfFilters().subList(0, 1)
+                : typesWhoseValuesVaryAcrossSelectedDescriptors;
+    }
+
+    private ImmutableMap<AssayGroup, String> displayNamePerSelectedAssayGroup() {
 
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
-        for(AssayGroup assayGroup: getDataColumnsToReturn()){
+        for (AssayGroup assayGroup : getDataColumnsToReturn()) {
             final FactorGroup factorGroup = experiment.getFactors(assayGroup);
 
             b.put(assayGroup, FluentIterable.from
-                    (typesWhoseValuesVaryAcrossSelectedDescriptors).transform(new Function<String, String>() {
+                    (typesWhoseValuesToDisplay()).transform(new Function<String, String>() {
                 @Override
                 public String apply(String type) {
                     return factorGroup.factorOfType(Factor.normalize(type)).getValue();
