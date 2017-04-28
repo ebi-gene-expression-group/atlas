@@ -24,7 +24,7 @@ import java.text.MessageFormat;
 import java.util.Set;
 
 @Named
-public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSerializer {
+public class RnaSeqBaselineExpressionKryoSerializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RnaSeqBaselineExpressionKryoSerializer.class);
 
@@ -47,7 +47,6 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     // This method will automatically block if the serialization is requested concurrently on the same experiment: it will wait
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
     // Kryo instance, as Kryo isn’t thread safe.
-    @Override
     public String serializeExpressionData(final String experimentAccession) {
         Kryo kryo = new Kryo();
         ImmutableSetKryoSerializer.registerSerializers(kryo);
