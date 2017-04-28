@@ -25,7 +25,7 @@ public class BaselineProfilesHeatMapWranglerFactory {
     public BaselineProfilesHeatMapWrangler create(HttpServletRequest httpServletRequest, BaselineRequestPreferences
             preferences, BaselineExperiment experiment) {
         return new BaselineProfilesHeatMapWrangler(
-                baselineProfilesHeatMap, solrQueryService, coexpressedGenesService, httpServletRequest,
+                baselineProfilesHeatMap, solrQueryService, coexpressedGenesService,
                 preferences,
                 experiment);
     }

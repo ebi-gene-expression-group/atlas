@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.TreeSet;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -70,7 +68,7 @@ public class BaselineProfilesHeatMapWranglerTest {
     public BaselineProfilesHeatMapWrangler fakeWrangler(BaselineRequestPreferences preferences, BaselineExperiment
             experiment, HttpServletRequest httpServletRequest){
         return new BaselineProfilesHeatMapWrangler(baselineProfilesHeatMap,
-                solrQueryService,new CoexpressedGenesService(coexpressedGenesDao),httpServletRequest,
+                solrQueryService,new CoexpressedGenesService(coexpressedGenesDao),
                 preferences,experiment);
     }
 

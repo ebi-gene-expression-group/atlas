@@ -35,7 +35,7 @@ public class ExternallyViewableProfilesListTest {
             @Override
             public URI apply(@Nullable BaselineExperimentProfile o) {
                 try {
-                    return new URI("https://www.ebi.ac.uk/gxa/experiments/" +URLEncoder.encode(o.getId(), "UTF-8"));
+                    return new URI("experiments/" +URLEncoder.encode(o.getId(), "UTF-8"));
                 } catch (URISyntaxException | UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }

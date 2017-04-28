@@ -14,11 +14,9 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -39,48 +37,40 @@ public class BaselineProfilesHeatMapWrangler {
 
     private final CoexpressedGenesService coexpressedGenesService;
 
-    private final Function<BaselineProfile, URI> linkToGenes;
+    private final Function<BaselineProfile, URI> linkToGenes = new Function<BaselineProfile, URI>() {
+        @Nullable
+        @Override
+        public URI apply(@Nullable BaselineProfile baselineProfile) {
+            try {
+                return new URI("genes/"+baselineProfile.getId());
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
 
-    private final Function<BaselineProfile, URI> linkToGenesets;
-
+    private final Function<BaselineProfile, URI> linkToGenesets = new Function<BaselineProfile, URI>() {
+        @Nullable
+        @Override
+        public URI apply(@Nullable BaselineProfile baselineProfile) {
+            try {
+                return new URI("genesets/"+baselineProfile.getId());
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
 
     public BaselineProfilesHeatMapWrangler(
             BaselineProfilesHeatMap baselineProfilesHeatMap,
             SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,
-            HttpServletRequest httpServletRequest,
             BaselineRequestPreferences preferences, BaselineExperiment experiment) {
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
         this.experiment = experiment;
         requestContext = new BaselineRequestContext(preferences, experiment);
-        final String serverURL = ApplicationProperties.buildServerURL(httpServletRequest);
-
-        linkToGenes = new Function<BaselineProfile, URI>() {
-            @Nullable
-            @Override
-            public URI apply(@Nullable BaselineProfile baselineProfile) {
-                try {
-                    return new URI(serverURL+"/genes/"+baselineProfile.getId());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-
-        linkToGenesets = new Function<BaselineProfile, URI>() {
-            @Nullable
-            @Override
-            public URI apply(@Nullable BaselineProfile baselineProfile) {
-                try {
-                    return new URI(serverURL+"/genesets/"+baselineProfile.getId());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-
     }
 
     private String getSpecies() {

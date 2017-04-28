@@ -59,11 +59,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
             }
         }
         result.add("expressions", expressions);
-        try {
-            result.addProperty("uri", provideLinkToProfile.apply(profile).toURL().toExternalForm());
-        } catch (MalformedURLException e){
-            throw new IllegalStateException(e);
-        }
+        result.addProperty("uri", provideLinkToProfile.apply(profile).toString());
 
         return result;
 

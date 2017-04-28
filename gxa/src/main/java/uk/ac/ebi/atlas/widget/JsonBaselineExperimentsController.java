@@ -25,11 +25,9 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -121,7 +119,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             result.add(
                     "profiles",
                     new ExternallyViewableProfilesList<>(
-                            experimentProfiles, provideLinkToProfile(request, geneQuery), dataColumns).asJson());
+                            experimentProfiles, provideLinkToProfile(geneQuery), dataColumns).asJson());
         }
 
         model.addAttribute("species", species.getReferenceName());
@@ -131,10 +129,9 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         return gson.toJson(result);
     }
 
-    private Function<BaselineExperimentProfile, URI> provideLinkToProfile(HttpServletRequest request, SemanticQuery
-            geneQuery){
+    private Function<BaselineExperimentProfile, URI> provideLinkToProfile(SemanticQuery geneQuery){
         try {
-            final URI experimentsLocation = new URI(ApplicationProperties.buildServerURL(request) + "/experiments/");
+            final URI experimentsLocation = new URI("experiments/");
             final Map<String, String> params = ImmutableMap.of("geneQuery", geneQuery.toUrlEncodedJson());
             return new Function<BaselineExperimentProfile, URI>() {
                 @Nullable
