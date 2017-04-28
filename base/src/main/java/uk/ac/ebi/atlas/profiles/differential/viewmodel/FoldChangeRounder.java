@@ -5,7 +5,7 @@ import org.apache.commons.math.util.MathUtils;
 
 public class FoldChangeRounder {
 
-    private FoldChangeRounder(){};
+    private FoldChangeRounder(){}
 
     public static double round(double number) {
         return MathUtils.round(number, 1);
