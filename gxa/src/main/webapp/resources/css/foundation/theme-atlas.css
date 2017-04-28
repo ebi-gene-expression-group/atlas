@@ -6,6 +6,9 @@
     background-color: #3497c5;
 }
 
+.tabs-title > a {
+    font-size: 0.9rem;
+}
 .tabs-title > a:hover {
     background: aliceblue;
     color: #0a0a0a;
