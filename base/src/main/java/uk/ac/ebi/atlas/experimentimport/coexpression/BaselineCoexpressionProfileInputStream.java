@@ -53,9 +53,9 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
         lineNumber++;
         try {
             return csvReader.readNext();
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("Exception thrown while reading line %s", lineNumber), e);
+        } catch (IOException e) {
+            LOGGER.error("Error while reading line {}", lineNumber);
+            throw new IllegalStateException(e);
         }
     }
 
