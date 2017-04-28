@@ -7,24 +7,26 @@ import java.util.Set;
 
 public enum ExperimentType {
 
-    RNASEQ_MRNA_BASELINE("rnaseq_mrna_baseline")
-    ,RNASEQ_MRNA_DIFFERENTIAL("rnaseq_mrna_differential")
-    ,MICROARRAY_ANY("microarray parent type")
-    ,MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential")
-    ,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
-    ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential")
-    ,PROTEOMICS_BASELINE("proteomics_baseline")
-    ,SINGLE_CELL_RNASEQ_MRNA_BASELINE("scrnaseq_mrna_baseline");
+    RNASEQ_MRNA_BASELINE("rnaseq_mrna_baseline", "RNA-Seq mRNA baseline"),
+    RNASEQ_MRNA_DIFFERENTIAL("rnaseq_mrna_differential", "RNA-Seq mRNA differential"),
+    MICROARRAY_ANY("microarray parent type", "Microarray"),
+    MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential", "Microarray 1-colour mRNA"),
+    MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential", "Microarray 2-colour mRNA"),
+    MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential", "Microarray 1-colour miRNA"),
+    PROTEOMICS_BASELINE("proteomics_baseline", "Proteomics baseline"),
+    SINGLE_CELL_RNASEQ_MRNA_BASELINE("scrnaseq_mrna_baseline", "Single-cell RNA-Seq mRNA baseline");
 
     private ExperimentType parent;
     private String description;
+    private String humanDescription;
 
-    ExperimentType(String description) {
+    ExperimentType(String description, String humanDescription) {
         this.description = description;
+        this.humanDescription = humanDescription;
     }
 
-    ExperimentType(ExperimentType parent, String description) {
-        this(description);
+    ExperimentType(ExperimentType parent, String description, String humanDescription) {
+        this(description, humanDescription);
         this.parent = parent;
     }
 
@@ -83,18 +85,12 @@ public enum ExperimentType {
         return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.name()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.name());
     }
 
-
-    // Do not remove: the following three methods are used in experiment-header.jsp
-    public boolean isTwoColour() {
-        return equals(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
-    }
-
-    public boolean isMicroRna() {
-        return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
-    }
-
     public boolean isRnaSeqBaseline() {
         return equals(RNASEQ_MRNA_BASELINE);
     }
 
+    // Used by EL in experiment-description.jsp
+    public String getHumanDescription() {
+        return humanDescription;
+    }
 }

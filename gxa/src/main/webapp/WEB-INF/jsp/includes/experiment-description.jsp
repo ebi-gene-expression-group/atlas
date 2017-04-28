@@ -17,6 +17,7 @@
     <h3 id="goto-experiment">
         ${experimentDescription}
     </h3>
+    <h5>${type.humanDescription}</h5>
     <c:if test="${hasExtraInfo}">
         <a id="extra-info"
            href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
