@@ -41,7 +41,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
             b.add(new ExternallyAvailableContent(
                     rDataUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
                     ExternallyAvailableContent.Description.create("Data", "icon-Rdata",
-                            "Summary of the data for this experiment ready to view in R"
+                            "Summary of the expression results for this experiment ready to view in R"
             )));
         }
 

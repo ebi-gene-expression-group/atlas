@@ -118,7 +118,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
         preferences.setCutoff(1.0);
         return Collections.singleton(new ExternallyAvailableContent(
                 makeUri("query-results"),
-                ExternallyAvailableContent.Description.create("Data", "icon-tsv", "All the data presented in the heatmap"),
+                ExternallyAvailableContent.Description.create("Data", "icon-tsv", "All expression results in the experiment"),
                 streamFile(experiment.getAccession() + "-query-results.tsv",
                         fetchAndWriteGeneProfiles(experiment, preferences)
                 )
