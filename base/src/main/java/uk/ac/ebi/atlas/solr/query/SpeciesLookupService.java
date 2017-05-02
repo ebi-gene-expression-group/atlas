@@ -32,10 +32,12 @@ public class SpeciesLookupService {
     }
 
     // Used for looking up species for a gene/protein/transcript/mirna/etc. ID; they will only have a single species
+    @Deprecated
     public Optional<String> fetchSpeciesForBioentityId(String identifier) {
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, Collections.singleton(identifier));
     }
 
+    @Deprecated
     public Optional<String> fetchFirstSpeciesForBioentityIdentifiers(Collection<String> identifiers) {
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifiers);
     }
@@ -72,6 +74,7 @@ public class SpeciesLookupService {
     // Used for looking up species for gene sets (GO, PO, InterPro, Reactome and Plant Reactome)
     // Reactome and Plant Reactome are always single species, but GO, PO and InterPro gene sets can be multi-species
     // If results are empty, then term does not exist in Solr
+    @Deprecated
     public Optional<String> fetchSpeciesForGeneSet(String term) {
         // eg: property_value_lower:"IPR027417"
         String queryText = PROPERTY_LOWER_FIELD + ":" + StringUtils.wrap(term, "\"") +

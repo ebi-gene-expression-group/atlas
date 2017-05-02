@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
+import uk.ac.ebi.atlas.search.SemanticQuery;
 import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTrader;
 import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
@@ -18,18 +19,18 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyLinkBuilder {
 
-    private SpeciesLookupService speciesLookupService;
+    private SpeciesInferrer speciesInferrer;
     private BioEntityPropertyDao bioEntityPropertyDao;
     private ReactomeClient reactomeClient;
     private GoPoTrader goPoTermTrader;
     private InterProTrader interProTermTrader;
 
     @Inject
-    public BioEntityPropertyLinkBuilder(SpeciesLookupService speciesLookupService,
+    public BioEntityPropertyLinkBuilder(SpeciesInferrer speciesInferrer,
                                         BioEntityPropertyDao bioEntityPropertyDao, ReactomeClient reactomeClient,
                                         GoPoTrader goPoTermTrader, InterProTrader interProTermTrader) {
 
-        this.speciesLookupService = speciesLookupService;
+        this.speciesInferrer = speciesInferrer;
         this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.reactomeClient = reactomeClient;
         this.goPoTermTrader = goPoTermTrader;
@@ -80,13 +81,13 @@ public class BioEntityPropertyLinkBuilder {
 
     private String fetchSymbolAndSpeciesForOrtholog(String identifier) {
 
-        Optional<String> species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+        Species species = speciesInferrer.inferSpeciesForGeneQuery(SemanticQuery.create(identifier));
 
-        if (!species.isPresent()) {
+        if (species.isUnknown()) {
             return identifier;
         }
 
-        String speciesToken = " (" + species.get() + ")";
+        String speciesToken = " (" + species.getName() + ")";
 
         Set<String> propertyValuesForGeneId =
                 bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);
