@@ -68,7 +68,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
             JsonArray jsonCoexpressions = heatMapResults.getJsonCoexpressions();
             if (jsonCoexpressions.size() > 0) {
-                result.add("coexpressions", heatMapResults.getJsonCoexpressions());
+                result.add("coexpressions", jsonCoexpressions);
             }
         } catch (GenesNotFoundException e){
             return heatmapDataToJsonService.jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
