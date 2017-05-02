@@ -25,7 +25,7 @@ public class StaticPageController {
     @RequestMapping("/{pageName}.html")
     public String getStaticPage(HttpServletRequest request,
                                 @PathVariable String pageName) throws IOException {
-        String path = String.format("/resources/html/foundation/%s.html", pageName);
+        String path = String.format("/resources/html/%s.html", pageName);
         request.setAttribute("contentResource", fetchResource(path));
         return "foundation-static";
     }
@@ -33,7 +33,7 @@ public class StaticPageController {
     @RequestMapping("/help/{pageName}.html")
     public String getHelpPage(HttpServletRequest request,
                               @PathVariable String pageName) throws IOException {
-        String path = String.format("/resources/html/help-foundation/%s.html", pageName);
+        String path = String.format("/resources/html/help/%s.html", pageName);
         request.setAttribute("contentResource", fetchResource(path));
         return "foundation-static";
     }
