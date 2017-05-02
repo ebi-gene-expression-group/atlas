@@ -43,14 +43,14 @@ public class AssayGroup extends DescribesDataColumns implements Iterable<String>
     }
 
     @Override
-    public int hashCode() {return Objects.hash(id, assayAccessions);}
+    public int hashCode() {return id.hashCode();}
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final AssayGroup other = (AssayGroup) obj;
-        return Objects.equals(this.id, other.id) && Objects.equals(this.assayAccessions, other.assayAccessions);
+        return Objects.equals(this.id, other.id);
     }
 
     public JsonObject toJson(){

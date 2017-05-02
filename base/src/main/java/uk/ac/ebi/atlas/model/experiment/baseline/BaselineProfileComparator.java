@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Set;
+import java.util.HashMap;
 
 public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
@@ -21,48 +21,45 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private boolean isSpecific;
     private Collection<AssayGroup> selectedQueryFactors;
     private Collection<AssayGroup> allQueryFactors;
+    private Collection<AssayGroup> nonSelectedQueryFactorsCachedInstance;
     private double cutoffDivisor;
-    private Double minimumExpressionLevelToQualifyAsGoodForOurRule = null;
-    private Double minimumFractionOfExpressionToQualifyAsGoodForOurRule = null;
-
+    private final BaselineProfileCachedStats baselineProfileStats = new BaselineProfileCachedStats();
 
     public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
-        return new BaselineProfileComparator(options.isSpecific(),
+        return new BaselineProfileComparator(
+                options.isSpecific(),
                 options.getDataColumnsToReturn(),
                 options.getAllDataColumns(),
-                options.getCutoff(), options.getThresholdForPremium(), options.getFractionForPremium());
+                options.getCutoff());
     }
 
-    BaselineProfileComparator(boolean isSpecific, Collection<AssayGroup> selectedQueryFactors,
-                              Collection<AssayGroup> allQueryFactors, double cutoff) {
-        this(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
-    }
-    protected BaselineProfileComparator(boolean isSpecific, Collection<AssayGroup> selectedQueryFactors,
-                                        Collection<AssayGroup> allQueryFactors, double cutoff, Double
-                                                   minimumExpressionLevelToQualifyAsGoodForOurRule, Double minimumFractionOfExpressionToQualifyAsGoodForOurRule ) {
+    protected BaselineProfileComparator(boolean isSpecific,
+                                        Collection<AssayGroup> selectedQueryFactors,
+                                        Collection<AssayGroup> allQueryFactors,
+                                        double cutoff) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors;
         this.allQueryFactors = allQueryFactors;
+        this.nonSelectedQueryFactorsCachedInstance = Sets.difference(ImmutableSet.copyOf(allQueryFactors),
+                ImmutableSet.copyOf(selectedQueryFactors));
 
         cutoffDivisor = cutoff != 0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
-        this.minimumExpressionLevelToQualifyAsGoodForOurRule=minimumExpressionLevelToQualifyAsGoodForOurRule;
-        this.minimumFractionOfExpressionToQualifyAsGoodForOurRule = minimumFractionOfExpressionToQualifyAsGoodForOurRule;
     }
 
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
-        // A1:
         if (isSpecific && selectedQueryFactors.equals(allQueryFactors)) {
             int order = ComparisonChain
                     .start()
-                    .compareTrueFirst(ourRule(firstBaselineProfile), ourRule(otherBaselineProfile))
                     .compare(firstBaselineProfile.getSpecificity(),otherBaselineProfile.getSpecificity() )
                     .result();
-            return 0 != order ? order : compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
+
+            return 0 != order ?
+                    order :
+                    compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
         }
 
-        // B1:
         if (isSpecific && !selectedQueryFactors.equals(allQueryFactors)) {
             // reverse because we want lower values to come first
             return Ordering.natural().reverse().compare(
@@ -70,29 +67,31 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                     getExpressionLevelFoldChange(otherBaselineProfile));
         }
 
-
-        // A2
         if (!isSpecific && selectedQueryFactors.equals(allQueryFactors)) {
-            return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, allQueryFactors);
+            return compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
         }
 
-        //B2 - !isSpecific && !selectedQueryFactors.equals(allQueryFactors)
-        return compareOnAverageExpressionLevel(firstBaselineProfile, otherBaselineProfile, selectedQueryFactors);
+        // !isSpecific && !selectedQueryFactors.equals(allQueryFactors)
+        return compareOnAverageExpressionLevelOverSelectedQueryFactors(firstBaselineProfile, otherBaselineProfile);
 
     }
 
-    boolean ourRule(BaselineProfile baselineProfile){
-        if(minimumExpressionLevelToQualifyAsGoodForOurRule == null ||
-                minimumFractionOfExpressionToQualifyAsGoodForOurRule == null){
-            return false;
-        } else {
-            return baselineProfile.getAssayGroupsWithExpressionLevelAtLeast(minimumExpressionLevelToQualifyAsGoodForOurRule).size()
-                    >= minimumFractionOfExpressionToQualifyAsGoodForOurRule * allQueryFactors.size();
-        }
+    protected int compareOnAverageExpressionLevelOverAllQueryFactors(BaselineProfile firstBaselineProfile,
+                                                                     BaselineProfile otherBaselineProfile) {
+        return Ordering.natural().reverse().
+                compare(baselineProfileStats.getAverageOverAllQueryFactors(firstBaselineProfile),
+                        baselineProfileStats.getAverageOverAllQueryFactors(otherBaselineProfile));
     }
 
-    protected int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile, BaselineProfile
-            otherBaselineProfile,
+    protected int compareOnAverageExpressionLevelOverSelectedQueryFactors(BaselineProfile firstBaselineProfile,
+                                                                          BaselineProfile otherBaselineProfile) {
+        return Ordering.natural().reverse().
+                compare(baselineProfileStats.getAverageOverSelectedQueryFactors(firstBaselineProfile),
+                        baselineProfileStats.getAverageOverSelectedQueryFactors(otherBaselineProfile));
+    }
+
+    protected int compareOnAverageExpressionLevel(BaselineProfile firstBaselineProfile,
+                                                  BaselineProfile otherBaselineProfile,
                                                   Collection<AssayGroup> assayGroups) {
 
         return Ordering.natural().reverse().
@@ -102,15 +101,13 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     public double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
 
-        double averageExpressionLevelOnSelectedQueryFactors = baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors);
-
-        Set<AssayGroup> nonSelectedQueryFactors = Sets.difference(ImmutableSet.copyOf(allQueryFactors),
-                ImmutableSet.copyOf(selectedQueryFactors));
-
-        double maxExpressionLevelOnNonSelectedQueryFactors = baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactors);
+        double averageExpressionLevelOnSelectedQueryFactors =
+                baselineProfileStats.getAverageOverSelectedQueryFactors(baselineProfile);
+        double maxExpressionLevelOnNonSelectedQueryFactors =
+                baselineProfileStats.getMaxOverNonSelectedQueryFactors(baselineProfile);
 
         if (maxExpressionLevelOnNonSelectedQueryFactors == 0) {
-            if (nonSelectedQueryFactors.isEmpty()) {
+            if (nonSelectedQueryFactorsCachedInstance.isEmpty()) {
                 return averageExpressionLevelOnSelectedQueryFactors;
             }
             return averageExpressionLevelOnSelectedQueryFactors / cutoffDivisor;
@@ -119,6 +116,35 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
     }
 
+    private class BaselineProfileCachedStats {
+        private final HashMap<String, Double> averageOverSelectedQueryFactors = new HashMap<>();
+        private final HashMap<String, Double> averageOverAllQueryFactors = new HashMap<>();
+        private final HashMap<String, Double> maxOverNonSelectedQueryFactors = new HashMap<>();
 
+        double getAverageOverSelectedQueryFactors(BaselineProfile baselineProfile) {
+            if(!averageOverSelectedQueryFactors.containsKey(baselineProfile.getId())) {
+                averageOverSelectedQueryFactors.put(
+                        baselineProfile.getId(), baselineProfile.getAverageExpressionLevelOn(selectedQueryFactors));
+            }
+            return averageOverSelectedQueryFactors.get(baselineProfile.getId());
+        }
+
+        double getAverageOverAllQueryFactors(BaselineProfile baselineProfile) {
+            if(!averageOverAllQueryFactors.containsKey(baselineProfile.getId())) {
+                averageOverAllQueryFactors.put(
+                        baselineProfile.getId(), baselineProfile.getAverageExpressionLevelOn(allQueryFactors));
+            }
+            return averageOverAllQueryFactors.get(baselineProfile.getId());
+        }
+
+        double getMaxOverNonSelectedQueryFactors(BaselineProfile baselineProfile) {
+            if(!maxOverNonSelectedQueryFactors.containsKey(baselineProfile.getId())) {
+                maxOverNonSelectedQueryFactors.put(
+                        baselineProfile.getId(),
+                        baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactorsCachedInstance));
+            }
+            return maxOverNonSelectedQueryFactors.get(baselineProfile.getId());
+        }
+    }
 
 }

@@ -23,8 +23,8 @@ public class MinMaxProfileRankingTest {
 
     private class VisibleBaselineProfileComparator extends BaselineProfileComparator {
 
-        protected VisibleBaselineProfileComparator(boolean isSpecific, Collection<AssayGroup> selectedQueryFactors, Collection<AssayGroup> allQueryFactors, double cutoff, Double minimumExpressionLevelToQualifyAsGoodForOurRule, Double minimumFractionOfExpressionToQualifyAsGoodForOurRule) {
-            super(isSpecific, selectedQueryFactors, allQueryFactors, cutoff, minimumExpressionLevelToQualifyAsGoodForOurRule, minimumFractionOfExpressionToQualifyAsGoodForOurRule);
+        protected VisibleBaselineProfileComparator(boolean isSpecific, Collection<AssayGroup> selectedQueryFactors, Collection<AssayGroup> allQueryFactors, double cutoff) {
+            super(isSpecific, selectedQueryFactors, allQueryFactors, cutoff);
         }
         
         @Override
@@ -41,7 +41,7 @@ public class MinMaxProfileRankingTest {
         final List<AssayGroup> selectedQueryFactors = ImmutableList.of();
         final List<AssayGroup> allQueryFactors = ImmutableList.of();
 
-        final VisibleBaselineProfileComparator c = new VisibleBaselineProfileComparator(isSpecific,selectedQueryFactors,allQueryFactors,cutoff,null,null);
+        final VisibleBaselineProfileComparator c = new VisibleBaselineProfileComparator(isSpecific,selectedQueryFactors,allQueryFactors,cutoff);
 
         Comparator<BaselineProfile> comparatorThatTestsAverageExpressionsOnly = new Comparator<BaselineProfile>(){
             @Override
@@ -137,7 +137,7 @@ public class MinMaxProfileRankingTest {
         double cutoff = randDouble(min,max);
 
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(false,
-                allFactors, allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
+                allFactors, allFactors,cutoff), new BaselineProfilesListBuilder()).select
                 (l,5);
 
         assertEquals("profileWeWant",result.iterator().next().getName());
@@ -169,7 +169,7 @@ public class MinMaxProfileRankingTest {
         double cutoff = randDouble(min,max);
 
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true,
-                allFactors, allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
+                allFactors, allFactors,cutoff), new BaselineProfilesListBuilder()).select
                 (l,50);
 
         if(!"profileWeWant".equals(result.iterator().next().getName())){
@@ -226,7 +226,7 @@ public class MinMaxProfileRankingTest {
     private BaselineProfile getFirstProfile(BaselineProfilesList l, List<AssayGroup> selectedFactors, List<AssayGroup> allFactors, double
             cutoff, int queueSize) {
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true,
-                selectedFactors, allFactors,cutoff, null,null), new BaselineProfilesListBuilder()).select
+                selectedFactors, allFactors,cutoff), new BaselineProfilesListBuilder()).select
                 (l,queueSize);
 
         return result.iterator().next();

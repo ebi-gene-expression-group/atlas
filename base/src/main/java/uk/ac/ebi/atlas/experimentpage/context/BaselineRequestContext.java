@@ -33,16 +33,6 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
                     "";
     }
 
-    @Override
-    public Double getThresholdForPremium() {
-        return requestPreferences.getThresholdForPremium();
-    }
-
-    @Override
-    public Double getFractionForPremium() {
-        return requestPreferences.getFractionForPremium();
-    }
-
     public String getQueryFactorType() {
         return requestPreferences.getQueryFactorType();
     }

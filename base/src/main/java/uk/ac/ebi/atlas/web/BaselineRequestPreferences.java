@@ -11,8 +11,6 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
 
     private static final String DEFAULT_GENE_QUERY_VALUE = "protein_coding";
     private static final String DEFAULT_GENE_QUERY_CATEGORY = BioentityPropertyName.GENE_BIOTYPE.name;
-    private double thresholdForPremium;
-    private double fractionForPremium;
 
     @Override
     protected SemanticQuery getDefaultGeneQuery() {
@@ -31,22 +29,6 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
         } else {
             super.setCutoff(null);
         }
-    }
-
-    public double getThresholdForPremium() {
-        return thresholdForPremium;
-    }
-
-    public double getFractionForPremium() {
-        return fractionForPremium;
-    }
-
-    public void setThresholdForPremium(double thresholdForPremium){
-        this.thresholdForPremium = thresholdForPremium;
-    }
-
-    public void setFractionForPremium(double fractionForPremium){
-        this.fractionForPremium = fractionForPremium;
     }
 
     public static BaselineRequestPreferences requestAllData(){

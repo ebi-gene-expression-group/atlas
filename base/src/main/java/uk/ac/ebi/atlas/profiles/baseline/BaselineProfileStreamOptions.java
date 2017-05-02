@@ -7,6 +7,4 @@ public interface BaselineProfileStreamOptions extends ProfileStreamOptions<Assay
     String getExperimentAccession();
     double getCutoff();
     String getQueryFactorType();
-    Double getThresholdForPremium();
-    Double getFractionForPremium();
 }
