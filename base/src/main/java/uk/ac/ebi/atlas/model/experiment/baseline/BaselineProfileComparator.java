@@ -10,7 +10,8 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
@@ -19,26 +20,36 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     // BaselineExpressionLevelRounder class
     private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.00000009;
     private static final ImmutableList<AssayGroup> EMPTY_LIST_OF_ASSAY_GROUPS = ImmutableList.of();
+    private static final int DEFAULT_CACHE_SIZE = 50;
 
     private final boolean isSpecific;
     private final Collection<AssayGroup> selectedQueryFactors;
     private final Collection<AssayGroup> allQueryFactors;
     private final Collection<AssayGroup> nonSelectedQueryFactorsCachedInstance;
     private final double cutoffDivisor;
-    private final BaselineProfileCachedStats baselineProfileStats = new BaselineProfileCachedStats();
+    private final BaselineProfileCachedStats baselineProfileStats;
 
     public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
         return new BaselineProfileComparator(
                 options.isSpecific(),
                 options.getDataColumnsToReturn(),
                 options.getAllDataColumns(),
-                options.getCutoff());
+                options.getCutoff(),
+                options.getHeatmapMatrixSize() + 1);    // The top ranked rows plus the profile we’re evaluating
     }
 
     protected BaselineProfileComparator(boolean isSpecific,
                                         Collection<AssayGroup> selectedQueryFactors,
                                         Collection<AssayGroup> allQueryFactors,
                                         double cutoff) {
+        this(isSpecific, selectedQueryFactors, allQueryFactors, cutoff, DEFAULT_CACHE_SIZE);
+    }
+
+    protected BaselineProfileComparator(boolean isSpecific,
+                                        Collection<AssayGroup> selectedQueryFactors,
+                                        Collection<AssayGroup> allQueryFactors,
+                                        double cutoff,
+                                        int cacheSize) {
         this.isSpecific = isSpecific;
         this.selectedQueryFactors = selectedQueryFactors == null ? EMPTY_LIST_OF_ASSAY_GROUPS : selectedQueryFactors;
         this.allQueryFactors = allQueryFactors == null ? EMPTY_LIST_OF_ASSAY_GROUPS : allQueryFactors;
@@ -48,6 +59,8 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                                 ImmutableSet.copyOf(this.selectedQueryFactors));
 
         cutoffDivisor = cutoff != 0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
+
+        baselineProfileStats = new BaselineProfileCachedStats(cacheSize);
     }
 
     @Override
@@ -120,10 +133,25 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
     }
 
+    static private <K, V> Map<K, V> createLRUMap(final int maxEntries) {
+        return new LinkedHashMap<K, V>(maxEntries, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+                return size() > maxEntries;
+            }
+        };
+    }
+
     private class BaselineProfileCachedStats {
-        private final HashMap<String, Double> averageOverSelectedQueryFactors = new HashMap<>();
-        private final HashMap<String, Double> averageOverAllQueryFactors = new HashMap<>();
-        private final HashMap<String, Double> maxOverNonSelectedQueryFactors = new HashMap<>();
+        private final Map<String, Double> averageOverSelectedQueryFactors;
+        private final Map<String, Double> averageOverAllQueryFactors;
+        private final Map<String, Double> maxOverNonSelectedQueryFactors;
+
+        private BaselineProfileCachedStats(int cacheSize) {
+            averageOverSelectedQueryFactors = createLRUMap(cacheSize);
+            averageOverAllQueryFactors = createLRUMap(cacheSize);
+            maxOverNonSelectedQueryFactors = createLRUMap(cacheSize);
+        }
 
         double getAverageOverSelectedQueryFactors(BaselineProfile baselineProfile) {
             if(!averageOverSelectedQueryFactors.containsKey(baselineProfile.getId())) {
