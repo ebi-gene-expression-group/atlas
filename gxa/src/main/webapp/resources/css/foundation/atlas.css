@@ -168,6 +168,11 @@ a.baseline {
     background-color: #2D3E51;
 }
 
+.experiment-list-latest .list-project-l ul li a:hover {
+    /*color: #3a4fcb;*/
+    color: #3a4fcb;
+}
+
 .publication-list .icon-conceptual:before {
     color: #5688B3;
 }
