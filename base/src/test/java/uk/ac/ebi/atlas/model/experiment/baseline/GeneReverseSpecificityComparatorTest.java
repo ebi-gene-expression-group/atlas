@@ -38,9 +38,14 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initGeneExpressions() {
+        when(geneWithSpecificity1.getId()).thenReturn("Gene with specificity 1");
         when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
+
+        when(geneWithSpecificity16.getId()).thenReturn("Gene with specificity 16");
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(assayGroups)).thenReturn(10D);
+
+        when(geneWithSpecificity16AndSmallerExpressionLevel.getId()).thenReturn("Gene with specificity 16 and smaller");
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(assayGroups)).thenReturn(0D);
     }

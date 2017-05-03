@@ -52,19 +52,25 @@ public class BaselineProfileComparatorTest {
 
     @Before
     public void initGeneExpressions() {
+        when(geneWithSpecificity1.getId()).thenReturn("Gene with specificity 1");
         when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
         when(geneWithSpecificity1.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(5D);
         when(geneWithSpecificity1.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(5D);
 
+        when(geneWithSpecificity16.getId()).thenReturn("Gene with specificity 16");
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(10D);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(2D);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(ImmutableList.of(g2))).thenReturn(1D);
 
+        when(geneWithSpecificity16AndSmallerExpressionLevel.getId()).thenReturn("Gene with specificity 16 and smaller");
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
 
+        when(geneWithAverageExpression3.getId()).thenReturn("Gene with average 3");
         when(geneWithAverageExpression3.getAverageExpressionLevelOn(anyListOf(AssayGroup.class))).thenReturn(3D);
+
+        when(geneWithAverageExpression8.getId()).thenReturn("Gene with average 8");
         when(geneWithAverageExpression8.getAverageExpressionLevelOn(anyListOf(AssayGroup.class))).thenReturn(8D);
     }
 
@@ -140,7 +146,7 @@ public class BaselineProfileComparatorTest {
         subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0.5);
 
         double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity1);
-        assertThat(averageExpressionLevel, Matchers.is(10d));
+        assertThat(averageExpressionLevel, Matchers.is(10D));
 
     }
 
