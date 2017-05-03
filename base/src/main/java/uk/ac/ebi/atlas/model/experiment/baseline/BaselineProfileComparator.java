@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
@@ -17,12 +18,13 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     // c.f. FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ZEROPOINTONE in
     // BaselineExpressionLevelRounder class
     private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.00000009;
+    private static final ImmutableList<AssayGroup> EMPTY_LIST_OF_ASSAY_GROUPS = ImmutableList.of();
 
-    private boolean isSpecific;
-    private Collection<AssayGroup> selectedQueryFactors;
-    private Collection<AssayGroup> allQueryFactors;
-    private Collection<AssayGroup> nonSelectedQueryFactorsCachedInstance;
-    private double cutoffDivisor;
+    private final boolean isSpecific;
+    private final Collection<AssayGroup> selectedQueryFactors;
+    private final Collection<AssayGroup> allQueryFactors;
+    private final Collection<AssayGroup> nonSelectedQueryFactorsCachedInstance;
+    private final double cutoffDivisor;
     private final BaselineProfileCachedStats baselineProfileStats = new BaselineProfileCachedStats();
 
     public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
@@ -38,10 +40,12 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                                         Collection<AssayGroup> allQueryFactors,
                                         double cutoff) {
         this.isSpecific = isSpecific;
-        this.selectedQueryFactors = selectedQueryFactors;
-        this.allQueryFactors = allQueryFactors;
-        this.nonSelectedQueryFactorsCachedInstance = Sets.difference(ImmutableSet.copyOf(allQueryFactors),
-                ImmutableSet.copyOf(selectedQueryFactors));
+        this.selectedQueryFactors = selectedQueryFactors == null ? EMPTY_LIST_OF_ASSAY_GROUPS : selectedQueryFactors;
+        this.allQueryFactors = allQueryFactors == null ? EMPTY_LIST_OF_ASSAY_GROUPS : allQueryFactors;
+
+        this.nonSelectedQueryFactorsCachedInstance =
+                Sets.difference(ImmutableSet.copyOf(this.allQueryFactors),
+                                ImmutableSet.copyOf(this.selectedQueryFactors));
 
         cutoffDivisor = cutoff != 0 ? cutoff : CUTOFF_DIVISOR_DEFAULT_VALUE;
     }
