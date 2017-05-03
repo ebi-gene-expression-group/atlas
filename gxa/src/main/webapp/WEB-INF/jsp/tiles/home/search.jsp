@@ -30,7 +30,7 @@
                 </div>
                 <div id="sample-properties-section" class="small-12 medium-4 large-5 columns">
                     <div class="row column">
-                        <label>Sample properties</label>
+                        <label>Biological conditions</label>
                         <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />
                     </div>
                     <div class="row column small margin-top-small">
