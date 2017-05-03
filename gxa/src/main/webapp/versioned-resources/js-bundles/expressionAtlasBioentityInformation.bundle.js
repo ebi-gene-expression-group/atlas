@@ -9,11 +9,11 @@ webpackJsonp_name_([3],{
 
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! ./src/renderer.js */ 2746);
+	module.exports = __webpack_require__(/*! ./src/renderer.js */ 2756);
 
 /***/ },
 
-/***/ 2746:
+/***/ 2756:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/src/renderer.js ***!
   \*************************************************************/
@@ -24,7 +24,7 @@ webpackJsonp_name_([3],{
 	var React = __webpack_require__(/*! react */ 300);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 332);
 	
-	var BioentityInformation = __webpack_require__(/*! ./BioentityInformation.jsx */ 2747);
+	var BioentityInformation = __webpack_require__(/*! ./BioentityInformation.jsx */ 2757);
 	
 	exports.render = function (options) {
 	    ReactDOM.render(React.createElement(BioentityInformation, { bioentityProperties: options.payload }), typeof options.target === "string" ? document.getElementById(options.target) : options.target);
@@ -32,7 +32,7 @@ webpackJsonp_name_([3],{
 
 /***/ },
 
-/***/ 2747:
+/***/ 2757:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/src/BioentityInformation.jsx ***!
   \**************************************************************************/
@@ -43,7 +43,7 @@ webpackJsonp_name_([3],{
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var React = __webpack_require__(/*! react */ 300);
-	__webpack_require__(/*! ./BioentityInformation.css */ 2748);
+	__webpack_require__(/*! ./BioentityInformation.css */ 2758);
 	
 	var PropertyLinkShape = {
 	  text: React.PropTypes.string.isRequired,
@@ -175,7 +175,7 @@ webpackJsonp_name_([3],{
 
 /***/ },
 
-/***/ 2748:
+/***/ 2758:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/src/BioentityInformation.css ***!
   \**************************************************************************/
@@ -184,10 +184,10 @@ webpackJsonp_name_([3],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../~/css-loader!./BioentityInformation.css */ 2749);
+	var content = __webpack_require__(/*! !../~/css-loader!./BioentityInformation.css */ 2759);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../~/style-loader/addStyles.js */ 2751)(content, {});
+	var update = __webpack_require__(/*! ../~/style-loader/addStyles.js */ 2761)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -205,13 +205,13 @@ webpackJsonp_name_([3],{
 
 /***/ },
 
-/***/ 2749:
+/***/ 2759:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/~/css-loader!./atlas_bundles/bioentity-information/src/BioentityInformation.css ***!
   \*****************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../~/css-loader/lib/css-base.js */ 2750)();
+	exports = module.exports = __webpack_require__(/*! ../~/css-loader/lib/css-base.js */ 2760)();
 	// imports
 	
 	
@@ -223,13 +223,13 @@ webpackJsonp_name_([3],{
 
 /***/ },
 
-/***/ 2750:
+/***/ 2760:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/~/css-loader/lib/css-base.js ***!
   \**************************************************************************/
 764,
 
-/***/ 2751:
+/***/ 2761:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/~/style-loader/addStyles.js ***!
   \*************************************************************************/

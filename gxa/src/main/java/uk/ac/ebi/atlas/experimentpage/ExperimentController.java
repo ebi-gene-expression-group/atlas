@@ -22,7 +22,6 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.text.MessageFormat;
 import java.util.List;
 
 @Controller
@@ -47,23 +46,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                      HttpServletRequest request,
                                      @PathVariable String experimentAccession,
                                      @RequestParam(required = false) String accessKey) {
-
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("pathToFolderWithBundledResources", MessageFormat.format(
-                "{0}/versioned-resources-{1}/js-bundles/",
-                ApplicationProperties.buildServerURL(request),
-                env.getProperty("resources.version")
-        ));
-        model.addAttribute("atlasHost", applicationProperties.buildAtlasHostURL(request));
-
-        model.addAttribute("content", gson.toJson(
-                experimentPageContentForExperiment(
-                        experiment, request, accessKey
-                )
-        ));
+        model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, request, accessKey)));
 
         return "foundation-experiment-page";
     }

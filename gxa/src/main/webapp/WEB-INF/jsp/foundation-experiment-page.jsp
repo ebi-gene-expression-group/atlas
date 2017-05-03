@@ -8,16 +8,16 @@
 <br/>
 <%@ include file="includes/experiment-description.jsp" %>
 <br/>
-<script src="${pathToFolderWithBundledResources}vendorCommons.bundle.js"></script>
-<script src="${pathToFolderWithBundledResources}experimentPage.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/experimentPage.bundle.js"></script>
 
 <div id="experiment-page" ></div>
 
 <script type="text/javascript">
     experimentPage.render({
-        atlasHost: "${not empty atlasHost? atlasHost: "https://www.ebi.ac.uk"}",
-        pathToFolderWithBundledResources: "${pathToFolderWithBundledResources}",
-        content:${content},
-        target: "experiment-page"
+        atlasUrl: '${pageContext.request.contextPath}/',
+        pathToFolderWithBundledResources: '${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/',
+        content: ${content},
+        target: 'experiment-page'
     });
 </script>
