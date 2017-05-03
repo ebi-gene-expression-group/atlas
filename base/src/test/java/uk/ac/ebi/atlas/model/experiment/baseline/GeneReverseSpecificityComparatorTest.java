@@ -52,7 +52,7 @@ public class GeneReverseSpecificityComparatorTest {
 
     @Before
     public void initSubject() {
-        subject = new BaselineProfileComparator(false, assayGroups, null, 0.5);
+        subject = new BaselineProfileComparator(false, assayGroups, assayGroups, 0.5);
     }
 
     @Test
