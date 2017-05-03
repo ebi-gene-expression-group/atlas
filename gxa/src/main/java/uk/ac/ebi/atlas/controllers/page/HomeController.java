@@ -4,13 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
-import static uk.ac.ebi.atlas.model.experiment.ExperimentType.*;
 import uk.ac.ebi.atlas.species.SpeciesInfoListService;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
@@ -19,8 +17,10 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import java.util.Random;
 
+import static uk.ac.ebi.atlas.model.experiment.ExperimentType.*;
+
 @Controller
-public class HomeController {
+public class HomeController extends HtmlExceptionHandlingController {
 
     private static final String NORMAL_SEPARATOR = "━━━━━━━━━━━━━━━━━";
     private static final String BEST_SEPARATOR = "(╯°□°）╯︵ ┻━┻";
@@ -31,9 +31,6 @@ public class HomeController {
     private final SpeciesPropertiesTrader speciesPropertiesTrader;
     private final ExperimentInfoListService experimentInfoListService;
     private final SpeciesInfoListService speciesInfoListService;
-
-    @Autowired
-    private Environment env;
 
     @Inject
     public HomeController(SpeciesPropertiesTrader speciesPropertiesTrader, ExperimentTrader experimentTrader){
