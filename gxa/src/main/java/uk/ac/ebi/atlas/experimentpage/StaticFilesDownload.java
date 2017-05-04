@@ -21,6 +21,11 @@ import java.util.Collection;
 
 public abstract class StaticFilesDownload<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
 
+    @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.DATA;
+    }
+
     @Inject
     private DataFileHub dataFileHub;
 
@@ -40,7 +45,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
         if(rData.toFile().exists()){
             b.add(new ExternallyAvailableContent(
                     rDataUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
-                    ExternallyAvailableContent.Description.create("Data", "icon-Rdata",
+                    ExternallyAvailableContent.Description.create("icon-Rdata",
                             "Summary of the expression results for this experiment ready to view in R"
             )));
         }
@@ -50,7 +55,7 @@ public abstract class StaticFilesDownload<E extends Experiment> extends External
         if(heatmap.toFile().exists()){
             b.add(new ExternallyAvailableContent(
                     heatmapUrl.replaceAll("\\{experimentAccession\\}", experiment.getAccession()),
-                    ExternallyAvailableContent.Description.create("Data", "icon-pdf",
+                    ExternallyAvailableContent.Description.create("icon-pdf",
                             "Heatmap of aggregated expression data"
                     )));
         }

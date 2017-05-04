@@ -23,7 +23,10 @@ import java.util.*;
 
 public abstract class ExperimentDesignFile<E extends Experiment> extends CanStreamSupplier<E> {
 
-
+    @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.DATA;
+    }
 
     private final DataFileHub dataFileHub;
     public ExperimentDesignFile(DataFileHub dataFileHub){
@@ -44,7 +47,7 @@ public abstract class ExperimentDesignFile<E extends Experiment> extends CanStre
         return Collections.singleton(
                 new ExternallyAvailableContent(
                         makeUri("experiment-design"),
-                        ExternallyAvailableContent.Description.create("Supplementary Information", "icon-experiment-design", "Experiment Design (tsv)"),
+                        ExternallyAvailableContent.Description.create("icon-experiment-design", "Experiment Design (tsv)"),
                         streamFile(experiment.getAccession() + "-experiment-design.tsv", new Function<Writer, Void>() {
                             @Nullable
                             @Override

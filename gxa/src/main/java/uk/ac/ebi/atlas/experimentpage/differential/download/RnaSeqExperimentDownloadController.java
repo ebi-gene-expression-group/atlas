@@ -32,6 +32,11 @@ import java.util.Collections;
 @Controller
 public class RnaSeqExperimentDownloadController extends CanStreamSupplier<DifferentialExperiment> {
 
+    @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.DATA;
+    }
+
     @InitBinder("preferences")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new DifferentialRequestPreferencesValidator());
@@ -118,7 +123,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
         preferences.setCutoff(1.0);
         return Collections.singleton(new ExternallyAvailableContent(
                 makeUri("query-results"),
-                ExternallyAvailableContent.Description.create("Data", "icon-tsv", "All expression results in the experiment"),
+                ExternallyAvailableContent.Description.create("icon-tsv", "All expression results in the experiment"),
                 streamFile(experiment.getAccession() + "-query-results.tsv",
                         fetchAndWriteGeneProfiles(experiment, preferences)
                 )

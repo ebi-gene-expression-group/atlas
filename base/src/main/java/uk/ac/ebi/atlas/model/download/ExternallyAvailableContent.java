@@ -68,12 +68,6 @@ public class ExternallyAvailableContent {
             return Joiner.on("/").join(sections);
         }
         /*
-        where on the download tab this would go?
-        I'm imagining this to be plot/data/supplementary info, sometimes followed by a contrast name for resources per contrast
-        Sometimes it will be irrelevant because it is called by something else e.g. extra link for experiment design
-        */
-        public abstract String group();
-        /*
         how to render?
          for images where we have icons it would be icon/ma
         for links: link
@@ -85,13 +79,13 @@ public class ExternallyAvailableContent {
          */
         public abstract String description();
 
-        public static Description create(String group, String type, String description){
-            return new AutoValue_ExternallyAvailableContent_Description(group, type, description);
+        public static Description create(String type, String description){
+            return new AutoValue_ExternallyAvailableContent_Description(type, description);
         }
 
         public JsonObject asJson(){
             JsonObject result = new JsonObject();
-            result.addProperty("group", group());
+            result.addProperty("group", "TODO deprecated");
             result.addProperty("type", type());
             result.addProperty("description", description());
             return result;
@@ -105,6 +99,8 @@ public class ExternallyAvailableContent {
         Tell the user what resources are available for this experiment
          */
         public abstract Collection<ExternallyAvailableContent> get(E experiment);
+
+        public abstract ContentType contentType();
 
         /*
         If o1.equals(o2) then o1.base() should equal o2.base()
@@ -150,5 +146,9 @@ public class ExternallyAvailableContent {
                 }
             });
         }
+    }
+
+    public enum ContentType {
+        DATA,SUPPLEMENTARY_INFORMATION,PLOTS
     }
 }

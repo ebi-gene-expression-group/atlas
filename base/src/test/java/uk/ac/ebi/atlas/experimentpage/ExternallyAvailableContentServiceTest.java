@@ -30,10 +30,19 @@ public class ExternallyAvailableContentServiceTest {
         }
     };
 
-    class MockSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
+    static final ExternallyAvailableContent.ContentType testContentType = ExternallyAvailableContent.ContentType.DATA;
+
+    abstract class TestSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
+        @Override
+        public ExternallyAvailableContent.ContentType contentType() {
+            return testContentType;
+        }
+    }
+
+    class MockSupplier extends TestSupplier {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
-            return Collections.singleton(new ExternallyAvailableContent(makeUri("test-resource"), ExternallyAvailableContent.Description.create("", "",""), streamFunction));
+            return Collections.singleton(new ExternallyAvailableContent(makeUri("test-resource"), ExternallyAvailableContent.Description.create("",""), streamFunction));
         }
     }
 
@@ -47,16 +56,16 @@ public class ExternallyAvailableContentServiceTest {
         }
     };
 
-    class MockDifferentSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
+    class MockDifferentSupplier extends TestSupplier {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
-            return Collections.singleton(new ExternallyAvailableContent(makeUri("different-resource"), ExternallyAvailableContent.Description.create("", "",""), differentStreamFunction));
+            return Collections.singleton(new ExternallyAvailableContent(makeUri("different-resource"), ExternallyAvailableContent.Description.create("",""), differentStreamFunction));
         }
     }
 
     ExternallyAvailableContent.Supplier<Experiment> differentSupplier = new MockDifferentSupplier();
 
-    class MockNullSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
+    class MockNullSupplier extends TestSupplier {
         @Override
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
             return ImmutableList.of();
@@ -66,7 +75,7 @@ public class ExternallyAvailableContentServiceTest {
     ExternallyAvailableContent.Supplier<Experiment> nullSupplier = new MockNullSupplier();
 
 
-    class RedirectingSupplier extends ExternallyAvailableContent.Supplier<Experiment> {
+    class RedirectingSupplier extends TestSupplier {
 
         String redirectRoot;
 
@@ -77,7 +86,7 @@ public class ExternallyAvailableContentServiceTest {
         public Collection<ExternallyAvailableContent> get(Experiment experiment) {
             return ImmutableList.of(
                     new ExternallyAvailableContent(redirectRoot+"/"+experiment.getAccession(),
-                            ExternallyAvailableContent.Description.create("", "",""))
+                            ExternallyAvailableContent.Description.create("",""))
             );
         }
     }
@@ -89,10 +98,16 @@ public class ExternallyAvailableContentServiceTest {
 
     ExternallyAvailableContentService<Experiment> subject;
 
-    public void testNoResourcesFor(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers){
+    public void testNoResourcesListed(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers){
         subject = new ExternallyAvailableContentService<>(suppliers);
-        List<?> result = subject.list(experiment);
+        List<?> result = subject.list(experiment, testContentType);
         assertThat(result, Matchers.empty());
+    }
+
+    public void testSomeResourcesListed(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers){
+        subject = new ExternallyAvailableContentService<>(suppliers);
+        List<?> result = subject.list(experiment, testContentType);
+        assertThat(result, Matchers.not(Matchers.empty()));
     }
 
     public void testNotFound(List<ExternallyAvailableContent.Supplier<Experiment>> suppliers, ExternallyAvailableContent externallyAvailableContent){
@@ -118,12 +133,12 @@ public class ExternallyAvailableContentServiceTest {
 
     @Test
     public void noSuppliersReturnsEmptyList() {
-        testNoResourcesFor(ImmutableList.<ExternallyAvailableContent.Supplier<Experiment>>of());
+        testNoResourcesListed(ImmutableList.<ExternallyAvailableContent.Supplier<Experiment>>of());
     }
 
     @Test
     public void noResourcesReturnsEmptyList() {
-        testNoResourcesFor(ImmutableList.of(nullSupplier));
+        testNoResourcesListed(ImmutableList.of(nullSupplier));
     }
 
     @Test
@@ -133,6 +148,13 @@ public class ExternallyAvailableContentServiceTest {
         testNotFound(ImmutableList.of(differentSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(nullSupplier, differentSupplier), externallyAvailableContent);
         testNotFound(ImmutableList.of(redirectingSupplier), externallyAvailableContent);
+    }
+
+    @Test
+    public void supplierListsResources() {
+        testSomeResourcesListed(ImmutableList.of(supplier));
+        testSomeResourcesListed(ImmutableList.of(supplier, nullSupplier));
+        testSomeResourcesListed(ImmutableList.of(nullSupplier, supplier));
     }
 
     @Test
@@ -174,6 +196,23 @@ public class ExternallyAvailableContentServiceTest {
         assertThat(new RedirectingSupplier("https://www.ebi.ac.uk/gxa/experiments").get(experiment).iterator().next().uri.getSchemeSpecificPart(),
                 is("https://www.ebi.ac.uk/gxa/experiments/"+experiment.getAccession()));
 
+    }
+
+    @Test
+    public void supplierWithDifferentTypeIsFilteredOut(){
+        class MockSupplierWithDifferentContentType extends MockSupplier {
+
+            @Override
+            public ExternallyAvailableContent.ContentType contentType() {
+                return ExternallyAvailableContent.ContentType.PLOTS;
+            }
+        }
+
+        ExternallyAvailableContent.Supplier<Experiment> supplierWithDifferentContentType = new MockSupplierWithDifferentContentType();
+
+        testNoResourcesListed(ImmutableList.of(supplierWithDifferentContentType));
+        testSomeResourcesListed(ImmutableList.of(supplier, supplierWithDifferentContentType));
+        testSomeResourcesListed(ImmutableList.of(supplierWithDifferentContentType, supplier));
     }
 
 

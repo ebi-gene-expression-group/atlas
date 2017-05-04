@@ -91,7 +91,7 @@ public class ExternallyAvailableContentController {
                        HttpServletRequest request) {
 
         return gson.toJson(
-                contentAsJson(expressionAtlasContentService.list(experimentAccession, accessKey),
+                contentAsJson(expressionAtlasContentService.list(experimentAccession, accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION),
                 experimentAccession, accessKey, request
                 ));
     }

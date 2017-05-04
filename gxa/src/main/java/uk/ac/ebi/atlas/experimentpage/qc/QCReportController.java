@@ -28,6 +28,11 @@ import java.util.Collection;
 @Controller
 public class QCReportController extends ExternallyAvailableContent.Supplier<MicroarrayExperiment> {
 
+    @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION;
+    }
+
     private static final String QC_REPORT_URL = "/experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
     public static final String getQcReportUrl(HttpServletRequest request, String experimentAccession,
@@ -67,8 +72,6 @@ public class QCReportController extends ExternallyAvailableContent.Supplier<Micr
                     .replace("{resource:.*}", "index.html")
                     ,
                     ExternallyAvailableContent.Description.create(
-                            ExternallyAvailableContent.Description.join("Supplementary Information",
-                                    arrayDesignTrader.getArrayDesignByName(arrayDesign)),
                             "icon-qc", MessageFormat.format("Microarray quality metrics report for {0} on array design {1}", experiment.getAccession(), arrayDesign)
                     )));
 

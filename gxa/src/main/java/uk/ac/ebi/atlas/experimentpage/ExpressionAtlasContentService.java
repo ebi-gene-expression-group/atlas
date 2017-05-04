@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
@@ -16,6 +17,8 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.ContrastImageSupplier;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+
+import static uk.ac.ebi.atlas.model.download.ExternallyAvailableContent.ContentType.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -59,6 +62,7 @@ public class ExpressionAtlasContentService {
             LinkToArrayExpress.Differential differentialLinkToArrayExpress,
             LinkToArrayExpress.Microarray microarrayLinkToArrayExpress,
             ExperimentTrader experimentTrader) {
+
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
@@ -114,17 +118,17 @@ public class ExpressionAtlasContentService {
         }
     }
 
-    public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey) {
+    public List<ExternallyAvailableContent> list(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType) {
         Experiment<?> experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         if (experiment.getType().isProteomicsBaseline()) {
-            return proteomicsBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment);
+            return proteomicsBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment, contentType);
         } else if (experiment.getType().isRnaSeqBaseline()) {
-            return rnaSeqBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment);
+            return rnaSeqBaselineExperimentExternallyAvailableContentService.list((BaselineExperiment) experiment, contentType);
         } else if (experiment.getType().isRnaSeqDifferential()) {
-            return rnaSeqDifferentialExperimentExternallyAvailableContentService.list((DifferentialExperiment) experiment);
+            return rnaSeqDifferentialExperimentExternallyAvailableContentService.list((DifferentialExperiment) experiment, contentType);
         } else {
-            return microarrayExperimentExternallyAvailableContentService.list((MicroarrayExperiment) experiment);
+            return microarrayExperimentExternallyAvailableContentService.list((MicroarrayExperiment) experiment, contentType);
         }
     }
 

@@ -15,10 +15,15 @@ import java.util.Collections;
 public abstract class LinkToArrayExpress<E extends Experiment> extends ExternallyAvailableContent.Supplier<E> {
 
     @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION;
+    }
+
+    @Override
     public Collection<ExternallyAvailableContent> get(E experiment) {
         return Collections.singleton(new ExternallyAvailableContent("https://www.ebi.ac.uk/arrayexpress/experiments/"+experiment.getAccession(),
                 ExternallyAvailableContent.Description.create(
-                        "Supplementary Information", "icon-ae", MessageFormat.format("ArrayExpress: experiment {0}", experiment.getAccession())
+                        "icon-ae", MessageFormat.format("ArrayExpress: experiment {0}", experiment.getAccession())
                 )));
     }
 
@@ -43,7 +48,7 @@ public abstract class LinkToArrayExpress<E extends Experiment> extends Externall
             for(String arrayDesign : experiment.getArrayDesignAccessions()){
                 b.add(new ExternallyAvailableContent("https://www.ebi.ac.uk/arrayexpress/arrays/"+arrayDesign,
                         ExternallyAvailableContent.Description.create(
-                                "Supplementary Information", "icon-ae", MessageFormat.format("ArrayExpress: array design {0}", arrayDesign)
+                                "icon-ae", MessageFormat.format("ArrayExpress: array design {0}", arrayDesign)
                )));
             }
             return b.build();

@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ExternallyAvailableContentService<E extends Experiment> {
         this.suppliers = suppliers;
     }
 
-    private Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>> makeTransform(final E experiment){
+    private Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>> extractContentFromSupplier(final E experiment){
         return new Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>>() {
             @Override
             public Iterable<ExternallyAvailableContent> apply(ExternallyAvailableContent.Supplier<E> supplier) {
@@ -43,8 +44,13 @@ public class ExternallyAvailableContentService<E extends Experiment> {
         }).get(experiment, uri).stream;
     }
 
-    public List<ExternallyAvailableContent> list(final E experiment){
-        return FluentIterable.from(suppliers).transformAndConcat(makeTransform(experiment)).toList();
+    public List<ExternallyAvailableContent> list(final E experiment, final ExternallyAvailableContent.ContentType contentType){
+        return FluentIterable.from(suppliers).filter(new Predicate<ExternallyAvailableContent.Supplier<E>>() {
+            @Override
+            public boolean apply(@Nullable ExternallyAvailableContent.Supplier<E> eSupplier) {
+                return eSupplier.contentType().equals(contentType);
+            }
+        }).transformAndConcat(extractContentFromSupplier(experiment)).toList();
     }
 
 }

@@ -21,6 +21,11 @@ import java.util.List;
 
 public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExperiment> extends CanStreamSupplier<E> {
 
+    @Override
+    public ExternallyAvailableContent.ContentType contentType() {
+        return ExternallyAvailableContent.ContentType.DATA;
+    }
+
     @Named
     public static class RnaSeq extends DifferentialSecondaryDataFiles<DifferentialExperiment> {
 
@@ -37,7 +42,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             if(analytics.exists()){
                 b.add(new ExternallyAvailableContent(
                                 makeUri("analytics"),
-                                ExternallyAvailableContent.Description.create("Data", "icon-tsv",
+                                ExternallyAvailableContent.Description.create("icon-tsv",
                                         "All analytics for the experiment"
                                 ),
                                 streamFile(experiment.getAccession()+"-analytics.tsv",
@@ -51,7 +56,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             if(rawCounts.exists()){
                 b.add(new ExternallyAvailableContent(
                                 makeUri("raw-counts"),
-                                ExternallyAvailableContent.Description.create("Data", "icon-tsv",
+                                ExternallyAvailableContent.Description.create("icon-tsv",
                                         "All the raw counts for the experiment"
                                 ),
                                 streamFile(experiment.getAccession()+"-raw-counts.tsv",
@@ -90,7 +95,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             if(analytics.size()>0){
                 b.add(new ExternallyAvailableContent(
                         makeUri("analytics"),
-                        ExternallyAvailableContent.Description.create("Data", "icon-tsv",
+                        ExternallyAvailableContent.Description.create("icon-tsv",
                                 "All the analytics for this experiment"
                                 ),
                         analytics.size() == 1 ? streamFile(analytics.get(0)) : streamFolder(experiment.getAccession()+"-analytics", analytics)
@@ -112,7 +117,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             if(logFoldChanges.size()>0){
                 b.add(new ExternallyAvailableContent(
                         makeUri("log-fold-changes"),
-                        ExternallyAvailableContent.Description.create("Data", "icon-tsv",
+                        ExternallyAvailableContent.Description.create("icon-tsv",
                                 "All the log fold changes for this experiment"
                         ),
                         logFoldChanges.size() == 1 ? streamFile( logFoldChanges.get(0)) : streamFolder(experiment.getAccession()+"-log-fold-changes", logFoldChanges)
@@ -135,7 +140,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
             if(normalizedExpressions.size()>0){
                 b.add(new ExternallyAvailableContent(
                         makeUri("normalized-expressions"),
-                        ExternallyAvailableContent.Description.create("Data", "icon-tsv",
+                        ExternallyAvailableContent.Description.create("icon-tsv",
                                 "All the normalized expressions for this experiment"
                         ),
                         normalizedExpressions.size() == 1 ? streamFile( normalizedExpressions.get(0)) : streamFolder(experiment.getAccession()+"-normalized-expressions", normalizedExpressions)
