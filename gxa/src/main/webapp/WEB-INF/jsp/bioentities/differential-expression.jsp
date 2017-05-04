@@ -16,12 +16,12 @@
     <c:if test="${hasDifferentialResults}">
     $(function() {
         expressionAtlasDifferentialExpression({
-            target: 'gxaDifferentialTab',
-            identifier: '${identifier}',
-            query: '${query}',
-            geneQuery: '${geneQuery}',
-            conditionQuery: '${conditionQuery}',
-            species: '${species}'
+            target: "gxaDifferentialTab",
+            identifier: "${identifier}",
+            query: "${query}",
+            geneQuery: "${geneQuery}",
+            conditionQuery: "${conditionQuery}",
+            species: "${species}"
         });
     });
     </c:if>
