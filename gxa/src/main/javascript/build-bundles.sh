@@ -30,12 +30,14 @@ do
     cd $dir
         for module in ${all_packages[*]}
         do
-            rm -rf node_modules/expression-atlas-$module
+            rm -rf node_modules/expression-atlas-$module*
         done
         for module in ${npm_packages[*]}
         do
             rm -rf node_modules/$module
         done
+	rm -rf node_modules/highcharts*
+
     npm install
     
 #    ../../patch-highcharts.sh
@@ -51,6 +53,7 @@ for module in ${npm_packages[*]}
 do
     rm -rf node_modules/$module
 done
+rm -rf node_modules/highcharts*
 
 npm install
 
