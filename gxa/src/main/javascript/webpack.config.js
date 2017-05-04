@@ -102,7 +102,7 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.js$/, loader: 'babel', query: {presets: ['es2015'], plugins:['transform-object-rest-spread']}, exclude: /node_modules\/(?!(expression-atlas|anatomogram|react-ebi-species))/},
-            {test: /\.jsx$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
+            {test: /\.jsx$/, loader: 'babel', query: {presets: ['es2015', 'react'], plugins:['transform-object-rest-spread']}},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
             {test: /\.json$/, loader: 'json'},
