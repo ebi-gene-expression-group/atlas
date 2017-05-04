@@ -23,13 +23,14 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Controller
 public class ExternallyAvailableContentController {
 
-    private static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources";
+    private static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources/{contentType}";
     private static final String STREAM_RESOURCES_URL = "/experiments-content/{experimentAccession}/resources/**";
 
-    public static final String listResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey){
+    public static final String listResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
         return ApplicationProperties.buildServerURL(request)
                 + LIST_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
+                .replace("{contentType}", contentType.name())
                 + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
     }
 
@@ -87,11 +88,11 @@ public class ExternallyAvailableContentController {
 
     @ResponseBody
     @RequestMapping(value = LIST_RESOURCES_URL, method = RequestMethod.GET)
-    public String list(@PathVariable String experimentAccession, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
+    public String list(@PathVariable String experimentAccession,@PathVariable String contentType, @RequestParam(value = "accessKey", defaultValue = "") String accessKey,
                        HttpServletRequest request) {
 
         return gson.toJson(
-                contentAsJson(expressionAtlasContentService.list(experimentAccession, accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION),
+                contentAsJson(expressionAtlasContentService.list(experimentAccession, accessKey, ExternallyAvailableContent.ContentType.valueOf(contentType)),
                 experimentAccession, accessKey, request
                 ));
     }

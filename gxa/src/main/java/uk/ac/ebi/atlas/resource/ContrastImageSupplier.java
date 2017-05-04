@@ -19,7 +19,7 @@ import java.util.List;
 public abstract class ContrastImageSupplier<E extends DifferentialExperiment> extends ExternallyAvailableContent.Supplier<E>{
 
     @Override
-    public ExternallyAvailableContent.ContentType contentType() {
+    public ExternallyAvailableContent.ContentType contentType(){
         return ExternallyAvailableContent.ContentType.PLOTS;
     }
 
@@ -27,7 +27,7 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
     ContrastImageFactory contrastImageFactory;
 
 
-    ExternallyAvailableContent.Description description(ResourceType resourceType){
+    ExternallyAvailableContent.Description description(ResourceType resourceType, Contrast contrast){
         String description;
         String type;
         switch (resourceType) {
@@ -53,6 +53,7 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
         }
 
         return ExternallyAvailableContent.Description.create(
+                contrast.getDisplayName(),
                 type,
                 description
         );
@@ -76,7 +77,7 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
                     if(externalImage.exists()){
                         b.add(new ExternallyAvailableContent
                                 (makeUri(MessageFormat.format("contrast_image-{0}-{1}", resourceType.name(), contrast.getId())),
-                                        description(resourceType) , externalImage.get()
+                                        description(resourceType, contrast) , externalImage.get()
                                 ));
                     }
                 }
@@ -102,7 +103,7 @@ public abstract class ContrastImageSupplier<E extends DifferentialExperiment> ex
                         if(externalImage.exists()){
                             b.add(new ExternallyAvailableContent
                                     (makeUri(MessageFormat.format("contrast_image-{0}-{1}-{2}", resourceType.name(), contrast.getId(), arrayDesign)),
-                                            description(resourceType) , externalImage.get()
+                                            description(resourceType, contrast) , externalImage.get()
                                     ));
                         }
                     }

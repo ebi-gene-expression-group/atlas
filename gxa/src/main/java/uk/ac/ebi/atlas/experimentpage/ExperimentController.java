@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -72,21 +73,49 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 BaselineBarChartController.geneDistributionUrl(request, experiment.getAccession(), accessKey))
         );
 
+        if(experiment.getType().isDifferential()){
+            availableTabs.add(
+                    customContentTab("resources", "Plots", "url",
+                            new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                                    request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.PLOTS)))
+            );
+        }
+
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
                             ExperimentDesignFile.makeUrl(request,experiment.getAccession(), accessKey))
             );
         }
+
+        availableTabs.add(
+                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, request, accessKey))
+        );
+
+        if(experiment.getType().isDifferential()){
+            availableTabs.add(
+                    customContentTab("resources", "Download", "url",
+                            new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                                    request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
+            );
+        }
+
+        result.add("tabs", availableTabs);
+
+        return result;
+    }
+
+    private JsonArray supplementaryInformationTabs(final Experiment experiment, final HttpServletRequest request, final String accessKey) {
+        JsonArray supplementaryInformationTabs = new JsonArray();
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
-            availableTabs.add(customContentTab("static-table", "Analysis Methods", "data",
+            supplementaryInformationTabs.add(customContentTab("static-table", "Analysis Methods", "data",
                     formatTable(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()
                             )
             ));
         }
         if(experiment.getType().isMicroarray() &&
                 dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()){
-            availableTabs.add(customContentTab("qc-report", "QC Report",
+            supplementaryInformationTabs.add(customContentTab("qc-report", "QC Report",
                     "reports",
                     pairsToArrayOfObjects("name", "url",
                             FluentIterable.from(new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
@@ -106,16 +135,14 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             ));
         }
 
-        availableTabs.add(
+        supplementaryInformationTabs.add(
             customContentTab("resources", "Resources", "url",
                 new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                        request, experiment.getAccession(), accessKey)))
+                        request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
         );
-
-        result.add("tabs", availableTabs);
-
-        return result;
+        return supplementaryInformationTabs;
     }
+
 
     private JsonArray formatTable(List<String []> rows){
 

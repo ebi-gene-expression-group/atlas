@@ -62,11 +62,9 @@ public class ExternallyAvailableContent {
     public abstract static class Description {
 
         /*
-        A strong hint to developers that if they have a multi-part group or type they should use this
+        Where in the resources tab this should go? Optional because usually the content list is not further split into sections
          */
-        public static String join (String ... sections){
-            return Joiner.on("/").join(sections);
-        }
+        public abstract String group();
         /*
         how to render?
          for images where we have icons it would be icon/ma
@@ -80,12 +78,16 @@ public class ExternallyAvailableContent {
         public abstract String description();
 
         public static Description create(String type, String description){
-            return new AutoValue_ExternallyAvailableContent_Description(type, description);
+            return create("", type, description);
+        }
+
+        public static Description create(String group, String type, String description){
+            return new AutoValue_ExternallyAvailableContent_Description(group, type, description);
         }
 
         public JsonObject asJson(){
             JsonObject result = new JsonObject();
-            result.addProperty("group", "TODO deprecated");
+            result.addProperty("group", group());
             result.addProperty("type", type());
             result.addProperty("description", description());
             return result;
