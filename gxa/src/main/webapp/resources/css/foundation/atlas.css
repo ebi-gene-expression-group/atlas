@@ -330,3 +330,10 @@ a.baseline {
     font-weight: bold;
 }
 
+.tab-disabled {
+    pointer-events: none;
+}
+
+.tab-disabled a {
+    color: gray;
+}

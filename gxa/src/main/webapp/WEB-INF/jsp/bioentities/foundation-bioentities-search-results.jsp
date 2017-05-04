@@ -16,15 +16,30 @@
     </h3>
 </section>
 
+<c:choose>
+    <c:when test="${hasBaselineResults && hasDifferentialResults}">
+        <c:set var="baselineTabClass" value="is-active"/>
+        <c:set var="differentialTabClass" value=""/>
+    </c:when>
+    <c:when test="${hasBaselineResults && !hasDifferentialResults}">
+        <c:set var="baselineTabClass" value="is-active"/>
+        <c:set var="differentialTabClass" value="tab-disabled"/>
+    </c:when>
+    <c:when test="${!hasBaselineResults && hasDifferentialResults}">
+        <c:set var="baselineTabClass" value="tab-disabled"/>
+        <c:set var="differentialTabClass" value="is-active"/>
+    </c:when>
+</c:choose>
+
 <section class="gxaSection">
     <ul class="tabs" data-tabs role="tablist" data-deep-link="true" id="experiments-tabs">
-        <c:if test="${hasBaselineResults}"><li title="Baseline experiments" class="tabs-title is-active" role="presentation">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}#base" role="tab" id="baselineTabLink">Baseline expression</a></li></c:if>
-        <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="tabs-title" role="presentation">Baseline expression</li></c:if>
+        <li title="Baseline experiments" class="tabs-title ${baselineTabClass}" role="presentation">
+            <a href="${requestScope['javax.servlet.forward.request_uri']}#base" role="tab" id="baselineTabLink">Baseline expression</a>
+        </li>
 
-        <c:if test="${hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a></li></c:if>
-        <c:if test="${!hasDifferentialResults}"><li title="Differential experiments" class="tabs-title" role="presentation"><a href="">Differential expression</a></li></c:if>
+        <li title="Differential experiments" class="tabs-title ${differentialTabClass}" role="presentation">
+            <a href="${requestScope['javax.servlet.forward.request_uri']}#diff" data-toggle="tab" id="differentialTabLink">Differential expression</a>
+        </li>
     </ul>
 
     <!-- Tab panes -->
