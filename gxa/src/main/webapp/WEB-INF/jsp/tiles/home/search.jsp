@@ -17,7 +17,7 @@
                     </div>
                     <div class="row column small">
                         Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>
                     </div>
                 </div>
                 <div class="small-12 medium-4 large-2 columns">
