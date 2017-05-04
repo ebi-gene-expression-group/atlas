@@ -38,7 +38,7 @@ do
         done
     npm install
     
-    ../../patch-highcharts.sh
+#    ../../patch-highcharts.sh
     
     popd > /dev/null
 done
@@ -54,7 +54,7 @@ done
 
 npm install
 
-./patch-highcharts.sh
+#./patch-highcharts.sh
 
 npm run $1
 
