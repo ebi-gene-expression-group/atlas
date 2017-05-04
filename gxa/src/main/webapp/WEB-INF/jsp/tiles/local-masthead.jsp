@@ -17,7 +17,7 @@
     <!-- local-search -->
     <div class="hide-for-small-only small-4 columns">
         <!-- EBI Framework standard search -->
-        <form id="local-search" name="local-search" method="get" action="query">
+        <form id="local-search" name="local-search" method="get" action="search">
             <h4>Search this project</h4>
             <fieldset>
                 <div class="input-group" style="margin-bottom: 0">
@@ -28,10 +28,10 @@
                 </div>
                 <small class="show-for-large">
                     <!-- Include some example searchterms - keep them short and few. -->
-                    <span>Examples: <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22ASPM%22%7D%5D">ASPM</a>,
-                            <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22apoptosis%22%7D%5D">Apoptosis</a>,
-                            <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22ENSMUSG00000021789%22%7D%5D">ENSMUSG00000021789</a>,
-                            <a href="${pageContext.request.contextPath}/query?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a></span>
+                    <span>Examples: <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22ASPM%22%7D%5D">ASPM</a>,
+                            <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22apoptosis%22%7D%5D">Apoptosis</a>,
+                            <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22ENSMUSG00000021789%22%7D%5D">ENSMUSG00000021789</a>,
+                            <a href="${pageContext.request.contextPath}/search?geneQuery=%5B%7B%22value%22%3A%22zinc%20finger%22%7D%5D">zinc finger</a></span>
                 </small>
 
             </fieldset>
