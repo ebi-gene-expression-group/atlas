@@ -6,29 +6,18 @@
     </div>
 
     <div class="columns small-10">
-        <h3>Analysing gene expression in tissues across species under different biological conditions</h3>
+        <h3>Exploring gene expression results across species under different biological conditions</h3>
         <p>
-            The Expression Atlas provides information on gene expression patterns under different biological
-            conditions. Gene expression data is re-analysed in-house to detect genes showing interesting baseline
-            and differential expression patterns.
+             Expression Atlas is an open science resource that gives users a powerful way to find information about gene and protein expression across species and biological conditions such as different tissues, cell types, developmental stages and diseases among others. Expression Atlas aims to help answering questions such as ‘where is a certain gene expressed?’ or ‘how its expression changes in a disease?’.
         </p>
         <!-- SP: customise animation  http://foundation.zurb.com/sites/docs/motion-ui.html-->
         <div id="description-more" data-toggler=".is-visible" style="display:none;">
             <p>
-                Expression Atlas provides information about gene and protein expression in animal and plant samples of
-                different cell types, organism parts, developmental stages, diseases and other conditions. It consists
-                of selected microarray and RNA-sequencing studies from ArrayExpress, which have been manually curated,
-                annotated with ontology terms, checked for high quality and processed using standardised analysis
-                methods. Since the last update, Atlas has grown seven-fold (1572 studies as of August 2015), and
-                incorporates baseline expression profiles of tissues from Human Protein Atlas, GTEx and FANTOM5, and of
-                cancer cell lines from ENCODE, CCLE and Genentech projects. Plant studies constitute a quarter of Atlas
-                data. For genes of interest, the user can view baseline expression in tissues, and differential
-                expression for biologically meaningful pairwise comparisons—estimated using consistent methodology
-                across all of Atlas. Our first proteomics study in human tissues is now displayed alongside
-                transcriptomics data in the same tissues. Novel analyses and visualisations include: ‘enrichment’ in
-                each differential comparison of GO terms, Reactome, Plant Reactome pathways and InterPro domains;
-                hierarchical clustering (by baseline expression) of most variable genes and experimental conditions;
-                and, for a given gene-condition, distribution of baseline expression across biological replicates.
+                Expression Atlas provides gene expression results on more than 3,000 experiments (microarray and RNA-sequencing) from 40 different organisms, including metazoans and plants. Expression profiles of tissues from Human Protein Atlas, GTEx and FANTOM5, and of cancer cell lines from ENCODE, CCLE and Genentech projects can be explored in Expression Atlas. All data are manually curated, annotated to ontology terms allowing for much richer queries and re-analysed using standardised methods.
+            </p>
+
+            <p>
+                Expression Atlas visualises gene expression results using heatmaps showing gene expression levels across different biological conditions. Novel analyses and visualisations include: ‘enrichment’ in each differential comparison of GO terms, Reactome, Plant Reactome pathways and InterPro domains; hierarchical clustering (by baseline expression) of most variable genes and experimental conditions; and, for a given gene-condition, distribution of baseline expression across biological replicates.
             </p>
         </div>
 
