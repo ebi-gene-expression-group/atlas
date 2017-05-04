@@ -10,7 +10,7 @@
                         <h3><span class="icon icon-conceptual" data-icon="l"></span></h3>
                     </div>
                     <div class="media-object-section middle">
-                        <p>The RNASeq-er API—a gateway to systematically updated analysis of public RNA-seq data</i>, 22 March 2017.</p>
+                        <p>The RNASeq-er API—a gateway to systematically updated analysis of public RNA-seq data<i>Bioinformatics</i>, 22 March 2017.</p>
                     </div>
                 </div>
             </a>
