@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="protocol" value="${pageContext.request.scheme}://"/>
+<c:set var="atlasHost" value="${pageContext.request.serverName}"/>
+<c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <div class="callout browse-by padding-bottom-for-button" data-equalizer-watch>
     <ul class="tabs" data-tabs id="browse-by-tabs">
         <li class="tabs-title is-active"><a href="#by-species" aria-selected="true">By species</a></li>
@@ -45,22 +51,22 @@
     });
 
     expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
+        atlasUrl: '${protocol}${atlasHost}${serverPort}/${contextPath}/',
         speciesInfoList: ${speciesList},
         container: document.getElementById('by-species')
     });
     expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
+        atlasUrl: '${protocol}${atlasHost}${serverPort}/${contextPath}/',
         speciesInfoList : ${animalsList},
         container: document.getElementById('by-animals')
     });
     expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
+        atlasUrl: '${protocol}${atlasHost}${serverPort}/${contextPath}/',
         speciesInfoList : ${plantsList},
         container: document.getElementById('by-plants')
     });
     expressionAtlasBrowseBySpecies.render({
-        atlasUrl: "${pageContext.request.contextPath}/",
+        atlasUrl: '${protocol}${atlasHost}${serverPort}/${contextPath}/',
         speciesInfoList : ${fungiList},
         container: document.getElementById('by-fungi')
     });
