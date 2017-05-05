@@ -30,7 +30,6 @@ public class HeatmapDataToJsonService {
 
     public JsonObject configAsJsonObject(HttpServletRequest request, Map<String, Object> model) {
         JsonObject config = new JsonObject();
-        config.addProperty("atlasHost", applicationProperties.buildAtlasHostURL(request));
         config.addProperty("contextRoot", request.getContextPath());
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
