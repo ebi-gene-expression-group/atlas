@@ -86,7 +86,7 @@ a.clear {
 
 /** End Foundation **/
 
-.combo:hover, .publication-list .media-object:hover {
+.combo:hover, .publication-list .media-object:hover, .tools .media-object:hover  {
     color: #0A0A0A;
     background-color: aliceblue;
     border-radius: 6px;
@@ -173,7 +173,10 @@ a.baseline {
     color: #3a4fcb;
 }
 
-.publication-list .icon-conceptual:before {
+.publication-list .icon-conceptual:before,
+.tools .icon-conceptual:before,
+.tools .icon-functional:before,
+.tools .icon-generic:before {
     color: #5688B3;
 }
 
