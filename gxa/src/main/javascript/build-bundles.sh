@@ -48,6 +48,7 @@ for module in ${npm_packages[*]}
 do
     rm -rf node_modules/$module
 done
+rm -rf node_modules/highcharts
 
 npm install
 
