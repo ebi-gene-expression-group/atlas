@@ -67,6 +67,11 @@
         <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
     </definition>
 
+    <definition name="request-diagnostics" extends="foundation-base">
+        <put-attribute name="title" value="Search results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/views/request-diagnostics.jsp"/>
+    </definition>
+
     <definition name="qc-template" template="/WEB-INF/jsp/qc-template.jsp">
     </definition>
 
