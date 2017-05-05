@@ -92,13 +92,11 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                 customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, request, accessKey))
         );
 
-        if(experiment.getType().isDifferential()){
-            availableTabs.add(
-                    customContentTab("resources", "Download", "url",
-                            new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                    request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
-            );
-        }
+        availableTabs.add(
+                customContentTab("resources", "Download", "url",
+                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                                request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
+        );
 
         result.add("tabs", availableTabs);
 
@@ -113,6 +111,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                             )
             ));
         }
+        supplementaryInformationTabs.add(
+                customContentTab("resources", "Resources", "url",
+                        new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
+                                request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
+        );
+
         if(experiment.getType().isMicroarray() &&
                 dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder.existsAndIsNonEmpty()){
             supplementaryInformationTabs.add(customContentTab("qc-report", "QC Report",
@@ -135,11 +139,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             ));
         }
 
-        supplementaryInformationTabs.add(
-            customContentTab("resources", "Resources", "url",
-                new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                        request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
-        );
         return supplementaryInformationTabs;
     }
 

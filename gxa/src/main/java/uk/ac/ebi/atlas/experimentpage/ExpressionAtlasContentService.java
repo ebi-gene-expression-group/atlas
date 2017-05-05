@@ -46,7 +46,6 @@ public class ExpressionAtlasContentService {
             BaselineProfilesWriterService.RnaSeq rnaSeqBaselineProfilesWriterService,
             ContrastImageSupplier.RnaSeq rnaSeqDifferentialContrastImageSupplier,
             ContrastImageSupplier.Microarray microarrayContrastImageSupplier,
-            QCReportController qcReportController,
             StaticFilesDownload.Baseline baselineStaticFilesDownload,
             StaticFilesDownload.RnaSeq rnaSeqDifferentialStaticFilesDownload,
             StaticFilesDownload.Microarray microarrayStaticFilesDownload,
@@ -96,7 +95,6 @@ public class ExpressionAtlasContentService {
                                 microarrayExperimentDownloadController,
                                 microarraySecondaryDataFiles,
                                 microarrayStaticFilesDownload,
-                                qcReportController,
                                 microarrayExperimentDesignFile,
                                 microarrayLinkToArrayExpress,
                                 microarrayContrastImageSupplier

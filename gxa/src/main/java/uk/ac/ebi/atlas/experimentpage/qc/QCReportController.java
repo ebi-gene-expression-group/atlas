@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.qc;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
-import com.google.common.collect.ImmutableList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
-import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
-import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -23,15 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.Collection;
 
 @Controller
-public class QCReportController extends ExternallyAvailableContent.Supplier<MicroarrayExperiment> {
-
-    @Override
-    public ExternallyAvailableContent.ContentType contentType() {
-        return ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION;
-    }
+public class QCReportController {
 
     private static final String QC_REPORT_URL = "/experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
@@ -50,34 +41,14 @@ public class QCReportController extends ExternallyAvailableContent.Supplier<Micr
 
     private ExperimentTrader experimentTrader;
     private final DataFileHub dataFileHub;
-    private ArrayDesignTrader arrayDesignTrader;
 
     @Inject
     public QCReportController(ExperimentTrader experimentTrader,
-                              DataFileHub dataFileHub, ArrayDesignTrader arrayDesignTrader) {
+                              DataFileHub dataFileHub) {
         this.experimentTrader = experimentTrader;
         this.dataFileHub = dataFileHub;
-        this.arrayDesignTrader = arrayDesignTrader;
     }
 
-    @Override
-    public Collection<ExternallyAvailableContent> get(final MicroarrayExperiment experiment) {
-        ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
-        for (final String arrayDesign : new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
-                .getArrayDesignsThatHaveQcReports()) {
-            b.add(new ExternallyAvailableContent(
-                    QC_REPORT_URL
-                    .replace("{experimentAccession}", experiment.getAccession())
-                    .replace("{arrayDesign}", arrayDesign)
-                    .replace("{resource:.*}", "index.html")
-                    ,
-                    ExternallyAvailableContent.Description.create(
-                            "icon-qc", MessageFormat.format("Microarray quality metrics report for {0} on array design {1}", experiment.getAccession(), arrayDesign)
-                    )));
-
-        }
-        return b.build();
-    }
 
     /**
      * @param request
