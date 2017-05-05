@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model.experiment.differential;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
-import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
 import java.util.Collection;
@@ -11,16 +10,19 @@ import java.util.Comparator;
 
 public class DifferentialProfileComparator<T extends DifferentialProfile> implements Comparator<T> {
 
-    private boolean isSpecific;
-    private Collection<Contrast> selectedQueryContrasts;
-    private Collection<Contrast> allQueryContrasts;
-    private Regulation regulation;
+    private final boolean isSpecific;
+    private final Collection<Contrast> selectedQueryContrasts;
+    private final Collection<Contrast> allQueryContrasts;
+    private final Collection<Contrast> nonSelectedQueryContrastsCachedInstance;
+    private final Regulation regulation;
 
     public DifferentialProfileComparator(boolean isSpecific, Collection<Contrast> selectedQueryContrasts,
                                          Collection<Contrast> allQueryContrasts, Regulation regulation) {
         this.isSpecific = isSpecific;
         this.selectedQueryContrasts = selectedQueryContrasts;
         this.allQueryContrasts = allQueryContrasts;
+        this.nonSelectedQueryContrastsCachedInstance = Sets.difference(ImmutableSet.copyOf(allQueryContrasts),
+                ImmutableSet.copyOf(selectedQueryContrasts));
         //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
         this.regulation = regulation;
     }
@@ -108,10 +110,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     public double getExpressionLevelFoldChange(DifferentialProfile<?> differentialProfile) {
 
-        Collection<Contrast> nonSelectedQueryContrasts = Sets.difference(ImmutableSet.copyOf(allQueryContrasts),
-                ImmutableSet.copyOf(selectedQueryContrasts));
-
-        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMaxExpressionLevelOn(nonSelectedQueryContrasts);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMaxExpressionLevelOn(nonSelectedQueryContrastsCachedInstance);
 
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts);
 
