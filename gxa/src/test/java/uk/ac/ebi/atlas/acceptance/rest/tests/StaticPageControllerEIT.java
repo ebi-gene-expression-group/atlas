@@ -16,7 +16,7 @@ public class StaticPageControllerEIT extends RestAssuredFixture {
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType(ContentType.HTML);
-        response.then().assertThat().body(containsString("About the Expression Atlas"));
+        response.then().assertThat().body(containsString("About Expression Atlas"));
     }
 
     @Test
