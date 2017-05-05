@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.common;
+package uk.ac.ebi.atlas.controllers;
 
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
