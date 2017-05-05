@@ -1,1 +1,0 @@
-patch-highcharts-5.0.9.sh

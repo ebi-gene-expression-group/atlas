@@ -36,12 +36,7 @@ do
         do
             rm -rf node_modules/$module
         done
-	rm -rf node_modules/highcharts*
-
     npm install
-    
-#    ../../patch-highcharts.sh
-    
     popd > /dev/null
 done
 
@@ -53,11 +48,8 @@ for module in ${npm_packages[*]}
 do
     rm -rf node_modules/$module
 done
-rm -rf node_modules/highcharts*
 
 npm install
-
-#./patch-highcharts.sh
 
 npm run $1
 
