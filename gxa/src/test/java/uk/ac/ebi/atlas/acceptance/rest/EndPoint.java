@@ -47,7 +47,7 @@ public class EndPoint {
     public JsonElement getJsonResponse(){
         Response response = getResponse();
 
-        assertThat(response.getStatusCode(), is(200));
+        assertThat(buildURL(), response.getStatusCode(), is(200));
         //TODO does not work for experiment page endpoints
         // assertThat(response.getContentType(), is("application/json;charset=UTF-8"));
 

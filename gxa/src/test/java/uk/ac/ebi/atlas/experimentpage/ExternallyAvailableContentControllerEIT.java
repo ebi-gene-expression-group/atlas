@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
@@ -32,14 +33,17 @@ public class ExternallyAvailableContentControllerEIT {
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
 
-    private EndPoint endPointForExperiment(String accession){
-        return new EndPoint(MessageFormat.format("/gxa/json/experiments/{0}/resources", accession));
+    private EndPoint endPointForExperiment(String accession, ExternallyAvailableContent.ContentType contentType){
+        return new EndPoint(MessageFormat.format("/gxa/json/experiments/{0}/resources/{1}", accession, contentType));
     }
 
-    void testAllResourcesAreNonemptyAndContainValidLinks(String accession) throws Exception {
-        JsonArray response = endPointForExperiment(accession).getJsonResponse().getAsJsonArray();
+    void testAllResourcesAreNonemptyAndContainValidLinks(String accession, ExternallyAvailableContent.ContentType contentType, boolean expectNonempty) throws Exception {
+        JsonArray response = endPointForExperiment(accession, contentType).getJsonResponse().getAsJsonArray();
 
-        assertThat(response.size(), greaterThan(0));
+        if(expectNonempty){
+            assertThat(response.size(), greaterThan(0));
+        }
+
 
         for(JsonElement e: response){
             String uri = e.getAsJsonObject().get("url").getAsString();
@@ -49,7 +53,6 @@ public class ExternallyAvailableContentControllerEIT {
                 Response r = RestAssured.get(URI.create(uri).toURL());
                 assertThat(uri, r.getStatusCode(), is(200));
             }
-
         }
     }
 
@@ -58,7 +61,12 @@ public class ExternallyAvailableContentControllerEIT {
         for(String accession : experimentTrader.getPublicExperimentAccessions(
                 ExperimentType.RNASEQ_MRNA_BASELINE, ExperimentType.PROTEOMICS_BASELINE,
                 ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)){
-            testAllResourcesAreNonemptyAndContainValidLinks(accession);
+            testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.DATA, true);
+            testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION, true);
+        }
+        for(String accession : experimentTrader.getPublicExperimentAccessions(
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, ExperimentType.MICROARRAY_ANY)){
+            testAllResourcesAreNonemptyAndContainValidLinks(accession, ExternallyAvailableContent.ContentType.PLOTS, false);
         }
     }
 
