@@ -124,20 +124,4 @@ public class ApplicationProperties {
         return sourceURLBuilder.toString();
     }
 
-    /* Used in bioentities.jsp and bioentities-search-results.jsp */
-    public String urlParamEncode(String value) throws UnsupportedEncodingException {
-        return URLEncoder.encode(value, "UTF-8");
-    }
-
-    /*
-    <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
-    <c:set var="protocol" value="${pageContext.request.scheme}://"/>
-    <c:set var="atlasHost" value="${pageContext.request.serverName.concat(serverPort)}"/>
-     */
-    public String buildAtlasHostURL(HttpServletRequest request){
-        String serverPort = request.getServerPort() == 80 ? "" : ":".concat(Integer.toString(request.getServerPort()));
-        String atlasHost = request.getServerName().concat(serverPort);
-        return (atlasHost.contains("wwwdev.ebi.ac.uk") || atlasHost.contains("www.ebi.ac.uk") ? "https": request.getScheme())+"://" + atlasHost;
-    }
-
 }
