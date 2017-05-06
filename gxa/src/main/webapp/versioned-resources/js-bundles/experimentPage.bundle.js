@@ -5661,6 +5661,12 @@ webpackJsonp_name_([1],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var prettyName = function prettyName(name) {
+	  return name.replace(/_/g, ' ').toLowerCase().replace(/\w\S*/, function (txt) {
+	    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	  });
+	};
+	
 	var OpenerButton = function OpenerButton(_ref) {
 	  var onClickButton = _ref.onClickButton;
 	  return _react2.default.createElement(
@@ -5738,11 +5744,6 @@ webpackJsonp_name_([1],[
 	};
 	
 	var determineColumnNameFromFirstGroup = function determineColumnNameFromFirstGroup(availableColumnIds, group) {
-	  var prettyName = function prettyName(name) {
-	    return name.replace(/_/g, ' ').toLowerCase().replace(/\w\S*/, function (txt) {
-	      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-	    });
-	  };
 	  var groupingValues = group.groupings.map(function (g) {
 	    return g[1];
 	  });
@@ -5881,7 +5882,7 @@ webpackJsonp_name_([1],[
 	          title: columnsName,
 	          show: this.state.showModal === 'columns',
 	          onCloseModal: resetState,
-	          onClickApply: (0, _lodash.flow)([toggleModal.bind(null, ""), this.setState.bind(this, { initialFilters: false }), onChangeProperty.bind(null, "selectedColumnIds", this.state.selectedColumnIds)]) },
+	          onClickApply: (0, _lodash.flow)([toggleModal.bind(null, ""), this.setState.bind(this, { initialFilters: this.state.initialFilters && (0, _lodash.xor)(this.state.selectedColumnIds, this.props.queryObjects.selectedColumnIds).length === 0 }), onChangeProperty.bind(null, "selectedColumnIds", this.state.selectedColumnIds)]) },
 	        _react2.default.createElement(_Main3.Main, _extends({
 	          columnGroups: this.props.columnGroups,
 	          selectedColumnIds: this.state.selectedColumnIds
@@ -5889,6 +5890,30 @@ webpackJsonp_name_([1],[
 	          onNewSelectedColumnIds: function onNewSelectedColumnIds(selectedColumnIds) {
 	            _this.setState({ selectedColumnIds: selectedColumnIds });
 	          } }))
+	      ),
+	      this.state.initialFilters && _react2.default.createElement(
+	        'div',
+	        { className: 'margin-top-xlarge' },
+	        _react2.default.createElement(
+	          'h5',
+	          null,
+	          'Initially showing:'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          this.props.columnGroups.filter(function (group) {
+	            return group.primary;
+	          }).map(function (primaryGroup) {
+	            return _react2.default.createElement(
+	              'li',
+	              null,
+	              prettyName(primaryGroup.name),
+	              ': ',
+	              primaryGroup.selected
+	            );
+	          })
+	        )
 	      )
 	    );
 	  }
@@ -9208,13 +9233,20 @@ webpackJsonp_name_([1],[
 	      availableColumnIds = _ref.availableColumnIds,
 	      columnsName = _ref.columnsName;
 	
+	  var oneGroupingColumnGroups = columnGroups.filter(function (group) {
+	    return group.groupings.length === 1;
+	  });
+	  var multipleGroupingColumnGroups = columnGroups.filter(function (group) {
+	    return group.groupings.length > 1;
+	  });
+	
 	  return _react2.default.createElement(
 	    'div',
 	    null,
 	    _react2.default.createElement(
 	      'h5',
 	      null,
-	      columnsName + ' selected currently: ' + selectedColumnIds.length + ' / ' + availableColumnIds.length
+	      columnsName + ' selected: ' + selectedColumnIds.length + ' / ' + availableColumnIds.length
 	    ),
 	    _react2.default.createElement(
 	      _lib.ButtonGroup,
@@ -9250,10 +9282,21 @@ webpackJsonp_name_([1],[
 	        )
 	      )
 	    ),
-	    _react2.default.createElement(
+	    multipleGroupingColumnGroups.length > 0 && _react2.default.createElement(
 	      'div',
 	      null,
-	      columnGroups.map(function (group) {
+	      multipleGroupingColumnGroups.map(function (group) {
+	        return _react2.default.createElement(_ColumnFiltersSection2.default, _extends({ key: group.name,
+	          availableIds: availableColumnIds,
+	          selectedIds: selectedColumnIds,
+	          onNewSelectedIds: onNewSelectedColumnIds
+	        }, group));
+	      })
+	    ),
+	    oneGroupingColumnGroups.length > 0 && _react2.default.createElement(
+	      'div',
+	      { className: multipleGroupingColumnGroups.length > 0 ? 'margin-top-xlarge' : '' },
+	      oneGroupingColumnGroups.map(function (group) {
 	        return _react2.default.createElement(_ColumnFiltersSection2.default, _extends({ key: group.name,
 	          availableIds: availableColumnIds,
 	          selectedIds: selectedColumnIds,
@@ -9263,12 +9306,14 @@ webpackJsonp_name_([1],[
 	    )
 	  );
 	};
+	
 	var ColumnCommonTypes = {
 	  columnGroups: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape(_PropTypes.ColumnGroupPropTypes).isRequired).isRequired,
 	  selectedColumnIds: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
 	  availableColumnIds: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
 	  columnsName: _react2.default.PropTypes.string.isRequired
 	};
+	
 	Main.propTypes = Object.assign({}, ColumnCommonTypes, {
 	  onNewSelectedColumnIds: _react2.default.PropTypes.func.isRequired
 	});
@@ -9572,10 +9617,10 @@ webpackJsonp_name_([1],[
 	      var open = this.state.open;
 	
 	      var headerName = prettyName(name) + ": ";
-	      if (this.props.groupings.length == 1) {
+	      if (this.props.groupings.length === 1) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'gxaSection' },
+	          { className: 'margin-top-large gxaSection' },
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'title' },
@@ -9583,10 +9628,10 @@ webpackJsonp_name_([1],[
 	          ),
 	          _react2.default.createElement(ReadOnlyGrouping, makeGroupingProps(this.props, groupings[0]))
 	        );
-	      } else if (groupings.length == 2 && (0, _lodash.isEqual)(new Set(groupings[0][1]), new Set(availableIds)) && (0, _lodash.isEqual)(new Set(groupings[1][1]), new Set(availableIds))) {
+	      } else if (groupings.length === 2 && (0, _lodash.isEqual)(new Set(groupings[0][1]), new Set(availableIds)) && (0, _lodash.isEqual)(new Set(groupings[1][1]), new Set(availableIds))) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'gxaSection' },
+	          { className: 'margin-top-large gxaSection' },
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'title' },
@@ -9599,7 +9644,7 @@ webpackJsonp_name_([1],[
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'gxaSection' },
+	          { className: 'margin-top-large gxaSection' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'title openable',
