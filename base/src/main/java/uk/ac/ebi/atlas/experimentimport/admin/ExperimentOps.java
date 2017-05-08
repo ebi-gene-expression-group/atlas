@@ -275,7 +275,7 @@ public class ExperimentOps {
         if (currentOpLog.isEmpty()) {
             return new JsonPrimitive("");
         } else {
-            return new JsonPrimitive(currentOpLog.get(0).statusMessage());
+            return new JsonPrimitive(currentOpLog.get(currentOpLog.size()-1).statusMessage());
         }
     }
 

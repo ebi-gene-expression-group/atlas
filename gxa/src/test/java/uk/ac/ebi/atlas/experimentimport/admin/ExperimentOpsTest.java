@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -52,7 +53,7 @@ public class ExperimentOpsTest {
     @Mock
     private Experiment experimentMock;
 
-    private final Map<String, ImmutableList<OpLogEntry>> fileSystem = new HashMap<>();
+    private Map<String, ImmutableList<OpLogEntry>> fileSystem;
 
     private String accession = "E-EXAMPLE-1";
 
@@ -64,6 +65,8 @@ public class ExperimentOpsTest {
                 new ExpressionAtlasExperimentOpsExecutionService(
                         experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
                         expressionSerializerService,experimentTrader));
+
+        fileSystem = new HashMap<>();
 
         when(expressionSerializerService.kryoSerializeExpressionData(Matchers.any(ExperimentDTO.class))).thenReturn("skipped");
 
@@ -132,7 +135,7 @@ public class ExperimentOpsTest {
             }
         }
     }
-    
+
     @Test
     public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
@@ -305,6 +308,24 @@ public class ExperimentOpsTest {
                 new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
 
         assertThat(response, containsString("error"));
+    }
+
+    private String readFromStatus(List<OpLogEntry> persisted){
+        String accession = "ACCESSION-statusReadsOpLog";
+        experimentOpLogWriter.persistOpLog(accession, persisted);
+
+        JsonArray response =
+                new Gson().fromJson(new ExperimentAdminController(subject).doOp(accession, "STATUS"), JsonArray.class).getAsJsonArray();
+
+        return response.get(0).getAsJsonObject().get("result").getAsString();
+    }
+
+    @Test
+    public void statusReadsLastOpLogEntry() {
+        assertThat(readFromStatus(ImmutableList.<OpLogEntry>of()), is(""));
+        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
+        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
+        assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), not(containsString("msg")));
     }
 
 }
