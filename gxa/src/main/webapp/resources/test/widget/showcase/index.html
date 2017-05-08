@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <title>Expression Atlas widget showcase</title>
+
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
+
+    <!-- CSS: implied media=all -->
+    <!-- CSS concatenated and minified via ant build script-->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all">
+
+    <!-- Use this CSS file for any custom styling -->
+    <link rel="stylesheet" href="/gxa/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
+</head>
+
+<style>
+    ol {
+        counter-reset: section;
+        list-style-type: none;
+    }
+
+    li::before {
+        counter-increment: section;
+        content: counters(section,".") ". ";
+    }
+
+    ol.outer li {
+        font-weight: 300;
+        font-size: 1.5625rem;
+    }
+
+    ol.inner li {
+        font-weight: 400;
+        font-size: 1rem;
+    }
+</style>
+
+<body>
+
+<div id="content" role="main" class="row column">
+    <h2>Demo pages</h2>
+    <ol class="outer">
+        <li>Simple gene ID search
+            <ol class="inner">
+                <li>
+                    <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-JSON.html">Multiple experiments result (JSON syntax): H. sapiens / ENSG00000066279 / ensgene</a>
+                </li>
+                <li>
+                    <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-Plain_text.html">Multiple experiments result (plain text): H. sapiens / ENSG00000066279</a>
+                </li>
+                <li>
+                    <a target="_blank" href="simple-search/ENSG00000066279-Plain_text.html">Multiple experiments result (plain text): ENSG00000066279</a>
+                </li>
+            </ol>
+        </li>
+
+        <li>Reference experiment search
+            <ol class="inner">
+                <li>
+                    <a target="_blank" href="reference-experiment/H_sapiens-R-HSA-73887.html">Reference experiment: H. sapiens / R-HSA-73887</a>
+                </li>
+                <li>
+                    <a target="_blank" href="reference-experiment/R-HSA-73887.html">Reference experiment: R-HSA-73887</a>
+                </li>
+            </ol>
+        </li>
+
+        <li>Multiple gene queries
+            <ol class="inner">
+                <li>
+                    <a target="_blank" href="reference-experiment/H_sapiens-R-HSA-73887.html">Reference experiment: H. sapiens / R-HSA-73887</a>
+                </li>
+                <li>
+                    <a target="_blank" href="reference-experiment/R-HSA-73887.html">Reference experiment: R-HSA-73887</a>
+                </li>
+            </ol>
+        </li>
+
+        <li>Proxying in and out
+            <ol class="inner">
+                <li>
+                    <a target="_blank" href="proxies/inbound-proxy.html">inProxy</a>
+                </li>
+                <li>
+                    <a target="_blank" href="callbacks/outbound-proxy.html">outProxy</a>
+                </li>
+            </ol>
+        </li>
+
+        <li>Callbacks
+            <ol class="inner">
+                <li>
+                    <a target="_blank" href="callbacks/fail_callback.html">If the AJAX request fails</a>
+                </li>
+                <li>
+                    <a target="_blank" href="callbacks/render_callback.html">When the widget is mounted on the DOM</a>
+                </li>
+            </ol>
+        </li>
+
+        <li>Common errors and pitfalls
+            <ol class="inner">
+                <li>
+                    <a target="_blank" href="pitfalls/ASPM.html">Gene name matches multiple species IDs: No species / ASPM</a>
+                </li>
+                <li>
+                    <a target="_blank" href="callbacks/fail_render_callback.html">The render callback will finished before the fail callback</a>
+                </li>
+            </ol>
+        </li>
+
+
+    </ol>
+</div>
+
+</body>
+</html>
