@@ -52,7 +52,6 @@ public class HomeController extends HtmlExceptionHandlingController {
         model.addAttribute("separator", RANDOM.nextDouble() < 0.001 ? BEST_SEPARATOR : NORMAL_SEPARATOR);
 
         ImmutableMap.Builder<String, String> organismSelectBuilder = ImmutableMap.builder();
-        organismSelectBuilder.put("", "Any");
         for (SpeciesProperties speciesProperties : speciesPropertiesTrader.getAll()) {
             organismSelectBuilder.put(speciesProperties.referenceName(), StringUtils.capitalize(speciesProperties.referenceName()));
         }
