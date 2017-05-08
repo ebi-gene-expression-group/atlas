@@ -5,7 +5,7 @@ webpackJsonp_name_([4],{
 /*!**************************************************!*\
   !*** ./atlas_bundles/browse-by-species/index.js ***!
   \**************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -14,7 +14,7 @@ webpackJsonp_name_([4],{
 	});
 	exports.render = undefined;
 	
-	var _browseBySpeciesRenderer = __webpack_require__(/*! ./src/browseBySpeciesRenderer.jsx */ 2719);
+	var _browseBySpeciesRenderer = __webpack_require__(/*! ./src/browseBySpeciesRenderer.jsx */ 3145);
 	
 	var _browseBySpeciesRenderer2 = _interopRequireDefault(_browseBySpeciesRenderer);
 	
@@ -22,13 +22,13 @@ webpackJsonp_name_([4],{
 	
 	exports.render = _browseBySpeciesRenderer2.default;
 
-/***/ }),
+/***/ },
 
-/***/ 2719:
+/***/ 3145:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/browseBySpeciesRenderer.jsx ***!
   \*************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -44,7 +44,7 @@ webpackJsonp_name_([4],{
 	    _reactDom2.default.render(_react2.default.createElement(_BrowseBySpecies2.default, { atlasUrl: atlasUrl, speciesInfoList: speciesInfoList }), typeof container === 'string' ? document.getElementById(container) : container);
 	};
 	
-	var _react = __webpack_require__(/*! react */ 299);
+	var _react = __webpack_require__(/*! react */ 300);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -52,7 +52,7 @@ webpackJsonp_name_([4],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _BrowseBySpecies = __webpack_require__(/*! ./BrowseBySpecies.jsx */ 2720);
+	var _BrowseBySpecies = __webpack_require__(/*! ./BrowseBySpecies.jsx */ 3146);
 	
 	var _BrowseBySpecies2 = _interopRequireDefault(_BrowseBySpecies);
 	
@@ -60,13 +60,13 @@ webpackJsonp_name_([4],{
 	
 	;
 
-/***/ }),
+/***/ },
 
-/***/ 2720:
+/***/ 3146:
 /*!*****************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/BrowseBySpecies.jsx ***!
   \*****************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -76,11 +76,11 @@ webpackJsonp_name_([4],{
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(/*! react */ 299);
+	var _react = __webpack_require__(/*! react */ 300);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SpeciesItem = __webpack_require__(/*! ./SpeciesItem.jsx */ 2721);
+	var _SpeciesItem = __webpack_require__(/*! ./SpeciesItem.jsx */ 3147);
 	
 	var _SpeciesItem2 = _interopRequireDefault(_SpeciesItem);
 	
@@ -112,13 +112,13 @@ webpackJsonp_name_([4],{
 	
 	exports.default = BrowseBySpecies;
 
-/***/ }),
+/***/ },
 
-/***/ 2721:
+/***/ 3147:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/SpeciesItem.jsx ***!
   \*************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -126,17 +126,17 @@ webpackJsonp_name_([4],{
 	    value: true
 	});
 	
-	var _react = __webpack_require__(/*! react */ 299);
+	var _react = __webpack_require__(/*! react */ 300);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _urijs = __webpack_require__(/*! urijs */ 2722);
+	var _urijs = __webpack_require__(/*! urijs */ 3148);
 	
 	var _urijs2 = _interopRequireDefault(_urijs);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var EbiSpeciesIcon = __webpack_require__(/*! react-ebi-species */ 2726).Icon;
+	var EbiSpeciesIcon = __webpack_require__(/*! react-ebi-species */ 3152).Icon;
 	
 	var SpeciesItem = function SpeciesItem(props) {
 	    var allExperimentsUrl = (0, _urijs2.default)(props.atlasUrl).segment('experiments').addSearch({ organism: props.species });
@@ -202,54 +202,54 @@ webpackJsonp_name_([4],{
 	
 	exports.default = SpeciesItem;
 
-/***/ }),
+/***/ },
 
-/***/ 2722:
+/***/ 3148:
 /*!************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/urijs/src/URI.js ***!
   \************************************************************/
-[3575, 2723, 2724, 2725, 2723, 2724, 2725],
+[4103, 3149, 3150, 3151, 3149, 3150, 3151],
 
-/***/ 2723:
+/***/ 3149:
 /*!*****************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/urijs/src/punycode.js ***!
   \*****************************************************************/
 471,
 
-/***/ 2724:
+/***/ 3150:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/urijs/src/IPv6.js ***!
   \*************************************************************/
 473,
 
-/***/ 2725:
+/***/ 3151:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/urijs/src/SecondLevelDomains.js ***!
   \***************************************************************************/
 474,
 
-/***/ 2726:
+/***/ 3152:
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/index.js ***!
   \**********************************************************************/
-[3923, 2727, 2732],
+[4431, 3153, 3158],
 
-/***/ 2727:
+/***/ 3153:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/src/SpeciesIcon.jsx ***!
   \*********************************************************************************/
-[3924, 2728, 2731],
+[4432, 3154, 3157],
 
-/***/ 2728:
+/***/ 3154:
 /*!********************************************************************************************************************************************************!*\
   !*** ./~/style-loader!./atlas_bundles/browse-by-species/~/css-loader!./atlas_bundles/browse-by-species/~/react-ebi-species/src/ebi-visual-species.css ***!
   \********************************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../css-loader!./ebi-visual-species.css */ 2729);
+	var content = __webpack_require__(/*! !../../css-loader!./ebi-visual-species.css */ 3155);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ../../../../../~/style-loader/addStyles.js */ 765)(content, {});
@@ -268,31 +268,31 @@ webpackJsonp_name_([4],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2729:
+/***/ 3155:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/css-loader!./atlas_bundles/browse-by-species/~/react-ebi-species/src/ebi-visual-species.css ***!
   \***************************************************************************************************************************************/
-[3926, 2730],
+[4433, 3156],
 
-/***/ 2730:
+/***/ 3156:
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/css-loader/lib/css-base.js ***!
   \**********************************************************************/
 764,
 
-/***/ 2731:
+/***/ 3157:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/src/mapping.js ***!
   \****************************************************************************/
-1173,
+1274,
 
-/***/ 2732:
+/***/ 3158:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/src/renderer.js ***!
   \*****************************************************************************/
-[3927, 2727]
+[4434, 3153]
 
 });
 //# sourceMappingURL=expressionAtlasBrowseBySpecies.bundle.js.map
