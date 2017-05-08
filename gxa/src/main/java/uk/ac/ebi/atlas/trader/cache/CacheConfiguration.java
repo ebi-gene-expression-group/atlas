@@ -19,13 +19,13 @@ import javax.inject.Inject;
 public class CacheConfiguration {
 
     @Inject
-    ArrayExpressClient arrayExpressClient;
+    private ArrayExpressClient arrayExpressClient;
 
     @Inject
-    ExperimentDesignParser experimentDesignParser;
+    private ExperimentDesignParser experimentDesignParser;
 
     @Inject
-    ExperimentDAO experimentDAO;
+    private ExperimentDAO experimentDAO;
 
     @Bean(name="rnaSeqBaselineExperimentsLoadingCache")
     @Inject

@@ -9,10 +9,8 @@ import javax.inject.Named;
 
 @Named
 public class MicroarrayExperimentsCache extends ExperimentsCache<MicroarrayExperiment> {
-
     @Inject
     public MicroarrayExperimentsCache(@Qualifier("microarrayExperimentsLoadingCache") LoadingCache<String, MicroarrayExperiment> experiments) {
         super(experiments);
     }
-
 }

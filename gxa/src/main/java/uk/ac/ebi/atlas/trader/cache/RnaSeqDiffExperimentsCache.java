@@ -9,7 +9,6 @@ import javax.inject.Named;
 
 @Named
 public class RnaSeqDiffExperimentsCache extends ExperimentsCache<DifferentialExperiment> {
-
     @Inject
     public RnaSeqDiffExperimentsCache(@Qualifier("differentialExperimentsLoadingCache") LoadingCache<String, DifferentialExperiment> experiments) {
         super(experiments);

@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.trader.cache;
 import com.google.common.cache.LoadingCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
@@ -11,7 +10,6 @@ import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
 @Named
-@Scope("singleton")
 public class PublicExperimentTypesCache {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PublicExperimentTypesCache.class);
