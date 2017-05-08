@@ -13,7 +13,7 @@
                 <div class="small-12 medium-4 large-5 columns">
                     <div class="row column">
                         <label>Gene / Gene properties</label>
-                        <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query" name="geneQuery"/>
+                        <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query…" name="geneQuery"/>
                     </div>
                     <div class="row column small">
                         Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
@@ -32,7 +32,7 @@
                 <div id="sample-properties-section" class="small-12 medium-4 large-5 columns">
                     <div class="row column">
                         <label>Biological conditions</label>
-                        <input id="home-search-condition-query-input" type="text" placeholder="Condition query" name="conditionQuery" />
+                        <input id="home-search-condition-query-input" type="text" placeholder="Enter condition query…" name="conditionQuery" />
                     </div>
                     <div class="row column small margin-top-small">
                         Examples: <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
@@ -57,32 +57,25 @@
     </div>
 
     <div class="tabs-panel" id="search-gene-set-enrichment" style="background-color: #e6e6e6;">
-        <p>
-            A simple RESTful API to analyse (Fisher-exact) enrichment of
-            user-provided set of Ensembl gene identifiers against
-            differentially expressed genes in each Atlas comparison in an organism.
-        </p>
         <form action="genesetenrichment" method="get" id="home-genesetenrichment-atlas-form">
             <div class="secondary ">
-                <div class="row">
-                    <div class="small-12 columns">
-                        <label>List of gene identifiers</label>
-                        <input type="text" placeholder="Add genes" name="query"/>
-                    </div>
+                <div class="row column">
+                    <label>Provide a set of Ensembl gene identifiers to test enrichment against differentially expressed genes by comparison:</label>
+                    <input type="text" placeholder="Enter gene IDs…" name="query"/>
                 </div>
 
-                <div class="row">
-                    <div class="small-12 columns small">
-                        Example: <a
-                            href="${pageContext.request.contextPath}/genesetenrichment?query=AT1G48030%20AT1G53240%20AT2G17130%20AT2G20420%20AT2G44350%20AT2G47510%20AT3G09810%20AT3G15020%20AT3G17240%20AT3G27380%20AT3G55410%20AT3G60100%20AT4G26910%20AT4G35260%20AT4G35650%20AT4G35830%20AT5G03290%20AT5G08300%20AT5G23250%20AT5G40650%20AT5G50950%20AT5G55070%20AT5G65165%20AT5G65750%20AT5G66760">
+                <div class="row column small">
+                    Example: <a
+                        href="${pageContext.request.contextPath}/genesetenrichment?query=AT1G48030%20AT1G53240%20AT2G17130%20AT2G20420%20AT2G44350%20AT2G47510%20AT3G09810%20AT3G15020%20AT3G17240%20AT3G27380%20AT3G55410%20AT3G60100%20AT4G26910%20AT4G35260%20AT4G35650%20AT4G35830%20AT5G03290%20AT5G08300%20AT5G23250%20AT5G40650%20AT5G50950%20AT5G55070%20AT5G65165%20AT5G65750%20AT5G66760">
                         AT1G48030 AT1G53240 AT2G17130 AT2G20420 AT2G44350 AT2G47510 AT3G09810 AT3G15020 AT3G17240 AT3G27380 AT3G55410 AT3G60100 AT4G26910 AT4G35260 AT4G35650 AT4G35830 AT5G03290 AT5G08300 AT5G23250</a>
-                    </div>
                 </div>
 
-                <div class="row margin-top-large">
-                    <div class="small-12 columns">
-                        <input id="genesetenrichment-atlas-search-button" class="button" type="submit" value="Search"/>
-                    </div>
+                <div class="row column margin-top-large">
+                    <input id="genesetenrichment-atlas-search-button" class="button" type="submit" value="Search"/>
+                </div>
+
+                <div class="row column">
+                    <a href="https://www.ebi.ac.uk/~rpetry/geteam/gsa/gsa_apispec.pdf">Analyse Fisher-exact enrichment through our restful API.</a>
                 </div>
             </div>
         </form>
