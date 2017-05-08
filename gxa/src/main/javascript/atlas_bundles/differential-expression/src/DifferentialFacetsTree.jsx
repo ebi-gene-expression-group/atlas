@@ -2,8 +2,6 @@ const React = require('react');
 
 //*------------------------------------------------------------------*
 
-require('./DifferentialFacetsTree.css');
-
 //*------------------------------------------------------------------*
 
 const RequiredString = React.PropTypes.string.isRequired;
@@ -54,7 +52,7 @@ const DifferentialFacetsTree = React.createClass({
     },
 
     render () {
-        let facets = this.props.facets.map(facet =>
+        const facets = this.props.facets.map(facet =>
             <Facet
                 key={facet.facetName}
                 facetName={facet.facetName}
@@ -64,7 +62,8 @@ const DifferentialFacetsTree = React.createClass({
         );
 
         return (
-            <div className="hidden-xs gxaFacetsContainer"><h3>Filter your results</h3>
+            <div>
+                <h4>Filter your results</h4>
                 {facets}
             </div>
         );
@@ -109,7 +108,7 @@ const Facet = React.createClass({
     },
 
     render () {
-        let facetItems = this.props.facetItems.map(facetItem =>
+        const facetItems = this.props.facetItems.map(facetItem =>
             <FacetItem
                 key = {facetItem.name}
                 name = {facetItem.name}
@@ -120,14 +119,10 @@ const Facet = React.createClass({
             />
         );
 
-        let className = this.props.facetName === 'species' ? 'gxaSpeciesFacet' : '';
-
         return (
-            <div className="gxaFacetItem">
-                <h4>{this._prettifyFacetName(this.props.facetName)}</h4>
-                <ul className={className}>
+            <div className="margin-top-large">
+                <h5>{this._prettifyFacetName(this.props.facetName)}</h5>
                     {facetItems}
-                </ul>
             </div>
         );
     }
@@ -147,12 +142,11 @@ const FacetItem = React.createClass({
     },
 
     render () {
-        let className = this.props.disabled ? 'gxaDisabledFacet' : '';
         return (
-            <li className={className}>
+            <div>
                 <input type="checkbox" checked={this.props.checked} onChange={this._setChecked} disabled={this.props.disabled}/>
-                {this.props.value}
-            </li>
+                <label style={{display:'inline'}}>{this.props.value}</label>
+            </div>
         );
     }
 });
