@@ -14,7 +14,6 @@
 <div id="gxaBaselineTab"></div>
 
 <script>
-    // function ({atlasHostUrl : hostUrl = "https://www.ebi.ac.uk", target = 'gxaBaselineTab', facetsTreeData, geneQuery, conditionQuery, species})
     <c:if test="${hasBaselineResults}">
         var baselineFacetsData = ${jsonFacets};
         // Running within $(document).ready() ensures that the heatmap stretches to the tab container width
