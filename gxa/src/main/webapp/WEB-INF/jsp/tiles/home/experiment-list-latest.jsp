@@ -74,7 +74,7 @@
         </div>
 
         <div class="tabs-panel is-active" id="latest-experiments">
-            <h5 class="margin-top-medium margin-bottom-xlarge">Total : ${experimentCount} experiments</h5>
+            <h5 class="margin-top-medium margin-bottom-xlarge">${formattedExperimentCount} experiments</h5>
             <div class="list-project-l">
                 <ul>
                     <c:forEach items="${latestExperiments}" var="experimentInfo">

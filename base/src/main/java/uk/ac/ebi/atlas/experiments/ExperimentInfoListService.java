@@ -14,13 +14,15 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class ExperimentInfoListService {
-    static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd-MM-yyyy");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd-MM-yyyy");
 
     private final ExperimentTrader experimentTrader;
     private final Collection<ExperimentType> experimentTypes;
@@ -74,16 +76,21 @@ public class ExperimentInfoListService {
 
     public ImmutableMap<String, Object> getLatestExperimentsListAttributes() {
         if(cached == null) {
-            cached = ImmutableMap.of("experimentCount", fetchCount(), "latestExperiments", fetchLatest());
+            int experimentCount = fetchCount();
+            cached =
+                    ImmutableMap.of(
+                            "experimentCount", experimentCount,
+                            "formattedExperimentCount", NumberFormat.getNumberInstance(Locale.US).format(experimentCount),
+                            "latestExperiments", fetchLatest());
         }
         return cached;
     }
 
-    int fetchCount() {
+    private int fetchCount() {
         return listPublicExperiments().size();
     }
 
-    List<ExperimentInfo> fetchLatest() {
+    private List<ExperimentInfo> fetchLatest() {
         ImmutableList<ExperimentInfo> l =
                 FluentIterable.from(listPublicExperiments()).toSortedList(new Comparator<ExperimentInfo>() {
                     @Override
