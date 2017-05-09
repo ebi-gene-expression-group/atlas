@@ -65,8 +65,7 @@
     <!-- <meta name="ebi:localmasthead-color" content="#000"> -->
     <!-- <meta name="ebi:localmasthead-image" content="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/images/backgrounds/embl-ebi-background.jpg"> -->
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
     <!-- end CSS-->
 
@@ -146,7 +145,11 @@
 
 
 <script>
-    geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, 'Enter gene query...');
+    var contextPath = '${pageContext.request.contextPath}/';
+    var geneQueryPlaceHolder = 'Enter gene query…';
+
+    geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, geneQueryPlaceHolder, contextPath);
+    geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, geneQueryPlaceHolder, contextPath);
     conditionAutocompleteModule.init('#home-search-condition-query-input', '${arrayexpressUrl}', function(){});
 
     $('#home-search-atlas-clear-button').on('click' , function () {
@@ -174,8 +177,6 @@
             conditionQueryTags = $conditionQuery.jsonTagEditor('getTags')[0].tags;
         $conditionQuery.val(JSON.stringify(conditionQueryTags));
     });
-
-    geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter gene query…', '${pageContext.request.contextPath}');
 </script>
 
 </body>
