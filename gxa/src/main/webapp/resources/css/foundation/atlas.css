@@ -268,8 +268,7 @@ a.baseline {
     position: relative;
 }
 
-.ac_tree_level
-, .ac_tree_control {
+.ac_tree_level, .ac_tree_control {
     float: left;
     width: 16px;
     height: 16px;
@@ -299,8 +298,7 @@ a.baseline {
     color: #FFF;
 }
 
-.ac_over .ac_efo
-, .ac_over .ac_field {
+.ac_over .ac_efo, .ac_over .ac_field {
     color: #FFF;
 }
 
@@ -317,8 +315,7 @@ a.baseline {
     padding: 1px;
 }
 
-.ac_field
-, .ac_efo {
+.ac_field, .ac_efo {
     position: absolute;
     top: 0;
     right: 2px;

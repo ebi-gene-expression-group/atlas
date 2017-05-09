@@ -113,29 +113,10 @@
     background: none !important;
 }
 
-/* jQuery UI autocomplete */
-.ui-autocomplete {
-    z-index: 600;
-    border-radius: 4px;
-    background: #FFF none !important;
-}
-
-.ui-autocomplete .ui-state-focus,
-.ui-autocomplete .ui-state-active {
-    color: #EB8F00;
-    font-weight: normal;
-    background: #E0EAF1 none !important;
-}
-
-.ui-autocomplete li {
-    border-radius: 4px;
-}
-
 .ui-autocomplete li {
     font-size: 85%;
 }
 
 .ui-autocomplete li a {
     border: none;
-    color: #46799B;
 }
