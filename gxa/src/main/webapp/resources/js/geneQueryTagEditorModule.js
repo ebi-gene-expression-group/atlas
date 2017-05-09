@@ -49,14 +49,14 @@ var geneQueryTagEditorModule = (function($) {
                         category_des = item.category;
                     }
 
-                    return $('<li style="width: 280px;"></li>')
+                    return $('<li style="width: 300px;"></li>')
                         .attr('data-value', item.value )
                         .attr('data-category', item.category )
                         .append(
-                            '<a>' +
+                            '<div><a>' +
                                 '<span>' + item.label + '</span>' +
                                 '<span style="float: right"><small><strong>' + category_des + '</strong></small></span>' +
-                            '</a>'
+                            '</a></div>'
                         )
                         .appendTo(ul);
                 },

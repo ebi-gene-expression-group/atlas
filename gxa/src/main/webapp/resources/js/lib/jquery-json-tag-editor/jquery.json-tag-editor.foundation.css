@@ -113,6 +113,12 @@
     background: none !important;
 }
 
+.ui-autocomplete {
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+}
+
 .ui-autocomplete li {
     font-size: 85%;
 }
