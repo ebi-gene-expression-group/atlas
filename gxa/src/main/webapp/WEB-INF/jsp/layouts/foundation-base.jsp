@@ -141,7 +141,7 @@
 -->
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
 
 <script>
     geneQueryTagEditorModule.init('#home-search-gene-query-input', '', function(){}, 'Enter gene query...');
@@ -173,7 +173,7 @@
         $conditionQuery.val(JSON.stringify(conditionQueryTags));
     });
 
-    geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
+    geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter gene query…', '${pageContext.request.contextPath}');
 </script>
 
 </body>
