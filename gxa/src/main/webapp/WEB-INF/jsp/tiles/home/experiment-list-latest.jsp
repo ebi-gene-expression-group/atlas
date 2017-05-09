@@ -46,6 +46,7 @@
                 <div class="columns small-6 medium-4 text-center">
                     <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">
                         <img style="height: 65px" src="${pageContext.request.contextPath}/resources/images/human_protein_atlas_logo.png" class="float-center"/>
+                        <h5>Human Protein Atlas</h5>
                     </a>
                 </div>
 
