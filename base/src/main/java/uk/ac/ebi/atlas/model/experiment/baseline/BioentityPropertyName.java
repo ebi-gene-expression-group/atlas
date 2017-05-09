@@ -12,7 +12,7 @@ public enum BioentityPropertyName {
     DESCRIPTION("description", false),
     DESIGN_ELEMENT("design_element", true),
     ENSFAMILY_DESCRIPTION("ensfamily_description", false, "Ensembl Family"),
-    ENSGENE("ensgene", false,"Ensembl Gene"),
+    ENSGENE("ensgene", true, "Ensembl Gene"),
     ENSPROTEIN("ensprotein", true, "Ensembl Protein"),
     ENSTRANSCRIPT("enstranscript", true, "Ensembl Transcript"),
     ENTREZGENE("entrezgene", false, "Entrez"),
