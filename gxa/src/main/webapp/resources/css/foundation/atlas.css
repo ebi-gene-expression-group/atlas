@@ -247,8 +247,8 @@ a.baseline {
     background-color: #fff;
     overflow: hidden;
     z-index: 99999;
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 11px;
+    font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+    font-size: 0.85rem;
 }
 
 .ac_results ul {
@@ -263,9 +263,9 @@ a.baseline {
     padding: 0 3px;
     cursor: default;
     display: block;
-    height: 16px;
     overflow: hidden;
     position: relative;
+    line-height: 1.7rem;
 }
 
 .ac_tree_level, .ac_tree_control {
@@ -277,7 +277,7 @@ a.baseline {
 .ac_tree_control div {
     width: 9px;
     height: 9px;
-    margin: 3px 3px 3px 3px;
+    margin: 10px 3px 3px 0;
     overflow: hidden;
 }
 
@@ -294,7 +294,7 @@ a.baseline {
 }
 
 .ac_over {
-    background-color: #5E8CC0;
+    background-color: #3497c5;
     color: #FFF;
 }
 
@@ -311,15 +311,11 @@ a.baseline {
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
 
-.ac_outer > div {
-    padding: 1px;
-}
-
 .ac_field, .ac_efo {
     position: absolute;
     top: 0;
     right: 2px;
-    color: #5E8CC0;
+    color: #3497c5;
 }
 
 .ac_field {

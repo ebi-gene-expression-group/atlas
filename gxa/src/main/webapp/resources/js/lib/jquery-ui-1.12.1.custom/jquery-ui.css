@@ -168,7 +168,7 @@
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-	border: 1px solid #3497c5;
+	border: 0;
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
