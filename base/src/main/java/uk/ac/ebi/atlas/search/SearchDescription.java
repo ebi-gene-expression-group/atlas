@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.search;
 
+import org.apache.commons.lang3.StringUtils;
+
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isEmpty;
 import static uk.ac.ebi.atlas.search.SemanticQuery.isNotEmpty;
@@ -46,7 +48,7 @@ public class SearchDescription {
         }
 
         if (isNotBlank(species)) {
-            stringBuilder.append(species);
+            stringBuilder.append(StringUtils.capitalize(species));
         }
 
         return stringBuilder.toString();
