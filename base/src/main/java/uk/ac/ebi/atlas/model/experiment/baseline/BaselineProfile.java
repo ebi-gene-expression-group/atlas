@@ -41,7 +41,7 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
 
     // add the expression levels of another profile to this one
     public BaselineProfile sumProfile(BaselineProfile otherProfile) {
-        for (AssayGroup assayGroup : otherProfile.getConditions()) {
+        for (AssayGroup assayGroup : otherProfile.getConditionsEvenTheOnesWithZeroExpression()) {
             BaselineExpression otherExpression = otherProfile.getExpression(assayGroup);
             BaselineExpression thisExpression = getExpression(assayGroup);
 
@@ -57,7 +57,7 @@ public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
     // divide all expression levels by foldFactor
     public BaselineProfile foldProfile(int foldFactor) {
         resetMaxMin();
-        for (AssayGroup assayGroup : getConditions()) {
+        for (AssayGroup assayGroup : getConditionsEvenTheOnesWithZeroExpression()) {
             BaselineExpression expression = getExpression(assayGroup);
             double foldLevel = fold(expression.getLevel(), foldFactor);
             BaselineExpression foldedExpression =

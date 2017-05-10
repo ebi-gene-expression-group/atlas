@@ -112,7 +112,7 @@ public class MicroarrayProfilesHeatMapIT {
 
         for(Object o: profilesUp) {
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            for(Contrast contrast: profile.getConditions()){
+            for(Contrast contrast: profile.getConditionsEvenTheOnesWithZeroExpression()){
                 assertThat(profile.getExpression(contrast).isOverExpressed(), is(true));
                 assertThat(profile.getExpression(contrast).isUnderExpressed(), is(false));
             }
@@ -127,7 +127,7 @@ public class MicroarrayProfilesHeatMapIT {
                 is(true));
         for(Object o: profilesDown) {
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            for(Contrast contrast: profile.getConditions()){
+            for(Contrast contrast: profile.getConditionsEvenTheOnesWithZeroExpression()){
                 assertThat(profile.getExpression(contrast).isOverExpressed(), is(false));
                 assertThat(profile.getExpression(contrast).isUnderExpressed(), is(true));
             }
@@ -169,8 +169,8 @@ public class MicroarrayProfilesHeatMapIT {
             assertThat(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
                     Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere, is(true) );
 
-            assertThat(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()), is(true));
-            for(Contrast contrast: profile.getConditions()){
+            assertThat(experiment.getDataColumnDescriptors().containsAll(profile.getConditionsEvenTheOnesWithZeroExpression()), is(true));
+            for(Contrast contrast: profile.getConditionsEvenTheOnesWithZeroExpression()){
                 assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
 
                 double expressionLevel = profile.getExpressionLevel(contrast);

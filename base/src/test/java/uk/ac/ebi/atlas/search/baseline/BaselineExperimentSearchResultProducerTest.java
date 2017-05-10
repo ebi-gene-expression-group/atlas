@@ -109,7 +109,7 @@ public class BaselineExperimentSearchResultProducerTest {
         Collection<BaselineExperimentProfile> result = subject.buildProfilesForExperiments(dataInSolr, factorType);
         assertThat(result.size(), is(1));
         assertThat(result.iterator().next().getSpecificity(), is(2));
-        assertThat(result.iterator().next().getConditions().size(), is(3));
+        assertThat(result.iterator().next().getConditionsEvenTheOnesWithZeroExpression().size(), is(3));
     }
 
     @Test
@@ -146,6 +146,11 @@ public class BaselineExperimentSearchResultProducerTest {
 
     @Test
     public void twoFactorExperimentWithOverlappingValuesResultsHaveRightShape(){
+        testDataHasShape(twoFactorExperimentWithOverlappingFactors, factorType,
+                ImmutableMap.of("a1", 1.0),
+                ImmutableList.of(1)
+        );
+
         testDataHasShape(twoFactorExperimentWithOverlappingFactors, factorType,
                 ImmutableMap.of("a1", 1.0, "a2", 2.0, "a3", 3.0, "a4", 4.0),
                 ImmutableList.of(2,2)
