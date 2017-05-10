@@ -154,6 +154,26 @@ public class BaselineExperimentSearchResultProducerTest {
                 ImmutableMap.of("a1", 1.0, "a2", 2.0, "a3", 3.0, "a4", 4.0),
                 ImmutableList.of(2,2)
         );
+        testDataHasShape(twoFactorExperimentWithOverlappingFactors, factorType,
+                ImmutableMap.of("a1", 1.0, "a2", 2.0),
+                ImmutableList.of(1,1)
+        );
+        testDataHasShape(twoFactorExperimentWithOverlappingFactors, secondFactorType,
+                ImmutableMap.of("a1", 1.0, "a2", 2.0),
+                ImmutableList.of(2)
+        );
+        testDataHasShape(twoFactorExperimentWithOverlappingFactors, factorType,
+                ImmutableMap.of("a1", 1.0, "a3", 3.0),
+                ImmutableList.of(2)
+        );
+        testDataHasShape(twoFactorExperimentWithOverlappingFactors, secondFactorType,
+                ImmutableMap.of("a1", 1.0, "a3", 3.0),
+                ImmutableList.of(1,1)
+        );
+        testDataHasShape(twoFactorExperimentWithOverlappingFactors, factorType,
+                ImmutableMap.of("a1", 1.0),
+                ImmutableList.of(1)
+        );
     }
 
     List<Integer> resultShape(BaselineExperiment experiment,String factorType, Map<String, Double> data){
@@ -171,10 +191,7 @@ public class BaselineExperimentSearchResultProducerTest {
     }
 
     void testDataHasShape(BaselineExperiment experiment,String factorType, Map<String, Double> data, List<Integer> shape){
-        Map<String, Map<String, Double>> dataInSolr = ImmutableMap.of(experiment.getAccession(), data);
-
         assertThat(resultShape(experiment,factorType,data), is(shape));
-
     }
 
 

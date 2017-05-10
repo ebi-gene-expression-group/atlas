@@ -64,7 +64,12 @@ public class BaselineExperimentSearchResultProducer {
             final Set<FactorGroup> factorGroups = FluentIterable.from(experiment.getDataColumnDescriptors()).transform(new Function<AssayGroup, FactorGroup>() {
                 @Override
                 public FactorGroup apply(AssayGroup assayGroup) {
-                    return experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType)).withoutTypes(commonFactorTypes);
+                    FactorGroup factorGroup = experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType));
+                    if(factorGroup.withoutTypes(commonFactorTypes).size() > 0){
+                        return factorGroup.withoutTypes(commonFactorTypes);
+                    } else {
+                        return factorGroup;
+                    }
                 }
             }).toSet();
 
