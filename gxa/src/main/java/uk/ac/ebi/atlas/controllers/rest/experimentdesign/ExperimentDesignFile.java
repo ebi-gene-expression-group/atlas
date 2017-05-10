@@ -39,8 +39,8 @@ public abstract class ExperimentDesignFile<E extends Experiment> extends CanStre
         return Collections.singleton("experiment-design");
     }
 
-    public static String makeUrl(HttpServletRequest request, String experimentAccession, String accessKey){
-        return ExternallyAvailableContentController.streamResourcesUrl(request, experimentAccession, accessKey, "experiment-design");
+    public static String makeUrl(String experimentAccession, String accessKey){
+        return ExternallyAvailableContentController.streamResourcesUrl(experimentAccession, accessKey, "experiment-design");
     }
 
     public Collection<ExternallyAvailableContent> get(final E experiment){

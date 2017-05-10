@@ -25,6 +25,19 @@
 </head>
 
 <body>
+    <div class="row column">
+        <code>
+            expressionAtlasHeatmapHighcharts.render(
+            {
+            target: 'highchartsContainer',
+            atlasUrl: '/gxa/',
+            query: {
+            gene: 'ENSG00000066279'
+            }
+            }
+            );
+        </code>
+    </div>
     <div id="content" role="main" class="row">
         <div id="highchartsContainer"></div>
     </div>
@@ -39,13 +52,10 @@
       target: 'highchartsContainer',
       atlasUrl: '/gxa/',
       query: {
-        species: 'homo sapiens',
         gene: 'ENSG00000066279'
       }
     }
   );
-
-
 </script>
 
 </html>

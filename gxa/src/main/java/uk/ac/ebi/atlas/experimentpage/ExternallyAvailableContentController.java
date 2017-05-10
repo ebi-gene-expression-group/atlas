@@ -23,20 +23,18 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Controller
 public class ExternallyAvailableContentController {
 
-    private static final String LIST_RESOURCES_URL = "/json/experiments/{experimentAccession}/resources/{contentType}";
-    private static final String STREAM_RESOURCES_URL = "/experiments-content/{experimentAccession}/resources/**";
+    private static final String LIST_RESOURCES_URL = "json/experiments/{experimentAccession}/resources/{contentType}";
+    private static final String STREAM_RESOURCES_URL = "experiments-content/{experimentAccession}/resources/**";
 
-    public static final String listResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
-        return ApplicationProperties.buildServerURL(request)
-                + LIST_RESOURCES_URL
+    public static final String listResourcesUrl(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
+        return LIST_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
                 .replace("{contentType}", contentType.name())
                 + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
     }
 
-    public static final String streamResourcesUrl(HttpServletRequest request, String experimentAccession, String accessKey, String resourceName){
-        return ApplicationProperties.buildServerURL(request)
-                + STREAM_RESOURCES_URL
+    public static final String streamResourcesUrl(String experimentAccession, String accessKey, String resourceName){
+        return STREAM_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
                 .replace("**", resourceName)
                 + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");

@@ -78,14 +78,14 @@ public class ExperimentController extends HtmlExceptionHandlingController {
             availableTabs.add(
                     customContentTab("resources", "Plots", "url",
                             new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                    request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.PLOTS)))
+                                    experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.PLOTS)))
             );
         }
 
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).experimentDesign.exists()){
             availableTabs.add(
                     experimentDesignTab(new ExperimentDesignTable(experiment).asJson(),
-                            ExperimentDesignFile.makeUrl(request,experiment.getAccession(), accessKey))
+                            ExperimentDesignFile.makeUrl(experiment.getAccession(), accessKey))
             );
         }
 
@@ -96,7 +96,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         availableTabs.add(
                 customContentTab("resources", "Download", "url",
                         new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
+                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
         );
 
         result.add("tabs", availableTabs);
@@ -115,7 +115,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         supplementaryInformationTabs.add(
                 customContentTab("resources", "Resources", "url",
                         new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
-                                request, experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
+                                experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.SUPPLEMENTARY_INFORMATION)))
         );
 
         if(experiment.getType().isMicroarray() &&
