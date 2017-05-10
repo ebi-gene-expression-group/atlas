@@ -39,6 +39,29 @@ a.clear {
     background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url("../../../resources/images/foundation/backgrounds/blurry.png");
 }
 
+/** Compact Header **/
+
+.masthead.compact-for-data .masthead-inner {
+    padding-top: .5rem;
+}
+.masthead.compact-for-data .masthead-inner div#local-title {
+    margin-bottom: 0;
+}
+.masthead.compact-for-data .masthead-inner h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+    margin-top: -.5rem;
+}
+.masthead.compact-for-data .masthead-inner form {
+    margin-top: -1rem;
+}
+.masthead.compact-for-data .masthead-inner nav {
+    margin-top: .75rem;
+    clear: none;
+}
+
+/** END Compact Header **/
+
 .button-rd {
     text-align: center;
     line-height: 1;

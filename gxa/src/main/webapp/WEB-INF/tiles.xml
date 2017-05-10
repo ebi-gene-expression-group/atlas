@@ -12,6 +12,14 @@
         <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
     </definition>
 
+    <definition name="foundation-base-compact" template="/WEB-INF/jsp/layouts/foundation-base-compact.jsp">
+        <put-attribute name="global-masthead-black-bar" value="/WEB-INF/jsp/tiles/compact/global-masthead-black-bar.jsp"/>
+        <put-attribute name="local-masthead-compact" value="/WEB-INF/jsp/tiles/compact/local-masthead-compact.jsp"/>
+        <put-attribute name="content"/>
+        <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
+        <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
+    </definition>
+
     <definition name="foundation-home" extends="foundation-base">
         <put-attribute name="title" value="Home &lt; "/>
         <put-attribute name="content">
@@ -27,42 +35,42 @@
         </put-attribute>
     </definition>
 
-    <definition name="foundation-static" extends="foundation-base">
+    <definition name="foundation-static" extends="foundation-base-compact">
         <put-attribute name="title" value=""/>
         <put-attribute name="content" value="/WEB-INF/jsp/foundation-static-template.jsp"/>
     </definition>
 
-    <definition name="foundation-experiments" extends="foundation-base">
+    <definition name="foundation-experiments" extends="foundation-base-compact">
         <put-attribute name="title" value="Experiments &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/foundation-experiments.jsp"/>
     </definition>
 
-    <definition name="foundation-experiment-page" extends="foundation-base">
+    <definition name="foundation-experiment-page" extends="foundation-base-compact">
         <put-attribute name="title" value="Experiment &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/foundation-experiment-page.jsp"/>
     </definition>
 
-    <definition name="foundation-baseline-experiments" extends="foundation-base">
+    <definition name="foundation-baseline-experiments" extends="foundation-base-compact">
         <put-attribute name="title" value="Baseline experiments &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/foundation-baseline-experiments.jsp"/>
     </definition>
 
-    <definition name="foundation-plants-experiments" extends="foundation-base">
+    <definition name="foundation-plants-experiments" extends="foundation-base-compact">
         <put-attribute name="title" value="Plant experiments &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/foundation-plants-experiments.jsp"/>
     </definition>
 
-    <definition name="gene-set-enrichment-results" extends="foundation-base">
+    <definition name="gene-set-enrichment-results" extends="foundation-base-compact">
         <put-attribute name="title" value="Gene set enrichment results &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/gene-set-enrichment-results.jsp"/>
     </definition>
 
-    <definition name="foundation-bioentities" extends="foundation-base">
+    <definition name="foundation-bioentities" extends="foundation-base-compact">
         <put-attribute name="title" value="Bioentity &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities.jsp"/>
     </definition>
 
-    <definition name="foundation-bioentities-search-results" extends="foundation-base">
+    <definition name="foundation-bioentities-search-results" extends="foundation-base-compact">
         <put-attribute name="title" value="Search results &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
     </definition>
