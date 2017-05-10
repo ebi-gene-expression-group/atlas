@@ -15,9 +15,6 @@
         <%--Links inside links to highlight text on hover, not necessary but aesthetically pleasing--%>
         <div class="tabs-panel is-active" id="featured-experiments">
             <div class="row">
-                <style>
-                    img {height: 65px;}
-                </style>
                 <div class="columns small-6 medium-4 text-center">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=ENCODE">
                         <img  src="${pageContext.request.contextPath}/resources/images/encode_logo.png" />
