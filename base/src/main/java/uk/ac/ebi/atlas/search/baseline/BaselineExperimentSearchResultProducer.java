@@ -5,6 +5,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -31,7 +32,7 @@ public class BaselineExperimentSearchResultProducer {
         return trimAndSort(profilesForExpressions(expressionsPerColumnPerExperiment, factorType));
     }
 
-    BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
+    private BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
         BaselineExperimentProfilesList result = new BaselineExperimentProfilesList();
         for(BaselineExperimentProfile profile: profiles){
             if(!profile.hasAllExpressionsEqualZero()){
@@ -43,7 +44,7 @@ public class BaselineExperimentSearchResultProducer {
         return result;
     }
 
-    Collection<BaselineExperimentProfile> profilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
+    private Collection<BaselineExperimentProfile> profilesForExpressions(Map<String, Map<String, Double>> expressionsPerColumnPerExperiment,
                                                                  final String factorType) {
         BaselineExperimentProfilesList resultRows = new BaselineExperimentProfilesList();
 
@@ -60,12 +61,14 @@ public class BaselineExperimentSearchResultProducer {
                         }
                     }));
 
-            for(final FactorGroup factorGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).transform(new Function<AssayGroup, FactorGroup>() {
+            final Set<FactorGroup> factorGroups = FluentIterable.from(experiment.getDataColumnDescriptors()).transform(new Function<AssayGroup, FactorGroup>() {
                 @Override
                 public FactorGroup apply(AssayGroup assayGroup) {
                     return experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType)).withoutTypes(commonFactorTypes);
                 }
-            }).toSet()){
+            }).toSet();
+
+            for(final FactorGroup factorGroup: factorGroups){
                 BaselineExperimentProfile baselineExperimentProfile =
                         new BaselineExperimentProfile(experiment,factorGroup);
                 for(AssayGroup assayGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).filter(new Predicate<AssayGroup>() {

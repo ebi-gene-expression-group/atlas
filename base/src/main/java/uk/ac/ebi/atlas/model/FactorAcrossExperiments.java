@@ -44,6 +44,11 @@ public class FactorAcrossExperiments extends DescribesDataColumns implements Com
     }
 
     @Override
+    public String toString(){
+        return "FactorAcrossExperiments id "+id;
+    }
+
+    @Override
     public int compareTo(FactorAcrossExperiments o) {
         return ComparisonChain.start().compare(this.id, o.id).result();
     }
