@@ -1,4 +1,4 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <ul class="tabs" data-tabs id="search-tabs">
@@ -15,7 +15,7 @@
                         <label>Gene / Gene properties</label>
                         <input id="home-search-gene-query-input" type="text" placeholder="Enter gene query…" name="geneQuery"/>
                     </div>
-                    <div class="row column small">
+                    <div class="row column small margin-top-small">
                         Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
                         <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>
                     </div>
@@ -61,10 +61,10 @@
             <div class="secondary ">
                 <div class="row column">
                     <label>Provide a set of Ensembl gene identifiers to test enrichment against differentially expressed genes by comparison:</label>
-                    <input type="text" placeholder="Enter gene IDs…" name="query"/>
+                    <input class="margin-bottom-none" type="text" placeholder="Enter gene IDs…" name="query"/>
                 </div>
 
-                <div class="row column small">
+                <div class="row column small margin-top-small">
                     Example: <a
                         href="${pageContext.request.contextPath}/genesetenrichment?query=AT1G48030%20AT1G53240%20AT2G17130%20AT2G20420%20AT2G44350%20AT2G47510%20AT3G09810%20AT3G15020%20AT3G17240%20AT3G27380%20AT3G55410%20AT3G60100%20AT4G26910%20AT4G35260%20AT4G35650%20AT4G35830%20AT5G03290%20AT5G08300%20AT5G23250%20AT5G40650%20AT5G50950%20AT5G55070%20AT5G65165%20AT5G65750%20AT5G66760">
                         AT1G48030 AT1G53240 AT2G17130 AT2G20420 AT2G44350 AT2G47510 AT3G09810 AT3G15020 AT3G17240 AT3G27380 AT3G55410 AT3G60100 AT4G26910 AT4G35260 AT4G35650 AT4G35830 AT5G03290 AT5G08300 AT5G23250</a>
