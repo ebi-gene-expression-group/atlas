@@ -17,7 +17,7 @@
     <!-- local-search -->
     <div class="hide-for-small-only small-4 columns">
         <!-- EBI Framework standard search -->
-        <form id="local-search" name="local-search" method="get" action="search">
+        <form id="local-search" name="local-search" method="get" action="${pageContext.request.contextPath}/search">
             <h4>Search this project</h4>
             <fieldset>
                 <div class="input-group" style="margin-bottom: 0">

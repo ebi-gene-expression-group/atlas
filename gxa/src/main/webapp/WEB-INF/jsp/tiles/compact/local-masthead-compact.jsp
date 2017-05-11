@@ -11,7 +11,7 @@
 
         <!-- local-search -->
         <div class="columns medium-5 large-3 large-push-6">
-            <form id="local-search" name="local-search" method="get" action="search">
+            <form id="local-search" name="local-search" method="get" action="${pageContext.request.contextPath}/search">
                 <fieldset>
                     <div class="input-group margin-bottom-none margin-top-large" >
                         <input type="text" class="input-group-field" name="geneQuery" id="local-searchbox">
