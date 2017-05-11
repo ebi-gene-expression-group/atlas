@@ -98,7 +98,7 @@ public class ApplicationProperties {
      */
     @Deprecated
     public static String buildServerURL(HttpServletRequest request) {
-        String spec = request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        String spec = request.getServerName() + (request.getServerPort() != 80 ? ":" + request.getServerPort() : "") + request.getContextPath();
         if (request.isSecure() || request.getServerName().startsWith("www.") || request.getServerName().startsWith("wwwdev.")) {
             spec = "https://" + spec;
         } else {
