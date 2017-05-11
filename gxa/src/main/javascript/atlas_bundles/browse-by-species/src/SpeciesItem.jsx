@@ -23,11 +23,11 @@ const SpeciesItem = props =>
             <p className="experiments">
                 {props.totalExperiments} experiments<br/>
                 <a href={baselineExperimentsUrl} className="baseline">
-                    <span data-tooltip className="baseline tiny button-rd" title="Baseline experiments">B</span>
+                    <span data-tooltip aria-haspopup="false" className="baseline tiny button-rd" title="Baseline experiments">B</span>
                     {props.baselineExperiments}
                 </a>
                 <a href={differentialExperimentsUrl} className="differential padding-left-medium">
-                    <span data-tooltip className="differential tiny button-rd" title="Differential experiments">D</span>
+                    <span data-tooltip aria-haspopup="false" className="differential tiny button-rd" title="Differential experiments">D</span>
                     {props.differentialExperiments}
                 </a>
             </p>
