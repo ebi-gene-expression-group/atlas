@@ -25,6 +25,7 @@ var DisplayLevelsButton = React.createClass({
 
     render: function () {
         var style = {
+            padding: `12px`
         };
         if (this.props.width) {
             style.width = this.props.width;
