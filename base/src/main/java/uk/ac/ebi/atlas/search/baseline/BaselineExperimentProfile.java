@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -108,6 +110,10 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
         return joinIntoText(shorten(super.getName()),
                 filterFactors.containsOnlyOrganism() ? new FactorSet() : filterFactors
                 );
+    }
+
+    public Pair<String, FactorGroup> getExperimentSlice(){
+        return Pair.of(experimentAccession, filterFactors);
     }
 
     public String getExperimentType() {

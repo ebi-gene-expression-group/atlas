@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
@@ -74,5 +76,10 @@ public class RichFactorGroupTest {
         assertThat(RichFactorGroup.isSubgroup(moreSpecificGroup, new FactorSet()), is(true));
         assertThat(RichFactorGroup.isSubgroup(differentSpecificGroup, new FactorSet()), is(true));
 
+    }
+
+    @Test
+    public void asJson() {
+        assertThat(new RichFactorGroup(new FactorSet().add(new Factor("header", "value"))).asJson(), is(new Gson().fromJson("{\"HEADER\":[\"value\"]}", JsonObject.class)));
     }
 }

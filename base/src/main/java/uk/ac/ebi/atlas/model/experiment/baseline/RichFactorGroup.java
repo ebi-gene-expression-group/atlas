@@ -6,8 +6,14 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 
 /*
@@ -30,6 +36,25 @@ public class RichFactorGroup {
                 return factor.getValueOntologyTerms();
             }
         }).toSet();
+    }
+
+    public String asUrlEncodedJson(){
+        try {
+            return URLEncoder.encode(new Gson().toJson(asJson()), "UTF-8");
+        } catch(UnsupportedEncodingException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Coupled to the experiment page client code - over there we can have multiple factor values per type
+    JsonObject asJson(){
+        JsonObject result = new JsonObject();
+        for(Factor factor: factorGroup){
+            JsonArray values = new JsonArray();
+            values.add(new JsonPrimitive(factor.getValue()));
+            result.add(factor.getType(), values);
+        }
+        return result;
     }
 
     public static Set<String> typesWithCommonValues(Iterable<FactorGroup> factorGroups){
