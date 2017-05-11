@@ -58,7 +58,7 @@ public class MicroarrayProfileStreamFactoryTest {
 
         assertThat(sequenceProfiles.get(0).getId(), is(GENE_ID));
         assertThat(sequenceProfiles.get(0).getName(), is(GENE_NAME));
-        assertThat(sequenceProfiles.get(0).getConditionsEvenTheOnesWithZeroExpression().size(), is(1));
+        assertThat(sequenceProfiles.get(0).getConditions().size(), is(1));
         
         MicroarrayExpression e00 = sequenceProfiles.get(0).getExpression(contrasts.get(0));
         assertThat(e00.getPValue(), is(Double.parseDouble(P_VALUE)));
@@ -67,7 +67,7 @@ public class MicroarrayProfileStreamFactoryTest {
         
         assertThat(sequenceProfiles.get(1).getId(), is(GENE_ID_2));
         assertThat(sequenceProfiles.get(1).getName(), is(GENE_NAME_2));
-        assertThat(sequenceProfiles.get(1).getConditionsEvenTheOnesWithZeroExpression().size(), is(1));
+        assertThat(sequenceProfiles.get(1).getConditions().size(), is(1));
         MicroarrayExpression e10 = sequenceProfiles.get(1).getExpression(contrasts.get(0));
         assertThat(e10.getPValue(), is(Double.parseDouble(P_VALUE_2)));
         assertThat(e10.getFoldChange(), is(Double.parseDouble(FOLD_CHANGE_2)));
@@ -85,7 +85,7 @@ public class MicroarrayProfileStreamFactoryTest {
         assertThat(sequenceProfiles.size(), is(1));
         assertThat(sequenceProfiles.get(0).getId(), is(GENE_ID));
         assertThat(sequenceProfiles.get(0).getName(), is(GENE_NAME));
-        assertThat(sequenceProfiles.get(0).getConditionsEvenTheOnesWithZeroExpression().size(), is(2));
+        assertThat(sequenceProfiles.get(0).getConditions().size(), is(2));
 
         MicroarrayExpression e00 = sequenceProfiles.get(0).getExpression(contrasts.get(0));
         assertThat(e00.getPValue(), is(Double.parseDouble(P_VALUE)));

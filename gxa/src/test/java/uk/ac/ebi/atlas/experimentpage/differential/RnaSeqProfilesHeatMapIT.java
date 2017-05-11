@@ -111,7 +111,7 @@ public class RnaSeqProfilesHeatMapIT {
                 .extractGeneNames()));
         for(Object o: profilesUp) {
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            for(Contrast contrast: profile.getConditionsEvenTheOnesWithZeroExpression()){
+            for(Contrast contrast: profile.getConditions()){
                 assertEquals(true, profile.getExpression(contrast).isOverExpressed());
                 assertEquals(false, profile.getExpression(contrast).isUnderExpressed());
             }
@@ -126,7 +126,7 @@ public class RnaSeqProfilesHeatMapIT {
                 ()));
         for(Object o: profilesDown) {
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            for(Contrast contrast: profile.getConditionsEvenTheOnesWithZeroExpression()){
+            for(Contrast contrast: profile.getConditions()){
                 assertEquals(false, profile.getExpression(contrast).isOverExpressed());
                 assertEquals(true, profile.getExpression(contrast).isUnderExpressed());
             }
@@ -168,8 +168,8 @@ public class RnaSeqProfilesHeatMapIT {
             assertTrue(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
                     Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere );
 
-            assertTrue(experiment.getDataColumnDescriptors().containsAll(profile.getConditionsEvenTheOnesWithZeroExpression()));
-            for(Contrast contrast: profile.getConditionsEvenTheOnesWithZeroExpression()){
+            assertTrue(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()));
+            for(Contrast contrast: profile.getConditions()){
                 assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
 
                 double expressionLevel = profile.getExpressionLevel(contrast);

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
@@ -119,20 +118,6 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     }
 
     public Set<DataColumnDescriptor> getConditions() {
-        return FluentIterable.from(expressionsByCondition.entrySet()).filter(new Predicate<Map.Entry<DataColumnDescriptor, Expr>>() {
-            @Override
-            public boolean apply(Map.Entry<DataColumnDescriptor, Expr> dataColumnDescriptorExprEntry) {
-                return dataColumnDescriptorExprEntry.getValue().getLevel() != 0;
-            }
-        }).transform(new Function<Map.Entry<DataColumnDescriptor,Expr>, DataColumnDescriptor>() {
-            @Override
-            public DataColumnDescriptor apply(Map.Entry<DataColumnDescriptor, Expr> dataColumnDescriptorExprEntry) {
-                return dataColumnDescriptorExprEntry.getKey();
-            }
-        }).toSet();
-    }
-
-    public Set<DataColumnDescriptor> getConditionsEvenTheOnesWithZeroExpression() {
         return Sets.newHashSet(expressionsByCondition.keySet());
     }
 
