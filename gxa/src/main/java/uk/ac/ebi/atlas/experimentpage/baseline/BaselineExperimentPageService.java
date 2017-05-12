@@ -25,16 +25,16 @@ import java.util.Map;
 public class BaselineExperimentPageService extends ExperimentPageService {
 
     private final TracksUtil tracksUtil;
-    private final BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory;
+    private final BaselineProfilesHeatmapWranglerFactory baselineProfilesHeatmapWranglerFactory;
     private final AnatomogramFactory anatomogramFactory;
 
-    public BaselineExperimentPageService(BaselineProfilesHeatMapWranglerFactory baselineProfilesHeatMapWranglerFactory,
+    public BaselineExperimentPageService(BaselineProfilesHeatmapWranglerFactory baselineProfilesHeatmapWranglerFactory,
                                          ApplicationProperties applicationProperties,
                                          TracksUtil tracksUtil,
                                          HeatmapDataToJsonService heatmapDataToJsonService) {
         super(heatmapDataToJsonService, applicationProperties);
         this.anatomogramFactory = new AnatomogramFactory();
-        this.baselineProfilesHeatMapWranglerFactory = baselineProfilesHeatMapWranglerFactory;
+        this.baselineProfilesHeatmapWranglerFactory = baselineProfilesHeatmapWranglerFactory;
         this.tracksUtil = tracksUtil;
     }
 
@@ -54,8 +54,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
-        BaselineProfilesHeatmapWrangler heatmapResults = baselineProfilesHeatMapWranglerFactory.create
-                (request, preferences,experiment);
+        BaselineProfilesHeatmapWrangler heatmapResults = baselineProfilesHeatmapWranglerFactory.create
+                (preferences,experiment);
 
         result.add("columnHeaders",
                 constructColumnHeaders(dataColumnsToReturn,requestContext, experiment));

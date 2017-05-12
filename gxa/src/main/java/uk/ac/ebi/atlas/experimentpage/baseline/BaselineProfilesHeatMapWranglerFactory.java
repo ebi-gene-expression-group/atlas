@@ -8,22 +8,22 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class BaselineProfilesHeatMapWranglerFactory {
+public class BaselineProfilesHeatmapWranglerFactory {
 
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
 
     private final SolrQueryService solrQueryService;
     private final CoexpressedGenesService coexpressedGenesService;
 
-    public BaselineProfilesHeatMapWranglerFactory(BaselineProfileStreamFactory inputStreamFactory
+    public BaselineProfilesHeatmapWranglerFactory(BaselineProfileStreamFactory inputStreamFactory
             , SolrQueryService solrQueryService, CoexpressedGenesService coexpressedGenesService) {
         this.baselineProfilesHeatMap = new BaselineProfilesHeatMap(inputStreamFactory);
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
     }
 
-    public BaselineProfilesHeatmapWrangler create(HttpServletRequest httpServletRequest, BaselineRequestPreferences
-            preferences, BaselineExperiment experiment) {
+    public BaselineProfilesHeatmapWrangler create(BaselineRequestPreferences
+                                                          preferences, BaselineExperiment experiment) {
         return new BaselineProfilesHeatmapWrangler(
                 baselineProfilesHeatMap, solrQueryService, coexpressedGenesService,
                 preferences,
