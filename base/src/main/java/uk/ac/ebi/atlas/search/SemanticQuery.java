@@ -105,8 +105,13 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         try {
             return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
         } catch (NullPointerException | JsonSyntaxException e) {
-            String geneQueryString = gson.fromJson(URLDecoder.decode(StringUtils.wrap(json, "\""), "UTF-8"), String.class);
-            return create(ImmutableSet.of(SemanticQueryTerm.create(geneQueryString)));
+            String geneQueryString = gson.fromJson(StringUtils.wrap(URLDecoder.decode(json, "UTF-8"), "\""), String.class);
+
+            ImmutableSet.Builder<SemanticQueryTerm> builder = ImmutableSet.builder();
+            for (String geneQueryTerm : geneQueryString.split(" ")) {
+                builder.add(SemanticQueryTerm.create(geneQueryTerm));
+            }
+            return create(builder.build());
         }
     }
 

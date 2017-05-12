@@ -70,4 +70,16 @@ public class SemanticQueryTest {
         assertThat(subject.size(), is(2));
     }
 
+    @Test
+    public void splitsPlainTextAtSpaces() throws Exception {
+        SemanticQuery subject = SemanticQuery.fromUrlEncodedJson("ASPM BRCA2");
+        assertThat(subject.size(), is(2));
+    }
+
+    @Test
+    public void splitsPlainTextAtUrlEncodedSpaces() throws Exception {
+        assertThat(SemanticQuery.fromUrlEncodedJson("ASPM%20BRCA2").size(), is(2));
+        assertThat(SemanticQuery.fromUrlEncodedJson("ASPM+BRCA2").size(), is(2));
+    }
+
 }
