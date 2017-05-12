@@ -12,7 +12,7 @@ public class HistogramAcrossGenes {
 
 
     public HistogramAcrossGenes(int[] histogram, double [] cutoffs){
-        Preconditions.checkArgument(histogram.length == cutoffs.length);
+        Preconditions.checkArgument(histogram.length == cutoffs.length +1);
 
         this.histogram = histogram;
         this.cutoffs = cutoffs;

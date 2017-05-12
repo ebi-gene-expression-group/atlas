@@ -51,7 +51,7 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
     }
 
     public int[] histogram(E experiment, StreamOptions streamOptions, double[] cutoffBins) {
-        int[] result = new int[cutoffBins.length];
+        int[] result = new int[cutoffBins.length+1];
 
         goThroughRows:
         for (Prof prof : getProfiles(experiment, streamOptions, Functions.<Iterable<Prof>>identity())) {
@@ -59,13 +59,15 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
             Double expressionValue = prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn());
             if (expressionValue != null) {
 
+                int rightBinId = cutoffBins.length; // last bin is for values not matching any cutoff
                 findTheRightBin:
                 for (int i = 0; i < cutoffBins.length; i++) {
                     if (expressionValue <= cutoffBins[i]) {
-                        result[i] = result[i] + 1;
+                        rightBinId = i;
                         break findTheRightBin;
                     }
                 }
+                result[rightBinId] += 1;
 
             }
 

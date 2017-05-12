@@ -48,6 +48,10 @@ public class MockDataFileHub extends DataFileHub {
         }
     }
 
+    public void addExpressionFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
     public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
         addTemporaryTsv(MessageFormat.format(EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE, accession), lines);
     }
