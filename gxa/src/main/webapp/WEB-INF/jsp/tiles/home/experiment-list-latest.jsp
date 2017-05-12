@@ -14,7 +14,7 @@
         <%--Using line height hack to align contents vertically, waiting for Flexible Grid support to align stuff inside rows: https://github.com/ebiwd/EBI-Framework/issues/71--%>
         <%--Links inside links to highlight text on hover, not necessary but aesthetically pleasing--%>
         <div class="tabs-panel is-active" id="featured-experiments">
-            <div class="row margin-bottom-xlarge">
+            <div class="row margin-bottom-xxlarge">
                 <div class="small-4 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments?experimentSet=ENCODE">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/encode_logo.png" />
@@ -46,12 +46,12 @@
                 </div>
             </div>
 
-            <div class="row margin-bottom-xlarge">
+            <div class="row margin-bottom-xxlarge">
                 <div class="small-4 columns combo text-center padding-top-medium">
                     <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">
                         <img class="margin-bottom-large experiment-thumbnail" src="${pageContext.request.contextPath}/resources/images/human_protein_atlas_logo.png" />
                         <h6>
-                            <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">Human Protein Atlas</a>
+                            <a href="${pageContext.request.contextPath}/experiments/E-PROT-3">Human tissues</a>
                         </h6>
                     </a>
                 </div>
