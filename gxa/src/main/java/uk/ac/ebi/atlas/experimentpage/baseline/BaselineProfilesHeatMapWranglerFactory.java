@@ -22,9 +22,9 @@ public class BaselineProfilesHeatMapWranglerFactory {
         this.coexpressedGenesService = coexpressedGenesService;
     }
 
-    public BaselineProfilesHeatMapWrangler create(HttpServletRequest httpServletRequest, BaselineRequestPreferences
+    public BaselineProfilesHeatmapWrangler create(HttpServletRequest httpServletRequest, BaselineRequestPreferences
             preferences, BaselineExperiment experiment) {
-        return new BaselineProfilesHeatMapWrangler(
+        return new BaselineProfilesHeatmapWrangler(
                 baselineProfilesHeatMap, solrQueryService, coexpressedGenesService,
                 preferences,
                 experiment);

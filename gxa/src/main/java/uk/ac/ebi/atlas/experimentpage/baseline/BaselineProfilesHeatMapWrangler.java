@@ -21,7 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class BaselineProfilesHeatMapWrangler {
+public class BaselineProfilesHeatmapWrangler {
 
     private GeneQueryResponse geneQueryResponseForProfiles;
 
@@ -61,7 +61,7 @@ public class BaselineProfilesHeatMapWrangler {
         }
     };
 
-    public BaselineProfilesHeatMapWrangler(
+    public BaselineProfilesHeatmapWrangler(
             BaselineProfilesHeatMap baselineProfilesHeatMap,
             SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,

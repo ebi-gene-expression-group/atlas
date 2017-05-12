@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -55,7 +54,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
-        BaselineProfilesHeatMapWrangler heatMapResults = baselineProfilesHeatMapWranglerFactory.create
+        BaselineProfilesHeatmapWrangler heatmapResults = baselineProfilesHeatMapWranglerFactory.create
                 (request, preferences,experiment);
 
         result.add("columnHeaders",
@@ -64,9 +63,9 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         result.add("columnGroupings",new JsonArray());
 
         try {
-            result.add("profiles", heatMapResults.getJsonProfiles());
+            result.add("profiles", heatmapResults.getJsonProfiles());
 
-            JsonArray jsonCoexpressions = heatMapResults.getJsonCoexpressions();
+            JsonArray jsonCoexpressions = heatmapResults.getJsonCoexpressions();
             if (jsonCoexpressions.size() > 0) {
                 result.add("coexpressions", jsonCoexpressions);
             }
