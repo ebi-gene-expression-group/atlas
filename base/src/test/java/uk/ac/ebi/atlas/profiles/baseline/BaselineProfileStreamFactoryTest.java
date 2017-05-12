@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
@@ -13,7 +12,8 @@ import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertThat;
 
 public class BaselineProfileStreamFactoryTest {
 

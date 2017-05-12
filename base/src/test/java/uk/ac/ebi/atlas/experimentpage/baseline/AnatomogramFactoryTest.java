@@ -30,7 +30,7 @@ public class AnatomogramFactoryTest {
         experimentDesign.putFactor("r2", "other_type", "b");
         experimentDesign.putFactor("r3", "other_type", "c");
 
-        BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(experimentDesign, assayGroups, ExperimentDisplayDefaults.create(), "accession");
+        BaselineExperiment experiment = BaselineExperimentTest.mockExperiment(experimentDesign, assayGroups, ExperimentDisplayDefaults.simpleDefaults(), "accession");
 
         assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g2, g3), experiment).isPresent(), is(true));
         assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g3), experiment).isPresent(), is(true));

@@ -48,6 +48,10 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
 
         List<AssayGroup> assayGroups;
 
+        /*
+        There is no reason to do this. We pass in a boolean orderCurated() and then sort data or not when printing it out.
+        TODO add validation that the two values are the same on experiment load, and only read from configuration
+         */
         if (factorsConfig.orderCurated()) {
             assayGroups = configuration.getAssayGroups();
         } else {
@@ -75,7 +79,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                 .withDisplayDefaults(ExperimentDisplayDefaults.create(
                         factorsConfig.getDefaultFilterFactors(),
                         factorsConfig.getDefaultQueryFactorType(),
-                        factorsConfig.getMenuFilterFactorTypes()))
+                        factorsConfig.getMenuFilterFactorTypes(), factorsConfig.orderCurated()))
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
                 .withRData(configuration.hasRData())

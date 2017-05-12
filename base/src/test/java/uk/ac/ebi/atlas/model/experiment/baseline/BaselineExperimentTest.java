@@ -65,7 +65,7 @@ public class BaselineExperimentTest {
                 experimentDesign.putFactor(assay, "type2", value2);
             }
         }
-        return mockExperiment(experimentDesign, assayGroups,ExperimentDisplayDefaults.create(), accession);
+        return mockExperiment(experimentDesign, assayGroups,ExperimentDisplayDefaults.simpleDefaults(), accession);
     }
 
     public static BaselineExperiment mockExperiment(ExperimentDesign experimentDesign,

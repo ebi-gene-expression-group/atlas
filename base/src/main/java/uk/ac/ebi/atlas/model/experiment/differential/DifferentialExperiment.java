@@ -36,7 +36,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
         super(experimentType, accession, lastUpdate,null, description, "", hasRData, species, pubMedIds,
                 experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
-                Collections.<String>emptyList(), Collections.<String>emptyList(), contrasts, ExperimentDisplayDefaults.create());
+                Collections.<String>emptyList(), Collections.<String>emptyList(), contrasts, ExperimentDisplayDefaults.simpleDefaults());
     }
 
     @Override

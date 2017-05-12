@@ -15,7 +15,6 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns,E extends
         Experiment<DataColumnDescriptor>, K extends ExperimentPageRequestPreferences>
@@ -58,15 +57,14 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
     }
 
     public List<DataColumnDescriptor> getDataColumnsToReturn() {
-
-        Comparator<DataColumnDescriptor> sortByDisplayName = new Comparator<DataColumnDescriptor>() {
+        return experiment.getDisplayDefaults().preserveColumnOrder()
+                ? dataColumnsToBeReturned().toList()
+                : dataColumnsToBeReturned().toSortedList(new Comparator<DataColumnDescriptor>() {
             @Override
             public int compare(DataColumnDescriptor o1, DataColumnDescriptor o2) {
                 return displayNameForColumn(o1).compareTo(displayNameForColumn(o2));
             }
-        };
-
-        return dataColumnsToBeReturned().toSortedList(sortByDisplayName);
+        });
     }
 
     public abstract String displayNameForColumn(DataColumnDescriptor dataColumnDescriptor);

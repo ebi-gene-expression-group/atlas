@@ -26,6 +26,7 @@ public abstract class ExperimentDisplayDefaults {
      */
     abstract Map<String, String> defaultFilterValues();
     public abstract List<String> prescribedOrderOfFilters();
+    public abstract boolean preserveColumnOrder();
 
 
     public List<String> defaultFilterValuesForFactor(String factorHeader){
@@ -68,40 +69,40 @@ public abstract class ExperimentDisplayDefaults {
     <menuFilterFactorTypes>CELL_TYPE, INDIVIDUAL, INFECT, TIME</menuFilterFactorTypes>
 
      */
-    public static ExperimentDisplayDefaults create(){
-        return create(ImmutableMap.<String, String>of(), ImmutableList.<String>of());
+    public static ExperimentDisplayDefaults simpleDefaults(){
+        return create(ImmutableMap.<String, String>of(), ImmutableList.<String>of(), false);
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
                                                    final String defaultQueryFactorType,
-                                                   List<String> menuFilterFactorTypes){
+                                                   List<String> menuFilterFactorTypes, boolean preserveColumnOrder){
         return create(defaultFilterFactors, ImmutableList.<String>builder().add(defaultQueryFactorType).addAll(Collections2.filter(menuFilterFactorTypes, new Predicate<String>() {
             @Override
             public boolean apply(@Nullable String s) {
                 return !s.equals(defaultQueryFactorType);
             }
-        })).build());
+        })).build(), preserveColumnOrder);
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
-                                                   List<String> prescribedOrderOfFilters){
+                                                   List<String> prescribedOrderOfFilters, boolean preserveColumnOrder){
         ImmutableMap.Builder<String, String> b = ImmutableMap.builder();
         for(Factor factor : defaultFilterFactors){
             b.put(factor.getType(), factor.getValue());
         }
-        return create(b.build(),prescribedOrderOfFilters);
+        return create(b.build(),prescribedOrderOfFilters, preserveColumnOrder);
     }
 
 
     static ExperimentDisplayDefaults create(Map<String, String> defaultFilterValues,
-                                                   List<String> prescribedOrderOfFilters){
+                                            List<String> prescribedOrderOfFilters, boolean preserveColumnOrder){
         ImmutableList.Builder<String> b = ImmutableList.<String>builder().addAll(prescribedOrderOfFilters);
         for(String filterType: defaultFilterValues.keySet()){
             if(!prescribedOrderOfFilters.contains(filterType)){
                 b.add(filterType);
             }
         }
-        return new AutoValue_ExperimentDisplayDefaults(defaultFilterValues,prescribedOrderOfFilters);
+        return new AutoValue_ExperimentDisplayDefaults(defaultFilterValues,prescribedOrderOfFilters, preserveColumnOrder);
     }
 
 
