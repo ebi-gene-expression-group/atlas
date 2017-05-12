@@ -18,7 +18,7 @@ public class BaselineBarChartController {
     private static final String GENE_DISTRIBUTION_URL = "/json/experiments/{experimentAccession}/genedistribution";
 
     public static final String geneDistributionUrl(HttpServletRequest request, String experimentAccession, String accessKey){
-        return ApplicationProperties.buildServerURL(request)+GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)+ (
+        return request.getContextPath()+GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)+ (
                 org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey="+accessKey : ""
         );
     }
