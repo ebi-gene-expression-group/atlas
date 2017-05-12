@@ -64,7 +64,9 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     @Override
     public int compare(BaselineProfile firstBaselineProfile, BaselineProfile otherBaselineProfile) {
 
-        if (isSpecific && selectedQueryFactors.equals(allQueryFactors)) {
+        boolean allContrastsSelected = nonSelectedQueryFactorsCachedInstance.isEmpty();
+
+        if (isSpecific && allContrastsSelected) {
             int order = ComparisonChain
                     .start()
                     .compare(firstBaselineProfile.getSpecificity(),otherBaselineProfile.getSpecificity() )
@@ -75,18 +77,18 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
                     compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
         }
 
-        if (isSpecific && !selectedQueryFactors.equals(allQueryFactors)) {
+        if (isSpecific && !allContrastsSelected) {
             // reverse because we want lower values to come first
             return Ordering.natural().reverse().compare(
                     getExpressionLevelFoldChange(firstBaselineProfile),
                     getExpressionLevelFoldChange(otherBaselineProfile));
         }
 
-        if (!isSpecific && selectedQueryFactors.equals(allQueryFactors)) {
+        if (!isSpecific && allContrastsSelected) {
             return compareOnAverageExpressionLevelOverAllQueryFactors(firstBaselineProfile, otherBaselineProfile);
         }
 
-        // !isSpecific && !selectedQueryFactors.equals(allQueryFactors)
+        // !isSpecific && !allContrastsSelected
         return compareOnAverageExpressionLevelOverSelectedQueryFactors(firstBaselineProfile, otherBaselineProfile);
 
     }

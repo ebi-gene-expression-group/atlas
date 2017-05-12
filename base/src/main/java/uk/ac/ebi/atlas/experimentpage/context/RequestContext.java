@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -12,7 +13,9 @@ import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns,E extends
         Experiment<DataColumnDescriptor>, K extends ExperimentPageRequestPreferences>
@@ -41,18 +44,29 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         return experiment.getDataColumnDescriptors();
     }
 
-    public List<DataColumnDescriptor> getDataColumnsToReturn() {
+    protected FluentIterable<DataColumnDescriptor> dataColumnsToBeReturned(){
         final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
-        if(selectedIds.isEmpty()){
-            return experiment.getDataColumnDescriptors();
-        } else {
-            return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(new Predicate<DataColumnDescriptor>() {
-                 @Override
-                 public boolean apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
-                     return selectedIds.contains(dataColumnDescriptor.getId());
-                 }
-             }).toList();
-        }
+        Predicate<DataColumnDescriptor> keepColumns =
+                selectedIds.isEmpty() ? Predicates.<DataColumnDescriptor>alwaysTrue()
+                        : new Predicate<DataColumnDescriptor>() {
+                    @Override
+                    public boolean apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
+                        return selectedIds.contains(dataColumnDescriptor.getId());
+                    }
+                };
+        return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(keepColumns);
+    }
+
+    public List<DataColumnDescriptor> getDataColumnsToReturn() {
+
+        Comparator<DataColumnDescriptor> sortByDisplayName = new Comparator<DataColumnDescriptor>() {
+            @Override
+            public int compare(DataColumnDescriptor o1, DataColumnDescriptor o2) {
+                return displayNameForColumn(o1).compareTo(displayNameForColumn(o2));
+            }
+        };
+
+        return dataColumnsToBeReturned().toSortedList(sortByDisplayName);
     }
 
     public abstract String displayNameForColumn(DataColumnDescriptor dataColumnDescriptor);

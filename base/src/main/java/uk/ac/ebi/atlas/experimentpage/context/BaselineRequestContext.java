@@ -28,7 +28,7 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
 
     @Override
     public String displayNameForColumn(AssayGroup assayGroup) {
-            return getDataColumnsToReturn().contains(assayGroup) ?
+            return dataColumnsToBeReturned().contains(assayGroup) ?
                     displayNamePerSelectedAssayGroup.get().get(assayGroup) :
                     "";
     }
@@ -54,7 +54,7 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
                             }
                         }).toList(),
 
-                        FluentIterable.from(getDataColumnsToReturn()).transform(new Function<AssayGroup, FactorGroup>() {
+                        dataColumnsToBeReturned().transform(new Function<AssayGroup, FactorGroup>() {
                             @Override
                             public FactorGroup apply(AssayGroup assayGroup) {
                                 return experiment.getFactors(assayGroup);
@@ -70,7 +70,7 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
 
         ImmutableMap.Builder<AssayGroup, String> b = ImmutableMap.builder();
 
-        for (AssayGroup assayGroup : getDataColumnsToReturn()) {
+        for (AssayGroup assayGroup : dataColumnsToBeReturned()) {
             final FactorGroup factorGroup = experiment.getFactors(assayGroup);
 
             b.put(assayGroup, FluentIterable.from

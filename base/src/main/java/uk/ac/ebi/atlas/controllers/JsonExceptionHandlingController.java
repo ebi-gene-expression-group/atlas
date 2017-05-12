@@ -21,6 +21,6 @@ public abstract class JsonExceptionHandlingController {
         return gson.toJson(
                 ImmutableMap.of(
                         "error",
-                        isBlank(e.getMessage()) ? "Unknown error, exception message was null" : e.getMessage()));
+                        isBlank(e.getMessage()) ? "Unknown error" : e.getMessage()));
     }
 }
