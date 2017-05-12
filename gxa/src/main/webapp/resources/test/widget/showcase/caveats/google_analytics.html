@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>Homo sapiens, ENSG00000066279 (JSON) &lt; Expression Atlas widget showcase</title>
+    <title>Google Analytics &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -31,32 +31,32 @@
 </head>
 
 <body>
-    <div id="content" role="main" class="row">
-        <div class="row column">
-            <div class="callout code-block">
+<div id="content" role="main" class="row">
+    <div class="row column">
+        <div class="callout code-block">
 <pre>expressionAtlasHeatmapHighcharts.render({
   target: 'highchartsContainer',
   query: {
-    species: 'homo sapiens',
-    gene: [{value: 'ENSG00000066279', category:'ensgene'}]
-  }
+    gene: 'ASPM'
+  },
+  disableGoogleAnalytics: true
 });</pre>
-            </div>
-
-            <div id="highchartsContainer"></div>
         </div>
+
+        <div id="highchartsContainer"></div>
     </div>
+</div>
 
-    <!-- JavaScript -->
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+<!-- JavaScript -->
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
 
-    <!-- The Foundation theme JavaScript -->
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
-    <script type="text/JavaScript">$(document).foundation();</script>
-    <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
+<!-- The Foundation theme JavaScript -->
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
+<script type="text/JavaScript">$(document).foundation();</script>
+<script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 </body>
 
 <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>
@@ -67,12 +67,11 @@
     {
       target: 'highchartsContainer',
       query: {
-        species: 'homo sapiens',
-        gene: [{value: 'ENSG00000066279', category:'ensgene'}]
+        gene: 'ASPM'
       },
       atlasUrl: '/gxa/',
       disableGoogleAnalytics: true
-    }
+    },
   );
 </script>
 

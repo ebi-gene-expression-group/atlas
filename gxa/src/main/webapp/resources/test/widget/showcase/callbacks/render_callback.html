@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>R-HSA-73887, R-HSA-1430728 (Plain text) &gt; Expression Atlas widget showcase</title>
+    <title>Render callback &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -34,15 +34,10 @@
     <div id="content" role="main" class="row">
         <div class="row column">
             <div class="callout code-block">
-                <pre>
-expressionAtlasHeatmapHighcharts.render({
+<pre>expressionAtlasHeatmapHighcharts.render({
   target: 'highchartsContainer',
-  experiment: 'reference',
-  query: {
-    gene: 'R-HSA-73887 R-HSA-1430728'   // URI-encoded text is equivalent: 'R-HSA-73887+R-HSA-1430728'
-  }
-});
-                </pre>
+  render: function() { window.alert('Everything done.') },
+});</pre>
             </div>
 
             <div id="highchartsContainer"></div>
@@ -68,11 +63,12 @@ expressionAtlasHeatmapHighcharts.render({
   expressionAtlasHeatmapHighcharts.render(
     {
       target: 'highchartsContainer',
-      atlasUrl: '/gxa/',
-      experiment: 'reference',
       query: {
-        gene: 'R-HSA-73887 R-HSA-1430728'
-      }
+        gene: 'ASPM'
+      },
+      render: function() { window.alert('Everything done.') },
+      atlasUrl: '/gxa/',
+      disableGoogleAnalytics: true
     }
   );
 </script>

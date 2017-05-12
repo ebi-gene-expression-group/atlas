@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>R-HSA-73887, R-HSA-1430728 (JSON) &gt; Expression Atlas widget showcase</title>
+    <title>Case insensitive search &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -32,20 +32,33 @@
 
 <body>
     <div id="content" role="main" class="row">
-        <div class="row column">
-            <div class="callout code-block">
-                <pre>
-expressionAtlasHeatmapHighcharts.render({
-  target: 'highchartsContainer',
+        <div class="small-6 columns">
+             <div class="callout code-block">
+<pre>expressionAtlasHeatmapHighcharts.render({
+  target: 'highchartsContainer1',
   experiment: 'reference',
   query: {
-    gene: [{value: 'R-HSA-73887'}, {value: 'R-HSA-1430728'}]
+    species: 'mus musculus',
+    gene: [{value: 'ASPM'}]
   }
-});
-                </pre>
-            </div>
+});</pre>
+             </div>
 
-            <div id="highchartsContainer"></div>
+            <div id="highchartsContainer1"></div>
+        </div>
+
+        <div class="small-6 columns">
+            <div class="callout code-block">
+<pre>expressionAtlasHeatmapHighcharts.render({
+  target: 'highchartsContainer2',
+  experiment: 'reference',
+  query: {
+    species: 'MuS MuSCuLuS',
+    gene: [{value: 'asPm
+  }
+});</pre>
+            </div>
+            <div id="highchartsContainer2"></div>
         </div>
     </div>
 
@@ -67,12 +80,27 @@ expressionAtlasHeatmapHighcharts.render({
 <script>
   expressionAtlasHeatmapHighcharts.render(
     {
-      target: 'highchartsContainer',
-      atlasUrl: '/gxa/',
+      target: 'highchartsContainer1',
       experiment: 'reference',
       query: {
-        gene: [{value: 'R-HSA-73887'}, {value: 'R-HSA-1430728'}]
-      }
+        species: 'mus musculus',
+        gene: [{value: 'ASPM'}]
+      },
+      atlasUrl: '/gxa/',
+      disableGoogleAnalytics: true
+    }
+  );
+
+  expressionAtlasHeatmapHighcharts.render(
+    {
+      target: 'highchartsContainer2',
+      experiment: 'reference',
+      query: {
+        species: 'MuS MuSCuLuS',
+        gene: [{value: 'asPm'}]
+      },
+      atlasUrl: '/gxa/',
+      disableGoogleAnalytics: true
     }
   );
 </script>

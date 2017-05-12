@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>Homo sapiens, ENSG00000066279 (JSON) &lt; Expression Atlas widget showcase</title>
+    <title>Inbound proxy &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -39,7 +39,8 @@
   query: {
     species: 'homo sapiens',
     gene: [{value: 'ENSG00000066279', category:'ensgene'}]
-  }
+  },
+  inProxy: 'https://my-secure-proxy.com
 });</pre>
             </div>
 
@@ -70,7 +71,8 @@
         species: 'homo sapiens',
         gene: [{value: 'ENSG00000066279', category:'ensgene'}]
       },
-      atlasUrl: '/gxa/',
+      inProxy: 'https://my-secure-proxy.com',
+      atlasUrl: 'https://wwwdev.ebi.ac.uk/gxa/',
       disableGoogleAnalytics: true
     }
   );

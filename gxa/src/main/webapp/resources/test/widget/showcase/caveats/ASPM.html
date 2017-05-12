@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>Homo sapiens, ENSG00000066279 (JSON) &lt; Expression Atlas widget showcase</title>
+    <title>ASPM &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -37,8 +37,7 @@
 <pre>expressionAtlasHeatmapHighcharts.render({
   target: 'highchartsContainer',
   query: {
-    species: 'homo sapiens',
-    gene: [{value: 'ENSG00000066279', category:'ensgene'}]
+    gene: 'ASPM'
   }
 });</pre>
             </div>
@@ -67,12 +66,11 @@
     {
       target: 'highchartsContainer',
       query: {
-        species: 'homo sapiens',
-        gene: [{value: 'ENSG00000066279', category:'ensgene'}]
+        gene: 'ASPM'
       },
       atlasUrl: '/gxa/',
       disableGoogleAnalytics: true
-    }
+    },
   );
 </script>
 

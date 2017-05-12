@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>Homo sapiens, ENSG00000066279 (JSON) &lt; Expression Atlas widget showcase</title>
+    <title>R-HSA-73887, R-HSA-1430728 (JSON) &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -36,9 +36,9 @@
             <div class="callout code-block">
 <pre>expressionAtlasHeatmapHighcharts.render({
   target: 'highchartsContainer',
+  experiment: 'reference',
   query: {
-    species: 'homo sapiens',
-    gene: [{value: 'ENSG00000066279', category:'ensgene'}]
+    gene: [{value: 'R-HSA-73887'}, {value: 'R-HSA-1430728'}]
   }
 });</pre>
             </div>
@@ -66,9 +66,9 @@
   expressionAtlasHeatmapHighcharts.render(
     {
       target: 'highchartsContainer',
+      experiment: 'reference',
       query: {
-        species: 'homo sapiens',
-        gene: [{value: 'ENSG00000066279', category:'ensgene'}]
+        gene: [{value: 'R-HSA-73887'}, {value: 'R-HSA-1430728'}]
       },
       atlasUrl: '/gxa/',
       disableGoogleAnalytics: true

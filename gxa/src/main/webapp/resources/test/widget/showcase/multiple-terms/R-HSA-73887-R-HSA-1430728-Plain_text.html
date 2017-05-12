@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 
-    <title>Homo sapiens, R-HSA-73887 &gt; Expression Atlas widget showcase</title>
+    <title>R-HSA-73887, R-HSA-1430728 (Plain text) &lt; Expression Atlas widget showcase</title>
 
     <meta charset="utf-8">
     <title>Expression Atlas &lt; Demo pages</title>
@@ -32,37 +32,18 @@
 
 <body>
     <div id="content" role="main" class="row">
-        <div class="small-6 columns">
-             <div class="callout code-block">
-                <pre>
-expressionAtlasHeatmapHighcharts.render({
-  target: 'highchartsContainer1',
-  experiment: 'reference',
-  query: {
-    species: 'mus musculus',
-    gene: [{value: 'ASPM'}]
-  }
-});
-                </pre>
-             </div>
-
-            <div id="highchartsContainer1"></div>
-        </div>
-
-        <div class="small-6 columns">
+        <div class="row column">
             <div class="callout code-block">
-                <pre>
-expressionAtlasHeatmapHighcharts.render({
-  target: 'highchartsContainer2',
+<pre>expressionAtlasHeatmapHighcharts.render({
+  target: 'highchartsContainer',
   experiment: 'reference',
   query: {
-    species: 'Mus MuscuLus',
-    gene: [{value: 'aspm'}]
+    gene: 'R-HSA-73887 R-HSA-1430728'   // URI-encoded text is equivalent: 'R-HSA-73887+R-HSA-1430728'
   }
-});
-                </pre>
+});</pre>
             </div>
-            <div id="highchartsContainer2"></div>
+
+            <div id="highchartsContainer"></div>
         </div>
     </div>
 
@@ -84,25 +65,13 @@ expressionAtlasHeatmapHighcharts.render({
 <script>
   expressionAtlasHeatmapHighcharts.render(
     {
-      target: 'highchartsContainer1',
-      atlasUrl: '/gxa/',
+      target: 'highchartsContainer',
       experiment: 'reference',
       query: {
-        species: 'mus musculus',
-        gene: [{value: 'ASPM'}]
-      }
-    }
-  );
-
-  expressionAtlasHeatmapHighcharts.render(
-    {
-      target: 'highchartsContainer2',
+        gene: 'R-HSA-73887 R-HSA-1430728'
+      },
       atlasUrl: '/gxa/',
-      experiment: 'reference',
-      query: {
-        species: 'Mus MuscuLus',
-        gene: [{value: 'aspm'}]
-      }
+      disableGoogleAnalytics: true
     }
   );
 </script>

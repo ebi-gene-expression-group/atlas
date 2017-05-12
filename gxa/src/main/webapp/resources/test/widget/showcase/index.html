@@ -22,34 +22,40 @@
 </head>
 
 <style>
-    ol {
-        counter-reset: section;
-        list-style-type: none;
+    #content {
+        counter-reset: section 0;
     }
 
-    li::before {
-        counter-increment: section;
-        content: counters(section,".") ". ";
-    }
-
-    ol.outer li {
+    ol.section > li {
         font-weight: 300;
         font-size: 1.5625rem;
+        list-style-type: none;
+        counter-increment: section;
     }
 
-    ol.inner li {
+    ol.section > li::before {
+        content: counters(section, ".") ". ";
+    }
+
+    ol.subsection > li {
         font-weight: 400;
         font-size: 1rem;
+        list-style-type: none;
+        counter-increment: subsection;
+    }
+
+    ol.subsection > li::before {
+        content: counters(section, ".") "." counters(subsection, ".") ". ";
     }
 </style>
 
 <body>
 
 <div id="content" role="main" class="row column">
-    <h2>Demo pages</h2>
-    <ol class="outer">
+    <h2>Basic use</h2>
+    <ol class="section">
         <li class="margin-bottom-large">Search across experiments
-            <ol class="inner">
+            <ol class="subsection">
                 <li>
                     <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-JSON.html">Search across all Expression Atlas experiments – Species and gene query in JSON</a>
                 </li>
@@ -63,7 +69,7 @@
         </li>
 
         <li class="margin-bottom-large">Search in reference experiment
-            <ol class="inner">
+            <ol class="subsection">
                 <li>
                     <a target="_blank" href="reference-experiment/M_musculus-ASPM.html">Search in <em>Mus musculus</em> reference experiment for a multi-species gene query</a>
                 </li>
@@ -72,31 +78,34 @@
                 </li>
             </ol>
         </li>
+    </ol>
 
-        <li class="margin-bottom-large">Multiple gene queries
-            <ol class="inner">
+    <h2>Advanced options</h2>
+    <ol class="section">
+        <li class="margin-bottom-large">Multiple gene query terms
+            <ol class="subsection">
                 <li>
-                    <a target="_blank" href="multiple-queries/R-HSA-73887-R-HSA-1430728-JSON.html">Search in reference experiment for more than one ID in JSON</a>
+                    <a target="_blank" href="multiple-terms/R-HSA-73887-R-HSA-1430728-JSON.html">Search in reference experiment for more than one ID in JSON</a>
                 </li>
                 <li>
-                    <a target="_blank" href="multiple-queries/R-HSA-73887-R-HSA-1430728-Plain_text.html">Search in reference experiment for more than one ID in plain text</a>
+                    <a target="_blank" href="multiple-terms/R-HSA-73887-R-HSA-1430728-Plain_text.html">Search in reference experiment for more than one ID in plain text</a>
                 </li>
             </ol>
         </li>
 
         <li class="margin-bottom-large">Proxying in and out
-            <ol class="inner">
+            <ol class="subsection">
                 <li>
-                    <a target="_blank" href="proxies/inbound-proxy.html">inProxy</a>
+                    <a target="_blank" href="proxies/inbound_proxy.html">Inbound proxy</a>
                 </li>
                 <li>
-                    <a target="_blank" href="callbacks/outbound-proxy.html">outProxy</a>
+                    <a target="_blank" href="proxies/outbound_proxy.html">Outbound proxy</a>
                 </li>
             </ol>
         </li>
 
         <li class="margin-bottom-large">Callbacks
-            <ol class="inner">
+            <ol class="subsection">
                 <li>
                     <a target="_blank" href="callbacks/fail_callback.html">If the AJAX request fails</a>
                 </li>
@@ -105,22 +114,26 @@
                 </li>
             </ol>
         </li>
+    </ol>
 
+    <h2>Caveats</h2>
+    <ol class="section">
         <li class="margin-bottom-large">Common errors and pitfalls
-            <ol class="inner">
+            <ol class="subsection">
                 <li>
-                    <a target="_blank" href="pitfalls/ASPM.html">Gene name matches multiple species IDs: No species / ASPM</a>
+                    <a target="_blank" href="caveats/ASPM.html">When a gene query matches multiple species the one with most results is shown</a>
                 </li>
                 <li>
-                    <a target="_blank" href="pitfalls/render_callback.html">The render callback will execute before the fail callback</a>
+                    <a target="_blank" href="caveats/render_fail_callback.html">The render callback will execute before the fail callback</a>
                 </li>
                 <li>
-                    <a target="_blank" href="pitfalls/case_insensitive.html">Species and unqualified gene queries are case insensitive</a>
+                    <a target="_blank" href="caveats/case_insensitive.html">Species and unqualified gene queries are case insensitive</a>
+                </li>
+                <li>
+                    <a target="_blank" href="caveats/google_analytics.html">Google Analytics is loaded by default but it will not overwrite your own tracker, however you can disable it</a>
                 </li>
             </ol>
         </li>
-
-
     </ol>
 </div>
 
