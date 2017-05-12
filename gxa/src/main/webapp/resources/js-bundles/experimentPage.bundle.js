@@ -6337,7 +6337,7 @@ webpackJsonp_name_([1],[
 	
 	    var showRegulation = ['UP', 'DOWN', 'UP_DOWN'].includes(this.props.queryObjects.regulation);
 	    var availableColumnIds = determineAvailableColumns(this.props.columnGroups);
-	    var columnsName = this.props.isDifferential ? 'Comparisons' : determineColumnNameFromFirstGroup(availableColumnIds, this.props.columnGroups[0]) || 'Sample properties';
+	    var columnsName = this.props.isDifferential ? 'Comparisons' : determineColumnNameFromFirstGroup(availableColumnIds, this.props.columnGroups[0]) || 'Experimental variables';
 	
 	    var onChangeProperty = function onChangeProperty(name, newValue) {
 	      var newQueryObjects = Object.assign({}, _this.props.queryObjects);
