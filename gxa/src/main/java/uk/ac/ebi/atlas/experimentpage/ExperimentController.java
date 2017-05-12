@@ -94,7 +94,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         );
 
         availableTabs.add(
-                customContentTab("resources", "Download", "url",
+                customContentTab("resources", "Downloads", "url",
                         new JsonPrimitive(ExternallyAvailableContentController.listResourcesUrl(
                                 experiment.getAccession(), accessKey, ExternallyAvailableContent.ContentType.DATA)))
         );
