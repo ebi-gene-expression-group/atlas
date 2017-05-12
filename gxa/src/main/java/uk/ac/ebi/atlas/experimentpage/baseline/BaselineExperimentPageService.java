@@ -25,10 +25,10 @@ import java.util.Map;
 public class BaselineExperimentPageService extends ExperimentPageService {
 
     private final TracksUtil tracksUtil;
-    private final BaselineProfilesHeatmapWranglerFactory baselineProfilesHeatmapWranglerFactory;
+    private final BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory;
     private final AnatomogramFactory anatomogramFactory;
 
-    public BaselineExperimentPageService(BaselineProfilesHeatmapWranglerFactory baselineProfilesHeatmapWranglerFactory,
+    public BaselineExperimentPageService(BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory,
                                          ApplicationProperties applicationProperties,
                                          TracksUtil tracksUtil,
                                          HeatmapDataToJsonService heatmapDataToJsonService) {
@@ -54,7 +54,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
                 requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
-        BaselineProfilesHeatmapWrangler heatmapResults = baselineProfilesHeatmapWranglerFactory.create
+        BaselineProfilesHeatmapsWrangler heatmapResults = baselineProfilesHeatmapWranglerFactory.create
                 (preferences,experiment);
 
         result.add("columnHeaders",

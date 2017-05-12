@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
@@ -21,7 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class BaselineProfilesHeatmapWrangler {
+public class BaselineProfilesHeatmapsWrangler {
 
     private GeneQueryResponse geneQueryResponseForProfiles;
 
@@ -61,7 +62,7 @@ public class BaselineProfilesHeatmapWrangler {
         }
     };
 
-    public BaselineProfilesHeatmapWrangler(
+    public BaselineProfilesHeatmapsWrangler(
             BaselineProfilesHeatMap baselineProfilesHeatMap,
             SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,
