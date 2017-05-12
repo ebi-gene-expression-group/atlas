@@ -20,27 +20,44 @@
 
     <!-- Use this CSS file for any custom styling -->
     <link rel="stylesheet" href="/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../showcase.css" type="text/css" media="all">
 
-    <link rel="stylesheet" href="/gxa/resources/css/customized-bootstrap-3.3.5.css">
+    <link rel="stylesheet" href="/gxa/resources/css/alt-customized-bootstrap-3.3.5.css">
+
+    <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 </head>
 
 <body>
-    <div class="row column">
-        <code>
-            expressionAtlasHeatmapHighcharts.render(
-            {
-            target: 'highchartsContainer',
-            atlasUrl: '/gxa/',
-            query: {
-            gene: 'ENSG00000066279'
-            }
-            }
-            );
-        </code>
-    </div>
     <div id="content" role="main" class="row">
-        <div id="highchartsContainer"></div>
+        <div class="row column">
+            <div class="callout code-block">
+                <pre>
+expressionAtlasHeatmapHighcharts.render({
+  target: 'highchartsContainer',
+  query: {
+    gene: 'ENSG00000066279'
+  }
+});
+                </pre>
+            </div>
+
+            <div id="highchartsContainer"></div>
+        </div>
     </div>
+
+    <!-- JavaScript -->
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+
+    <!-- The Foundation theme JavaScript -->
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
+    <script type="text/JavaScript">$(document).foundation();</script>
+    <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 </body>
 
 <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>

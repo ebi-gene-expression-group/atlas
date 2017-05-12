@@ -48,43 +48,43 @@
 <div id="content" role="main" class="row column">
     <h2>Demo pages</h2>
     <ol class="outer">
-        <li>Simple gene ID search
+        <li class="margin-bottom-large">Search across experiments
             <ol class="inner">
                 <li>
-                    <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-JSON.html">Multiple experiments result (JSON syntax): H. sapiens / ENSG00000066279 / ensgene</a>
+                    <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-JSON.html">Search across all Expression Atlas experiments – Species and gene query in JSON</a>
                 </li>
                 <li>
-                    <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-Plain_text.html">Multiple experiments result (plain text): H. sapiens / ENSG00000066279</a>
+                    <a target="_blank" href="simple-search/H_sapiens-ENSG00000066279-Plain_text.html">Search across all Expression Atlas experiments – Species and gene query in plain text</a>
                 </li>
                 <li>
-                    <a target="_blank" href="simple-search/ENSG00000066279-Plain_text.html">Multiple experiments result (plain text): ENSG00000066279</a>
+                    <a target="_blank" href="simple-search/ENSG00000066279-Plain_text.html">Search across all Expression Atlas experiments – Only gene query in plain text</a>
                 </li>
             </ol>
         </li>
 
-        <li>Reference experiment search
+        <li class="margin-bottom-large">Search in reference experiment
             <ol class="inner">
                 <li>
-                    <a target="_blank" href="reference-experiment/H_sapiens-R-HSA-73887.html">Reference experiment: H. sapiens / R-HSA-73887</a>
+                    <a target="_blank" href="reference-experiment/M_musculus-ASPM.html">Search in <em>Mus musculus</em> reference experiment for a multi-species gene query</a>
                 </li>
                 <li>
-                    <a target="_blank" href="reference-experiment/R-HSA-73887.html">Reference experiment: R-HSA-73887</a>
+                    <a target="_blank" href="reference-experiment/R-HSA-73887.html">Search in reference experiment with a species-specific gene query</a>
                 </li>
             </ol>
         </li>
 
-        <li>Multiple gene queries
+        <li class="margin-bottom-large">Multiple gene queries
             <ol class="inner">
                 <li>
-                    <a target="_blank" href="reference-experiment/H_sapiens-R-HSA-73887.html">Reference experiment: H. sapiens / R-HSA-73887</a>
+                    <a target="_blank" href="multiple-queries/R-HSA-73887-R-HSA-1430728-JSON.html">Search in reference experiment for more than one ID in JSON</a>
                 </li>
                 <li>
-                    <a target="_blank" href="reference-experiment/R-HSA-73887.html">Reference experiment: R-HSA-73887</a>
+                    <a target="_blank" href="multiple-queries/R-HSA-73887-R-HSA-1430728-Plain_text.html">Search in reference experiment for more than one ID in plain text</a>
                 </li>
             </ol>
         </li>
 
-        <li>Proxying in and out
+        <li class="margin-bottom-large">Proxying in and out
             <ol class="inner">
                 <li>
                     <a target="_blank" href="proxies/inbound-proxy.html">inProxy</a>
@@ -95,7 +95,7 @@
             </ol>
         </li>
 
-        <li>Callbacks
+        <li class="margin-bottom-large">Callbacks
             <ol class="inner">
                 <li>
                     <a target="_blank" href="callbacks/fail_callback.html">If the AJAX request fails</a>
@@ -106,13 +106,16 @@
             </ol>
         </li>
 
-        <li>Common errors and pitfalls
+        <li class="margin-bottom-large">Common errors and pitfalls
             <ol class="inner">
                 <li>
                     <a target="_blank" href="pitfalls/ASPM.html">Gene name matches multiple species IDs: No species / ASPM</a>
                 </li>
                 <li>
-                    <a target="_blank" href="callbacks/fail_render_callback.html">The render callback will finished before the fail callback</a>
+                    <a target="_blank" href="pitfalls/render_callback.html">The render callback will execute before the fail callback</a>
+                </li>
+                <li>
+                    <a target="_blank" href="pitfalls/case_insensitive.html">Species and unqualified gene queries are case insensitive</a>
                 </li>
             </ol>
         </li>
