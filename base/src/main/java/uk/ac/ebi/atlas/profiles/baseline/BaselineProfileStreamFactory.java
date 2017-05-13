@@ -23,7 +23,7 @@ public abstract class BaselineProfileStreamFactory extends ProfileStreamFactory<
     }
 
     @Override
-    protected ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
+    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
                                                              BaselineProfileStreamOptions options){
         return new TsvInputStream<>(openDataFile(experiment.getAccession()),
                 getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,

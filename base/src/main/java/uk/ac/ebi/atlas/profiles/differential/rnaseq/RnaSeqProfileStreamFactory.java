@@ -31,7 +31,7 @@ public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory
     }
 
     @Override
-    protected ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, RnaSeqRequestContext
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, RnaSeqRequestContext
             options) {
 
         return new TsvInputStream<>(openDataFile(experiment.getAccession()),

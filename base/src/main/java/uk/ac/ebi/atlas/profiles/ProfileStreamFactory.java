@@ -31,7 +31,7 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
 
     protected abstract ExpressionsRowDeserializerBuilder<Expr> getExpressionsRowDeserializerBuilder(E experiment);
 
-    protected abstract ObjectInputStream<Prof> create(E experiment, StreamOptions options);
+    public abstract ObjectInputStream<Prof> create(E experiment, StreamOptions options);
 
     private Iterable<Prof> getProfiles(E experiment, StreamOptions streamOptions, Function<Iterable<Prof>,
             Iterable<Prof>>
