@@ -7,7 +7,7 @@
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi.atlas</groupId>
-        <version>1.0</version>
+        <version>3.5</version>
     </parent>
 
     <artifactId>sc</artifactId>
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>uk.ac.ebi.atlas</groupId>
             <artifactId>atlas-base</artifactId>
-            <version>3.1</version>
+            <version>3.5</version>
         </dependency>
     </dependencies>
 </project>

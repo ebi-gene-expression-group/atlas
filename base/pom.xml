@@ -7,11 +7,11 @@
     <parent>
         <artifactId>atlas</artifactId>
         <groupId>uk.ac.ebi.atlas</groupId>
-        <version>1.0</version>
+        <version>3.5</version>
     </parent>
 
     <artifactId>atlas-base</artifactId>
-    <version>3.2</version>
+    <version>3.5</version>
     <packaging>jar</packaging>
 
     <name>Atlas base</name>
