@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 
 @Controller
-public class SingleCellExperimentPageController extends ExperimentPageController {
+public class SingleCellExperimentPageController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
 
