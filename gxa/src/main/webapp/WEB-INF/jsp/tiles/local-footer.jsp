@@ -21,7 +21,7 @@
             <div class="column column-block margin-top-large margin-bottom-large text-center">
                 <h4 style="color:white">Follow us</h4>
                 <a href="https://twitter.com/ExpressionAtlas" target="_blank">Twitter</a><br/>
-                <a href="${pageContext.request.contextPath}/feedback-form" target="_blank">Feedback</a><br/>
+                <a href="https://www.ebi.ac.uk/support/gxa" target="_blank">Feedback</a><br/>
                 <a href="mailto:arrayexpress-atlas@ebi.ac.uk" target="_blank">Contact</a>
             </div>
         </div>
