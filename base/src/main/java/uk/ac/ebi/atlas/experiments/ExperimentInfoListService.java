@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ExperimentInfoListService {
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd-MM-yyyy");
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd-MM-yyyy");
 
     private final ExperimentTrader experimentTrader;
     private final Collection<ExperimentType> experimentTypes;
@@ -86,11 +86,11 @@ public class ExperimentInfoListService {
         return cached;
     }
 
-    private int fetchCount() {
+    public int fetchCount() {
         return listPublicExperiments().size();
     }
 
-    private List<ExperimentInfo> fetchLatest() {
+    public List<ExperimentInfo> fetchLatest() {
         ImmutableList<ExperimentInfo> l =
                 FluentIterable.from(listPublicExperiments()).toSortedList(new Comparator<ExperimentInfo>() {
                     @Override
