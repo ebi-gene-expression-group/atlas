@@ -40,13 +40,14 @@ public class DifferentialAnalyticsSearchService {
         String differentialResults =
                 differentialAnalyticsSearchDao.fetchResultsAboveDefaultFoldChange(
                         geneQuery, conditionQuery, species.getReferenceName());
-        return differentialResultsReader.extractResultsAsJson(differentialResults);
+        return differentialResultsReader.extractResultsAsJson(differentialResults, new LinkToContrast(geneQuery));
     }
 
     public JsonObject fetchResults(SemanticQuery geneQuery, SemanticQuery conditionQuery) {
         String differentialResults =
                 differentialAnalyticsSearchDao.fetchResultsAboveDefaultFoldChange(geneQuery, conditionQuery);
-        return differentialResultsReader.extractResultsAsJson(differentialResults);
+
+        return differentialResultsReader.extractResultsAsJson(differentialResults, new LinkToContrast(geneQuery));
     }
 
 }

@@ -17,6 +17,7 @@
     $(function() {
         expressionAtlasDifferentialExpression({
             target: "gxaDifferentialTab",
+            atlasUrl: "${pageContext.request.contextPath}/",
             identifier: "${identifier}",
             query: "${query}",
             geneQuery: "${geneQuery}",
