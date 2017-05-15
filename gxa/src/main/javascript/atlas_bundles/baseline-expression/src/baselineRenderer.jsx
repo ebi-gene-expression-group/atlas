@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import BaselineRouter from './BaselineRouter.jsx';
 
 export default function (
-    { atlasUrl = `https://www.ebi.ac.uk/gxa`, target = 'gxaBaselineTab', facetsTreeData,
+    { atlasUrl = `https://www.ebi.ac.uk/gxa`, target = `gxaBaselineTab`, facetsTreeData,
       geneQuery, conditionQuery, species }) {
 
     ReactDOM.render(
