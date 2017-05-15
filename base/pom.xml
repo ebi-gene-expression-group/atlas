@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>atlas-base</artifactId>
-    <version>3.5</version>
+    <version>3.5.p1-RDF-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Atlas base</name>

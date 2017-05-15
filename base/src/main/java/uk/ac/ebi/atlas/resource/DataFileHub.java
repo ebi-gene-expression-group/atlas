@@ -24,22 +24,22 @@ public class DataFileHub {
 
     final static String SPECIES_PROPERTIES_FILE_PATH = "/species/species-properties.json";
 
-    final static String CONFIGURATION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-configuration.xml";
-    final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analysis-methods.tsv";
+    final static String CONFIGURATION_FILE_PATH_TEMPLATE = "/{0}/{0}-configuration.xml";
+    final static String ANALYSIS_METHODS_FILE_PATH_TEMPLATE = "/{0}/{0}-analysis-methods.tsv";
     final static String EXPERIMENT_DESIGN_FILE_PATH_TEMPLATE = "/expdesign/ExpDesign-{0}.tsv";
-    final static String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.condensed-sdrf.tsv";
-    final static String IDF_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.idf.txt";
+    final static String CONDENSED_SDRF_FILE_PATH_TEMPLATE = "/{0}/{0}.condensed-sdrf.tsv";
+    final static String IDF_FILE_PATH_TEMPLATE = "/{0}/{0}.idf.txt";
     final static String OP_LOG_FILE_PATH_TEMPLATE = "/admin/{0}-op-log.tsv";
 
-    final static String EXPRESSION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv"; // For baseline and RNA-seq diff
-    final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
-    final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
-    final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
-    final static String QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
-    final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
-    final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-normalized-expressions.tsv";
-    final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
-    final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
+    final static String EXPRESSION_FILE_PATH_TEMPLATE = "/{0}/{0}.tsv"; // For baseline and RNA-seq diff
+    final static String FACTORS_FILE_PATH_TEMPLATE = "/{0}/{0}-factors.xml";
+    final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/{0}/{0}-analytics.tsv";
+    final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/{0}/{0}-raw-counts.tsv";
+    final static String QC_DIRECTORY_PATH_TEMPLATE = "/{0}/qc";
+    final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/{0}/{0}_{1}-analytics.tsv";
+    final static String MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE = "/{0}/{0}_{1}-normalized-expressions.tsv";
+    final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/{0}/{0}_{1}-log-fold-changes.tsv";
+    final static String COEXPRESSION_FILE_TEMPLATE = "/{0}/{0}-coexpressions.tsv.gz";
 
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
