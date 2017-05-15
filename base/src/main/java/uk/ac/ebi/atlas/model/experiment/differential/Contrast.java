@@ -82,8 +82,8 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
         JsonObject o = new JsonObject();
         o.addProperty("id", id);
         o.addProperty("arrayDesignAccession", arrayDesignAccession);
-        o.add("referenceAssayGroup", referenceAssayGroup.toJson());
         o.add("testAssayGroup", testAssayGroup.toJson());
+        o.add("referenceAssayGroup", referenceAssayGroup.toJson());
         o.addProperty("displayName",displayName);
         return o;
     }
@@ -91,8 +91,8 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
     @Override
     public Set<String> assaysAnalyzedForThisDataColumn() {
         return ImmutableSet.<String>builder()
-                .addAll(referenceAssayGroup.assaysAnalyzedForThisDataColumn())
                 .addAll(testAssayGroup.assaysAnalyzedForThisDataColumn())
+                .addAll(referenceAssayGroup.assaysAnalyzedForThisDataColumn())
                 .build();
     }
 }

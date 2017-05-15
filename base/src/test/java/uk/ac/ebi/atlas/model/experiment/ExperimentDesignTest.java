@@ -2,11 +2,15 @@ package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
@@ -47,6 +51,19 @@ public class ExperimentDesignTest {
 
 
     public ExperimentDesign subject;
+
+    public static ExperimentDesign mockExperimentDesign(List<AssayGroup> assayGroups){
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+        for(AssayGroup assayGroup: assayGroups){
+            String value1 = RandomStringUtils.random(5);
+            String value2 = RandomStringUtils.random(5);
+            for(String assay: assayGroup){
+                experimentDesign.putFactor(assay, "type1", value1);
+                experimentDesign.putFactor(assay, "type2", value2);
+            }
+        }
+        return experimentDesign;
+    }
 
     @Test
     public void loadMultipleFactorSet(){

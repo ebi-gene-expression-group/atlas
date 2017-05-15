@@ -1,7 +1,12 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,9 +14,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTest;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 
@@ -35,13 +42,20 @@ public class DifferentialExperimentTest {
     Contrast c2 = new Contrast("g3_g4", null, referenceAssay2, testAssay2, "second contrast");
 
     public static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts){
-        return new DifferentialExperiment(accession, new Date(), contrasts,
-                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
-                mock(ExperimentDesign.class));
+        return mockExperiment(accession, contrasts, ExperimentDesignTest.mockExperimentDesign(FluentIterable.from(contrasts).transformAndConcat(new Function<Contrast, Iterable<AssayGroup>>() {
+            @Nullable
+            @Override
+            public Iterable<AssayGroup> apply(@Nullable Contrast contrast) {
+                return ImmutableList.of(contrast.getTestAssayGroup(), contrast.getReferenceAssayGroup());
+            }
+        }).toList()));
     }
 
-    @Mock
-    private ExperimentDesign experimentDesignMock;
+    static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts, ExperimentDesign experimentDesign){
+        return new DifferentialExperiment(accession, new Date(), contrasts,
+                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
+                experimentDesign);
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -67,6 +81,32 @@ public class DifferentialExperimentTest {
     @Test
     public void testGetPubMedIds() throws Exception {
         assertThat((Iterable<String>) subject.getAttributes().get("pubMedIds"), contains(PUBMEDID));
+    }
+
+    @Test
+    public void groupingsForHeatmapIncludeComparisonName(){
+        DifferentialExperiment experiment = mockExperiment("accession", ImmutableList.of(c1), ExperimentDesignTest.mockExperimentDesign(ImmutableList.of(referenceAssay1, testAssay1)));
+        JsonArray result = experiment.groupingsForHeatmap();
+
+        assertThat(result.size(), greaterThan(0));
+        assertThat(result.get(0).getAsJsonObject().get("name").getAsString(), equalToIgnoringCase("comparison_name"));
+    }
+
+    @Test
+    public void sampleCharacteristicsThatArePerWholeContrastShowUpAsTestThenReference(){
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+
+        experimentDesign.putFactor(referenceAssay1.getFirstAssayAccession(), "infect", "totally_normal");
+        experimentDesign.putFactor(testAssay1.getFirstAssayAccession(), "infect", "very_disease");
+
+        DifferentialExperiment experiment = mockExperiment("accession", ImmutableList.of(c1), experimentDesign);
+        JsonArray result = experiment.groupingsForHeatmap();
+
+        assertThat(result.size(), is(2));
+
+        String stringDump = new Gson().toJson(result);
+
+        assertThat(stringDump.indexOf("very_disease"), lessThan(stringDump.indexOf("totally_normal")));
     }
 
 }

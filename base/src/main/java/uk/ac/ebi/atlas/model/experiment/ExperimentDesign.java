@@ -201,7 +201,8 @@ public class ExperimentDesign implements Serializable {
 
 
     public Collection<SampleCharacteristic> getSampleCharacteristics(String runOrAssay) {
-        return this.samples.get(runOrAssay).values();
+        SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
+        return (sampleCharacteristics == null ? new SampleCharacteristics() : sampleCharacteristics).values();
     }
 
 

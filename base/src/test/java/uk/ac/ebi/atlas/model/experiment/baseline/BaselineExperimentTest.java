@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTest;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.Species;
@@ -56,16 +57,8 @@ public class BaselineExperimentTest {
     }
 
     public static BaselineExperiment mockExperiment(List<AssayGroup> assayGroups, String accession){
-        ExperimentDesign experimentDesign = new ExperimentDesign();
-        for(AssayGroup assayGroup: assayGroups){
-            String value1 = RandomStringUtils.random(5);
-            String value2 = RandomStringUtils.random(5);
-            for(String assay: assayGroup){
-                experimentDesign.putFactor(assay, "type1", value1);
-                experimentDesign.putFactor(assay, "type2", value2);
-            }
-        }
-        return mockExperiment(experimentDesign, assayGroups,ExperimentDisplayDefaults.simpleDefaults(), accession);
+
+        return mockExperiment(ExperimentDesignTest.mockExperimentDesign(assayGroups), assayGroups,ExperimentDisplayDefaults.simpleDefaults(), accession);
     }
 
     public static BaselineExperiment mockExperiment(ExperimentDesign experimentDesign,
