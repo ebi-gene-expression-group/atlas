@@ -1,73 +1,193 @@
 <div class="row">
-    <div class="columns small-10">
-        <h2>Welcome to Expression Atlas help</h2>
+    <div class="small-10 small-centered columns">
 
-        <h3>Quick start help</h3>
+        <div class="columns small-9">
+            <h2>Welcome to Expression Atlas help</h2>
 
-        <p>This page provides a brief summary of how to search Expression Atlas. For
-        more details please see the <a href="baseline-atlas.html">Baseline</a> and
-        <a href="differential-atlas.html">Differential</a> Atlas help pages, as
-        well as the <a href="../FAQ.html">FAQ</a>.
+            <h3>How to search in Expression Atlas</h3>
 
+            <p style="text-align:justify;">In Expression Atlas you can either search by gene (e.g. <i>APOA2</i>) or by biological condition (e.g. heart or lung carcinoma). Use the <b>Gene query search box</b> to find out in which conditions is <i>APOA2</i> gene expressed (baseline results) and in which conditions is <i>APOA2</i> gene differentially expressed (differential results).</p>
 
-        <h5>How to search</h5>
+            <p style="text-align:justify;">Use the <b>Condition query search box</b> to find out what genes are expressed in that particular condition, e.g. heart (baseline results) or to find out what genes are differentially expressed in the condition you searched for, e.g. lung carcinoma (differential results).</p>
 
-        <p>From the <a href="/gxa">home page</a> you can search to find out which genes
-        are expressed in various biological conditions.</p>
-
-        <p><img src="../resources/images/help/homepage_help.png" alt="Expression Atlas home page" /></p>
-
-        <p>Separate terms with spaces, and put multi-word terms in quotes.</p>
-
-        <p><img src="../resources/images/help/homepage_query.png" alt="Homepage query boxes" /></p>
-
-        <p>Your queries are expanded using <a href="http://www.ebi.ac.uk/efo/">EFO</a>.
-        This means that if you search for e.g. "cancer", you will also see results with
-        terms such as "carcinoma", "malignant tumour", and other synonyms and children
-        of the <a href="http://www.ebi.ac.uk/efo/EFO_0000311">cancer</a> entry in
-        EFO.</p>
-
-        <h3>Search results</h3>
-
-        <h5>Gene query results</h5>
-
-        <p>See annotations for a gene:</p>
-        <p><img src="../resources/images/help/genePage_shot1.png" alt="gene annotations" /></p>
-
-        <p>See <a href="./baseline-atlas.html">Baseline</a> expression for a gene:</p>
-        <p><img src="../resources/images/help/gene_results_baseline_heatmap.png" alt="gene baseline expression" /></p>
-
-        <p>See <a href="differential-atlas.html">Differential</a> expression for a gene:</p>
-        <p><img src="../resources/images/help/genePage_shot3.png" alt="gene differential expression" /></p>
+            <p><img src="../resources/images/help-page/homepage_help.png" alt="Expression Atlas home page"></p>
 
 
+            <h4>Ontology-driven query expansion</h4>
 
-        <h5>Combined gene and sample attribute/experimental variable query results</h5>
-        <p><img src="../resources/images/help/gene_and_condition_results_baseline.png" alt="combined query results" /></p>
+            <p style="text-align:justify;">Your queries are expanded using the <a href="https://www.ebi.ac.uk/efo/">Experimental Factor Ontology (EFO)</a>. This means that if you search for e.g. "cancer", you will also see results with terms such as "carcinoma" and other terms that are children of the cancer entry in EFO.
 
-
-        <h5>Gene set search results</h5>
-
-        <p>See <a href="baseline-atlas.html?foundation">Baseline</a> expression for a gene set e.g. a <a href="http://www.reactome.org">Reactome</a> pathway&hellip;</p>
-        <p><img src="../resources/images/help/pathway_results_baseline_heatmap.png" alt="reactome gene set before" /></p>
+            <p><img src="../resources/images/help-page/homepage_query.png" alt="Homepage query boxes"></p>
 
 
+            <h3>Baseline expression results</h3>
 
-        <h3>Expression Atlas experiments list</h3>
-        <p><img src="../resources/images/help/experimentList_help.png" alt="experiment list help" /></p>
-        <p>Click on "All Experiments" on the homepage to browse all experiments in ExpressionAtlas.</p>
+            <p style="text-align:justify;">When you search for a particular gene (e.g. <i>UMOD</i>) in one species (e.g. Homo sapiens), the <b>Baseline expression results</b> will show a heatmap with all tissues studied (columns) in different experiments (rows) in which <i>UMOD</i> gene is expressed above the default minimum expression level of 0.5 FPKM or 0.5 TPM.</p>
 
-    </div>
+            <p style="text-align:justify;">Expression levels are displayed in a <b>heatmap</b> in five different colours:
+            <ol>
+                <li>Grey box: expression level is below cutoff (0.5 FPKM)</li>
+                <li>Light blue box: expression level is low (between 0.5 to 10 FPKM)</li>
+                <li>Medium blue box: expression level is medium (between 11 to 1000 FPKM)</li>
+                <li>Dark blue box: expression level is high (more than 1000 FPKM)</li>
+                <li>White box: there is no data available</li>
+            </ol>
+            </p>
 
-    <div class="columns small-2">
-        <h4>More help</h4>
-        <ul class="menu vertical">
-            <li><a href="../about.html">About Expression Atlas</a></li>
-            <li><a href="../FAQ.html">Frequently asked questions</a></li>
-            <li><a href="baseline-atlas.html">Baseline Atlas help</a></li>
-            <li><a href="differential-atlas.html">Differential Atlas help</a></li>
-            <li><a href="r-data-objects.html">Atlas data in R</a></li>
-            <li><a href="../download.html">Download Expression Atlas data</a></li>
-        </ul>
+            <h4>Filter your results</h4>
+
+            <p style="text-align:justify;">By default, expression data for different tissues (that is the biological condition pre-selected) are displayed. However, you can use the filters in the left to explore <i>UMOD</i> gene expression in other biological conditions such as cell lines.</p>
+
+            <p><img src="../resources/images/help-page//baseline_multiexperiment.png" alt="baseline multi-experiment page"></p>
+
+            <h4>Anatomical Systems Filter</h4>
+
+            <p style="text-align:justify;">Use the <b>Filters</b> button above the heatmap to display gene expression in a particular anatomical system. For example, you can filter the results in the heatmap to show <i>UMOD</i> gene expression only in renal system.</p>
+
+            <p><img src="../resources/images/help-page/anatomical_systems_filter.png" alt="anatomical systems filter"></p>
+
+
+            <h3>Baseline experiment page</h3>
+
+            <p style="text-align:justify;">Each baseline experiment in Expression Atlas has its own Experiment page. Just click in the title of any experiment in the baseline expression results (e.g. Uhlen's lab) to see the corresponding <b>baseline experiment page</b>. If you want to see gene expression results not only for <i>UMOD</i> gene, you have to remove it from the Genes box and click Apply.</p>
+
+            <p style="text-align:justify;">In a baseline experiment page, expression levels are displayed in one heatmap by colour intensity, according to the gradient bar above the heatmap. The gradient shows intensities corresponding to expression levels for the 50 genes displayed. Mouse over a cell in the heatmap to see expression values for each gene in each tissue (or other condition).</p>
+
+            <h4>Specify a minimum expression level</h4>
+
+            <p style="text-align:justify;">Use the <b>Expression value</b> box to specify a different minimum level (the default one is 0.5) so only genes expressed above this level are displayed.</p>
+
+            <p><img src="../resources/images/help-page/specify_expression_level.png" alt="set minimum expression level"></p>
+
+
+            <h4>Most specific search</h4>
+
+            <p style="text-align:justify;">By default, the 50 most specifically expressed genes (rows) across all conditions (columns) studied are displayed. Unclick the <b>Most specific</b> option to show genes with highest expression first.</p>
+
+            <p><img src="../resources/images/help-page/most_specific.png" alt="most specific feature"></p>
+
+
+            <h4>Searching with genes</h4>
+
+            <p style="text-align:justify;">Use the <b>Genes search box</b> to search for a particular gene. You can search with Ensembl gene symbols (e.g. IGLC2), Ensembl ID (e.g. ENSG00000211677), UniProt accessions (e.g. A0A075B6K9) or InterPro terms (e.g. Immunoglobulin C1-set).</p>
+
+            <img src="../resources/images/help-page/search_with_gene.png" alt="searching with genes"></p>
+
+            <h4>Visualise variation among biological replicates</h4>
+
+            <p style="text-align:justify;">When you search for a particular gene (e.g. <i>IGLC2</i>) in the baseline experiment page you have the option to see the variation of its expression among the biological replicates for each tissue (or other condition) in the experiment. Click on <b>Switch to boxplot view</b> to display a plot per tissue with the maximum, upper quartile, median, lower quartile and minimum expression values for each set of biological replicates.</p>
+
+            <p><img src="../resources/images/help-page/boxplot_view.png" alt="boxplot view"></p>
+
+            <h4>Similar expression</h4>
+
+            <p style="text-align:justify;">Click on <b>Add similarly expressed genes</b> button below the heatmap to explore gene co-expression across tissues (or other condition). A list of genes with similar expression pattern across tissues is shown. Adjust the number of genes displayed using the slider at the bottom.</p>
+
+            <p><img src="../resources/images/help-page/co-expression.png" alt="similar expression"></p>
+
+            <h4>Experiments with more than one experimental variable</h4>
+
+            <p style="text-align:justify;">There are baseline experiments with more than one experimental variable. For example, in experiment <a href="/gxa/experiments/E-GEOD-26284">RNA-seq of long poly adenylated RNA and long non-poly adenylated RNA from ENCODE cell lines</a> three different types of <b>RNA</b> were extracted from six <b>cellular components</b> in 23 human <b>cell lines</b>. However, only 18 cell lines are shown by default. If you click on the <b>Select</b> button below Experimental variables, you will see that the 18 cell lines displayed by default correspond to the ones satisfying the following criteria:
+            <ol>
+                <li>Experimental variable 'cellular component' is whole cell</li>
+                <li>Experimental variable 'RNA' is long polyA RNA</li>
+            </ol>
+            </p>
+
+            <p><img src="../resources/images/help-page/multi-factor_experiment.png" alt="multi-factor experiment"></p>
+
+            <p>You can display the whole experiment just by clicking on the <b>Choose all</b> button in the top of the <b>Select Experimental variables</b> window.</p>
+
+            <h4>Other information in the baseline experiment page</h4>
+
+            <p style="text-align:justify;">The <b>Experiment Design</b> tab shows RNA-seq processing run accessions (from <a href="https://www.ebi.ac.uk/ena">ENA</a>), along with their corresponding biological sample characteristics and experimental variables values.</p>
+
+            <p style="text-align:justify;">The <b>Supplementary Information</b> tab includes Analysis Methods (list of the analysis methods we applied to the raw data in FASTQ format to obtain gene expression results) and Resources to see the experiment in <a href="https://www.ebi.ac.uk/arrayexpress/">ArrayExpress</a>.</p>
+
+            <p style="text-align:justify;">The <b>Downloads</b> tab contains all the files that you can download such as: i) gene expression results in tab-delimited format, ii) file containing the R object representing the experiment and iii) results of hierarchical clustering using the top 100 most variable genes across all tissues (or other condition) in the experiment</p>
+
+            <h3>Differential expression results</h3>
+
+            <p style="text-align:justify;">When you search for a particular gene (e.g. <i>UMOD</i>) in one species (e.g. Homo sapiens), the <b>Differential expression results</b> will show all comparisons in which <i>UMOD</i> gene is differentially expressed (absolute value of log<sub>2</sub> fold-change &gt; 1 and adjusted <i>p</i>-value &lt; 0.05). Mouse over each colour boxed to see <i>UMOD</i> gene expression values in each particular comparison. Mouse over each comparison to display more information: experimental variables are shown in bold along with other characteristics that define each group of samples compared.</p>
+
+            <p><img src="../resources/images/help-page/differential_expression_results.png" alt="differential expression results"></p>
+
+
+            <h4>Filter your results</h4>
+
+            <p style="text-align:justify;">You can narrow down the results displayed by using the filters in the left to select, for example, only comparisons in which <i>UMOD</i> gene is up-regulated.</p>
+
+
+            <h3>Differential experiment page</h3>
+
+            <p style="text-align:justify;">Each differential experiment in Expression Atlas has its own Experiment page. Just click in the title of any experiment in the differential expression results (e.g. Gene array analysis of clear cell renal cell carcinoma tissue versus matched normal kidney tissue) to see the corresponding <b>differential experiment page</b>.</p>
+
+            <p style="text-align:justify;">In a differential experiment page, differentially expressed genes (rows) in each comparison studied (column) are displayed in one heatmap by colour intensity, according to the gradient bar above the heatmap. The gradient shows intensities corresponding to the top 50 differentially expressed genes displayed. In the case of microarray data, design elements are displayed alongside genes (rows).</p>
+
+            <p style="text-align:justify;">The heatmap ranks genes by absolute log<sub>2</sub> fold-change. Blue cells indicate the gene is down-regulated while red ones correspond to up-regulated genes. Mouse over a cell in the heatmap to see log<sub>2</sub> fold-change and adjusted <i>p</i>-value (and <i>t</i>-statistic for microarray data) for differentially expressed gene in each comparison.</p>
+
+            <p><img src="../resources/images/help-page/differential_experiment_page.png" alt="differential experiment page"></p>
+
+            <h4>Specify different criteria for differential expression</h4>
+
+            <p style="text-align:justify;">Use the <b>log<sub>2</sub> fold-change</b> and the <b>adjusted <i>p</i>-value</b> box to specify different criteria for differential expression (the default one is log<sub>2</sub> fold-change &gt; 1 and adjusted <i>p</i>-value &lt; 0.05) so only genes satisfying both criteria are displayed.</p>
+
+            <h4>Searching with genes</h4>
+
+            <p style="text-align:justify;">Use the <b>Genes search</b> box to search for a particular gene. You can search with Ensembl gene symbols (e.g. NEBL), Ensembl ID (e.g. ENSG00000078114), UniProt accessions (e.g. A0A0U1RRK0) or InterPro terms (e.g. Nebulin repeat).</p>
+
+            <p style="text-align:justify;">On microarray experiments a gene can be represented by more than one design element, also known as probe or probe set. This is the oligonucleotide probe on the microarray that targets that gene.</p>
+
+            <h4>Most specific search</h4>
+
+            <p style="text-align:justify;">By default, genes that are differentially expressed in just one comparison are displayed, followed by genes differentially expressed in two comparisons, then three and so on, reporting genes that are differentially expressed in all comparisons at the end of the results. Unclick the <b>Most specific</b> option to show genes with largest absolute log<sub>2</sub> fold-change in all comparisons first.</p>
+
+            <h4>Select comparisons</h4>
+
+            <p style="text-align:justify;">Use the <b>Select</b> button below Comparisons to display gene expression results for specific comparisons that are more relevant to you.</p>
+
+            <h4>MA plots and enrichment analysis</h4>
+
+            <p style="text-align:justify;">The differential experiment page shows an additional tab called <b>Plots</b>. Two types of plots can be visualised:
+            <ol>
+                <li><b>MA plot</b> for each comparison. This plot displays the average expression level for each gene (normalized microarray intensity level or RNA-Seq log<sub>2</sub> counts-per-million) on the <i>x</i>-axis against log<sub>2</sub> fold-change on the <i>y</i>-axis. Differentially expressed genes at FDR &lt; 0.05 are shown in red in the plot.</li>
+                <li><b>Enrichment analysis plots</b> to see if there is any <a href="http://www.geneontology.org/">Gene Ontology</a>, <a href="https://www.ebi.ac.uk/interpro/">InterPro</a> or <a href="http://www.reactome.org/">Reactome</a> term significantly over-represented in the set of differentially expressed genes.</li>
+            </ol>
+            </p>
+
+            <p style="text-align:justify;">Enrichment analysis is performed using the <a href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">Piano</a> package from <a href="http://www.bioconductor.org/">Bioconductor</a>. For each comparison, enrichment between the set of differentially expressed genes and terms from GO, InterPro and Reactome is performed, using Fisher's exact test with multiple testing correction (FDR &lt; 0.1). Enrichment analysis plots are available only when statistically significant enrichment of terms was detected. Click on one plot to display it.</p>
+
+            <p style="text-align:justify;">The plot corresponding to GO terms enrichment analysis shows a maximum of 10 enriched terms (nodes) from a list sorted by the effect size (i.e. the number of observed divided by the number of expected genes annotated with a given term within the differentially expressed set of genes). The terms are linked by edges representing genes shared between them - the more genes shared between the two terms, the thicker the edge. The size of each node represents the proportion of differentially expressed genes annotated with each term.</p>
+
+            <p><img src="../resources/images/help-page/enrichment_analysis.png" alt="GO enrichment analysis"></p>
+
+            <h4>Other information in the differential experiment page</h4>
+
+            <p style="text-align:justify;">The <b>Experiment Design</b> tab shows RNA-seq processing run accessions (from <a href="https://www.ebi.ac.uk/ena">ENA</a>) or microarray assay accessions, along with their corresponding biological sample characteristics and experimental variables values.</p>
+
+            <p style="text-align:justify;">The <b>Supplementary Information</b> tab includes:
+            <ol>
+                <li><b>Analysis Methods</b> to see the list of the analysis methods we applied to the raw data to obtain differential expression results</li>
+                <li><b>Resources</b> to see the experiment in <a href="https://www.ebi.ac.uk/arrayexpress/">ArrayExpress</a></li>
+                <li><b>QC report</b> to see the results of quality assessment for the experiment data files. For microarray experiments, this report is
+                    generated by the <a href="http://www.bioconductor.org/packages/release/bioc/html/arrayQualityMetrics.html">arrayQualityMetrics</a>
+                    package from <a href="http://www.bioconductor.org/">Bioconductor</a> in <a href="http://www.r-project.org/">R</a>. Briefly, outlier arrays are detected using distance measures, box plots, and MA plots. Any array that is found to be an outlier by all three of these methods is excluded from further analysis. For RNA-seq experiments, the QC report is generated by the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.</li>
+            </ol>
+            </p>
+
+            <p style="text-align:justify;">The <b>Downloads</b> tab contains all the files that you can download such as: i) RNA-seq raw counts or normalised microarray intensity data, ii) all statistical analytics results for all comparisons in the experiment, iii) file containing the R object representing the experiment.</p>
+
+        </div>
+
+
+        <div class="columns small-2">
+            <h4>More help</h4>
+            <ul class="menu vertical">
+                <li><a href="/gxa/about.html">About Expression Atlas</a></li>
+                <li><a href="/gxa/FAQ.html">Frequently asked questions</a></li>
+                <li><a href="/gxa/help/r-data-objects.html">Atlas data in R</a></li>
+                <li><a href="/gxa/download.html">Download Expression Atlas data</a></li>
+            </ul>
+        </div>
     </div>
 </div>
