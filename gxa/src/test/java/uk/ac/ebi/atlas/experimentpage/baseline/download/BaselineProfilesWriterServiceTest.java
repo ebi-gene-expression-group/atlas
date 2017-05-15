@@ -9,10 +9,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -27,9 +27,12 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.io.Writer;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -38,13 +41,7 @@ import static org.mockito.Mockito.when;
 public class BaselineProfilesWriterServiceTest {
 
     @Mock
-    ObjectInputStream<BaselineProfile> objectInputStreamMock;
-
-    @Mock
     BaselineProfilesWriterFactory baselineProfilesWriterFactory;
-
-    @Mock
-    Writer responseWriter;
 
     @Mock
     ProfilesWriter<BaselineProfile> profilesWriter;
@@ -58,15 +55,18 @@ public class BaselineProfilesWriterServiceTest {
     @Mock
     CoexpressedGenesService coexpressedGenesService;
 
-    BaselineProfilesWriterService subject;
-
     @Mock
     BaselineRequestPreferences preferencesMock;
 
     @Mock
     BaselineExperiment baselineExperimentMock;
 
+    @Mock
+    ExperimentDisplayDefaults experimentDisplayDefaultsMock;
+
     BaselineRequestContext baselineRequestContext;
+
+    BaselineProfilesWriterService subject;
 
     String geneName = "some_gene";
     String geneId = "some_gene_id";
@@ -84,14 +84,16 @@ public class BaselineProfilesWriterServiceTest {
 
         when(profilesWriter.write(anyCollection())).thenReturn(123L);
 
-
         subject = new BaselineProfilesWriterService(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
                 coexpressedGenesService);
+
+        when(experimentDisplayDefaultsMock.preserveColumnOrder()).thenReturn(true);
 
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
+        when(baselineExperimentMock.getDisplayDefaults()).thenReturn(experimentDisplayDefaultsMock);
         Species species = new Species("some species", SpeciesProperties.UNKNOWN);
         when(baselineExperimentMock.getSpecies()).thenReturn(species);
         TreeSet<Factor> t = new TreeSet<>();
