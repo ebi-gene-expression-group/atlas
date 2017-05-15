@@ -14,6 +14,7 @@ const ContrastTooltips = require('expression-atlas-contrast-tooltips');
 const AtlasFeedback = require('expression-atlas-feedback');
 const EbiSpeciesIcon = require('react-ebi-species').Icon;
 
+import URI from 'urijs'
 
 //*------------------------------------------------------------------*
 
@@ -41,7 +42,8 @@ const ResultType = {
     comparison: RequiredString,
     foldChange: React.PropTypes.number.isRequired,
     colour: RequiredString,
-    id: RequiredString
+    id: RequiredString,
+    uri: RequiredString
 }
 
 const DifferentialResults = React.createClass({
@@ -84,7 +86,7 @@ const DifferentialResults = React.createClass({
         minDownLevel: DoubleWithDefault,
         minUpLevel: DoubleWithDefault,
         maxUpLevel: DoubleWithDefault,
-        hostUrl: RequiredString
+        atlasUrl: RequiredString
     },
 
     getDefaultProps () {
@@ -110,11 +112,13 @@ const DifferentialResults = React.createClass({
 
     render () {
         let differentialResultRows = this.props.results.map(diffResult => {
-            return <DifferentialResultRow
-                        key = {diffResult.id}
-                        displayLevels = {this.state.displayLevels}
-                        atlasBaseUrl = {this.props.hostUrl + '/gxa'}
-                        {...diffResult} />;
+            return (
+              <DifferentialResultRow
+                key = {diffResult.id}
+                displayLevels = {this.state.displayLevels}
+                atlasUrl = {this.props.atlasUrl}
+                {...diffResult} />
+            );
         });
 
         let feedbackSmileys = $.browser.msie ? null
@@ -134,13 +138,12 @@ const DifferentialResults = React.createClass({
 
                 <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
                     <Legend
-                        atlasBaseURL={this.props.hostUrl + '/gxa'} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
+                        atlasBaseURL={this.props.atlasUrl} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                     />
                 </div>
 
                 <div style={{display: 'inline-block', paddingLeft: '10px', verticalAlign: 'top'}}>
                     <DifferentialDownloadButton ref="downloadProfilesButton"
-                                                hostUrl={this.props.hostUrl}
                                                 results={this.props.results}
                     />
                  </div>
@@ -168,7 +171,9 @@ const DifferentialResults = React.createClass({
 
 
 const DifferentialResultRow = React.createClass({
-    propTypes: ResultType,
+    propTypes: Object.assign({}, ResultType, {
+      atlasUrl: RequiredString
+    }),
 
     _linkToComparisonPage () {
       return (
@@ -181,7 +186,7 @@ const DifferentialResultRow = React.createClass({
 
     render () {
         let factors = this.props.factors ? this.props.factors.toString().replace(/,/g, ', ') : '';
-
+        const uriBase = URI(this.props.atlasUrl).path()
         return (
             <tr>
                 <CellDifferential
@@ -195,10 +200,14 @@ const DifferentialResultRow = React.createClass({
                     <EbiSpeciesIcon species={this.props.species}/>
                 </td>
                 <td>
-                    <a href={'/gxa/genes/' + this.props.bioentityIdentifier}>{this.props.bioentityName || this.props.bioentityIdentifier}</a>
+                    <a href={URI(`genes/${this.props.bioentityIdentifier}`, uriBase).toString()}>
+                    {
+                      this.props.bioentityName || this.props.bioentityIdentifier
+                    }
+                    </a>
                 </td>
                 <td ref="comparison">
-                    <a href={this._linkToComparisonPage()}>
+                    <a href={URI(this.props.uri, uriBase).toString()}>
                         {this.props.comparison}
                     </a>
                 </td>
@@ -206,7 +215,7 @@ const DifferentialResultRow = React.createClass({
                     {factors}
                 </td>
                 <td>
-                    <a href={'experiments/' + this.props.experimentAccession}>
+                    <a href={URI(`experiments/${this.props.experimentAccession}`, uriBase).toString()}>
                         {this.props.experimentName}
                     </a>
                 </td>
@@ -215,7 +224,7 @@ const DifferentialResultRow = React.createClass({
     },
 
     componentDidMount () {
-        ContrastTooltips(this.props.atlasBaseUrl, '', ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
+        ContrastTooltips(this.props.atlasUrl, '', ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
         $(document).ready(() => {
           this.setState(
               {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : () => {}}

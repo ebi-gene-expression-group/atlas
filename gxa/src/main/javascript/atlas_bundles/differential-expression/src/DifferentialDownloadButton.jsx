@@ -21,7 +21,6 @@ const OptionalNumber = React.PropTypes.number;
 const DownloadDifferentialButton = React.createClass({
 
     propTypes: {
-        hostUrl: RequiredString,
         results: React.PropTypes.arrayOf(React.PropTypes.shape({
             species: RequiredString,
             kingdom: RequiredString,
@@ -72,11 +71,9 @@ const DownloadDifferentialButton = React.createClass({
     },
 
     render () {
-        // let downloadImgSrcURL = this.props.hostUrl + '/gxa/resources/images/download_blue_small.png';
-
-        let tsvString = this._convertJsonToTsv(this.props.results);
-        let uri = 'data:text/tsv;charset=utf-8,' + encodeURI(tsvString);
-        let fileName = 'differentialResults.tsv';
+        const tsvString = this._convertJsonToTsv(this.props.results);
+        const uri = 'data:text/tsv;charset=utf-8,' + encodeURI(tsvString);
+        const fileName = 'differentialResults.tsv';
 
         return (
             <div style={{display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px'}}>

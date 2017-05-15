@@ -3,7 +3,7 @@ const React = require('react');
 const $ = require('jquery');
 $.ajaxSetup({ traditional:true });
 
-const Url = require('url');
+import URI from 'urijs'
 
 //*------------------------------------------------------------------*
 
@@ -24,7 +24,7 @@ const RequiredString = React.PropTypes.string.isRequired;
 
 const DifferentialRouter = React.createClass({
     propTypes: {
-        hostUrl: RequiredString,
+        atlasUrl: RequiredString,
         geneQuery: RequiredString,
         conditionQuery : RequiredString,
         species: RequiredString
@@ -160,11 +160,11 @@ const DifferentialRouter = React.createClass({
                     {this.state.results && this.state.results.length
                         ? <Results
                             results = {filteredResults}
-                            hostUrl = {this.props.hostUrl}
+                            atlasUrl = {this.props.atlasUrl}
                             {...this.state.legend}
                           />
                         : <div ref="loadingImagePlaceholder">
-                              <img src={this.props.hostUrl + "/gxa/resources/images/loading.gif"}/>
+                              <img src={this.props.atlasUrl + "resources/images/loading.gif"}/>
                     </div>
                     }
                 </div>
@@ -173,15 +173,7 @@ const DifferentialRouter = React.createClass({
     },
 
     _loadInitialData () {
-        let differentialFacetsUrlObject = Url.parse(this.props.hostUrl),
-            differentialResultsUrlObject = Url.parse(this.props.hostUrl);
-
-        differentialFacetsUrlObject.pathname = 'gxa/json/search/differential_facets';
-        differentialResultsUrlObject.pathname = 'gxa/json/search/differential_results';
-
         const queryParams = {geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, species: this.props.species};
-        differentialFacetsUrlObject.query = queryParams;
-        differentialResultsUrlObject.query = queryParams;
 
         const onAjaxFailure = (jqXHR, textStatus, errorThrown) => {
             console.log("ERROR");
@@ -189,12 +181,14 @@ const DifferentialRouter = React.createClass({
             console.log("Error thrown: " + errorThrown);
         };
 
+        const uriBase = URI(this.props.atlasUrl).path()
+
         $.ajax({
-            url: Url.format(differentialFacetsUrlObject),
+            url:URI('json/search/differential_facets', uriBase).addSearch(queryParams).toString(),
             dataType: "json",
             success: facetsResponse => {
                 $.ajax({
-                    url: Url.format(differentialResultsUrlObject),
+                    url: URI('json/search/differential_results', uriBase).addSearch(queryParams).toString(),
                     dataType: "json",
                     success: resultsResponse => {
 
