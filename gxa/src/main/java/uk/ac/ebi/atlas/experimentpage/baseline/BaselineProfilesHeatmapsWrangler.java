@@ -66,12 +66,15 @@ public class BaselineProfilesHeatmapsWrangler {
             BaselineProfilesHeatMap baselineProfilesHeatMap,
             SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,
-            BaselineRequestPreferences preferences, BaselineExperiment experiment) {
+            BaselineRequestPreferences preferences,
+            BaselineExperiment experiment) {
+
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
         this.experiment = experiment;
         requestContext = new BaselineRequestContext(preferences, experiment);
+
     }
 
     private String getSpecies() {
@@ -103,12 +106,14 @@ public class BaselineProfilesHeatmapsWrangler {
     }
 
     public Optional<JsonObject> getJsonProfilesAsGeneSets()  {
-        GeneQueryResponse r = getGeneQueryResponseForProfiles();
-        return r.containsGeneSets()
+        GeneQueryResponse geneQueryResponse = getGeneQueryResponseForProfiles();
+        return geneQueryResponse.containsGeneSets()
                 ? Optional.of(
                         new ExternallyViewableProfilesList<>(
-                                baselineProfilesHeatMap.fetch(experiment,requestContext, r, true),
-                                linkToGenesets, requestContext.getDataColumnsToReturn()).asJson())
+                                baselineProfilesHeatMap.fetch(experiment, requestContext, geneQueryResponse, true),
+                                linkToGenesets,
+                                requestContext.getDataColumnsToReturn())
+                                .asJson())
 
                 : Optional.<JsonObject>absent();
     }
