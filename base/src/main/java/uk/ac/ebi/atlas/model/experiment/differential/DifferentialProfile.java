@@ -70,10 +70,6 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return pValueTotal / contrasts.size();
     }
 
-    public String getDesignElementName(){
-        return "";
-    }
-
     @Override
     protected void updateStateAfterAddingExpression(DifferentialExpression differentialExpression) {
         if (differentialExpression.isOverExpressed()) {

@@ -28,4 +28,9 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
         return ImmutableMap.<String,String>builder().putAll(super.properties()).put("designElement", designElementName).build();
     }
 
+    // Used by atlas-rdf
+    public String getDesignElementName(){
+        return designElementName;
+    }
+
 }
