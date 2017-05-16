@@ -8,6 +8,7 @@
 
 .tabs-title > a {
     font-size: 0.9rem;
+    color: #3e3e3e;
 }
 .tabs-title > a:hover {
     background: aliceblue;
@@ -35,6 +36,10 @@ h2 {
 header .masthead {
     padding-top: 1rem;
     color: #fff;
+}
+
+#content {
+    padding: 0.5rem 0 1.5rem;
 }
 
 /* end */
