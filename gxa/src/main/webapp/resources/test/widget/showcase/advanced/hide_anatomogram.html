@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <title>Hide anatomogram &lt; Expression Atlas widget showcase</title>
+
+    <meta charset="utf-8">
+    <title>Expression Atlas &lt; Demo pages</title>
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
+
+    <!-- CSS: implied media=all -->
+    <!-- CSS concatenated and minified via ant build script-->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all">
+
+    <!-- Use this CSS file for any custom styling -->
+    <link rel="stylesheet" href="/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../showcase.css" type="text/css" media="all">
+
+    <link rel="stylesheet" href="/gxa/resources/css/alt-customized-bootstrap-3.3.5.css">
+
+    <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+</head>
+
+<body>
+    <div id="content" role="main" class="row">
+        <div class="row column">
+             <div class="callout code-block">
+<pre>expressionAtlasHeatmapHighcharts.render({
+  target: 'highchartsContainer1',
+  experiment: 'reference',
+  query: {
+    species: 'monodelphis domestica',
+    gene: [{value: 'zinc finger'}]
+  },
+  showAnatomogram: false
+});</pre>
+             </div>
+
+            <div id="highchartsContainer1"></div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+
+    <!-- The Foundation theme JavaScript -->
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
+    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
+    <script type="text/JavaScript">$(document).foundation();</script>
+    <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
+</body>
+
+<script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendorCommons.bundle.js"></script>
+<script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expressionAtlasHeatmapHighcharts.bundle.js"></script>
+
+<script>
+  expressionAtlasHeatmapHighcharts.render(
+    {
+      target: 'highchartsContainer1',
+      experiment: 'reference',
+      query: {
+        species: 'monodelphis domestica',
+        gene: [{value: 'zinc finger'}]
+      },
+      showAnatomogram: false,
+      atlasUrl: '/gxa/',
+      disableGoogleAnalytics: true
+    }
+  );
+</script>
+
+</html>
