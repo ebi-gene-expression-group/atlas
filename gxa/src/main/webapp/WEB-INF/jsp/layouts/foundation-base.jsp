@@ -103,13 +103,13 @@
 
 
 <!-- JavaScript -->
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/cookiebanner.js"></script>
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foot.js"></script>
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
 
 <!-- The Foundation theme JavaScript -->
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
 <script type="text/JavaScript">$(document).foundation();</script>
 <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 

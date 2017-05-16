@@ -32,4 +32,9 @@ h2 {
     background: #2f5767;
 }
 
+header .masthead {
+    padding-top: 1rem;
+    color: #fff;
+}
+
 /* end */
