@@ -1,34 +1,34 @@
 var expressionAtlasBaselineExpression=webpackJsonp_name_([2],[/*!****************************************************!*\
   !*** ./atlas_bundles/baseline-expression/index.js ***!
   \****************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0}),t.render=void 0;var o=r(/*! ./src/baselineRenderer.jsx */2057),n=a(o);t.render=n.default},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,/*!********************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0}),e.render=void 0;var n=i(/*! ./src/baselineRenderer.jsx */2078),r=s(n);e.render=r.default},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/baselineRenderer.jsx ***!
   \********************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=e.atlasUrl,r=void 0===t?"https://www.ebi.ac.uk/gxa":t,a=e.target,o=void 0===a?"gxaBaselineTab":a,s=e.facetsTreeData,u=e.geneQuery,c=e.conditionQuery,f=e.species;i.default.render(n.default.createElement(l.default,{atlasUrl:r,facetsTreeData:s,geneQuery:u,conditionQuery:c,species:f}),document.getElementById(o))};var o=r(/*! react */299),n=a(o),s=r(/*! react-dom */328),i=a(s),u=r(/*! ./BaselineRouter.jsx */2058),l=a(u)},/*!******************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t){var e=t.atlasUrl,i=void 0===e?"https://www.ebi.ac.uk/gxa":e,s=t.target,n=void 0===s?"gxaBaselineTab":s,o=t.facetsTreeData,h=t.geneQuery,c=t.conditionQuery,d=t.species;a.default.render(r.default.createElement(l.default,{atlasUrl:i,facetsTreeData:o,geneQuery:h,conditionQuery:c,species:d}),document.getElementById(n))};var n=i(/*! react */299),r=s(n),o=i(/*! react-dom */328),a=s(o),h=i(/*! ./BaselineRouter.jsx */2079),l=s(h)},/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineRouter.jsx ***!
   \******************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function n(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var i=function(){function e(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,r,a){return r&&e(t.prototype,r),a&&e(t,a),t}}(),u=r(/*! react */299),l=a(u),c=r(/*! events */2059),f=a(c),p=r(/*! ./facets-tree/BaselineFacetsTree.jsx */2060),d=a(p),m=r(/*! ./BaselineHeatmaps.jsx */2063),y=a(m),g=r(/*! ./urlManager.js */2695),h=function(e){function t(e){o(this,t);var r=n(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e)),a=new f.default;a.setMaxListeners(0);var s=g.parseBaselineUrlParameter(),i=!1;return 0===Object.keys(s).length&&Object.keys(r.props.facetsTreeData).forEach(function(e){var t=r.props.facetsTreeData[e].find(function(e){return"organism_part"===e.name.toLowerCase()});t?(r._addElementToObjectOfArrays(s,e,t.name),i=!0):r.props.facetsTreeData[e].length&&r._addElementToObjectOfArrays(s,e,r.props.facetsTreeData[e][0].name)}),g.baselinePush(s,!0),r.state={facetsTreeData:r._transformPropsFacetsObjectToArray(s),querySelect:s,anatomogramDataEventEmitter:a,showAnatomograms:i},r.setChecked=r._setChecked.bind(r),r.toggleAnatomograms=r._toggleAnatomograms.bind(r),r}return s(t,e),i(t,[{key:"componentDidMount",value:function(){var e=this;window.addEventListener("popstate",function(){var t=g.parseBaselineUrlParameter();e.setState({querySelect:t,facetsTreeData:e._transformPropsFacetsObjectToArray(t)})},!1)}},{key:"render",value:function(){var e=this._organismPartInQuerySelect(),t=this._querySelectToHeatmaps();return l.default.createElement("div",{className:"row"},l.default.createElement("div",{className:"small-2 columns"},l.default.createElement(d.default,{facets:this.state.facetsTreeData,setChecked:this.setChecked,showAnatomograms:this.state.showAnatomograms,toggleAnatomograms:this.toggleAnatomograms,disableAnatomogramsCheckbox:!e})),l.default.createElement("div",{className:"small-10 columns"},l.default.createElement(y.default,{atlasUrl:this.props.atlasUrl,geneQuery:this.props.geneQuery,conditionQuery:this.props.conditionQuery,heatmaps:t,showAnatomograms:this.state.showAnatomograms,anatomogramDataEventEmitter:this.state.anatomogramDataEventEmitter})))}},{key:"_setChecked",value:function(e,t,r){var a=JSON.parse(JSON.stringify(this.state.querySelect)),o=JSON.parse(JSON.stringify(this.state.facetsTreeData));r?(this._addElementToObjectOfArrays(a,e,t),o.find(function(t){return t.facetName===e}).facetItems.find(function(e){return e.name===t}).checked=!0):(this._removeElementFromObjectOfArrays(a,e,t),o.find(function(t){return t.facetName===e}).facetItems.find(function(e){return e.name===t}).checked=!1),g.baselinePush(a,!1),this.setState({facetsTreeData:o,querySelect:a})}},{key:"_addElementToObjectOfArrays",value:function(e,t,r){e[t]||(e[t]=[]),e[t].push(r)}},{key:"_removeElementFromObjectOfArrays",value:function(e,t,r){delete e[t].splice(e[t].indexOf(r),1),0===e[t].length&&delete e[t]}},{key:"_toggleAnatomograms",value:function(){var e=!this.state.showAnatomograms;this.setState({showAnatomograms:e})}},{key:"_organismPartInQuerySelect",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:this.state.querySelect;return Object.keys(e).some(function(t){return e[t].some(function(e){return"organism_part"===e.toLowerCase()})})}},{key:"_transformPropsFacetsObjectToArray",value:function(e){var t=this;return Object.keys(this.props.facetsTreeData).map(function(r){return{facetName:r,facetItems:t.props.facetsTreeData[r].map(function(t){return{name:t.name,value:t.value,checked:!!e[r]&&e[r].includes(t.name)}})}})}},{key:"_querySelectToHeatmaps",value:function(){var e=this,t=[];return this.state.facetsTreeData.forEach(function(r){r.facetItems.forEach(function(a){e.state.querySelect[r.facetName]&&e.state.querySelect[r.facetName].includes(a.name)&&t.push({species:r.facetName,factor:a})})}),t}}]),t}(l.default.Component);h.propTypes={atlasUrl:l.default.PropTypes.string.isRequired,facetsTreeData:l.default.PropTypes.object.isRequired,geneQuery:l.default.PropTypes.string.isRequired,conditionQuery:l.default.PropTypes.string.isRequired,species:l.default.PropTypes.string.isRequired},t.default=h},/*!**************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}function n(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function r(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function o(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}Object.defineProperty(e,"__esModule",{value:!0});var a=function(){function t(t,e){for(var i=0;i<e.length;i++){var s=e[i];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(t,s.key,s)}}return function(e,i,s){return i&&t(e.prototype,i),s&&t(e,s),e}}(),h=i(/*! react */299),l=s(h),c=i(/*! events */2080),d=s(c),p=i(/*! ./facets-tree/BaselineFacetsTree.jsx */2081),u=s(p),f=i(/*! ./BaselineHeatmaps.jsx */2084),g=s(f),m=i(/*! ./urlManager.js */2728),v=function(t){function e(t){n(this,e);var i=r(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t)),s=new d.default;s.setMaxListeners(0);var o=m.parseBaselineUrlParameter(),a=!1;return 0===Object.keys(o).length&&Object.keys(i.props.facetsTreeData).forEach(function(t){var e=i.props.facetsTreeData[t].find(function(t){return"organism_part"===t.name.toLowerCase()});e?(i._addElementToObjectOfArrays(o,t,e.name),a=!0):i.props.facetsTreeData[t].length&&i._addElementToObjectOfArrays(o,t,i.props.facetsTreeData[t][0].name)}),m.baselinePush(o,!0),i.state={facetsTreeData:i._transformPropsFacetsObjectToArray(o),querySelect:o,anatomogramDataEventEmitter:s,showAnatomograms:a},i.setChecked=i._setChecked.bind(i),i.toggleAnatomograms=i._toggleAnatomograms.bind(i),i}return o(e,t),a(e,[{key:"componentDidMount",value:function(){var t=this;window.addEventListener("popstate",function(){var e=m.parseBaselineUrlParameter();t.setState({querySelect:e,facetsTreeData:t._transformPropsFacetsObjectToArray(e)})},!1)}},{key:"render",value:function(){var t=this._organismPartInQuerySelect(),e=this._querySelectToHeatmaps();return l.default.createElement("div",{className:"row"},l.default.createElement("div",{className:"small-2 columns"},l.default.createElement(u.default,{facets:this.state.facetsTreeData,setChecked:this.setChecked,showAnatomograms:this.state.showAnatomograms,toggleAnatomograms:this.toggleAnatomograms,disableAnatomogramsCheckbox:!t})),l.default.createElement("div",{className:"small-10 columns"},l.default.createElement(g.default,{atlasUrl:this.props.atlasUrl,geneQuery:this.props.geneQuery,conditionQuery:this.props.conditionQuery,heatmaps:e,showAnatomograms:this.state.showAnatomograms,anatomogramDataEventEmitter:this.state.anatomogramDataEventEmitter})))}},{key:"_setChecked",value:function(t,e,i){var s=JSON.parse(JSON.stringify(this.state.querySelect)),n=JSON.parse(JSON.stringify(this.state.facetsTreeData));i?(this._addElementToObjectOfArrays(s,t,e),n.find(function(e){return e.facetName===t}).facetItems.find(function(t){return t.name===e}).checked=!0):(this._removeElementFromObjectOfArrays(s,t,e),n.find(function(e){return e.facetName===t}).facetItems.find(function(t){return t.name===e}).checked=!1),m.baselinePush(s,!1),this.setState({facetsTreeData:n,querySelect:s})}},{key:"_addElementToObjectOfArrays",value:function(t,e,i){t[e]||(t[e]=[]),t[e].push(i)}},{key:"_removeElementFromObjectOfArrays",value:function(t,e,i){delete t[e].splice(t[e].indexOf(i),1),0===t[e].length&&delete t[e]}},{key:"_toggleAnatomograms",value:function(){var t=!this.state.showAnatomograms;this.setState({showAnatomograms:t})}},{key:"_organismPartInQuerySelect",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:this.state.querySelect;return Object.keys(t).some(function(e){return t[e].some(function(t){return"organism_part"===t.toLowerCase()})})}},{key:"_transformPropsFacetsObjectToArray",value:function(t){var e=this;return Object.keys(this.props.facetsTreeData).map(function(i){return{facetName:i,facetItems:e.props.facetsTreeData[i].map(function(e){return{name:e.name,value:e.value,checked:!!t[i]&&t[i].includes(e.name)}})}})}},{key:"_querySelectToHeatmaps",value:function(){var t=this,e=[];return this.state.facetsTreeData.forEach(function(i){i.facetItems.forEach(function(s){t.state.querySelect[i.facetName]&&t.state.querySelect[i.facetName].includes(s.name)&&e.push({species:i.facetName,factor:s})})}),e}}]),e}(l.default.Component);v.propTypes={atlasUrl:l.default.PropTypes.string.isRequired,facetsTreeData:l.default.PropTypes.object.isRequired,geneQuery:l.default.PropTypes.string.isRequired,conditionQuery:l.default.PropTypes.string.isRequired,species:l.default.PropTypes.string.isRequired},e.default=v},/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/events/events.js ***!
   \**************************************************************/
-995,/*!**********************************************************************************!*\
+1008,/*!**********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.jsx ***!
   \**********************************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=r(/*! react */299),n=a(o),s=r(/*! ./Facet.jsx */2061),i=a(s),u=function(e){var t=e.facets.map(function(t){return n.default.createElement(i.default,{key:t.facetName,facetName:t.facetName,facetItems:t.facetItems,setChecked:e.setChecked})});return n.default.createElement("div",null,n.default.createElement("input",{type:"checkbox",checked:e.showAnatomograms,onChange:e.toggleAnatomograms,disabled:e.disableAnatomogramsCheckbox}),n.default.createElement("label",{className:e.disableAnatomogramsCheckbox?"gxaDisabledCheckbox":""},"Show anatomograms"),n.default.createElement("h4",null,"Filter your results"),t)};u.propTypes={facets:n.default.PropTypes.arrayOf(n.default.PropTypes.shape({facetName:n.default.PropTypes.string.isRequired,facetItems:n.default.PropTypes.arrayOf(n.default.PropTypes.shape({name:n.default.PropTypes.string.isRequired,value:n.default.PropTypes.string.isRequired,checked:n.default.PropTypes.bool.isRequired})).isRequired})).isRequired,setChecked:n.default.PropTypes.func.isRequired,showAnatomograms:n.default.PropTypes.bool.isRequired,toggleAnatomograms:n.default.PropTypes.func.isRequired,disableAnatomogramsCheckbox:n.default.PropTypes.bool.isRequired},t.default=u},/*!*********************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var n=i(/*! react */299),r=s(n),o=i(/*! ./Facet.jsx */2082),a=s(o),h=function(t){var e=t.facets.map(function(e){return r.default.createElement(a.default,{key:e.facetName,facetName:e.facetName,facetItems:e.facetItems,setChecked:t.setChecked})});return r.default.createElement("div",null,r.default.createElement("input",{type:"checkbox",checked:t.showAnatomograms,onChange:t.toggleAnatomograms,disabled:t.disableAnatomogramsCheckbox}),r.default.createElement("label",{className:t.disableAnatomogramsCheckbox?"gxaDisabledCheckbox":""},"Show anatomograms"),r.default.createElement("h4",null,"Filter your results"),e)};h.propTypes={facets:r.default.PropTypes.arrayOf(r.default.PropTypes.shape({facetName:r.default.PropTypes.string.isRequired,facetItems:r.default.PropTypes.arrayOf(r.default.PropTypes.shape({name:r.default.PropTypes.string.isRequired,value:r.default.PropTypes.string.isRequired,checked:r.default.PropTypes.bool.isRequired})).isRequired})).isRequired,setChecked:r.default.PropTypes.func.isRequired,showAnatomograms:r.default.PropTypes.bool.isRequired,toggleAnatomograms:r.default.PropTypes.func.isRequired,disableAnatomogramsCheckbox:r.default.PropTypes.bool.isRequired},e.default=h},/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/Facet.jsx ***!
   \*********************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=r(/*! react */299),n=a(o),s=r(/*! ./FacetItem.jsx */2062),i=a(s),u=function(e){return e.charAt(0).toUpperCase()+e.slice(1).toLowerCase()},l=function(e){var t=e.facetItems.map(function(t){return n.default.createElement(i.default,{key:e.facetName+"_"+t.name,name:t.name,value:t.value,checked:t.checked,setChecked:function(t,r){e.setChecked(e.facetName,t,r)}})});return n.default.createElement("div",{className:"margin-top-large"},n.default.createElement("h5",null,u(e.facetName)),t)};l.propTypes={facetName:n.default.PropTypes.string.isRequired,facetItems:n.default.PropTypes.arrayOf(n.default.PropTypes.shape({name:n.default.PropTypes.string.isRequired,value:n.default.PropTypes.string.isRequired,checked:n.default.PropTypes.bool.isRequired})).isRequired,setChecked:n.default.PropTypes.func.isRequired},t.default=l},/*!*************************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var n=i(/*! react */299),r=s(n),o=i(/*! ./FacetItem.jsx */2083),a=s(o),h=function(t){return t.charAt(0).toUpperCase()+t.slice(1).toLowerCase()},l=function(t){var e=t.facetItems.map(function(e){return r.default.createElement(a.default,{key:t.facetName+"_"+e.name,name:e.name,value:e.value,checked:e.checked,setChecked:function(e,i){t.setChecked(t.facetName,e,i)}})});return r.default.createElement("div",{className:"margin-top-large"},r.default.createElement("h5",null,h(t.facetName)),e)};l.propTypes={facetName:r.default.PropTypes.string.isRequired,facetItems:r.default.PropTypes.arrayOf(r.default.PropTypes.shape({name:r.default.PropTypes.string.isRequired,value:r.default.PropTypes.string.isRequired,checked:r.default.PropTypes.bool.isRequired})).isRequired,setChecked:r.default.PropTypes.func.isRequired},e.default=l},/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/facets-tree/FacetItem.jsx ***!
   \*************************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=r(/*! react */299),n=a(o),s=function(e){return n.default.createElement("div",null,n.default.createElement("input",{type:"checkbox",checked:e.checked,onChange:function(){return e.setChecked(e.name,!e.checked)}}),n.default.createElement("label",null,e.value))};s.propTypes={name:n.default.PropTypes.string.isRequired,value:n.default.PropTypes.string.isRequired,checked:n.default.PropTypes.bool.isRequired,setChecked:n.default.PropTypes.func.isRequired},t.default=s},/*!********************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var n=i(/*! react */299),r=s(n),o=function(t){return r.default.createElement("div",null,r.default.createElement("input",{type:"checkbox",checked:t.checked,onChange:function(){return t.setChecked(t.name,!t.checked)}}),r.default.createElement("label",null,t.value))};o.propTypes={name:r.default.PropTypes.string.isRequired,value:r.default.PropTypes.string.isRequired,checked:r.default.PropTypes.bool.isRequired,setChecked:r.default.PropTypes.func.isRequired},e.default=o},/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmaps.jsx ***!
   \********************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function n(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function s(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var i=function(){function e(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,r,a){return r&&e(t.prototype,r),a&&e(t,a),t}}(),u=r(/*! react */299),l=a(u),c=r(/*! jquery */2064),f=a(c);r(/*! jquery.browser */2065);var p=r(/*! events */2059),d=a(p),m=r(/*! ./BaselineHeatmapWidget.jsx */2066),y=a(m),g=r(/*! expression-atlas-feedback */2673),h=function(e){function t(){return o(this,t),n(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return s(t,e),i(t,[{key:"render",value:function(){var e=this,t=f.default.browser.msie?null:l.default.createElement(g,{collectionCallback:"function"==typeof window.ga?function(e,t){window.ga("send","event","BaselineHeatmaps","feedback",t,e)}:function(){}});return l.default.createElement("div",null,this.props.heatmaps.map(function(t){return l.default.createElement(y.default,{key:t.species+"_"+t.factor.name,showAnatomogram:e.props.showAnatomograms,showHeatmapLabel:e._hasMoreThanOneSpecies(),species:t.species,factor:t.factor,atlasUrl:e.props.atlasUrl,geneQuery:e.props.geneQuery,conditionQuery:e.props.conditionQuery,anatomogramDataEventEmitter:e.props.anatomogramDataEventEmitter})}),t)}},{key:"_hasMoreThanOneSpecies",value:function(){var e=new Set;return this.props.heatmaps.forEach(function(t){e.add(t.species)}),e.size>1}}]),t}(l.default.Component);h.propTypes={atlasUrl:l.default.PropTypes.string.isRequired,geneQuery:l.default.PropTypes.string.isRequired,conditionQuery:l.default.PropTypes.string,showAnatomograms:l.default.PropTypes.bool.isRequired,heatmaps:l.default.PropTypes.arrayOf(l.default.PropTypes.shape({species:l.default.PropTypes.string.isRequired,factor:l.default.PropTypes.shape({name:l.default.PropTypes.string.isRequired,value:l.default.PropTypes.string.isRequired})})).isRequired,anatomogramDataEventEmitter:l.default.PropTypes.instanceOf(d.default).isRequired},t.default=h},/*!*******************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}function n(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function r(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function o(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}Object.defineProperty(e,"__esModule",{value:!0});var a=function(){function t(t,e){for(var i=0;i<e.length;i++){var s=e[i];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(t,s.key,s)}}return function(e,i,s){return i&&t(e.prototype,i),s&&t(e,s),e}}(),h=i(/*! react */299),l=s(h),c=i(/*! jquery */2085),d=s(c);i(/*! jquery.browser */2086);var p=i(/*! events */2080),u=s(p),f=i(/*! ./BaselineHeatmapWidget.jsx */2087),g=s(f),m=i(/*! expression-atlas-feedback */2706),v=function(t){function e(){return n(this,e),r(this,(e.__proto__||Object.getPrototypeOf(e)).apply(this,arguments))}return o(e,t),a(e,[{key:"render",value:function(){var t=this,e=d.default.browser.msie?null:l.default.createElement(m,{collectionCallback:"function"==typeof window.ga?function(t,e){window.ga("send","event","BaselineHeatmaps","feedback",e,t)}:function(){}});return l.default.createElement("div",null,this.props.heatmaps.map(function(e){return l.default.createElement(g.default,{key:e.species+"_"+e.factor.name,showAnatomogram:t.props.showAnatomograms,showHeatmapLabel:t._hasMoreThanOneSpecies(),species:e.species,factor:e.factor,atlasUrl:t.props.atlasUrl,geneQuery:t.props.geneQuery,conditionQuery:t.props.conditionQuery,anatomogramDataEventEmitter:t.props.anatomogramDataEventEmitter})}),e)}},{key:"_hasMoreThanOneSpecies",value:function(){var t=new Set;return this.props.heatmaps.forEach(function(e){t.add(e.species)}),t.size>1}}]),e}(l.default.Component);v.propTypes={atlasUrl:l.default.PropTypes.string.isRequired,geneQuery:l.default.PropTypes.string.isRequired,conditionQuery:l.default.PropTypes.string,showAnatomograms:l.default.PropTypes.bool.isRequired,heatmaps:l.default.PropTypes.arrayOf(l.default.PropTypes.shape({species:l.default.PropTypes.string.isRequired,factor:l.default.PropTypes.shape({name:l.default.PropTypes.string.isRequired,value:l.default.PropTypes.string.isRequired})})).isRequired,anatomogramDataEventEmitter:l.default.PropTypes.instanceOf(u.default).isRequired},e.default=v},/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/jquery/dist/jquery.js ***!
   \*******************************************************************/
-1164,/*!***********************************************************************************!*\
+1173,/*!***********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/jquery.browser/dist/jquery.browser.js ***!
   \***********************************************************************************/
-function(e,t,r){var a,o;/*!
+function(t,e,i){var s,n;/*!
 	 * jQuery Browser Plugin 0.1.0
 	 * https://github.com/gabceb/jquery-browser-plugin
 	 *
@@ -42,946 +42,997 @@ function(e,t,r){var a,o;/*!
 	 *
 	 * Date: 05-07-2015
 	 */
-!function(n){a=[r(/*! jquery */2064)],o=function(e){return n(e)}.apply(t,a),!(void 0!==o&&(e.exports=o))}(function(e){"use strict";function t(e){void 0===e&&(e=window.navigator.userAgent),e=e.toLowerCase();var t=/(edge)\/([\w.]+)/.exec(e)||/(opr)[\/]([\w.]+)/.exec(e)||/(chrome)[ \/]([\w.]+)/.exec(e)||/(iemobile)[\/]([\w.]+)/.exec(e)||/(version)(applewebkit)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+).*(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+)/.exec(e)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(e)||/(msie) ([\w.]+)/.exec(e)||e.indexOf("trident")>=0&&/(rv)(?::| )([\w.]+)/.exec(e)||e.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(e)||[],r=/(ipad)/.exec(e)||/(ipod)/.exec(e)||/(windows phone)/.exec(e)||/(iphone)/.exec(e)||/(kindle)/.exec(e)||/(silk)/.exec(e)||/(android)/.exec(e)||/(win)/.exec(e)||/(mac)/.exec(e)||/(linux)/.exec(e)||/(cros)/.exec(e)||/(playbook)/.exec(e)||/(bb)/.exec(e)||/(blackberry)/.exec(e)||[],a={},o={browser:t[5]||t[3]||t[1]||"",version:t[2]||t[4]||"0",versionNumber:t[4]||t[2]||"0",platform:r[0]||""};if(o.browser&&(a[o.browser]=!0,a.version=o.version,a.versionNumber=parseInt(o.versionNumber,10)),o.platform&&(a[o.platform]=!0),(a.android||a.bb||a.blackberry||a.ipad||a.iphone||a.ipod||a.kindle||a.playbook||a.silk||a["windows phone"])&&(a.mobile=!0),(a.cros||a.mac||a.linux||a.win)&&(a.desktop=!0),(a.chrome||a.opr||a.safari)&&(a.webkit=!0),a.rv||a.iemobile){var n="msie";o.browser=n,a[n]=!0}if(a.edge){delete a.edge;var s="msedge";o.browser=s,a[s]=!0}if(a.safari&&a.blackberry){var i="blackberry";o.browser=i,a[i]=!0}if(a.safari&&a.playbook){var u="playbook";o.browser=u,a[u]=!0}if(a.bb){var l="blackberry";o.browser=l,a[l]=!0}if(a.opr){var c="opera";o.browser=c,a[c]=!0}if(a.safari&&a.android){var f="android";o.browser=f,a[f]=!0}if(a.safari&&a.kindle){var p="kindle";o.browser=p,a[p]=!0}if(a.safari&&a.silk){var d="silk";o.browser=d,a[d]=!0}return a.name=o.browser,a.platform=o.platform,a}return window.jQBrowser=t(window.navigator.userAgent),window.jQBrowser.uaMatch=t,e&&(e.browser=window.jQBrowser),window.jQBrowser})},/*!*************************************************************************!*\
+!function(r){s=[i(/*! jquery */2085)],n=function(t){return r(t)}.apply(e,s),!(void 0!==n&&(t.exports=n))}(function(t){"use strict";function e(t){void 0===t&&(t=window.navigator.userAgent),t=t.toLowerCase();var e=/(edge)\/([\w.]+)/.exec(t)||/(opr)[\/]([\w.]+)/.exec(t)||/(chrome)[ \/]([\w.]+)/.exec(t)||/(iemobile)[\/]([\w.]+)/.exec(t)||/(version)(applewebkit)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(t)||/(webkit)[ \/]([\w.]+).*(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(t)||/(webkit)[ \/]([\w.]+)/.exec(t)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(t)||/(msie) ([\w.]+)/.exec(t)||t.indexOf("trident")>=0&&/(rv)(?::| )([\w.]+)/.exec(t)||t.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(t)||[],i=/(ipad)/.exec(t)||/(ipod)/.exec(t)||/(windows phone)/.exec(t)||/(iphone)/.exec(t)||/(kindle)/.exec(t)||/(silk)/.exec(t)||/(android)/.exec(t)||/(win)/.exec(t)||/(mac)/.exec(t)||/(linux)/.exec(t)||/(cros)/.exec(t)||/(playbook)/.exec(t)||/(bb)/.exec(t)||/(blackberry)/.exec(t)||[],s={},n={browser:e[5]||e[3]||e[1]||"",version:e[2]||e[4]||"0",versionNumber:e[4]||e[2]||"0",platform:i[0]||""};if(n.browser&&(s[n.browser]=!0,s.version=n.version,s.versionNumber=parseInt(n.versionNumber,10)),n.platform&&(s[n.platform]=!0),(s.android||s.bb||s.blackberry||s.ipad||s.iphone||s.ipod||s.kindle||s.playbook||s.silk||s["windows phone"])&&(s.mobile=!0),(s.cros||s.mac||s.linux||s.win)&&(s.desktop=!0),(s.chrome||s.opr||s.safari)&&(s.webkit=!0),s.rv||s.iemobile){var r="msie";n.browser=r,s[r]=!0}if(s.edge){delete s.edge;var o="msedge";n.browser=o,s[o]=!0}if(s.safari&&s.blackberry){var a="blackberry";n.browser=a,s[a]=!0}if(s.safari&&s.playbook){var h="playbook";n.browser=h,s[h]=!0}if(s.bb){var l="blackberry";n.browser=l,s[l]=!0}if(s.opr){var c="opera";n.browser=c,s[c]=!0}if(s.safari&&s.android){var d="android";n.browser=d,s[d]=!0}if(s.safari&&s.kindle){var p="kindle";n.browser=p,s[p]=!0}if(s.safari&&s.silk){var u="silk";n.browser=u,s[u]=!0}return s.name=n.browser,s.platform=n.platform,s}return window.jQBrowser=e(window.navigator.userAgent),window.jQBrowser.uaMatch=e,t&&(t.browser=window.jQBrowser),window.jQBrowser})},/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmapWidget.jsx ***!
   \*************************************************************************/
-function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=r(/*! react */299),n=a(o),s=r(/*! events */2059),i=a(s),u=r(/*! expression-atlas-heatmap-highcharts */2067),l=function(e){return e.charAt(0).toUpperCase()+e.slice(1).toLowerCase()},c=function(e){return n.default.createElement("div",{className:"row column margin-top-large"},n.default.createElement("h5",null,(e.showHeatmapLabel?l(e.species)+" — ":"")+e.factor.value),n.default.createElement(u.ExpressionAtlasHeatmap,{atlasUrl:e.atlasUrl,query:{gene:e.geneQuery,condition:e.conditionQuery,species:e.species,source:e.factor.name},isWidget:!1,showAnatomogram:e.showAnatomogram,anatomogramDataEventEmitter:e.anatomogramDataEventEmitter}))};c.propTypes={atlasUrl:n.default.PropTypes.string.isRequired,geneQuery:n.default.PropTypes.string.isRequired,conditionQuery:n.default.PropTypes.string.isRequired,species:n.default.PropTypes.string.isRequired,factor:n.default.PropTypes.shape({name:n.default.PropTypes.string.isRequired,value:n.default.PropTypes.string.isRequired}).isRequired,showAnatomogram:n.default.PropTypes.bool.isRequired,showHeatmapLabel:n.default.PropTypes.bool.isRequired,anatomogramDataEventEmitter:n.default.PropTypes.instanceOf(i.default).isRequired},t.default=c},/*!**********************************************************************************************!*\
+function(t,e,i){"use strict";function s(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var n=i(/*! react */299),r=s(n),o=i(/*! events */2080),a=s(o),h=i(/*! expression-atlas-heatmap-highcharts */2088),l=function(t){return t.charAt(0).toUpperCase()+t.slice(1).toLowerCase()},c=function(t){return r.default.createElement("div",{className:"row column margin-top-large"},r.default.createElement("h5",null,(t.showHeatmapLabel?l(t.species)+" — ":"")+t.factor.value),r.default.createElement(h.ExpressionAtlasHeatmap,{atlasUrl:t.atlasUrl,query:{gene:t.geneQuery,condition:t.conditionQuery,species:t.species,source:t.factor.name},isWidget:!1,showAnatomogram:t.showAnatomogram,anatomogramDataEventEmitter:t.anatomogramDataEventEmitter}))};c.propTypes={atlasUrl:r.default.PropTypes.string.isRequired,geneQuery:r.default.PropTypes.string.isRequired,conditionQuery:r.default.PropTypes.string.isRequired,species:r.default.PropTypes.string.isRequired,factor:r.default.PropTypes.shape({name:r.default.PropTypes.string.isRequired,value:r.default.PropTypes.string.isRequired}).isRequired,showAnatomogram:r.default.PropTypes.bool.isRequired,showHeatmapLabel:r.default.PropTypes.bool.isRequired,anatomogramDataEventEmitter:r.default.PropTypes.instanceOf(a.default).isRequired},e.default=c},/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/Main.jsx ***!
   \**********************************************************************************************/
-[3565,2068,2072],/*!**************************************************************!*\
+[3601,2089,2106,2110],/*!*******************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/index.js ***!
+  \*******************************************************************/
+[3602,2090,2095,2093,2094,2096,2097],/*!**************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/format.js ***!
+  \**************************************************************************/
+[3603,2091,2092,2094],/*!********************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/mightBeEmail.js ***!
+  \********************************************************************************/
+463,/*!*******************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/toTitleCase.js ***!
+  \*******************************************************************************/
+[3604,2093],/*!************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/trim.js ***!
+  \************************************************************************/
+465,/*!********************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/console/warn.js ***!
+  \********************************************************************************/
+466,/*!**************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/removeLeadingSlash.js ***!
+  \**************************************************************************************/
+467,/*!*******************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/console/log.js ***!
+  \*******************************************************************************/
+468,/*!*************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/components/OutboundLink.js ***!
+  \*************************************************************************************/
+[3605,2098,2103,2100],/*!*************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/create-react-class/index.js ***!
+  \*************************************************************************/
+[3606,2099],/*!***************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/create-react-class/factory.js ***!
+  \***************************************************************************/
+[3607,2100,2101,2102],/*!********************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/object-assign/index.js ***!
+  \********************************************************************/
+301,/*!*********************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/emptyObject.js ***!
+  \*********************************************************************/
+316,/*!*******************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/invariant.js ***!
+  \*******************************************************************/
+305,/*!*****************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/prop-types/index.js ***!
+  \*****************************************************************/
+[3608,2104],/*!************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/prop-types/factoryWithThrowingShims.js ***!
+  \************************************************************************************/
+[3609,2105,2102],/*!***********************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/emptyFunction.js ***!
+  \***********************************************************************/
+309,/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/urijs/src/URI.js ***!
   \**************************************************************/
-[3566,2069,2070,2071,2069,2070,2071],/*!*******************************************************************!*\
+[3610,2107,2108,2109,2107,2108,2109],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/urijs/src/punycode.js ***!
   \*******************************************************************/
-462,/*!***************************************************************!*\
+475,/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/urijs/src/IPv6.js ***!
   \***************************************************************/
-464,/*!*****************************************************************************!*\
+477,/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/urijs/src/SecondLevelDomains.js ***!
   \*****************************************************************************/
-465,/*!****************************************************************************************************************!*\
+478,/*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/ContainerLoader.jsx ***!
   \****************************************************************************************************************/
-[3567,2073,2068,2299],/*!************************************************************************!*\
+[3611,2111,2106,2337],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/index.js ***!
   \************************************************************************/
-[3568,2074,2082],/*!*************************************************************************************!*\
+[3612,2112,2120],/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/components/connect.js ***!
   \*************************************************************************************/
-[3569,2075,2076,2077,2079,2080,2082,2083,2081,2084,2085],/*!**************************************************************************************!*\
+[3613,2113,2114,2115,2117,2118,2120,2121,2119,2122,2123],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/isPlainObject.js ***!
   \**************************************************************************************/
-469,/*!*************************************************************************************!*\
+482,/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/shallowEqual.js ***!
   \*************************************************************************************/
-470,/*!***************************************************************************************!*\
+483,/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/handleResponse.js ***!
   \***************************************************************************************/
-[3570,2078],/*!*******************************************************************************!*\
+[3614,2116],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/errors.js ***!
   \*******************************************************************************/
-472,/*!*************************************************************************************!*\
+485,/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/buildRequest.js ***!
   \*************************************************************************************/
-473,/*!***********************************************************************************!*\
+486,/*!***********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/checkTypes.js ***!
   \***********************************************************************************/
-[3571,2081,2075],/*!******************************************************************!*\
+[3615,2119,2113],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/invariant/browser.js ***!
   \******************************************************************/
-475,/*!*******************************************************************************!*\
+488,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/PromiseState.js ***!
   \*******************************************************************************/
-476,/*!******************************************************************************!*\
+489,/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/hoist-non-react-statics/index.js ***!
   \******************************************************************************/
-477,/*!********************************************************************************!*\
+490,/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-refetch/~/warning/browser.js ***!
   \********************************************************************************/
-478,/*!***************************************************************!*\
+491,/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/fp/omit.js ***!
   \***************************************************************/
-[3572,2086,2292,2089],/*!******************************************************************!*\
+[3616,2124,2330,2127],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/fp/convert.js ***!
   \******************************************************************/
-[3573,2087,2090],/*!***********************************************************************!*\
+[3617,2125,2128],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/fp/_baseConvert.js ***!
   \***********************************************************************/
-[3574,2088,2089],/*!*******************************************************************!*\
+[3618,2126,2127],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/fp/_mapping.js ***!
   \*******************************************************************/
-482,/*!**********************************************************************!*\
+495,/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/fp/placeholder.js ***!
   \**********************************************************************/
-483,/*!****************************************************************!*\
+496,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/fp/_util.js ***!
   \****************************************************************/
-[3575,2091,2160,2182,2249,2144,2130,2099,2250,2177,2285,2156,2291],/*!***********************************************************!*\
+[3619,2129,2198,2220,2287,2182,2168,2137,2288,2215,2323,2194,2329],/*!***********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/ary.js ***!
   \***********************************************************/
-[3576,2092],/*!*******************************************************************!*\
+[3620,2130],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createWrap.js ***!
   \*******************************************************************/
-[3577,2093,2111,2114,2116,2154,2124,2155,2134,2136,2156],/*!********************************************************************!*\
+[3621,2131,2149,2152,2154,2192,2162,2193,2172,2174,2194],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseSetData.js ***!
   \********************************************************************/
-[3578,2094,2095],/*!****************************************************************!*\
+[3622,2132,2133],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/identity.js ***!
   \****************************************************************/
-488,/*!****************************************************************!*\
+501,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_metaMap.js ***!
   \****************************************************************/
-[3579,2096],/*!****************************************************************!*\
+[3623,2134],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_WeakMap.js ***!
   \****************************************************************/
-[3580,2097,2102],/*!******************************************************************!*\
+[3624,2135,2140],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getNative.js ***!
   \******************************************************************/
-[3581,2098,2110],/*!*********************************************************************!*\
+[3625,2136,2148],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsNative.js ***!
   \*********************************************************************/
-[3582,2099,2107,2106,2109],/*!******************************************************************!*\
+[3626,2137,2145,2144,2147],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isFunction.js ***!
   \******************************************************************/
-[3583,2100,2106],/*!*******************************************************************!*\
+[3627,2138,2144],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseGetTag.js ***!
   \*******************************************************************/
-[3584,2101,2104,2105],/*!***************************************************************!*\
+[3628,2139,2142,2143],/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Symbol.js ***!
   \***************************************************************/
-[3585,2102],/*!*************************************************************!*\
+[3629,2140],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_root.js ***!
   \*************************************************************/
-[3586,2103],/*!*******************************************************************!*\
+[3630,2141],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_freeGlobal.js ***!
   \*******************************************************************/
-497,/*!******************************************************************!*\
+510,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getRawTag.js ***!
   \******************************************************************/
-[3587,2101],/*!***********************************************************************!*\
+[3631,2139],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_objectToString.js ***!
   \***********************************************************************/
-499,/*!****************************************************************!*\
+512,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isObject.js ***!
   \****************************************************************/
-500,/*!*****************************************************************!*\
+513,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isMasked.js ***!
   \*****************************************************************/
-[3588,2108],/*!*******************************************************************!*\
+[3632,2146],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_coreJsData.js ***!
   \*******************************************************************/
-[3589,2102],/*!*****************************************************************!*\
+[3633,2140],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_toSource.js ***!
   \*****************************************************************/
-503,/*!*****************************************************************!*\
+516,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getValue.js ***!
   \*****************************************************************/
-504,/*!*******************************************************************!*\
+517,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createBind.js ***!
   \*******************************************************************/
-[3590,2112,2102],/*!*******************************************************************!*\
+[3634,2150,2140],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createCtor.js ***!
   \*******************************************************************/
-[3591,2113,2106],/*!*******************************************************************!*\
+[3635,2151,2144],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseCreate.js ***!
   \*******************************************************************/
-[3592,2106],/*!********************************************************************!*\
+[3636,2144],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createCurry.js ***!
   \********************************************************************/
-[3593,2115,2112,2116,2120,2150,2153,2102],/*!**************************************************************!*\
+[3637,2153,2150,2154,2158,2188,2191,2140],/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_apply.js ***!
   \**************************************************************/
-509,/*!*********************************************************************!*\
+522,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createHybrid.js ***!
   \*********************************************************************/
-[3594,2117,2118,2119,2112,2120,2150,2151,2153,2102],/*!********************************************************************!*\
+[3638,2155,2156,2157,2150,2158,2188,2189,2191,2140],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_composeArgs.js ***!
   \********************************************************************/
-511,/*!*************************************************************************!*\
+524,/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_composeArgsRight.js ***!
   \*************************************************************************/
-512,/*!*********************************************************************!*\
+525,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_countHolders.js ***!
   \*********************************************************************/
-513,/*!**********************************************************************!*\
+526,/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createRecurry.js ***!
   \**********************************************************************/
-[3595,2121,2134,2136],/*!*******************************************************************!*\
+[3639,2159,2172,2174],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isLaziable.js ***!
   \*******************************************************************/
-[3596,2122,2124,2126,2128],/*!********************************************************************!*\
+[3640,2160,2162,2164,2166],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_LazyWrapper.js ***!
   \********************************************************************/
-[3597,2113,2123],/*!*******************************************************************!*\
+[3641,2151,2161],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseLodash.js ***!
   \*******************************************************************/
-517,/*!****************************************************************!*\
+530,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getData.js ***!
   \****************************************************************/
-[3598,2095,2125],/*!************************************************************!*\
+[3642,2133,2163],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/noop.js ***!
   \************************************************************/
-519,/*!********************************************************************!*\
+532,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getFuncName.js ***!
   \********************************************************************/
-[3599,2127],/*!******************************************************************!*\
+[3643,2165],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_realNames.js ***!
   \******************************************************************/
-521,/*!*********************************************************************!*\
+534,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/wrapperLodash.js ***!
   \*********************************************************************/
-[3600,2122,2129,2123,2130,2131,2132],/*!**********************************************************************!*\
+[3644,2160,2167,2161,2168,2169,2170],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_LodashWrapper.js ***!
   \**********************************************************************/
-[3601,2113,2123],/*!***************************************************************!*\
+[3645,2151,2161],/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isArray.js ***!
   \***************************************************************/
-524,/*!********************************************************************!*\
+537,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isObjectLike.js ***!
   \********************************************************************/
-525,/*!*********************************************************************!*\
+538,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_wrapperClone.js ***!
   \*********************************************************************/
-[3602,2122,2129,2133],/*!******************************************************************!*\
+[3646,2160,2167,2171],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_copyArray.js ***!
   \******************************************************************/
-527,/*!****************************************************************!*\
+540,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_setData.js ***!
   \****************************************************************/
-[3603,2093,2135],/*!*****************************************************************!*\
+[3647,2131,2173],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_shortOut.js ***!
   \*****************************************************************/
-529,/*!************************************************************************!*\
+542,/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_setWrapToString.js ***!
   \************************************************************************/
-[3604,2137,2138,2139,2143],/*!***********************************************************************!*\
+[3648,2175,2176,2177,2181],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getWrapDetails.js ***!
   \***********************************************************************/
-531,/*!**************************************************************************!*\
+544,/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_insertWrapDetails.js ***!
   \**************************************************************************/
-532,/*!********************************************************************!*\
+545,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_setToString.js ***!
   \********************************************************************/
-[3605,2140,2135],/*!************************************************************************!*\
+[3649,2178,2173],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseSetToString.js ***!
   \************************************************************************/
-[3606,2141,2142,2094],/*!****************************************************************!*\
+[3650,2179,2180,2132],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/constant.js ***!
   \****************************************************************/
-535,/*!***********************************************************************!*\
+548,/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_defineProperty.js ***!
   \***********************************************************************/
-[3607,2097],/*!**************************************************************************!*\
+[3651,2135],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_updateWrapDetails.js ***!
   \**************************************************************************/
-[3608,2144,2145],/*!******************************************************************!*\
+[3652,2182,2183],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayEach.js ***!
   \******************************************************************/
-538,/*!**********************************************************************!*\
+551,/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayIncludes.js ***!
   \**********************************************************************/
-[3609,2146],/*!********************************************************************!*\
+[3653,2184],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIndexOf.js ***!
   \********************************************************************/
-[3610,2147,2148,2149],/*!**********************************************************************!*\
+[3654,2185,2186,2187],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseFindIndex.js ***!
   \**********************************************************************/
-541,/*!******************************************************************!*\
+554,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsNaN.js ***!
   \******************************************************************/
-542,/*!**********************************************************************!*\
+555,/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_strictIndexOf.js ***!
   \**********************************************************************/
-543,/*!******************************************************************!*\
+556,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getHolder.js ***!
   \******************************************************************/
-544,/*!****************************************************************!*\
+557,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_reorder.js ***!
   \****************************************************************/
-[3611,2133,2152],/*!****************************************************************!*\
+[3655,2171,2190],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isIndex.js ***!
   \****************************************************************/
-546,/*!***********************************************************************!*\
+559,/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_replaceHolders.js ***!
   \***********************************************************************/
-547,/*!**********************************************************************!*\
+560,/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createPartial.js ***!
   \**********************************************************************/
-[3612,2115,2112,2102],/*!******************************************************************!*\
+[3656,2153,2150,2140],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mergeData.js ***!
   \******************************************************************/
-[3613,2117,2118,2153],/*!*****************************************************************!*\
+[3657,2155,2156,2191],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/toInteger.js ***!
   \*****************************************************************/
-[3614,2157],/*!****************************************************************!*\
+[3658,2195],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/toFinite.js ***!
   \****************************************************************/
-[3615,2158],/*!****************************************************************!*\
+[3659,2196],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/toNumber.js ***!
   \****************************************************************/
-[3616,2106,2159],/*!****************************************************************!*\
+[3660,2144,2197],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isSymbol.js ***!
   \****************************************************************/
-[3617,2100,2131],/*!*******************************************************************!*\
+[3661,2138,2169],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseAssign.js ***!
   \*******************************************************************/
-[3618,2161,2165],/*!*******************************************************************!*\
+[3662,2199,2203],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_copyObject.js ***!
   \*******************************************************************/
-[3619,2162,2163],/*!********************************************************************!*\
+[3663,2200,2201],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_assignValue.js ***!
   \********************************************************************/
-[3620,2163,2164],/*!************************************************************************!*\
+[3664,2201,2202],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseAssignValue.js ***!
   \************************************************************************/
-[3621,2142],/*!**********************************************************!*\
+[3665,2180],/*!**********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/eq.js ***!
   \**********************************************************/
-558,/*!************************************************************!*\
+571,/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/keys.js ***!
   \************************************************************/
-[3622,2166,2177,2181],/*!**********************************************************************!*\
+[3666,2204,2215,2219],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayLikeKeys.js ***!
   \**********************************************************************/
-[3623,2167,2168,2130,2170,2152,2172],/*!******************************************************************!*\
+[3667,2205,2206,2168,2208,2190,2210],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseTimes.js ***!
   \******************************************************************/
-561,/*!*******************************************************************!*\
+574,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isArguments.js ***!
   \*******************************************************************/
-[3624,2169,2131],/*!************************************************************************!*\
+[3668,2207,2169],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsArguments.js ***!
   \************************************************************************/
-[3625,2100,2131],/*!****************************************************************!*\
+[3669,2138,2169],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isBuffer.js ***!
   \****************************************************************/
-[3626,2102,2171],/*!*****************************************************************!*\
+[3670,2140,2209],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/stubFalse.js ***!
   \*****************************************************************/
-565,/*!********************************************************************!*\
+578,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isTypedArray.js ***!
   \********************************************************************/
-[3627,2173,2175,2176],/*!*************************************************************************!*\
+[3671,2211,2213,2214],/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsTypedArray.js ***!
   \*************************************************************************/
-[3628,2100,2174,2131],/*!****************************************************************!*\
+[3672,2138,2212,2169],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isLength.js ***!
   \****************************************************************/
-568,/*!******************************************************************!*\
+581,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseUnary.js ***!
   \******************************************************************/
-569,/*!*****************************************************************!*\
+582,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_nodeUtil.js ***!
   \*****************************************************************/
-[3629,2103],/*!*****************************************************************!*\
+[3673,2141],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseKeys.js ***!
   \*****************************************************************/
-[3630,2178,2179],/*!********************************************************************!*\
+[3674,2216,2217],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isPrototype.js ***!
   \********************************************************************/
-572,/*!*******************************************************************!*\
+585,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_nativeKeys.js ***!
   \*******************************************************************/
-[3631,2180],/*!****************************************************************!*\
+[3675,2218],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_overArg.js ***!
   \****************************************************************/
-574,/*!*******************************************************************!*\
+587,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isArrayLike.js ***!
   \*******************************************************************/
-[3632,2099,2174],/*!*************************************************************!*\
+[3676,2137,2212],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/clone.js ***!
   \*************************************************************/
-[3633,2183],/*!******************************************************************!*\
+[3677,2221],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseClone.js ***!
   \******************************************************************/
-[3634,2184,2144,2162,2160,2213,2217,2133,2218,2222,2226,2228,2229,2233,2234,2248,2130,2170,2106,2165],/*!**************************************************************!*\
+[3678,2222,2182,2200,2198,2251,2255,2171,2256,2260,2264,2266,2267,2271,2272,2286,2168,2208,2144,2203],/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Stack.js ***!
   \**************************************************************/
-[3635,2185,2192,2193,2194,2195,2196],/*!******************************************************************!*\
+[3679,2223,2230,2231,2232,2233,2234],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_ListCache.js ***!
   \******************************************************************/
-[3636,2186,2187,2189,2190,2191],/*!***********************************************************************!*\
+[3680,2224,2225,2227,2228,2229],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheClear.js ***!
   \***********************************************************************/
-580,/*!************************************************************************!*\
+593,/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheDelete.js ***!
   \************************************************************************/
-[3637,2188],/*!*********************************************************************!*\
+[3681,2226],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_assocIndexOf.js ***!
   \*********************************************************************/
-[3638,2164],/*!*********************************************************************!*\
+[3682,2202],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheGet.js ***!
   \*********************************************************************/
-[3639,2188],/*!*********************************************************************!*\
+[3683,2226],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheHas.js ***!
   \*********************************************************************/
-[3640,2188],/*!*********************************************************************!*\
+[3684,2226],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheSet.js ***!
   \*********************************************************************/
-[3641,2188],/*!*******************************************************************!*\
+[3685,2226],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_stackClear.js ***!
   \*******************************************************************/
-[3642,2185],/*!********************************************************************!*\
+[3686,2223],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_stackDelete.js ***!
   \********************************************************************/
-587,/*!*****************************************************************!*\
+600,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_stackGet.js ***!
   \*****************************************************************/
-588,/*!*****************************************************************!*\
+601,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_stackHas.js ***!
   \*****************************************************************/
-589,/*!*****************************************************************!*\
+602,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_stackSet.js ***!
   \*****************************************************************/
-[3643,2185,2197,2198],/*!************************************************************!*\
+[3687,2223,2235,2236],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Map.js ***!
   \************************************************************/
-[3644,2097,2102],/*!*****************************************************************!*\
+[3688,2135,2140],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_MapCache.js ***!
   \*****************************************************************/
-[3645,2199,2207,2210,2211,2212],/*!**********************************************************************!*\
+[3689,2237,2245,2248,2249,2250],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheClear.js ***!
   \**********************************************************************/
-[3646,2200,2185,2197],/*!*************************************************************!*\
+[3690,2238,2223,2235],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Hash.js ***!
   \*************************************************************/
-[3647,2201,2203,2204,2205,2206],/*!******************************************************************!*\
+[3691,2239,2241,2242,2243,2244],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_hashClear.js ***!
   \******************************************************************/
-[3648,2202],/*!*********************************************************************!*\
+[3692,2240],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_nativeCreate.js ***!
   \*********************************************************************/
-[3649,2097],/*!*******************************************************************!*\
+[3693,2135],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_hashDelete.js ***!
   \*******************************************************************/
-597,/*!****************************************************************!*\
+610,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_hashGet.js ***!
   \****************************************************************/
-[3650,2202],/*!****************************************************************!*\
+[3694,2240],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_hashHas.js ***!
   \****************************************************************/
-[3651,2202],/*!****************************************************************!*\
+[3695,2240],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_hashSet.js ***!
   \****************************************************************/
-[3652,2202],/*!***********************************************************************!*\
+[3696,2240],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheDelete.js ***!
   \***********************************************************************/
-[3653,2208],/*!*******************************************************************!*\
+[3697,2246],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getMapData.js ***!
   \*******************************************************************/
-[3654,2209],/*!******************************************************************!*\
+[3698,2247],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isKeyable.js ***!
   \******************************************************************/
-603,/*!********************************************************************!*\
+616,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheGet.js ***!
   \********************************************************************/
-[3655,2208],/*!********************************************************************!*\
+[3699,2246],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheHas.js ***!
   \********************************************************************/
-[3656,2208],/*!********************************************************************!*\
+[3700,2246],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheSet.js ***!
   \********************************************************************/
-[3657,2208],/*!*********************************************************************!*\
+[3701,2246],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseAssignIn.js ***!
   \*********************************************************************/
-[3658,2161,2214],/*!**************************************************************!*\
+[3702,2199,2252],/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/keysIn.js ***!
   \**************************************************************/
-[3659,2166,2215,2181],/*!*******************************************************************!*\
+[3703,2204,2253,2219],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseKeysIn.js ***!
   \*******************************************************************/
-[3660,2106,2178,2216],/*!*********************************************************************!*\
+[3704,2144,2216,2254],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_nativeKeysIn.js ***!
   \*********************************************************************/
-610,/*!********************************************************************!*\
+623,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneBuffer.js ***!
   \********************************************************************/
-[3661,2102],/*!********************************************************************!*\
+[3705,2140],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_copySymbols.js ***!
   \********************************************************************/
-[3662,2161,2219],/*!*******************************************************************!*\
+[3706,2199,2257],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getSymbols.js ***!
   \*******************************************************************/
-[3663,2220,2221],/*!********************************************************************!*\
+[3707,2258,2259],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayFilter.js ***!
   \********************************************************************/
-614,/*!*****************************************************************!*\
+627,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/stubArray.js ***!
   \*****************************************************************/
-615,/*!**********************************************************************!*\
+628,/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_copySymbolsIn.js ***!
   \**********************************************************************/
-[3664,2161,2223],/*!*********************************************************************!*\
+[3708,2199,2261],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getSymbolsIn.js ***!
   \*********************************************************************/
-[3665,2224,2225,2219,2221],/*!******************************************************************!*\
+[3709,2262,2263,2257,2259],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayPush.js ***!
   \******************************************************************/
-618,/*!*********************************************************************!*\
+631,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getPrototype.js ***!
   \*********************************************************************/
-[3666,2180],/*!*******************************************************************!*\
+[3710,2218],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getAllKeys.js ***!
   \*******************************************************************/
-[3667,2227,2219,2165],/*!***********************************************************************!*\
+[3711,2265,2257,2203],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseGetAllKeys.js ***!
   \***********************************************************************/
-[3668,2224,2130],/*!*********************************************************************!*\
+[3712,2262,2168],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getAllKeysIn.js ***!
   \*********************************************************************/
-[3669,2227,2223,2214],/*!***************************************************************!*\
+[3713,2265,2261,2252],/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getTag.js ***!
   \***************************************************************/
-[3670,2230,2197,2231,2232,2096,2100,2109],/*!*****************************************************************!*\
+[3714,2268,2235,2269,2270,2134,2138,2147],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_DataView.js ***!
   \*****************************************************************/
-[3671,2097,2102],/*!****************************************************************!*\
+[3715,2135,2140],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Promise.js ***!
   \****************************************************************/
-[3672,2097,2102],/*!************************************************************!*\
+[3716,2135,2140],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Set.js ***!
   \************************************************************/
-[3673,2097,2102],/*!***********************************************************************!*\
+[3717,2135,2140],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_initCloneArray.js ***!
   \***********************************************************************/
-627,/*!***********************************************************************!*\
+640,/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_initCloneByTag.js ***!
   \***********************************************************************/
-[3674,2235,2237,2238,2242,2243,2246,2247],/*!*************************************************************************!*\
+[3718,2273,2275,2276,2280,2281,2284,2285],/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneArrayBuffer.js ***!
   \*************************************************************************/
-[3675,2236],/*!*******************************************************************!*\
+[3719,2274],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_Uint8Array.js ***!
   \*******************************************************************/
-[3676,2102],/*!**********************************************************************!*\
+[3720,2140],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneDataView.js ***!
   \**********************************************************************/
-[3677,2235],/*!*****************************************************************!*\
+[3721,2273],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneMap.js ***!
   \*****************************************************************/
-[3678,2239,2240,2241],/*!********************************************************************!*\
+[3722,2277,2278,2279],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_addMapEntry.js ***!
   \********************************************************************/
-633,/*!********************************************************************!*\
+646,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayReduce.js ***!
   \********************************************************************/
-634,/*!*******************************************************************!*\
+647,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_mapToArray.js ***!
   \*******************************************************************/
-635,/*!********************************************************************!*\
+648,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneRegExp.js ***!
   \********************************************************************/
-636,/*!*****************************************************************!*\
+649,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneSet.js ***!
   \*****************************************************************/
-[3679,2244,2240,2245],/*!********************************************************************!*\
+[3723,2282,2278,2283],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_addSetEntry.js ***!
   \********************************************************************/
-638,/*!*******************************************************************!*\
+651,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_setToArray.js ***!
   \*******************************************************************/
-639,/*!********************************************************************!*\
+652,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneSymbol.js ***!
   \********************************************************************/
-[3680,2101],/*!************************************************************************!*\
+[3724,2139],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneTypedArray.js ***!
   \************************************************************************/
-[3681,2235],/*!************************************************************************!*\
+[3725,2273],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_initCloneObject.js ***!
   \************************************************************************/
-[3682,2113,2225,2178],/*!*************************************************************!*\
+[3726,2151,2263,2216],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/curry.js ***!
   \*************************************************************/
-[3683,2092],/*!****************************************************************!*\
+[3727,2130],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/iteratee.js ***!
   \****************************************************************/
-[3684,2183,2251],/*!*********************************************************************!*\
+[3728,2221,2289],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIteratee.js ***!
   \*********************************************************************/
-[3685,2252,2267,2094,2130,2282],/*!********************************************************************!*\
+[3729,2290,2305,2132,2168,2320],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseMatches.js ***!
   \********************************************************************/
-[3686,2253,2264,2266],/*!********************************************************************!*\
+[3730,2291,2302,2304],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsMatch.js ***!
   \********************************************************************/
-[3687,2184,2254],/*!********************************************************************!*\
+[3731,2222,2292],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsEqual.js ***!
   \********************************************************************/
-[3688,2255,2131],/*!************************************************************************!*\
+[3732,2293,2169],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsEqualDeep.js ***!
   \************************************************************************/
-[3689,2184,2256,2262,2263,2229,2130,2170,2172],/*!********************************************************************!*\
+[3733,2222,2294,2300,2301,2267,2168,2208,2210],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_equalArrays.js ***!
   \********************************************************************/
-[3690,2257,2260,2261],/*!*****************************************************************!*\
+[3734,2295,2298,2299],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_SetCache.js ***!
   \*****************************************************************/
-[3691,2198,2258,2259],/*!********************************************************************!*\
+[3735,2236,2296,2297],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_setCacheAdd.js ***!
   \********************************************************************/
-652,/*!********************************************************************!*\
+665,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_setCacheHas.js ***!
   \********************************************************************/
-653,/*!******************************************************************!*\
+666,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arraySome.js ***!
   \******************************************************************/
-654,/*!*****************************************************************!*\
+667,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_cacheHas.js ***!
   \*****************************************************************/
-655,/*!*******************************************************************!*\
+668,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_equalByTag.js ***!
   \*******************************************************************/
-[3692,2101,2236,2164,2256,2241,2245],/*!*********************************************************************!*\
+[3736,2139,2274,2202,2294,2279,2283],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_equalObjects.js ***!
   \*********************************************************************/
-[3693,2226],/*!*********************************************************************!*\
+[3737,2264],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_getMatchData.js ***!
   \*********************************************************************/
-[3694,2265,2165],/*!***************************************************************************!*\
+[3738,2303,2203],/*!***************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isStrictComparable.js ***!
   \***************************************************************************/
-[3695,2106],/*!********************************************************************************!*\
+[3739,2144],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_matchesStrictComparable.js ***!
   \********************************************************************************/
-660,/*!****************************************************************************!*\
+673,/*!****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseMatchesProperty.js ***!
   \****************************************************************************/
-[3696,2254,2268,2279,2271,2265,2266,2278],/*!***********************************************************!*\
+[3740,2292,2306,2317,2309,2303,2304,2316],/*!***********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/get.js ***!
   \***********************************************************/
-[3697,2269],/*!****************************************************************!*\
+[3741,2307],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseGet.js ***!
   \****************************************************************/
-[3698,2270,2278],/*!*****************************************************************!*\
+[3742,2308,2316],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_castPath.js ***!
   \*****************************************************************/
-[3699,2130,2271,2272,2275],/*!**************************************************************!*\
+[3743,2168,2309,2310,2313],/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isKey.js ***!
   \**************************************************************/
-[3700,2130,2159],/*!*********************************************************************!*\
+[3744,2168,2197],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_stringToPath.js ***!
   \*********************************************************************/
-[3701,2273],/*!**********************************************************************!*\
+[3745,2311],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_memoizeCapped.js ***!
   \**********************************************************************/
-[3702,2274],/*!***************************************************************!*\
+[3746,2312],/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/memoize.js ***!
   \***************************************************************/
-[3703,2198],/*!****************************************************************!*\
+[3747,2236],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/toString.js ***!
   \****************************************************************/
-[3704,2276],/*!*********************************************************************!*\
+[3748,2314],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseToString.js ***!
   \*********************************************************************/
-[3705,2101,2277,2130,2159],/*!*****************************************************************!*\
+[3749,2139,2315,2168,2197],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayMap.js ***!
   \*****************************************************************/
-671,/*!**************************************************************!*\
+684,/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_toKey.js ***!
   \**************************************************************/
-[3706,2159],/*!*************************************************************!*\
+[3750,2197],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/hasIn.js ***!
   \*************************************************************/
-[3707,2280,2281],/*!******************************************************************!*\
+[3751,2318,2319],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseHasIn.js ***!
   \******************************************************************/
-674,/*!****************************************************************!*\
+687,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_hasPath.js ***!
   \****************************************************************/
-[3708,2270,2168,2130,2152,2174,2278],/*!****************************************************************!*\
+[3752,2308,2206,2168,2190,2212,2316],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/property.js ***!
   \****************************************************************/
-[3709,2283,2284,2271,2278],/*!*********************************************************************!*\
+[3753,2321,2322,2309,2316],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseProperty.js ***!
   \*********************************************************************/
-677,/*!*************************************************************************!*\
+690,/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_basePropertyDeep.js ***!
   \*************************************************************************/
-[3710,2269],/*!*************************************************************!*\
+[3754,2307],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/rearg.js ***!
   \*************************************************************/
-[3711,2092,2286],/*!*****************************************************************!*\
+[3755,2130,2324],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_flatRest.js ***!
   \*****************************************************************/
-[3712,2287,2290,2139],/*!***************************************************************!*\
+[3756,2325,2328,2177],/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/flatten.js ***!
   \***************************************************************/
-[3713,2288],/*!********************************************************************!*\
+[3757,2326],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseFlatten.js ***!
   \********************************************************************/
-[3714,2224,2289],/*!**********************************************************************!*\
+[3758,2262,2327],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isFlattenable.js ***!
   \**********************************************************************/
-[3715,2101,2168,2130],/*!*****************************************************************!*\
+[3759,2139,2206,2168],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_overRest.js ***!
   \*****************************************************************/
-[3716,2115],/*!**************************************************************!*\
+[3760,2153],/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/toPath.js ***!
   \**************************************************************/
-[3717,2277,2133,2130,2159,2272,2278,2275],/*!************************************************************!*\
+[3761,2315,2171,2168,2197,2310,2316,2313],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/omit.js ***!
   \************************************************************/
-[3718,2277,2183,2293,2270,2161,2297,2286,2228],/*!******************************************************************!*\
+[3762,2315,2221,2331,2308,2199,2335,2324,2266],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseUnset.js ***!
   \******************************************************************/
-[3719,2270,2294,2295,2278],/*!************************************************************!*\
+[3763,2308,2332,2333,2316],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/last.js ***!
   \************************************************************/
-688,/*!***************************************************************!*\
+701,/*!***************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_parent.js ***!
   \***************************************************************/
-[3720,2269,2296],/*!******************************************************************!*\
+[3764,2307,2334],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseSlice.js ***!
   \******************************************************************/
-690,/*!************************************************************************!*\
+703,/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_customOmitClone.js ***!
   \************************************************************************/
-[3721,2298],/*!*********************************************************************!*\
+[3765,2336],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isPlainObject.js ***!
   \*********************************************************************/
-[3722,2100,2225,2131],/*!**********************************************************************************************************!*\
+[3766,2138,2263,2169],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/Container.jsx ***!
   \**********************************************************************************************************/
-[3723,2068,2300,2364,2365,2366,2651,2652],/*!******************************************************************!*\
+[3767,2106,2338,2402,2403,2404,2684,2685],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/index.js ***!
   \******************************************************************/
-[3724,2301],/*!************************************************************************************!*\
+[3768,2339],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/AnatomogramFactory.jsx ***!
   \************************************************************************************/
-[3725,2302,2306,2362],/*!*****************************************************************************!*\
+[3769,2340,2344,2400],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/Anatomogram.jsx ***!
   \*****************************************************************************/
-[3726,2303,2305],/*!**********************************************************************************!*\
+[3770,2341,2343],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/AnatomogramImage.jsx ***!
   \**********************************************************************************/
-[3727,2304],/*!**************************************************************************************************************************************************************!*\
+[3771,2342],/*!**************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/imports-loader?this=>window,fix=>module.exports=0!./atlas_bundles/baseline-expression/~/snapsvg/dist/snap.svg.js ***!
   \**************************************************************************************************************************************************************/
-698,/*!*******************************************************************************!*\
+711,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/SelectionIcon.jsx ***!
   \*******************************************************************************/
-[3728,2306,2358],/*!********************************************************************************!*\
+[3772,2344,2396],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/imagesAvailable.js ***!
   \********************************************************************************/
-[3729,2307,707,2313,2314,2315,2326],/*!********************************************************!*\
+[3773,2345,720,2351,2352,2353,2364],/*!********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/url/url.js ***!
   \********************************************************/
-[3730,2308,2309,2310],/*!************************************************************************!*\
+[3774,2346,2347,2348],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/url/~/punycode/punycode.js ***!
   \************************************************************************/
-702,/*!*********************************************************!*\
+715,/*!*********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/url/util.js ***!
   \*********************************************************/
-703,/*!******************************************************************!*\
+716,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/querystring/index.js ***!
   \******************************************************************/
-[3731,2311,2312],/*!*******************************************************************!*\
+[3775,2349,2350],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/querystring/decode.js ***!
   \*******************************************************************/
-705,/*!*******************************************************************!*\
+718,/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/querystring/encode.js ***!
   \*******************************************************************/
-706,/*!********************************************************************************************!*\
+719,/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/json/svgsForSpecies.json ***!
   \********************************************************************************************/
-708,/*!****************************************************************************************!*\
+721,/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/json/idsForSvgs.json ***!
   \****************************************************************************************/
-709,/*!***********************************************************************************************!*\
+722,/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons ^\.\/.*selected\.png$ ***!
   \***********************************************************************************************/
-function(e,t,r){function a(e){return r(o(e))}function o(e){return n[e]||function(){throw new Error("Cannot find module '"+e+"'.")}()}var n={"./brain_selected.png":2316,"./brain_unselected.png":2317,"./female_selected.png":2318,"./female_unselected.png":2319,"./flower_parts_selected.png":2320,"./flower_parts_unselected.png":2321,"./male_selected.png":2322,"./male_unselected.png":2323,"./whole_plant_selected.png":2324,"./whole_plant_unselected.png":2325};a.keys=function(){return Object.keys(n)},a.resolve=o,e.exports=a,a.id=2315},/*!********************************************************************************************!*\
+function(t,e,i){function s(t){return i(n(t))}function n(t){return r[t]||function(){throw new Error("Cannot find module '"+t+"'.")}()}var r={"./brain_selected.png":2354,"./brain_unselected.png":2355,"./female_selected.png":2356,"./female_unselected.png":2357,"./flower_parts_selected.png":2358,"./flower_parts_unselected.png":2359,"./male_selected.png":2360,"./male_unselected.png":2361,"./whole_plant_selected.png":2362,"./whole_plant_unselected.png":2363};s.keys=function(){return Object.keys(r)},s.resolve=n,t.exports=s,s.id=2353},/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/brain_selected.png ***!
   \********************************************************************************************/
-711,/*!**********************************************************************************************!*\
+724,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/brain_unselected.png ***!
   \**********************************************************************************************/
-712,/*!*********************************************************************************************!*\
+725,/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/female_selected.png ***!
   \*********************************************************************************************/
-713,/*!***********************************************************************************************!*\
+726,/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/female_unselected.png ***!
   \***********************************************************************************************/
-714,/*!***************************************************************************************************!*\
+727,/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/flower_parts_selected.png ***!
   \***************************************************************************************************/
-715,/*!*****************************************************************************************************!*\
+728,/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/flower_parts_unselected.png ***!
   \*****************************************************************************************************/
-716,/*!*******************************************************************************************!*\
+729,/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/male_selected.png ***!
   \*******************************************************************************************/
-717,/*!*********************************************************************************************!*\
+730,/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/male_unselected.png ***!
   \*********************************************************************************************/
-718,/*!**************************************************************************************************!*\
+731,/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/whole_plant_selected.png ***!
   \**************************************************************************************************/
-719,/*!****************************************************************************************************!*\
+732,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/whole_plant_unselected.png ***!
   \****************************************************************************************************/
-720,/*!********************************************************************************!*\
+733,/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg ^\.\/.*$ ***!
   \********************************************************************************/
-function(e,t,r){function a(e){return r(o(e))}function o(e){return n[e]||function(){throw new Error("Cannot find module '"+e+"'.")}()}var n={"./anolis_carolinensis.svg":2327,"./arabidopsis_thaliana_whole_plant.svg":2328,"./brachypodium_distachyon_flower_parts.svg":2329,"./brachypodium_distachyon_whole_plant.svg":2330,"./chicken.svg":2331,"./cow.svg":2332,"./hordeum_vulgare_flower_parts.svg":2333,"./hordeum_vulgare_whole_plant.svg":2334,"./human_brain.svg":2335,"./human_female.svg":2336,"./human_male.svg":2337,"./macaca_mulatta.svg":2338,"./monodelphis_domestica.svg":2339,"./mouse_brain.svg":2340,"./mouse_female.svg":2341,"./mouse_male.svg":2342,"./oryza_sativa_flower_parts.svg":2343,"./oryza_sativa_whole_plant.svg":2344,"./papio_anubis.svg":2345,"./rat.svg":2346,"./solanum_lycopersicum_flower_parts.svg":2347,"./solanum_lycopersicum_whole_plant.svg":2348,"./solanum_tuberosum_whole_plant.svg":2349,"./sorghum_bicolor_flower_parts.svg":2350,"./sorghum_bicolor_whole_plant.svg":2351,"./tetraodon_nigroviridis.svg":2352,"./triticum_aestivum_flower_parts.svg":2353,"./triticum_aestivum_whole_plant.svg":2354,"./xenopus_tropicalis.svg":2355,"./zea_mays_flower_parts.svg":2356,"./zea_mays_whole_plant.svg":2357};a.keys=function(){return Object.keys(n)},a.resolve=o,e.exports=a,a.id=2326},/*!***********************************************************************************************!*\
+function(t,e,i){function s(t){return i(n(t))}function n(t){return r[t]||function(){throw new Error("Cannot find module '"+t+"'.")}()}var r={"./anolis_carolinensis.svg":2365,"./arabidopsis_thaliana_whole_plant.svg":2366,"./brachypodium_distachyon_flower_parts.svg":2367,"./brachypodium_distachyon_whole_plant.svg":2368,"./chicken.svg":2369,"./cow.svg":2370,"./hordeum_vulgare_flower_parts.svg":2371,"./hordeum_vulgare_whole_plant.svg":2372,"./human_brain.svg":2373,"./human_female.svg":2374,"./human_male.svg":2375,"./macaca_mulatta.svg":2376,"./monodelphis_domestica.svg":2377,"./mouse_brain.svg":2378,"./mouse_female.svg":2379,"./mouse_male.svg":2380,"./oryza_sativa_flower_parts.svg":2381,"./oryza_sativa_whole_plant.svg":2382,"./papio_anubis.svg":2383,"./rat.svg":2384,"./solanum_lycopersicum_flower_parts.svg":2385,"./solanum_lycopersicum_whole_plant.svg":2386,"./solanum_tuberosum_whole_plant.svg":2387,"./sorghum_bicolor_flower_parts.svg":2388,"./sorghum_bicolor_whole_plant.svg":2389,"./tetraodon_nigroviridis.svg":2390,"./triticum_aestivum_flower_parts.svg":2391,"./triticum_aestivum_whole_plant.svg":2392,"./xenopus_tropicalis.svg":2393,"./zea_mays_flower_parts.svg":2394,"./zea_mays_whole_plant.svg":2395};s.keys=function(){return Object.keys(r)},s.resolve=n,t.exports=s,s.id=2364},/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/anolis_carolinensis.svg ***!
   \***********************************************************************************************/
-722,/*!************************************************************************************************************!*\
+735,/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/arabidopsis_thaliana_whole_plant.svg ***!
   \************************************************************************************************************/
-723,/*!****************************************************************************************************************!*\
+736,/*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/brachypodium_distachyon_flower_parts.svg ***!
   \****************************************************************************************************************/
-724,/*!***************************************************************************************************************!*\
+737,/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/brachypodium_distachyon_whole_plant.svg ***!
   \***************************************************************************************************************/
-725,/*!***********************************************************************************!*\
+738,/*!***********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/chicken.svg ***!
   \***********************************************************************************/
-726,/*!*******************************************************************************!*\
+739,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/cow.svg ***!
   \*******************************************************************************/
-727,/*!********************************************************************************************************!*\
+740,/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/hordeum_vulgare_flower_parts.svg ***!
   \********************************************************************************************************/
-728,/*!*******************************************************************************************************!*\
+741,/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/hordeum_vulgare_whole_plant.svg ***!
   \*******************************************************************************************************/
-729,/*!***************************************************************************************!*\
+742,/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/human_brain.svg ***!
   \***************************************************************************************/
-730,/*!****************************************************************************************!*\
+743,/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/human_female.svg ***!
   \****************************************************************************************/
-731,/*!**************************************************************************************!*\
+744,/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/human_male.svg ***!
   \**************************************************************************************/
-732,/*!******************************************************************************************!*\
+745,/*!******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/macaca_mulatta.svg ***!
   \******************************************************************************************/
-733,/*!*************************************************************************************************!*\
+746,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/monodelphis_domestica.svg ***!
   \*************************************************************************************************/
-734,/*!***************************************************************************************!*\
+747,/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/mouse_brain.svg ***!
   \***************************************************************************************/
-735,/*!****************************************************************************************!*\
+748,/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/mouse_female.svg ***!
   \****************************************************************************************/
-736,/*!**************************************************************************************!*\
+749,/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/mouse_male.svg ***!
   \**************************************************************************************/
-737,/*!*****************************************************************************************************!*\
+750,/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/oryza_sativa_flower_parts.svg ***!
   \*****************************************************************************************************/
-738,/*!****************************************************************************************************!*\
+751,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/oryza_sativa_whole_plant.svg ***!
   \****************************************************************************************************/
-739,/*!****************************************************************************************!*\
+752,/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/papio_anubis.svg ***!
   \****************************************************************************************/
-740,/*!*******************************************************************************!*\
+753,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/rat.svg ***!
   \*******************************************************************************/
-741,/*!*************************************************************************************************************!*\
+754,/*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/solanum_lycopersicum_flower_parts.svg ***!
   \*************************************************************************************************************/
-742,/*!************************************************************************************************************!*\
+755,/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/solanum_lycopersicum_whole_plant.svg ***!
   \************************************************************************************************************/
-743,/*!*********************************************************************************************************!*\
+756,/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/solanum_tuberosum_whole_plant.svg ***!
   \*********************************************************************************************************/
-744,/*!********************************************************************************************************!*\
+757,/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/sorghum_bicolor_flower_parts.svg ***!
   \********************************************************************************************************/
-745,/*!*******************************************************************************************************!*\
+758,/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/sorghum_bicolor_whole_plant.svg ***!
   \*******************************************************************************************************/
-746,/*!**************************************************************************************************!*\
+759,/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/tetraodon_nigroviridis.svg ***!
   \**************************************************************************************************/
-747,/*!**********************************************************************************************************!*\
+760,/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/triticum_aestivum_flower_parts.svg ***!
   \**********************************************************************************************************/
-748,/*!*********************************************************************************************************!*\
+761,/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/triticum_aestivum_whole_plant.svg ***!
   \*********************************************************************************************************/
-749,/*!**********************************************************************************************!*\
+762,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/xenopus_tropicalis.svg ***!
   \**********************************************************************************************/
-750,/*!*************************************************************************************************!*\
+763,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/zea_mays_flower_parts.svg ***!
   \*************************************************************************************************/
-751,/*!************************************************************************************************!*\
+764,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/zea_mays_whole_plant.svg ***!
   \************************************************************************************************/
-752,/*!********************************************************************************!*\
+765,/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/SelectionIcon.less ***!
   \********************************************************************************/
-function(e,t,r){var a=r(/*! !../../css-loader!../../../../../~/less-loader!./SelectionIcon.less */2359);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../style-loader/addStyles.js */2361)(a,{});a.locals&&(e.exports=a.locals)},/*!*************************************************************************************************************************************************!*\
+function(t,e,i){var s=i(/*! !../../css-loader!../../../../../~/less-loader!./SelectionIcon.less */2397);"string"==typeof s&&(s=[[t.id,s,""]]);i(/*! ../../style-loader/addStyles.js */2399)(s,{});s.locals&&(t.exports=s.locals)},/*!*************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/anatomogram/src/SelectionIcon.less ***!
   \*************************************************************************************************************************************************/
-[3732,2360],/*!************************************************************************!*\
+[3776,2398],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader/lib/css-base.js ***!
   \************************************************************************/
-755,/*!***********************************************************************!*\
+768,/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/style-loader/addStyles.js ***!
   \***********************************************************************/
-756,/*!**********************************************************************************!*\
+769,/*!**********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/ContainerLayout.less ***!
   \**********************************************************************************/
-function(e,t,r){var a=r(/*! !../../css-loader!../../../../../~/less-loader!./ContainerLayout.less */2363);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../style-loader/addStyles.js */2361)(a,{});a.locals&&(e.exports=a.locals)},/*!***************************************************************************************************************************************************!*\
+function(t,e,i){var s=i(/*! !../../css-loader!../../../../../~/less-loader!./ContainerLayout.less */2401);"string"==typeof s&&(s=[[t.id,s,""]]);i(/*! ../../style-loader/addStyles.js */2399)(s,{});s.locals&&(t.exports=s.locals)},/*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/anatomogram/src/ContainerLayout.less ***!
   \***************************************************************************************************************************************************/
-[3733,2360],/*!**********************************************************************************************************************!*\
+[3777,2398],/*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/ExperimentDescription.jsx ***!
   \**********************************************************************************************************************/
-759,/*!*******************************************************************************************************!*\
+772,/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/Footer.jsx ***!
   \*******************************************************************************************************/
-760,/*!*******************************************************************************************************************!*\
+773,/*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/ChartContainer.jsx ***!
   \*******************************************************************************************************************/
-[3734,2367,2370,2650,2557],/*!*********************************************************************!*\
+[3778,2405,2408,2682,2595],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/uncontrollable/index.js ***!
   \*********************************************************************/
-[3735,2368],/*!************************************************************************************!*\
+[3779,2406],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/uncontrollable/createUncontrollable.js ***!
   \************************************************************************************/
-[3736,2081,2369],/*!*********************************************************************!*\
+[3780,2119,2407],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/uncontrollable/utils.js ***!
   \*********************************************************************/
-[3737,2081],/*!************************************************************************************************************************!*\
+[3781,2119],/*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/HeatmapWithControls.jsx ***!
   \************************************************************************************************************************/
-[3738,2371,2505,2559,2567,2571,2576,2577,2585,2647,2649,2557],/*!*******************************************************************************************************************************!*\
+[3782,2409,2543,2597,2605,2611,2616,2617,2625,2679,2681,2595],/*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/OrderingsDropdown.jsx ***!
   \*******************************************************************************************************************************/
-[3739,2372,2503,2504],/*!*****************************************************************************!*\
+[3783,2410,2541,2542],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Dropdown.js ***!
   \*****************************************************************************/
-[3740,2373,2374,2412,2413,2449,2457,2458,2461,2463,2464,2466,2467,2367,2468,2469,2481,2501,2475,2499,2502,2500],/*!**********************************************************************************************!*\
+[3784,2411,2412,2450,2451,2487,2495,2496,2499,2501,2502,2504,2505,2405,2506,2507,2519,2539,2513,2537,2540,2538],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/objectWithoutProperties.js ***!
   \**********************************************************************************************/
-768,/*!******************************************************************************!*\
+781,/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/extends.js ***!
   \******************************************************************************/
-[3741,2375],/*!************************************************************************************!*\
+[3785,2413],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/assign.js ***!
   \************************************************************************************/
-[3742,2376],/*!*************************************************************************************************!*\
+[3786,2414],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
   \*************************************************************************************************/
-[3743,2377,2380],/*!**********************************************************************************************************!*\
+[3787,2415,2418],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
   \**********************************************************************************************************/
-[3544,2378,2393],/*!************************************************************************************************!*\
+[3580,2416,2431],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_export.js ***!
   \************************************************************************************************/
-[3744,2379,2380,2381,2383],/*!************************************************************************************************!*\
+[3788,2417,2418,2419,2421],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_global.js ***!
   \************************************************************************************************/
 4,/*!**********************************************************************************************!*\
@@ -990,58 +1041,58 @@ function(e,t,r){var a=r(/*! !../../css-loader!../../../../../~/less-loader!./Con
 9,/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
   \*********************************************************************************************/
-[3516,2382],/*!****************************************************************************************************!*\
+[3552,2420],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
   \****************************************************************************************************/
 21,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
   \**********************************************************************************************/
-[3510,2384,2392,2388],/*!***************************************************************************************************!*\
+[3546,2422,2430,2426],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
   \***************************************************************************************************/
-[3511,2385,2387,2391,2388],/*!***************************************************************************************************!*\
+[3547,2423,2425,2429,2426],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
   \***************************************************************************************************/
-[3512,2386],/*!***************************************************************************************************!*\
+[3548,2424],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
   \***************************************************************************************************/
 13,/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
   \********************************************************************************************************/
-[3513,2388,2389,2390],/*!*****************************************************************************************************!*\
+[3549,2426,2427,2428],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
   \*****************************************************************************************************/
-[3509,2389],/*!***********************************************************************************************!*\
+[3545,2427],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
   \***********************************************************************************************/
 7,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
   \****************************************************************************************************/
-[3514,2386,2379],/*!******************************************************************************************************!*\
+[3550,2424,2417],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
   \******************************************************************************************************/
-[3515,2386],/*!*******************************************************************************************************!*\
+[3551,2424],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
   \*******************************************************************************************************/
 17,/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
   \*******************************************************************************************************/
-[3545,2394,2409,2410,2411,2398,2389],/*!*****************************************************************************************************!*\
+[3581,2432,2447,2448,2449,2436,2427],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
   \*****************************************************************************************************/
-[3524,2395,2408],/*!**************************************************************************************************************!*\
+[3560,2433,2446],/*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
   \**************************************************************************************************************/
-[3525,2396,2397,2401,2405],/*!*********************************************************************************************!*\
+[3561,2434,2435,2439,2443],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_has.js ***!
   \*********************************************************************************************/
 5,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
   \****************************************************************************************************/
-[3526,2398,2400],/*!*************************************************************************************************!*\
+[3562,2436,2438],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
   \*************************************************************************************************/
-[3527,2399],/*!*********************************************************************************************!*\
+[3563,2437],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
   \*********************************************************************************************/
 34,/*!*************************************************************************************************!*\
@@ -1050,22 +1101,22 @@ function(e,t,r){var a=r(/*! !../../css-loader!../../../../../~/less-loader!./Con
 35,/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
   \********************************************************************************************************/
-[3528,2397,2402,2404],/*!***************************************************************************************************!*\
+[3564,2435,2440,2442],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
   \***************************************************************************************************/
-[3529,2403],/*!****************************************************************************************************!*\
+[3565,2441],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
   \****************************************************************************************************/
 38,/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
   \**************************************************************************************************/
-[3530,2403],/*!****************************************************************************************************!*\
+[3566,2441],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
   \****************************************************************************************************/
-[3531,2406,2407],/*!************************************************************************************************!*\
+[3567,2444,2445],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
   \************************************************************************************************/
-[3518,2379],/*!*********************************************************************************************!*\
+[3554,2417],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
   \*********************************************************************************************/
 19,/*!*******************************************************************************************************!*\
@@ -1080,856 +1131,847 @@ function(e,t,r){var a=r(/*! !../../css-loader!../../../../../~/less-loader!./Con
 44,/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
   \***************************************************************************************************/
-[3542,2400],/*!*************************************************************************************!*\
+[3578,2438],/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/classCallCheck.js ***!
   \*************************************************************************************/
-807,/*!************************************************************************************************!*\
+820,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
   \************************************************************************************************/
-[3745,2414],/*!*****************************************************************************!*\
+[3789,2452],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/typeof.js ***!
   \*****************************************************************************/
-[3746,2415,2435],/*!**************************************************************************************!*\
+[3790,2453,2473],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/symbol/iterator.js ***!
   \**************************************************************************************/
-[3747,2416],/*!***************************************************************************************************!*\
+[3791,2454],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
   \***************************************************************************************************/
-[3748,2417,2430,2434],/*!************************************************************************************************************!*\
+[3792,2455,2468,2472],/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
   \************************************************************************************************************/
-[3549,2418,2419],/*!***************************************************************************************************!*\
+[3585,2456,2457],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
   \***************************************************************************************************/
-[3550,2403,2400],/*!*****************************************************************************************************!*\
+[3586,2441,2438],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
   \*****************************************************************************************************/
-[3551,2420,2378,2421,2383,2396,2422,2423,2427,2429,2428],/*!*************************************************************************************************!*\
+[3587,2458,2416,2459,2421,2434,2460,2461,2465,2467,2466],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_library.js ***!
   \*************************************************************************************************/
-815,/*!**************************************************************************************************!*\
+828,/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
   \**************************************************************************************************/
-[3749,2383],/*!***************************************************************************************************!*\
+[3793,2421],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
   \***************************************************************************************************/
 129,/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
   \*****************************************************************************************************/
-[3552,2424,2392,2427,2383,2428],/*!*******************************************************************************************************!*\
+[3588,2462,2430,2465,2421,2466],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
   \*******************************************************************************************************/
-[3534,2385,2425,2408,2405,2390,2426],/*!****************************************************************************************************!*\
+[3570,2423,2463,2446,2443,2428,2464],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
   \****************************************************************************************************/
-[3535,2384,2385,2394,2388],/*!**********************************************************************************************!*\
+[3571,2422,2423,2432,2426],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_html.js ***!
   \**********************************************************************************************/
-[3536,2379],/*!***********************************************************************************************************!*\
+[3572,2417],/*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
   \***********************************************************************************************************/
-[3519,2384,2396,2428],/*!*********************************************************************************************!*\
+[3555,2422,2434,2466],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
   \*********************************************************************************************/
-[3520,2406,2407,2379],/*!****************************************************************************************************!*\
+[3556,2444,2445,2417],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
   \****************************************************************************************************/
-[3543,2396,2411,2405],/*!*********************************************************************************************************!*\
+[3579,2434,2449,2443],/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
   \*********************************************************************************************************/
-[3750,2431,2379,2383,2422,2428],/*!***********************************************************************************************************!*\
+[3794,2469,2417,2421,2460,2466],/*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
   \***********************************************************************************************************/
-[3559,2432,2433,2422,2397,2419],/*!************************************************************************************************************!*\
+[3595,2470,2471,2460,2435,2457],/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
   \************************************************************************************************************/
-827,/*!***************************************************************************************************!*\
+840,/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
   \***************************************************************************************************/
 194,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
   \*************************************************************************************************/
-[3521,2428],/*!*****************************************************************************!*\
+[3557,2466],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/symbol.js ***!
   \*****************************************************************************/
-[3751,2436],/*!************************************************************************************************!*\
+[3795,2474],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
   \************************************************************************************************/
-[3752,2437,2446,2447,2448,2380],/*!***************************************************************************************************!*\
+[3796,2475,2484,2485,2486,2418],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
   \***************************************************************************************************/
-[3508,2379,2396,2388,2378,2421,2438,2389,2406,2427,2407,2428,2434,2439,2440,2441,2442,2385,2397,2391,2392,2424,2443,2445,2384,2394,2444,2410,2409,2420,2383],/*!**********************************************************************************************!*\
+[3544,2417,2434,2426,2416,2459,2476,2427,2444,2465,2445,2466,2472,2477,2478,2479,2480,2423,2435,2429,2430,2462,2481,2483,2422,2432,2482,2448,2447,2458,2421],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
   \**********************************************************************************************/
-[3517,2407,2386,2396,2384,2389],/*!****************************************************************************************************!*\
+[3553,2445,2424,2434,2422,2427],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
   \****************************************************************************************************/
-[3522,2379,2380,2420,2434,2384],/*!***********************************************************************************************!*\
+[3558,2417,2418,2458,2472,2422],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
   \***********************************************************************************************/
-[3523,2394,2397],/*!***************************************************************************************************!*\
+[3559,2432,2435],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
   \***************************************************************************************************/
-[3532,2394,2409,2410],/*!**************************************************************************************************!*\
+[3568,2432,2447,2448],/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
   \**************************************************************************************************/
-[3533,2399],/*!*********************************************************************************************************!*\
+[3569,2437],/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
   \*********************************************************************************************************/
-[3537,2397,2444],/*!*****************************************************************************************************!*\
+[3573,2435,2482],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
   \*****************************************************************************************************/
-[3538,2395,2408],/*!*****************************************************************************************************!*\
+[3574,2433,2446],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
   \*****************************************************************************************************/
-[3539,2410,2392,2397,2391,2396,2387,2388],/*!*************************************************************************************************************!*\
+[3575,2448,2430,2435,2429,2434,2425,2426],/*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
   \*************************************************************************************************************/
-841,/*!******************************************************************************************************************!*\
+854,/*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
   \******************************************************************************************************************/
-[3560,2439],/*!**************************************************************************************************************!*\
+[3596,2477],/*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
   \**************************************************************************************************************/
-[3561,2439],/*!*******************************************************************************!*\
+[3597,2477],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/inherits.js ***!
   \*******************************************************************************/
-[3753,2450,2454,2414],/*!**********************************************************************************************!*\
+[3797,2488,2492,2452],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/set-prototype-of.js ***!
   \**********************************************************************************************/
-[3754,2451],/*!***********************************************************************************************************!*\
+[3798,2489],/*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
   \***********************************************************************************************************/
-[3755,2452,2380],/*!********************************************************************************************************************!*\
+[3799,2490,2418],/*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \********************************************************************************************************************/
-[3546,2378,2453],/*!***************************************************************************************************!*\
+[3582,2416,2491],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
   \***************************************************************************************************/
-[3547,2386,2385,2381,2445],/*!************************************************************************************!*\
+[3583,2424,2423,2419,2483],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/create.js ***!
   \************************************************************************************/
-[3756,2455],/*!*************************************************************************************************!*\
+[3800,2493],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
   \*************************************************************************************************/
-[3757,2456,2380],/*!**********************************************************************************************************!*\
+[3801,2494,2418],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
   \**********************************************************************************************************/
-[3540,2378,2424],/*!*****************************************************************!*\
+[3576,2416,2462],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/classnames/index.js ***!
   \*****************************************************************/
-852,/*!**************************************************************************!*\
+865,/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/activeElement.js ***!
   \**************************************************************************/
-[3758,2459,2460],/*!******************************************************************************!*\
+[3802,2497,2498],/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/util/babelHelpers.js ***!
   \******************************************************************************/
-854,/*!**************************************************************************!*\
+867,/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/ownerDocument.js ***!
   \**************************************************************************/
-855,/*!***************************************************************************!*\
+868,/*!***************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/query/contains.js ***!
   \***************************************************************************/
-[3759,2462],/*!***********************************************************************!*\
+[3803,2500],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/util/inDOM.js ***!
   \***********************************************************************/
-857,/*!**************************************************************!*\
+870,/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/keycode/index.js ***!
   \**************************************************************/
-858,/*!*************************************************************************!*\
+871,/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/all.js ***!
   \*************************************************************************/
-[3760,2465],/*!******************************************************************************************************!*\
+[3804,2503],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
   \******************************************************************************************************/
-860,/*!*********************************************************************************!*\
+873,/*!*********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/elementType.js ***!
   \*********************************************************************************/
-[3761,2465],/*!***************************************************************************************!*\
+[3805,2503],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/isRequiredForA11y.js ***!
   \***************************************************************************************/
-862,/*!****************************************************************!*\
+875,/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/warning/browser.js ***!
   \****************************************************************/
-478,/*!********************************************************************************!*\
+491,/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ButtonGroup.js ***!
   \********************************************************************************/
-[3762,2374,2373,2412,2413,2449,2457,2464,2470,2475],/*!***************************************************************************!*\
+[3806,2412,2411,2450,2451,2487,2495,2502,2508,2513],/*!***************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Button.js ***!
   \***************************************************************************/
-[3763,2471,2373,2374,2412,2413,2449,2457,2466,2475,2479,2480],/*!************************************************************************************!*\
+[3807,2509,2411,2412,2450,2451,2487,2495,2504,2513,2517,2518],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/values.js ***!
   \************************************************************************************/
-[3764,2472],/*!*************************************************************************************************!*\
+[3808,2510],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
   \*************************************************************************************************/
-[3765,2473,2380],/*!**********************************************************************************************************!*\
+[3809,2511,2418],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
   \**********************************************************************************************************/
-[3562,2378,2474],/*!*********************************************************************************************************!*\
+[3598,2416,2512],/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
   \*********************************************************************************************************/
-[3563,2394,2397,2410],/*!*****************************************************************************************!*\
+[3599,2432,2435,2448],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
   \*****************************************************************************************/
-[3766,2476,2374,2081,2479],/*!*************************************************************************************!*\
+[3810,2514,2412,2119,2517],/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/entries.js ***!
   \*************************************************************************************/
-[3767,2477],/*!**************************************************************************************************!*\
+[3811,2515],/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
   \**************************************************************************************************/
-[3768,2478,2380],/*!***********************************************************************************************************!*\
+[3812,2516,2418],/*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
   \***********************************************************************************************************/
-[3564,2378,2474],/*!**************************************************************************************!*\
+[3600,2416,2512],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/StyleConfig.js ***!
   \**************************************************************************************/
-874,/*!*******************************************************************************!*\
+887,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/SafeAnchor.js ***!
   \*******************************************************************************/
-[3769,2374,2373,2412,2413,2449,2466],/*!*********************************************************************************!*\
+[3813,2412,2411,2450,2451,2487,2504],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/DropdownMenu.js ***!
   \*********************************************************************************/
-[3770,2374,2373,2482,2412,2413,2449,2457,2463,2491,2475,2499,2500],/*!*********************************************************************************!*\
+[3814,2412,2411,2520,2450,2451,2487,2495,2501,2529,2513,2537,2538],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/array/from.js ***!
   \*********************************************************************************/
-[3771,2483],/*!**********************************************************************************************!*\
+[3815,2521],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/array/from.js ***!
   \**********************************************************************************************/
-[3772,2417,2484,2380],/*!*******************************************************************************************************!*\
+[3816,2455,2522,2418],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.array.from.js ***!
   \*******************************************************************************************************/
-[3553,2381,2378,2411,2485,2486,2402,2487,2488,2490],/*!***************************************************************************************************!*\
+[3589,2419,2416,2449,2523,2524,2440,2525,2526,2528],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-call.js ***!
   \***************************************************************************************************/
-[3554,2385],/*!*******************************************************************************************************!*\
+[3590,2423],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_is-array-iter.js ***!
   \*******************************************************************************************************/
-[3555,2422,2428],/*!*********************************************************************************************************!*\
+[3591,2460,2466],/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_create-property.js ***!
   \*********************************************************************************************************/
-[3556,2384,2392],/*!*****************************************************************************************************************!*\
+[3592,2422,2430],/*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/core.get-iterator-method.js ***!
   \*****************************************************************************************************************/
-[3557,2489,2428,2422,2380],/*!*************************************************************************************************!*\
+[3593,2527,2466,2460,2418],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_classof.js ***!
   \*************************************************************************************************/
-[3548,2399,2428],/*!*****************************************************************************************************!*\
+[3584,2437,2466],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-detect.js ***!
   \*****************************************************************************************************/
-[3558,2428],/*!************************************************************************************!*\
+[3594,2466],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/RootCloseWrapper.js ***!
   \************************************************************************************/
-[3773,2492,2494,2497],/*!********************************************************************************************!*\
+[3817,2530,2532,2535],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/query/contains.js ***!
   \********************************************************************************************/
-[3774,2493],/*!****************************************************************************************!*\
+[3818,2531],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/inDOM.js ***!
   \****************************************************************************************/
-888,/*!******************************************************************************************!*\
+901,/*!******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/addEventListener.js ***!
   \******************************************************************************************/
-[3775,2495,2496],/*!***************************************************************************************!*\
+[3819,2533,2534],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/events/on.js ***!
   \***************************************************************************************/
-[3776,2493],/*!****************************************************************************************!*\
+[3820,2531],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/events/off.js ***!
   \****************************************************************************************/
-[3777,2493],/*!***************************************************************************************!*\
+[3821,2531],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/ownerDocument.js ***!
   \***************************************************************************************/
-[3778,2498],/*!*******************************************************************************************!*\
+[3822,2536],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/ownerDocument.js ***!
   \*******************************************************************************************/
-893,/*!************************************************************************************************!*\
+906,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/createChainedFunction.js ***!
   \************************************************************************************************/
-894,/*!*************************************************************************************************!*\
+907,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
   \*************************************************************************************************/
-895,/*!***********************************************************************************!*\
+908,/*!***********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/DropdownToggle.js ***!
   \***********************************************************************************/
-[3779,2374,2373,2412,2413,2449,2457,2470,2480,2475],/*!************************************************************************************!*\
+[3823,2412,2411,2450,2451,2487,2495,2508,2518,2513],/*!************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/PropTypes.js ***!
   \************************************************************************************/
-[3780,2465,2500],/*!*****************************************************************************!*\
+[3824,2503,2538],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/MenuItem.js ***!
   \*****************************************************************************/
-[3781,2374,2373,2412,2413,2449,2457,2464,2480,2475,2499],/*!******************************************************************************!*\
+[3825,2412,2411,2450,2451,2487,2495,2502,2518,2513,2537],/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Glyphicon.js ***!
   \******************************************************************************/
-[3782,2374,2373,2412,2413,2449,2457,2475],/*!*********************************************************************************************************************************!*\
+[3826,2412,2411,2450,2451,2487,2495,2513],/*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/FiltersModal.jsx ***!
   \*********************************************************************************************************************************/
-[3783,2506,2470,2504,2545,2556,2557],/*!**************************************************************************!*\
+[3827,2544,2508,2542,2583,2594,2595],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Modal.js ***!
   \**************************************************************************/
-[3784,2373,2412,2413,2449,2374,2457,2507,2460,2462,2512,2513,2532,2466,2537,2539,2540,2541,2542,2543,2475,2499,2544,2479],/*!*************************************************************************!*\
+[3828,2411,2450,2451,2487,2412,2495,2545,2498,2500,2550,2551,2570,2504,2575,2577,2578,2579,2580,2581,2513,2537,2582,2517],/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/index.js ***!
   \*************************************************************************/
-[3785,2508,2509,2510],/*!**********************************************************************!*\
+[3829,2546,2547,2548],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/on.js ***!
   \**********************************************************************/
-[3786,2462],/*!***********************************************************************!*\
+[3830,2500],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/off.js ***!
   \***********************************************************************/
-[3787,2462],/*!**************************************************************************!*\
+[3831,2500],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/filter.js ***!
   \**************************************************************************/
-[3788,2461,2511],/*!***********************************************************************************!*\
+[3832,2499,2549],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/query/querySelectorAll.js ***!
   \***********************************************************************************/
-906,/*!*******************************************************************************!*\
+919,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-helpers/util/scrollbarSize.js ***!
   \*******************************************************************************/
-[3789,2462],/*!*************************************************************************!*\
+[3833,2500],/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/Modal.js ***!
   \*************************************************************************/
-[3790,2468,2514,2466,2515,2517,2497,2494,2535,2493,2536,2492,2516],/*!****************************************************************************************!*\
+[3834,2506,2552,2504,2553,2555,2535,2532,2573,2531,2574,2530,2554],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/componentOrElement.js ***!
   \****************************************************************************************/
-[3791,2465],/*!**************************************************************************!*\
+[3835,2503],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/Portal.js ***!
   \**************************************************************************/
-[3792,2514,2497,2516],/*!**************************************************************************************!*\
+[3836,2552,2535,2554],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/getContainer.js ***!
   \**************************************************************************************/
-911,/*!********************************************************************************!*\
+924,/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/ModalManager.js ***!
   \********************************************************************************/
-[3793,2518,2527,2531,2532,2534],/*!*****************************************************************************************!*\
+[3837,2556,2565,2569,2570,2572],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/style/index.js ***!
   \*****************************************************************************************/
-[3794,2519,2521,2523,2524,2525,2526],/*!************************************************************************************************!*\
+[3838,2557,2559,2561,2562,2563,2564],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/camelizeStyle.js ***!
   \************************************************************************************************/
-[3795,2520],/*!*******************************************************************************************!*\
+[3839,2558],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/camelize.js ***!
   \*******************************************************************************************/
-915,/*!*************************************************************************************************!*\
+928,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/hyphenateStyle.js ***!
   \*************************************************************************************************/
-[3796,2522],/*!********************************************************************************************!*\
+[3840,2560],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/hyphenate.js ***!
   \********************************************************************************************/
-917,/*!****************************************************************************************************!*\
+930,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/style/getComputedStyle.js ***!
   \****************************************************************************************************/
-[3797,2519],/*!***********************************************************************************************!*\
+[3841,2557],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/style/removeStyle.js ***!
   \***********************************************************************************************/
-919,/*!***************************************************************************************************!*\
+932,/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/transition/properties.js ***!
   \***************************************************************************************************/
-[3798,2493],/*!****************************************************************************************************!*\
+[3842,2531],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/transition/isTransform.js ***!
   \****************************************************************************************************/
-921,/*!*****************************************************************************************!*\
+934,/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/index.js ***!
   \*****************************************************************************************/
-[3799,2528,2530,2529],/*!********************************************************************************************!*\
+[3843,2566,2568,2567],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/addClass.js ***!
   \********************************************************************************************/
-[3800,2529],/*!********************************************************************************************!*\
+[3844,2567],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/hasClass.js ***!
   \********************************************************************************************/
-924,/*!***********************************************************************************************!*\
+937,/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/removeClass.js ***!
   \***********************************************************************************************/
-925,/*!************************************************************************************************!*\
+938,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/scrollbarSize.js ***!
   \************************************************************************************************/
-[3801,2493],/*!***************************************************************************************!*\
+[3845,2531],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/isOverflowing.js ***!
   \***************************************************************************************/
-[3802,2533,2498],/*!********************************************************************************************!*\
+[3846,2571,2536],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/query/isWindow.js ***!
   \********************************************************************************************/
-928,/*!******************************************************************************************!*\
+941,/*!******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/manageAriaHidden.js ***!
   \******************************************************************************************/
-929,/*!******************************************************************************************!*\
+942,/*!******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/addFocusListener.js ***!
   \******************************************************************************************/
-930,/*!*******************************************************************************************!*\
+943,/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/activeElement.js ***!
   \*******************************************************************************************/
-[3803,2498],/*!*************************************************************************!*\
+[3847,2536],/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Fade.js ***!
   \*************************************************************************/
-[3804,2374,2412,2413,2449,2457,2538],/*!******************************************************************************!*\
+[3848,2412,2450,2451,2487,2495,2576],/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/Transition.js ***!
   \******************************************************************************/
-[3805,2457,2495,2525],/*!******************************************************************************!*\
+[3849,2495,2533,2563],/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalBody.js ***!
   \******************************************************************************/
-[3806,2374,2373,2412,2413,2449,2457,2466,2475],/*!********************************************************************************!*\
+[3850,2412,2411,2450,2451,2487,2495,2504,2513],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalDialog.js ***!
   \********************************************************************************/
-[3807,2374,2373,2412,2413,2449,2457,2475,2479],/*!********************************************************************************!*\
+[3851,2412,2411,2450,2451,2487,2495,2513,2517],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalFooter.js ***!
   \********************************************************************************/
-[3808,2374,2373,2412,2413,2449,2457,2466,2475],/*!********************************************************************************!*\
+[3852,2412,2411,2450,2451,2487,2495,2504,2513],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalHeader.js ***!
   \********************************************************************************/
-[3809,2374,2373,2412,2413,2449,2457,2475,2499],/*!*******************************************************************************!*\
+[3853,2412,2411,2450,2451,2487,2495,2513,2537],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalTitle.js ***!
   \*******************************************************************************/
-[3810,2374,2373,2412,2413,2449,2457,2466,2475],/*!**********************************************************************************************!*\
+[3854,2412,2411,2450,2451,2487,2495,2504,2513],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/splitComponentProps.js ***!
   \**********************************************************************************************/
-[3811,2476],/*!*******************************************************************************************************************************!*\
+[3855,2514],/*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/FlatFilter.jsx ***!
   \*******************************************************************************************************************************/
-[3812,2546,2554],/*!***********************************************************!*\
+[3856,2584,2592],/*!***********************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/xor.js ***!
   \***********************************************************/
-[3813,2220,2547,2548,2553],/*!*****************************************************************!*\
+[3857,2258,2585,2586,2591],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseRest.js ***!
   \*****************************************************************/
-[3814,2094,2290,2139],/*!****************************************************************!*\
+[3858,2132,2328,2177],/*!****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseXor.js ***!
   \****************************************************************/
-[3815,2549,2288,2551],/*!***********************************************************************!*\
+[3859,2587,2326,2589],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseDifference.js ***!
   \***********************************************************************/
-[3816,2257,2145,2550,2277,2175,2261],/*!**************************************************************************!*\
+[3860,2295,2183,2588,2315,2213,2299],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayIncludesWith.js ***!
   \**************************************************************************/
-945,/*!*****************************************************************!*\
+958,/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseUniq.js ***!
   \*****************************************************************/
-[3817,2257,2145,2550,2261,2552,2245],/*!******************************************************************!*\
+[3861,2295,2183,2588,2299,2590,2283],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createSet.js ***!
   \******************************************************************/
-[3818,2232,2125,2245],/*!*************************************************************************!*\
+[3862,2270,2163,2283],/*!*************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/isArrayLikeObject.js ***!
   \*************************************************************************/
-[3819,2181,2131],/*!****************************************************************************************************************************!*\
+[3863,2219,2169],/*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/Filter.less ***!
   \****************************************************************************************************************************/
-function(e,t,r){var a=r(/*! !../../../../../css-loader!../../../../../../../../~/less-loader!./Filter.less */2555);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../../../../style-loader/addStyles.js */2361)(a,{});a.locals&&(e.exports=a.locals)},/*!*********************************************************************************************************************************************************************************************!*\
+function(t,e,i){var s=i(/*! !../../../../../css-loader!../../../../../../../../~/less-loader!./Filter.less */2593);"string"==typeof s&&(s=[[t.id,s,""]]);i(/*! ../../../../../style-loader/addStyles.js */2399)(s,{});s.locals&&(t.exports=s.locals)},/*!*********************************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/Filter.less ***!
   \*********************************************************************************************************************************************************************************************/
-[3820,2360],/*!***********************************************************************************************************************************!*\
+[3864,2398],/*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/GroupingFilter.jsx ***!
   \***********************************************************************************************************************************/
-[3821,2469,2470,2504,2546,2554],/*!**********************************************************************************************************************!*\
+[3865,2507,2508,2542,2584,2592],/*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/chartDataPropTypes.js ***!
   \**********************************************************************************************************************/
-[3822,2558],/*!*****************************************************************************************************************!*\
+[3866,2596],/*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/experimentTypeUtils.js ***!
   \*****************************************************************************************************************/
-953,/*!********************************************************************************************************************************************!*\
+966,/*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/DownloadButton.jsx ***!
   \********************************************************************************************************************************************/
-[3823,2506,2470,2504,2560,2561,2557],/*!*****************************************************************************************************************************************!*\
+[3867,2544,2508,2542,2598,2599,2595],/*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/Disclaimers.jsx ***!
   \*****************************************************************************************************************************************/
-955,/*!*************************************************************************************************************************************!*\
+968,/*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/Download.js ***!
   \*************************************************************************************************************************************/
-[3824,2562,2566],/*!*************************************************************!*\
+[3868,2600,2604],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/range.js ***!
   \*************************************************************/
-[3825,2563],/*!********************************************************************!*\
+[3869,2601],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_createRange.js ***!
   \********************************************************************/
-[3826,2564,2565,2157],/*!******************************************************************!*\
+[3870,2602,2603,2195],/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_baseRange.js ***!
   \******************************************************************/
-959,/*!***********************************************************************!*\
+972,/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/_isIterateeCall.js ***!
   \***********************************************************************/
-[3827,2164,2181,2152,2106],/*!********************************************************************!*\
+[3871,2202,2219,2190,2144],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/downloadjs/download.js ***!
   \********************************************************************/
-961,/*!************************************************************************************************************!*\
+974,/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/show/HeatmapCanvas.jsx ***!
   \************************************************************************************************************/
-[3828,2568,2569,2570,2557],/*!**************************************************************************************!*\
+[3872,2606,2608,2609,2610,2595],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-highcharts/dist/ReactHighcharts.js ***!
   \**************************************************************************************/
-963,/*!*****************************************************************************************!*\
+[3873,2607],/*!**********************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/highcharts/highcharts.js ***!
+  \**********************************************************************/
+function(t,e){!function(e,i){"object"==typeof t&&t.exports?t.exports=e.document?i(e):i:e.Highcharts=i(e)}("undefined"!=typeof window?window:this,function(t){t=function(){var t=window,e=t.document,i=t.navigator&&t.navigator.userAgent||"",s=e&&e.createElementNS&&!!e.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,n=/(edge|msie|trident)/i.test(i)&&!window.opera,r=!s,o=/Firefox/.test(i),a=o&&4>parseInt(i.split("Firefox/")[1],10);return t.Highcharts?t.Highcharts.error(16,!0):{product:"Highcharts",version:"5.0.11",deg2rad:2*Math.PI/360,doc:e,hasBidiBug:a,hasTouch:e&&void 0!==e.documentElement.ontouchstart,isMS:n,isWebKit:/AppleWebKit/.test(i),isFirefox:o,isTouchDevice:/(Mobile|Android|Windows Phone)/.test(i),SVG_NS:"http://www.w3.org/2000/svg",chartCount:0,seriesTypes:{},symbolSizes:{},svg:s,vml:r,win:t,marginNames:["plotTop","marginRight","marginBottom","plotLeft"],noop:function(){},charts:[]}}(),function(t){var e=[],i=t.charts,s=t.doc,n=t.win;t.error=function(e,i){if(e=t.isNumber(e)?"Highcharts error #"+e+": www.highcharts.com/errors/"+e:e,i)throw Error(e);n.console&&console.log(e)},t.Fx=function(t,e,i){this.options=e,this.elem=t,this.prop=i},t.Fx.prototype={dSetter:function(){var t,e=this.paths[0],i=this.paths[1],s=[],n=this.now,r=e.length;if(1===n)s=this.toD;else if(r===i.length&&1>n)for(;r--;)t=parseFloat(e[r]),s[r]=isNaN(t)?e[r]:n*parseFloat(i[r]-t)+t;else s=i;this.elem.attr("d",s,null,!0)},update:function(){var t=this.elem,e=this.prop,i=this.now,s=this.options.step;this[e+"Setter"]?this[e+"Setter"]():t.attr?t.element&&t.attr(e,i,null,!0):t.style[e]=i+this.unit,s&&s.call(t,i,this)},run:function(t,i,s){var n,r=this,o=function(t){return!o.stopped&&r.step(t)};this.startTime=+new Date,this.start=t,this.end=i,this.unit=s,this.now=this.start,this.pos=0,o.elem=this.elem,o.prop=this.prop,o()&&1===e.push(o)&&(o.timerId=setInterval(function(){for(n=0;n<e.length;n++)e[n]()||e.splice(n--,1);e.length||clearInterval(o.timerId)},13))},step:function(e){var i,s=+new Date,n=this.options,r=this.elem,o=n.complete,a=n.duration,h=n.curAnim;return r.attr&&!r.element?e=!1:e||s>=a+this.startTime?(this.now=this.end,this.pos=1,this.update(),i=h[this.prop]=!0,t.objectEach(h,function(t){!0!==t&&(i=!1)}),i&&o&&o.call(r),e=!1):(this.pos=n.easing((s-this.startTime)/a),this.now=this.start+(this.end-this.start)*this.pos,this.update(),e=!0),e},initPath:function(e,i,s){function n(t){var e,i;for(c=t.length;c--;)e="M"===t[c]||"L"===t[c],i=/[a-zA-Z]/.test(t[c+3]),e&&i&&t.splice(c+1,0,t[c+1],t[c+2],t[c+1],t[c+2])}function r(t,e){for(;t.length<h;){t[0]=e[h-t.length];var i=t.slice(0,f);[].splice.apply(t,[0,0].concat(i)),m&&(i=t.slice(t.length-f),[].splice.apply(t,[t.length,0].concat(i)),c--)}t[0]="M"}function o(t,e){for(var i=(h-t.length)/f;0<i&&i--;)l=t.slice().splice(t.length/v-f,f*v),l[0]=e[h-f-i*f],u&&(l[f-6]=l[f-2],l[f-5]=l[f-1]),[].splice.apply(t,[t.length/v,0].concat(l)),m&&i--}i=i||"";var a,h,l,c,d=e.startX,p=e.endX,u=-1<i.indexOf("C"),f=u?7:3;i=i.split(" "),s=s.slice();var g,m=e.isArea,v=m?2:1;if(u&&(n(i),n(s)),d&&p){for(c=0;c<d.length;c++){if(d[c]===p[0]){a=c;break}if(d[0]===p[p.length-d.length+c]){a=c,g=!0;break}}void 0===a&&(i=[])}return i.length&&t.isNumber(a)&&(h=s.length+a*v*f,g?(r(i,s),o(s,i)):(r(s,i),o(i,s))),[i,s]}},t.extend=function(t,e){var i;t||(t={});for(i in e)t[i]=e[i];return t},t.merge=function(){var e,i,s=arguments,n={},r=function(e,i){return"object"!=typeof e&&(e={}),t.objectEach(i,function(s,n){!t.isObject(s,!0)||t.isClass(s)||t.isDOMElement(s)?e[n]=i[n]:e[n]=r(e[n]||{},s)}),e};for(!0===s[0]&&(n=s[1],s=Array.prototype.slice.call(s,2)),i=s.length,e=0;e<i;e++)n=r(n,s[e]);return n},t.pInt=function(t,e){return parseInt(t,e||10)},t.isString=function(t){return"string"==typeof t},t.isArray=function(t){return t=Object.prototype.toString.call(t),"[object Array]"===t||"[object Array Iterator]"===t},t.isObject=function(e,i){return!(!e||"object"!=typeof e||i&&t.isArray(e))},t.isDOMElement=function(e){return t.isObject(e)&&"number"==typeof e.nodeType},t.isClass=function(e){var i=e&&e.constructor;return!(!t.isObject(e,!0)||t.isDOMElement(e)||!i||!i.name||"Object"===i.name)},t.isNumber=function(t){return"number"==typeof t&&!isNaN(t)},t.erase=function(t,e){for(var i=t.length;i--;)if(t[i]===e){t.splice(i,1);break}},t.defined=function(t){return void 0!==t&&null!==t},t.attr=function(e,i,s){var n;return t.isString(i)?t.defined(s)?e.setAttribute(i,s):e&&e.getAttribute&&(n=e.getAttribute(i)):t.defined(i)&&t.isObject(i)&&t.objectEach(i,function(t,i){e.setAttribute(i,t)}),n},t.splat=function(e){return t.isArray(e)?e:[e]},t.syncTimeout=function(t,e,i){return e?setTimeout(t,e,i):void t.call(0,i)},t.pick=function(){var t,e,i=arguments,s=i.length;for(t=0;t<s;t++)if(e=i[t],void 0!==e&&null!==e)return e},t.css=function(e,i){t.isMS&&!t.svg&&i&&void 0!==i.opacity&&(i.filter="alpha(opacity="+100*i.opacity+")"),t.extend(e.style,i)},t.createElement=function(e,i,n,r,o){e=s.createElement(e);var a=t.css;return i&&t.extend(e,i),o&&a(e,{padding:0,border:"none",margin:0}),n&&a(e,n),r&&r.appendChild(e),e},t.extendClass=function(e,i){var s=function(){};return s.prototype=new e,t.extend(s.prototype,i),s},t.pad=function(t,e,i){return Array((e||2)+1-String(t).length).join(i||0)+t},t.relativeLength=function(t,e){return/%$/.test(t)?e*parseFloat(t)/100:parseFloat(t)},t.wrap=function(t,e,i){var s=t[e];t[e]=function(){var t=Array.prototype.slice.call(arguments),e=arguments,n=this;return n.proceed=function(){s.apply(n,arguments.length?arguments:e)},t.unshift(s),t=i.apply(this,t),n.proceed=null,t}},t.getTZOffset=function(e){var i=t.Date;return 6e4*(i.hcGetTimezoneOffset&&i.hcGetTimezoneOffset(e)||i.hcTimezoneOffset||0)},t.dateFormat=function(e,i,s){if(!t.defined(i)||isNaN(i))return t.defaultOptions.lang.invalidDate||"";e=t.pick(e,"%Y-%m-%d %H:%M:%S");var n=t.Date,r=new n(i-t.getTZOffset(i)),o=r[n.hcGetHours](),a=r[n.hcGetDay](),h=r[n.hcGetDate](),l=r[n.hcGetMonth](),c=r[n.hcGetFullYear](),d=t.defaultOptions.lang,p=d.weekdays,u=d.shortWeekdays,f=t.pad,n=t.extend({a:u?u[a]:p[a].substr(0,3),A:p[a],d:f(h),e:f(h,2," "),w:a,b:d.shortMonths[l],B:d.months[l],m:f(l+1),y:c.toString().substr(2,2),Y:c,H:f(o),k:o,I:f(o%12||12),l:o%12||12,M:f(r[n.hcGetMinutes]()),p:12>o?"AM":"PM",P:12>o?"am":"pm",S:f(r.getSeconds()),L:f(Math.round(i%1e3),3)},t.dateFormats);return t.objectEach(n,function(t,s){for(;-1!==e.indexOf("%"+s);)e=e.replace("%"+s,"function"==typeof t?t(i):t)}),s?e.substr(0,1).toUpperCase()+e.substr(1):e},t.formatSingle=function(e,i){var s=/\.([0-9])/,n=t.defaultOptions.lang;return/f$/.test(e)?(s=(s=e.match(s))?s[1]:-1,null!==i&&(i=t.numberFormat(i,s,n.decimalPoint,-1<e.indexOf(",")?n.thousandsSep:""))):i=t.dateFormat(e,i),i},t.format=function(e,i){for(var s,n,r,o,a,h="{",l=!1,c=[];e&&(h=e.indexOf(h),-1!==h);){if(s=e.slice(0,h),l){for(s=s.split(":"),n=s.shift().split("."),o=n.length,a=i,r=0;r<o;r++)a=a[n[r]];s.length&&(a=t.formatSingle(s.join(":"),a)),c.push(a)}else c.push(s);e=e.slice(h+1),h=(l=!l)?"}":"{"}return c.push(e),c.join("")},t.getMagnitude=function(t){return Math.pow(10,Math.floor(Math.log(t)/Math.LN10))},t.normalizeTickInterval=function(e,i,s,n,r){var o,a=e;for(s=t.pick(s,1),o=e/s,i||(i=r?[1,1.2,1.5,2,2.5,3,4,5,6,8,10]:[1,2,2.5,5,10],!1===n&&(1===s?i=t.grep(i,function(t){return 0===t%1}):.1>=s&&(i=[1/s]))),n=0;n<i.length&&(a=i[n],!(r&&a*s>=e||!r&&o<=(i[n]+(i[n+1]||i[n]))/2));n++);return a=t.correctFloat(a*s,-Math.round(Math.log(.001)/Math.LN10))},t.stableSort=function(t,e){var i,s,n=t.length;for(s=0;s<n;s++)t[s].safeI=s;for(t.sort(function(t,s){return i=e(t,s),0===i?t.safeI-s.safeI:i}),s=0;s<n;s++)delete t[s].safeI},t.arrayMin=function(t){for(var e=t.length,i=t[0];e--;)t[e]<i&&(i=t[e]);return i},t.arrayMax=function(t){for(var e=t.length,i=t[0];e--;)t[e]>i&&(i=t[e]);return i},t.destroyObjectProperties=function(e,i){t.objectEach(e,function(t,s){t&&t!==i&&t.destroy&&t.destroy(),delete e[s]})},t.discardElement=function(e){var i=t.garbageBin;i||(i=t.createElement("div")),e&&i.appendChild(e),i.innerHTML=""},t.correctFloat=function(t,e){return parseFloat(t.toPrecision(e||14))},t.setAnimation=function(e,i){i.renderer.globalAnimation=t.pick(e,i.options.chart.animation,!0)},t.animObject=function(e){return t.isObject(e)?t.merge(e):{duration:e?500:0}},t.timeUnits={millisecond:1,second:1e3,minute:6e4,hour:36e5,day:864e5,week:6048e5,month:24192e5,year:314496e5},t.numberFormat=function(e,i,s,n){e=+e||0,i=+i;var r,o,a=t.defaultOptions.lang,h=(e.toString().split(".")[1]||"").length;return-1===i?i=Math.min(h,20):t.isNumber(i)||(i=2),o=(Math.abs(e)+Math.pow(10,-Math.max(i,h)-1)).toFixed(i),h=String(t.pInt(o)),r=3<h.length?h.length%3:0,s=t.pick(s,a.decimalPoint),n=t.pick(n,a.thousandsSep),e=(0>e?"-":"")+(r?h.substr(0,r)+n:""),e+=h.substr(r).replace(/(\d{3})(?=\d)/g,"$1"+n),i&&(e+=s+o.slice(-i)),e},Math.easeInOutSine=function(t){return-.5*(Math.cos(Math.PI*t)-1)},t.getStyle=function(e,i,s){return"width"===i?Math.min(e.offsetWidth,e.scrollWidth)-t.getStyle(e,"padding-left")-t.getStyle(e,"padding-right"):"height"===i?Math.min(e.offsetHeight,e.scrollHeight)-t.getStyle(e,"padding-top")-t.getStyle(e,"padding-bottom"):((e=n.getComputedStyle(e,void 0))&&(e=e.getPropertyValue(i),t.pick(s,!0)&&(e=t.pInt(e))),e)},t.inArray=function(t,e){return e.indexOf?e.indexOf(t):[].indexOf.call(e,t)},t.grep=function(t,e){return[].filter.call(t,e)},t.find=function(t,e){return[].find.call(t,e)},t.map=function(t,e){for(var i=[],s=0,n=t.length;s<n;s++)i[s]=e.call(t[s],t[s],s,t);return i},t.offset=function(t){var e=s.documentElement;return t=t.getBoundingClientRect(),{top:t.top+(n.pageYOffset||e.scrollTop)-(e.clientTop||0),left:t.left+(n.pageXOffset||e.scrollLeft)-(e.clientLeft||0)}},t.stop=function(t,i){for(var s=e.length;s--;)e[s].elem!==t||i&&i!==e[s].prop||(e[s].stopped=!0)},t.each=function(t,e,i){return Array.prototype.forEach.call(t,e,i)},t.objectEach=function(t,e,i){for(var s in t)t.hasOwnProperty(s)&&e.call(i,t[s],s,t)},t.addEvent=function(e,i,s){function r(t){t.target=t.srcElement||n,s.call(e,t)}var o=e.hcEvents=e.hcEvents||{};return e.addEventListener?e.addEventListener(i,s,!1):e.attachEvent&&(e.hcEventsIE||(e.hcEventsIE={}),e.hcEventsIE[s.toString()]=r,e.attachEvent("on"+i,r)),o[i]||(o[i]=[]),o[i].push(s),function(){t.removeEvent(e,i,s)}},t.removeEvent=function(e,i,s){function n(t,i){e.removeEventListener?e.removeEventListener(t,i,!1):e.attachEvent&&(i=e.hcEventsIE[i.toString()],e.detachEvent("on"+t,i))}function r(){var s,r;e.nodeName&&(i?(s={},s[i]=!0):s=h,t.objectEach(s,function(t,e){if(h[e])for(r=h[e].length;r--;)n(e,h[e][r])}))}var o,a,h=e.hcEvents;h&&(i?(o=h[i]||[],s?(a=t.inArray(s,o),-1<a&&(o.splice(a,1),h[i]=o),n(i,s)):(r(),h[i]=[])):(r(),e.hcEvents={}))},t.fireEvent=function(e,i,n,r){var o;o=e.hcEvents;var a,h;if(n=n||{},s.createEvent&&(e.dispatchEvent||e.fireEvent))o=s.createEvent("Events"),o.initEvent(i,!0,!0),t.extend(o,n),e.dispatchEvent?e.dispatchEvent(o):e.fireEvent(i,o);else if(o)for(o=o[i]||[],a=o.length,n.target||t.extend(n,{preventDefault:function(){n.defaultPrevented=!0},target:e,type:i}),i=0;i<a;i++)(h=o[i])&&!1===h.call(e,n)&&n.preventDefault();r&&!n.defaultPrevented&&r(n)},t.animate=function(e,i,s){var n,r,o,a,h="";t.isObject(s)||(a=arguments,s={duration:a[2],easing:a[3],complete:a[4]}),t.isNumber(s.duration)||(s.duration=400),s.easing="function"==typeof s.easing?s.easing:Math[s.easing]||Math.easeInOutSine,s.curAnim=t.merge(i),t.objectEach(i,function(a,l){t.stop(e,l),o=new t.Fx(e,s,l),r=null,"d"===l?(o.paths=o.initPath(e,e.d,i.d),o.toD=i.d,n=0,r=1):e.attr?n=e.attr(l):(n=parseFloat(t.getStyle(e,l))||0,"opacity"!==l&&(h="px")),r||(r=a),r&&r.match&&r.match("px")&&(r=r.replace(/px/g,"")),o.run(n,r,h)})},t.seriesType=function(e,i,s,n,r){var o=t.getOptions(),a=t.seriesTypes;return o.plotOptions[e]=t.merge(o.plotOptions[i],s),a[e]=t.extendClass(a[i]||function(){},n),a[e].prototype.type=e,r&&(a[e].prototype.pointClass=t.extendClass(t.Point,r)),a[e]},t.uniqueKey=function(){var t=Math.random().toString(36).substring(2,9),e=0;return function(){return"highcharts-"+t+"-"+e++}}(),n.jQuery&&(n.jQuery.fn.highcharts=function(){var e=[].slice.call(arguments);if(this[0])return e[0]?(new(t[t.isString(e[0])?e.shift():"Chart"])(this[0],e[0],e[1]),this):i[t.attr(this[0],"data-highcharts-chart")]}),s&&!s.defaultView&&(t.getStyle=function(e,i){var s={width:"clientWidth",height:"clientHeight"}[i];return e.style[i]?t.pInt(e.style[i]):("opacity"===i&&(i="filter"),s?(e.style.zoom=1,Math.max(e[s]-2*t.getStyle(e,"padding"),0)):(e=e.currentStyle[i.replace(/\-(\w)/g,function(t,e){return e.toUpperCase()})],"filter"===i&&(e=e.replace(/alpha\(opacity=([0-9]+)\)/,function(t,e){return e/100})),""===e?1:t.pInt(e)))}),Array.prototype.forEach||(t.each=function(t,e,i){for(var s=0,n=t.length;s<n;s++)if(!1===e.call(i,t[s],s,t))return s}),Array.prototype.indexOf||(t.inArray=function(t,e){var i,s=0;if(e)for(i=e.length;s<i;s++)if(e[s]===t)return s;return-1}),Array.prototype.filter||(t.grep=function(t,e){for(var i=[],s=0,n=t.length;s<n;s++)e(t[s],s)&&i.push(t[s]);return i}),Array.prototype.find||(t.find=function(t,e){var i,s=t.length;for(i=0;i<s;i++)if(e(t[i],i))return t[i]})}(t),function(t){var e=t.each,i=t.isNumber,s=t.map,n=t.merge,r=t.pInt;t.Color=function(e){return this instanceof t.Color?void this.init(e):new t.Color(e)},t.Color.prototype={parsers:[{regex:/rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]?(?:\.[0-9]+)?)\s*\)/,parse:function(t){return[r(t[1]),r(t[2]),r(t[3]),parseFloat(t[4],10)]}},{regex:/rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/,parse:function(t){return[r(t[1]),r(t[2]),r(t[3]),1]}}],names:{white:"#ffffff",black:"#000000"},init:function(e){var i,n,r,o;if((this.input=e=this.names[e&&e.toLowerCase?e.toLowerCase():""]||e)&&e.stops)this.stops=s(e.stops,function(e){return new t.Color(e[1])});else if(e&&"#"===e[0]&&(i=e.length,e=parseInt(e.substr(1),16),7===i?n=[(16711680&e)>>16,(65280&e)>>8,255&e,1]:4===i&&(n=[(3840&e)>>4|(3840&e)>>8,(240&e)>>4|240&e,(15&e)<<4|15&e,1])),!n)for(r=this.parsers.length;r--&&!n;)o=this.parsers[r],(i=o.regex.exec(e))&&(n=o.parse(i));this.rgba=n||[]},get:function(t){var s,r=this.input,o=this.rgba;return this.stops?(s=n(r),s.stops=[].concat(s.stops),e(this.stops,function(e,i){s.stops[i]=[s.stops[i][0],e.get(t)]})):s=o&&i(o[0])?"rgb"===t||!t&&1===o[3]?"rgb("+o[0]+","+o[1]+","+o[2]+")":"a"===t?o[3]:"rgba("+o.join(",")+")":r,s},brighten:function(t){var s,n=this.rgba;if(this.stops)e(this.stops,function(e){e.brighten(t)});else if(i(t)&&0!==t)for(s=0;3>s;s++)n[s]+=r(255*t),0>n[s]&&(n[s]=0),255<n[s]&&(n[s]=255);return this},setOpacity:function(t){return this.rgba[3]=t,this}},t.color=function(e){return new t.Color(e)}}(t),function(t){var e,i,s=t.addEvent,n=t.animate,r=t.attr,o=t.charts,a=t.color,h=t.css,l=t.createElement,c=t.defined,d=t.deg2rad,p=t.destroyObjectProperties,u=t.doc,f=t.each,g=t.extend,m=t.erase,v=t.grep,y=t.hasTouch,x=t.inArray,b=t.isArray,k=t.isFirefox,w=t.isMS,M=t.isObject,S=t.isString,T=t.isWebKit,A=t.merge,P=t.noop,C=t.objectEach,L=t.pick,O=t.pInt,I=t.removeEvent,D=t.stop,E=t.svg,z=t.SVG_NS,R=t.symbolSizes,N=t.win;e=t.SVGElement=function(){return this},e.prototype={opacity:1,SVG_NS:z,textProps:"direction fontSize fontWeight fontFamily fontStyle color lineHeight width textAlign textDecoration textOverflow textOutline".split(" "),init:function(t,e){this.element="span"===e?l(e):u.createElementNS(this.SVG_NS,e),this.renderer=t},animate:function(e,i,s){return i=t.animObject(L(i,this.renderer.globalAnimation,!0)),0!==i.duration?(s&&(i.complete=s),n(this,e,i)):(this.attr(e,null,s),i.step&&i.step.call(this)),this},colorGradient:function(e,i,s){var n,r,o,a,h,l,d,p,u,g,m,v=this.renderer,y=[];e.radialGradient?r="radialGradient":e.linearGradient&&(r="linearGradient"),r&&(o=e[r],h=v.gradients,d=e.stops,g=s.radialReference,b(o)&&(e[r]=o={x1:o[0],y1:o[1],x2:o[2],y2:o[3],gradientUnits:"userSpaceOnUse"}),"radialGradient"===r&&g&&!c(o.gradientUnits)&&(a=o,o=A(o,v.getRadialAttr(g,a),{gradientUnits:"userSpaceOnUse"})),C(o,function(t,e){"id"!==e&&y.push(e,t)}),C(d,function(t){y.push(t)}),y=y.join(","),h[y]?g=h[y].attr("id"):(o.id=g=t.uniqueKey(),h[y]=l=v.createElement(r).attr(o).add(v.defs),l.radAttr=a,l.stops=[],f(d,function(e){0===e[1].indexOf("rgba")?(n=t.color(e[1]),p=n.get("rgb"),u=n.get("a")):(p=e[1],u=1),e=v.createElement("stop").attr({offset:e[0],"stop-color":p,"stop-opacity":u}).add(l),l.stops.push(e)})),m="url("+v.url+"#"+g+")",s.setAttribute(i,m),s.gradient=y,e.toString=function(){return m})},applyTextOutline:function(e){var i,s,n,o,a,h=this.element;if(-1!==e.indexOf("contrast")&&(e=e.replace(/contrast/g,this.renderer.getContrast(h.style.fill))),e=e.split(" "),s=e[e.length-1],(n=e[0])&&"none"!==n&&t.svg){for(this.fakeTS=!0,e=[].slice.call(h.getElementsByTagName("tspan")),this.ySetter=this.xSetter,n=n.replace(/(^[\d\.]+)(.*?)$/g,function(t,e,i){return 2*e+i}),a=e.length;a--;)i=e[a],"highcharts-text-outline"===i.getAttribute("class")&&m(e,h.removeChild(i));o=h.firstChild,f(e,function(t,e){0===e&&(t.setAttribute("x",h.getAttribute("x")),e=h.getAttribute("y"),t.setAttribute("y",e||0),null===e&&h.setAttribute("y",0)),t=t.cloneNode(1),r(t,{class:"highcharts-text-outline",fill:s,stroke:s,"stroke-width":n,"stroke-linejoin":"round"}),h.insertBefore(t,o)})}},attr:function(t,e,i,s){var n,r,o,a,h=this.element,l=this;return"string"==typeof t&&void 0!==e&&(n=t,t={},t[n]=e),"string"==typeof t?l=(this[t+"Getter"]||this._defaultGetter).call(this,t,h):(C(t,function(e,i){o=!1,s||D(this,i),this.symbolName&&/^(x|y|width|height|r|start|end|innerR|anchorX|anchorY)$/.test(i)&&(r||(this.symbolAttr(t),r=!0),o=!0),!this.rotation||"x"!==i&&"y"!==i||(this.doTransform=!0),o||(a=this[i+"Setter"]||this._defaultSetter,a.call(this,e,i,h),this.shadows&&/^(width|height|visibility|x|y|d|transform|cx|cy|r)$/.test(i)&&this.updateShadows(i,e,a))},this),this.doTransform&&(this.updateTransform(),this.doTransform=!1)),i&&i(),l},updateShadows:function(t,e,i){for(var s=this.shadows,n=s.length;n--;)i.call(s[n],"height"===t?Math.max(e-(s[n].cutHeight||0),0):"d"===t?this.d:e,t,s[n])},addClass:function(t,e){var i=this.attr("class")||"";return-1===i.indexOf(t)&&(e||(t=(i+(i?" ":"")+t).replace("  "," ")),this.attr("class",t)),this},hasClass:function(t){return-1!==r(this.element,"class").indexOf(t)},removeClass:function(t){return r(this.element,"class",(r(this.element,"class")||"").replace(t,"")),this},symbolAttr:function(t){var e=this;f("x y r start end width height innerR anchorX anchorY".split(" "),function(i){e[i]=L(t[i],e[i])}),e.attr({d:e.renderer.symbols[e.symbolName](e.x,e.y,e.width,e.height,e)})},clip:function(t){return this.attr("clip-path",t?"url("+this.renderer.url+"#"+t.id+")":"none")},crisp:function(t,e){var i,s=this,n={};return e=e||t.strokeWidth||0,i=Math.round(e)%2/2,t.x=Math.floor(t.x||s.x||0)+i,t.y=Math.floor(t.y||s.y||0)+i,t.width=Math.floor((t.width||s.width||0)-2*i),t.height=Math.floor((t.height||s.height||0)-2*i),c(t.strokeWidth)&&(t.strokeWidth=e),C(t,function(t,e){s[e]!==t&&(s[e]=n[e]=t)}),n},css:function(t){var e,i,s=this.styles,n={},o=this.element,a="",l=!s,c=["textOutline","textOverflow","width"];return t&&t.color&&(t.fill=t.color),s&&C(t,function(t,e){t!==s[e]&&(n[e]=t,l=!0)}),l&&(s&&(t=g(s,n)),e=this.textWidth=t&&t.width&&"auto"!==t.width&&"text"===o.nodeName.toLowerCase()&&O(t.width),this.styles=t,e&&!E&&this.renderer.forExport&&delete t.width,w&&!E?h(this.element,t):(i=function(t,e){return"-"+e.toLowerCase()},C(t,function(t,e){-1===x(e,c)&&(a+=e.replace(/([A-Z])/g,i)+":"+t+";")}),a&&r(o,"style",a)),this.added&&("text"===this.element.nodeName&&this.renderer.buildText(this),t&&t.textOutline&&this.applyTextOutline(t.textOutline))),this},strokeWidth:function(){return this["stroke-width"]||0},on:function(t,e){var i=this,s=i.element;return y&&"click"===t?(s.ontouchstart=function(t){i.touchEventFired=Date.now(),t.preventDefault(),e.call(s,t)},s.onclick=function(t){(-1===N.navigator.userAgent.indexOf("Android")||1100<Date.now()-(i.touchEventFired||0))&&e.call(s,t)}):s["on"+t]=e,this},setRadialReference:function(t){var e=this.renderer.gradients[this.element.gradient];return this.element.radialReference=t,e&&e.radAttr&&e.animate(this.renderer.getRadialAttr(t,e.radAttr)),this},translate:function(t,e){return this.attr({translateX:t,translateY:e})},invert:function(t){return this.inverted=t,this.updateTransform(),this},updateTransform:function(){var t=this.translateX||0,e=this.translateY||0,i=this.scaleX,s=this.scaleY,n=this.inverted,r=this.rotation,o=this.element;n&&(t+=this.width,e+=this.height),t=["translate("+t+","+e+")"],n?t.push("rotate(90) scale(-1,1)"):r&&t.push("rotate("+r+" "+(o.getAttribute("x")||0)+" "+(o.getAttribute("y")||0)+")"),(c(i)||c(s))&&t.push("scale("+L(i,1)+" "+L(s,1)+")"),t.length&&o.setAttribute("transform",t.join(" "))},toFront:function(){var t=this.element;return t.parentNode.appendChild(t),this},align:function(t,e,i){var s,n,r,o,a={};n=this.renderer,r=n.alignedObjects;var h,l;return t?(this.alignOptions=t,this.alignByTranslate=e,(!i||S(i))&&(this.alignTo=s=i||"renderer",m(r,this),r.push(this),i=null)):(t=this.alignOptions,e=this.alignByTranslate,s=this.alignTo),i=L(i,n[s],n),s=t.align,n=t.verticalAlign,r=(i.x||0)+(t.x||0),o=(i.y||0)+(t.y||0),"right"===s?h=1:"center"===s&&(h=2),h&&(r+=(i.width-(t.width||0))/h),a[e?"translateX":"x"]=Math.round(r),"bottom"===n?l=1:"middle"===n&&(l=2),l&&(o+=(i.height-(t.height||0))/l),a[e?"translateY":"y"]=Math.round(o),this[this.placed?"animate":"attr"](a),this.placed=!0,this.alignAttr=a,this},getBBox:function(t,e){var i,s,n,r,o,a=this.renderer,h=this.element,l=this.styles,c=this.textStr,p=a.cache,u=a.cacheKeys;if(e=L(e,this.rotation),s=e*d,n=l&&l.fontSize,void 0!==c&&(o=c.toString(),-1===o.indexOf("<")&&(o=o.replace(/[0-9]/g,"0")),o+=["",e||0,n,l&&l.width,l&&l.textOverflow].join()),o&&!t&&(i=p[o]),!i){if(h.namespaceURI===this.SVG_NS||a.forExport){try{(r=this.fakeTS&&function(t){f(h.querySelectorAll(".highcharts-text-outline"),function(e){e.style.display=t})})&&r("none"),i=h.getBBox?g({},h.getBBox()):{width:h.offsetWidth,height:h.offsetHeight},r&&r("")}catch(t){}(!i||0>i.width)&&(i={width:0,height:0})}else i=this.htmlGetBBox();if(a.isSVG&&(t=i.width,a=i.height,l&&"11px"===l.fontSize&&17===Math.round(a)&&(i.height=a=14),e&&(i.width=Math.abs(a*Math.sin(s))+Math.abs(t*Math.cos(s)),i.height=Math.abs(a*Math.cos(s))+Math.abs(t*Math.sin(s)))),o&&0<i.height){for(;250<u.length;)delete p[u.shift()];p[o]||u.push(o),p[o]=i}}return i},show:function(t){return this.attr({visibility:t?"inherit":"visible"})},hide:function(){return this.attr({visibility:"hidden"})},fadeOut:function(t){var e=this;e.animate({opacity:0},{duration:t||150,complete:function(){e.attr({y:-9999})}})},add:function(t){var e,i=this.renderer,s=this.element;return t&&(this.parentGroup=t),this.parentInverted=t&&t.inverted,void 0!==this.textStr&&i.buildText(this),this.added=!0,(!t||t.handleZ||this.zIndex)&&(e=this.zIndexSetter()),e||(t?t.element:i.box).appendChild(s),this.onAdd&&this.onAdd(),this},safeRemoveChild:function(t){var e=t.parentNode;e&&e.removeChild(t)},destroy:function(){var t=this,e=t.element||{},i=t.renderer.isSVG&&"SPAN"===e.nodeName&&t.parentGroup,s=e.ownerSVGElement;if(e.onclick=e.onmouseout=e.onmouseover=e.onmousemove=e.point=null,D(t),t.clipPath&&s&&(f(s.querySelectorAll("[clip-path]"),function(e){-1<e.getAttribute("clip-path").indexOf(t.clipPath.element.id+")")&&e.removeAttribute("clip-path")}),t.clipPath=t.clipPath.destroy()),t.stops){for(s=0;s<t.stops.length;s++)t.stops[s]=t.stops[s].destroy();t.stops=null}for(t.safeRemoveChild(e),t.destroyShadows();i&&i.div&&0===i.div.childNodes.length;)e=i.parentGroup,t.safeRemoveChild(i.div),delete i.div,i=e;return t.alignTo&&m(t.renderer.alignedObjects,t),C(t,function(e,i){delete t[i]}),null},shadow:function(t,e,i){var s,n,o,a,h,l,c=[],d=this.element;if(t){if(!this.shadows){for(a=L(t.width,3),h=(t.opacity||.15)/a,l=this.parentInverted?"(-1,-1)":"("+L(t.offsetX,1)+", "+L(t.offsetY,1)+")",s=1;s<=a;s++)n=d.cloneNode(0),o=2*a+1-2*s,r(n,{isShadow:"true",stroke:t.color||"#000000","stroke-opacity":h*s,"stroke-width":o,transform:"translate"+l,fill:"none"}),i&&(r(n,"height",Math.max(r(n,"height")-o,0)),n.cutHeight=o),e?e.element.appendChild(n):d.parentNode.insertBefore(n,d),c.push(n);this.shadows=c}}else this.destroyShadows();return this},destroyShadows:function(){f(this.shadows||[],function(t){this.safeRemoveChild(t)},this),this.shadows=void 0},xGetter:function(t){return"circle"===this.element.nodeName&&("x"===t?t="cx":"y"===t&&(t="cy")),this._defaultGetter(t)},_defaultGetter:function(t){return t=L(this[t],this.element?this.element.getAttribute(t):null,0),/^[\-0-9\.]+$/.test(t)&&(t=parseFloat(t)),t},dSetter:function(t,e,i){t&&t.join&&(t=t.join(" ")),/(NaN| {2}|^$)/.test(t)&&(t="M 0 0"),i.setAttribute(e,t),this[e]=t},dashstyleSetter:function(t){var e,i=this["stroke-width"];if("inherit"===i&&(i=1),t=t&&t.toLowerCase()){for(t=t.replace("shortdashdotdot","3,1,1,1,1,1,").replace("shortdashdot","3,1,1,1").replace("shortdot","1,1,").replace("shortdash","3,1,").replace("longdash","8,3,").replace(/dot/g,"1,3,").replace("dash","4,3,").replace(/,$/,"").split(","),e=t.length;e--;)t[e]=O(t[e])*i;t=t.join(",").replace(/NaN/g,"none"),this.element.setAttribute("stroke-dasharray",t)}},alignSetter:function(t){this.element.setAttribute("text-anchor",{left:"start",center:"middle",right:"end"}[t])},opacitySetter:function(t,e,i){this[e]=t,i.setAttribute(e,t)},titleSetter:function(t){var e=this.element.getElementsByTagName("title")[0];e||(e=u.createElementNS(this.SVG_NS,"title"),this.element.appendChild(e)),e.firstChild&&e.removeChild(e.firstChild),e.appendChild(u.createTextNode(String(L(t),"").replace(/<[^>]*>/g,"")))},textSetter:function(t){t!==this.textStr&&(delete this.bBox,this.textStr=t,this.added&&this.renderer.buildText(this))},fillSetter:function(t,e,i){"string"==typeof t?i.setAttribute(e,t):t&&this.colorGradient(t,e,i)},visibilitySetter:function(t,e,i){"inherit"===t?i.removeAttribute(e):i.setAttribute(e,t)},zIndexSetter:function(t,e){var i,s,n=this.renderer,r=this.parentGroup,o=(r||n).element||n.box,a=this.element;i=this.added;var h;if(c(t)&&(a.zIndex=t,t=+t,this[e]===t&&(i=!1),this[e]=t),i){for((t=this.zIndex)&&r&&(r.handleZ=!0),e=o.childNodes,h=0;h<e.length&&!s;h++)r=e[h],i=r.zIndex,r!==a&&(O(i)>t||!c(t)&&c(i)||0>t&&!c(i)&&o!==n.box)&&(o.insertBefore(a,r),s=!0);s||o.appendChild(a)}return s},_defaultSetter:function(t,e,i){i.setAttribute(e,t)}},e.prototype.yGetter=e.prototype.xGetter,e.prototype.translateXSetter=e.prototype.translateYSetter=e.prototype.rotationSetter=e.prototype.verticalAlignSetter=e.prototype.scaleXSetter=e.prototype.scaleYSetter=function(t,e){this[e]=t,this.doTransform=!0},e.prototype["stroke-widthSetter"]=e.prototype.strokeSetter=function(t,i,s){this[i]=t,this.stroke&&this["stroke-width"]?(e.prototype.fillSetter.call(this,this.stroke,"stroke",s),s.setAttribute("stroke-width",this["stroke-width"]),this.hasStroke=!0):"stroke-width"===i&&0===t&&this.hasStroke&&(s.removeAttribute("stroke"),this.hasStroke=!1)},i=t.SVGRenderer=function(){this.init.apply(this,arguments)},i.prototype={Element:e,SVG_NS:z,init:function(t,e,i,n,o,a){var l;n=this.createElement("svg").attr({version:"1.1",class:"highcharts-root"}).css(this.getStyle(n)),l=n.element,t.appendChild(l),-1===t.innerHTML.indexOf("xmlns")&&r(l,"xmlns",this.SVG_NS),this.isSVG=!0,this.box=l,this.boxWrapper=n,this.alignedObjects=[],this.url=(k||T)&&u.getElementsByTagName("base").length?N.location.href.replace(/#.*?$/,"").replace(/<[^>]*>/g,"").replace(/([\('\)])/g,"\\$1").replace(/ /g,"%20"):"",this.createElement("desc").add().element.appendChild(u.createTextNode("Created with Highcharts 5.0.11")),this.defs=this.createElement("defs").add(),this.allowHTML=a,this.forExport=o,this.gradients={},this.cache={},this.cacheKeys=[],this.imgCount=0,this.setSize(e,i,!1);var c;k&&t.getBoundingClientRect&&(e=function(){h(t,{left:0,top:0}),c=t.getBoundingClientRect(),h(t,{left:Math.ceil(c.left)-c.left+"px",top:Math.ceil(c.top)-c.top+"px"})},e(),this.unSubPixelFix=s(N,"resize",e))},getStyle:function(t){return this.style=g({fontFamily:'"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif',fontSize:"12px"},t)},setStyle:function(t){this.boxWrapper.css(this.getStyle(t))},isHidden:function(){return!this.boxWrapper.getBBox().width},destroy:function(){var t=this.defs;return this.box=null,this.boxWrapper=this.boxWrapper.destroy(),p(this.gradients||{}),this.gradients=null,t&&(this.defs=t.destroy()),this.unSubPixelFix&&this.unSubPixelFix(),this.alignedObjects=null},createElement:function(t){var e=new this.Element;return e.init(this,t),e},draw:P,getRadialAttr:function(t,e){return{cx:t[0]-t[2]/2+e.cx*t[2],cy:t[1]-t[2]/2+e.cy*t[2],r:e.r*t[2]}},getSpanWidth:function(t,e){var i=t.getBBox(!0).width;return!E&&this.forExport&&(i=this.measureSpanWidth(e.firstChild.data,t.styles)),i},applyEllipsis:function(t,e,i,s){var n,r=this.getSpanWidth(t,e),o=r>s,r=i,a=0,h=i.length,l=function(t){e.removeChild(e.firstChild),t&&e.appendChild(u.createTextNode(t))};if(o){for(;a<=h;)n=Math.ceil((a+h)/2),r=i.substring(0,n)+"…",l(r),r=this.getSpanWidth(t,e),a===h?a=h+1:r>s?h=n-1:a=n;0===h&&l("")}return o},buildText:function(t){var e,i,s,n,o,a,l=t.element,c=this,d=c.forExport,p=L(t.textStr,"").toString(),g=-1!==p.indexOf("<"),m=l.childNodes,y=r(l,"x"),x=t.styles,b=t.textWidth,k=x&&x.lineHeight,w=x&&x.textOutline,M=x&&"ellipsis"===x.textOverflow,S=x&&"nowrap"===x.whiteSpace,T=x&&x.fontSize,A=m.length,x=b&&!t.added&&this.box,P=function(t){var e;return e=/(px|em)$/.test(t&&t.style.fontSize)?t.style.fontSize:T||c.style.fontSize||12,k?O(k):c.fontMetrics(e,t.getAttribute("style")?t:l).h};if(o=[p,M,S,k,w,T,b].join(),o!==t.textCache){for(t.textCache=o;A--;)l.removeChild(m[A]);g||w||M||b||-1!==p.indexOf(" ")?(e=/<.*class="([^"]+)".*>/,i=/<.*style="([^"]+)".*>/,s=/<.*href="(http[^"]+)".*>/,x&&x.appendChild(l),p=g?p.replace(/<(b|strong)>/g,'<span style="font-weight:bold">').replace(/<(i|em)>/g,'<span style="font-style:italic">').replace(/<a/g,"<span").replace(/<\/(b|strong|i|em|a)>/g,"</span>").split(/<br.*?>/g):[p],p=v(p,function(t){return""!==t}),f(p,function(o,p){var g,m=0;o=o.replace(/^\s+|\s+$/g,"").replace(/<span/g,"|||<span").replace(/<\/span>/g,"</span>|||"),g=o.split("|||"),f(g,function(o){if(""!==o||1===g.length){var f,v,x={},k=u.createElementNS(c.SVG_NS,"tspan");if(e.test(o)&&(f=o.match(e)[1],r(k,"class",f)),i.test(o)&&(v=o.match(i)[1].replace(/(;| |^)color([ :])/,"$1fill$2"),r(k,"style",v)),s.test(o)&&!d&&(r(k,"onclick",'location.href="'+o.match(s)[1]+'"'),h(k,{cursor:"pointer"})),o=(o.replace(/<(.|\n)*?>/g,"")||" ").replace(/&lt;/g,"<").replace(/&gt;/g,">")," "!==o){if(k.appendChild(u.createTextNode(o)),m?x.dx=0:p&&null!==y&&(x.x=y),r(k,x),l.appendChild(k),!m&&a&&(!E&&d&&h(k,{display:"block"}),r(k,"dy",P(k))),b){x=o.replace(/([^\^])-/g,"$1- ").split(" "),f=1<g.length||p||1<x.length&&!S;var w,T=[],A=P(k),C=t.rotation;for(M&&(n=c.applyEllipsis(t,k,o,b));!M&&f&&(x.length||T.length);)t.rotation=0,w=c.getSpanWidth(t,k),o=w>b,void 0===n&&(n=o),o&&1!==x.length?(k.removeChild(k.firstChild),T.unshift(x.pop())):(x=T,T=[],x.length&&!S&&(k=u.createElementNS(z,"tspan"),r(k,{dy:A,x:y}),v&&r(k,"style",v),l.appendChild(k)),w>b&&(b=w)),x.length&&k.appendChild(u.createTextNode(x.join(" ").replace(/- /g,"-")));t.rotation=C}m++}}}),a=a||l.childNodes.length}),n&&t.attr("title",t.textStr),x&&x.removeChild(l),w&&t.applyTextOutline&&t.applyTextOutline(w)):l.appendChild(u.createTextNode(p.replace(/&lt;/g,"<").replace(/&gt;/g,">")))}},getContrast:function(t){return t=a(t).rgba,510<t[0]+t[1]+t[2]?"#000000":"#FFFFFF"},button:function(t,e,i,n,r,o,a,h,l){var c=this.label(t,e,i,l,null,null,null,null,"button"),d=0;c.attr(A({padding:8,r:2},r));var p,u,f,m;return r=A({fill:"#f7f7f7",stroke:"#cccccc","stroke-width":1,style:{color:"#333333",cursor:"pointer",fontWeight:"normal"}},r),p=r.style,delete r.style,o=A(r,{fill:"#e6e6e6"},o),u=o.style,delete o.style,a=A(r,{fill:"#e6ebf5",style:{color:"#000000",
+fontWeight:"bold"}},a),f=a.style,delete a.style,h=A(r,{style:{color:"#cccccc"}},h),m=h.style,delete h.style,s(c.element,w?"mouseover":"mouseenter",function(){3!==d&&c.setState(1)}),s(c.element,w?"mouseout":"mouseleave",function(){3!==d&&c.setState(d)}),c.setState=function(t){1!==t&&(c.state=d=t),c.removeClass(/highcharts-button-(normal|hover|pressed|disabled)/).addClass("highcharts-button-"+["normal","hover","pressed","disabled"][t||0]),c.attr([r,o,a,h][t||0]).css([p,u,f,m][t||0])},c.attr(r).css(g({cursor:"default"},p)),c.on("click",function(t){3!==d&&n.call(c,t)})},crispLine:function(t,e){return t[1]===t[4]&&(t[1]=t[4]=Math.round(t[1])-e%2/2),t[2]===t[5]&&(t[2]=t[5]=Math.round(t[2])+e%2/2),t},path:function(t){var e={fill:"none"};return b(t)?e.d=t:M(t)&&g(e,t),this.createElement("path").attr(e)},circle:function(t,e,i){return t=M(t)?t:{x:t,y:e,r:i},e=this.createElement("circle"),e.xSetter=e.ySetter=function(t,e,i){i.setAttribute("c"+e,t)},e.attr(t)},arc:function(t,e,i,s,n,r){return M(t)?(s=t,e=s.y,i=s.r,t=s.x):s={innerR:s,start:n,end:r},t=this.symbol("arc",t,e,i,i,s),t.r=i,t},rect:function(t,e,i,s,n,o){n=M(t)?t.r:n;var a=this.createElement("rect");return t=M(t)?t:void 0===t?{}:{x:t,y:e,width:Math.max(i,0),height:Math.max(s,0)},void 0!==o&&(t.strokeWidth=o,t=a.crisp(t)),t.fill="none",n&&(t.r=n),a.rSetter=function(t,e,i){r(i,{rx:t,ry:t})},a.attr(t)},setSize:function(t,e,i){var s=this.alignedObjects,n=s.length;for(this.width=t,this.height=e,this.boxWrapper.animate({width:t,height:e},{step:function(){this.attr({viewBox:"0 0 "+this.attr("width")+" "+this.attr("height")})},duration:L(i,!0)?void 0:0});n--;)s[n].align()},g:function(t){var e=this.createElement("g");return t?e.attr({class:"highcharts-"+t}):e},image:function(t,e,i,s,n){var r={preserveAspectRatio:"none"};return 1<arguments.length&&g(r,{x:e,y:i,width:s,height:n}),r=this.createElement("image").attr(r),r.element.setAttributeNS?r.element.setAttributeNS("http://www.w3.org/1999/xlink","href",t):r.element.setAttribute("hc-svg-href",t),r},symbol:function(t,e,i,s,n,r){var a,d,p,m=this,v=/^url\((.*?)\)$/,y=v.test(t),x=!y&&(this.symbols[t]?t:"circle"),b=x&&this.symbols[x],k=c(e)&&b&&b.call(this.symbols,Math.round(e),Math.round(i),s,n,r);return b?(a=this.path(k),a.attr("fill","none"),g(a,{symbolName:x,x:e,y:i,width:s,height:n}),r&&g(a,r)):y&&(d=t.match(v)[1],a=this.image(d),a.imgwidth=L(R[d]&&R[d].width,r&&r.width),a.imgheight=L(R[d]&&R[d].height,r&&r.height),p=function(){a.attr({width:a.width,height:a.height})},f(["width","height"],function(t){a[t+"Setter"]=function(t,e){var i={},s=this["img"+e],n="width"===e?"translateX":"translateY";this[e]=t,c(s)&&(this.element&&this.element.setAttribute(e,s),this.alignByTranslate||(i[n]=((this[e]||0)-s)/2,this.attr(i)))}}),c(e)&&a.attr({x:e,y:i}),a.isImg=!0,c(a.imgwidth)&&c(a.imgheight)?p():(a.attr({width:0,height:0}),l("img",{onload:function(){var t=o[m.chartIndex];0===this.width&&(h(this,{position:"absolute",top:"-999em"}),u.body.appendChild(this)),R[d]={width:this.width,height:this.height},a.imgwidth=this.width,a.imgheight=this.height,a.element&&p(),this.parentNode&&this.parentNode.removeChild(this),m.imgCount--,!m.imgCount&&t&&t.onload&&t.onload()},src:d}),this.imgCount++)),a},symbols:{circle:function(t,e,i,s){return this.arc(t+i/2,e+s/2,i/2,s/2,{start:0,end:2*Math.PI,open:!1})},square:function(t,e,i,s){return["M",t,e,"L",t+i,e,t+i,e+s,t,e+s,"Z"]},triangle:function(t,e,i,s){return["M",t+i/2,e,"L",t+i,e+s,t,e+s,"Z"]},"triangle-down":function(t,e,i,s){return["M",t,e,"L",t+i,e,t+i/2,e+s,"Z"]},diamond:function(t,e,i,s){return["M",t+i/2,e,"L",t+i,e+s/2,t+i/2,e+s,t,e+s/2,"Z"]},arc:function(t,e,i,s,n){var r=n.start,o=n.r||i,a=n.r||s||i,h=n.end-.001;i=n.innerR,s=n.open;var l=Math.cos(r),d=Math.sin(r),p=Math.cos(h),h=Math.sin(h);return n=n.end-r<Math.PI?0:1,o=["M",t+o*l,e+a*d,"A",o,a,0,n,1,t+o*p,e+a*h],c(i)&&o.push(s?"M":"L",t+i*p,e+i*h,"A",i,i,0,n,0,t+i*l,e+i*d),o.push(s?"":"Z"),o},callout:function(t,e,i,s,n){var r=Math.min(n&&n.r||0,i,s),o=r+6,a=n&&n.anchorX;n=n&&n.anchorY;var h;return h=["M",t+r,e,"L",t+i-r,e,"C",t+i,e,t+i,e,t+i,e+r,"L",t+i,e+s-r,"C",t+i,e+s,t+i,e+s,t+i-r,e+s,"L",t+r,e+s,"C",t,e+s,t,e+s,t,e+s-r,"L",t,e+r,"C",t,e,t,e,t+r,e],a&&a>i?n>e+o&&n<e+s-o?h.splice(13,3,"L",t+i,n-6,t+i+6,n,t+i,n+6,t+i,e+s-r):h.splice(13,3,"L",t+i,s/2,a,n,t+i,s/2,t+i,e+s-r):a&&0>a?n>e+o&&n<e+s-o?h.splice(33,3,"L",t,n+6,t-6,n,t,n-6,t,e+r):h.splice(33,3,"L",t,s/2,a,n,t,s/2,t,e+r):n&&n>s&&a>t+o&&a<t+i-o?h.splice(23,3,"L",a+6,e+s,a,e+s+6,a-6,e+s,t+r,e+s):n&&0>n&&a>t+o&&a<t+i-o&&h.splice(3,3,"L",a-6,e,a,e-6,a+6,e,i-r,e),h}},clipRect:function(e,i,s,n){var r=t.uniqueKey(),o=this.createElement("clipPath").attr({id:r}).add(this.defs);return e=this.rect(e,i,s,n,0).add(o),e.id=r,e.clipPath=o,e.count=0,e},text:function(t,e,i,s){var n=!E&&this.forExport,r={};return!s||!this.allowHTML&&this.forExport?(r.x=Math.round(e||0),i&&(r.y=Math.round(i)),(t||0===t)&&(r.text=t),t=this.createElement("text").attr(r),n&&t.css({position:"absolute"}),s||(t.xSetter=function(t,e,i){var s,n,r=i.getElementsByTagName("tspan"),o=i.getAttribute(e);for(n=0;n<r.length;n++)s=r[n],s.getAttribute(e)===o&&s.setAttribute(e,t);i.setAttribute(e,t)}),t):this.html(t,e,i)},fontMetrics:function(t,e){return t=t||e&&e.style&&e.style.fontSize||this.style&&this.style.fontSize,t=/px/.test(t)?O(t):/em/.test(t)?parseFloat(t)*(e?this.fontMetrics(null,e.parentNode).f:16):12,e=24>t?t+3:Math.round(1.2*t),{h:e,b:Math.round(.8*e),f:t}},rotCorr:function(t,e,i){var s=t;return e&&i&&(s=Math.max(s*Math.cos(e*d),4)),{x:-t/3*Math.sin(e*d),y:s}},label:function(i,s,n,r,o,a,h,l,d){var p,u,m,v,y,x,b,k,w,M,S,T,P,C=this,L=C.g("button"!==d&&"label"),O=L.text=C.text("",0,0,h).attr({zIndex:1}),D=0,E=3,z=0,R={},N=/^url\((.*?)\)$/.test(r),B=N;d&&L.addClass("highcharts-"+d),B=N,M=function(){return(k||0)%2/2},S=function(){var t=O.element.style,e={};u=(void 0===m||void 0===v||b)&&c(O.textStr)&&O.getBBox(),L.width=(m||u.width||0)+2*E+z,L.height=(v||u.height||0)+2*E,w=E+C.fontMetrics(t&&t.fontSize,O).b,B&&(p||(L.box=p=C.symbols[r]||N?C.symbol(r):C.rect(),p.addClass(("button"===d?"":"highcharts-label-box")+(d?" highcharts-"+d+"-box":"")),p.add(L),t=M(),e.x=t,e.y=(l?-w:0)+t),e.width=Math.round(L.width),e.height=Math.round(L.height),p.attr(g(e,R)),R={})},T=function(){var t,e=z+E;t=l?0:w,c(m)&&u&&("center"===b||"right"===b)&&(e+={center:.5,right:1}[b]*(m-u.width)),e===O.x&&t===O.y||(O.attr("x",e),void 0!==t&&O.attr("y",t)),O.x=e,O.y=t},P=function(t,e){p?p.attr(t,e):R[t]=e},L.onAdd=function(){O.add(L),L.attr({text:i||0===i?i:"",x:s,y:n}),p&&c(o)&&L.attr({anchorX:o,anchorY:a})},L.widthSetter=function(e){m=t.isNumber(e)?e:null},L.heightSetter=function(t){v=t},L["text-alignSetter"]=function(t){b=t},L.paddingSetter=function(t){c(t)&&t!==E&&(E=L.padding=t,T())},L.paddingLeftSetter=function(t){c(t)&&t!==z&&(z=t,T())},L.alignSetter=function(t){t={left:0,center:.5,right:1}[t],t!==D&&(D=t,u&&L.attr({x:y}))},L.textSetter=function(t){void 0!==t&&O.textSetter(t),S(),T()},L["stroke-widthSetter"]=function(t,e){t&&(B=!0),k=this["stroke-width"]=t,P(e,t)},L.strokeSetter=L.fillSetter=L.rSetter=function(t,e){"fill"===e&&t&&(B=!0),P(e,t)},L.anchorXSetter=function(t,e){o=L.anchorX=t,P(e,Math.round(t)-M()-y)},L.anchorYSetter=function(t,e){a=L.anchorY=t,P(e,t-x)},L.xSetter=function(t){L.x=t,D&&(t-=D*((m||u.width)+2*E)),y=Math.round(t),L.attr("translateX",y)},L.ySetter=function(t){x=L.y=Math.round(t),L.attr("translateY",x)};var G=L.css;return g(L,{css:function(t){if(t){var e={};t=A(t),f(L.textProps,function(i){void 0!==t[i]&&(e[i]=t[i],delete t[i])}),O.css(e)}return G.call(L,t)},getBBox:function(){return{width:u.width+2*E,height:u.height+2*E,x:u.x-E,y:u.y-E}},shadow:function(t){return t&&(S(),p&&p.shadow(t)),L},destroy:function(){I(L.element,"mouseenter"),I(L.element,"mouseleave"),O&&(O=O.destroy()),p&&(p=p.destroy()),e.prototype.destroy.call(L),L=C=S=T=P=null}})}},t.Renderer=i}(t),function(t){var e=t.attr,i=t.createElement,s=t.css,n=t.defined,r=t.each,o=t.extend,a=t.isFirefox,h=t.isMS,l=t.isWebKit,c=t.pInt,d=t.SVGRenderer,p=t.win,u=t.wrap;o(t.SVGElement.prototype,{htmlCss:function(t){var e=this.element;return(e=t&&"SPAN"===e.tagName&&t.width)&&(delete t.width,this.textWidth=e,this.updateTransform()),t&&"ellipsis"===t.textOverflow&&(t.whiteSpace="nowrap",t.overflow="hidden"),this.styles=o(this.styles,t),s(this.element,t),this},htmlGetBBox:function(){var t=this.element;return"text"===t.nodeName&&(t.style.position="absolute"),{x:t.offsetLeft,y:t.offsetTop,width:t.offsetWidth,height:t.offsetHeight}},htmlUpdateTransform:function(){if(this.added){var t=this.renderer,e=this.element,i=this.translateX||0,o=this.translateY||0,a=this.x||0,h=this.y||0,d=this.textAlign||"left",p={left:0,center:.5,right:1}[d],u=this.styles;if(s(e,{marginLeft:i,marginTop:o}),this.shadows&&r(this.shadows,function(t){s(t,{marginLeft:i+1,marginTop:o+1})}),this.inverted&&r(e.childNodes,function(i){t.invertChild(i,e)}),"SPAN"===e.tagName){var f=this.rotation,g=c(this.textWidth),m=u&&u.whiteSpace,v=[f,d,e.innerHTML,this.textWidth,this.textAlign].join();v!==this.cTT&&(u=t.fontMetrics(e.style.fontSize).b,n(f)&&this.setSpanRotation(f,p,u),s(e,{width:"",whiteSpace:m||"nowrap"}),e.offsetWidth>g&&/[ \-]/.test(e.textContent||e.innerText)&&s(e,{width:g+"px",display:"block",whiteSpace:m||"normal"}),this.getSpanCorrection(e.offsetWidth,u,p,f,d)),s(e,{left:a+(this.xCorr||0)+"px",top:h+(this.yCorr||0)+"px"}),l&&(u=e.offsetHeight),this.cTT=v}}else this.alignOnAdd=!0},setSpanRotation:function(t,e,i){var n={},r=h?"-ms-transform":l?"-webkit-transform":a?"MozTransform":p.opera?"-o-transform":"";n[r]=n.transform="rotate("+t+"deg)",n[r+(a?"Origin":"-origin")]=n.transformOrigin=100*e+"% "+i+"px",s(this.element,n)},getSpanCorrection:function(t,e,i){this.xCorr=-t*i,this.yCorr=-e}}),o(d.prototype,{html:function(t,s,n){var a=this.createElement("span"),h=a.element,l=a.renderer,c=l.isSVG,d=function(t,e){r(["opacity","visibility"],function(i){u(t,i+"Setter",function(t,i,s,n){t.call(this,i,s,n),e[s]=i})})};return a.textSetter=function(t){t!==h.innerHTML&&delete this.bBox,h.innerHTML=this.textStr=t,a.htmlUpdateTransform()},c&&d(a,a.element.style),a.xSetter=a.ySetter=a.alignSetter=a.rotationSetter=function(t,e){"align"===e&&(e="textAlign"),a[e]=t,a.htmlUpdateTransform()},a.attr({text:t,x:Math.round(s),y:Math.round(n)}).css({fontFamily:this.style.fontFamily,fontSize:this.style.fontSize,position:"absolute"}),h.style.whiteSpace="nowrap",a.css=a.htmlCss,c&&(a.add=function(t){var s,n=l.box.parentNode,c=[];if(this.parentGroup=t){if(s=t.div,!s){for(;t;)c.push(t),t=t.parentGroup;r(c.reverse(),function(t){var r,h=e(t.element,"class");h&&(h={className:h}),s=t.div=t.div||i("div",h,{position:"absolute",left:(t.translateX||0)+"px",top:(t.translateY||0)+"px",display:t.display,opacity:t.opacity,pointerEvents:t.styles&&t.styles.pointerEvents},s||n),r=s.style,o(t,{on:function(){return a.on.apply({element:c[0].div},arguments),t},translateXSetter:function(e,i){r.left=e+"px",t[i]=e,t.doTransform=!0},translateYSetter:function(e,i){r.top=e+"px",t[i]=e,t.doTransform=!0}}),d(t,r)})}}else s=n;return s.appendChild(h),a.added=!0,a.alignOnAdd&&a.htmlUpdateTransform(),a}),a}})}(t),function(t){var e,i,s=t.createElement,n=t.css,r=t.defined,o=t.deg2rad,a=t.discardElement,h=t.doc,l=t.each,c=t.erase,d=t.extend;e=t.extendClass;var p=t.isArray,u=t.isNumber,f=t.isObject,g=t.merge;i=t.noop;var m=t.pick,v=t.pInt,y=t.SVGElement,x=t.SVGRenderer,b=t.win;t.svg||(i={docMode8:h&&8===h.documentMode,init:function(t,e){var i=["<",e,' filled="f" stroked="f"'],n=["position: ","absolute",";"],r="div"===e;("shape"===e||r)&&n.push("left:0;top:0;width:1px;height:1px;"),n.push("visibility: ",r?"hidden":"visible"),i.push(' style="',n.join(""),'"/>'),e&&(i=r||"span"===e||"img"===e?i.join(""):t.prepVML(i),this.element=s(i)),this.renderer=t},add:function(t){var e=this.renderer,i=this.element,s=e.box,n=t&&t.inverted,s=t?t.element||t:s;return t&&(this.parentGroup=t),n&&e.invertChild(i,s),s.appendChild(i),this.added=!0,this.alignOnAdd&&!this.deferUpdateTransform&&this.updateTransform(),this.onAdd&&this.onAdd(),this.className&&this.attr("class",this.className),this},updateTransform:y.prototype.htmlUpdateTransform,setSpanRotation:function(){var t=this.rotation,e=Math.cos(t*o),i=Math.sin(t*o);n(this.element,{filter:t?["progid:DXImageTransform.Microsoft.Matrix(M11=",e,", M12=",-i,", M21=",i,", M22=",e,", sizingMethod='auto expand')"].join(""):"none"})},getSpanCorrection:function(t,e,i,s,r){var a,h=s?Math.cos(s*o):1,l=s?Math.sin(s*o):0,c=m(this.elemHeight,this.element.offsetHeight);this.xCorr=0>h&&-t,this.yCorr=0>l&&-c,a=0>h*l,this.xCorr+=l*e*(a?1-i:i),this.yCorr-=h*e*(s?a?i:1-i:1),r&&"left"!==r&&(this.xCorr-=t*i*(0>h?-1:1),s&&(this.yCorr-=c*i*(0>l?-1:1)),n(this.element,{textAlign:r}))},pathToVML:function(t){for(var e=t.length,i=[];e--;)u(t[e])?i[e]=Math.round(10*t[e])-5:"Z"===t[e]?i[e]="x":(i[e]=t[e],!t.isArc||"wa"!==t[e]&&"at"!==t[e]||(i[e+5]===i[e+7]&&(i[e+7]+=t[e+7]>t[e+5]?1:-1),i[e+6]===i[e+8]&&(i[e+8]+=t[e+8]>t[e+6]?1:-1)));return i.join(" ")||"x"},clip:function(t){var e,i=this;return t?(e=t.members,c(e,i),e.push(i),i.destroyClip=function(){c(e,i)},t=t.getCSS(i)):(i.destroyClip&&i.destroyClip(),t={clip:i.docMode8?"inherit":"rect(auto)"}),i.css(t)},css:y.prototype.htmlCss,safeRemoveChild:function(t){t.parentNode&&a(t)},destroy:function(){return this.destroyClip&&this.destroyClip(),y.prototype.destroy.apply(this)},on:function(t,e){return this.element["on"+t]=function(){var t=b.event;t.target=t.srcElement,e(t)},this},cutOffPath:function(t,e){var i;return t=t.split(/[ ,]/),i=t.length,9!==i&&11!==i||(t[i-4]=t[i-2]=v(t[i-2])-10*e),t.join(" ")},shadow:function(t,e,i){var n,r,o,a,h,l,c,d=[],p=this.element,u=this.renderer,f=p.style,g=p.path;if(g&&"string"!=typeof g.value&&(g="x"),h=g,t){for(l=m(t.width,3),c=(t.opacity||.15)/l,n=1;3>=n;n++)a=2*l+1-2*n,i&&(h=this.cutOffPath(g.value,a+.5)),o=['<shape isShadow="true" strokeweight="',a,'" filled="false" path="',h,'" coordsize="10 10" style="',p.style.cssText,'" />'],r=s(u.prepVML(o),null,{left:v(f.left)+m(t.offsetX,1),top:v(f.top)+m(t.offsetY,1)}),i&&(r.cutOff=a+1),o=['<stroke color="',t.color||"#000000",'" opacity="',c*n,'"/>'],s(u.prepVML(o),null,null,r),e?e.element.appendChild(r):p.parentNode.insertBefore(r,p),d.push(r);this.shadows=d}return this},updateShadows:i,setAttr:function(t,e){this.docMode8?this.element[t]=e:this.element.setAttribute(t,e)},classSetter:function(t){(this.added?this.element:this).className=t},dashstyleSetter:function(t,e,i){(i.getElementsByTagName("stroke")[0]||s(this.renderer.prepVML(["<stroke/>"]),null,null,i))[e]=t||"solid",this[e]=t},dSetter:function(t,e,i){var s=this.shadows;if(t=t||[],this.d=t.join&&t.join(" "),i.path=t=this.pathToVML(t),s)for(i=s.length;i--;)s[i].path=s[i].cutOff?this.cutOffPath(t,s[i].cutOff):t;this.setAttr(e,t)},fillSetter:function(t,e,i){var s=i.nodeName;"SPAN"===s?i.style.color=t:"IMG"!==s&&(i.filled="none"!==t,this.setAttr("fillcolor",this.renderer.color(t,i,e,this)))},"fill-opacitySetter":function(t,e,i){s(this.renderer.prepVML(["<",e.split("-")[0],' opacity="',t,'"/>']),null,null,i)},opacitySetter:i,rotationSetter:function(t,e,i){i=i.style,this[e]=i[e]=t,i.left=-Math.round(Math.sin(t*o)+1)+"px",i.top=Math.round(Math.cos(t*o))+"px"},strokeSetter:function(t,e,i){this.setAttr("strokecolor",this.renderer.color(t,i,e,this))},"stroke-widthSetter":function(t,e,i){i.stroked=!!t,this[e]=t,u(t)&&(t+="px"),this.setAttr("strokeweight",t)},titleSetter:function(t,e){this.setAttr(e,t)},visibilitySetter:function(t,e,i){"inherit"===t&&(t="visible"),this.shadows&&l(this.shadows,function(i){i.style[e]=t}),"DIV"===i.nodeName&&(t="hidden"===t?"-999em":0,this.docMode8||(i.style[e]=t?"visible":"hidden"),e="top"),i.style[e]=t},xSetter:function(t,e,i){this[e]=t,"x"===e?e="left":"y"===e&&(e="top"),this.updateClipping?(this[e]=t,this.updateClipping()):i.style[e]=t},zIndexSetter:function(t,e,i){i.style[e]=t}},i["stroke-opacitySetter"]=i["fill-opacitySetter"],t.VMLElement=i=e(y,i),i.prototype.ySetter=i.prototype.widthSetter=i.prototype.heightSetter=i.prototype.xSetter,i={Element:i,isIE8:-1<b.navigator.userAgent.indexOf("MSIE 8.0"),init:function(t,e,i){var s,n;if(this.alignedObjects=[],s=this.createElement("div").css({position:"relative"}),n=s.element,t.appendChild(s.element),this.isVML=!0,this.box=n,this.boxWrapper=s,this.gradients={},this.cache={},this.cacheKeys=[],this.imgCount=0,this.setSize(e,i,!1),!h.namespaces.hcv){h.namespaces.add("hcv","urn:schemas-microsoft-com:vml");try{h.createStyleSheet().cssText="hcv\\:fill, hcv\\:path, hcv\\:shape, hcv\\:stroke{ behavior:url(#default#VML); display: inline-block; } "}catch(t){h.styleSheets[0].cssText+="hcv\\:fill, hcv\\:path, hcv\\:shape, hcv\\:stroke{ behavior:url(#default#VML); display: inline-block; } "}}},isHidden:function(){return!this.box.offsetWidth},clipRect:function(t,e,i,s){var n=this.createElement(),r=f(t);return d(n,{members:[],count:0,left:(r?t.x:t)+1,top:(r?t.y:e)+1,width:(r?t.width:i)-1,height:(r?t.height:s)-1,getCSS:function(t){var e=t.element,i=e.nodeName,s=t.inverted,n=this.top-("shape"===i?e.offsetTop:0),r=this.left,e=r+this.width,o=n+this.height,n={clip:"rect("+Math.round(s?r:n)+"px,"+Math.round(s?o:e)+"px,"+Math.round(s?e:o)+"px,"+Math.round(s?n:r)+"px)"};return!s&&t.docMode8&&"DIV"===i&&d(n,{width:e+"px",height:o+"px"}),n},updateClipping:function(){l(n.members,function(t){t.element&&t.css(n.getCSS(t))})}})},color:function(e,i,n,r){var o,a,h,c=this,d=/^rgba/,p="none";if(e&&e.linearGradient?h="gradient":e&&e.radialGradient&&(h="pattern"),h){var u,f,g,m,v,y,x,b=e.linearGradient||e.radialGradient,k="";e=e.stops;var w,M=[],S=function(){a=['<fill colors="'+M.join(",")+'" opacity="',v,'" o:opacity2="',m,'" type="',h,'" ',k,'focus="100%" method="any" />'],s(c.prepVML(a),null,null,i)};if(g=e[0],w=e[e.length-1],0<g[0]&&e.unshift([0,g[1]]),1>w[0]&&e.push([1,w[1]]),l(e,function(e,i){d.test(e[1])?(o=t.color(e[1]),u=o.get("rgb"),f=o.get("a")):(u=e[1],f=1),M.push(100*e[0]+"% "+u),i?(v=f,y=u):(m=f,x=u)}),"fill"===n)if("gradient"===h)n=b.x1||b[0]||0,e=b.y1||b[1]||0,g=b.x2||b[2]||0,b=b.y2||b[3]||0,k='angle="'+(90-180*Math.atan((b-e)/(g-n))/Math.PI)+'"',S();else{var T,p=b.r,A=2*p,P=2*p,C=b.cx,L=b.cy,O=i.radialReference,p=function(){O&&(T=r.getBBox(),C+=(O[0]-T.x)/T.width-.5,L+=(O[1]-T.y)/T.height-.5,A*=O[2]/T.width,P*=O[2]/T.height),k='src="'+t.getOptions().global.VMLRadialGradientURL+'" size="'+A+","+P+'" origin="0.5,0.5" position="'+C+","+L+'" color2="'+x+'" ',S()};r.added?p():r.onAdd=p,p=y}else p=u}else d.test(e)&&"IMG"!==i.tagName?(o=t.color(e),r[n+"-opacitySetter"](o.get("a"),n,i),p=o.get("rgb")):(p=i.getElementsByTagName(n),p.length&&(p[0].opacity=1,p[0].type="solid"),p=e);return p},prepVML:function(t){var e=this.isIE8;return t=t.join(""),e?(t=t.replace("/>",' xmlns="urn:schemas-microsoft-com:vml" />'),t=-1===t.indexOf('style="')?t.replace("/>",' style="display:inline-block;behavior:url(#default#VML);" />'):t.replace('style="','style="display:inline-block;behavior:url(#default#VML);')):t=t.replace("<","<hcv:"),t},text:x.prototype.html,path:function(t){var e={coordsize:"10 10"};return p(t)?e.d=t:f(t)&&d(e,t),this.createElement("shape").attr(e)},circle:function(t,e,i){var s=this.symbol("circle");return f(t)&&(i=t.r,e=t.y,t=t.x),s.isCircle=!0,s.r=i,s.attr({x:t,y:e})},g:function(t){var e;return t&&(e={className:"highcharts-"+t,class:"highcharts-"+t}),this.createElement("div").attr(e)},image:function(t,e,i,s,n){var r=this.createElement("img").attr({src:t});return 1<arguments.length&&r.attr({x:e,y:i,width:s,height:n}),r},createElement:function(t){return"rect"===t?this.symbol(t):x.prototype.createElement.call(this,t)},invertChild:function(t,e){var i=this;e=e.style;var s="IMG"===t.tagName&&t.style;n(t,{flip:"x",left:v(e.width)-(s?v(s.top):1),top:v(e.height)-(s?v(s.left):1),rotation:-90}),l(t.childNodes,function(e){i.invertChild(e,t)})},symbols:{arc:function(t,e,i,s,n){var r=n.start,o=n.end,a=n.r||i||s;i=n.innerR,s=Math.cos(r);var h=Math.sin(r),l=Math.cos(o),c=Math.sin(o);return 0===o-r?["x"]:(r=["wa",t-a,e-a,t+a,e+a,t+a*s,e+a*h,t+a*l,e+a*c],n.open&&!i&&r.push("e","M",t,e),r.push("at",t-i,e-i,t+i,e+i,t+i*l,e+i*c,t+i*s,e+i*h,"x","e"),r.isArc=!0,r)},circle:function(t,e,i,s,n){return n&&r(n.r)&&(i=s=2*n.r),n&&n.isCircle&&(t-=i/2,e-=s/2),["wa",t,e,t+i,e+s,t+i,e+s/2,t+i,e+s/2,"e"]},rect:function(t,e,i,s,n){return x.prototype.symbols[r(n)&&n.r?"callout":"square"].call(0,t,e,i,s,n)}}},t.VMLRenderer=e=function(){this.init.apply(this,arguments)},e.prototype=g(x.prototype,i),t.Renderer=e),x.prototype.measureSpanWidth=function(t,e){var i=h.createElement("span");return t=h.createTextNode(t),i.appendChild(t),n(i,e),this.box.appendChild(i),e=i.offsetWidth,a(i),e}}(t),function(t){function e(){var e=t.defaultOptions.global,i=h.moment;if(e.timezone){if(i)return function(t){return-i.tz(t,e.timezone).utcOffset()};t.error(25)}return e.useUTC&&e.getTimezoneOffset}function i(){var i,s=t.defaultOptions.global,o=s.useUTC,l=o?"getUTC":"get",c=o?"setUTC":"set";t.Date=i=s.Date||h.Date,i.hcTimezoneOffset=o&&s.timezoneOffset,i.hcGetTimezoneOffset=e(),i.hcMakeTime=function(t,e,s,n,h,l){var c;return o?(c=i.UTC.apply(0,arguments),c+=r(c)):c=new i(t,e,a(s,1),a(n,0),a(h,0),a(l,0)).getTime(),c},n("Minutes Hours Day Date Month FullYear".split(" "),function(t){i["hcGet"+t]=l+t}),n("Milliseconds Seconds Minutes Hours Date Month FullYear".split(" "),function(t){i["hcSet"+t]=c+t})}var s=t.color,n=t.each,r=t.getTZOffset,o=t.merge,a=t.pick,h=t.win;t.defaultOptions={colors:"#7cb5ec #434348 #90ed7d #f7a35c #8085e9 #f15c80 #e4d354 #2b908f #f45b5b #91e8e1".split(" "),symbols:["circle","diamond","square","triangle","triangle-down"],lang:{loading:"Loading...",months:"January February March April May June July August September October November December".split(" "),shortMonths:"Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" "),weekdays:"Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" "),decimalPoint:".",numericSymbols:"kMGTPE".split(""),resetZoom:"Reset zoom",resetZoomTitle:"Reset zoom level 1:1",thousandsSep:" "},global:{useUTC:!0,VMLRadialGradientURL:"http://code.highcharts.com/5.0.11/gfx/vml-radial-gradient.png"},chart:{borderRadius:0,defaultSeriesType:"line",ignoreHiddenSeries:!0,spacing:[10,10,15,10],resetZoomButton:{theme:{zIndex:20},position:{align:"right",x:-10,y:10}},width:null,height:null,borderColor:"#335cad",backgroundColor:"#ffffff",plotBorderColor:"#cccccc"},title:{text:"Chart title",align:"center",margin:15,widthAdjust:-44},subtitle:{text:"",align:"center",widthAdjust:-44},plotOptions:{},labels:{style:{position:"absolute",color:"#333333"}},legend:{enabled:!0,align:"center",layout:"horizontal",labelFormatter:function(){return this.name},borderColor:"#999999",borderRadius:0,navigation:{activeColor:"#003399",inactiveColor:"#cccccc"},itemStyle:{color:"#333333",fontSize:"12px",fontWeight:"bold"},itemHoverStyle:{color:"#000000"},itemHiddenStyle:{color:"#cccccc"},shadow:!1,itemCheckboxStyle:{position:"absolute",width:"13px",height:"13px"},squareSymbol:!0,symbolPadding:5,verticalAlign:"bottom",x:0,y:0,title:{style:{fontWeight:"bold"}}},loading:{labelStyle:{fontWeight:"bold",position:"relative",top:"45%"},style:{position:"absolute",backgroundColor:"#ffffff",opacity:.5,textAlign:"center"}},tooltip:{enabled:!0,animation:t.svg,borderRadius:3,dateTimeLabelFormats:{millisecond:"%A, %b %e, %H:%M:%S.%L",second:"%A, %b %e, %H:%M:%S",minute:"%A, %b %e, %H:%M",hour:"%A, %b %e, %H:%M",day:"%A, %b %e, %Y",week:"Week from %A, %b %e, %Y",month:"%B %Y",year:"%Y"},footerFormat:"",padding:8,snap:t.isTouchDevice?25:10,backgroundColor:s("#f7f7f7").setOpacity(.85).get(),borderWidth:1,headerFormat:'<span style="font-size: 10px">{point.key}</span><br/>',pointFormat:'<span style="color:{point.color}">●</span> {series.name}: <b>{point.y}</b><br/>',shadow:!0,style:{color:"#333333",cursor:"default",fontSize:"12px",pointerEvents:"none",whiteSpace:"nowrap"}},credits:{enabled:!0,href:"http://www.highcharts.com",position:{align:"right",x:-10,verticalAlign:"bottom",y:-5},style:{cursor:"pointer",color:"#999999",fontSize:"9px"},text:"Highcharts.com"}},t.setOptions=function(e){return t.defaultOptions=o(!0,t.defaultOptions,e),i(),t.defaultOptions},t.getOptions=function(){return t.defaultOptions},t.defaultPlotOptions=t.defaultOptions.plotOptions,i()}(t),function(t){var e=t.correctFloat,i=t.defined,s=t.destroyObjectProperties,n=t.isNumber,r=t.merge,o=t.pick,a=t.deg2rad;t.Tick=function(t,e,i,s){this.axis=t,this.pos=e,this.type=i||"",this.isNew=!0,i||s||this.addLabel()},t.Tick.prototype={addLabel:function(){var t,s=this.axis,n=s.options,a=s.chart,h=s.categories,l=s.names,c=this.pos,d=n.labels,p=s.tickPositions,u=c===p[0],f=c===p[p.length-1],l=h?o(h[c],l[c],c):c,h=this.label,p=p.info;s.isDatetimeAxis&&p&&(t=n.dateTimeLabelFormats[p.higherRanks[c]||p.unitName]),this.isFirst=u,this.isLast=f,n=s.labelFormatter.call({axis:s,chart:a,isFirst:u,isLast:f,dateTimeLabelFormat:t,value:s.isLog?e(s.lin2log(l)):l}),i(h)?h&&h.attr({text:n}):(this.labelLength=(this.label=h=i(n)&&d.enabled?a.renderer.text(n,0,0,d.useHTML).css(r(d.style)).add(s.labelGroup):null)&&h.getBBox().width,this.rotation=0)},getLabelSize:function(){return this.label?this.label.getBBox()[this.axis.horiz?"height":"width"]:0},handleOverflow:function(t){var e,i=this.axis,s=t.x,n=i.chart.chartWidth,r=i.chart.spacing,h=o(i.labelLeft,Math.min(i.pos,r[3])),r=o(i.labelRight,Math.max(i.pos+i.len,n-r[1])),l=this.label,c=this.rotation,d={left:0,center:.5,right:1}[i.labelAlign],p=l.getBBox().width,u=i.getSlotWidth(),f=u,g=1,m={};c?0>c&&s-d*p<h?e=Math.round(s/Math.cos(c*a)-h):0<c&&s+d*p>r&&(e=Math.round((n-s)/Math.cos(c*a))):(n=s+(1-d)*p,s-d*p<h?f=t.x+f*(1-d)-h:n>r&&(f=r-t.x+f*d,g=-1),f=Math.min(u,f),f<u&&"center"===i.labelAlign&&(t.x+=g*(u-f-d*(u-Math.min(p,f)))),(p>f||i.autoRotation&&(l.styles||{}).width)&&(e=f)),e&&(m.width=e,(i.options.labels.style||{}).textOverflow||(m.textOverflow="ellipsis"),l.css(m))},getPosition:function(t,e,i,s){var n=this.axis,r=n.chart,o=s&&r.oldChartHeight||r.chartHeight;return{x:t?n.translate(e+i,null,null,s)+n.transB:n.left+n.offset+(n.opposite?(s&&r.oldChartWidth||r.chartWidth)-n.right-n.left:0),y:t?o-n.bottom+n.offset-(n.opposite?n.height:0):o-n.translate(e+i,null,null,s)-n.transB}},getLabelPosition:function(t,e,s,n,r,o,h,l){var c=this.axis,d=c.transA,p=c.reversed,u=c.staggerLines,f=c.tickRotCorr||{x:0,y:0},g=r.y;return i(g)||(g=0===c.side?s.rotation?-8:-s.getBBox().height:2===c.side?f.y+8:Math.cos(s.rotation*a)*(f.y-s.getBBox(!1,0).height/2)),t=t+r.x+f.x-(o&&n?o*d*(p?-1:1):0),e=e+g-(o&&!n?o*d*(p?1:-1):0),u&&(s=h/(l||1)%u,c.opposite&&(s=u-s-1),e+=c.labelOffset/u*s),{x:t,y:Math.round(e)}},getMarkPath:function(t,e,i,s,n,r){return r.crispLine(["M",t,e,"L",t+(n?0:-i),e+(n?i:0)],s)},renderGridLine:function(t,e,i){var s=this.axis,n=s.options,r=this.gridLine,o={},a=this.pos,h=this.type,l=s.tickmarkOffset,c=s.chart.renderer,d=h?h+"Grid":"grid",p=n[d+"LineWidth"],u=n[d+"LineColor"],n=n[d+"LineDashStyle"];r||(o.stroke=u,o["stroke-width"]=p,n&&(o.dashstyle=n),h||(o.zIndex=1),t&&(o.opacity=0),this.gridLine=r=c.path().attr(o).addClass("highcharts-"+(h?h+"-":"")+"grid-line").add(s.gridGroup)),!t&&r&&(t=s.getPlotLinePath(a+l,r.strokeWidth()*i,t,!0))&&r[this.isNew?"attr":"animate"]({d:t,opacity:e})},renderMark:function(t,e,i){var s=this.axis,n=s.options,r=s.chart.renderer,a=this.type,h=a?a+"Tick":"tick",l=s.tickSize(h),c=this.mark,d=!c,p=t.x;t=t.y;var u=o(n[h+"Width"],!a&&s.isXAxis?1:0),n=n[h+"Color"];l&&(s.opposite&&(l[0]=-l[0]),d&&(this.mark=c=r.path().addClass("highcharts-"+(a?a+"-":"")+"tick").add(s.axisGroup),c.attr({stroke:n,"stroke-width":u})),c[d?"attr":"animate"]({d:this.getMarkPath(p,t,l[0],c.strokeWidth()*i,s.horiz,r),opacity:e}))},renderLabel:function(t,e,i,s){var r=this.axis,a=r.horiz,h=r.options,l=this.label,c=h.labels,d=c.step,p=r.tickmarkOffset,u=!0,f=t.x;t=t.y,l&&n(f)&&(l.xy=t=this.getLabelPosition(f,t,l,a,c,p,s,d),this.isFirst&&!this.isLast&&!o(h.showFirstLabel,1)||this.isLast&&!this.isFirst&&!o(h.showLastLabel,1)?u=!1:!a||r.isRadial||c.step||c.rotation||e||0===i||this.handleOverflow(t),d&&s%d&&(u=!1),u&&n(t.y)?(t.opacity=i,l[this.isNew?"attr":"animate"](t)):l.attr("y",-9999),this.isNew=!1)},render:function(t,e,i){var s=this.axis,n=s.horiz,r=this.getPosition(n,this.pos,s.tickmarkOffset,e),a=r.x,h=r.y,s=n&&a===s.pos+s.len||!n&&h===s.pos?-1:1;i=o(i,1),this.isActive=!0,this.renderGridLine(e,i,s),this.renderMark(r,i,s),this.renderLabel(r,e,i,t)},destroy:function(){s(this,this.axis)}}}(t);var e=function(t){var e=t.addEvent,i=t.animObject,s=t.arrayMax,n=t.arrayMin,r=t.color,o=t.correctFloat,a=t.defaultOptions,h=t.defined,l=t.deg2rad,c=t.destroyObjectProperties,d=t.each,p=t.extend,u=t.fireEvent,f=t.format,g=t.getMagnitude,m=t.grep,v=t.inArray,y=t.isArray,x=t.isNumber,b=t.isString,k=t.merge,w=t.normalizeTickInterval,M=t.objectEach,S=t.pick,T=t.removeEvent,A=t.splat,P=t.syncTimeout,C=t.Tick,L=function(){this.init.apply(this,arguments)};return t.extend(L.prototype,{defaultOptions:{dateTimeLabelFormats:{millisecond:"%H:%M:%S.%L",second:"%H:%M:%S",minute:"%H:%M",hour:"%H:%M",day:"%e. %b",week:"%e. %b",month:"%b '%y",year:"%Y"},endOnTick:!1,labels:{enabled:!0,style:{color:"#666666",cursor:"default",fontSize:"11px"},x:0},minPadding:.01,maxPadding:.01,minorTickLength:2,minorTickPosition:"outside",startOfWeek:1,startOnTick:!1,tickLength:10,tickmarkPlacement:"between",tickPixelInterval:100,tickPosition:"outside",title:{align:"middle",style:{color:"#666666"}},type:"linear",minorGridLineColor:"#f2f2f2",minorGridLineWidth:1,minorTickColor:"#999999",lineColor:"#ccd6eb",lineWidth:1,gridLineColor:"#e6e6e6",tickColor:"#ccd6eb"},defaultYAxisOptions:{endOnTick:!0,tickPixelInterval:72,showLastLabel:!0,labels:{x:-8},maxPadding:.05,minPadding:.05,startOnTick:!0,title:{rotation:270,text:"Values"},stackLabels:{enabled:!1,formatter:function(){return t.numberFormat(this.total,-1)},style:{fontSize:"11px",fontWeight:"bold",color:"#000000",textOutline:"1px contrast"}},gridLineWidth:1,lineWidth:0},defaultLeftAxisOptions:{labels:{x:-15},title:{rotation:270}},defaultRightAxisOptions:{labels:{x:15},title:{rotation:90}},defaultBottomAxisOptions:{labels:{autoRotation:[-45],x:0},title:{rotation:0}},defaultTopAxisOptions:{labels:{autoRotation:[-45],x:0},title:{rotation:0}},init:function(t,i){var s=i.isX,n=this;n.chart=t,n.horiz=t.inverted?!s:s,n.isXAxis=s,n.coll=n.coll||(s?"xAxis":"yAxis"),n.opposite=i.opposite,n.side=i.side||(n.horiz?n.opposite?0:2:n.opposite?1:3),n.setOptions(i);var r=this.options,o=r.type;n.labelFormatter=r.labels.formatter||n.defaultLabelFormatter,n.userOptions=i,n.minPixelPadding=0,n.reversed=r.reversed,n.visible=!1!==r.visible,n.zoomEnabled=!1!==r.zoomEnabled,n.hasNames="category"===o||!0===r.categories,n.categories=r.categories||n.hasNames,n.names=n.names||[],n.plotLinesAndBandsGroups={},n.isLog="logarithmic"===o,n.isDatetimeAxis="datetime"===o,n.positiveValuesOnly=n.isLog&&!n.allowNegativeLog,n.isLinked=h(r.linkedTo),n.ticks={},n.labelEdge=[],n.minorTicks={},n.plotLinesAndBands=[],n.alternateBands={},n.len=0,n.minRange=n.userMinRange=r.minRange||r.maxZoom,n.range=r.range,n.offset=r.offset||0,n.stacks={},n.oldStacks={},n.stacksTouched=0,n.max=null,n.min=null,n.crosshair=S(r.crosshair,A(t.options.tooltip.crosshairs)[s?0:1],!1),i=n.options.events,-1===v(n,t.axes)&&(s?t.axes.splice(t.xAxis.length,0,n):t.axes.push(n),t[n.coll].push(n)),n.series=n.series||[],t.inverted&&s&&void 0===n.reversed&&(n.reversed=!0),M(i,function(t,i){e(n,i,t)}),n.lin2log=r.linearToLogConverter||n.lin2log,n.isLog&&(n.val2lin=n.log2lin,n.lin2val=n.lin2log)},setOptions:function(t){this.options=k(this.defaultOptions,"yAxis"===this.coll&&this.defaultYAxisOptions,[this.defaultTopAxisOptions,this.defaultRightAxisOptions,this.defaultBottomAxisOptions,this.defaultLeftAxisOptions][this.side],k(a[this.coll],t))},defaultLabelFormatter:function(){var e,i=this.axis,s=this.value,n=i.categories,r=this.dateTimeLabelFormat,o=a.lang,h=o.numericSymbols,o=o.numericSymbolMagnitude||1e3,l=h&&h.length,c=i.options.labels.format,i=i.isLog?Math.abs(s):i.tickInterval;
+if(c)e=f(c,this);else if(n)e=s;else if(r)e=t.dateFormat(r,s);else if(l&&1e3<=i)for(;l--&&void 0===e;)n=Math.pow(o,l+1),i>=n&&0===10*s%n&&null!==h[l]&&0!==s&&(e=t.numberFormat(s/n,-1)+h[l]);return void 0===e&&(e=1e4<=Math.abs(s)?t.numberFormat(s,-1):t.numberFormat(s,-1,void 0,"")),e},getSeriesExtremes:function(){var t=this,e=t.chart;t.hasVisibleSeries=!1,t.dataMin=t.dataMax=t.threshold=null,t.softThreshold=!t.isXAxis,t.buildStacks&&t.buildStacks(),d(t.series,function(i){if(i.visible||!e.options.chart.ignoreHiddenSeries){var r,o=i.options,a=o.threshold;t.hasVisibleSeries=!0,t.positiveValuesOnly&&0>=a&&(a=null),t.isXAxis?(o=i.xData,o.length&&(i=n(o),x(i)||i instanceof Date||(o=m(o,function(t){return x(t)}),i=n(o)),t.dataMin=Math.min(S(t.dataMin,o[0]),i),t.dataMax=Math.max(S(t.dataMax,o[0]),s(o)))):(i.getExtremes(),r=i.dataMax,i=i.dataMin,h(i)&&h(r)&&(t.dataMin=Math.min(S(t.dataMin,i),i),t.dataMax=Math.max(S(t.dataMax,r),r)),h(a)&&(t.threshold=a),(!o.softThreshold||t.positiveValuesOnly)&&(t.softThreshold=!1))}})},translate:function(t,e,i,s,n,r){var o=this.linkedParent||this,a=1,h=0,l=s?o.oldTransA:o.transA;s=s?o.oldMin:o.min;var c=o.minPixelPadding;return n=(o.isOrdinal||o.isBroken||o.isLog&&n)&&o.lin2val,l||(l=o.transA),i&&(a*=-1,h=o.len),o.reversed&&(a*=-1,h-=a*(o.sector||o.len)),e?(t=(t*a+h-c)/l+s,n&&(t=o.lin2val(t))):(n&&(t=o.val2lin(t)),t=a*(t-s)*l+h+a*c+(x(r)?l*r:0)),t},toPixels:function(t,e){return this.translate(t,!1,!this.horiz,null,!0)+(e?0:this.pos)},toValue:function(t,e){return this.translate(t-(e?0:this.pos),!0,!this.horiz,null,!0)},getPlotLinePath:function(t,e,i,s,n){var r,o,a,h=this.chart,l=this.left,c=this.top,d=i&&h.oldChartHeight||h.chartHeight,p=i&&h.oldChartWidth||h.chartWidth;r=this.transB;var u=function(t,e,i){return(t<e||t>i)&&(s?t=Math.min(Math.max(e,t),i):a=!0),t};return n=S(n,this.translate(t,null,null,i)),t=i=Math.round(n+r),r=o=Math.round(d-n-r),x(n)?this.horiz?(r=c,o=d-this.bottom,t=i=u(t,l,l+this.width)):(t=l,i=p-this.right,r=o=u(r,c,c+this.height)):a=!0,a&&!s?null:h.renderer.crispLine(["M",t,r,"L",i,o],e||1)},getLinearTickPositions:function(t,e,i){var s,n=o(Math.floor(e/t)*t);i=o(Math.ceil(i/t)*t);var r=[];if(this.single)return[e];for(e=n;e<=i&&(r.push(e),e=o(e+t),e!==s);)s=e;return r},getMinorTickPositions:function(){var t=this,e=t.options,i=t.tickPositions,s=t.minorTickInterval,n=[],r=t.pointRangePadding||0,o=t.min-r,r=t.max+r,a=r-o;if(a&&a/s<t.len/3)if(t.isLog)d(this.paddedTicks,function(e,i,r){i&&n.push.apply(n,t.getLogTickPositions(s,r[i-1],r[i],!0))});else if(t.isDatetimeAxis&&"auto"===e.minorTickInterval)n=n.concat(t.getTimeTicks(t.normalizeTimeTickInterval(s),o,r,e.startOfWeek));else for(e=o+(i[0]-o)%s;e<=r&&e!==n[0];e+=s)n.push(e);return 0!==n.length&&t.trimTicks(n),n},adjustForMinRange:function(){var t,e,i,r,o,a,l,c=this.options,p=this.min,u=this.max,f=this.dataMax-this.dataMin>=this.minRange;this.isXAxis&&void 0===this.minRange&&!this.isLog&&(h(c.min)||h(c.max)?this.minRange=null:(d(this.series,function(t){for(o=t.xData,i=a=t.xIncrement?1:o.length-1;0<i;i--)r=o[i]-o[i-1],(void 0===e||r<e)&&(e=r)}),this.minRange=Math.min(5*e,this.dataMax-this.dataMin))),u-p<this.minRange&&(l=this.minRange,t=(l-u+p)/2,t=[p-t,S(c.min,p-t)],f&&(t[2]=this.isLog?this.log2lin(this.dataMin):this.dataMin),p=s(t),u=[p+l,S(c.max,p+l)],f&&(u[2]=this.isLog?this.log2lin(this.dataMax):this.dataMax),u=n(u),u-p<l&&(t[0]=u-l,t[1]=S(c.min,u-l),p=s(t))),this.min=p,this.max=u},getClosest:function(){var t;return this.categories?t=1:d(this.series,function(e){var i=e.closestPointRange,s=e.visible||!e.chart.options.chart.ignoreHiddenSeries;!e.noSharedTooltip&&h(i)&&s&&(t=h(t)?Math.min(t,i):i)}),t},nameToX:function(t){var e,i=y(this.categories),s=i?this.categories:this.names,n=t.options.x;return t.series.requireSorting=!1,h(n)||(n=!1===this.options.uniqueNames?t.series.autoIncrement():v(t.name,s)),-1===n?i||(e=s.length):e=n,void 0!==e&&(this.names[e]=t.name),e},updateNames:function(){var t=this;0<this.names.length&&(this.names.length=0,this.minRange=void 0,d(this.series||[],function(e){e.xIncrement=null,e.points&&!e.isDirtyData||(e.processData(),e.generatePoints()),d(e.points,function(i,s){var n;i.options&&(n=t.nameToX(i),void 0!==n&&n!==i.x&&(i.x=n,e.xData[s]=n))})}))},setAxisTranslation:function(t){var e,i=this,s=i.max-i.min,n=i.axisPointRange||0,r=0,o=0,a=i.linkedParent,h=!!i.categories,l=i.transA,c=i.isXAxis;(c||h||n)&&(e=i.getClosest(),a?(r=a.minPointOffset,o=a.pointRangePadding):d(i.series,function(t){var s=h?1:c?S(t.options.pointRange,e,0):i.axisPointRange||0;t=t.options.pointPlacement,n=Math.max(n,s),i.single||(r=Math.max(r,b(t)?0:s/2),o=Math.max(o,"on"===t?0:s))}),a=i.ordinalSlope&&e?i.ordinalSlope/e:1,i.minPointOffset=r*=a,i.pointRangePadding=o*=a,i.pointRange=Math.min(n,s),c&&(i.closestPointRange=e)),t&&(i.oldTransA=l),i.translationSlope=i.transA=l=i.options.staticScale||i.len/(s+o||1),i.transB=i.horiz?i.left:i.bottom,i.minPixelPadding=l*r},minFromRange:function(){return this.max-this.range},setTickInterval:function(e){var i,s,n,r,a=this,l=a.chart,c=a.options,p=a.isLog,f=a.log2lin,m=a.isDatetimeAxis,v=a.isXAxis,y=a.isLinked,b=c.maxPadding,k=c.minPadding,M=c.tickInterval,T=c.tickPixelInterval,A=a.categories,P=a.threshold,C=a.softThreshold;m||A||y||this.getTickAmount(),n=S(a.userMin,c.min),r=S(a.userMax,c.max),y?(a.linkedParent=l[a.coll][c.linkedTo],l=a.linkedParent.getExtremes(),a.min=S(l.min,l.dataMin),a.max=S(l.max,l.dataMax),c.type!==a.linkedParent.options.type&&t.error(11,1)):(!C&&h(P)&&(a.dataMin>=P?(i=P,k=0):a.dataMax<=P&&(s=P,b=0)),a.min=S(n,i,a.dataMin),a.max=S(r,s,a.dataMax)),p&&(a.positiveValuesOnly&&!e&&0>=Math.min(a.min,S(a.dataMin,a.min))&&t.error(10,1),a.min=o(f(a.min),15),a.max=o(f(a.max),15)),a.range&&h(a.max)&&(a.userMin=a.min=n=Math.max(a.min,a.minFromRange()),a.userMax=r=a.max,a.range=null),u(a,"foundExtremes"),a.beforePadding&&a.beforePadding(),a.adjustForMinRange(),!(A||a.axisPointRange||a.usePercentage||y)&&h(a.min)&&h(a.max)&&(f=a.max-a.min)&&(!h(n)&&k&&(a.min-=f*k),!h(r)&&b&&(a.max+=f*b)),x(c.softMin)&&(a.min=Math.min(a.min,c.softMin)),x(c.softMax)&&(a.max=Math.max(a.max,c.softMax)),x(c.floor)&&(a.min=Math.max(a.min,c.floor)),x(c.ceiling)&&(a.max=Math.min(a.max,c.ceiling)),C&&h(a.dataMin)&&(P=P||0,!h(n)&&a.min<P&&a.dataMin>=P?a.min=P:!h(r)&&a.max>P&&a.dataMax<=P&&(a.max=P)),a.tickInterval=a.min===a.max||void 0===a.min||void 0===a.max?1:y&&!M&&T===a.linkedParent.options.tickPixelInterval?M=a.linkedParent.tickInterval:S(M,this.tickAmount?(a.max-a.min)/Math.max(this.tickAmount-1,1):void 0,A?1:(a.max-a.min)*T/Math.max(a.len,T)),v&&!e&&d(a.series,function(t){t.processData(a.min!==a.oldMin||a.max!==a.oldMax)}),a.setAxisTranslation(!0),a.beforeSetTickPositions&&a.beforeSetTickPositions(),a.postProcessTickInterval&&(a.tickInterval=a.postProcessTickInterval(a.tickInterval)),a.pointRange&&!M&&(a.tickInterval=Math.max(a.pointRange,a.tickInterval)),e=S(c.minTickInterval,a.isDatetimeAxis&&a.closestPointRange),!M&&a.tickInterval<e&&(a.tickInterval=e),m||p||M||(a.tickInterval=w(a.tickInterval,null,g(a.tickInterval),S(c.allowDecimals,!(.5<a.tickInterval&&5>a.tickInterval&&1e3<a.max&&9999>a.max)),!!this.tickAmount)),this.tickAmount||(a.tickInterval=a.unsquish()),this.setTickPositions()},setTickPositions:function(){var t,e=this.options,i=e.tickPositions,s=e.tickPositioner,n=e.startOnTick,r=e.endOnTick;this.tickmarkOffset=this.categories&&"between"===e.tickmarkPlacement&&1===this.tickInterval?.5:0,this.minorTickInterval="auto"===e.minorTickInterval&&this.tickInterval?this.tickInterval/5:e.minorTickInterval,this.single=this.min===this.max&&h(this.min)&&!this.tickAmount&&(parseInt(this.min,10)===this.min||!1!==e.allowDecimals),this.tickPositions=t=i&&i.slice(),!t&&(t=this.isDatetimeAxis?this.getTimeTicks(this.normalizeTimeTickInterval(this.tickInterval,e.units),this.min,this.max,e.startOfWeek,this.ordinalPositions,this.closestPointRange,!0):this.isLog?this.getLogTickPositions(this.tickInterval,this.min,this.max):this.getLinearTickPositions(this.tickInterval,this.min,this.max),t.length>this.len&&(t=[t[0],t.pop()]),this.tickPositions=t,s&&(s=s.apply(this,[this.min,this.max])))&&(this.tickPositions=t=s),this.paddedTicks=t.slice(0),this.trimTicks(t,n,r),this.isLinked||(this.single&&(this.min-=.5,this.max+=.5),i||s||this.adjustTickAmount())},trimTicks:function(t,e,i){var s=t[0],n=t[t.length-1],r=this.minPointOffset||0;if(!this.isLinked){if(e&&-(1/0)!==s)this.min=s;else for(;this.min-r>t[0];)t.shift();if(i)this.max=n;else for(;this.max+r<t[t.length-1];)t.pop();0===t.length&&h(s)&&t.push((n+s)/2)}},alignToOthers:function(){var t,e={},i=this.options;return!1===this.chart.options.chart.alignTicks||!1===i.alignTicks||this.isLog||d(this.chart[this.coll],function(i){var s=i.options,s=[i.horiz?s.left:s.top,s.width,s.height,s.pane].join();i.series.length&&(e[s]?t=!0:e[s]=1)}),t},getTickAmount:function(){var t=this.options,e=t.tickAmount,i=t.tickPixelInterval;!h(t.tickInterval)&&this.len<i&&!this.isRadial&&!this.isLog&&t.startOnTick&&t.endOnTick&&(e=2),!e&&this.alignToOthers()&&(e=Math.ceil(this.len/i)+1),4>e&&(this.finalTickAmt=e,e=5),this.tickAmount=e},adjustTickAmount:function(){var t=this.tickInterval,e=this.tickPositions,i=this.tickAmount,s=this.finalTickAmt,n=e&&e.length;if(n<i){for(;e.length<i;)e.push(o(e[e.length-1]+t));this.transA*=(n-1)/(i-1),this.max=e[e.length-1]}else n>i&&(this.tickInterval*=2,this.setTickPositions());if(h(s)){for(t=i=e.length;t--;)(3===s&&1===t%2||2>=s&&0<t&&t<i-1)&&e.splice(t,1);this.finalTickAmt=void 0}},setScale:function(){var t,e;this.oldMin=this.min,this.oldMax=this.max,this.oldAxisLength=this.len,this.setAxisSize(),e=this.len!==this.oldAxisLength,d(this.series,function(e){(e.isDirtyData||e.isDirty||e.xAxis.isDirty)&&(t=!0)}),e||t||this.isLinked||this.forceRedraw||this.userMin!==this.oldUserMin||this.userMax!==this.oldUserMax||this.alignToOthers()?(this.resetStacks&&this.resetStacks(),this.forceRedraw=!1,this.getSeriesExtremes(),this.setTickInterval(),this.oldUserMin=this.userMin,this.oldUserMax=this.userMax,this.isDirty||(this.isDirty=e||this.min!==this.oldMin||this.max!==this.oldMax)):this.cleanStacks&&this.cleanStacks()},setExtremes:function(t,e,i,s,n){var r=this,o=r.chart;i=S(i,!0),d(r.series,function(t){delete t.kdTree}),n=p(n,{min:t,max:e}),u(r,"setExtremes",n,function(){r.userMin=t,r.userMax=e,r.eventArgs=n,i&&o.redraw(s)})},zoom:function(t,e){var i=this.dataMin,s=this.dataMax,n=this.options,r=Math.min(i,S(n.min,i)),n=Math.max(s,S(n.max,s));return t===this.min&&e===this.max||(this.allowZoomOutside||(h(i)&&(t<r&&(t=r),t>n&&(t=n)),h(s)&&(e<r&&(e=r),e>n&&(e=n))),this.displayBtn=void 0!==t||void 0!==e,this.setExtremes(t,e,!1,void 0,{trigger:"zoom"})),!0},setAxisSize:function(){var t=this.chart,e=this.options,i=e.offsets||[0,0,0,0],s=this.horiz,n=S(e.width,t.plotWidth-i[3]+i[1]),r=S(e.height,t.plotHeight-i[0]+i[2]),o=S(e.top,t.plotTop+i[0]),e=S(e.left,t.plotLeft+i[3]),i=/%$/;i.test(r)&&(r=Math.round(parseFloat(r)/100*t.plotHeight)),i.test(o)&&(o=Math.round(parseFloat(o)/100*t.plotHeight+t.plotTop)),this.left=e,this.top=o,this.width=n,this.height=r,this.bottom=t.chartHeight-r-o,this.right=t.chartWidth-n-e,this.len=Math.max(s?n:r,0),this.pos=s?e:o},getExtremes:function(){var t=this.isLog,e=this.lin2log;return{min:t?o(e(this.min)):this.min,max:t?o(e(this.max)):this.max,dataMin:this.dataMin,dataMax:this.dataMax,userMin:this.userMin,userMax:this.userMax}},getThreshold:function(t){var e=this.isLog,i=this.lin2log,s=e?i(this.min):this.min,e=e?i(this.max):this.max;return null===t?t=s:s>t?t=s:e<t&&(t=e),this.translate(t,0,1,0,1)},autoLabelAlign:function(t){return t=(S(t,0)-90*this.side+720)%360,15<t&&165>t?"right":195<t&&345>t?"left":"center"},tickSize:function(t){var e=this.options,i=e[t+"Length"],s=S(e[t+"Width"],"tick"===t&&this.isXAxis?1:0);if(s&&i)return"inside"===e[t+"Position"]&&(i=-i),[i,s]},labelMetrics:function(){return this.chart.renderer.fontMetrics(this.options.labels.style&&this.options.labels.style.fontSize,this.ticks[0]&&this.ticks[0].label)},unsquish:function(){var t,e,i,s=this.options.labels,n=this.horiz,r=this.tickInterval,o=r,a=this.len/(((this.categories?1:0)+this.max-this.min)/r),c=s.rotation,p=this.labelMetrics(),u=Number.MAX_VALUE,f=function(t){return t/=a||1,t=1<t?Math.ceil(t):1,t*r};return n?(i=!s.staggerLines&&!s.step&&(h(c)?[c]:a<S(s.autoRotationLimit,80)&&s.autoRotation))&&d(i,function(i){var s;(i===c||i&&-90<=i&&90>=i)&&(e=f(Math.abs(p.h/Math.sin(l*i))),s=e+Math.abs(i/360),s<u&&(u=s,t=i,o=e))}):s.step||(o=f(p.h)),this.autoRotation=i,this.labelRotation=S(t,c),o},getSlotWidth:function(){var t=this.chart,e=this.horiz,i=this.options.labels,s=Math.max(this.tickPositions.length-(this.categories?0:1),1),n=t.margin[3];return e&&2>(i.step||0)&&!i.rotation&&(this.staggerLines||1)*this.len/s||!e&&(n&&n-t.spacing[3]||.33*t.chartWidth)},renderUnsquish:function(){var t,e,i,s=this.chart,n=s.renderer,r=this.tickPositions,o=this.ticks,a=this.options.labels,h=this.horiz,l=this.getSlotWidth(),c=Math.max(1,Math.round(l-2*(a.padding||5))),p={},u=this.labelMetrics(),f=a.style&&a.style.textOverflow,g=0;if(b(a.rotation)||(p.rotation=a.rotation||0),d(r,function(t){(t=o[t])&&t.labelLength>g&&(g=t.labelLength)}),this.maxLabelLength=g,this.autoRotation)g>c&&g>u.h?p.rotation=this.labelRotation:this.labelRotation=0;else if(l&&(t={width:c+"px"},!f))for(t.textOverflow="clip",e=r.length;!h&&e--;)i=r[e],(c=o[i].label)&&(c.styles&&"ellipsis"===c.styles.textOverflow?c.css({textOverflow:"clip"}):o[i].labelLength>l&&c.css({width:l+"px"}),c.getBBox().height>this.len/r.length-(u.h-u.f)&&(c.specCss={textOverflow:"ellipsis"}));p.rotation&&(t={width:(g>.5*s.chartHeight?.33*s.chartHeight:s.chartHeight)+"px"},f||(t.textOverflow="ellipsis")),(this.labelAlign=a.align||this.autoLabelAlign(this.labelRotation))&&(p.align=this.labelAlign),d(r,function(e){var i=(e=o[e])&&e.label;i&&(i.attr(p),t&&i.css(k(t,i.specCss)),delete i.specCss,e.rotation=p.rotation)}),this.tickRotCorr=n.rotCorr(u.b,this.labelRotation||0,0!==this.side)},hasData:function(){return this.hasVisibleSeries||h(this.min)&&h(this.max)&&!!this.tickPositions},addTitle:function(t){var e,i=this.chart.renderer,s=this.horiz,n=this.opposite,r=this.options.title;this.axisTitle||((e=r.textAlign)||(e=(s?{low:"left",middle:"center",high:"right"}:{low:n?"right":"left",middle:"center",high:n?"left":"right"})[r.align]),this.axisTitle=i.text(r.text,0,0,r.useHTML).attr({zIndex:7,rotation:r.rotation||0,align:e}).addClass("highcharts-axis-title").css(r.style).add(this.axisGroup),this.axisTitle.isNew=!0),this.axisTitle[t?"show":"hide"](!0)},generateTick:function(t){var e=this.ticks;e[t]?e[t].addLabel():e[t]=new C(this,t)},getOffset:function(){var t,e,i,s=this,n=s.chart,r=n.renderer,o=s.options,a=s.tickPositions,l=s.ticks,c=s.horiz,p=s.side,u=n.inverted?[1,0,3,2][p]:p,f=0,g=0,m=o.title,v=o.labels,y=0,x=n.axisOffset,n=n.clipOffset,b=[-1,1,1,-1][p],k=o.className,w=s.axisParent,T=this.tickSize("tick");t=s.hasData(),s.showAxis=e=t||S(o.showEmpty,!0),s.staggerLines=s.horiz&&v.staggerLines,s.axisGroup||(s.gridGroup=r.g("grid").attr({zIndex:o.gridZIndex||1}).addClass("highcharts-"+this.coll.toLowerCase()+"-grid "+(k||"")).add(w),s.axisGroup=r.g("axis").attr({zIndex:o.zIndex||2}).addClass("highcharts-"+this.coll.toLowerCase()+" "+(k||"")).add(w),s.labelGroup=r.g("axis-labels").attr({zIndex:v.zIndex||7}).addClass("highcharts-"+s.coll.toLowerCase()+"-labels "+(k||"")).add(w)),t||s.isLinked?(d(a,function(t,e){s.generateTick(t,e)}),s.renderUnsquish(),!1===v.reserveSpace||0!==p&&2!==p&&{1:"left",3:"right"}[p]!==s.labelAlign&&"center"!==s.labelAlign||d(a,function(t){y=Math.max(l[t].getLabelSize(),y)}),s.staggerLines&&(y*=s.staggerLines,s.labelOffset=y*(s.opposite?-1:1))):M(l,function(t,e){t.destroy(),delete l[e]}),m&&m.text&&!1!==m.enabled&&(s.addTitle(e),e&&!1!==m.reserveSpace&&(s.titleOffset=f=s.axisTitle.getBBox()[c?"height":"width"],i=m.offset,g=h(i)?0:S(m.margin,c?5:10))),s.renderLine(),s.offset=b*S(o.offset,x[p]),s.tickRotCorr=s.tickRotCorr||{x:0,y:0},r=0===p?-s.labelMetrics().h:2===p?s.tickRotCorr.y:0,g=Math.abs(y)+g,y&&(g=g-r+b*(c?S(v.y,s.tickRotCorr.y+8*b):v.x)),s.axisTitleMargin=S(i,g),x[p]=Math.max(x[p],s.axisTitleMargin+f+b*s.offset,g,t&&a.length&&T?T[0]+b*s.offset:0),o=o.offset?0:2*Math.floor(s.axisLine.strokeWidth()/2),n[u]=Math.max(n[u],o)},getLinePath:function(t){var e=this.chart,i=this.opposite,s=this.offset,n=this.horiz,r=this.left+(i?this.width:0)+s,s=e.chartHeight-this.bottom-(i?this.height:0)+s;return i&&(t*=-1),e.renderer.crispLine(["M",n?this.left:r,n?s:this.top,"L",n?e.chartWidth-this.right:r,n?s:e.chartHeight-this.bottom],t)},renderLine:function(){this.axisLine||(this.axisLine=this.chart.renderer.path().addClass("highcharts-axis-line").add(this.axisGroup),this.axisLine.attr({stroke:this.options.lineColor,"stroke-width":this.options.lineWidth,zIndex:7}))},getTitlePosition:function(){var t=this.horiz,e=this.left,i=this.top,s=this.len,n=this.options.title,r=t?e:i,o=this.opposite,a=this.offset,h=n.x||0,l=n.y||0,c=this.chart.renderer.fontMetrics(n.style&&n.style.fontSize,this.axisTitle).f,s={low:r+(t?0:s),middle:r+s/2,high:r+(t?s:0)}[n.align],e=(t?i+this.height:e)+(t?1:-1)*(o?-1:1)*this.axisTitleMargin+(2===this.side?c:0);return{x:t?s+h:e+(o?this.width:0)+a+h,y:t?e+l-(o?this.height:0)+a:s+l}},renderMinorTick:function(t){var e=this.chart.hasRendered&&x(this.oldMin),i=this.minorTicks;i[t]||(i[t]=new C(this,t,"minor")),e&&i[t].isNew&&i[t].render(null,!0),i[t].render(null,!1,1)},renderTick:function(t,e){var i=this.isLinked,s=this.ticks,n=this.chart.hasRendered&&x(this.oldMin);(!i||t>=this.min&&t<=this.max)&&(s[t]||(s[t]=new C(this,t)),n&&s[t].isNew&&s[t].render(e,!0,.1),s[t].render(e))},render:function(){var e,s,n=this,r=n.chart,o=n.options,a=n.isLog,h=n.lin2log,l=n.isLinked,c=n.tickPositions,p=n.axisTitle,u=n.ticks,f=n.minorTicks,g=n.alternateBands,m=o.stackLabels,v=o.alternateGridColor,y=n.tickmarkOffset,x=n.axisLine,b=n.showAxis,k=i(r.renderer.globalAnimation);n.labelEdge.length=0,n.overlap=!1,d([u,f,g],function(t){M(t,function(t){t.isActive=!1})}),(n.hasData()||l)&&(n.minorTickInterval&&!n.categories&&d(n.getMinorTickPositions(),function(t){n.renderMinorTick(t)}),c.length&&(d(c,function(t,e){n.renderTick(t,e)}),y&&(0===n.min||n.single)&&(u[-1]||(u[-1]=new C(n,-1,null,!0)),u[-1].render(-1))),v&&d(c,function(i,o){s=void 0!==c[o+1]?c[o+1]+y:n.max-y,0===o%2&&i<n.max&&s<=n.max+(r.polar?-y:y)&&(g[i]||(g[i]=new t.PlotLineOrBand(n)),e=i+y,g[i].options={from:a?h(e):e,to:a?h(s):s,color:v},g[i].render(),g[i].isActive=!0)}),n._addedPlotLB||(d((o.plotLines||[]).concat(o.plotBands||[]),function(t){n.addPlotBandOrLine(t)}),n._addedPlotLB=!0)),d([u,f,g],function(t){var e,i=[],s=k.duration;M(t,function(t,e){t.isActive||(t.render(e,!1,0),t.isActive=!1,i.push(e))}),P(function(){for(e=i.length;e--;)t[i[e]]&&!t[i[e]].isActive&&(t[i[e]].destroy(),delete t[i[e]])},t!==g&&r.hasRendered&&s?s:0)}),x&&(x[x.isPlaced?"animate":"attr"]({d:this.getLinePath(x.strokeWidth())}),x.isPlaced=!0,x[b?"show":"hide"](!0)),p&&b&&(p[p.isNew?"attr":"animate"](n.getTitlePosition()),p.isNew=!1),m&&m.enabled&&n.renderStackTotals(),n.isDirty=!1},redraw:function(){this.visible&&(this.render(),d(this.plotLinesAndBands,function(t){t.render()})),d(this.series,function(t){t.isDirty=!0})},keepProps:"extKey hcEvents names series userMax userMin".split(" "),destroy:function(t){var e,i=this,s=i.stacks,n=i.plotLinesAndBands;if(t||T(i),M(s,function(t,e){c(t),s[e]=null}),d([i.ticks,i.minorTicks,i.alternateBands],function(t){c(t)}),n)for(t=n.length;t--;)n[t].destroy();d("stackTotalGroup axisLine axisTitle axisGroup gridGroup labelGroup cross".split(" "),function(t){i[t]&&(i[t]=i[t].destroy())});for(e in i.plotLinesAndBandsGroups)i.plotLinesAndBandsGroups[e]=i.plotLinesAndBandsGroups[e].destroy();M(i,function(t,e){-1===v(e,i.keepProps)&&delete i[e]})},drawCrosshair:function(t,e){var i,s,n=this.crosshair,o=S(n.snap,!0),a=this.cross;t||(t=this.cross&&this.cross.e),this.crosshair&&!1!==(h(e)||!o)?(o?h(e)&&(s=this.isXAxis?e.plotX:this.len-e.plotY):s=t&&(this.horiz?t.chartX-this.pos:this.len-t.chartY+this.pos),h(s)&&(i=this.getPlotLinePath(e&&(this.isXAxis?e.x:S(e.stackY,e.y)),null,null,null,s)||null),h(i)?(e=this.categories&&!this.isRadial,a||(this.cross=a=this.chart.renderer.path().addClass("highcharts-crosshair highcharts-crosshair-"+(e?"category ":"thin ")+n.className).attr({zIndex:S(n.zIndex,2)}).add(),a.attr({stroke:n.color||(e?r("#ccd6eb").setOpacity(.25).get():"#cccccc"),"stroke-width":S(n.width,1)}),n.dashStyle&&a.attr({dashstyle:n.dashStyle})),a.show().attr({d:i}),e&&!n.width&&a.attr({"stroke-width":this.transA}),this.cross.e=t):this.hideCrosshair()):this.hideCrosshair()},hideCrosshair:function(){this.cross&&this.cross.hide()}}),t.Axis=L}(t);return function(t){var e=t.Axis,i=t.Date,s=t.dateFormat,n=t.defaultOptions,r=t.defined,o=t.each,a=t.extend,h=t.getMagnitude,l=t.getTZOffset,c=t.normalizeTickInterval,d=t.pick,p=t.timeUnits;e.prototype.getTimeTicks=function(t,e,h,c){var u,f,g=[],m={},v=n.global.useUTC,y=new i(e-Math.max(l(e),l(h))),x=i.hcMakeTime,b=t.unitRange,k=t.count;if(r(e)){y[i.hcSetMilliseconds](b>=p.second?0:k*Math.floor(y.getMilliseconds()/k)),b>=p.second&&y[i.hcSetSeconds](b>=p.minute?0:k*Math.floor(y.getSeconds()/k)),b>=p.minute&&y[i.hcSetMinutes](b>=p.hour?0:k*Math.floor(y[i.hcGetMinutes]()/k)),b>=p.hour&&y[i.hcSetHours](b>=p.day?0:k*Math.floor(y[i.hcGetHours]()/k)),b>=p.day&&y[i.hcSetDate](b>=p.month?1:k*Math.floor(y[i.hcGetDate]()/k)),b>=p.month&&(y[i.hcSetMonth](b>=p.year?0:k*Math.floor(y[i.hcGetMonth]()/k)),u=y[i.hcGetFullYear]()),b>=p.year&&y[i.hcSetFullYear](u-u%k),b===p.week&&y[i.hcSetDate](y[i.hcGetDate]()-y[i.hcGetDay]()+d(c,1)),u=y[i.hcGetFullYear](),c=y[i.hcGetMonth]();var w=y[i.hcGetDate](),M=y[i.hcGetHours]();for((i.hcTimezoneOffset||i.hcGetTimezoneOffset)&&(f=(!v||!!i.hcGetTimezoneOffset)&&(h-e>4*p.month||l(e)!==l(h)),y=y.getTime(),y=new i(y+l(y))),v=y.getTime(),e=1;v<h;)g.push(v),v=b===p.year?x(u+e*k,0):b===p.month?x(u,c+e*k):!f||b!==p.day&&b!==p.week?f&&b===p.hour?x(u,c,w,M+e*k):v+b*k:x(u,c,w+e*k*(b===p.day?1:7)),e++;g.push(v),b<=p.hour&&1e4>g.length&&o(g,function(t){0===t%18e5&&"000000000"===s("%H%M%S%L",t)&&(m[t]="day")})}return g.info=a(t,{higherRanks:m,totalRange:b*k}),g},e.prototype.normalizeTimeTickInterval=function(t,e){var i=e||[["millisecond",[1,2,5,10,20,25,50,100,200,500]],["second",[1,2,5,10,15,30]],["minute",[1,2,5,10,15,30]],["hour",[1,2,3,4,6,8,12]],["day",[1,2]],["week",[1,2]],["month",[1,2,3,4,6]],["year",null]];e=i[i.length-1];var s,n=p[e[0]],r=e[1];for(s=0;s<i.length&&(e=i[s],n=p[e[0]],r=e[1],!(i[s+1]&&t<=(n*r[r.length-1]+p[i[s+1][0]])/2));s++);return n===p.year&&t<5*n&&(r=[1,2,5]),t=c(t/n,r,"year"===e[0]?Math.max(h(t/n),1):1),{unitRange:n,count:t,unitName:e[0]}}}(t),function(t){var e=t.Axis,i=t.getMagnitude,s=t.map,n=t.normalizeTickInterval,r=t.pick;e.prototype.getLogTickPositions=function(t,e,o,a){var h=this.options,l=this.len,c=this.lin2log,d=this.log2lin,p=[];if(a||(this._minorAutoInterval=null),.5<=t)t=Math.round(t),p=this.getLinearTickPositions(t,e,o);else if(.08<=t)for(var u,f,g,m,v,l=Math.floor(e),h=.3<t?[1,2,4]:.15<t?[1,2,4,6,8]:[1,2,3,4,5,6,7,8,9];l<o+1&&!v;l++)for(f=h.length,u=0;u<f&&!v;u++)g=d(c(l)*h[u]),g>e&&(!a||m<=o)&&void 0!==m&&p.push(m),m>o&&(v=!0),m=g;else e=c(e),o=c(o),t=h[a?"minorTickInterval":"tickInterval"],t=r("auto"===t?null:t,this._minorAutoInterval,h.tickPixelInterval/(a?5:1)*(o-e)/((a?l/this.tickPositions.length:l)||1)),t=n(t,null,i(t)),p=s(this.getLinearTickPositions(t,e,o),d),a||(this._minorAutoInterval=t/5);return a||(this.tickInterval=t),p},e.prototype.log2lin=function(t){return Math.log(t)/Math.LN10},e.prototype.lin2log=function(t){return Math.pow(10,t)}}(t),function(t,e){var i=t.arrayMax,s=t.arrayMin,n=t.defined,r=t.destroyObjectProperties,o=t.each,a=t.erase,h=t.merge,l=t.pick;t.PlotLineOrBand=function(t,e){this.axis=t,e&&(this.options=e,this.id=e.id)},t.PlotLineOrBand.prototype={render:function(){var e=this,i=e.axis,s=i.horiz,r=e.options,o=r.label,a=e.label,c=r.to,d=r.from,p=r.value,u=n(d)&&n(c),f=n(p),g=e.svgElem,m=!g,v=[],y=r.color,x=l(r.zIndex,0),b=r.events,v={class:"highcharts-plot-"+(u?"band ":"line ")+(r.className||"")},k={},w=i.chart.renderer,M=u?"bands":"lines",S=i.log2lin;if(i.isLog&&(d=S(d),c=S(c),p=S(p)),f?(v={stroke:y,"stroke-width":r.width},r.dashStyle&&(v.dashstyle=r.dashStyle)):u&&(y&&(v.fill=y),r.borderWidth&&(v.stroke=r.borderColor,v["stroke-width"]=r.borderWidth)),k.zIndex=x,M+="-"+x,(y=i.plotLinesAndBandsGroups[M])||(i.plotLinesAndBandsGroups[M]=y=w.g("plot-"+M).attr(k).add()),m&&(e.svgElem=g=w.path().attr(v).add(y)),f)v=i.getPlotLinePath(p,g.strokeWidth());else{if(!u)return;v=i.getPlotBandPath(d,c,r)}return m&&v&&v.length?(g.attr({d:v}),b&&t.objectEach(b,function(t,i){g.on(i,function(t){b[i].apply(e,[t])})})):g&&(v?(g.show(),g.animate({d:v})):(g.hide(),a&&(e.label=a=a.destroy()))),o&&n(o.text)&&v&&v.length&&0<i.width&&0<i.height&&!v.flat?(o=h({align:s&&u&&"center",x:s?!u&&4:10,verticalAlign:!s&&u&&"middle",y:s?u?16:10:u?6:-4,rotation:s&&!u&&90},o),this.renderLabel(o,v,u,x)):a&&a.hide(),e},renderLabel:function(t,e,n,r){var o=this.label,a=this.axis.chart.renderer;o||(o={align:t.textAlign||t.align,rotation:t.rotation,class:"highcharts-plot-"+(n?"band":"line")+"-label "+(t.className||"")},o.zIndex=r,this.label=o=a.text(t.text,0,0,t.useHTML).attr(o).add(),o.css(t.style)),r=[e[1],e[4],n?e[6]:e[1]],e=[e[2],e[5],n?e[7]:e[2]],n=s(r),a=s(e),o.align(t,!1,{x:n,y:a,width:i(r)-n,height:i(e)-a}),o.show()},destroy:function(){a(this.axis.plotLinesAndBands,this),delete this.axis,r(this)}},t.extend(e.prototype,{getPlotBandPath:function(t,e){var i=this.getPlotLinePath(e,null,null,!0),s=this.getPlotLinePath(t,null,null,!0),n=this.horiz,r=1;return t=t<this.min&&e<this.min||t>this.max&&e>this.max,s&&i?(t&&(s.flat=s.toString()===i.toString(),r=0),s.push(n&&i[4]===s[4]?i[4]+r:i[4],n||i[5]!==s[5]?i[5]:i[5]+r,n&&i[1]===s[1]?i[1]+r:i[1],n||i[2]!==s[2]?i[2]:i[2]+r)):s=null,s},addPlotBand:function(t){return this.addPlotBandOrLine(t,"plotBands")},addPlotLine:function(t){return this.addPlotBandOrLine(t,"plotLines")},addPlotBandOrLine:function(e,i){var s=new t.PlotLineOrBand(this,e).render(),n=this.userOptions;return s&&(i&&(n[i]=n[i]||[],n[i].push(e)),this.plotLinesAndBands.push(s)),s},removePlotBandOrLine:function(t){for(var e=this.plotLinesAndBands,i=this.options,s=this.userOptions,n=e.length;n--;)e[n].id===t&&e[n].destroy();o([i.plotLines||[],s.plotLines||[],i.plotBands||[],s.plotBands||[]],function(e){for(n=e.length;n--;)e[n].id===t&&a(e,e[n])})},removePlotBand:function(t){this.removePlotBandOrLine(t)},removePlotLine:function(t){this.removePlotBandOrLine(t)}})}(t,e),function(t){var e=t.dateFormat,i=t.each,s=t.extend,n=t.format,r=t.isNumber,o=t.map,a=t.merge,h=t.pick,l=t.splat,c=t.syncTimeout,d=t.timeUnits;t.Tooltip=function(){this.init.apply(this,arguments)},t.Tooltip.prototype={init:function(t,e){this.chart=t,this.options=e,this.crosshairs=[],this.now={x:0,y:0},this.isHidden=!0,this.split=e.split&&!t.inverted,this.shared=e.shared||this.split},cleanSplit:function(t){i(this.chart.series,function(e){var i=e&&e.tt;i&&(!i.isActive||t?e.tt=i.destroy():i.isActive=!1)})},getLabel:function(){var t=this.chart.renderer,e=this.options;return this.label||(this.split?this.label=t.g("tooltip"):(this.label=t.label("",0,0,e.shape||"callout",null,null,e.useHTML,null,"tooltip").attr({padding:e.padding,r:e.borderRadius}),this.label.attr({fill:e.backgroundColor,"stroke-width":e.borderWidth}).css(e.style).shadow(e.shadow)),this.label.attr({zIndex:8}).add()),this.label},update:function(t){this.destroy(),a(!0,this.chart.options.tooltip.userOptions,t),this.init(this.chart,a(!0,this.options,t))},destroy:function(){this.label&&(this.label=this.label.destroy()),this.split&&this.tt&&(this.cleanSplit(this.chart,!0),this.tt=this.tt.destroy()),clearTimeout(this.hideTimer),clearTimeout(this.tooltipTimeout)},move:function(t,e,i,n){var r=this,o=r.now,a=!1!==r.options.animation&&!r.isHidden&&(1<Math.abs(t-o.x)||1<Math.abs(e-o.y)),h=r.followPointer||1<r.len;s(o,{x:a?(2*o.x+t)/3:t,y:a?(o.y+e)/2:e,anchorX:h?void 0:a?(2*o.anchorX+i)/3:i,anchorY:h?void 0:a?(o.anchorY+n)/2:n}),r.getLabel().attr(o),a&&(clearTimeout(this.tooltipTimeout),this.tooltipTimeout=setTimeout(function(){r&&r.move(t,e,i,n)},32))},hide:function(t){var e=this;clearTimeout(this.hideTimer),t=h(t,this.options.hideDelay,500),this.isHidden||(this.hideTimer=c(function(){e.getLabel()[t?"fadeOut":"hide"](),e.isHidden=!0},t))},getAnchor:function(t,e){var s,n,r,a=this.chart,h=a.inverted,c=a.plotTop,d=a.plotLeft,p=0,u=0;return t=l(t),s=t[0].tooltipPos,this.followPointer&&e&&(void 0===e.chartX&&(e=a.pointer.normalize(e)),s=[e.chartX-a.plotLeft,e.chartY-c]),s||(i(t,function(t){n=t.series.yAxis,r=t.series.xAxis,p+=t.plotX+(!h&&r?r.left-d:0),u+=(t.plotLow?(t.plotLow+t.plotHigh)/2:t.plotY)+(!h&&n?n.top-c:0)}),p/=t.length,u/=t.length,s=[h?a.plotWidth-u:p,this.shared&&!h&&1<t.length&&e?e.chartY-c:h?a.plotHeight-p:u]),o(s,Math.round)},getPosition:function(t,e,i){var s,n=this.chart,r=this.distance,o={},a=i.h||0,l=["y",n.chartHeight,e,i.plotY+n.plotTop,n.plotTop,n.plotTop+n.plotHeight],c=["x",n.chartWidth,t,i.plotX+n.plotLeft,n.plotLeft,n.plotLeft+n.plotWidth],d=!this.followPointer&&h(i.ttBelow,!n.inverted==!!i.negative),p=function(t,e,i,s,n,h){var l=i<s-r,c=s+r+i<e,p=s-r-i;if(s+=r,d&&c)o[t]=s;else if(!d&&l)o[t]=p;else if(l)o[t]=Math.min(h-i,0>p-a?p:p-a);else{if(!c)return!1;o[t]=Math.max(n,s+a+i>e?s:s+a)}},u=function(t,e,i,s){var n;return s<r||s>e-r?n=!1:o[t]=s<i/2?1:s>e-i/2?e-i-2:s-i/2,n},f=function(t){var e=l;l=c,c=e,s=t},g=function(){!1!==p.apply(0,l)?!1!==u.apply(0,c)||s||(f(!0),g()):s?o.x=o.y=0:(f(!0),g())};return(n.inverted||1<this.len)&&f(),g(),o},defaultFormatter:function(t){var e,i=this.points||l(this);return e=[t.tooltipFooterHeaderFormatter(i[0])],e=e.concat(t.bodyFormatter(i)),e.push(t.tooltipFooterHeaderFormatter(i[0],!0)),e},refresh:function(t,e){var s,n,r,o=this.options,a=t,c={},d=[];s=o.formatter||this.defaultFormatter;var p,c=this.shared;clearTimeout(this.hideTimer),this.followPointer=l(a)[0].series.tooltipOptions.followPointer,r=this.getAnchor(a,e),e=r[0],n=r[1],!c||a.series&&a.series.noSharedTooltip?c=a.getLabelConfig():(i(a,function(t){t.setState("hover"),d.push(t.getLabelConfig())}),c={x:a[0].category,y:a[0].y},c.points=d,a=a[0]),this.len=d.length,c=s.call(c,this),p=a.series,this.distance=h(p.tooltipOptions.distance,16),!1===c?this.hide():(s=this.getLabel(),this.isHidden&&s.attr({opacity:1}).show(),this.split?this.renderSplit(c,t):(s.attr({text:c&&c.join?c.join(""):c}),s.removeClass(/highcharts-color-[\d]+/g).addClass("highcharts-color-"+h(a.colorIndex,p.colorIndex)),s.attr({stroke:o.borderColor||a.color||p.color||"#666666"}),this.updatePosition({plotX:e,plotY:n,negative:a.negative,ttBelow:a.ttBelow,h:r[2]||0})),this.isHidden=!1)},renderSplit:function(e,s){var n,r=this,o=[],a=this.chart,l=a.renderer,c=!0,d=this.options,p=this.getLabel();i(e.slice(0,s.length+1),function(t,e){e=s[e-1]||{isHeader:!0,plotX:s[0].plotX};var i=e.series||r,u=i.tt,f=e.series||{},g="highcharts-color-"+h(e.colorIndex,f.colorIndex,"none");u||(i.tt=u=l.label(null,null,null,"callout").addClass("highcharts-tooltip-box "+g).attr({padding:d.padding,r:d.borderRadius,fill:d.backgroundColor,stroke:e.color||f.color||"#333333","stroke-width":d.borderWidth}).add(p)),u.isActive=!0,u.attr({text:t}),u.css(d.style),t=u.getBBox(),f=t.width+u.strokeWidth(),e.isHeader?(n=t.height,f=Math.max(0,Math.min(e.plotX+a.plotLeft-f/2,a.chartWidth-f))):f=e.plotX+a.plotLeft-h(d.distance,16)-f,0>f&&(c=!1),t=(e.series&&e.series.yAxis&&e.series.yAxis.pos)+(e.plotY||0),t-=a.plotTop,o.push({target:e.isHeader?a.plotHeight+n:t,rank:e.isHeader?1:0,size:i.tt.getBBox().height+1,point:e,x:f,tt:u})}),this.cleanSplit(),t.distribute(o,a.plotHeight+n),i(o,function(t){var e=t.point,i=e.series;t.tt.attr({visibility:void 0===t.pos?"hidden":"inherit",x:c||e.isHeader?t.x:e.plotX+a.plotLeft+h(d.distance,16),y:t.pos+a.plotTop,anchorX:e.isHeader?e.plotX+a.plotLeft:e.plotX+i.xAxis.pos,
+anchorY:e.isHeader?t.pos+a.plotTop-15:e.plotY+i.yAxis.pos})})},updatePosition:function(t){var e=this.chart,i=this.getLabel(),i=(this.options.positioner||this.getPosition).call(this,i.width,i.height,t);this.move(Math.round(i.x),Math.round(i.y||0),t.plotX+e.plotLeft,t.plotY+e.plotTop)},getDateFormat:function(t,i,s,n){var r,o,a=e("%m-%d %H:%M:%S.%L",i),h={millisecond:15,second:12,minute:9,hour:6,day:3},l="millisecond";for(o in d){if(t===d.week&&+e("%w",i)===s&&"00:00:00.000"===a.substr(6)){o="week";break}if(d[o]>t){o=l;break}if(h[o]&&a.substr(h[o])!=="01-01 00:00:00.000".substr(h[o]))break;"week"!==o&&(l=o)}return o&&(r=n[o]),r},getXDateFormat:function(t,e,i){e=e.dateTimeLabelFormats;var s=i&&i.closestPointRange;return(s?this.getDateFormat(s,t.x,i.options.startOfWeek,e):e.day)||e.year},tooltipFooterHeaderFormatter:function(t,e){var i=e?"footer":"header";e=t.series;var s=e.tooltipOptions,o=s.xDateFormat,a=e.xAxis,h=a&&"datetime"===a.options.type&&r(t.key),i=s[i+"Format"];return h&&!o&&(o=this.getXDateFormat(t,s,a)),h&&o&&(i=i.replace("{point.key}","{point.key:"+o+"}")),n(i,{point:t,series:e})},bodyFormatter:function(t){return o(t,function(t){var e=t.series.tooltipOptions;return(e.pointFormatter||t.point.tooltipFormatter).call(t.point,e.pointFormat)})}}}(t),function(t){var e=t.addEvent,i=t.attr,s=t.charts,n=t.color,r=t.css,o=t.defined,a=t.doc,h=t.each,l=t.extend,c=t.fireEvent,d=t.offset,p=t.pick,u=t.removeEvent,f=t.splat,g=t.Tooltip,m=t.win;t.Pointer=function(t,e){this.init(t,e)},t.Pointer.prototype={init:function(t,e){this.options=e,this.chart=t,this.runChartClick=e.chart.events&&!!e.chart.events.click,this.pinchDown=[],this.lastValidTouch={},g&&e.tooltip.enabled&&(t.tooltip=new g(t,e.tooltip),this.followTouchMove=p(e.tooltip.followTouchMove,!0)),this.setDOMEvents()},zoomOption:function(t){var e=this.chart,i=e.options.chart,s=i.zoomType||"",e=e.inverted;/touch/.test(t.type)&&(s=p(i.pinchType,s)),this.zoomX=t=/x/.test(s),this.zoomY=s=/y/.test(s),this.zoomHor=t&&!e||s&&e,this.zoomVert=s&&!e||t&&e,this.hasZoom=t||s},normalize:function(t,e){var i,s;return t=t||m.event,t.target||(t.target=t.srcElement),s=t.touches?t.touches.length?t.touches.item(0):t.changedTouches[0]:t,e||(this.chartPosition=e=d(this.chart.container)),void 0===s.pageX?(i=Math.max(t.x,t.clientX-e.left),e=t.y):(i=s.pageX-e.left,e=s.pageY-e.top),l(t,{chartX:Math.round(i),chartY:Math.round(e)})},getCoordinates:function(t){var e={xAxis:[],yAxis:[]};return h(this.chart.axes,function(i){e[i.isXAxis?"xAxis":"yAxis"].push({axis:i,value:i.toValue(t[i.horiz?"chartX":"chartY"])})}),e},getKDPoints:function(t,e,i){var s,n,r,o=[];if(h(t,function(t){s=t.noSharedTooltip&&e,n=!e&&t.directTouch,t.visible&&!n&&p(t.options.enableMouseTracking,!0)&&(r=t.searchPoint(i,!s&&0>t.options.findNearestPointBy.indexOf("y")))&&r.series&&o.push(r)}),o.sort(function(t,i){var s=t.distX-i.distX,n=t.dist-i.dist,r=(i.series.group&&i.series.group.zIndex)-(t.series.group&&t.series.group.zIndex);return 0!==s&&e?s:0!==n?n:0!==r?r:t.series.index>i.series.index?-1:1}),e&&o[0]&&!o[0].series.noSharedTooltip)for(t=o.length;t--;)(o[t].x!==o[0].x||o[t].series.noSharedTooltip)&&o.splice(t,1);return o},getPointFromEvent:function(t){t=t.target;for(var e;t&&!e;)e=t.point,t=t.parentNode;return e},getHoverData:function(e,i,s,n,r,o){var a,l=e,c=i;return n?r?(a=[],h(s,function(t){var e=t.noSharedTooltip&&r,i=!r&&t.directTouch;t.visible&&!e&&!i&&p(t.options.enableMouseTracking,!0)&&(t=t.searchKDTree({clientX:l.clientX,plotY:l.plotY},!e&&1===t.kdDimensions))&&t.series&&a.push(t)}),0===a.length&&(a=[l])):a=[l]:c&&!c.stickyTracking?(r||(s=[c]),a=this.getKDPoints(s,r,o),l=t.find(a,function(t){return t.series===c})):(e=t.grep(s,function(t){return t.stickyTracking}),a=this.getKDPoints(e,r,o),c=(l=a[0])&&l.series,r&&(a=this.getKDPoints(s,r,o))),a.sort(function(t,e){return t.series.index-e.series.index}),{hoverPoint:l,hoverSeries:c,hoverPoints:a}},runPointActions:function(i,n){var r=this.chart,o=r.tooltip,l=!!o&&o.shared,c=n||r.hoverPoint,d=c&&c.series||r.hoverSeries;n=this.getHoverData(c,d,r.series,!!n||d&&d.directTouch,l,i);var u,f,c=n.hoverPoint;u=(d=n.hoverSeries)&&d.tooltipOptions.followPointer,f=(l=l&&c&&!c.series.noSharedTooltip)?n.hoverPoints:c?[c]:[],c&&(c!==r.hoverPoint||o&&o.isHidden)?(h(r.hoverPoints||[],function(e){-1===t.inArray(e,f)&&e.setState()}),h(f||[],function(t){t.setState("hover")}),r.hoverSeries!==d&&d.onMouseOver(),d&&!d.directTouch&&(r.hoverPoint&&r.hoverPoint.firePointEvent("mouseOut"),c.firePointEvent("mouseOver")),r.hoverPoints=f,r.hoverPoint=c,o&&o.refresh(l?f:c,i)):u&&o&&!o.isHidden&&(d=o.getAnchor([{}],i),o.updatePosition({plotX:d[0],plotY:d[1]})),this.unDocMouseMove||(this.unDocMouseMove=e(a,"mousemove",function(e){var i=s[t.hoverChartIndex];i&&i.pointer.onDocumentMouseMove(e)})),h(r.axes,function(e){p(e.crosshair.snap,!0)?t.find(f,function(t){return t.series[e.coll]===e})?e.drawCrosshair(i,c):e.hideCrosshair():e.drawCrosshair(i)})},reset:function(t,e){var i=this.chart,s=i.hoverSeries,n=i.hoverPoint,r=i.hoverPoints,o=i.tooltip,a=o&&o.shared?r:n;t&&a&&h(f(a),function(e){e.series.isCartesian&&void 0===e.plotX&&(t=!1)}),t?o&&a&&(o.refresh(a),n&&(n.setState(n.state,!0),h(i.axes,function(t){t.crosshair&&t.drawCrosshair(null,n)}))):(n&&n.onMouseOut(),r&&h(r,function(t){t.setState()}),s&&s.onMouseOut(),o&&o.hide(e),this.unDocMouseMove&&(this.unDocMouseMove=this.unDocMouseMove()),h(i.axes,function(t){t.hideCrosshair()}),this.hoverX=i.hoverPoints=i.hoverPoint=null)},scaleGroups:function(t,e){var i,s=this.chart;h(s.series,function(n){i=t||n.getPlotBox(),n.xAxis&&n.xAxis.zoomEnabled&&n.group&&(n.group.attr(i),n.markerGroup&&(n.markerGroup.attr(i),n.markerGroup.clip(e?s.clipRect:null)),n.dataLabelsGroup&&n.dataLabelsGroup.attr(i))}),s.clipRect.attr(e||s.clipBox)},dragStart:function(t){var e=this.chart;e.mouseIsDown=t.type,e.cancelClick=!1,e.mouseDownX=this.mouseDownX=t.chartX,e.mouseDownY=this.mouseDownY=t.chartY},drag:function(t){var e,i=this.chart,s=i.options.chart,r=t.chartX,o=t.chartY,a=this.zoomHor,h=this.zoomVert,l=i.plotLeft,c=i.plotTop,d=i.plotWidth,p=i.plotHeight,u=this.selectionMarker,f=this.mouseDownX,g=this.mouseDownY,m=s.panKey&&t[s.panKey+"Key"];u&&u.touch||(r<l?r=l:r>l+d&&(r=l+d),o<c?o=c:o>c+p&&(o=c+p),this.hasDragged=Math.sqrt(Math.pow(f-r,2)+Math.pow(g-o,2)),10<this.hasDragged&&(e=i.isInsidePlot(f-l,g-c),i.hasCartesianSeries&&(this.zoomX||this.zoomY)&&e&&!m&&!u&&(this.selectionMarker=u=i.renderer.rect(l,c,a?1:d,h?1:p,0).attr({fill:s.selectionMarkerFill||n("#335cad").setOpacity(.25).get(),class:"highcharts-selection-marker",zIndex:7}).add()),u&&a&&(r-=f,u.attr({width:Math.abs(r),x:(0<r?0:r)+f})),u&&h&&(r=o-g,u.attr({height:Math.abs(r),y:(0<r?0:r)+g})),e&&!u&&s.panning&&i.pan(t,s.panning)))},drop:function(t){var e=this,i=this.chart,s=this.hasPinched;if(this.selectionMarker){var n,a={originalEvent:t,xAxis:[],yAxis:[]},d=this.selectionMarker,p=d.attr?d.attr("x"):d.x,u=d.attr?d.attr("y"):d.y,f=d.attr?d.attr("width"):d.width,g=d.attr?d.attr("height"):d.height;(this.hasDragged||s)&&(h(i.axes,function(i){if(i.zoomEnabled&&o(i.min)&&(s||e[{xAxis:"zoomX",yAxis:"zoomY"}[i.coll]])){var r=i.horiz,h="touchend"===t.type?i.minPixelPadding:0,l=i.toValue((r?p:u)+h),r=i.toValue((r?p+f:u+g)-h);a[i.coll].push({axis:i,min:Math.min(l,r),max:Math.max(l,r)}),n=!0}}),n&&c(i,"selection",a,function(t){i.zoom(l(t,s?{animation:!1}:null))})),this.selectionMarker=this.selectionMarker.destroy(),s&&this.scaleGroups()}i&&(r(i.container,{cursor:i._cursor}),i.cancelClick=10<this.hasDragged,i.mouseIsDown=this.hasDragged=this.hasPinched=!1,this.pinchDown=[])},onContainerMouseDown:function(t){t=this.normalize(t),this.zoomOption(t),t.preventDefault&&t.preventDefault(),this.dragStart(t)},onDocumentMouseUp:function(e){s[t.hoverChartIndex]&&s[t.hoverChartIndex].pointer.drop(e)},onDocumentMouseMove:function(t){var e=this.chart,i=this.chartPosition;t=this.normalize(t,i),!i||this.inClass(t.target,"highcharts-tracker")||e.isInsidePlot(t.chartX-e.plotLeft,t.chartY-e.plotTop)||this.reset()},onContainerMouseLeave:function(e){var i=s[t.hoverChartIndex];i&&(e.relatedTarget||e.toElement)&&(i.pointer.reset(),i.pointer.chartPosition=null)},onContainerMouseMove:function(e){var i=this.chart;o(t.hoverChartIndex)&&s[t.hoverChartIndex]&&s[t.hoverChartIndex].mouseIsDown||(t.hoverChartIndex=i.index),e=this.normalize(e),e.returnValue=!1,"mousedown"===i.mouseIsDown&&this.drag(e),!this.inClass(e.target,"highcharts-tracker")&&!i.isInsidePlot(e.chartX-i.plotLeft,e.chartY-i.plotTop)||i.openMenu||this.runPointActions(e)},inClass:function(t,e){for(var s;t;){if(s=i(t,"class")){if(-1!==s.indexOf(e))return!0;if(-1!==s.indexOf("highcharts-container"))return!1}t=t.parentNode}},onTrackerMouseOut:function(t){var e=this.chart.hoverSeries;t=t.relatedTarget||t.toElement,!e||!t||e.stickyTracking||this.inClass(t,"highcharts-tooltip")||this.inClass(t,"highcharts-series-"+e.index)&&this.inClass(t,"highcharts-tracker")||e.onMouseOut()},onContainerClick:function(t){var e=this.chart,i=e.hoverPoint,s=e.plotLeft,n=e.plotTop;t=this.normalize(t),e.cancelClick||(i&&this.inClass(t.target,"highcharts-tracker")?(c(i.series,"click",l(t,{point:i})),e.hoverPoint&&i.firePointEvent("click",t)):(l(t,this.getCoordinates(t)),e.isInsidePlot(t.chartX-s,t.chartY-n)&&c(e,"click",t)))},setDOMEvents:function(){var i=this,s=i.chart.container;s.onmousedown=function(t){i.onContainerMouseDown(t)},s.onmousemove=function(t){i.onContainerMouseMove(t)},s.onclick=function(t){i.onContainerClick(t)},e(s,"mouseleave",i.onContainerMouseLeave),1===t.chartCount&&e(a,"mouseup",i.onDocumentMouseUp),t.hasTouch&&(s.ontouchstart=function(t){i.onContainerTouchStart(t)},s.ontouchmove=function(t){i.onContainerTouchMove(t)},1===t.chartCount&&e(a,"touchend",i.onDocumentTouchEnd))},destroy:function(){var e=this;e.unDocMouseMove&&e.unDocMouseMove(),u(e.chart.container,"mouseleave",e.onContainerMouseLeave),t.chartCount||(u(a,"mouseup",e.onDocumentMouseUp),u(a,"touchend",e.onDocumentTouchEnd)),clearInterval(e.tooltipTimeout),t.objectEach(e,function(t,i){e[i]=null})}}}(t),function(t){var e=t.charts,i=t.each,s=t.extend,n=t.map,r=t.noop,o=t.pick;s(t.Pointer.prototype,{pinchTranslate:function(t,e,i,s,n,r){this.zoomHor&&this.pinchTranslateDirection(!0,t,e,i,s,n,r),this.zoomVert&&this.pinchTranslateDirection(!1,t,e,i,s,n,r)},pinchTranslateDirection:function(t,e,i,s,n,r,o,a){var h,l,c,d=this.chart,p=t?"x":"y",u=t?"X":"Y",f="chart"+u,g=t?"width":"height",m=d["plot"+(t?"Left":"Top")],v=a||1,y=d.inverted,x=d.bounds[t?"h":"v"],b=1===e.length,k=e[0][f],w=i[0][f],M=!b&&e[1][f],S=!b&&i[1][f];i=function(){!b&&20<Math.abs(k-M)&&(v=a||Math.abs(w-S)/Math.abs(k-M)),l=(m-w)/v+k,h=d["plot"+(t?"Width":"Height")]/v},i(),e=l,e<x.min?(e=x.min,c=!0):e+h>x.max&&(e=x.max-h,c=!0),c?(w-=.8*(w-o[p][0]),b||(S-=.8*(S-o[p][1])),i()):o[p]=[w,S],y||(r[p]=l-m,r[g]=h),r=y?1/v:v,n[g]=h,n[p]=e,s[y?t?"scaleY":"scaleX":"scale"+u]=v,s["translate"+u]=r*m+(w-r*k)},pinch:function(t){var e=this,a=e.chart,h=e.pinchDown,l=t.touches,c=l.length,d=e.lastValidTouch,p=e.hasZoom,u=e.selectionMarker,f={},g=1===c&&(e.inClass(t.target,"highcharts-tracker")&&a.runTrackerClick||e.runChartClick),m={};1<c&&(e.initiated=!0),p&&e.initiated&&!g&&t.preventDefault(),n(l,function(t){return e.normalize(t)}),"touchstart"===t.type?(i(l,function(t,e){h[e]={chartX:t.chartX,chartY:t.chartY}}),d.x=[h[0].chartX,h[1]&&h[1].chartX],d.y=[h[0].chartY,h[1]&&h[1].chartY],i(a.axes,function(t){if(t.zoomEnabled){var e=a.bounds[t.horiz?"h":"v"],i=t.minPixelPadding,s=t.toPixels(o(t.options.min,t.dataMin)),n=t.toPixels(o(t.options.max,t.dataMax)),r=Math.max(s,n);e.min=Math.min(t.pos,Math.min(s,n)-i),e.max=Math.max(t.pos+t.len,r+i)}}),e.res=!0):e.followTouchMove&&1===c?this.runPointActions(e.normalize(t)):h.length&&(u||(e.selectionMarker=u=s({destroy:r,touch:!0},a.plotBox)),e.pinchTranslate(h,l,f,u,m,d),e.hasPinched=p,e.scaleGroups(f,m),e.res&&(e.res=!1,this.reset(!1,0)))},touch:function(e,i){var s,n,r=this.chart;r.index!==t.hoverChartIndex&&this.onContainerMouseLeave({relatedTarget:!0}),t.hoverChartIndex=r.index,1===e.touches.length?(e=this.normalize(e),(n=r.isInsidePlot(e.chartX-r.plotLeft,e.chartY-r.plotTop))&&!r.openMenu?(i&&this.runPointActions(e),"touchmove"===e.type&&(i=this.pinchDown,s=!!i[0]&&4<=Math.sqrt(Math.pow(i[0].chartX-e.chartX,2)+Math.pow(i[0].chartY-e.chartY,2))),o(s,!0)&&this.pinch(e)):i&&this.reset()):2===e.touches.length&&this.pinch(e)},onContainerTouchStart:function(t){this.zoomOption(t),this.touch(t,!0)},onContainerTouchMove:function(t){this.touch(t)},onDocumentTouchEnd:function(i){e[t.hoverChartIndex]&&e[t.hoverChartIndex].pointer.drop(i)}})}(t),function(t){var e=t.addEvent,i=t.charts,s=t.css,n=t.doc,r=t.extend,o=t.noop,a=t.Pointer,h=t.removeEvent,l=t.win,c=t.wrap;if(!t.hasTouch&&(l.PointerEvent||l.MSPointerEvent)){var d={},p=!!l.PointerEvent,u=function(){var e=[];return e.item=function(t){return this[t]},t.objectEach(d,function(t){e.push({pageX:t.pageX,pageY:t.pageY,target:t.target})}),e},f=function(e,s,n,r){"touch"!==e.pointerType&&e.pointerType!==e.MSPOINTER_TYPE_TOUCH||!i[t.hoverChartIndex]||(r(e),r=i[t.hoverChartIndex].pointer,r[s]({type:n,target:e.currentTarget,preventDefault:o,touches:u()}))};r(a.prototype,{onContainerPointerDown:function(t){f(t,"onContainerTouchStart","touchstart",function(t){d[t.pointerId]={pageX:t.pageX,pageY:t.pageY,target:t.currentTarget}})},onContainerPointerMove:function(t){f(t,"onContainerTouchMove","touchmove",function(t){d[t.pointerId]={pageX:t.pageX,pageY:t.pageY},d[t.pointerId].target||(d[t.pointerId].target=t.currentTarget)})},onDocumentPointerUp:function(t){f(t,"onDocumentTouchEnd","touchend",function(t){delete d[t.pointerId]})},batchMSEvents:function(t){t(this.chart.container,p?"pointerdown":"MSPointerDown",this.onContainerPointerDown),t(this.chart.container,p?"pointermove":"MSPointerMove",this.onContainerPointerMove),t(n,p?"pointerup":"MSPointerUp",this.onDocumentPointerUp)}}),c(a.prototype,"init",function(t,e,i){t.call(this,e,i),this.hasZoom&&s(e.container,{"-ms-touch-action":"none","touch-action":"none"})}),c(a.prototype,"setDOMEvents",function(t){t.apply(this),(this.hasZoom||this.followTouchMove)&&this.batchMSEvents(e)}),c(a.prototype,"destroy",function(t){this.batchMSEvents(h),t.call(this)})}}(t),function(t){var e,i=t.addEvent,s=t.css,n=t.discardElement,r=t.defined,o=t.each,a=t.isFirefox,h=t.marginNames,l=t.merge,c=t.pick,d=t.setAnimation,p=t.stableSort,u=t.win,f=t.wrap;e=t.Legend=function(t,e){this.init(t,e)},e.prototype={init:function(t,e){this.chart=t,this.setOptions(e),e.enabled&&(this.render(),i(this.chart,"endResize",function(){this.legend.positionCheckboxes()}))},setOptions:function(t){var e=c(t.padding,8);this.options=t,this.itemStyle=t.itemStyle,this.itemHiddenStyle=l(this.itemStyle,t.itemHiddenStyle),this.itemMarginTop=t.itemMarginTop||0,this.padding=e,this.initialItemY=e-5,this.itemHeight=this.maxItemWidth=0,this.symbolWidth=c(t.symbolWidth,16),this.pages=[]},update:function(t,e){var i=this.chart;this.setOptions(l(!0,this.options,t)),this.destroy(),i.isDirtyLegend=i.isDirtyBox=!0,c(e,!0)&&i.redraw()},colorizeItem:function(e,i){e.legendGroup[i?"removeClass":"addClass"]("highcharts-legend-item-hidden");var s=this.options,n=e.legendItem,r=e.legendLine,o=e.legendSymbol,a=this.itemHiddenStyle.color,s=i?s.itemStyle.color:a,h=i?e.color||a:a,l=e.options&&e.options.marker,c={fill:h};n&&n.css({fill:s,color:s}),r&&r.attr({stroke:h}),o&&(l&&o.isMarker&&(c=e.pointAttribs(),i||t.objectEach(c,function(t,e){c[e]=a})),o.attr(c))},positionItem:function(t){var e=this.options,i=e.symbolPadding,e=!e.rtl,s=t._legendItemPos,n=s[0],s=s[1],r=t.checkbox;(t=t.legendGroup)&&t.element&&t.translate(e?n:this.legendWidth-n-2*i-4,s),r&&(r.x=n,r.y=s)},destroyItem:function(t){var e=t.checkbox;o(["legendItem","legendLine","legendSymbol","legendGroup"],function(e){t[e]&&(t[e]=t[e].destroy())}),e&&n(t.checkbox)},destroy:function(){function t(t){this[t]&&(this[t]=this[t].destroy())}o(this.getAllItems(),function(e){o(["legendItem","legendGroup"],t,e)}),o("clipRect up down pager nav box title group".split(" "),t,this),this.display=null},positionCheckboxes:function(t){var e,i=this.group&&this.group.alignAttr,n=this.clipHeight||this.legendHeight,r=this.titleHeight;i&&(e=i.translateY,o(this.allItems,function(o){var a,h=o.checkbox;h&&(a=e+r+h.y+(t||0)+3,s(h,{left:i.translateX+o.checkboxOffset+h.x-20+"px",top:a+"px",display:a>e-6&&a<e+n-6?"":"none"}))}))},renderTitle:function(){var t=this.options,e=this.padding,i=t.title,s=0;i.text&&(this.title||(this.title=this.chart.renderer.label(i.text,e-3,e-4,null,null,null,t.useHTML,null,"legend-title").attr({zIndex:1}).css(i.style).add(this.group)),t=this.title.getBBox(),s=t.height,this.offsetWidth=t.width,this.contentGroup.attr({translateY:s})),this.titleHeight=s},setText:function(e){var i=this.options;e.legendItem.attr({text:i.labelFormat?t.format(i.labelFormat,e):i.labelFormatter.call(e)})},renderItem:function(t){var e=this.chart,i=e.renderer,s=this.options,n="horizontal"===s.layout,r=this.symbolWidth,o=s.symbolPadding,a=this.itemStyle,h=this.itemHiddenStyle,d=this.padding,p=n?c(s.itemDistance,20):0,u=!s.rtl,f=s.width,g=s.itemMarginBottom||0,m=this.itemMarginTop,v=t.legendItem,y=!t.series,x=!y&&t.series.drawLegendSymbol?t.series:t,b=x.options,b=this.createCheckboxForItem&&b&&b.showCheckbox,k=s.useHTML,w=t.options.className;v||(t.legendGroup=i.g("legend-item").addClass("highcharts-"+x.type+"-series highcharts-color-"+t.colorIndex+(w?" "+w:"")+(y?" highcharts-series-"+t.index:"")).attr({zIndex:1}).add(this.scrollGroup),t.legendItem=v=i.text("",u?r+o:-o,this.baseline||0,k).css(l(t.visible?a:h)).attr({align:u?"left":"right",zIndex:2}).add(t.legendGroup),this.baseline||(a=a.fontSize,this.fontMetrics=i.fontMetrics(a,v),this.baseline=this.fontMetrics.f+3+m,v.attr("y",this.baseline)),this.symbolHeight=s.symbolHeight||this.fontMetrics.f,x.drawLegendSymbol(this,t),this.setItemEvents&&this.setItemEvents(t,v,k),b&&this.createCheckboxForItem(t)),this.colorizeItem(t,t.visible),this.setText(t),i=v.getBBox(),r=t.checkboxOffset=s.itemWidth||t.legendItemWidth||r+o+i.width+p+(b?20:0),this.itemHeight=o=Math.round(t.legendItemHeight||i.height||this.symbolHeight),n&&this.itemX-d+r>(f||e.spacingBox.width-2*d-s.x)&&(this.itemX=d,this.itemY+=m+this.lastLineHeight+g,this.lastLineHeight=0),this.maxItemWidth=Math.max(this.maxItemWidth,r),this.lastItemY=m+this.itemY+g,this.lastLineHeight=Math.max(o,this.lastLineHeight),t._legendItemPos=[this.itemX,this.itemY],n?this.itemX+=r:(this.itemY+=m+o+g,this.lastLineHeight=o),this.offsetWidth=f||Math.max((n?this.itemX-d-p:r)+d,this.offsetWidth)},getAllItems:function(){var t=[];return o(this.chart.series,function(e){var i=e&&e.options;e&&c(i.showInLegend,!r(i.linkedTo)&&void 0,!0)&&(t=t.concat(e.legendItems||("point"===i.legendType?e.data:e)))}),t},adjustMargins:function(t,e){var i=this.chart,s=this.options,n=s.align.charAt(0)+s.verticalAlign.charAt(0)+s.layout.charAt(0);s.floating||o([/(lth|ct|rth)/,/(rtv|rm|rbv)/,/(rbh|cb|lbh)/,/(lbv|lm|ltv)/],function(o,a){o.test(n)&&!r(t[a])&&(i[h[a]]=Math.max(i[h[a]],i.legend[(a+1)%2?"legendHeight":"legendWidth"]+[1,-1,-1,1][a]*s[a%2?"x":"y"]+c(s.margin,12)+e[a]))})},render:function(){var t,e,i,s,n=this,r=n.chart,a=r.renderer,h=n.group,c=n.box,d=n.options,u=n.padding;n.itemX=u,n.itemY=n.initialItemY,n.offsetWidth=0,n.lastItemY=0,h||(n.group=h=a.g("legend").attr({zIndex:7}).add(),n.contentGroup=a.g().attr({zIndex:1}).add(h),n.scrollGroup=a.g().add(n.contentGroup)),n.renderTitle(),t=n.getAllItems(),p(t,function(t,e){return(t.options&&t.options.legendIndex||0)-(e.options&&e.options.legendIndex||0)}),d.reversed&&t.reverse(),n.allItems=t,n.display=e=!!t.length,n.lastLineHeight=0,o(t,function(t){n.renderItem(t)}),i=(d.width||n.offsetWidth)+u,s=n.lastItemY+n.lastLineHeight+n.titleHeight,s=n.handleOverflow(s),s+=u,c||(n.box=c=a.rect().addClass("highcharts-legend-box").attr({r:d.borderRadius}).add(h),c.isNew=!0),c.attr({stroke:d.borderColor,"stroke-width":d.borderWidth||0,fill:d.backgroundColor||"none"}).shadow(d.shadow),0<i&&0<s&&(c[c.isNew?"attr":"animate"](c.crisp({x:0,y:0,width:i,height:s},c.strokeWidth())),c.isNew=!1),c[e?"show":"hide"](),n.legendWidth=i,n.legendHeight=s,o(t,function(t){n.positionItem(t)}),e&&h.align(l(d,{width:i,height:s}),!0,"spacingBox"),r.isResizing||this.positionCheckboxes()},handleOverflow:function(t){var e,i,s=this,n=this.chart,r=n.renderer,a=this.options,h=a.y,l=this.padding,n=n.spacingBox.height+("top"===a.verticalAlign?-h:h)-l,h=a.maxHeight,d=this.clipRect,p=a.navigation,u=c(p.animation,!0),f=p.arrowSize||12,g=this.nav,m=this.pages,v=this.allItems,y=function(t){"number"==typeof t?d.attr({height:t}):d&&(s.clipRect=d.destroy(),s.contentGroup.clip()),s.contentGroup.div&&(s.contentGroup.div.style.clip=t?"rect("+l+"px,9999px,"+(l+t)+"px,0)":"auto")};return"horizontal"!==a.layout||"middle"===a.verticalAlign||a.floating||(n/=2),h&&(n=Math.min(n,h)),m.length=0,t>n&&!1!==p.enabled?(this.clipHeight=e=Math.max(n-20-this.titleHeight-l,0),this.currentPage=c(this.currentPage,1),this.fullHeight=t,o(v,function(t,s){var n=t._legendItemPos[1];t=Math.round(t.legendItem.getBBox().height);var r=m.length;(!r||n-m[r-1]>e&&(i||n)!==m[r-1])&&(m.push(i||n),r++),s===v.length-1&&n+t-m[r-1]>e&&m.push(n),n!==i&&(i=n)}),d||(d=s.clipRect=r.clipRect(0,l,9999,0),s.contentGroup.clip(d)),y(e),g||(this.nav=g=r.g().attr({zIndex:1}).add(this.group),this.up=r.symbol("triangle",0,0,f,f).on("click",function(){s.scroll(-1,u)}).add(g),this.pager=r.text("",15,10).addClass("highcharts-legend-navigation").css(p.style).add(g),this.down=r.symbol("triangle-down",0,0,f,f).on("click",function(){s.scroll(1,u)}).add(g)),s.scroll(0),t=n):g&&(y(),this.nav=g.destroy(),this.scrollGroup.attr({translateY:1}),this.clipHeight=0),t},scroll:function(t,e){var i=this.pages,s=i.length;t=this.currentPage+t;var n=this.clipHeight,r=this.options.navigation,o=this.pager,a=this.padding;t>s&&(t=s),0<t&&(void 0!==e&&d(e,this.chart),this.nav.attr({translateX:a,translateY:n+this.padding+7+this.titleHeight,visibility:"visible"}),this.up.attr({class:1===t?"highcharts-legend-nav-inactive":"highcharts-legend-nav-active"}),o.attr({text:t+"/"+s}),this.down.attr({x:18+this.pager.getBBox().width,class:t===s?"highcharts-legend-nav-inactive":"highcharts-legend-nav-active"}),this.up.attr({fill:1===t?r.inactiveColor:r.activeColor}).css({cursor:1===t?"default":"pointer"}),this.down.attr({fill:t===s?r.inactiveColor:r.activeColor}).css({cursor:t===s?"default":"pointer"}),e=-i[t-1]+this.initialItemY,this.scrollGroup.animate({translateY:e}),this.currentPage=t,this.positionCheckboxes(e))}},t.LegendSymbolMixin={drawRectangle:function(t,e){var i=t.symbolHeight,s=t.options.squareSymbol;e.legendSymbol=this.chart.renderer.rect(s?(t.symbolWidth-i)/2:0,t.baseline-i+1,s?i:t.symbolWidth,i,c(t.options.symbolRadius,i/2)).addClass("highcharts-point").attr({zIndex:3}).add(e.legendGroup)},drawLineMarker:function(t){var e=this.options,i=e.marker,s=t.symbolWidth,n=t.symbolHeight,r=n/2,o=this.chart.renderer,a=this.legendGroup;t=t.baseline-Math.round(.3*t.fontMetrics.b);var h;h={"stroke-width":e.lineWidth||0},e.dashStyle&&(h.dashstyle=e.dashStyle),this.legendLine=o.path(["M",0,t,"L",s,t]).addClass("highcharts-graph").attr(h).add(a),i&&!1!==i.enabled&&(e=Math.min(c(i.radius,r),r),0===this.symbol.indexOf("url")&&(i=l(i,{width:n,height:n}),e=0),this.legendSymbol=i=o.symbol(this.symbol,s/2-e,t-e,2*e,2*e,i).addClass("highcharts-point").add(a),i.isMarker=!0)}},(/Trident\/7\.0/.test(u.navigator.userAgent)||a)&&f(e.prototype,"positionItem",function(t,e){var i=this,s=function(){e._legendItemPos&&t.call(i,e)};s(),setTimeout(s)})}(t),function(t){var e=t.addEvent,i=t.animate,s=t.animObject,n=t.attr,r=t.doc,o=t.Axis,a=t.createElement,h=t.defaultOptions,l=t.discardElement,c=t.charts,d=t.css,p=t.defined,u=t.each,f=t.extend,g=t.find,m=t.fireEvent,v=t.getStyle,y=t.grep,x=t.isNumber,b=t.isObject,k=t.isString,w=t.Legend,M=t.marginNames,S=t.merge,T=t.objectEach,A=t.Pointer,P=t.pick,C=t.pInt,L=t.removeEvent,O=t.seriesTypes,I=t.splat,D=t.svg,E=t.syncTimeout,z=t.win,R=t.Renderer,N=t.Chart=function(){this.getArgs.apply(this,arguments)};t.chart=function(t,e,i){return new N(t,e,i)},f(N.prototype,{callbacks:[],getArgs:function(){var t=[].slice.call(arguments);(k(t[0])||t[0].nodeName)&&(this.renderTo=t.shift()),this.init(t[0],t[1])},init:function(i,s){var n,r,o=i.series,a=i.plotOptions||{};i.series=null,n=S(h,i);for(r in n.plotOptions)n.plotOptions[r].tooltip=a[r]&&S(a[r].tooltip)||void 0;n.tooltip.userOptions=i.chart&&i.chart.forExport&&i.tooltip.userOptions||i.tooltip,n.series=i.series=o,this.userOptions=i,i=n.chart,r=i.events,this.margin=[],this.spacing=[],this.bounds={h:{},v:{}},this.callback=s,this.isResizing=0,this.options=n,this.axes=[],this.series=[],this.hasCartesianSeries=i.showAxes;var l=this;l.index=c.length,c.push(l),t.chartCount++,r&&T(r,function(t,i){e(l,i,t)}),l.xAxis=[],l.yAxis=[],l.pointCount=l.colorCounter=l.symbolCounter=0,l.firstRender()},initSeries:function(e){var i=this.options.chart;return(i=O[e.type||i.type||i.defaultSeriesType])||t.error(17,!0),i=new i,i.init(this,e),i},orderSeries:function(t){var e=this.series;for(t=t||0;t<e.length;t++)e[t]&&(e[t].index=t,e[t].name=e[t].name||"Series "+(e[t].index+1))},isInsidePlot:function(t,e,i){var s=i?e:t;return t=i?t:e,0<=s&&s<=this.plotWidth&&0<=t&&t<=this.plotHeight},redraw:function(e){var i,s,n,r=this.axes,o=this.series,a=this.pointer,h=this.legend,l=this.isDirtyLegend,c=this.hasCartesianSeries,d=this.isDirtyBox,p=this.renderer,g=p.isHidden(),v=[];for(this.setResponsive&&this.setResponsive(!1),t.setAnimation(e,this),g&&this.temporaryDisplay(),this.layOutTitles(),e=o.length;e--;)if(n=o[e],n.options.stacking&&(i=!0,n.isDirty)){s=!0;break}if(s)for(e=o.length;e--;)n=o[e],n.options.stacking&&(n.isDirty=!0);u(o,function(t){t.isDirty&&"point"===t.options.legendType&&(t.updateTotals&&t.updateTotals(),l=!0),t.isDirtyData&&m(t,"updatedData")}),l&&h.options.enabled&&(h.render(),this.isDirtyLegend=!1),i&&this.getStacks(),c&&u(r,function(t){t.updateNames(),t.setScale()}),this.getMargins(),c&&(u(r,function(t){t.isDirty&&(d=!0)}),u(r,function(t){var e=t.min+","+t.max;t.extKey!==e&&(t.extKey=e,v.push(function(){m(t,"afterSetExtremes",f(t.eventArgs,t.getExtremes())),delete t.eventArgs})),(d||i)&&t.redraw()})),d&&this.drawChartBox(),m(this,"predraw"),u(o,function(t){(d||t.isDirty)&&t.visible&&t.redraw(),t.isDirtyData=!1}),a&&a.reset(!0),p.draw(),m(this,"redraw"),m(this,"render"),g&&this.temporaryDisplay(!0),u(v,function(t){t.call()})},get:function(t){function e(e){return e.id===t||e.options&&e.options.id===t}var i,s,n=this.series;for(i=g(this.axes,e)||g(this.series,e),s=0;!i&&s<n.length;s++)i=g(n[s].points||[],e);return i},getAxes:function(){var t=this,e=this.options,i=e.xAxis=I(e.xAxis||{}),e=e.yAxis=I(e.yAxis||{});u(i,function(t,e){t.index=e,t.isX=!0}),u(e,function(t,e){t.index=e}),i=i.concat(e),u(i,function(e){new o(t,e)})},getSelectedPoints:function(){var t=[];return u(this.series,function(e){t=t.concat(y(e.data||[],function(t){return t.selected}))}),t},getSelectedSeries:function(){return y(this.series,function(t){return t.selected})},setTitle:function(t,e,i){var s,n=this,r=n.options;s=r.title=S({style:{color:"#333333",fontSize:r.isStock?"16px":"18px"}},r.title,t),r=r.subtitle=S({style:{color:"#666666"}},r.subtitle,e),u([["title",t,s],["subtitle",e,r]],function(t,e){var i=t[0],s=n[i],r=t[1];t=t[2],s&&r&&(n[i]=s=s.destroy()),t&&t.text&&!s&&(n[i]=n.renderer.text(t.text,0,0,t.useHTML).attr({align:t.align,class:"highcharts-"+i,zIndex:t.zIndex||4}).add(),n[i].update=function(t){n.setTitle(!e&&t,e&&t)},n[i].css(t.style))}),n.layOutTitles(i)},layOutTitles:function(t){var e,i=0,s=this.renderer,n=this.spacingBox;u(["title","subtitle"],function(t){var e=this[t],r=this.options[t];t="title"===t?-3:r.verticalAlign?0:i+2;var o;e&&(o=r.style.fontSize,o=s.fontMetrics(o,e).b,e.css({width:(r.width||n.width+r.widthAdjust)+"px"}).align(f({y:t+o},r),!1,"spacingBox"),r.floating||r.verticalAlign||(i=Math.ceil(i+e.getBBox(r.useHTML).height)))},this),e=this.titleOffset!==i,this.titleOffset=i,!this.isDirtyBox&&e&&(this.isDirtyBox=e,this.hasRendered&&P(t,!0)&&this.isDirtyBox&&this.redraw())},getChartSize:function(){var e=this.options.chart,i=e.width,e=e.height,s=this.renderTo;p(i)||(this.containerWidth=v(s,"width")),p(e)||(this.containerHeight=v(s,"height")),this.chartWidth=Math.max(0,i||this.containerWidth||600),this.chartHeight=Math.max(0,t.relativeLength(e,this.chartWidth)||this.containerHeight||400)},temporaryDisplay:function(e){var i=this.renderTo;if(e)for(;i&&i.style;)i.hcOrigStyle&&(t.css(i,i.hcOrigStyle),delete i.hcOrigStyle),i=i.parentNode;else for(;i&&i.style;)"none"===v(i,"display",!1)&&(i.hcOrigStyle={display:i.style.display,height:i.style.height,overflow:i.style.overflow},t.css(i,{display:"block",height:0,overflow:"hidden"}),i.style.setProperty&&i.style.setProperty("display","block","important")),i=i.parentNode},setClassName:function(t){this.container.className="highcharts-container "+(t||"")},getContainer:function(){var e,i,s,o=this.options,h=o.chart;e=this.renderTo;var l,d=t.uniqueKey();e||(this.renderTo=e=h.renderTo),k(e)&&(this.renderTo=e=r.getElementById(e)),e||t.error(13,!0),i=C(n(e,"data-highcharts-chart")),x(i)&&c[i]&&c[i].hasRendered&&c[i].destroy(),n(e,"data-highcharts-chart",this.index),e.innerHTML="",h.skipClone||e.offsetWidth||this.temporaryDisplay(),this.getChartSize(),i=this.chartWidth,s=this.chartHeight,l=f({position:"relative",overflow:"hidden",width:i+"px",height:s+"px",textAlign:"left",lineHeight:"normal",zIndex:0,"-webkit-tap-highlight-color":"rgba(0,0,0,0)"},h.style),this.container=e=a("div",{id:d},l,e),this._cursor=e.style.cursor,this.renderer=new(t[h.renderer]||R)(e,i,s,null,h.forExport,o.exporting&&o.exporting.allowHTML),this.setClassName(h.className),this.renderer.setStyle(h.style),this.renderer.chartIndex=this.index},getMargins:function(t){var e=this.spacing,i=this.margin,s=this.titleOffset;this.resetMargins(),s&&!p(i[0])&&(this.plotTop=Math.max(this.plotTop,s+this.options.title.margin+e[0])),this.legend.display&&this.legend.adjustMargins(i,e),this.extraMargin&&(this[this.extraMargin.type]=(this[this.extraMargin.type]||0)+this.extraMargin.value),this.extraTopMargin&&(this.plotTop+=this.extraTopMargin),t||this.getAxisMargins()},getAxisMargins:function(){var t=this,e=t.axisOffset=[0,0,0,0],i=t.margin;t.hasCartesianSeries&&u(t.axes,function(t){t.visible&&t.getOffset()}),u(M,function(s,n){p(i[n])||(t[s]+=e[n])}),t.setChartSize()},reflow:function(t){var e=this,i=e.options.chart,s=e.renderTo,n=p(i.width),o=i.width||v(s,"width"),i=i.height||v(s,"height"),s=t?t.target:z;n||e.isPrinting||!o||!i||s!==z&&s!==r||(o===e.containerWidth&&i===e.containerHeight||(clearTimeout(e.reflowTimeout),e.reflowTimeout=E(function(){e.container&&e.setSize(void 0,void 0,!1)},t?100:0)),e.containerWidth=o,e.containerHeight=i)},initReflow:function(){var t,i=this;t=e(z,"resize",function(t){i.reflow(t)}),e(i,"destroy",t)},setSize:function(e,n,r){var o=this,a=o.renderer;o.isResizing+=1,t.setAnimation(r,o),o.oldChartHeight=o.chartHeight,o.oldChartWidth=o.chartWidth,void 0!==e&&(o.options.chart.width=e),void 0!==n&&(o.options.chart.height=n),o.getChartSize(),e=a.globalAnimation,(e?i:d)(o.container,{width:o.chartWidth+"px",height:o.chartHeight+"px"},e),o.setChartSize(!0),a.setSize(o.chartWidth,o.chartHeight,r),u(o.axes,function(t){t.isDirty=!0,t.setScale()}),o.isDirtyLegend=!0,o.isDirtyBox=!0,o.layOutTitles(),o.getMargins(),o.redraw(r),o.oldChartHeight=null,m(o,"resize"),E(function(){o&&m(o,"endResize",null,function(){--o.isResizing})},s(e).duration)},setChartSize:function(t){var e,i,s,n,r=this.inverted,o=this.renderer,a=this.chartWidth,h=this.chartHeight,l=this.options.chart,c=this.spacing,d=this.clipOffset;this.plotLeft=e=Math.round(this.plotLeft),this.plotTop=i=Math.round(this.plotTop),this.plotWidth=s=Math.max(0,Math.round(a-e-this.marginRight)),this.plotHeight=n=Math.max(0,Math.round(h-i-this.marginBottom)),this.plotSizeX=r?n:s,this.plotSizeY=r?s:n,
+this.plotBorderWidth=l.plotBorderWidth||0,this.spacingBox=o.spacingBox={x:c[3],y:c[0],width:a-c[3]-c[1],height:h-c[0]-c[2]},this.plotBox=o.plotBox={x:e,y:i,width:s,height:n},a=2*Math.floor(this.plotBorderWidth/2),r=Math.ceil(Math.max(a,d[3])/2),o=Math.ceil(Math.max(a,d[0])/2),this.clipBox={x:r,y:o,width:Math.floor(this.plotSizeX-Math.max(a,d[1])/2-r),height:Math.max(0,Math.floor(this.plotSizeY-Math.max(a,d[2])/2-o))},t||u(this.axes,function(t){t.setAxisSize(),t.setAxisTranslation()})},resetMargins:function(){var t=this,e=t.options.chart;u(["margin","spacing"],function(i){var s=e[i],n=b(s)?s:[s,s,s,s];u(["Top","Right","Bottom","Left"],function(s,r){t[i][r]=P(e[i+s],n[r])})}),u(M,function(e,i){t[e]=P(t.margin[i],t.spacing[i])}),t.axisOffset=[0,0,0,0],t.clipOffset=[0,0,0,0]},drawChartBox:function(){var t,e,i=this.options.chart,s=this.renderer,n=this.chartWidth,r=this.chartHeight,o=this.chartBackground,a=this.plotBackground,h=this.plotBorder,l=this.plotBGImage,c=i.backgroundColor,d=i.plotBackgroundColor,p=i.plotBackgroundImage,u=this.plotLeft,f=this.plotTop,g=this.plotWidth,m=this.plotHeight,v=this.plotBox,y=this.clipRect,x=this.clipBox,b="animate";o||(this.chartBackground=o=s.rect().addClass("highcharts-background").add(),b="attr"),t=i.borderWidth||0,e=t+(i.shadow?8:0),c={fill:c||"none"},(t||o["stroke-width"])&&(c.stroke=i.borderColor,c["stroke-width"]=t),o.attr(c).shadow(i.shadow),o[b]({x:e/2,y:e/2,width:n-e-t%2,height:r-e-t%2,r:i.borderRadius}),b="animate",a||(b="attr",this.plotBackground=a=s.rect().addClass("highcharts-plot-background").add()),a[b](v),a.attr({fill:d||"none"}).shadow(i.plotShadow),p&&(l?l.animate(v):this.plotBGImage=s.image(p,u,f,g,m).add()),y?y.animate({width:x.width,height:x.height}):this.clipRect=s.clipRect(x),b="animate",h||(b="attr",this.plotBorder=h=s.rect().addClass("highcharts-plot-border").attr({zIndex:1}).add()),h.attr({stroke:i.plotBorderColor,"stroke-width":i.plotBorderWidth||0,fill:"none"}),h[b](h.crisp({x:u,y:f,width:g,height:m},-h.strokeWidth())),this.isDirtyBox=!1},propFromSeries:function(){var t,e,i,s=this,n=s.options.chart,r=s.options.series;u(["inverted","angular","polar"],function(o){for(t=O[n.type||n.defaultSeriesType],i=n[o]||t&&t.prototype[o],e=r&&r.length;!i&&e--;)(t=O[r[e].type])&&t.prototype[o]&&(i=!0);s[o]=i})},linkSeries:function(){var t=this,e=t.series;u(e,function(t){t.linkedSeries.length=0}),u(e,function(e){var i=e.options.linkedTo;k(i)&&(i=":previous"===i?t.series[e.index-1]:t.get(i))&&i.linkedParent!==e&&(i.linkedSeries.push(e),e.linkedParent=i,e.visible=P(e.options.visible,i.options.visible,e.visible))})},renderSeries:function(){u(this.series,function(t){t.translate(),t.render()})},renderLabels:function(){var t=this,e=t.options.labels;e.items&&u(e.items,function(i){var s=f(e.style,i.style),n=C(s.left)+t.plotLeft,r=C(s.top)+t.plotTop+12;delete s.left,delete s.top,t.renderer.text(i.html,n,r).attr({zIndex:2}).css(s).add()})},render:function(){var t,e,i,s=this.axes,n=this.renderer,r=this.options;this.setTitle(),this.legend=new w(this,r.legend),this.getStacks&&this.getStacks(),this.getMargins(!0),this.setChartSize(),r=this.plotWidth,t=this.plotHeight-=21,u(s,function(t){t.setScale()}),this.getAxisMargins(),e=1.1<r/this.plotWidth,i=1.05<t/this.plotHeight,(e||i)&&(u(s,function(t){(t.horiz&&e||!t.horiz&&i)&&t.setTickInterval(!0)}),this.getMargins()),this.drawChartBox(),this.hasCartesianSeries&&u(s,function(t){t.visible&&t.render()}),this.seriesGroup||(this.seriesGroup=n.g("series-group").attr({zIndex:3}).add()),this.renderSeries(),this.renderLabels(),this.addCredits(),this.setResponsive&&this.setResponsive(),this.hasRendered=!0},addCredits:function(t){var e=this;t=S(!0,this.options.credits,t),t.enabled&&!this.credits&&(this.credits=this.renderer.text(t.text+(this.mapCredits||""),0,0).addClass("highcharts-credits").on("click",function(){t.href&&(z.location.href=t.href)}).attr({align:t.position.align,zIndex:8}).css(t.style).add().align(t.position),this.credits.update=function(t){e.credits=e.credits.destroy(),e.addCredits(t)})},destroy:function(){var e,i=this,s=i.axes,n=i.series,r=i.container,o=r&&r.parentNode;for(m(i,"destroy"),i.renderer.forExport?t.erase(c,i):c[i.index]=void 0,t.chartCount--,i.renderTo.removeAttribute("data-highcharts-chart"),L(i),e=s.length;e--;)s[e]=s[e].destroy();for(this.scroller&&this.scroller.destroy&&this.scroller.destroy(),e=n.length;e--;)n[e]=n[e].destroy();u("title subtitle chartBackground plotBackground plotBGImage plotBorder seriesGroup clipRect credits pointer rangeSelector legend resetZoomButton tooltip renderer".split(" "),function(t){var e=i[t];e&&e.destroy&&(i[t]=e.destroy())}),r&&(r.innerHTML="",L(r),o&&l(r)),T(i,function(t,e){delete i[e]})},isReadyToRender:function(){var t=this;return!(!D&&z==z.top&&"complete"!==r.readyState)||(r.attachEvent("onreadystatechange",function(){r.detachEvent("onreadystatechange",t.firstRender),"complete"===r.readyState&&t.firstRender()}),!1)},firstRender:function(){var t=this,e=t.options;t.isReadyToRender()&&(t.getContainer(),m(t,"init"),t.resetMargins(),t.setChartSize(),t.propFromSeries(),t.getAxes(),u(e.series||[],function(e){t.initSeries(e)}),t.linkSeries(),m(t,"beforeRender"),A&&(t.pointer=new A(t,e)),t.render(),!t.renderer.imgCount&&t.onload&&t.onload(),t.temporaryDisplay(!0))},onload:function(){u([this.callback].concat(this.callbacks),function(t){t&&void 0!==this.index&&t.apply(this,[this])},this),m(this,"load"),m(this,"render"),p(this.index)&&!1!==this.options.chart.reflow&&this.initReflow(),this.onload=null}})}(t),function(t){var e,i=t.each,s=t.extend,n=t.erase,r=t.fireEvent,o=t.format,a=t.isArray,h=t.isNumber,l=t.pick,c=t.removeEvent;e=t.Point=function(){},e.prototype={init:function(t,e,i){return this.series=t,this.color=t.color,this.applyOptions(e,i),t.options.colorByPoint?(e=t.options.colors||t.chart.options.colors,this.color=this.color||e[t.colorCounter],e=e.length,i=t.colorCounter,t.colorCounter++,t.colorCounter===e&&(t.colorCounter=0)):i=t.colorIndex,this.colorIndex=l(this.colorIndex,i),t.chart.pointCount++,this},applyOptions:function(t,i){var n=this.series,r=n.options.pointValKey||n.pointValKey;return t=e.prototype.optionsToObject.call(this,t),s(this,t),this.options=this.options?s(this.options,t):t,t.group&&delete this.group,r&&(this.y=this[r]),this.isNull=l(this.isValid&&!this.isValid(),null===this.x||!h(this.y,!0)),this.selected&&(this.state="select"),"name"in this&&void 0===i&&n.xAxis&&n.xAxis.hasNames&&(this.x=n.xAxis.nameToX(this)),void 0===this.x&&n&&(this.x=void 0===i?n.autoIncrement(this):i),this},optionsToObject:function(t){var e={},i=this.series,s=i.options.keys,n=s||i.pointArrayMap||["y"],r=n.length,o=0,l=0;if(h(t)||null===t)e[n[0]]=t;else if(a(t))for(!s&&t.length>r&&(i=typeof t[0],"string"===i?e.name=t[0]:"number"===i&&(e.x=t[0]),o++);l<r;)s&&void 0===t[o]||(e[n[l]]=t[o]),o++,l++;else"object"==typeof t&&(e=t,t.dataLabels&&(i._hasPointLabels=!0),t.marker&&(i._hasPointMarkers=!0));return e},getClassName:function(){return"highcharts-point"+(this.selected?" highcharts-point-select":"")+(this.negative?" highcharts-negative":"")+(this.isNull?" highcharts-null-point":"")+(void 0!==this.colorIndex?" highcharts-color-"+this.colorIndex:"")+(this.options.className?" "+this.options.className:"")+(this.zone&&this.zone.className?" "+this.zone.className.replace("highcharts-negative",""):"")},getZone:function(){var t,e=this.series,i=e.zones,e=e.zoneAxis||"y",s=0;for(t=i[s];this[e]>=t.value;)t=i[++s];return t&&t.color&&!this.options.color&&(this.color=t.color),t},destroy:function(){var t,e=this.series.chart,i=e.hoverPoints;e.pointCount--,i&&(this.setState(),n(i,this),i.length||(e.hoverPoints=null)),this===e.hoverPoint&&this.onMouseOut(),(this.graphic||this.dataLabel)&&(c(this),this.destroyElements()),this.legendItem&&e.legend.destroyItem(this);for(t in this)this[t]=null},destroyElements:function(){for(var t,e=["graphic","dataLabel","dataLabelUpper","connector","shadowGroup"],i=6;i--;)t=e[i],this[t]&&(this[t]=this[t].destroy())},getLabelConfig:function(){return{x:this.category,y:this.y,color:this.color,colorIndex:this.colorIndex,key:this.name||this.category,series:this.series,point:this,percentage:this.percentage,total:this.total||this.stackTotal}},tooltipFormatter:function(t){var e=this.series,s=e.tooltipOptions,n=l(s.valueDecimals,""),r=s.valuePrefix||"",a=s.valueSuffix||"";return i(e.pointArrayMap||["y"],function(e){e="{point."+e,(r||a)&&(t=t.replace(e+"}",r+e+"}"+a)),t=t.replace(e+"}",e+":,."+n+"f}")}),o(t,{point:this,series:this.series})},firePointEvent:function(t,e,i){var s=this,n=this.series.options;(n.point.events[t]||s.options&&s.options.events&&s.options.events[t])&&this.importEvents(),"click"===t&&n.allowPointSelect&&(i=function(t){s.select&&s.select(null,t.ctrlKey||t.metaKey||t.shiftKey)}),r(this,t,e,i)},visible:!0}}(t),function(t){var e=t.addEvent,i=t.animObject,s=t.arrayMax,n=t.arrayMin,r=t.correctFloat,o=t.Date,a=t.defaultOptions,h=t.defaultPlotOptions,l=t.defined,c=t.each,d=t.erase,p=t.extend,u=t.fireEvent,f=t.grep,g=t.isArray,m=t.isNumber,v=t.isString,y=t.merge,x=t.objectEach,b=t.pick,k=t.removeEvent,w=t.splat,M=t.SVGElement,S=t.syncTimeout,T=t.win;t.Series=t.seriesType("line",null,{lineWidth:2,allowPointSelect:!1,showCheckbox:!1,animation:{duration:1e3},events:{},marker:{lineWidth:0,lineColor:"#ffffff",radius:4,states:{hover:{animation:{duration:50},enabled:!0,radiusPlus:2,lineWidthPlus:1},select:{fillColor:"#cccccc",lineColor:"#000000",lineWidth:2}}},point:{events:{}},dataLabels:{align:"center",formatter:function(){return null===this.y?"":t.numberFormat(this.y,-1)},style:{fontSize:"11px",fontWeight:"bold",color:"contrast",textOutline:"1px contrast"},verticalAlign:"bottom",x:0,y:0,padding:5},cropThreshold:300,pointRange:0,softThreshold:!0,states:{hover:{animation:{duration:50},lineWidthPlus:1,marker:{},halo:{size:10,opacity:.25}},select:{marker:{}}},stickyTracking:!0,turboThreshold:1e3,findNearestPointBy:"x"},{isCartesian:!0,pointClass:t.Point,sorted:!0,requireSorting:!0,directTouch:!1,axisTypes:["xAxis","yAxis"],colorCounter:0,parallelArrays:["x","y"],coll:"series",init:function(t,i){var s,n,r=this,o=t.series;r.chart=t,r.options=i=r.setOptions(i),r.linkedSeries=[],r.bindAxes(),p(r,{name:i.name,state:"",visible:!1!==i.visible,selected:!0===i.selected}),s=i.events,x(s,function(t,i){e(r,i,t)}),(s&&s.click||i.point&&i.point.events&&i.point.events.click||i.allowPointSelect)&&(t.runTrackerClick=!0),r.getColor(),r.getSymbol(),c(r.parallelArrays,function(t){r[t+"Data"]=[]}),r.setData(i.data,!1),r.isCartesian&&(t.hasCartesianSeries=!0),o.length&&(n=o[o.length-1]),r._i=b(n&&n._i,-1)+1,t.orderSeries(this.insert(o))},insert:function(t){var e,i=this.options.index;if(m(i)){for(e=t.length;e--;)if(i>=b(t[e].options.index,t[e]._i)){t.splice(e+1,0,this);break}-1===e&&t.unshift(this),e+=1}else t.push(this);return b(e,t.length-1)},bindAxes:function(){var e,i=this,s=i.options,n=i.chart;c(i.axisTypes||[],function(r){c(n[r],function(t){e=t.options,(s[r]===e.index||void 0!==s[r]&&s[r]===e.id||void 0===s[r]&&0===e.index)&&(i.insert(t.series),i[r]=t,t.isDirty=!0)}),i[r]||i.optionalAxis===r||t.error(18,!0)})},updateParallelArrays:function(t,e){var i=t.series,s=arguments,n=m(e)?function(s){var n="y"===s&&i.toYData?i.toYData(t):t[s];i[s+"Data"][e]=n}:function(t){Array.prototype[e].apply(i[t+"Data"],Array.prototype.slice.call(s,2))};c(i.parallelArrays,n)},autoIncrement:function(){var t,e=this.options,i=this.xIncrement,s=e.pointIntervalUnit,i=b(i,e.pointStart,0);return this.pointInterval=t=b(this.pointInterval,e.pointInterval,1),s&&(e=new o(i),"day"===s?e=+e[o.hcSetDate](e[o.hcGetDate]()+t):"month"===s?e=+e[o.hcSetMonth](e[o.hcGetMonth]()+t):"year"===s&&(e=+e[o.hcSetFullYear](e[o.hcGetFullYear]()+t)),t=e-i),this.xIncrement=i+t,i},setOptions:function(t){var e=this.chart,i=e.options,s=i.plotOptions,n=(e.userOptions||{}).plotOptions||{},r=s[this.type];return this.userOptions=t,e=y(r,s.series,t),this.tooltipOptions=y(a.tooltip,a.plotOptions.series&&a.plotOptions.series.tooltip,a.plotOptions[this.type].tooltip,i.tooltip.userOptions,s.series&&s.series.tooltip,s[this.type].tooltip,t.tooltip),this.stickyTracking=b(t.stickyTracking,n[this.type]&&n[this.type].stickyTracking,n.series&&n.series.stickyTracking,!(!this.tooltipOptions.shared||this.noSharedTooltip)||e.stickyTracking),null===r.marker&&delete e.marker,this.zoneAxis=e.zoneAxis,t=this.zones=(e.zones||[]).slice(),!e.negativeColor&&!e.negativeFillColor||e.zones||t.push({value:e[this.zoneAxis+"Threshold"]||e.threshold||0,className:"highcharts-negative",color:e.negativeColor,fillColor:e.negativeFillColor}),t.length&&l(t[t.length-1].value)&&t.push({color:this.color,fillColor:this.fillColor}),e},getCyclic:function(t,e,i){var s,n=this.chart,r=this.userOptions,o=t+"Index",a=t+"Counter",h=i?i.length:b(n.options.chart[t+"Count"],n[t+"Count"]);e||(s=b(r[o],r["_"+o]),l(s)||(n.series.length||(n[a]=0),r["_"+o]=s=n[a]%h,n[a]+=1),i&&(e=i[s])),void 0!==s&&(this[o]=s),this[t]=e},getColor:function(){this.options.colorByPoint?this.options.color=null:this.getCyclic("color",this.options.color||h[this.type].color,this.chart.options.colors)},getSymbol:function(){this.getCyclic("symbol",this.options.marker.symbol,this.chart.options.symbols)},drawLegendSymbol:t.LegendSymbolMixin.drawLineMarker,setData:function(e,i,s,n){var r,o=this,a=o.points,h=a&&a.length||0,l=o.options,d=o.chart,p=null,u=o.xAxis,f=l.turboThreshold,y=this.xData,x=this.yData,k=(r=o.pointArrayMap)&&r.length;if(e=e||[],r=e.length,i=b(i,!0),!1!==n&&r&&h===r&&!o.cropped&&!o.hasGroupedData&&o.visible)c(e,function(t,e){a[e].update&&t!==l.data[e]&&a[e].update(t,!1,null,!1)});else{if(o.xIncrement=null,o.colorCounter=0,c(this.parallelArrays,function(t){o[t+"Data"].length=0}),f&&r>f){for(s=0;null===p&&s<r;)p=e[s],s++;if(m(p))for(s=0;s<r;s++)y[s]=this.autoIncrement(),x[s]=e[s];else if(g(p))if(k)for(s=0;s<r;s++)p=e[s],y[s]=p[0],x[s]=p.slice(1,k+1);else for(s=0;s<r;s++)p=e[s],y[s]=p[0],x[s]=p[1];else t.error(12)}else for(s=0;s<r;s++)void 0!==e[s]&&(p={series:o},o.pointClass.prototype.applyOptions.apply(p,[e[s]]),o.updateParallelArrays(p,s));for(v(x[0])&&t.error(14,!0),o.data=[],o.options.data=o.userOptions.data=e,s=h;s--;)a[s]&&a[s].destroy&&a[s].destroy();u&&(u.minRange=u.userMinRange),o.isDirty=d.isDirtyBox=!0,o.isDirtyData=!!a,s=!1}"point"===l.legendType&&(this.processData(),this.generatePoints()),i&&d.redraw(s)},processData:function(e){var i,s=this.xData,n=this.yData,r=s.length;i=0;var o,a,h,l=this.xAxis,c=this.options;h=c.cropThreshold;var d,p,u=this.getExtremesFromAll||c.getExtremesFromAll,f=this.isCartesian,c=l&&l.val2lin,g=l&&l.isLog;if(f&&!this.isDirty&&!l.isDirty&&!this.yAxis.isDirty&&!e)return!1;for(l&&(e=l.getExtremes(),d=e.min,p=e.max),f&&this.sorted&&!u&&(!h||r>h||this.forceCrop)&&(s[r-1]<d||s[0]>p?(s=[],n=[]):(s[0]<d||s[r-1]>p)&&(i=this.cropData(this.xData,this.yData,d,p),s=i.xData,n=i.yData,i=i.start,o=!0)),h=s.length||1;--h;)r=g?c(s[h])-c(s[h-1]):s[h]-s[h-1],0<r&&(void 0===a||r<a)?a=r:0>r&&this.requireSorting&&t.error(15);this.cropped=o,this.cropStart=i,this.processedXData=s,this.processedYData=n,this.closestPointRange=a},cropData:function(t,e,i,s){var n,r=t.length,o=0,a=r,h=b(this.cropShoulder,1);for(n=0;n<r;n++)if(t[n]>=i){o=Math.max(0,n-h);break}for(i=n;i<r;i++)if(t[i]>s){a=i+h;break}return{xData:t.slice(o,a),yData:e.slice(o,a),start:o,end:a}},generatePoints:function(){var t,e,i,s,n=this.options,r=n.data,o=this.data,a=this.processedXData,h=this.processedYData,l=this.pointClass,c=a.length,d=this.cropStart||0,p=this.hasGroupedData,n=n.keys,u=[];for(o||p||(o=[],o.length=r.length,o=this.data=o),n&&p&&(this.options.keys=!1),s=0;s<c;s++)e=d+s,p?(i=(new l).init(this,[a[s]].concat(w(h[s]))),i.dataGroup=this.groupMap[s]):(i=o[e])||void 0===r[e]||(o[e]=i=(new l).init(this,r[e],a[s])),i&&(i.index=e,u[s]=i);if(this.options.keys=n,o&&(c!==(t=o.length)||p))for(s=0;s<t;s++)s!==d||p||(s+=c),o[s]&&(o[s].destroyElements(),o[s].plotX=void 0);this.data=o,this.points=u},getExtremes:function(t){var e,i=this.yAxis,r=this.processedXData,o=[],a=0;e=this.xAxis.getExtremes();var h,l,c,d,p=e.min,u=e.max;for(t=t||this.stackedYData||this.processedYData||[],e=t.length,d=0;d<e;d++)if(l=r[d],c=t[d],h=(m(c,!0)||g(c))&&(!i.positiveValuesOnly||c.length||0<c),l=this.getExtremesFromAll||this.options.getExtremesFromAll||this.cropped||(r[d]||l)>=p&&(r[d]||l)<=u,h&&l)if(h=c.length)for(;h--;)null!==c[h]&&(o[a++]=c[h]);else o[a++]=c;this.dataMin=n(o),this.dataMax=s(o)},translate:function(){this.processedXData||this.processData(),this.generatePoints();var t,e,i,s,n=this.options,o=n.stacking,a=this.xAxis,h=a.categories,c=this.yAxis,d=this.points,p=d.length,u=!!this.modifyValue,f=n.pointPlacement,g="between"===f||m(f),v=n.threshold,y=n.startFromThreshold?v:0,x=Number.MAX_VALUE;for("between"===f&&(f=.5),m(f)&&(f*=b(n.pointRange||a.pointRange)),n=0;n<p;n++){var k=d[n],w=k.x,M=k.y;e=k.low;var S,T=o&&c.stacks[(this.negStacks&&M<(y?0:v)?"-":"")+this.stackKey];c.positiveValuesOnly&&null!==M&&0>=M&&(k.isNull=!0),k.plotX=t=r(Math.min(Math.max(-1e5,a.translate(w,0,0,0,1,f,"flags"===this.type)),1e5)),o&&this.visible&&!k.isNull&&T&&T[w]&&(s=this.getStackIndicator(s,w,this.index),S=T[w],M=S.points[s.key],e=M[0],M=M[1],e===y&&s.key===T[w].base&&(e=b(v,c.min)),c.positiveValuesOnly&&0>=e&&(e=null),k.total=k.stackTotal=S.total,k.percentage=S.total&&k.y/S.total*100,k.stackY=M,S.setOffset(this.pointXOffset||0,this.barW||0)),k.yBottom=l(e)?c.translate(e,0,1,0,1):null,u&&(M=this.modifyValue(M,k)),k.plotY=e="number"==typeof M&&1/0!==M?Math.min(Math.max(-1e5,c.translate(M,0,1,0,1)),1e5):void 0,k.isInside=void 0!==e&&0<=e&&e<=c.len&&0<=t&&t<=a.len,k.clientX=g?r(a.translate(w,0,0,0,1,f)):t,k.negative=k.y<(v||0),k.category=h&&void 0!==h[k.x]?h[k.x]:k.x,k.isNull||(void 0!==i&&(x=Math.min(x,Math.abs(t-i))),i=t),k.zone=this.zones.length&&k.getZone()}this.closestPointRangePx=x},getValidPoints:function(t,e){var i=this.chart;return f(t||this.points||[],function(t){return!(e&&!i.isInsidePlot(t.plotX,t.plotY,i.inverted))&&!t.isNull})},setClip:function(t){var e=this.chart,i=this.options,s=e.renderer,n=e.inverted,r=this.clipBox,o=r||e.clipBox,a=this.sharedClipKey||["_sharedClip",t&&t.duration,t&&t.easing,o.height,i.xAxis,i.yAxis].join(),h=e[a],l=e[a+"m"];h||(t&&(o.width=0,e[a+"m"]=l=s.clipRect(-99,n?-e.plotLeft:-e.plotTop,99,n?e.chartWidth:e.chartHeight)),e[a]=h=s.clipRect(o),h.count={length:0}),t&&!h.count[this.index]&&(h.count[this.index]=!0,h.count.length+=1),!1!==i.clip&&(this.group.clip(t||r?h:e.clipRect),this.markerGroup.clip(l),this.sharedClipKey=a),t||(h.count[this.index]&&(delete h.count[this.index],--h.count.length),0===h.count.length&&a&&e[a]&&(r||(e[a]=e[a].destroy()),e[a+"m"]&&(e[a+"m"]=e[a+"m"].destroy())))},animate:function(t){var e,s=this.chart,n=i(this.options.animation);t?this.setClip(n):(e=this.sharedClipKey,(t=s[e])&&t.animate({width:s.plotSizeX},n),s[e+"m"]&&s[e+"m"].animate({width:s.plotSizeX+99},n),this.animate=null)},afterAnimate:function(){this.setClip(),u(this,"afterAnimate")},drawPoints:function(){var t,e,i,s,n,r,o,a,h=this.points,l=this.chart,c=this.options.marker,d=this[this.specialGroup]||this.markerGroup,p=b(c.enabled,!!this.xAxis.isRadial||null,this.closestPointRangePx>=2*c.radius);if(!1!==c.enabled||this._hasPointMarkers)for(e=0;e<h.length;e++)i=h[e],t=i.plotY,s=i.graphic,n=i.marker||{},r=!!i.marker,o=p&&void 0===n.enabled||n.enabled,a=i.isInside,o&&m(t)&&null!==i.y?(t=b(n.symbol,this.symbol),i.hasImage=0===t.indexOf("url"),o=this.markerAttribs(i,i.selected&&"select"),s?s[a?"show":"hide"](!0).animate(o):a&&(0<o.width||i.hasImage)&&(i.graphic=s=l.renderer.symbol(t,o.x,o.y,o.width,o.height,r?n:c).add(d)),s&&s.attr(this.pointAttribs(i,i.selected&&"select")),s&&s.addClass(i.getClassName(),!0)):s&&(i.graphic=s.destroy())},markerAttribs:function(t,e){var i=this.options.marker,s=t.marker||{},n=b(s.radius,i.radius);return e&&(i=i.states[e],e=s.states&&s.states[e],n=b(e&&e.radius,i&&i.radius,n+(i&&i.radiusPlus||0))),t.hasImage&&(n=0),t={x:Math.floor(t.plotX)-n,y:t.plotY-n},n&&(t.width=t.height=2*n),t},pointAttribs:function(t,e){var i=this.options.marker,s=t&&t.options,n=s&&s.marker||{},r=this.color,o=s&&s.color,a=t&&t.color,s=b(n.lineWidth,i.lineWidth);return t=t&&t.zone&&t.zone.color,r=o||t||a||r,t=n.fillColor||i.fillColor||r,r=n.lineColor||i.lineColor||r,e&&(i=i.states[e],e=n.states&&n.states[e]||{},s=b(e.lineWidth,i.lineWidth,s+b(e.lineWidthPlus,i.lineWidthPlus,0)),t=e.fillColor||i.fillColor||t,r=e.lineColor||i.lineColor||r),{stroke:r,"stroke-width":s,fill:t}},destroy:function(){var t,e,i,s,n=this,r=n.chart,o=/AppleWebKit\/533/.test(T.navigator.userAgent),a=n.data||[];for(u(n,"destroy"),k(n),c(n.axisTypes||[],function(t){(s=n[t])&&s.series&&(d(s.series,n),s.isDirty=s.forceRedraw=!0)}),n.legendItem&&n.chart.legend.destroyItem(n),e=a.length;e--;)(i=a[e])&&i.destroy&&i.destroy();n.points=null,clearTimeout(n.animationTimeout),x(n,function(e,i){e instanceof M&&!e.survive&&(t=o&&"group"===i?"hide":"destroy",e[t]())}),r.hoverSeries===n&&(r.hoverSeries=null),d(r.series,n),r.orderSeries(),x(n,function(t,e){delete n[e]})},getGraphPath:function(t,e,i){var s,n,r=this,o=r.options,a=o.step,h=[],d=[];return t=t||r.points,(s=t.reversed)&&t.reverse(),(a={right:1,center:2}[a]||a&&3)&&s&&(a=4-a),!o.connectNulls||e||i||(t=this.getValidPoints(t)),c(t,function(s,c){var p=s.plotX,u=s.plotY,f=t[c-1];(s.leftCliff||f&&f.rightCliff)&&!i&&(n=!0),s.isNull&&!l(e)&&0<c?n=!o.connectNulls:s.isNull&&!e?n=!0:(0===c||n?c=["M",s.plotX,s.plotY]:r.getPointSpline?c=r.getPointSpline(t,s,c):a?(c=1===a?["L",f.plotX,u]:2===a?["L",(f.plotX+p)/2,f.plotY,"L",(f.plotX+p)/2,u]:["L",p,f.plotY],c.push("L",p,u)):c=["L",p,u],d.push(s.x),a&&d.push(s.x),h.push.apply(h,c),n=!1)}),h.xMap=d,r.graphPath=h},drawGraph:function(){var t=this,e=this.options,i=(this.gappedPath||this.getGraphPath).call(this),s=[["graph","highcharts-graph",e.lineColor||this.color,e.dashStyle]];c(this.zones,function(i,n){s.push(["zone-graph-"+n,"highcharts-graph highcharts-zone-graph-"+n+" "+(i.className||""),i.color||t.color,i.dashStyle||e.dashStyle])}),c(s,function(s,n){var r=s[0],o=t[r];o?(o.endX=i.xMap,o.animate({d:i})):i.length&&(t[r]=t.chart.renderer.path(i).addClass(s[1]).attr({zIndex:1}).add(t.group),o={stroke:s[2],"stroke-width":e.lineWidth,fill:t.fillGraph&&t.color||"none"},s[3]?o.dashstyle=s[3]:"square"!==e.linecap&&(o["stroke-linecap"]=o["stroke-linejoin"]="round"),o=t[r].attr(o).shadow(2>n&&e.shadow)),o&&(o.startX=i.xMap,o.isArea=i.isArea)})},applyZones:function(){var t,e,i,s,n,r,o,a,h,l=this,d=this.chart,p=d.renderer,u=this.zones,f=this.clips||[],g=this.graph,m=this.area,v=Math.max(d.chartWidth,d.chartHeight),y=this[(this.zoneAxis||"y")+"Axis"],x=d.inverted,k=!1;u.length&&(g||m)&&y&&void 0!==y.min&&(n=y.reversed,r=y.horiz,g&&g.hide(),m&&m.hide(),s=y.getExtremes(),c(u,function(c,u){t=n?r?d.plotWidth:0:r?0:y.toPixels(s.min),t=Math.min(Math.max(b(e,t),0),v),e=Math.min(Math.max(Math.round(y.toPixels(b(c.value,s.max),!0)),0),v),k&&(t=e=y.toPixels(s.max)),o=Math.abs(t-e),a=Math.min(t,e),h=Math.max(t,e),y.isXAxis?(i={x:x?h:a,y:0,width:o,height:v},r||(i.x=d.plotHeight-i.x)):(i={x:0,y:x?h:a,width:v,height:o},r&&(i.y=d.plotWidth-i.y)),x&&p.isVML&&(i=y.isXAxis?{x:0,y:n?a:h,height:i.width,width:d.chartWidth}:{x:i.y-d.plotLeft-d.spacingBox.x,y:0,width:i.height,height:d.chartHeight}),f[u]?f[u].animate(i):(f[u]=p.clipRect(i),g&&l["zone-graph-"+u].clip(f[u]),m&&l["zone-area-"+u].clip(f[u])),k=c.value>s.max}),this.clips=f)},invertGroups:function(t){function i(){c(["group","markerGroup"],function(e){n[e]&&(r.renderer.isVML&&n[e].attr({width:n.yAxis.len,height:n.xAxis.len}),n[e].width=n.yAxis.len,n[e].height=n.xAxis.len,n[e].invert(t))})}var s,n=this,r=n.chart;n.xAxis&&(s=e(r,"resize",i),e(n,"destroy",s),i(t),n.invertGroups=i)},plotGroup:function(t,e,i,s,n){var r=this[t],o=!r;return o&&(this[t]=r=this.chart.renderer.g().attr({zIndex:s||.1}).add(n)),r.addClass("highcharts-"+e+" highcharts-series-"+this.index+" highcharts-"+this.type+"-series highcharts-color-"+this.colorIndex+" "+(this.options.className||""),!0),r.attr({visibility:i})[o?"attr":"animate"](this.getPlotBox()),r},getPlotBox:function(){var t=this.chart,e=this.xAxis,i=this.yAxis;return t.inverted&&(e=i,i=this.xAxis),{translateX:e?e.left:t.plotLeft,translateY:i?i.top:t.plotTop,scaleX:1,scaleY:1}},render:function(){var t,e=this,s=e.chart,n=e.options,r=!!e.animate&&s.renderer.isSVG&&i(n.animation).duration,o=e.visible?"inherit":"hidden",a=n.zIndex,h=e.hasRendered,l=s.seriesGroup,c=s.inverted;t=e.plotGroup("group","series",o,a,l),e.markerGroup=e.plotGroup("markerGroup","markers",o,a,l),r&&e.animate(!0),t.inverted=!!e.isCartesian&&c,e.drawGraph&&(e.drawGraph(),e.applyZones()),e.drawDataLabels&&e.drawDataLabels(),e.visible&&e.drawPoints(),e.drawTracker&&!1!==e.options.enableMouseTracking&&e.drawTracker(),e.invertGroups(c),!1===n.clip||e.sharedClipKey||h||t.clip(s.clipRect),r&&e.animate(),h||(e.animationTimeout=S(function(){e.afterAnimate()},r)),e.isDirty=!1,e.hasRendered=!0},redraw:function(){var t=this.chart,e=this.isDirty||this.isDirtyData,i=this.group,s=this.xAxis,n=this.yAxis;i&&(t.inverted&&i.attr({width:t.plotWidth,height:t.plotHeight}),i.animate({translateX:b(s&&s.left,t.plotLeft),translateY:b(n&&n.top,t.plotTop)})),this.translate(),this.render(),e&&delete this.kdTree},kdAxisArray:["clientX","plotY"],searchPoint:function(t,e){var i=this.xAxis,s=this.yAxis,n=this.chart.inverted;return this.searchKDTree({clientX:n?i.len-t.chartY+i.pos:t.chartX-i.pos,plotY:n?s.len-t.chartX+s.pos:t.chartY-s.pos},e)},buildKDTree:function(){function t(i,s,n){var r,o;if(o=i&&i.length)return r=e.kdAxisArray[s%n],i.sort(function(t,e){return t[r]-e[r]}),o=Math.floor(o/2),{point:i[o],left:t(i.slice(0,o),s+1,n),right:t(i.slice(o+1),s+1,n)}}this.buildingKdTree=!0;var e=this,i=-1<e.options.findNearestPointBy.indexOf("y")?2:1;delete e.kdTree,S(function(){e.kdTree=t(e.getValidPoints(null,!e.directTouch),i,i),e.buildingKdTree=!1},e.options.kdNow?0:1)},searchKDTree:function(t,e){function i(t,e,a,h){var c,d,p=e.point,u=s.kdAxisArray[a%h],f=p;return d=l(t[n])&&l(p[n])?Math.pow(t[n]-p[n],2):null,c=l(t[r])&&l(p[r])?Math.pow(t[r]-p[r],2):null,c=(d||0)+(c||0),p.dist=l(c)?Math.sqrt(c):Number.MAX_VALUE,p.distX=l(d)?Math.sqrt(d):Number.MAX_VALUE,u=t[u]-p[u],c=0>u?"left":"right",d=0>u?"right":"left",e[c]&&(c=i(t,e[c],a+1,h),f=c[o]<f[o]?c:p),e[d]&&Math.sqrt(u*u)<f[o]&&(t=i(t,e[d],a+1,h),f=t[o]<f[o]?t:f),f}var s=this,n=this.kdAxisArray[0],r=this.kdAxisArray[1],o=e?"distX":"dist";if(e=-1<s.options.findNearestPointBy.indexOf("y")?2:1,this.kdTree||this.buildingKdTree||this.buildKDTree(),this.kdTree)return i(t,this.kdTree,e,e)}})}(t),function(t){function e(t,e,i,s,n){var r=t.chart.inverted;this.axis=t,this.isNegative=i,this.options=e,this.x=s,this.total=null,this.points={},this.stack=n,this.rightCliff=this.leftCliff=0,this.alignOptions={align:e.align||(r?i?"left":"right":"center"),verticalAlign:e.verticalAlign||(r?"middle":i?"bottom":"top"),y:c(e.y,r?4:i?14:-6),x:c(e.x,r?i?-6:6:0)},this.textAlign=e.textAlign||(r?i?"right":"left":"center")}var i=t.Axis,s=t.Chart,n=t.correctFloat,r=t.defined,o=t.destroyObjectProperties,a=t.each,h=t.format,l=t.objectEach,c=t.pick;t=t.Series,e.prototype={destroy:function(){o(this,this.axis)},render:function(t){var e=this.options,i=e.format,i=i?h(i,this):e.formatter.call(this);this.label?this.label.attr({text:i,visibility:"hidden"}):this.label=this.axis.chart.renderer.text(i,null,null,e.useHTML).css(e.style).attr({align:this.textAlign,rotation:e.rotation,visibility:"hidden"}).add(t)},setOffset:function(t,e){var i=this.axis,s=i.chart,n=s.inverted,r=i.reversed,r=this.isNegative&&!r||!this.isNegative&&r,o=i.translate(i.usePercentage?100:this.total,0,0,0,1),i=i.translate(0),i=Math.abs(o-i);t=s.xAxis[0].translate(this.x)+t;var a=s.plotHeight,n={x:n?r?o:o-i:t,y:n?a-t-e:r?a-o-i:a-o,width:n?i:e,height:n?e:i};(e=this.label)&&(e.align(this.alignOptions,null,n),n=e.alignAttr,e[!1===this.options.crop||s.isInsidePlot(n.x,n.y)?"show":"hide"](!0))}},s.prototype.getStacks=function(){var t=this;a(t.yAxis,function(t){t.stacks&&t.hasVisibleSeries&&(t.oldStacks=t.stacks)}),a(t.series,function(e){!e.options.stacking||!0!==e.visible&&!1!==t.options.chart.ignoreHiddenSeries||(e.stackKey=e.type+c(e.options.stack,""))})},i.prototype.buildStacks=function(){var t,e,i=this.series,s=c(this.options.reversedStacks,!0),n=i.length;if(!this.isXAxis){for(this.usePercentage=!1,e=n;e--;)i[s?e:n-e-1].setStackedPoints();for(e=n;e--;)t=i[s?e:n-e-1],t.setStackCliffs&&t.setStackCliffs();if(this.usePercentage)for(e=0;e<n;e++)i[e].setPercentStacks()}},i.prototype.renderStackTotals=function(){var t=this.chart,e=t.renderer,i=this.stacks,s=this.stackTotalGroup;s||(this.stackTotalGroup=s=e.g("stack-labels").attr({visibility:"visible",zIndex:6}).add()),s.translate(t.plotLeft,t.plotTop),l(i,function(t){l(t,function(t){t.render(s)})})},i.prototype.resetStacks=function(){var t=this,e=t.stacks;t.isXAxis||l(e,function(e){l(e,function(i,s){i.touched<t.stacksTouched?(i.destroy(),delete e[s]):(i.total=null,i.cum=null)})})},i.prototype.cleanStacks=function(){var t;this.isXAxis||(this.oldStacks&&(t=this.stacks=this.oldStacks),l(t,function(t){l(t,function(t){t.cum=t.total})}))},t.prototype.setStackedPoints=function(){if(this.options.stacking&&(!0===this.visible||!1===this.chart.options.chart.ignoreHiddenSeries)){var t,i,s,o,a,h,l,d=this.processedXData,p=this.processedYData,u=[],f=p.length,g=this.options,m=g.threshold,v=g.startFromThreshold?m:0,y=g.stack,g=g.stacking,x=this.stackKey,b="-"+x,k=this.negStacks,w=this.yAxis,M=w.stacks,S=w.oldStacks;for(w.stacksTouched+=1,a=0;a<f;a++)h=d[a],l=p[a],t=this.getStackIndicator(t,h,this.index),o=t.key,s=(i=k&&l<(v?0:m))?b:x,M[s]||(M[s]={}),M[s][h]||(S[s]&&S[s][h]?(M[s][h]=S[s][h],M[s][h].total=null):M[s][h]=new e(w,w.options.stackLabels,i,h,y)),s=M[s][h],null!==l&&(s.points[o]=s.points[this.index]=[c(s.cum,v)],r(s.cum)||(s.base=o),s.touched=w.stacksTouched,0<t.index&&!1===this.singleStacks&&(s.points[o][0]=s.points[this.index+","+h+",0"][0])),"percent"===g?(i=i?x:b,k&&M[i]&&M[i][h]?(i=M[i][h],s.total=i.total=Math.max(i.total,s.total)+Math.abs(l)||0):s.total=n(s.total+(Math.abs(l)||0))):s.total=n(s.total+(l||0)),s.cum=c(s.cum,v)+(l||0),null!==l&&(s.points[o].push(s.cum),u[a]=s.cum);"percent"===g&&(w.usePercentage=!0),this.stackedYData=u,w.oldStacks={}}},t.prototype.setPercentStacks=function(){var t,e=this,i=e.stackKey,s=e.yAxis.stacks,r=e.processedXData;a([i,"-"+i],function(i){for(var o,a,h=r.length;h--;)o=r[h],t=e.getStackIndicator(t,o,e.index,i),(o=(a=s[i]&&s[i][o])&&a.points[t.key])&&(a=a.total?100/a.total:0,o[0]=n(o[0]*a),o[1]=n(o[1]*a),e.stackedYData[h]=o[1])})},t.prototype.getStackIndicator=function(t,e,i,s){return!r(t)||t.x!==e||s&&t.key!==s?t={x:e,index:0,key:s}:t.index++,t.key=[i,e,t.index].join(),t}}(t),function(t){var e=t.addEvent,i=t.animate,s=t.Axis,n=t.createElement,r=t.css,o=t.defined,a=t.each,h=t.erase,l=t.extend,c=t.fireEvent,d=t.inArray,p=t.isNumber,u=t.isObject,f=t.isArray,g=t.merge,m=t.objectEach,v=t.pick,y=t.Point,x=t.Series,b=t.seriesTypes,k=t.setAnimation,w=t.splat;l(t.Chart.prototype,{addSeries:function(t,e,i){var s,n=this;return t&&(e=v(e,!0),c(n,"addSeries",{options:t},function(){s=n.initSeries(t),n.isDirtyLegend=!0,n.linkSeries(),e&&n.redraw(i)})),s},addAxis:function(t,e,i,n){var r=e?"xAxis":"yAxis",o=this.options;t=g(t,{index:this[r].length,isX:e}),new s(this,t),o[r]=w(o[r]||{}),o[r].push(t),v(i,!0)&&this.redraw(n)},showLoading:function(t){var s=this,o=s.options,a=s.loadingDiv,h=o.loading,c=function(){a&&r(a,{left:s.plotLeft+"px",top:s.plotTop+"px",width:s.plotWidth+"px",height:s.plotHeight+"px"})};a||(s.loadingDiv=a=n("div",{className:"highcharts-loading highcharts-loading-hidden"},null,s.container),s.loadingSpan=n("span",{className:"highcharts-loading-inner"},null,a),e(s,"redraw",c)),a.className="highcharts-loading",s.loadingSpan.innerHTML=t||o.lang.loading,r(a,l(h.style,{zIndex:10})),r(s.loadingSpan,h.labelStyle),s.loadingShown||(r(a,{opacity:0,display:""}),i(a,{opacity:h.style.opacity||.5
+},{duration:h.showDuration||0})),s.loadingShown=!0,c()},hideLoading:function(){var t=this.options,e=this.loadingDiv;e&&(e.className="highcharts-loading highcharts-loading-hidden",i(e,{opacity:0},{duration:t.loading.hideDuration||100,complete:function(){r(e,{display:"none"})}})),this.loadingShown=!1},propsRequireDirtyBox:"backgroundColor borderColor borderWidth margin marginTop marginRight marginBottom marginLeft spacing spacingTop spacingRight spacingBottom spacingLeft borderRadius plotBackgroundColor plotBackgroundImage plotBorderColor plotBorderWidth plotShadow shadow".split(" "),propsRequireUpdateSeries:"chart.inverted chart.polar chart.ignoreHiddenSeries chart.type colors plotOptions tooltip".split(" "),update:function(t,e){var i,s,n=this,r={credits:"addCredits",title:"setTitle",subtitle:"setSubtitle"},h=t.chart;h&&(g(!0,n.options.chart,h),"className"in h&&n.setClassName(h.className),("inverted"in h||"polar"in h)&&(n.propFromSeries(),i=!0),"alignTicks"in h&&(i=!0),m(h,function(t,e){-1!==d("chart."+e,n.propsRequireUpdateSeries)&&(s=!0),-1!==d(e,n.propsRequireDirtyBox)&&(n.isDirtyBox=!0)}),"style"in h&&n.renderer.setStyle(h.style)),t.colors&&(this.options.colors=t.colors),t.plotOptions&&g(!0,this.options.plotOptions,t.plotOptions),m(t,function(t,e){n[e]&&"function"==typeof n[e].update?n[e].update(t,!1):"function"==typeof n[r[e]]&&n[r[e]](t),"chart"!==e&&-1!==d(e,n.propsRequireUpdateSeries)&&(s=!0)}),a("xAxis yAxis zAxis series colorAxis pane".split(" "),function(e){t[e]&&a(w(t[e]),function(t,i){(i=o(t.id)&&n.get(t.id)||n[e][i])&&i.coll===e&&i.update(t,!1)})}),i&&a(n.axes,function(t){t.update({},!1)}),s&&a(n.series,function(t){t.update({},!1)}),t.loading&&g(!0,n.options.loading,t.loading),i=h&&h.width,h=h&&h.height,p(i)&&i!==n.chartWidth||p(h)&&h!==n.chartHeight?n.setSize(i,h):v(e,!0)&&n.redraw()},setSubtitle:function(t){this.setTitle(void 0,t)}}),l(y.prototype,{update:function(t,e,i,s){function n(){o.applyOptions(t),null===o.y&&h&&(o.graphic=h.destroy()),u(t,!0)&&(h&&h.element&&t&&t.marker&&t.marker.symbol&&(o.graphic=h.destroy()),t&&t.dataLabels&&o.dataLabel&&(o.dataLabel=o.dataLabel.destroy())),r=o.index,a.updateParallelArrays(o,r),c.data[r]=u(c.data[r],!0)||u(t,!0)?o.options:t,a.isDirty=a.isDirtyData=!0,!a.fixedBox&&a.hasCartesianSeries&&(l.isDirtyBox=!0),"point"===c.legendType&&(l.isDirtyLegend=!0),e&&l.redraw(i)}var r,o=this,a=o.series,h=o.graphic,l=a.chart,c=a.options;e=v(e,!0),!1===s?n():o.firePointEvent("update",{options:t},n)},remove:function(t,e){this.series.removePoint(d(this,this.series.data),t,e)}}),l(x.prototype,{addPoint:function(t,e,i,s){var n,r,o,a,h=this.options,l=this.data,c=this.chart,d=this.xAxis,d=d&&d.hasNames&&d.names,p=h.data,u=this.xData;if(e=v(e,!0),n={series:this},this.pointClass.prototype.applyOptions.apply(n,[t]),a=n.x,o=u.length,this.requireSorting&&a<u[o-1])for(r=!0;o&&u[o-1]>a;)o--;this.updateParallelArrays(n,"splice",o,0,0),this.updateParallelArrays(n,o),d&&n.name&&(d[a]=n.name),p.splice(o,0,t),r&&(this.data.splice(o,0,null),this.processData()),"point"===h.legendType&&this.generatePoints(),i&&(l[0]&&l[0].remove?l[0].remove(!1):(l.shift(),this.updateParallelArrays(n,"shift"),p.shift())),this.isDirtyData=this.isDirty=!0,e&&c.redraw(s)},removePoint:function(t,e,i){var s=this,n=s.data,r=n[t],o=s.points,a=s.chart,h=function(){o&&o.length===n.length&&o.splice(t,1),n.splice(t,1),s.options.data.splice(t,1),s.updateParallelArrays(r||{series:s},"splice",t,1),r&&r.destroy(),s.isDirty=!0,s.isDirtyData=!0,e&&a.redraw()};k(i,a),e=v(e,!0),r?r.firePointEvent("remove",null,h):h()},remove:function(t,e,i){function s(){n.destroy(),r.isDirtyLegend=r.isDirtyBox=!0,r.linkSeries(),v(t,!0)&&r.redraw(e)}var n=this,r=n.chart;!1!==i?c(n,"remove",null,s):s()},update:function(t,e){var i,s=this,n=s.chart,r=s.userOptions,o=s.oldType||s.type,h=t.type||r.type||n.options.chart.type,c=b[o].prototype,d=["group","markerGroup","dataLabelsGroup"];(h&&h!==o||void 0!==t.zIndex)&&(d.length=0),a(d,function(t){d[t]=s[t],delete s[t]}),t=g(r,{animation:!1,index:s.index,pointStart:s.xData[0]},{data:s.options.data},t),s.remove(!1,null,!1);for(i in c)s[i]=void 0;l(s,b[h||o].prototype),a(d,function(t){s[t]=d[t]}),s.init(n,t),s.oldType=o,n.linkSeries(),v(e,!0)&&n.redraw(!1)}}),l(s.prototype,{update:function(t,e){var i=this.chart;t=i.options[this.coll][this.options.index]=g(this.userOptions,t),this.destroy(!0),this.init(i,l(t,{events:void 0})),i.isDirtyBox=!0,v(e,!0)&&i.redraw()},remove:function(t){for(var e=this.chart,i=this.coll,s=this.series,n=s.length;n--;)s[n]&&s[n].remove(!1);h(e.axes,this),h(e[i],this),f(e.options[i])?e.options[i].splice(this.options.index,1):delete e.options[i],a(e[i],function(t,e){t.options.index=e}),this.destroy(),e.isDirtyBox=!0,v(t,!0)&&e.redraw()},setTitle:function(t,e){this.update({title:t},e)},setCategories:function(t,e){this.update({categories:t},e)}})}(t),function(t){var e=t.color,i=t.each,s=t.map,n=t.pick,r=t.Series,o=t.seriesType;o("area","line",{softThreshold:!1,threshold:0},{singleStacks:!1,getStackPoints:function(){var e,r,o=[],a=[],h=this.xAxis,l=this.yAxis,c=l.stacks[this.stackKey],d={},p=this.points,u=this.index,f=l.series,g=f.length,m=n(l.options.reversedStacks,!0)?1:-1;if(this.options.stacking){for(r=0;r<p.length;r++)d[p[r].x]=p[r];t.objectEach(c,function(t,e){null!==t.total&&a.push(e)}),a.sort(function(t,e){return t-e}),e=s(f,function(){return this.visible}),i(a,function(t,s){var n,p,f=0;if(d[t]&&!d[t].isNull)o.push(d[t]),i([-1,1],function(i){var o=1===i?"rightNull":"leftNull",h=0,l=c[a[s+i]];if(l)for(r=u;0<=r&&r<g;)n=l.points[r],n||(r===u?d[t][o]=!0:e[r]&&(p=c[t].points[r])&&(h-=p[1]-p[0])),r+=m;d[t][1===i?"rightCliff":"leftCliff"]=h});else{for(r=u;0<=r&&r<g;){if(n=c[t].points[r]){f=n[1];break}r+=m}f=l.translate(f,0,1,0,1),o.push({isNull:!0,plotX:h.translate(t,0,0,0,1),x:t,plotY:f,yBottom:f})}})}return o},getGraphPath:function(t){var e,i,s,o,a=r.prototype.getGraphPath,h=this.options,l=h.stacking,c=this.yAxis,d=[],p=[],u=this.index,f=c.stacks[this.stackKey],g=h.threshold,m=c.getThreshold(h.threshold),h=h.connectNulls||"percent"===l,v=function(e,i,n){var r=t[e];e=l&&f[r.x].points[u];var o=r[n+"Null"]||0;n=r[n+"Cliff"]||0;var a,h,r=!0;n||o?(a=(o?e[0]:e[1])+n,h=e[0]+n,r=!!o):!l&&t[i]&&t[i].isNull&&(a=h=g),void 0!==a&&(p.push({plotX:s,plotY:null===a?m:c.getThreshold(a),isNull:r,isCliff:!0}),d.push({plotX:s,plotY:null===h?m:c.getThreshold(h),doCurve:!1}))};for(t=t||this.points,l&&(t=this.getStackPoints()),e=0;e<t.length;e++)i=t[e].isNull,s=n(t[e].rectPlotX,t[e].plotX),o=n(t[e].yBottom,m),(!i||h)&&(h||v(e,e-1,"left"),i&&!l&&h||(p.push(t[e]),d.push({x:e,plotX:s,plotY:o})),h||v(e,e+1,"right"));return e=a.call(this,p,!0,!0),d.reversed=!0,i=a.call(this,d,!0,!0),i.length&&(i[0]="L"),i=e.concat(i),a=a.call(this,p,!1,h),i.xMap=e.xMap,this.areaPath=i,a},drawGraph:function(){this.areaPath=[],r.prototype.drawGraph.apply(this);var t=this,s=this.areaPath,o=this.options,a=[["area","highcharts-area",this.color,o.fillColor]];i(this.zones,function(e,i){a.push(["zone-area-"+i,"highcharts-area highcharts-zone-area-"+i+" "+e.className,e.color||t.color,e.fillColor||o.fillColor])}),i(a,function(i){var r=i[0],a=t[r];a?(a.endX=s.xMap,a.animate({d:s})):(a=t[r]=t.chart.renderer.path(s).addClass(i[1]).attr({fill:n(i[3],e(i[2]).setOpacity(n(o.fillOpacity,.75)).get()),zIndex:0}).add(t.group),a.isArea=!0),a.startX=s.xMap,a.shiftUnit=o.step?2:1})},drawLegendSymbol:t.LegendSymbolMixin.drawRectangle})}(t),function(t){var e=t.pick;(t=t.seriesType)("spline","line",{},{getPointSpline:function(t,i,s){var n=i.plotX,r=i.plotY,o=t[s-1];s=t[s+1];var a,h,l,c;if(o&&!o.isNull&&!1!==o.doCurve&&!i.isCliff&&s&&!s.isNull&&!1!==s.doCurve&&!i.isCliff){t=o.plotY,l=s.plotX,s=s.plotY;var d=0;a=(1.5*n+o.plotX)/2.5,h=(1.5*r+t)/2.5,l=(1.5*n+l)/2.5,c=(1.5*r+s)/2.5,l!==a&&(d=(c-h)*(l-n)/(l-a)+r-c),h+=d,c+=d,h>t&&h>r?(h=Math.max(t,r),c=2*r-h):h<t&&h<r&&(h=Math.min(t,r),c=2*r-h),c>s&&c>r?(c=Math.max(s,r),h=2*r-c):c<s&&c<r&&(c=Math.min(s,r),h=2*r-c),i.rightContX=l,i.rightContY=c}return i=["C",e(o.rightContX,o.plotX),e(o.rightContY,o.plotY),e(a,n),e(h,r),n,r],o.rightContX=o.rightContY=null,i}})}(t),function(t){var e=t.seriesTypes.area.prototype,i=t.seriesType;i("areaspline","spline",t.defaultPlotOptions.area,{getStackPoints:e.getStackPoints,getGraphPath:e.getGraphPath,setStackCliffs:e.setStackCliffs,drawGraph:e.drawGraph,drawLegendSymbol:t.LegendSymbolMixin.drawRectangle})}(t),function(t){var e=t.animObject,i=t.color,s=t.each,n=t.extend,r=t.isNumber,o=t.merge,a=t.pick,h=t.Series,l=t.seriesType,c=t.svg;l("column","line",{borderRadius:0,crisp:!0,groupPadding:.2,marker:null,pointPadding:.1,minPointLength:0,cropThreshold:50,pointRange:null,states:{hover:{halo:!1,brightness:.1,shadow:!1},select:{color:"#cccccc",borderColor:"#000000",shadow:!1}},dataLabels:{align:null,verticalAlign:null,y:null},softThreshold:!1,startFromThreshold:!0,stickyTracking:!1,tooltip:{distance:6},threshold:0,borderColor:"#ffffff"},{cropShoulder:0,directTouch:!0,trackerGroups:["group","dataLabelsGroup"],negStacks:!0,init:function(){h.prototype.init.apply(this,arguments);var t=this,e=t.chart;e.hasRendered&&s(e.series,function(e){e.type===t.type&&(e.isDirty=!0)})},getColumnMetrics:function(){var t,e=this,i=e.options,n=e.xAxis,r=e.yAxis,o=n.reversed,h={},l=0;!1===i.grouping?l=1:s(e.chart.series,function(i){var s,n=i.options,o=i.yAxis;i.type===e.type&&i.visible&&r.len===o.len&&r.pos===o.pos&&(n.stacking?(t=i.stackKey,void 0===h[t]&&(h[t]=l++),s=h[t]):!1!==n.grouping&&(s=l++),i.columnIndex=s)});var c=Math.min(Math.abs(n.transA)*(n.ordinalSlope||i.pointRange||n.closestPointRange||n.tickInterval||1),n.len),d=c*i.groupPadding,p=(c-2*d)/(l||1),i=Math.min(i.maxPointWidth||n.len,a(i.pointWidth,p*(1-2*i.pointPadding)));return e.columnMetrics={width:i,offset:(p-i)/2+(d+((e.columnIndex||0)+(o?1:0))*p-c/2)*(o?-1:1)},e.columnMetrics},crispCol:function(t,e,i,s){var n=this.chart,r=this.borderWidth,o=-(r%2?.5:0),r=r%2?.5:1;return n.inverted&&n.renderer.isVML&&(r+=1),this.options.crisp&&(i=Math.round(t+i)+o,t=Math.round(t)+o,i-=t),s=Math.round(e+s)+r,o=.5>=Math.abs(e)&&.5<s,e=Math.round(e)+r,s-=e,o&&s&&(--e,s+=1),{x:t,y:e,width:i,height:s}},translate:function(){var t=this,e=t.chart,i=t.options,n=t.dense=2>t.closestPointRange*t.xAxis.transA,n=t.borderWidth=a(i.borderWidth,n?0:1),r=t.yAxis,o=t.translatedThreshold=r.getThreshold(i.threshold),l=a(i.minPointLength,5),c=t.getColumnMetrics(),d=c.width,p=t.barW=Math.max(d,1+2*n),u=t.pointXOffset=c.offset;e.inverted&&(o-=.5),i.pointPadding&&(p=Math.ceil(p)),h.prototype.translate.apply(t),s(t.points,function(i){var s,n=a(i.yBottom,o),h=999+Math.abs(n),h=Math.min(Math.max(-h,i.plotY),r.len+h),c=i.plotX+u,f=p,g=Math.min(h,n),m=Math.max(h,n)-g;Math.abs(m)<l&&l&&(m=l,s=!r.reversed&&!i.negative||r.reversed&&i.negative,g=Math.abs(g-o)>l?n-l:o-(s?l:0)),i.barX=c,i.pointWidth=d,i.tooltipPos=e.inverted?[r.len+r.pos-e.plotLeft-h,t.xAxis.len-c-f/2,m]:[c+f/2,h+r.pos-e.plotTop,m],i.shapeType="rect",i.shapeArgs=t.crispCol.apply(t,i.isNull?[c,o,f,0]:[c,g,f,m])})},getSymbol:t.noop,drawLegendSymbol:t.LegendSymbolMixin.drawRectangle,drawGraph:function(){this.group[this.dense?"addClass":"removeClass"]("highcharts-dense-data")},pointAttribs:function(t,e){var s,n=this.options,r=this.pointAttrToOptions||{};s=r.stroke||"borderColor";var a=r["stroke-width"]||"borderWidth",h=t&&t.color||this.color,l=t[s]||n[s]||this.color||h,c=t[a]||n[a]||this[a]||0,r=n.dashStyle;return t&&this.zones.length&&(h=t.getZone(),h=t.options.color||h&&h.color||this.color),e&&(t=o(n.states[e],t.options.states&&t.options.states[e]||{}),e=t.brightness,h=t.color||void 0!==e&&i(h).brighten(t.brightness).get()||h,l=t[s]||l,c=t[a]||c,r=t.dashStyle||r),s={fill:h,stroke:l,"stroke-width":c},n.borderRadius&&(s.r=n.borderRadius),r&&(s.dashstyle=r),s},drawPoints:function(){var t,e=this,i=this.chart,n=e.options,a=i.renderer,h=n.animationLimit||250;s(e.points,function(s){var l=s.graphic;r(s.plotY)&&null!==s.y?(t=s.shapeArgs,l?l[i.pointCount<h?"animate":"attr"](o(t)):s.graphic=l=a[s.shapeType](t).add(s.group||e.group),l.attr(e.pointAttribs(s,s.selected&&"select")).shadow(n.shadow,null,n.stacking&&!n.borderRadius),l.addClass(s.getClassName(),!0)):l&&(s.graphic=l.destroy())})},animate:function(t){var i=this,s=this.yAxis,r=i.options,o=this.chart.inverted,a={};c&&(t?(a.scaleY=.001,t=Math.min(s.pos+s.len,Math.max(s.pos,s.toPixels(r.threshold))),o?a.translateX=t-s.len:a.translateY=t,i.group.attr(a)):(a[o?"translateX":"translateY"]=s.pos,i.group.animate(a,n(e(i.options.animation),{step:function(t,e){i.group.attr({scaleY:Math.max(.001,e.pos)})}})),i.animate=null))},remove:function(){var t=this,e=t.chart;e.hasRendered&&s(e.series,function(e){e.type===t.type&&(e.isDirty=!0)}),h.prototype.remove.apply(t,arguments)}})}(t),function(t){(t=t.seriesType)("bar","column",null,{inverted:!0})}(t),function(t){var e=t.Series;(t=t.seriesType)("scatter","line",{lineWidth:0,findNearestPointBy:"xy",marker:{enabled:!0},tooltip:{headerFormat:'<span style="color:{point.color}">●</span> <span style="font-size: 0.85em"> {series.name}</span><br/>',pointFormat:"x: <b>{point.x}</b><br/>y: <b>{point.y}</b><br/>"}},{sorted:!1,requireSorting:!1,noSharedTooltip:!0,trackerGroups:["group","markerGroup","dataLabelsGroup"],takeOrdinalPosition:!1,drawGraph:function(){this.options.lineWidth&&e.prototype.drawGraph.call(this)}})}(t),function(t){var e=t.pick,i=t.relativeLength;t.CenteredSeriesMixin={getCenter:function(){var t,s,n=this.options,r=this.chart,o=2*(n.slicedOffset||0),a=r.plotWidth-2*o,r=r.plotHeight-2*o,h=n.center,h=[e(h[0],"50%"),e(h[1],"50%"),n.size||"100%",n.innerSize||0],l=Math.min(a,r);for(t=0;4>t;++t)s=h[t],n=2>t||2===t&&/%$/.test(s),h[t]=i(s,[a,r,l,h[2]][t])+(n?o:0);return h[3]>h[2]&&(h[3]=h[2]),h}}}(t),function(t){var e=t.addEvent,i=t.defined,s=t.each,n=t.extend,r=t.inArray,o=t.noop,a=t.pick,h=t.Point,l=t.Series,c=t.seriesType,d=t.setAnimation;c("pie","line",{center:[null,null],clip:!1,colorByPoint:!0,dataLabels:{distance:30,enabled:!0,formatter:function(){return this.point.isNull?void 0:this.point.name},x:0},ignoreHiddenPoint:!0,legendType:"point",marker:null,size:null,showInLegend:!1,slicedOffset:10,stickyTracking:!1,tooltip:{followPointer:!0},borderColor:"#ffffff",borderWidth:1,states:{hover:{brightness:.1,shadow:!1}}},{isCartesian:!1,requireSorting:!1,directTouch:!0,noSharedTooltip:!0,trackerGroups:["group","dataLabelsGroup"],axisTypes:[],pointAttribs:t.seriesTypes.column.prototype.pointAttribs,animate:function(t){var e=this,i=e.points,n=e.startAngleRad;t||(s(i,function(t){var i=t.graphic,s=t.shapeArgs;i&&(i.attr({r:t.startR||e.center[3]/2,start:n,end:n}),i.animate({r:s.r,start:s.start,end:s.end},e.options.animation))}),e.animate=null)},updateTotals:function(){var t,e,i=0,s=this.points,n=s.length,r=this.options.ignoreHiddenPoint;for(t=0;t<n;t++)e=s[t],i+=r&&!e.visible?0:e.isNull?0:e.y;for(this.total=i,t=0;t<n;t++)e=s[t],e.percentage=0<i&&(e.visible||!r)?e.y/i*100:0,e.total=i},generatePoints:function(){l.prototype.generatePoints.call(this),this.updateTotals()},translate:function(t){this.generatePoints();var e,i,s,n,r,o,h=0,l=this.options,c=l.slicedOffset,d=c+(l.borderWidth||0),p=l.startAngle||0,u=this.startAngleRad=Math.PI/180*(p-90),p=(this.endAngleRad=Math.PI/180*(a(l.endAngle,p+360)-90))-u,f=this.points,g=l.dataLabels.distance,l=l.ignoreHiddenPoint,m=f.length;for(t||(this.center=t=this.getCenter()),this.getX=function(e,i,n){return s=Math.asin(Math.min((e-t[1])/(t[2]/2+n.labelDistance),1)),t[0]+(i?-1:1)*Math.cos(s)*(t[2]/2+n.labelDistance)},r=0;r<m;r++)o=f[r],o.labelDistance=a(o.options.dataLabels&&o.options.dataLabels.distance,g),this.maxLabelDistance=Math.max(this.maxLabelDistance||0,o.labelDistance),e=u+h*p,l&&!o.visible||(h+=o.percentage/100),i=u+h*p,o.shapeType="arc",o.shapeArgs={x:t[0],y:t[1],r:t[2]/2,innerR:t[3]/2,start:Math.round(1e3*e)/1e3,end:Math.round(1e3*i)/1e3},s=(i+e)/2,s>1.5*Math.PI?s-=2*Math.PI:s<-Math.PI/2&&(s+=2*Math.PI),o.slicedTranslation={translateX:Math.round(Math.cos(s)*c),translateY:Math.round(Math.sin(s)*c)},i=Math.cos(s)*t[2]/2,n=Math.sin(s)*t[2]/2,o.tooltipPos=[t[0]+.7*i,t[1]+.7*n],o.half=s<-Math.PI/2||s>Math.PI/2?1:0,o.angle=s,e=Math.min(d,o.labelDistance/5),o.labelPos=[t[0]+i+Math.cos(s)*o.labelDistance,t[1]+n+Math.sin(s)*o.labelDistance,t[0]+i+Math.cos(s)*e,t[1]+n+Math.sin(s)*e,t[0]+i,t[1]+n,0>o.labelDistance?"center":o.half?"right":"left",s]},drawGraph:null,drawPoints:function(){var t,e,i,r,o=this,a=o.chart.renderer,h=o.options.shadow;h&&!o.shadowGroup&&(o.shadowGroup=a.g("shadow").add(o.group)),s(o.points,function(s){if(!s.isNull){e=s.graphic,r=s.shapeArgs,t=s.getTranslate();var l=s.shadowGroup;h&&!l&&(l=s.shadowGroup=a.g("shadow").add(o.shadowGroup)),l&&l.attr(t),i=o.pointAttribs(s,s.selected&&"select"),e?e.setRadialReference(o.center).attr(i).animate(n(r,t)):(s.graphic=e=a[s.shapeType](r).setRadialReference(o.center).attr(t).add(o.group),s.visible||e.attr({visibility:"hidden"}),e.attr(i).attr({"stroke-linejoin":"round"}).shadow(h,l)),e.addClass(s.getClassName())}})},searchPoint:o,sortByAngle:function(t,e){t.sort(function(t,i){return void 0!==t.angle&&(i.angle-t.angle)*e})},drawLegendSymbol:t.LegendSymbolMixin.drawRectangle,getCenter:t.CenteredSeriesMixin.getCenter,getSymbol:o},{init:function(){h.prototype.init.apply(this,arguments);var t,i=this;return i.name=a(i.name,"Slice"),t=function(t){i.slice("select"===t.type)},e(i,"select",t),e(i,"unselect",t),i},isValid:function(){return t.isNumber(this.y,!0)&&0<=this.y},setVisible:function(t,e){var i=this,n=i.series,o=n.chart,h=n.options.ignoreHiddenPoint;e=a(e,h),t!==i.visible&&(i.visible=i.options.visible=t=void 0===t?!i.visible:t,n.options.data[r(i,n.data)]=i.options,s(["graphic","dataLabel","connector","shadowGroup"],function(e){i[e]&&i[e][t?"show":"hide"](!0)}),i.legendItem&&o.legend.colorizeItem(i,t),t||"hover"!==i.state||i.setState(""),h&&(n.isDirty=!0),e&&o.redraw())},slice:function(t,e,s){var n=this.series;d(s,n.chart),a(e,!0),this.sliced=this.options.sliced=i(t)?t:!this.sliced,n.options.data[r(this,n.data)]=this.options,this.graphic.animate(this.getTranslate()),this.shadowGroup&&this.shadowGroup.animate(this.getTranslate())},getTranslate:function(){return this.sliced?this.slicedTranslation:{translateX:0,translateY:0}},haloPath:function(t){var e=this.shapeArgs;return this.sliced||!this.visible?[]:this.series.chart.renderer.symbols.arc(e.x,e.y,e.r+t,e.r+t,{innerR:this.shapeArgs.r,start:e.start,end:e.end})}})}(t),function(t){var e=t.addEvent,i=t.arrayMax,s=t.defined,n=t.each,r=t.extend,o=t.format,a=t.map,h=t.merge,l=t.noop,c=t.pick,d=t.relativeLength,p=t.Series,u=t.seriesTypes,f=t.stableSort;t.distribute=function(t,e){function i(t,e){return t.target-e.target}var s,r,o=!0,h=t,l=[];for(r=0,s=t.length;s--;)r+=t[s].size;if(r>e){for(f(t,function(t,e){return(e.rank||0)-(t.rank||0)}),r=s=0;r<=e;)r+=t[s].size,s++;l=t.splice(s-1,t.length)}for(f(t,i),t=a(t,function(t){return{size:t.size,targets:[t.target]}});o;){for(s=t.length;s--;)o=t[s],r=(Math.min.apply(0,o.targets)+Math.max.apply(0,o.targets))/2,o.pos=Math.min(Math.max(0,r-o.size/2),e-o.size);for(s=t.length,o=!1;s--;)0<s&&t[s-1].pos+t[s-1].size>t[s].pos&&(t[s-1].size+=t[s].size,t[s-1].targets=t[s-1].targets.concat(t[s].targets),t[s-1].pos+t[s-1].size>e&&(t[s-1].pos=e-t[s-1].size),t.splice(s,1),o=!0)}s=0,n(t,function(t){var e=0;n(t.targets,function(){h[s].pos=t.pos+e,e+=h[s].size,s++})}),h.push.apply(h,l),f(h,i)},p.prototype.drawDataLabels=function(){var i,r,a,l,d=this,p=d.options,u=p.dataLabels,f=d.points,g=d.hasRendered||0,m=c(u.defer,!0),v=d.chart.renderer;(u.enabled||d._hasPointLabels)&&(d.dlProcessOptions&&d.dlProcessOptions(u),l=d.plotGroup("dataLabelsGroup","data-labels",m&&!g?"hidden":"visible",u.zIndex||6),m&&(l.attr({opacity:+g}),g||e(d,"afterAnimate",function(){d.visible&&l.show(!0),l[p.animation?"animate":"attr"]({opacity:1},{duration:200})})),r=u,n(f,function(e){var n,f,g,m,y=e.dataLabel,x=e.connector,b=!y;i=e.dlOptions||e.options&&e.options.dataLabels,(n=c(i&&i.enabled,r.enabled)&&null!==e.y)&&(u=h(r,i),f=e.getLabelConfig(),a=u.format?o(u.format,f):u.formatter.call(f,u),m=u.style,f=u.rotation,m.color=c(u.color,m.color,d.color,"#000000"),"contrast"===m.color&&(e.contrastColor=v.getContrast(e.color||d.color),m.color=u.inside||0>c(e.labelDistance,u.distance)||p.stacking?e.contrastColor:"#000000"),p.cursor&&(m.cursor=p.cursor),g={fill:u.backgroundColor,stroke:u.borderColor,"stroke-width":u.borderWidth,r:u.borderRadius||0,rotation:f,padding:u.padding,zIndex:1},t.objectEach(g,function(t,e){void 0===t&&delete g[e]})),!y||n&&s(a)?n&&s(a)&&(y?g.text=a:(y=e.dataLabel=v[f?"text":"label"](a,0,-9999,u.shape,null,null,u.useHTML,null,"data-label"),y.addClass("highcharts-data-label-color-"+e.colorIndex+" "+(u.className||"")+(u.useHTML?"highcharts-tracker":""))),y.attr(g),y.css(m).shadow(u.shadow),y.added||y.add(l),d.alignDataLabel(e,y,u,null,b)):(e.dataLabel=y=y.destroy(),x&&(e.connector=x.destroy()))}))},p.prototype.alignDataLabel=function(t,e,i,s,n){var o,a=this.chart,h=a.inverted,l=c(t.plotX,-9999),d=c(t.plotY,-9999),p=e.getBBox(),u=i.rotation,f=i.align,g=this.visible&&(t.series.forceDL||a.isInsidePlot(l,Math.round(d),h)||s&&a.isInsidePlot(l,h?s.x+1:s.y+s.height-1,h)),m="justify"===c(i.overflow,"justify");g&&(o=i.style.fontSize,o=a.renderer.fontMetrics(o,e).b,s=r({x:h?a.plotWidth-d:l,y:Math.round(h?a.plotHeight-l:d),width:0,height:0},s),r(i,{width:p.width,height:p.height}),u?(m=!1,l=a.renderer.rotCorr(o,u),l={x:s.x+i.x+s.width/2+l.x,y:s.y+i.y+{top:0,middle:.5,bottom:1}[i.verticalAlign]*s.height},e[n?"attr":"animate"](l).attr({align:f}),d=(u+720)%360,d=180<d&&360>d,"left"===f?l.y-=d?p.height:0:"center"===f?(l.x-=p.width/2,l.y-=p.height/2):"right"===f&&(l.x-=p.width,l.y-=d?0:p.height)):(e.align(i,null,s),l=e.alignAttr),m?t.isLabelJustified=this.justifyDataLabel(e,i,l,p,s,n):c(i.crop,!0)&&(g=a.isInsidePlot(l.x,l.y)&&a.isInsidePlot(l.x+p.width,l.y+p.height)),i.shape&&!u)&&e[n?"attr":"animate"]({anchorX:h?a.plotWidth-t.plotY:t.plotX,anchorY:h?a.plotHeight-t.plotX:t.plotY}),g||(e.attr({y:-9999}),e.placed=!1)},p.prototype.justifyDataLabel=function(t,e,i,s,n,r){var o,a,h=this.chart,l=e.align,c=e.verticalAlign,d=t.box?0:t.padding||0;return o=i.x+d,0>o&&("right"===l?e.align="left":e.x=-o,a=!0),o=i.x+s.width-d,o>h.plotWidth&&("left"===l?e.align="right":e.x=h.plotWidth-o,a=!0),o=i.y+d,0>o&&("bottom"===c?e.verticalAlign="top":e.y=-o,a=!0),o=i.y+s.height-d,o>h.plotHeight&&("top"===c?e.verticalAlign="bottom":e.y=h.plotHeight-o,a=!0),a&&(t.placed=!r,t.align(e,null,n)),a},u.pie&&(u.pie.prototype.drawDataLabels=function(){var e,r,o,a,h,l,d,u,f,g,m=this,v=m.data,y=m.chart,x=m.options.dataLabels,b=c(x.connectorPadding,10),k=c(x.connectorWidth,1),w=y.plotWidth,M=y.plotHeight,S=m.center,T=S[2]/2,A=S[1],P=[[],[]],C=[0,0,0,0];m.visible&&(x.enabled||m._hasPointLabels)&&(n(v,function(t){t.dataLabel&&t.visible&&t.dataLabel.shortened&&(t.dataLabel.attr({width:"auto"}).css({width:"auto",textOverflow:"clip"}),t.dataLabel.shortened=!1)}),p.prototype.drawDataLabels.apply(m),n(v,function(t){t.dataLabel&&t.visible&&(P[t.half].push(t),t.dataLabel._pos=null)}),n(P,function(i,r){var c,p,v,k=i.length,P=[];if(k)for(m.sortByAngle(i,r-.5),0<m.maxLabelDistance&&(c=Math.max(0,A-T-m.maxLabelDistance),p=Math.min(A+T+m.maxLabelDistance,y.plotHeight),n(i,function(t){0<t.labelDistance&&t.dataLabel&&(t.top=Math.max(0,A-T-t.labelDistance),t.bottom=Math.min(A+T+t.labelDistance,y.plotHeight),v=t.dataLabel.getBBox().height||21,t.positionsIndex=P.push({target:t.labelPos[1]-t.top+v/2,size:v,rank:t.y})-1)}),t.distribute(P,p+v-c)),g=0;g<k;g++)e=i[g],p=e.positionsIndex,h=e.labelPos,o=e.dataLabel,f=!1===e.visible?"hidden":"inherit",c=h[1],P&&s(P[p])?void 0===P[p].pos?f="hidden":(l=P[p].size,u=e.top+P[p].pos):u=c,delete e.positionIndex,d=x.justify?S[0]+(r?-1:1)*(T+e.labelDistance):m.getX(u<e.top+2||u>e.bottom-2?c:u,r,e),o._attr={visibility:f,align:h[6]},o._pos={x:d+x.x+({left:b,right:-b}[h[6]]||0),y:u+x.y-10},h.x=d,h.y=u,null===m.options.size&&(a=o.getBBox().width,c=null,d-a<b?(c=Math.round(a-d+b),C[3]=Math.max(c,C[3])):d+a>w-b&&(c=Math.round(d+a-w+b),C[1]=Math.max(c,C[1])),0>u-l/2?C[0]=Math.max(Math.round(-u+l/2),C[0]):u+l/2>M&&(C[2]=Math.max(Math.round(u+l/2-M),C[2])),o.sideOverflow=c)}),0===i(C)||this.verifyDataLabelOverflow(C))&&(this.placeDataLabels(),k&&n(this.points,function(t){var e;r=t.connector,(o=t.dataLabel)&&o._pos&&t.visible&&0<t.labelDistance?(f=o._attr.visibility,(e=!r)&&(t.connector=r=y.renderer.path().addClass("highcharts-data-label-connector highcharts-color-"+t.colorIndex).add(m.dataLabelsGroup),r.attr({"stroke-width":k,stroke:x.connectorColor||t.color||"#666666"})),r[e?"attr":"animate"]({d:m.connectorPath(t.labelPos)}),r.attr("visibility",f)):r&&(t.connector=r.destroy())}))},u.pie.prototype.connectorPath=function(t){var e=t.x,i=t.y;return c(this.options.dataLabels.softConnector,!0)?["M",e+("left"===t[6]?5:-5),i,"C",e,i,2*t[2]-t[4],2*t[3]-t[5],t[2],t[3],"L",t[4],t[5]]:["M",e+("left"===t[6]?5:-5),i,"L",t[2],t[3],"L",t[4],t[5]]},u.pie.prototype.placeDataLabels=function(){n(this.points,function(t){var e=t.dataLabel;e&&t.visible&&((t=e._pos)?(e.sideOverflow&&(e._attr.width=e.getBBox().width-e.sideOverflow,e.css({width:e._attr.width+"px",textOverflow:"ellipsis"}),e.shortened=!0),e.attr(e._attr),e[e.moved?"animate":"attr"](t),e.moved=!0):e&&e.attr({y:-9999}))},this)},u.pie.prototype.alignDataLabel=l,u.pie.prototype.verifyDataLabelOverflow=function(t){var e,i,s=this.center,n=this.options,r=n.center,o=n.minSize||80;return null!==r[0]?e=Math.max(s[2]-Math.max(t[1],t[3]),o):(e=Math.max(s[2]-t[1]-t[3],o),s[0]+=(t[3]-t[1])/2),null!==r[1]?e=Math.max(Math.min(e,s[2]-Math.max(t[0],t[2])),o):(e=Math.max(Math.min(e,s[2]-t[0]-t[2]),o),s[1]+=(t[0]-t[2])/2),e<s[2]?(s[2]=e,s[3]=Math.min(d(n.innerSize||0,e),e),this.translate(s),this.drawDataLabels&&this.drawDataLabels()):i=!0,i}),u.column&&(u.column.prototype.alignDataLabel=function(t,e,i,s,n){var r=this.chart.inverted,o=t.series,a=t.dlBox||t.shapeArgs,l=c(t.below,t.plotY>c(this.translatedThreshold,o.yAxis.len)),d=c(i.inside,!!this.options.stacking);a&&(s=h(a),0>s.y&&(s.height+=s.y,s.y=0),a=s.y+s.height-o.yAxis.len,0<a&&(s.height-=a),r&&(s={x:o.yAxis.len-s.y-s.height,y:o.xAxis.len-s.x-s.width,width:s.height,height:s.width}),d||(r?(s.x+=l?0:s.width,s.width=0):(s.y+=l?s.height:0,s.height=0))),i.align=c(i.align,!r||d?"center":l?"right":"left"),i.verticalAlign=c(i.verticalAlign,r||d?"middle":l?"top":"bottom"),p.prototype.alignDataLabel.call(this,t,e,i,s,n),t.isLabelJustified&&t.contrastColor&&t.dataLabel.css({color:t.contrastColor})})}(t),function(t){var e=t.Chart,i=t.each,s=t.pick,n=t.addEvent;e.prototype.callbacks.push(function(t){function e(){var e=[];i(t.series||[],function(t){var n=t.options.dataLabels,r=t.dataLabelCollections||["dataLabel"];(n.enabled||t._hasPointLabels)&&!n.allowOverlap&&t.visible&&i(r,function(n){i(t.points,function(t){t[n]&&(t[n].labelrank=s(t.labelrank,t.shapeArgs&&t.shapeArgs.height),e.push(t[n]))})})}),t.hideOverlappingLabels(e)}e(),n(t,"redraw",e)}),e.prototype.hideOverlappingLabels=function(t){var e,s,n,r,o,a,h,l,c,d=t.length,p=function(t,e,i,s,n,r,o,a){return!(n>t+i||n+o<t||r>e+s||r+a<e)};for(s=0;s<d;s++)(e=t[s])&&(e.oldOpacity=e.opacity,e.newOpacity=1);for(t.sort(function(t,e){return(e.labelrank||0)-(t.labelrank||0)}),s=0;s<d;s++)for(n=t[s],e=s+1;e<d;++e)r=t[e],n&&r&&n!==r&&n.placed&&r.placed&&0!==n.newOpacity&&0!==r.newOpacity&&(o=n.alignAttr,a=r.alignAttr,h=n.parentGroup,l=r.parentGroup,c=2*(n.box?0:n.padding),o=p(o.x+h.translateX,o.y+h.translateY,n.width-c,n.height-c,a.x+l.translateX,a.y+l.translateY,r.width-c,r.height-c))&&((n.labelrank<r.labelrank?n:r).newOpacity=0);i(t,function(t){var e,i;t&&(i=t.newOpacity,t.oldOpacity!==i&&t.placed&&(i?t.show(!0):e=function(){t.hide()},t.alignAttr.opacity=i,t[t.isOld?"animate":"attr"](t.alignAttr,null,e)),t.isOld=!0)})}}(t),function(t){var e,i=t.addEvent,s=t.Chart,n=t.createElement,r=t.css,o=t.defaultOptions,a=t.defaultPlotOptions,h=t.each,l=t.extend,c=t.fireEvent,d=t.hasTouch,p=t.inArray,u=t.isObject,f=t.Legend,g=t.merge,m=t.pick,v=t.Point,y=t.Series,x=t.seriesTypes,b=t.svg;e=t.TrackerMixin={drawTrackerPoint:function(){var t=this,e=t.chart.pointer,i=function(t){var i=e.getPointFromEvent(t);void 0!==i&&i.onMouseOver(t)};h(t.points,function(t){t.graphic&&(t.graphic.element.point=t),t.dataLabel&&(t.dataLabel.div?t.dataLabel.div.point=t:t.dataLabel.element.point=t)}),t._hasTracking||(h(t.trackerGroups,function(s){t[s]&&(t[s].addClass("highcharts-tracker").on("mouseover",i).on("mouseout",function(t){e.onTrackerMouseOut(t)}),d&&t[s].on("touchstart",i),t.options.cursor&&t[s].css(r).css({cursor:t.options.cursor}))}),t._hasTracking=!0)},drawTrackerGraph:function(){var t,e=this,i=e.options,s=i.trackByArea,n=[].concat(s?e.areaPath:e.graphPath),r=n.length,o=e.chart,a=o.pointer,l=o.renderer,c=o.options.tooltip.snap,p=e.tracker,u=function(){o.hoverSeries!==e&&e.onMouseOver()},f="rgba(192,192,192,"+(b?1e-4:.002)+")";if(r&&!s)for(t=r+1;t--;)"M"===n[t]&&n.splice(t+1,0,n[t+1]-c,n[t+2],"L"),(t&&"M"===n[t]||t===r)&&n.splice(t,0,"L",n[t-2]+c,n[t-1]);p?p.attr({d:n}):e.graph&&(e.tracker=l.path(n).attr({"stroke-linejoin":"round",visibility:e.visible?"visible":"hidden",stroke:f,fill:s?f:"none","stroke-width":e.graph.strokeWidth()+(s?0:2*c),zIndex:2}).add(e.group),h([e.tracker,e.markerGroup],function(t){t.addClass("highcharts-tracker").on("mouseover",u).on("mouseout",function(t){a.onTrackerMouseOut(t)}),i.cursor&&t.css({cursor:i.cursor}),d&&t.on("touchstart",u)}))}},x.column&&(x.column.prototype.drawTracker=e.drawTrackerPoint),x.pie&&(x.pie.prototype.drawTracker=e.drawTrackerPoint),x.scatter&&(x.scatter.prototype.drawTracker=e.drawTrackerPoint),l(f.prototype,{setItemEvents:function(t,e,i){var s=this,n=s.chart.renderer.boxWrapper,r="highcharts-legend-"+(t.series?"point":"series")+"-active";(i?e:t.legendGroup).on("mouseover",function(){t.setState("hover"),n.addClass(r),e.css(s.options.itemHoverStyle)}).on("mouseout",function(){e.css(g(t.visible?s.itemStyle:s.itemHiddenStyle)),n.removeClass(r),t.setState()}).on("click",function(e){var i=function(){t.setVisible&&t.setVisible()};e={browserEvent:e},t.firePointEvent?t.firePointEvent("legendItemClick",e,i):c(t,"legendItemClick",e,i)})},createCheckboxForItem:function(t){t.checkbox=n("input",{type:"checkbox",checked:t.selected,defaultChecked:t.selected},this.options.itemCheckboxStyle,this.chart.container),i(t.checkbox,"click",function(e){c(t.series||t,"checkboxClick",{checked:e.target.checked,item:t},function(){t.select()})})}}),o.legend.itemStyle.cursor="pointer",l(s.prototype,{showResetZoom:function(){var t=this,e=o.lang,i=t.options.chart.resetZoomButton,s=i.theme,n=s.states,r="chart"===i.relativeTo?null:"plotBox";this.resetZoomButton=t.renderer.button(e.resetZoom,null,null,function(){t.zoomOut()},s,n&&n.hover).attr({align:i.position.align,title:e.resetZoomTitle}).addClass("highcharts-reset-zoom").add().align(i.position,!1,r)},zoomOut:function(){var t=this;c(t,"selection",{resetSelection:!0},function(){t.zoom()})},zoom:function(t){var e,i,s=this.pointer,n=!1;!t||t.resetSelection?h(this.axes,function(t){e=t.zoom()}):h(t.xAxis.concat(t.yAxis),function(t){var i=t.axis;s[i.isXAxis?"zoomX":"zoomY"]&&(e=i.zoom(t.min,t.max),i.displayBtn&&(n=!0))}),i=this.resetZoomButton,n&&!i?this.showResetZoom():!n&&u(i)&&(this.resetZoomButton=i.destroy()),e&&this.redraw(m(this.options.chart.animation,t&&t.animation,100>this.pointCount))},pan:function(t,e){var i,s=this,n=s.hoverPoints;n&&h(n,function(t){t.setState()}),h("xy"===e?[1,0]:[1],function(e){e=s[e?"xAxis":"yAxis"][0];var n,r=e.horiz,o=t[r?"chartX":"chartY"],r=r?"mouseDownX":"mouseDownY",a=s[r],h=(e.pointRange||0)/2,l=e.getExtremes(),c=e.toValue(a-o,!0)+h,h=e.toValue(a+e.len-o,!0)-h,d=h<c,a=d?h:c,c=d?c:h,h=Math.min(l.dataMin,e.toValue(e.toPixels(l.min)-e.minPixelPadding)),d=Math.max(l.dataMax,e.toValue(e.toPixels(l.max)+e.minPixelPadding));n=h-a,0<n&&(c+=n,a=h),n=c-d,0<n&&(c=d,a-=n),e.series.length&&a!==l.min&&c!==l.max&&(e.setExtremes(a,c,!1,!1,{trigger:"pan"}),i=!0),s[r]=o}),
+i&&s.redraw(!1),r(s.container,{cursor:"move"})}}),l(v.prototype,{select:function(t,e){var i=this,s=i.series,n=s.chart;t=m(t,!i.selected),i.firePointEvent(t?"select":"unselect",{accumulate:e},function(){i.selected=i.options.selected=t,s.options.data[p(i,s.data)]=i.options,i.setState(t&&"select"),e||h(n.getSelectedPoints(),function(t){t.selected&&t!==i&&(t.selected=t.options.selected=!1,s.options.data[p(t,s.data)]=t.options,t.setState(""),t.firePointEvent("unselect"))})})},onMouseOver:function(t){var e=this.series.chart.pointer;this.firePointEvent("mouseOver"),e.runPointActions(t,this)},onMouseOut:function(){var t=this.series.chart;this.firePointEvent("mouseOut"),h(t.hoverPoints||[],function(t){t.setState()}),t.hoverPoints=t.hoverPoint=null},importEvents:function(){if(!this.hasImportedEvents){var e=this,s=g(e.series.options.point,e.options).events;e.events=s,t.objectEach(s,function(t,s){i(e,s,t)}),this.hasImportedEvents=!0}},setState:function(t,e){var i,s=Math.floor(this.plotX),n=this.plotY,r=this.series,o=r.options.states[t]||{},h=a[r.type].marker&&r.options.marker,c=h&&!1===h.enabled,d=h&&h.states&&h.states[t]||{},p=!1===d.enabled,u=r.stateMarkerGraphic,f=this.marker||{},g=r.chart,v=r.halo,y=h&&r.markerAttribs;t=t||"",t===this.state&&!e||this.selected&&"select"!==t||!1===o.enabled||t&&(p||c&&!1===d.enabled)||t&&f.states&&f.states[t]&&!1===f.states[t].enabled||(y&&(i=r.markerAttribs(this,t)),this.graphic?(this.state&&this.graphic.removeClass("highcharts-point-"+this.state),t&&this.graphic.addClass("highcharts-point-"+t),this.graphic.attr(r.pointAttribs(this,t)),i&&this.graphic.animate(i,m(g.options.chart.animation,d.animation,h.animation)),u&&u.hide()):(t&&d&&(h=f.symbol||r.symbol,u&&u.currentSymbol!==h&&(u=u.destroy()),u?u[e?"animate":"attr"]({x:i.x,y:i.y}):h&&(r.stateMarkerGraphic=u=g.renderer.symbol(h,i.x,i.y,i.width,i.height).add(r.markerGroup),u.currentSymbol=h),u&&u.attr(r.pointAttribs(this,t))),u&&(u[t&&g.isInsidePlot(s,n,g.inverted)?"show":"hide"](),u.element.point=this)),(s=o.halo)&&s.size?(v||(r.halo=v=g.renderer.path().add(y?r.markerGroup:r.group)),v[e?"animate":"attr"]({d:this.haloPath(s.size)}),v.attr({class:"highcharts-halo highcharts-color-"+m(this.colorIndex,r.colorIndex)}),v.point=this,v.attr(l({fill:this.color||r.color,"fill-opacity":s.opacity,zIndex:-1},s.attributes))):v&&v.point&&v.point.haloPath&&v.animate({d:v.point.haloPath(0)}),this.state=t)},haloPath:function(t){return this.series.chart.renderer.symbols.circle(Math.floor(this.plotX)-t,this.plotY-t,2*t,2*t)}}),l(y.prototype,{onMouseOver:function(){var t=this.chart,e=t.hoverSeries;e&&e!==this&&e.onMouseOut(),this.options.events.mouseOver&&c(this,"mouseOver"),this.setState("hover"),t.hoverSeries=this},onMouseOut:function(){var t=this.options,e=this.chart,i=e.tooltip,s=e.hoverPoint;e.hoverSeries=null,s&&s.onMouseOut(),this&&t.events.mouseOut&&c(this,"mouseOut"),!i||this.stickyTracking||i.shared&&!this.noSharedTooltip||i.hide(),this.setState()},setState:function(t){var e=this,i=e.options,s=e.graph,n=i.states,r=i.lineWidth,i=0;if(t=t||"",e.state!==t&&(h([e.group,e.markerGroup,e.dataLabelsGroup],function(i){i&&(e.state&&i.removeClass("highcharts-series-"+e.state),t&&i.addClass("highcharts-series-"+t))}),e.state=t,!n[t]||!1!==n[t].enabled)&&(t&&(r=n[t].lineWidth||r+(n[t].lineWidthPlus||0)),s&&!s.dashstyle))for(r={"stroke-width":r},s.animate(r,m(e.chart.options.chart.animation,n[t]&&n[t].animation));e["zone-graph-"+i];)e["zone-graph-"+i].attr(r),i+=1},setVisible:function(t,e){var i,s=this,n=s.chart,r=s.legendItem,o=n.options.chart.ignoreHiddenSeries,a=s.visible;i=(s.visible=t=s.options.visible=s.userOptions.visible=void 0===t?!a:t)?"show":"hide",h(["group","dataLabelsGroup","markerGroup","tracker","tt"],function(t){s[t]&&s[t][i]()}),n.hoverSeries!==s&&(n.hoverPoint&&n.hoverPoint.series)!==s||s.onMouseOut(),r&&n.legend.colorizeItem(s,t),s.isDirty=!0,s.options.stacking&&h(n.series,function(t){t.options.stacking&&t.visible&&(t.isDirty=!0)}),h(s.linkedSeries,function(e){e.setVisible(t,!1)}),o&&(n.isDirtyBox=!0),!1!==e&&n.redraw(),c(s,i)},show:function(){this.setVisible(!0)},hide:function(){this.setVisible(!1)},select:function(t){this.selected=t=void 0===t?!this.selected:t,this.checkbox&&(this.checkbox.checked=t),c(this,t?"select":"unselect")},drawTracker:e.drawTrackerGraph})}(t),function(t){var e=t.Chart,i=t.each,s=t.inArray,n=t.isArray,r=t.isObject,o=t.pick,a=t.splat;e.prototype.setResponsive=function(e){var s=this.options.responsive,n=[],r=this.currentResponsive;s&&s.rules&&i(s.rules,function(i){void 0===i._id&&(i._id=t.uniqueKey()),this.matchResponsiveRule(i,n,e)},this);var o=t.merge.apply(0,t.map(n,function(e){return t.find(s.rules,function(t){return t._id===e}).chartOptions})),n=n.toString()||void 0;n!==(r&&r.ruleIds)&&(r&&this.update(r.undoOptions,e),n?(this.currentResponsive={ruleIds:n,mergedOptions:o,undoOptions:this.currentOptions(o)},this.update(o,e)):this.currentResponsive=void 0)},e.prototype.matchResponsiveRule=function(t,e){var i=t.condition;(i.callback||function(){return this.chartWidth<=o(i.maxWidth,Number.MAX_VALUE)&&this.chartHeight<=o(i.maxHeight,Number.MAX_VALUE)&&this.chartWidth>=o(i.minWidth,0)&&this.chartHeight>=o(i.minHeight,0)}).call(this)&&e.push(t._id)},e.prototype.currentOptions=function(e){function i(e,o,h,l){var c;t.objectEach(e,function(t,d){if(!l&&-1<s(d,["series","xAxis","yAxis"]))for(e[d]=a(e[d]),h[d]=[],c=0;c<e[d].length;c++)o[d][c]&&(h[d][c]={},i(t[c],o[d][c],h[d][c],l+1));else r(t)?(h[d]=n(t)?[]:{},i(t,o[d]||{},h[d],l+1)):h[d]=o[d]||null})}var o={};return i(e,this.options,o,0),o}}(t),t})},/*!*****************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/highcharts/modules/heatmap.js ***!
+  \*****************************************************************************************************************/
+978,/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/highcharts-custom-events/js/customEvents.js ***!
   \*****************************************************************************************/
-966,/*!******************************************************************!*\
+979,/*!******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/object-hash/index.js ***!
   \******************************************************************/
-967,/*!*******************************************************************************************************************************************!*\
+980,/*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/heatmapCellTooltipFormatter.jsx ***!
   \*******************************************************************************************************************************************/
-[3830,2572,2575],/*!**********************************************************************************************************************************!*\
+[3875,2612,2615],/*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/HeatmapCellTooltip.jsx ***!
   \**********************************************************************************************************************************/
-[3831,2573],/*!*************************************************************************************!*\
+[3876,2613],/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-number-format/index.js ***!
   \*************************************************************************************/
-[3832,2574],/*!*************************************************************************************************!*\
+[3877,2614],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-number-format/src/NumberFormat.jsx ***!
   \*************************************************************************************************/
-1034,/*!******************************************************!*\
+1047,/*!******************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/he/he.js ***!
   \******************************************************/
-1035,/*!******************************************************************************************************************************!*\
+1048,/*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/axesFormatters.jsx ***!
   \******************************************************************************************************************************/
-[3833,2575],/*!************************************************************************************************************************!*\
+[3878,2615],/*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/Main.jsx ***!
   \************************************************************************************************************************/
-[3834,2578,2581,2557],/*!*******************************************************************************************************************************************!*\
+[3879,2618,2621,2595],/*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.jsx ***!
   \*******************************************************************************************************************************************/
-[3835,2579],/*!********************************************************************************************************************************************!*\
+[3880,2619],/*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.less ***!
   \********************************************************************************************************************************************/
-function(e,t,r){var a=r(/*! !../../../../css-loader!../../../../../../../~/less-loader!./DataSeriesHeatmapLegend.less */2580);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../../../style-loader/addStyles.js */2361)(a,{});a.locals&&(e.exports=a.locals)},/*!*************************************************************************************************************************************************************************************************************!*\
+function(t,e,i){var s=i(/*! !../../../../css-loader!../../../../../../../~/less-loader!./DataSeriesHeatmapLegend.less */2620);"string"==typeof s&&(s=[[t.id,s,""]]);i(/*! ../../../../style-loader/addStyles.js */2399)(s,{});s.locals&&(t.exports=s.locals)},/*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.less ***!
   \*************************************************************************************************************************************************************************************************************/
-[3836,2360],/*!*****************************************************************************************************************************************!*\
+[3881,2398],/*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.jsx ***!
   \*****************************************************************************************************************************************/
-[3837,2558,2582,2583],/*!**********************************************************************************************!*\
+[3882,2596,2622,2623],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/utils.js ***!
   \**********************************************************************************************/
-1042,/*!******************************************************************************************************************************************!*\
+1055,/*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.less ***!
   \******************************************************************************************************************************************/
-function(e,t,r){var a=r(/*! !../../../../css-loader!../../../../../../../~/less-loader!./GradientHeatmapLegend.less */2584);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../../../style-loader/addStyles.js */2361)(a,{});a.locals&&(e.exports=a.locals)},/*!***********************************************************************************************************************************************************************************************************!*\
+function(t,e,i){var s=i(/*! !../../../../css-loader!../../../../../../../~/less-loader!./GradientHeatmapLegend.less */2624);"string"==typeof s&&(s=[[t.id,s,""]]);i(/*! ../../../../style-loader/addStyles.js */2399)(s,{});s.locals&&(t.exports=s.locals)},/*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.less ***!
   \***********************************************************************************************************************************************************************************************************/
-[3838,2360],/*!************************************************************************************************************************************!*\
+[3883,2398],/*!************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.jsx ***!
   \************************************************************************************************************************************/
-[3839,2470,2504,2586,2643,2645],/*!********************************************************************!*\
+[3884,2508,2542,2626,2675,2677],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/index.js ***!
   \********************************************************************/
-[3840,2587],/*!*********************************************************************!*\
+[3885,2627],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Slider.js ***!
   \*********************************************************************/
-[3841,2588,2592,2374,2412,2413,2449,2593,2457,2598,2599,2641,2642],/*!*************************************************************************************!*\
+[3886,2628,2632,2412,2450,2451,2487,2633,2495,2637,2638,2673,2674],/*!*************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/defineProperty.js ***!
   \*************************************************************************************/
-[3842,2589],/*!*********************************************************************************************!*\
+[3887,2629],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/define-property.js ***!
   \*********************************************************************************************/
-[3843,2590],/*!**********************************************************************************************************!*\
+[3888,2630],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/define-property.js ***!
   \**********************************************************************************************************/
-[3844,2591,2380],/*!*******************************************************************************************************************!*\
+[3889,2631,2418],/*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.define-property.js ***!
   \*******************************************************************************************************************/
-[3541,2378,2388,2384],/*!****************************************************************************************!*\
+[3577,2416,2426,2422],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/toConsumableArray.js ***!
   \****************************************************************************************/
-[3845,2482],/*!*********************************************************************************!*\
+[3890,2520],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-util/lib/Dom/addEventListener.js ***!
   \*********************************************************************************/
-[3846,2594],/*!*********************************************************************************!*\
+[3891,2634],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/add-dom-event-listener/lib/index.js ***!
   \*********************************************************************************/
-[3847,2595],/*!***************************************************************************************!*\
+[3892,2635],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/add-dom-event-listener/lib/EventObject.js ***!
   \***************************************************************************************/
-[3848,2596,2597],/*!*******************************************************************************************!*\
+[3893,2636,2100],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/add-dom-event-listener/lib/EventBaseObject.js ***!
   \*******************************************************************************************/
-1056,/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/object-assign/index.js ***!
-  \********************************************************************/
-301,/*!********************************************************************!*\
+1069,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Track.js ***!
   \********************************************************************/
-1057,/*!*********************************************************************!*\
+1070,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Handle.js ***!
   \*********************************************************************/
-[3849,2412,2413,2449,2600],/*!*********************************************************************!*\
+[3894,2450,2451,2487,2639],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-tooltip/lib/index.js ***!
   \*********************************************************************/
-[3850,2601],/*!***********************************************************************!*\
+[3895,2640],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-tooltip/lib/Tooltip.js ***!
   \***********************************************************************/
-[3851,2374,2373,2412,2413,2449,2602,2606,2640],/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/prop-types/index.js ***!
-  \*****************************************************************/
-[3852,2603],/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/prop-types/factoryWithThrowingShims.js ***!
-  \************************************************************************************/
-[3853,2604,2605],/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/emptyFunction.js ***!
-  \***********************************************************************/
-309,/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/invariant.js ***!
-  \*******************************************************************/
-305,/*!*********************************************************************!*\
+[3896,2412,2411,2450,2451,2487,2103,2641,2672],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/index.js ***!
   \*********************************************************************/
-[3854,2607],/*!***********************************************************************!*\
+[3897,2642],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/Trigger.js ***!
   \***********************************************************************/
-[3855,2374,2602,2608,2611,2612,2613,2638,2639],/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/create-react-class/index.js ***!
-  \*************************************************************************/
-[3856,2609],/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/create-react-class/factory.js ***!
-  \***************************************************************************/
-[3857,2597,2610,2605],/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/emptyObject.js ***!
-  \*********************************************************************/
-316,/*!**************************************************************************************!*\
+[3898,2412,2103,2098,2643,2644,2645,2670,2671],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/~/rc-util/lib/Dom/contains.js ***!
   \**************************************************************************************/
-1067,/*!**********************************************************************************************!*\
+1076,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/~/rc-util/lib/Dom/addEventListener.js ***!
   \**********************************************************************************************/
-[3846,2594],/*!*********************************************************************!*\
+[3891,2634],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/Popup.js ***!
   \*********************************************************************/
-[3858,2374,2412,2413,2449,2602,2614,2627,2636,2637],/*!*******************************************************************!*\
+[3899,2412,2450,2451,2487,2103,2646,2659,2668,2669],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-align/lib/index.js ***!
   \*******************************************************************/
-[3859,2615],/*!*******************************************************************!*\
+[3900,2647],/*!*******************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-align/lib/Align.js ***!
   \*******************************************************************/
-[3860,2602,2616,2625,2626],/*!********************************************************************!*\
+[3901,2103,2648,2657,2658],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/index.js ***!
   \********************************************************************/
-[3861,2617,2619,2620,2621,2622,2623],/*!********************************************************************!*\
+[3902,2649,2651,2652,2653,2654,2655],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/utils.js ***!
   \********************************************************************/
-[3862,2618],/*!****************************************************************************!*\
+[3903,2650],/*!****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/propertyUtils.js ***!
   \****************************************************************************/
-1074,/*!******************************************************************************!*\
+1083,/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getOffsetParent.js ***!
   \******************************************************************************/
-[3863,2617],/*!***************************************************************************************!*\
+[3904,2649],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getVisibleRectForElement.js ***!
   \***************************************************************************************/
-[3864,2617,2619],/*!********************************************************************************!*\
+[3905,2649,2651],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/adjustForViewport.js ***!
   \********************************************************************************/
-[3865,2617],/*!************************************************************************!*\
+[3906,2649],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getRegion.js ***!
   \************************************************************************/
-[3866,2617],/*!*****************************************************************************!*\
+[3907,2649],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getElFuturePos.js ***!
   \*****************************************************************************/
-[3867,2624],/*!*****************************************************************************!*\
+[3908,2656],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getAlignOffset.js ***!
   \*****************************************************************************/
-1080,/*!********************************************************************************************!*\
+1089,/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-align/~/rc-util/lib/Dom/addEventListener.js ***!
   \********************************************************************************************/
-[3846,2594],/*!**********************************************************************!*\
+[3891,2634],/*!**********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-align/lib/isWindow.js ***!
   \**********************************************************************/
-1082,/*!*********************************************************************!*\
+1091,/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/index.js ***!
   \*********************************************************************/
-[3868,2628],/*!***********************************************************************!*\
+[3909,2660],/*!***********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/Animate.js ***!
   \***********************************************************************/
-[3869,2602,2629,2630,2635],/*!*****************************************************************************!*\
+[3910,2103,2661,2662,2667],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/ChildrenUtils.js ***!
   \*****************************************************************************/
-1085,/*!****************************************************************************!*\
+1094,/*!****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/AnimateChild.js ***!
   \****************************************************************************/
-[3870,2602,2631,2635],/*!************************************************************************!*\
+[3911,2103,2663,2667],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-animation/lib/index.js ***!
   \************************************************************************/
-[3871,2632,2633],/*!************************************************************************!*\
+[3912,2664,2665],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-animation/lib/Event.js ***!
   \************************************************************************/
-1088,/*!************************************************************************!*\
+1097,/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/component-classes/index.js ***!
   \************************************************************************/
-[3872,2634,2634],/*!************************************************************************!*\
+[3913,2666,2666],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/component-indexof/index.js ***!
   \************************************************************************/
-1090,/*!********************************************************************!*\
+1099,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/util.js ***!
   \********************************************************************/
-1091,/*!**************************************************************************!*\
+1100,/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/PopupInner.js ***!
   \**************************************************************************/
-[3873,2412,2413,2449,2602,2637],/*!*****************************************************************************!*\
+[3914,2450,2451,2487,2103,2669],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/LazyRenderBox.js ***!
   \*****************************************************************************/
-[3874,2373,2412,2413,2449,2602],/*!*********************************************************************!*\
+[3915,2411,2450,2451,2487,2103],/*!*********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/utils.js ***!
   \*********************************************************************/
-[3875,2374],/*!*************************************************************************************************!*\
+[3916,2412],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-trigger/~/rc-util/lib/getContainerRenderMixin.js ***!
   \*************************************************************************************************/
-1095,/*!**************************************************************************!*\
+1104,/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-tooltip/lib/placements.js ***!
   \**************************************************************************/
-1096,/*!********************************************************************!*\
+1105,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Steps.js ***!
   \********************************************************************/
-[3876,2588,2457,2468],/*!********************************************************************!*\
+[3917,2628,2495,2506],/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Marks.js ***!
   \********************************************************************/
-[3877,2374,2414,2588,2457],/*!************************************************************************!*\
+[3918,2412,2452,2628,2495],/*!************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/rc-slider/assets/index.css ***!
   \************************************************************************/
-[3878,2644,2361],/*!*************************************************************************************************************************!*\
+[3919,2676,2399],/*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./atlas_bundles/baseline-expression/~/rc-slider/assets/index.css ***!
   \*************************************************************************************************************************/
-[3879,2360],/*!*************************************************************************************************************************************!*\
+[3920,2398],/*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.less ***!
   \*************************************************************************************************************************************/
-function(e,t,r){var a=r(/*! !../../../../css-loader!../../../../../../../~/less-loader!./CoexpressionOption.less */2646);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../../../style-loader/addStyles.js */2361)(a,{});a.locals&&(e.exports=a.locals)},/*!******************************************************************************************************************************************************************************************************!*\
+function(t,e,i){var s=i(/*! !../../../../css-loader!../../../../../../../~/less-loader!./CoexpressionOption.less */2678);"string"==typeof s&&(s=[[t.id,s,""]]);i(/*! ../../../../style-loader/addStyles.js */2399)(s,{});s.locals&&(t.exports=s.locals)},/*!******************************************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.less ***!
   \******************************************************************************************************************************************************************************************************/
-[3880,2360],/*!**********************************************************************************************************!*\
+[3921,2398],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/Events.js ***!
   \**********************************************************************************************************/
-[3881,2648],/*!**************************************************************!*\
+[3922,2680],/*!**************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/lodash/lodash.js ***!
   \**************************************************************/
-1104,/*!****************************************************************************************************************!*\
+1113,/*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/Manipulators.js ***!
   \****************************************************************************************************************/
-1105,/*!************************************************************************************************************!*\
+1114,/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/show/BoxplotCanvas.jsx ***!
   \************************************************************************************************************/
-[3882,2568],/*!********************************************************************************************************************!*\
+[3923,2606,2683],/*!*****************************************************************************************************************!*\
+  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/~/highcharts/highcharts-more.js ***!
+  \*****************************************************************************************************************/
+1116,/*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/jsonPayloadPropTypes.js ***!
   \********************************************************************************************************************/
-[3883,2558],/*!**************************************************************************************************!*\
+[3924,2596],/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/main.js ***!
   \**************************************************************************************************/
-[3884,2653,2654,2662,2663,2664,2672],/*!****************************************************************************************************************!*\
+[3925,2686,2687,2695,2696,2697,2705],/*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/chartConfiguration.js ***!
   \****************************************************************************************************************/
-[3885,2558,2582],/*!*********************************************************************************************************!*\
+[3926,2596,2622],/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapData.js ***!
   \*********************************************************************************************************/
-[3886,2655,2656],/*!***************************************************************************************************************!*\
+[3927,2688,2689],/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapDataSeries.js ***!
   \***************************************************************************************************************/
-[3887,2648,2558],/*!*******************************************************************************************************************!*\
+[3928,2680,2596],/*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapAxisCategories.js ***!
   \*******************************************************************************************************************/
-[3888,2307,707,2558,2657],/*!************************************************************************************************************!*\
+[3929,2345,720,2596,2690],/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets ^\.\/.*\-icon\.png$ ***!
   \************************************************************************************************************/
-function(e,t,r){function a(e){return r(o(e))}function o(e){return n[e]||function(){throw new Error("Cannot find module '"+e+"'.")}()}var n={"./gsea_go-icon.png":2658,"./gsea_interpro-icon.png":2659,"./gsea_reactome-icon.png":2660,"./ma-plot-icon.png":2661};a.keys=function(){return Object.keys(n)},a.resolve=o,e.exports=a,a.id=2657},/*!*********************************************************************************************************!*\
+function(t,e,i){function s(t){return i(n(t))}function n(t){return r[t]||function(){throw new Error("Cannot find module '"+t+"'.")}()}var r={"./gsea_go-icon.png":2691,"./gsea_interpro-icon.png":2692,"./gsea_reactome-icon.png":2693,"./ma-plot-icon.png":2694};s.keys=function(){return Object.keys(r)},s.resolve=n,t.exports=s,s.id=2690},/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/gsea_go-icon.png ***!
   \*********************************************************************************************************/
-1115,/*!***************************************************************************************************************!*\
+1124,/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/gsea_interpro-icon.png ***!
   \***************************************************************************************************************/
-1116,/*!***************************************************************************************************************!*\
+1125,/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/gsea_reactome-icon.png ***!
   \***************************************************************************************************************/
-1117,/*!*********************************************************************************************************!*\
+1126,/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/ma-plot-icon.png ***!
   \*********************************************************************************************************/
-1118,/*!*********************************************************************************************************!*\
+1127,/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/boxplotData.js ***!
   \*********************************************************************************************************/
-[3889,2558],/*!**************************************************************************************************************!*\
+[3930,2596],/*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapOrderings.js ***!
   \**************************************************************************************************************/
-[3890,2648,2558],/*!***************************************************************************************************************!*\
+[3931,2680,2596],/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapColourAxis.js ***!
   \***************************************************************************************************************/
-[3891,2665,2558],/*!************************************************************!*\
+[3932,2698,2596],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/color/index.js ***!
   \************************************************************/
-[3892,2666,2667,2671],/*!************************************************************!*\
+[3933,2699,2700,2704],/*!************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/clone/clone.js ***!
   \************************************************************/
-1123,/*!********************************************************************!*\
+1132,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/color-convert/index.js ***!
   \********************************************************************/
-[3893,2668,2670],/*!**************************************************************************!*\
+[3934,2701,2703],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/color-convert/conversions.js ***!
   \**************************************************************************/
-[3894,2669],/*!*****************************************************************!*\
+[3935,2702],/*!*****************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/color-name/index.js ***!
   \*****************************************************************/
-1126,/*!********************************************************************!*\
+1135,/*!********************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/color-convert/route.js ***!
   \********************************************************************/
-[3895,2668],/*!**************************************************************************!*\
+[3936,2701],/*!**************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/color-string/color-string.js ***!
   \**************************************************************************/
-[3896,2669],/*!************************************************************************************************************!*\
+[3937,2702],/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapFilters.js ***!
   \************************************************************************************************************/
-[3897,2648],/*!********************************************************************************!*\
+[3938,2680],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/index.js ***!
   \********************************************************************************/
-[3898,2674],/*!****************************************************************************************!*\
+[3939,2707],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/src/Feedback.jsx ***!
   \****************************************************************************************/
-[3899,2675,2677,2678,2470,2679,2680,2683,2684,2693],/*!**************************************************************************************!*\
+[3940,2708,2710,2711,2508,2712,2713,2716,2717,2726],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-localstorage/react-localstorage.js ***!
   \**************************************************************************************/
-[3900,2676],/*!*******************************************************************************!*\
+[3941,2709],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-localstorage/lib/warning.js ***!
   \*******************************************************************************/
-1133,/*!*****************************************************************************!*\
+1142,/*!*****************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-timer-mixin/TimerMixin.js ***!
   \*****************************************************************************/
-1134,/*!****************************************************************************************!*\
+1143,/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-addons-css-transition-group/index.js ***!
   \****************************************************************************************/
-1135,/*!******************************************************************************!*\
+1144,/*!******************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormGroup.js ***!
   \******************************************************************************/
-[3901,2374,2373,2412,2413,2449,2457,2475,2479,2500],/*!********************************************************************************!*\
+[3942,2412,2411,2450,2451,2487,2495,2513,2517,2538],/*!********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormControl.js ***!
   \********************************************************************************/
-[3902,2374,2373,2412,2413,2449,2457,2466,2468,2681,2682,2475],/*!****************************************************************************************!*\
+[3943,2412,2411,2450,2451,2487,2495,2504,2506,2714,2715,2513],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormControlFeedback.js ***!
   \****************************************************************************************/
-[3903,2373,2374,2412,2413,2449,2457,2504,2475],/*!**************************************************************************************!*\
+[3944,2411,2412,2450,2451,2487,2495,2542,2513],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormControlStatic.js ***!
   \**************************************************************************************/
-[3904,2374,2373,2412,2413,2449,2457,2466,2475],/*!***************************************************************************************************!*\
+[3945,2412,2411,2450,2451,2487,2495,2504,2513],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/assets/emojione.sprites.png ***!
   \***************************************************************************************************/
-1146,/*!**********************************************************************************!*\
+1155,/*!**********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/react-emojione.js ***!
   \**********************************************************************************/
-[3905,2685,2686,2690],/*!*****************************************************************************************!*\
+[3946,2718,2719,2723],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/data/ascii-to-unicode.js ***!
   \*****************************************************************************************/
-1148,/*!**********************************************************************************************!*\
+1157,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/renderers/renderer-factory.js ***!
   \**********************************************************************************************/
-[3906,2687,2692],/*!********************************************************************************************!*\
+[3947,2720,2725],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/renderers/emoji-renderer.js ***!
   \********************************************************************************************/
-[3907,2688,2690],/*!******************************************************************************************!*\
+[3948,2721,2723],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/styles/emojione-sprite.js ***!
   \******************************************************************************************/
-[3908,2689],/*!****************************************************************************************************!*\
+[3949,2722],/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
   \****************************************************************************************************/
-1152,/*!*************************************************************************************************!*\
+1161,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
   \*************************************************************************************************/
-[3909,2691],/*!***********************************************************************************!*\
+[3950,2724],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/data/emoji-data.js ***!
   \***********************************************************************************/
-1154,/*!**********************************************************************************************!*\
+1163,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/renderers/unicode-renderer.js ***!
   \**********************************************************************************************/
-[3910,2690],/*!*******************************************************************************************!*\
+[3951,2723],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
   \*******************************************************************************************/
-[3911,2694,2361],/*!********************************************************************************************************************************************!*\
+[3952,2727,2399],/*!********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/~/css-loader!./atlas_bundles/baseline-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
   \********************************************************************************************************************************************/
-[3912,2360],/*!*************************************************************!*\
+[3953,2398],/*!*************************************************************!*\
   !*** ./atlas_bundles/baseline-expression/src/urlManager.js ***!
   \*************************************************************/
-function(e,t,r){"use strict";var a=r(/*! url */2307),o=r(/*! querystring */2310);t.baselinePush=function(e,t){var r=a.parse(window.location.toString()),n=o.parse(r.query);n.bs=JSON.stringify(e);var s={protocol:r.protocol,host:r.host,hash:r.hash,pathname:r.pathname,query:n};t?history.replaceState(null,"",a.format(s)):history.pushState(null,"",a.format(s))},t.parseBaselineUrlParameter=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.location,t=a.parse(e.toString()),r=o.parse(t.query).bs;return r?JSON.parse(r):{}}}]);
+function(t,e,i){"use strict";var s=i(/*! url */2345),n=i(/*! querystring */2348);e.baselinePush=function(t,e){var i=s.parse(window.location.toString()),r=n.parse(i.query);r.bs=JSON.stringify(t);var o={protocol:i.protocol,host:i.host,hash:i.hash,pathname:i.pathname,query:r};e?history.replaceState(null,"",s.format(o)):history.pushState(null,"",s.format(o))},e.parseBaselineUrlParameter=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.location,e=s.parse(t.toString()),i=n.parse(e.query).bs;return i?JSON.parse(i):{}}}]);
