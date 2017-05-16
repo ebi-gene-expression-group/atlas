@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <div class="tabs-panel is-active" id="latest-experiments">
+        <div class="tabs-panel" id="latest-experiments">
             <div class="row column">
                 <h5 class="margin-bottom-large">${formattedExperimentCount} experiments</h5>
                     <c:forEach items="${latestExperiments}" var="experimentInfo">
