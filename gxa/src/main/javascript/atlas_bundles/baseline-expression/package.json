@@ -13,6 +13,7 @@
   "dependencies": {
     "expression-atlas-feedback": "file:../../atlas_modules/feedback",
     "expression-atlas-heatmap-highcharts": "latest",
+    "highcharts": "git://github.com/gxa/highcharts-dist.git",
     "jquery": "2.2.1",
     "jquery.browser": "0.1.0",
     "react": "15.3.2",
