@@ -17,7 +17,9 @@
                     </div>
                     <div class="row column small margin-top-small">
                         Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O1477", "category":"interpro"}]'>O1477 (InterPro)</a>
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0008150"}]'>GO:0008150</a>
                     </div>
                 </div>
                 <div class="small-12 medium-4 large-2 columns">
