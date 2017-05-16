@@ -41,7 +41,7 @@
     "expression-atlas-heatmap-highcharts": "latest",
     "expression-atlas-number-format": "latest",
     "he": "1.1.0",
-    "highcharts": "file:highcharts-5.0.11.tgz",
+    "highcharts": "git://github.com/gxa/highcharts-dist.git",
     "highcharts-custom-events": "2.0.10",
     "jquery": "2.2.1",
     "lodash": "4.17.4",
