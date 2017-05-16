@@ -5,7 +5,9 @@
     <div class="masthead-inner row">
         <!-- local-title -->
         <div class="columns medium-7 large-3" id="local-title">
-            <h1>Expression Atlas</h1>
+            <a href="${pageContext.request.contextPath}/home/" title="Back to Expression Atlas homepage">
+                <h1>Expression Atlas</h1>
+            </a>
         </div>
         <!-- end local-title -->
 

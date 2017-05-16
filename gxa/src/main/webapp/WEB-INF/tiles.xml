@@ -5,16 +5,24 @@
 
 <tiles-definitions>
     <definition name="foundation-base" template="/WEB-INF/jsp/layouts/foundation-base.jsp">
-        <put-attribute name="global-masthead" value="/WEB-INF/jsp/tiles/global-masthead.jsp"/>
-        <put-attribute name="local-masthead" value="/WEB-INF/jsp/tiles/local-masthead.jsp"/>
+        <put-attribute name="header">
+            <definition template="/WEB-INF/jsp/tiles/headers/masthead.jsp">
+                <put-attribute name="global-masthead" value="/WEB-INF/jsp/tiles/headers/home/global-masthead.jsp"/>
+                <put-attribute name="local-masthead" value="/WEB-INF/jsp/tiles/headers/home/local-masthead.jsp"/>
+            </definition>
+        </put-attribute>
         <put-attribute name="content"/>
         <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
         <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
     </definition>
 
-    <definition name="foundation-base-compact" template="/WEB-INF/jsp/layouts/foundation-base-compact.jsp">
-        <put-attribute name="global-masthead-black-bar" value="/WEB-INF/jsp/tiles/compact/global-masthead-black-bar.jsp"/>
-        <put-attribute name="local-masthead-compact" value="/WEB-INF/jsp/tiles/compact/local-masthead-compact.jsp"/>
+    <definition name="foundation-base-compact" template="/WEB-INF/jsp/layouts/foundation-base.jsp">
+        <put-attribute name="header">
+            <definition template="/WEB-INF/jsp/tiles/headers/masthead-compact.jsp">
+                <put-attribute name="global-masthead-black-bar" value="/WEB-INF/jsp/tiles/headers/compact/global-masthead-black-bar.jsp"/>
+                <put-attribute name="local-masthead-compact" value="/WEB-INF/jsp/tiles/headers/compact/local-masthead-compact.jsp"/>
+            </definition>
+        </put-attribute>
         <put-attribute name="content"/>
         <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
         <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
