@@ -123,15 +123,12 @@
 <%@ include file="../includes/condition-autocomplete-js.jsp" %>
 
 <!-- Google Analytics details... -->
-<!-- Change UA-XXXXX-X to be your site's ID -->
-<!--
 <script>
-  window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+  window._gaq = [['_setAccount','UA-37676851-1'],['_trackPageview'],['_trackPageLoadTime']];
   Modernizr.load({
     load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
   });
 </script>
--->
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.17.0/URI.min.js"></script>
