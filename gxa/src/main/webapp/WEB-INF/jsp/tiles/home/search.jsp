@@ -18,8 +18,9 @@
                     <div class="row column small margin-top-small">
                         Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
                         <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
-                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>
-                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0008150"}]'>GO:0008150</a>
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"O14777", "category":"uniprot"}]'>O14777 (UniProt)</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"GO:0008150"}]'>GO:0019080 (viral gene expression)</a>,
+                        <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"PO:0004714"}]'>PO:0004714 (terminal flower bud)</a>
                     </div>
                 </div>
                 <div class="small-12 medium-4 large-2 columns">
