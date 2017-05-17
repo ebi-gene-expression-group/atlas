@@ -355,5 +355,6 @@ a.baseline {
 }
 
 .tab-disabled a {
-    color: gray;
+    /* Overrides .tabs-title > a in theme-atlas.css */
+    color: gray !important;
 }
