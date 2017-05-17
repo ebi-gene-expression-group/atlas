@@ -12,7 +12,7 @@ public class HistogramAcrossGenes {
 
 
     public HistogramAcrossGenes(int[] histogram, double [] cutoffs){
-        Preconditions.checkArgument(histogram.length == cutoffs.length +1);
+        Preconditions.checkArgument(histogram.length == cutoffs.length);
 
         this.histogram = histogram;
         this.cutoffs = cutoffs;
@@ -22,8 +22,7 @@ public class HistogramAcrossGenes {
         JsonObject result = new JsonObject();
 
         result.add("bins", gson.toJsonTree(cutoffs).getAsJsonArray());
-        result.add("values", gson.toJsonTree(histogram).getAsJsonArray());
-
+        result.add("counts", gson.toJsonTree(histogram).getAsJsonArray());
 
         return result;
     }

@@ -36,7 +36,7 @@ public abstract class CutoffScale {
 
     public static class Scaled {
 
-        private final int size = 100    ;
+        private final int size = 100;
 
         public double[] get(){
             double[] result = new double[size];

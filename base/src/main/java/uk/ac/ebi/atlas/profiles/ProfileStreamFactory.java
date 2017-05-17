@@ -14,9 +14,6 @@ import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class ProfileStreamFactory<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
         E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
         Prof extends Profile<DataColumnDescriptor, Expr>> {
@@ -51,26 +48,18 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
     }
 
     public int[] histogram(E experiment, StreamOptions streamOptions, double[] cutoffBins) {
-        int[] result = new int[cutoffBins.length+1];
+        int[] result = new int[cutoffBins.length];
 
-        goThroughRows:
         for (Prof prof : getProfiles(experiment, streamOptions, Functions.<Iterable<Prof>>identity())) {
 
-            Double expressionValue = prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn());
-            if (expressionValue != null) {
+            double expressionValue = prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn());
 
-                int rightBinId = cutoffBins.length; // last bin is for values not matching any cutoff
-                findTheRightBin:
-                for (int i = 0; i < cutoffBins.length; i++) {
-                    if (expressionValue <= cutoffBins[i]) {
-                        rightBinId = i;
-                        break findTheRightBin;
-                    }
+            for (int i = cutoffBins.length - 1 ; i >= 0 ; i--) {
+                if (expressionValue >= cutoffBins[i]) {
+                    result[i] += 1;
+                    break;
                 }
-                result[rightBinId] += 1;
-
             }
-
         }
         return result;
     }
