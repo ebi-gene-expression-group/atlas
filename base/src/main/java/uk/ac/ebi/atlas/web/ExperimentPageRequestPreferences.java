@@ -18,23 +18,11 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     private double cutoff = getDefaultCutoff();
 
-    private String serializedFilterFactors;
-
-    private String queryFactorType;
-
-    private Set<String> queryFactorValues = Collections.emptySet();
-
     @NotNull
     @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
 
     private boolean specific = true;
-
-    private boolean displayLevels;
-
-    private boolean displayGeneDistribution;
-
-    private String rootContext;
 
     protected ExperimentPageRequestPreferences() {
     }
@@ -48,14 +36,6 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     public Set<String> getSelectedColumnIds(){
         return selectedColumnIds;
-    }
-
-    public boolean isDisplayGeneDistribution() {
-        return displayGeneDistribution;
-    }
-
-    public void setDisplayGeneDistribution(boolean displayGeneDistribution) {
-        this.displayGeneDistribution = displayGeneDistribution;
     }
 
     public Integer getHeatmapMatrixSize() {
@@ -90,28 +70,10 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
         this.specific = specific;
     }
 
-    public boolean getDisplayLevels() {
-        return displayLevels;
-    }
-
-    public void setDisplayLevels(boolean displayLevels) {
-        this.displayLevels = displayLevels;
-    }
-
-    public String getRootContext() {
-        return rootContext;
-    }
-
-    public void setRootContext(String rootContext) {
-        this.rootContext = rootContext;
-    }
-
     public String toString() {
         return MoreObjects.toStringHelper(this.getClass())
                 .addValue(super.toString())
-                .add("queryFactorType", queryFactorType)
                 .add("cutoff", cutoff)
-                .add("serializedFilterFactors", serializedFilterFactors)
                 .add("specific", specific)
                 .toString();
     }
