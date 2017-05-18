@@ -63,8 +63,8 @@ class BaselineRouter extends React.Component {
         const heatmaps = this._querySelectToHeatmaps();
 
         return (
-            <div className="row">
-                <div className="small-2 columns">
+            <div className="row expanded">
+                <div className="small-3 columns">
                     <BaselineFacetsTree
                         facets = {this.state.facetsTreeData}
                         setChecked = {this.setChecked}
@@ -73,7 +73,7 @@ class BaselineRouter extends React.Component {
                         disableAnatomogramsCheckbox = {!organismPartInQuerySelect}
                     />
                 </div>
-                <div className="small-10 columns">
+                <div className="small-9 columns">
                     <BaselineHeatmaps
                         atlasUrl = {this.props.atlasUrl}
                         geneQuery = {this.props.geneQuery}

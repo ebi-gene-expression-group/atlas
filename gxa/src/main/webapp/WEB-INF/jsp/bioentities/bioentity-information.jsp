@@ -4,7 +4,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="row">
+<div class="row expanded">
     <div class="small-12 columns">
         <div id="bioentityInformationTab"></div>
     </div>
