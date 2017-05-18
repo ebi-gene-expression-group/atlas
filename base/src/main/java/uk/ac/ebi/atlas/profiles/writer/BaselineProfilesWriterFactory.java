@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 
@@ -18,8 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Named
-public class BaselineProfilesWriterFactory extends ProfilesWriterFactory<AssayGroup, BaselineExpression,
-        BaselineProfile, BaselineRequestContext, BaselineProfilesWriterFactory.BaselineDownloadOptions> {
+public class BaselineProfilesWriterFactory<Unit extends ExpressionUnit.Absolute> extends ProfilesWriterFactory<AssayGroup, BaselineExpression,
+        BaselineProfile, BaselineRequestContext<Unit>, BaselineProfilesWriterFactory.BaselineDownloadOptions> {
 
     static class BaselineDownloadOptions extends ProfilesWriterFactory.ProfileDownloadOptions {
         public final boolean isGeneSet;

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class ProteomicsBaselineProfileStreamFactory extends BaselineProfileStreamFactory {
+public class ProteomicsBaselineProfileStreamFactory extends BaselineProfileStreamFactory<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>> {
     @Inject
     ProteomicsBaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
@@ -21,7 +22,7 @@ public class ProteomicsBaselineProfileStreamFactory extends BaselineProfileStrea
         return new ProteomicsBaselineExpressionsRowDeserializerBuilder(experiment);
     }
 
-    static class ProteomicsBaselineExpressionsRowDeserializerBuilder implements ExpressionsRowDeserializerBuilder {
+    static class ProteomicsBaselineExpressionsRowDeserializerBuilder implements ExpressionsRowDeserializerBuilder<BaselineExpression> {
 
         private final BaselineExperiment baselineExperiment;
         public ProteomicsBaselineExpressionsRowDeserializerBuilder(BaselineExperiment baselineExperiment) {

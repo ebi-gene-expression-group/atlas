@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.web;
 
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
-public abstract class BaselineRequestPreferences extends ExperimentPageRequestPreferences{
+public abstract class BaselineRequestPreferences<Unit extends ExpressionUnit.Absolute> extends ExperimentPageRequestPreferences {
 
     private static final String DEFAULT_GENE_QUERY_VALUE = "protein_coding";
     private static final String DEFAULT_GENE_QUERY_CATEGORY = BioentityPropertyName.GENE_BIOTYPE.name;
@@ -28,4 +29,6 @@ public abstract class BaselineRequestPreferences extends ExperimentPageRequestPr
         preferences.setCutoff(0.0d);
         preferences.setGeneQuery(SemanticQuery.create());
     }
+
+    public abstract Unit getUnit();
 }

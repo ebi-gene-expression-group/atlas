@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
@@ -15,8 +16,8 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.Reader;
 
-public abstract class BaselineProfileStreamFactory extends ProfileStreamFactory<AssayGroup, BaselineExpression,
-        BaselineExperiment, BaselineProfileStreamOptions,BaselineProfile>{
+public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends ProfileStreamFactory<AssayGroup, BaselineExpression,
+        BaselineExperiment, StreamOptions,BaselineProfile>{
 
     BaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
@@ -24,7 +25,7 @@ public abstract class BaselineProfileStreamFactory extends ProfileStreamFactory<
 
     @Override
     public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
-                                                             BaselineProfileStreamOptions options){
+        StreamOptions options){
         return new TsvInputStream<>(openDataFile(experiment.getAccession()),
                 getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
                 new Function<String[], BaselineProfile>() {
@@ -37,7 +38,7 @@ public abstract class BaselineProfileStreamFactory extends ProfileStreamFactory<
     }
 
     @Override
-    protected Predicate<BaselineExpression> filterExpressions(BaselineExperiment experiment, BaselineProfileStreamOptions options) {
+    protected Predicate<BaselineExpression> filterExpressions(BaselineExperiment experiment, StreamOptions options) {
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(options.getCutoff());
         //TODO pay attention to other options
