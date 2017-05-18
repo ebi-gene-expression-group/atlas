@@ -7,12 +7,12 @@
     border: solid cornflowerblue;
     padding: 4px;
     color: cornflowerblue;
-    /*font: 10px Verdana, Helvetica, Arial, sans-serif;*/
 }
 
 a.help-icon {
-    color: darkorange;
+    color: cornflowerblue;
     vertical-align: top;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
     font-weight: bold;
+    font-size: smaller;
+    padding-left: 0.25rem;
 }

@@ -1,22 +1,20 @@
-"use strict";
+const $ = require('jquery');
+require('jquery-ui-bundle');
+
+const React = require('react');
 
 //*------------------------------------------------------------------*
 
-var React = require('react');
-var ReactDOM = require('react-dom');
+const LegendRow = require('./LegendRow.jsx');
 
 //*------------------------------------------------------------------*
 
-var LegendRow = require('./LegendRow.jsx');
-var HelpTooltips = require('expression-atlas-help-tooltips');
+require('./gxaGradient.css');
+require('./gxaHelpTooltip.css');
 
 //*------------------------------------------------------------------*
 
-require('./gxaLegend.css');
-
-//*------------------------------------------------------------------*
-
-var LegendDifferential = React.createClass({
+const LegendDifferential = React.createClass({
 
     propTypes: {
         atlasBaseURL: React.PropTypes.string.isRequired,
@@ -45,13 +43,16 @@ var LegendDifferential = React.createClass({
                                    highValueColour="#FF0000"/>
                     }
                 </div>
-                <div ref="legendHelp" data-help-loc="#gradient-differential" className="gxaLegendHelp"></div>
+
+                <a href="#" id="legendHelp" className="help-icon" title="Greater colour saturation means higher absolute log<sub>2</sub>-fold change value. Blue indicates the gene is down–regulated and red means up–regulated.">?</a>
             </div>
         );
     },
 
     componentDidMount: function () {
-        HelpTooltips(this.props.atlasBaseURL, "experiment", ReactDOM.findDOMNode(this.refs.legendHelp));
+        $('#legendHelp')
+          .click(function (e) {e.preventDefault();})
+          .tooltip({ tooltipClass: 'gxaHelpTooltip' })
     }
 });
 

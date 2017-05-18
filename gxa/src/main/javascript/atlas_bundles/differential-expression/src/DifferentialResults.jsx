@@ -6,17 +6,19 @@ const ReactDOM = require('react-dom');
 
 //*------------------------------------------------------------------*
 
-const DisplayLevelsButton = require('expression-atlas-display-levels-button');
-const Legend = require('expression-atlas-legend').LegendDifferential;
-const CellDifferential = require('expression-atlas-cell-differential');
-const DifferentialDownloadButton = require('./DifferentialDownloadButton.jsx');
-const ContrastTooltips = require('expression-atlas-contrast-tooltips');
 const AtlasFeedback = require('expression-atlas-feedback');
 const EbiSpeciesIcon = require('react-ebi-species').Icon;
 
 import URI from 'urijs'
 
 //*------------------------------------------------------------------*
+
+const DisplayLevelsButton = require('./DisplayLevelsButton.jsx');
+const DifferentialDownloadButton = require('./DifferentialDownloadButton.jsx');
+const Legend = require('./legend/LegendDifferential.jsx');
+const CellDifferential = require('./cell-differential/CellDifferential.jsx');
+
+const ContrastTooltips = require('./contrast-tooltip/contrastTooltipModule.js');
 
 require('./DifferentialResults.css');
 
@@ -25,7 +27,6 @@ require('./DifferentialResults.css');
 const RequiredString = React.PropTypes.string.isRequired;
 const OptionalString = React.PropTypes.string;
 const DoubleWithDefault = React.PropTypes.number;
-const RequiredBool = React.PropTypes.bool.isRequired;
 
 const ResultType = {
     species: RequiredString,
@@ -111,15 +112,13 @@ const DifferentialResults = React.createClass({
     },
 
     render () {
-        let differentialResultRows = this.props.results.map(diffResult => {
-            return (
+        let differentialResultRows = this.props.results.map(diffResult =>
               <DifferentialResultRow
                 key = {diffResult.id}
                 displayLevels = {this.state.displayLevels}
                 atlasUrl = {this.props.atlasUrl}
                 {...diffResult} />
-            );
-        });
+        );
 
         let feedbackSmileys = $.browser.msie ? null
             :
@@ -136,13 +135,13 @@ const DifferentialResults = React.createClass({
                     <DisplayLevelsButton hideText='Hide log<sub>2</sub>-fold change' showText='Display log<sub>2</sub>-fold change' onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} fontSize='14px' width='200px'/>
                 </div>
 
-                <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
+                <div style={{display: 'inline-block', verticalAlign: 'middle'}} className="margin-left-large">
                     <Legend
                         atlasBaseURL={this.props.atlasUrl} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
                     />
                 </div>
 
-                <div style={{display: 'inline-block', paddingLeft: '10px', verticalAlign: 'top'}}>
+                <div style={{display: 'inline-block'}} className="margin-left-large">
                     <DifferentialDownloadButton ref="downloadProfilesButton"
                                                 results={this.props.results}
                     />
@@ -160,7 +159,7 @@ const DifferentialResults = React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                            {differentialResultRows}
+                        {differentialResultRows}
                     </tbody>
                 </table>
                 {feedbackSmileys}

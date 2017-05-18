@@ -1,9 +1,8 @@
 .gxaContrastTooltip {
-    position: relative;
     border: solid transparent;
     color: darkslategray;
     padding: 2px;
-    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    box-shadow: 0 0 1em lightgrey;
     max-width: 500px;
 }
 

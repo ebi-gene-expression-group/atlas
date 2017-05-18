@@ -76,19 +76,13 @@ const DownloadDifferentialButton = React.createClass({
         const fileName = 'differentialResults.tsv';
 
         return (
-            <div style={{display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px'}}>
-                <a ref={c => {this._downloadProfilesLinkRef = c;}} className="button large gxaDownloadButton"
-                   href={uri} download={fileName} target="_blank"
-                   onClick={this._downloadDifferentialProfiles}>
-                    <span className="icon icon-functional" data-icon="="></span>
-                </a>
-            </div>
+            <a style={{padding: '10px', fontSize: '12px', verticalAlign: 'middle'}}
+               className="ui-button ui-widget ui-corner-all"
+               href={uri} download={fileName} target="_blank"
+               onClick={this._downloadDifferentialProfiles}>
+              <span className="icon icon-functional" data-icon="="> Download results</span>
+            </a>
         );
-    },
-
-    componentDidMount () {
-        let $downloadProfilesLink = $(ReactDOM.findDOMNode(this._downloadProfilesLinkRef));
-        $downloadProfilesLink.tooltip();
     }
 
 });

@@ -181,14 +181,12 @@ const DifferentialRouter = React.createClass({
             console.log("Error thrown: " + errorThrown);
         };
 
-        const uriBase = URI(this.props.atlasUrl).path()
-
         $.ajax({
-            url:URI('json/search/differential_facets', uriBase).addSearch(queryParams).toString(),
+            url: URI('json/search/differential_facets', this.props.atlasUrl).addSearch(queryParams).toString(),
             dataType: "json",
             success: facetsResponse => {
                 $.ajax({
-                    url: URI('json/search/differential_results', uriBase).addSearch(queryParams).toString(),
+                    url: URI('json/search/differential_results', this.props.atlasUrl).addSearch(queryParams).toString(),
                     dataType: "json",
                     success: resultsResponse => {
 

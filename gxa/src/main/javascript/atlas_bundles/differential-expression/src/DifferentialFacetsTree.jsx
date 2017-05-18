@@ -2,8 +2,6 @@ const React = require('react');
 
 //*------------------------------------------------------------------*
 
-//*------------------------------------------------------------------*
-
 const RequiredString = React.PropTypes.string.isRequired;
 const RequiredBool = React.PropTypes.bool.isRequired;
 

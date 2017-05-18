@@ -11,11 +11,7 @@
   "license": "Apache license, version 2.0",
   "private": true,
   "dependencies": {
-    "expression-atlas-cell-differential": "file:../../atlas_modules/cell-differential",
-    "expression-atlas-contrast-tooltips": "file:../../atlas_modules/contrast-tooltips",
-    "expression-atlas-display-levels-button": "file:../../atlas_modules/display-levels-button",
     "expression-atlas-feedback": "file:../../atlas_modules/feedback",
-    "expression-atlas-legend": "file:../../atlas_modules/legend",
     "jquery": "2.2.1",
     "jquery-ui-bundle": "1.11.4",
     "jquery.browser": "0.1.0",
