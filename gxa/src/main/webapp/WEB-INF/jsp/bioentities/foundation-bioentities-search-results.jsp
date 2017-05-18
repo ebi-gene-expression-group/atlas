@@ -11,46 +11,52 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/foundation/bioentities-box.css"/>
 
-<c:if test="${empty entityBriefName}">
-<div>
-    <h3 class="gxaSearchTermDescription">
-        Results for <span class="searchterm">${searchDescription}</span>
-    </h3>
-</div>
-</c:if>
+<div class="row expanded">
+    <div class="small-12 columns">
 
-<c:choose>
-    <c:when test="${hasBaselineResults && hasDifferentialResults}">
-        <c:set var="baselineTabClass" value="is-active"/>
-        <c:set var="differentialTabClass" value=""/>
-    </c:when>
-    <c:when test="${hasBaselineResults && !hasDifferentialResults}">
-        <c:set var="baselineTabClass" value="is-active"/>
-        <c:set var="differentialTabClass" value="tab-disabled"/>
-    </c:when>
-    <c:when test="${!hasBaselineResults && hasDifferentialResults}">
-        <c:set var="baselineTabClass" value="tab-disabled"/>
-        <c:set var="differentialTabClass" value="is-active"/>
-    </c:when>
-</c:choose>
-
-<div>
-    <ul class="tabs" data-tabs data-deep-link="true" data-update-history="true" id="expression-tabs">
-        <li class="tabs-title ${baselineTabClass}"><a href="#baseline">Baseline expression</a></li>
-        <li class="tabs-title ${differentialTabClass}"><a href="#differential">Differential expression</a></li>
-
-        <c:if test="${not empty entityBriefName}">
-        <li class="tabs-title"><a href="#information">${entityBriefName} information</a></li>
+        <c:if test="${empty entityBriefName}">
+            <div>
+                <h3 class="gxaSearchTermDescription">
+                    Results for <span class="searchterm">${searchDescription}</span>
+                </h3>
+            </div>
         </c:if>
-    </ul>
 
-    <div class="tabs-content" data-tabs-content="expression-tabs">
-        <div class="tabs-panel ${baselineTabClass}" id="baseline"><%@ include file="baseline-expression.jsp" %></div>
-        <div class="tabs-panel ${differentialTabClass}" id="differential"><%@ include file="differential-expression.jsp" %></div>
+        <c:choose>
+            <c:when test="${hasBaselineResults && hasDifferentialResults}">
+                <c:set var="baselineTabClass" value="is-active"/>
+                <c:set var="differentialTabClass" value=""/>
+            </c:when>
+            <c:when test="${hasBaselineResults && !hasDifferentialResults}">
+                <c:set var="baselineTabClass" value="is-active"/>
+                <c:set var="differentialTabClass" value="tab-disabled"/>
+            </c:when>
+            <c:when test="${!hasBaselineResults && hasDifferentialResults}">
+                <c:set var="baselineTabClass" value="tab-disabled"/>
+                <c:set var="differentialTabClass" value="is-active"/>
+            </c:when>
+        </c:choose>
 
-        <c:if test="${not empty entityBriefName}">
-        <div class="tabs-panel" id="information"><%@ include file="bioentity-information.jsp" %></div>
-        </c:if>
+        <div>
+            <ul class="tabs" data-tabs data-deep-link="true" data-update-history="true" id="expression-tabs">
+                <li class="tabs-title ${baselineTabClass}"><a href="#baseline">Baseline expression</a></li>
+                <li class="tabs-title ${differentialTabClass}"><a href="#differential">Differential expression</a></li>
+
+                <c:if test="${not empty entityBriefName}">
+                    <li class="tabs-title"><a href="#information">${entityBriefName} information</a></li>
+                </c:if>
+            </ul>
+
+            <div class="tabs-content" data-tabs-content="expression-tabs">
+                <div class="tabs-panel ${baselineTabClass}" id="baseline"><%@ include file="baseline-expression.jsp" %></div>
+                <div class="tabs-panel ${differentialTabClass}" id="differential"><%@ include file="differential-expression.jsp" %></div>
+
+                <c:if test="${not empty entityBriefName}">
+                    <div class="tabs-panel" id="information"><%@ include file="bioentity-information.jsp" %></div>
+                </c:if>
+            </div>
+        </div>
+
     </div>
 </div>
 
