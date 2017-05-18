@@ -56,7 +56,6 @@ public class BaselineProfilesHeatMapIT {
         String randomAccession = experimentTrader.getAllBaselineExperimentAccessions().iterator().next();
         baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(randomAccession);
 
-        requestPreferences.setQueryFactorType("ORGANISM_PART");
         baselineRequestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
 
         subject = new BaselineProfilesHeatMap(inputStreamFactory);

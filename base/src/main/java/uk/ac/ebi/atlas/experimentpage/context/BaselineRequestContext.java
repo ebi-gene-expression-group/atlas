@@ -33,10 +33,6 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
                     "";
     }
 
-    public String getQueryFactorType() {
-        return requestPreferences.getQueryFactorType();
-    }
-
     LazyReference<ImmutableMap<AssayGroup, String>> displayNamePerSelectedAssayGroup = new LazyReference<ImmutableMap<AssayGroup, String>>() {
         @Override
         protected ImmutableMap<AssayGroup, String> create() throws Exception {
