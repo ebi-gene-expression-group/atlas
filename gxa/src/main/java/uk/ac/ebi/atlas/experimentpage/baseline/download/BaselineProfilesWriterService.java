@@ -16,6 +16,8 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -119,7 +121,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
                             "Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
                     response.setContentType("text/plain; charset=utf-8");
 
-                    write(response.getWriter(), BaselineRequestPreferences.requestAllData(), experiment, coexpressionsRequested);
+                    write(response.getWriter(), experiment.getType().isProteomicsBaseline() ? ProteomicsBaselineRequestPreferences.requestAllData() : RnaSeqBaselineRequestPreferences.requestAllData(), experiment, coexpressionsRequested);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

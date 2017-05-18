@@ -9,4 +9,10 @@ public class ProteomicsBaselineRequestPreferences extends BaselineRequestPrefere
         return DEFAULT_CUTOFF;
     }
 
+    public static ProteomicsBaselineRequestPreferences requestAllData(){
+        ProteomicsBaselineRequestPreferences preferences = new ProteomicsBaselineRequestPreferences();
+        BaselineRequestPreferences.setRequestAllData(preferences);
+        return preferences;
+    }
+
 }

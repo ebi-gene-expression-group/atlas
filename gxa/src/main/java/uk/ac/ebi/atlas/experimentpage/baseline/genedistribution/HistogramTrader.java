@@ -13,6 +13,8 @@ import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,15 +44,14 @@ public class HistogramTrader {
             @Override
             public HistogramAcrossGenes load(Pair<String, String> accessionAndAccessKey) throws Exception {
                 BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(accessionAndAccessKey.getLeft(), accessionAndAccessKey.getRight());
-                BaselineProfileStreamOptions baselineProfileStreamOptions = new BaselineRequestContext(BaselineRequestPreferences.requestAllData(), experiment);
                 double [] bins ;
                 int [] histogram;
                 if(experiment.getType().isProteomicsBaseline()){
                     bins = new CutoffScale.Logarithmic().get();
-                    histogram = proteomicsBaselineProfileStreamFactory.histogram(experiment, baselineProfileStreamOptions, bins);
+                    histogram = proteomicsBaselineProfileStreamFactory.histogram(experiment, new BaselineRequestContext(ProteomicsBaselineRequestPreferences.requestAllData(), experiment), bins);
                 } else {
                     bins = new CutoffScale.Scaled().get();
-                    histogram = rnaSeqBaselineProfileStreamFactory.histogram(experiment, baselineProfileStreamOptions, bins);
+                    histogram = rnaSeqBaselineProfileStreamFactory.histogram(experiment, new BaselineRequestContext(RnaSeqBaselineRequestPreferences.requestAllData(), experiment), bins);
                 }
                 return new HistogramAcrossGenes(histogram, bins);
             }

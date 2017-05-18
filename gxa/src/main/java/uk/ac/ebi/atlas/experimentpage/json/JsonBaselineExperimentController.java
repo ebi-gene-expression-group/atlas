@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                     params = "type=RNASEQ_MRNA_BASELINE")
     @ResponseBody
     public String baselineRnaSeqExperimentData(
-            @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+            @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(required = false) String accessKey,
             Model model, HttpServletRequest request) {

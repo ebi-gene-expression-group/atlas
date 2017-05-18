@@ -9,7 +9,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -37,7 +37,7 @@ public class BaselineProfileStreamFactoryTest {
         }
         mockDataFileHub.addExpressionFile(baselineExperiment.getAccession(), b.build());
 
-        int [] result = subject.histogram(baselineExperiment, new BaselineRequestContext(new BaselineRequestPreferences(), baselineExperiment), cutoffBins);
+        int [] result = subject.histogram(baselineExperiment, new BaselineRequestContext(BaselineRequestPreferencesTest.get(), baselineExperiment), cutoffBins);
 
         assertThat(result.length, is(cutoffBins.length));
 
