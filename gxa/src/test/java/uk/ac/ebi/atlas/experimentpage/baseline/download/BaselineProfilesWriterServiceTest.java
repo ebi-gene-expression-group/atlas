@@ -89,7 +89,6 @@ public class BaselineProfilesWriterServiceTest {
 
         when(experimentDisplayDefaultsMock.preserveColumnOrder()).thenReturn(true);
 
-        when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
         when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));

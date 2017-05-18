@@ -41,40 +41,13 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     Set<String> selectedColumnIds = Collections.emptySet();
 
+    @SuppressWarnings("unused")
     public void setSelectedColumnIds(Set<String> selectedColumnIds){
         this.selectedColumnIds = (selectedColumnIds == null) ? Collections.<String>emptySet() : ImmutableSet.copyOf(selectedColumnIds);
     }
 
     public Set<String> getSelectedColumnIds(){
         return selectedColumnIds;
-    }
-
-    @Deprecated
-    public Set<String> getQueryFactorValues() {
-        return queryFactorValues;
-    }
-
-    @Deprecated
-    public void setQueryFactorValues(Set<String> queryFactorValues) {
-        this.queryFactorValues = (queryFactorValues == null) ? Collections.<String>emptySet() : queryFactorValues;
-    }
-
-    public String getQueryFactorType() {
-        return queryFactorType;
-    }
-
-    public void setQueryFactorType(String type) {
-        this.queryFactorType = type;
-    }
-
-    @Deprecated
-    public String getSerializedFilterFactors() {
-        return serializedFilterFactors;
-    }
-
-    @Deprecated
-    public void setSerializedFilterFactors(String serializedFilterFactors) {
-        this.serializedFilterFactors = serializedFilterFactors;
     }
 
     public boolean isDisplayGeneDistribution() {

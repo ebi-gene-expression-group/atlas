@@ -71,9 +71,6 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
         when(experimentTraderMock.getExperiment(eq(EXPERIMENT_ACCESSION), Matchers.anyString())).thenReturn
                 (baselineExperimentMock);
-        when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
-        when(preferencesMock.getSerializedFilterFactors()).thenReturn("TYPE:value");
-        when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
         when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));

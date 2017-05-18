@@ -134,8 +134,6 @@ public class MicroarrayProfilesHeatMapIT {
         }
 
         setUp();
-        requestPreferences.setQueryFactorValues(Collections.singleton(experimentsCache.getExperiment(accession).getDataColumnDescriptors()
-                .iterator().next().getId()));
         requestContext = populateRequestContext(accession);
 
         DifferentialProfilesList profilesQueryFactorValues = subject.fetch(requestContext);
