@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="row">
+<div class="row expanded">
     <div class="columns small-2">
         <img src="${pageContext.request.contextPath}/resources/images/foundation/heatmap-hero.png">
     </div>
@@ -8,7 +8,7 @@
     <div class="columns small-10">
         <h3>Exploring gene expression results across species under different biological conditions</h3>
         <p>
-             Expression Atlas is an open science resource that gives users a powerful way to find information about gene and protein expression across species and biological conditions such as different tissues, cell types, developmental stages and diseases among others. Expression Atlas aims to help answering questions such as ‘where is a certain gene expressed?’ or ‘how its expression changes in a disease?’.
+             Expression Atlas is an open science resource that gives users a powerful way to find information about gene and protein expression across species and biological conditions such as different tissues, cell types, developmental stages and diseases among others. Expression Atlas aims to help answering questions such as ‘where is a certain gene expressed?’ or ‘how does its expression change in a disease?’.
         </p>
         <!-- SP: customise animation  http://foundation.zurb.com/sites/docs/motion-ui.html-->
         <div id="description-more" data-toggler=".is-visible" style="display:none;">

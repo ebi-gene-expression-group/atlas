@@ -4,13 +4,16 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
 
-<br/>
-    <%@ include file="includes/experiment-description.jsp" %>
-<br/>
+<%@ include file="includes/experiment-description.jsp" %>
+
+<div class="row expanded margin-top-large">
+    <div class="small-12 columns">
+        <div id="experiment-page" ></div>
+    </div>
+</div>
+
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/experimentPage.bundle.js"></script>
-
-<div id="experiment-page" ></div>
 
 <script type="text/javascript">
     experimentPage.render({

@@ -1,19 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<div class="row">
-    <div class="small-12 columns">
-        <tiles:insertAttribute name="home-hero"/>
-    </div>
-</div>
+<tiles:insertAttribute name="home-hero"/>
 
-<div class="row margin-top-large">
-    <div class="small-12 columns">
-        <tiles:insertAttribute name="home-search"/>
-    </div>
-</div>
+<tiles:insertAttribute name="home-search"/>
 
-<div class="row margin-top-large" data-equalizer>
+<div class="row expanded margin-top-large" data-equalizer>
     <div class="small-12 medium-12 large-6 columns">
             <tiles:insertAttribute name="browse-by-box"/>
     </div>
@@ -22,7 +14,7 @@
     </div>
 </div>
 
-<div class="row margin-top-large" data-equalizer>
+<div class="row expanded margin-top-large" data-equalizer>
     <div class="small-12 medium-12 large-6 columns">
         <tiles:insertAttribute name="tools-box"/>
     </div>

@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div id="global-footer">
+<div id="global-footer" class="global-footer">
 
-    <nav id="global-nav-expanded" class="row">
+    <nav id="global-nav-expanded" class="row global-nav-expanded">
         <div class="columns small-6 medium-2 ">
             <a href="https://www.ebi.ac.uk/" title="EMBL-EBI"><span class="ebi-logo"></span></a>
             <ul></ul>
@@ -53,7 +53,7 @@
         </div>
     </nav>
 
-    <section id="ebi-footer-meta" class="row">
+    <section id="ebi-footer-meta" class="row ebi-footer-meta">
         <p class="address">EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p>
         <p>Copyright © EMBL-EBI 2016 | EBI is an outstation of the <a href="http://www.embl.org/">European Molecular Biology Laboratory</a> | <a href="https://ebiwd.github.io/about/terms-of-use">Terms of use</a></p>
     </section>

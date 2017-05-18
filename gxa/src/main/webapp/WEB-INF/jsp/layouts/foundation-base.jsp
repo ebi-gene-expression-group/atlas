@@ -61,21 +61,16 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
 
-    <!-- If you have a custom header image or colour -->
-    <!-- <meta name="ebi:localmasthead-color" content="#000"> -->
-    <!-- <meta name="ebi:localmasthead-image" content="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/images/backgrounds/embl-ebi-background.jpg"> -->
-
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
     <!-- end CSS-->
 
     <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 </head>
 
-<body class="level2 full-width">
+<body class="level2">
 <div id="skip-to">
     <ul>
         <li><a href="#content">Skip to main content</a></li>
@@ -85,31 +80,32 @@
     </ul>
 </div>
 
-<%-- #local-masthead --%>
-<tiles:insertAttribute name="header"/>
+<%-- #global-masthead --%>
+<tiles:insertAttribute name="global-masthead"/>
 
 <%--#content--%>
-<div id="content" role="main" class="row">
-    <div class="small-12 columns">
-        <tiles:insertAttribute name="content"/>
-    </div>
-</div>
+<div id="content">
+    <%-- #masthead --%>
+    <tiles:insertAttribute name="masthead"/>
 
-<%-- #local-footer --%>
-<tiles:insertAttribute name="local-footer"/>
+    <section id="main-content-area" class="margin-top-large margin-bottom-large" role="main">
+        <tiles:insertAttribute name="content"/>
+    </section>
+
+    <%-- #local-footer --%>
+    <tiles:insertAttribute name="local-footer"/>
+</div>
 
 <%-- #global-footer --%>
 <tiles:insertAttribute name="global-footer"/>
 
 
 <!-- JavaScript -->
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+<script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
 
 <!-- The Foundation theme JavaScript -->
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
-<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
 <script type="text/JavaScript">$(document).foundation();</script>
 <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
 
@@ -124,10 +120,10 @@
 
 <!-- Google Analytics details... -->
 <script>
-  window._gaq = [['_setAccount','UA-37676851-1'],['_trackPageview'],['_trackPageLoadTime']];
-  Modernizr.load({
-    load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-  });
+//  window._gaq = [['_setAccount','UA-37676851-1'],['_trackPageview'],['_trackPageLoadTime']];
+//  Modernizr.load({
+//    load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+//  });
 </script>
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>

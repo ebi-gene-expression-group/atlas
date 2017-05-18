@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div id="local-footer" class="row margin-top-large margin-bottom-large">
+<footer id="local-footer" class="local-footer row expanded">
     <div class="small-12 small-centered medium-8 large-6 columns">
         <div class="row small-up-1 medium-up-3">
             <div class="column column-block margin-top-large margin-bottom-large text-center">
@@ -26,4 +26,4 @@
             </div>
         </div>
     </div>
-</div>
+</footer>

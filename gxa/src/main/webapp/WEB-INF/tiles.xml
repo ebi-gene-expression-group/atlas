@@ -5,24 +5,8 @@
 
 <tiles-definitions>
     <definition name="foundation-base" template="/WEB-INF/jsp/layouts/foundation-base.jsp">
-        <put-attribute name="header">
-            <definition template="/WEB-INF/jsp/tiles/headers/masthead.jsp">
-                <put-attribute name="global-masthead" value="/WEB-INF/jsp/tiles/headers/home/global-masthead.jsp"/>
-                <put-attribute name="local-masthead" value="/WEB-INF/jsp/tiles/headers/home/local-masthead.jsp"/>
-            </definition>
-        </put-attribute>
-        <put-attribute name="content"/>
-        <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
-        <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
-    </definition>
-
-    <definition name="foundation-base-compact" template="/WEB-INF/jsp/layouts/foundation-base.jsp">
-        <put-attribute name="header">
-            <definition template="/WEB-INF/jsp/tiles/headers/masthead-compact.jsp">
-                <put-attribute name="global-masthead-black-bar" value="/WEB-INF/jsp/tiles/headers/compact/global-masthead-black-bar.jsp"/>
-                <put-attribute name="local-masthead-compact" value="/WEB-INF/jsp/tiles/headers/compact/local-masthead-compact.jsp"/>
-            </definition>
-        </put-attribute>
+        <put-attribute name="global-masthead" value="/WEB-INF/jsp/tiles/headers/global-masthead.jsp"/>
+        <put-attribute name="masthead" value="/WEB-INF/jsp/tiles/headers/masthead.jsp"/>
         <put-attribute name="content"/>
         <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
         <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
@@ -41,6 +25,30 @@
                 <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
             </definition>
         </put-attribute>
+    </definition>
+
+    <!--Error pages-->
+    <definition name="error-page" extends="foundation-base">
+        <put-attribute name="title" value="Error &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/generic-error.jsp"/>
+    </definition>
+
+    <!--Not technically an error, but it seems the best place to put it-->
+    <definition name="no-results" extends="foundation-base">
+        <put-attribute name="title" value="No results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/no-results.jsp"/>
+    </definition>
+
+    <definition name="request-diagnostics" extends="foundation-base">
+        <put-attribute name="title" value="Search results &lt; "/>
+        <put-attribute name="content" value="/WEB-INF/jsp/views/request-diagnostics.jsp"/>
+    </definition>
+
+
+
+    <!-- Compact header views -->
+    <definition name="foundation-base-compact" extends="foundation-base">
+        <put-attribute name="masthead" value="/WEB-INF/jsp/tiles/headers/masthead.jsp"/>
     </definition>
 
     <definition name="foundation-static" extends="foundation-base-compact">
@@ -78,26 +86,13 @@
         <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
     </definition>
 
-    <definition name="request-diagnostics" extends="foundation-base">
-        <put-attribute name="title" value="Search results &lt; "/>
-        <put-attribute name="content" value="/WEB-INF/jsp/views/request-diagnostics.jsp"/>
-    </definition>
 
+
+    <!-- iframes and other stuff -->
     <definition name="qc-template" template="/WEB-INF/jsp/qc-template.jsp">
     </definition>
 
     <definition name="das-features" template="/WEB-INF/jsp/das-features.jsp">
     </definition>
 
-    <!--Error pages-->
-    <definition name="error-page" extends="foundation-base">
-        <put-attribute name="title" value="Error &lt; "/>
-        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/generic-error.jsp"/>
-    </definition>
-
-    <!--Not technically an error, but it seems the best place to put it-->
-    <definition name="no-results" extends="foundation-base">
-        <put-attribute name="title" value="No results &lt; "/>
-        <put-attribute name="content" value="/WEB-INF/jsp/tiles/errors/no-results.jsp"/>
-    </definition>
 </tiles-definitions>

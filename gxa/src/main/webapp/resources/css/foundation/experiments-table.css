@@ -31,3 +31,8 @@
     color: grey;
     font-style: italic;
 }
+
+/* Make experiments table header inputs (Show and Columns) expanded */
+#experiments-table_wrapper .row {
+    max-width: none;
+}

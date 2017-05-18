@@ -13,63 +13,69 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<div id="experimentDescription">
-    <h3 id="goto-experiment">
-        ${experimentDescription}
-    </h3>
-    <h5>${type.humanDescription}</h5>
-    <c:if test="${hasExtraInfo}">
+<div id="experimentDescription" class="row expanded">
+    <div class="small-12 columns">
+        <h3 id="goto-experiment">
+            ${experimentDescription}
+        </h3>
+        <h5>${type.humanDescription}</h5>
+
+        <c:if test="${hasExtraInfo}">
         <a id="extra-info"
            href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
             <img alt="more information"
                  src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/overview_button.png">
         </a>
-    </c:if>
-</div>
-<div id="experimentOrganisms">Organism:
-    <span style="font-style:italic">${species}</span>
-</div>
-<c:if test="${allArrayDesigns!=null}">
-    <div id="experimentArrayDesigns">Array Design(s):
-        <c:forEach items="${allArrayDesigns}" var="arrayDesign">
-            <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
-               href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
-               target='_blank'>${arrayDesign}</a>
-        </c:forEach>
-    </div>
-</c:if>
-<c:if test="${not empty pubMedIds and not empty pubMedIds.get(0)}">
-    <div id="experimentReferences">Reference(s):
-        <c:forEach var="pubMedId" items="${pubMedIds}">
+        </c:if>
+
+        <div id="experimentOrganisms">Organism:
+            <span style="font-style:italic">${species}</span>
+        </div>
+
+        <c:if test="${allArrayDesigns!=null}">
+        <div id="experimentArrayDesigns">Array Design(s):
+            <c:forEach items="${allArrayDesigns}" var="arrayDesign">
+                <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
+                   href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
+                   target='_blank'>${arrayDesign}</a>
+            </c:forEach>
+        </div>
+        </c:if>
+
+        <c:if test="${not empty pubMedIds and not empty pubMedIds.get(0)}">
+        <div id="experimentReferences">Reference(s):
+            <c:forEach var="pubMedId" items="${pubMedIds}">
                     <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
                              title="View publication in PubMed" target='_blank'>${pubMedId}</a>
                         <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}" title="Filter by text-mined genes/proteins in reference publication">(Filter by genes in paper)</a>
                         &nbsp;&nbsp;&nbsp;
                     </span>
-        </c:forEach>
-    </div>
-</c:if>
-<c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
-    <div id="dataProvider">Raw Data Provider:
-        <c:forEach var="dataProvider" items="${dataProviderURL}" varStatus="i">
-            <a class="thick-link" title="Experiment Data Provider"
-        href="${dataProvider}">${dataProviderDescription.get(i.index)}</a>
-        </c:forEach>
-    </div>
-</c:if>
-<c:if test="${not empty alternativeViews and not empty alternativeViewDescriptions}">
-    <div id="alternativeViews">See also:
-        <c:forEach var="alternativeViewAccession" items="${alternativeViews}" varStatus="i">
-            <a class="thick-link" title="Alternative view"
-               href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
-                    ${alternativeViewDescriptions.get(i.index)}
-            </a>
+            </c:forEach>
+        </div>
+        </c:if>
 
-        </c:forEach>
+        <c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
+        <div id="dataProvider">Raw Data Provider:
+            <c:forEach var="dataProvider" items="${dataProviderURL}" varStatus="i">
+                <a class="thick-link" title="Experiment Data Provider"
+                   href="${dataProvider}">${dataProviderDescription.get(i.index)}</a>
+            </c:forEach>
+        </div>
+        </c:if>
+
+        <c:if test="${not empty alternativeViews and not empty alternativeViewDescriptions}">
+        <div id="alternativeViews">See also:
+            <c:forEach var="alternativeViewAccession" items="${alternativeViews}" varStatus="i">
+                <a class="thick-link" title="Alternative view"
+                   href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
+                        ${alternativeViewDescriptions.get(i.index)}
+                </a>
+
+            </c:forEach>
+        </div>
+        </c:if>
     </div>
-</c:if>
-
-
+</div>
 
 <script>
     var europepmcUrl = "<spring:eval expression="@configuration['europepmc.base.url']"/>" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
