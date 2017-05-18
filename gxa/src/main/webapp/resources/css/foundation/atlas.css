@@ -1,4 +1,5 @@
-/*Override ebi-global.css padding for medium-sized screens and smaller*/
+/* Override ebi-global.css padding for medium-sized screens and smaller */
+/* https://github.com/ebiwd/EBI-Framework/issues/90 */
 #content {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -7,6 +8,10 @@
 /*Until flex grid is part of the EBI framework we use these two classes as a hack...*/
 .padding-bottom-for-button {
     padding-bottom: 5rem !important;
+}
+
+#local-search a:hover {
+    border-bottom-color: white;
 }
 
 .align-row-to-bottom {
