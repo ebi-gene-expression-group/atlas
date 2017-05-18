@@ -23,9 +23,11 @@ public abstract class CutoffScale {
         private final double step = 1.1;
 
         public double[] get(){
-            double[] result = new double[size];
+            double[] result = new double[size + 1];
+            result[0] = 0.0;
+
             double current = initial;
-            for(int i = 0 ; i< result.length ; i ++){
+            for(int i = 1 ; i< result.length ; i ++){
                 result[i] = current;
                 current*=step;
             }

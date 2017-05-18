@@ -39,13 +39,7 @@ public class BaselineProfileStreamFactoryTest {
 
         int [] result = subject.histogram(baselineExperiment, new BaselineRequestContext(new BaselineRequestPreferences(), baselineExperiment), cutoffBins);
 
-        assertThat(result.length, is(cutoffBins.length+1));
-
-        int sum = 0;
-        for (int i : result){
-            sum+=i;
-        }
-        assertThat(sum, is(values.length));
+        assertThat(result.length, is(cutoffBins.length));
 
         return result;
     }
@@ -71,14 +65,14 @@ public class BaselineProfileStreamFactoryTest {
     @Test
     public void valuesAssignedCorrectlyToBins(){
         assertArrayEquals(
-                new int[]{3},
+                new int[]{},
                 testHistogram(new double[]{0.5,1.5,2.5}, new double[]{}));
         assertArrayEquals(
-                new int[]{1,2},
+                new int[]{2},
                 testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0}));
 
         assertArrayEquals(
-                new int[]{1,1,1},
+                new int[]{1,1},
                 testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0, 2.0}));
     }
 
