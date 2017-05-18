@@ -76,7 +76,7 @@ const DownloadDifferentialButton = React.createClass({
         const fileName = 'differentialResults.tsv';
 
         return (
-            <a style={{padding: '10px', fontSize: '12px', verticalAlign: 'middle'}}
+            <a style={{padding: '10px', fontSize: '14px', verticalAlign: 'middle'}}
                className="ui-button ui-widget ui-corner-all"
                href={uri} download={fileName} target="_blank"
                onClick={this._downloadDifferentialProfiles}>
