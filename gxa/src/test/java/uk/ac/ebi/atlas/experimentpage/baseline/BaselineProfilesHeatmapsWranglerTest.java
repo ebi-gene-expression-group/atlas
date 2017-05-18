@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import java.util.TreeSet;
 
@@ -61,7 +62,7 @@ public class BaselineProfilesHeatmapsWranglerTest {
         when(experimentDisplayDefaultsMock.preserveColumnOrder()).thenReturn(true);
         when(baselineExperimentMock.getDisplayDefaults()).thenReturn(experimentDisplayDefaultsMock);
 
-        baselineRequestPreferences = new BaselineRequestPreferences();
+        baselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
         baselineRequestPreferences.setGeneQuery(SemanticQuery.create(GENE_WE_ASK_FOR));
 
         TreeSet<Factor> ts = new TreeSet<>();
@@ -111,7 +112,7 @@ public class BaselineProfilesHeatmapsWranglerTest {
                 .thenReturn(new BaselineProfilesList());
 
         BaselineProfilesHeatmapsWrangler subject =
-                fakeWrangler(new BaselineRequestPreferences(), baselineExperimentMock);
+                fakeWrangler(new RnaSeqBaselineRequestPreferences(), baselineExperimentMock);
 
         subject.getJsonProfilesAsGeneSets();
 

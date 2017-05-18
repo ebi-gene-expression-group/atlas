@@ -21,7 +21,7 @@ public class ExperimentPageRequestPreferencesTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineRequestPreferences();
+        subject = new RnaSeqBaselineRequestPreferences();
     }
 
     @Test

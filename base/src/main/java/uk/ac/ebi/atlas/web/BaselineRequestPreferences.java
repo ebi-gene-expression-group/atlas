@@ -5,9 +5,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 
-public class BaselineRequestPreferences extends ExperimentPageRequestPreferences{
-
-    public static final double DEFAULT_CUTOFF = 0.5d;
+public abstract class BaselineRequestPreferences extends ExperimentPageRequestPreferences{
 
     private static final String DEFAULT_GENE_QUERY_VALUE = "protein_coding";
     private static final String DEFAULT_GENE_QUERY_CATEGORY = BioentityPropertyName.GENE_BIOTYPE.name;
@@ -15,11 +13,6 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     @Override
     protected SemanticQuery getDefaultGeneQuery() {
         return SemanticQuery.create(SemanticQueryTerm.create(DEFAULT_GENE_QUERY_VALUE, DEFAULT_GENE_QUERY_CATEGORY));
-    }
-
-    @Override
-    public double getDefaultCutoff() {
-        return DEFAULT_CUTOFF;
     }
 
     @Override
@@ -31,11 +24,8 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
         }
     }
 
-    public static BaselineRequestPreferences requestAllData(){
-        BaselineRequestPreferences preferences = new BaselineRequestPreferences();
+    protected static void setRequestAllData(BaselineRequestPreferences preferences){
         preferences.setCutoff(0.0d);
         preferences.setGeneQuery(SemanticQuery.create());
-        return preferences;
     }
-
 }

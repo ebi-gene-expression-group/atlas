@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.concurrent.ExecutionException;
@@ -41,7 +42,7 @@ public class BaselineProfilesHeatMapIT {
     @Inject
     RnaSeqBaselineProfileStreamFactory inputStreamFactory;
 
-    private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
+    private BaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
 
     private BaselineRequestContext baselineRequestContext;
 

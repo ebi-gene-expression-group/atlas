@@ -10,7 +10,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,7 +46,7 @@ public class BaselineRequestContextTest {
 
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
-        BaselineRequestContext subject = new BaselineRequestContext(new BaselineRequestPreferences(),
+        BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
                 BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
                         ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
 
@@ -80,7 +80,7 @@ public class BaselineRequestContextTest {
 
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
-        BaselineRequestContext subject = new BaselineRequestContext(new BaselineRequestPreferences(),
+        BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
                 BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
                         ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
 
@@ -114,14 +114,14 @@ public class BaselineRequestContextTest {
 
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
-        BaselineRequestContext subject = new BaselineRequestContext(new BaselineRequestPreferences(),
+        BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
                 BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
                         ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1, other type value 1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2, other type value 2")));
 
-        subject = new BaselineRequestContext(new BaselineRequestPreferences(),
+        subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
                 BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
                         ExperimentDisplayDefaults.create(defaultFactorValues, Lists.reverse(prescribedOrderOfFilters), false),  "accession"));
 
@@ -155,14 +155,14 @@ public class BaselineRequestContextTest {
 
         when(experimentDesign.getFactors("run21")).thenReturn(factors2);
 
-        BaselineRequestContext subject = new BaselineRequestContext(new BaselineRequestPreferences(),
+        BaselineRequestContext subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
                 BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
                         ExperimentDisplayDefaults.create(defaultFactorValues, prescribedOrderOfFilters, false),  "accession"));
 
         assertThat(subject.displayNameForColumn(ag1), (is("name for g1")));
         assertThat(subject.displayNameForColumn(ag2), (is("name for g2")));
 
-        subject = new BaselineRequestContext(new BaselineRequestPreferences(),
+        subject = new BaselineRequestContext(BaselineRequestPreferencesTest.get(),
                 BaselineExperimentTest.mockExperiment(experimentDesign, dataColumnDescriptors,
                         ExperimentDisplayDefaults.create(defaultFactorValues, Lists.reverse(prescribedOrderOfFilters), false),  "accession"));
 
