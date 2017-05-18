@@ -100,7 +100,7 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-        return "foundation-bioentities";
+        return "foundation-bioentities-search-results";
     }
 
     protected abstract Map<String, Object> pageDescriptionAttributes(String identifier, Species species, String entityName);

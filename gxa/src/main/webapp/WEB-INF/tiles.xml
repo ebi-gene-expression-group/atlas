@@ -73,11 +73,6 @@
         <put-attribute name="content" value="/WEB-INF/jsp/gene-set-enrichment-results.jsp"/>
     </definition>
 
-    <definition name="foundation-bioentities" extends="foundation-base-compact">
-        <put-attribute name="title" value="Bioentity &lt; "/>
-        <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities.jsp"/>
-    </definition>
-
     <definition name="foundation-bioentities-search-results" extends="foundation-base-compact">
         <put-attribute name="title" value="Search results &lt; "/>
         <put-attribute name="content" value="/WEB-INF/jsp/bioentities/foundation-bioentities-search-results.jsp"/>
