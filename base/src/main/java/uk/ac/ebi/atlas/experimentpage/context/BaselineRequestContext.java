@@ -7,6 +7,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 import uk.ac.ebi.atlas.model.experiment.baseline.FactorGroup;
@@ -19,10 +20,10 @@ import java.util.List;
 
 @Named
 @Scope("request")
-public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineExperiment, BaselineRequestPreferences>
-        implements BaselineProfileStreamOptions {
+public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extends RequestContext<AssayGroup,BaselineExperiment, BaselineRequestPreferences<Unit>>
+        implements BaselineProfileStreamOptions<Unit> {
 
-    public BaselineRequestContext(BaselineRequestPreferences requestPreferences, BaselineExperiment experiment) {
+    public BaselineRequestContext(BaselineRequestPreferences<Unit> requestPreferences, BaselineExperiment experiment) {
         super(requestPreferences, experiment);
     }
 
@@ -81,5 +82,8 @@ public class BaselineRequestContext extends RequestContext<AssayGroup,BaselineEx
         return b.build();
     }
 
-
+    @Override
+    public Unit getExpressionUnit() {
+        return requestPreferences.getUnit();
+    }
 }

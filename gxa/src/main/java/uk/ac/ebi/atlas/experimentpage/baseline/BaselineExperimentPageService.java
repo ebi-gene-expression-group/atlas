@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
@@ -38,12 +39,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         this.tracksUtil = tracksUtil;
     }
 
-    public JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,
-                                                   BaselineRequestPreferences preferences,
-                                                   Model model, HttpServletRequest request, boolean isWidget) {
+    public <Unit extends ExpressionUnit.Absolute> JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,
+                                                                                BaselineRequestPreferences<Unit> preferences,
+                                                                                Model model, HttpServletRequest request, boolean isWidget) {
         JsonObject result = new JsonObject();
 
-        BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
+        BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
 
         /*From here on preferences are immutable, variables not required for request-preferences.jsp*/

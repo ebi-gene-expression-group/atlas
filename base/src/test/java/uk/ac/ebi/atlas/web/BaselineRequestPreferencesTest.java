@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.web;
 
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+
 public class BaselineRequestPreferencesTest {
 
     public static BaselineRequestPreferences get(){
@@ -7,6 +9,10 @@ public class BaselineRequestPreferencesTest {
             @Override
             public double getDefaultCutoff() {
                 return 0.0;
+            }
+
+            public ExpressionUnit.Absolute getUnit(){
+                return ExpressionUnit.Absolute.Rna.TPM;
             }
         };
     }

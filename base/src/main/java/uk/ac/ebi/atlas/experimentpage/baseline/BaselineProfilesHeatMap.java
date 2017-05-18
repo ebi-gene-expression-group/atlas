@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
@@ -16,22 +14,19 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
-import javax.inject.Named;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Named
-@Scope("prototype")
-public class BaselineProfilesHeatMap {
+public class BaselineProfilesHeatMap<StreamOptions extends BaselineProfileStreamOptions<?>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
-    private final BaselineProfileStreamFactory baselineProfileStreamFactory;
-    public BaselineProfilesHeatMap(@Qualifier("baselineProfileInputStreamFactory") BaselineProfileStreamFactory inputStreamFactory) {
+    private final BaselineProfileStreamFactory<StreamOptions> baselineProfileStreamFactory;
+    public BaselineProfilesHeatMap(BaselineProfileStreamFactory<StreamOptions> inputStreamFactory) {
         this.baselineProfileStreamFactory = inputStreamFactory;
     }
 
-    public BaselineProfilesList fetch(BaselineExperiment experiment, BaselineProfileStreamOptions options,
+    public BaselineProfilesList fetch(BaselineExperiment experiment, StreamOptions options,
                                       GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
@@ -49,7 +44,7 @@ public class BaselineProfilesHeatMap {
         return profiles;
     }
 
-    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder,BaselineExperiment experiment, BaselineProfileStreamOptions options,
+    public BaselineProfilesList fetchInPrescribedOrder(List<String> geneNamesInOrder,BaselineExperiment experiment, StreamOptions options,
                                                         GeneQueryResponse geneQueryResponse, boolean asGeneSets) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
