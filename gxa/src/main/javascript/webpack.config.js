@@ -12,9 +12,8 @@ module.exports = {
         expressionAtlasDifferentialExpression: './atlas_bundles/differential-expression',
         expressionAtlasBioentityInformation: './atlas_bundles/bioentity-information',
         expressionAtlasBrowseBySpecies: './atlas_bundles/browse-by-species',
+        polyfills: ['babel-polyfill', 'whatwg-fetch'],
         dependencies: [
-            'babel-polyfill', 'whatwg-fetch',
-
             // Bundled dependencies: expressionAtlasHeatmapHighcharts
             'expression-atlas-heatmap-highcharts',
             'anatomogram',
@@ -43,9 +42,6 @@ module.exports = {
             // Required by: anatomogram
             'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
 
-            // anatomogram
-            // 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-
             // Node.js stuff
             'url',
             'path',
@@ -53,6 +49,7 @@ module.exports = {
 
             // feedback
             'react-addons-css-transition-group',
+
             // 'react-bootstrap',
             'react-emojione',
             'react-localstorage',

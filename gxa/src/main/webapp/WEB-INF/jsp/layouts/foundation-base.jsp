@@ -65,9 +65,11 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
     <!-- end CSS-->
 
-    <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
+    <!-- All JavaScript at the bottom, except for jQuery -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js-bundles/polyfills.bundle.js"></script>
 </head>
 
 <body class="level2">
@@ -99,7 +101,6 @@
 <%-- #global-footer --%>
 <tiles:insertAttribute name="global-footer"/>
 
-
 <!-- JavaScript -->
 <script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
@@ -118,12 +119,15 @@
 <spring:eval var="arrayexpressUrl" expression="@configuration['arrayexpress.autocomplete.url']" />
 <%@ include file="../includes/condition-autocomplete-js.jsp" %>
 
-<!-- Google Analytics details... -->
+<!-- Google Analytics details -->
 <script>
-//  window._gaq = [['_setAccount','UA-37676851-1'],['_trackPageview'],['_trackPageLoadTime']];
-//  Modernizr.load({
-//    load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-//  });
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37676851-1', 'auto');
+  ga('send', 'pageview');
 </script>
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
