@@ -96,16 +96,22 @@ public abstract class SemanticQuery implements Iterable<SemanticQueryTerm> {
         return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(json, AutoValue_SemanticQueryTerm[].class)));
     }
 
-    public static SemanticQuery fromUrlEncodedJson(String json) throws UnsupportedEncodingException, MalformedJsonException {
+    public static SemanticQuery fromUrlEncodedJson(String json) throws MalformedJsonException {
         if (isBlank(json)) {
             return create();
         }
 
         Gson gson = new Gson();
+        String decoded;
         try {
-            return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(URLDecoder.decode(json, "UTF-8"), AutoValue_SemanticQueryTerm[].class)));
+            decoded = URLDecoder.decode(json, "UTF-8");
+        }  catch(UnsupportedEncodingException e){
+                throw new RuntimeException(e);
+        }
+         try {
+             return create(ImmutableSet.<SemanticQueryTerm>copyOf(gson.fromJson(decoded, AutoValue_SemanticQueryTerm[].class)));
         } catch (NullPointerException | JsonSyntaxException e) {
-            String geneQueryString = gson.fromJson(StringUtils.wrap(URLDecoder.decode(json, "UTF-8"), "\""), String.class);
+            String geneQueryString = gson.fromJson(StringUtils.wrap(decoded, "\""), String.class);
 
             ImmutableSet.Builder<SemanticQueryTerm> builder = ImmutableSet.builder();
             for (String geneQueryTerm : geneQueryString.split(" ")) {

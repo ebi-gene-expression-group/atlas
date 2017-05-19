@@ -6,7 +6,7 @@ public class RnaSeqBaselineRequestPreferences extends BaselineRequestPreferences
 
     private static final double DEFAULT_CUTOFF = 0.5d;
 
-    private ExpressionUnit.Absolute.Rna unit;
+    private ExpressionUnit.Absolute.Rna unit = getDefaultUnit();
 
     @Override
     public double getDefaultCutoff() {
