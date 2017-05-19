@@ -34,9 +34,9 @@ public class ConfigurationTrader {
 
     private ExperimentConfiguration getExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
         if (isMicroarray) {
-            return new MicroarrayExperimentConfiguration(dataFileHub.getBaselineExperimentFiles(experimentAccession).configuration.get());
+            return new MicroarrayExperimentConfiguration(dataFileHub.getExperimentFiles(experimentAccession).configuration.get());
         }
-        return new ExperimentConfiguration(dataFileHub.getBaselineExperimentFiles(experimentAccession).configuration.get());
+        return new ExperimentConfiguration(dataFileHub.getExperimentFiles(experimentAccession).configuration.get());
     }
 
 }

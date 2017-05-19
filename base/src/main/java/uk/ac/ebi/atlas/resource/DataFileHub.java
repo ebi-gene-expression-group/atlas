@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.resource.*;
 
 import javax.inject.Inject;
@@ -29,7 +30,12 @@ public class DataFileHub {
     final static String IDF_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.idf.txt";
     final static String OP_LOG_FILE_PATH_TEMPLATE = "/admin/{0}-op-log.tsv";
 
-    final static String EXPRESSION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv"; // For baseline and RNA-seq diff
+    final static String PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+    final static String RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+    final static String RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+
+
+
     final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
     final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
     final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
@@ -57,6 +63,15 @@ public class DataFileHub {
         return new BaselineExperimentFiles(experimentAccession);
     }
 
+    public RnaSeqBaselineExperimentFiles getRnaSeqBaselineExperimentFiles(String experimentAccession) {
+        return new RnaSeqBaselineExperimentFiles(experimentAccession);
+    }
+
+    public ProteomicsBaselineExperimentFiles getProteomicsBaselineExperimentFiles(String experimentAccession) {
+        return new ProteomicsBaselineExperimentFiles(experimentAccession);
+    }
+
+
     public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession) {
         return new DifferentialExperimentFiles(experimentAccession);
     }
@@ -66,8 +81,8 @@ public class DataFileHub {
     }
 
     //TODO move me inside RnaSeqBaselineExperimentFiles!
-    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession){
-        return new KryoFile(dataFilesLocation, experimentAccession);
+    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession, ExpressionUnit.Absolute.Rna unit){
+        return new KryoFile(dataFilesLocation, experimentAccession, unit);
     }
 
     public class SpeciesPropertiesFile {
@@ -106,14 +121,41 @@ public class DataFileHub {
 
     }
 
-    public class BaselineExperimentFiles extends ExperimentFiles {
+    public class RnaSeqBaselineExperimentFiles extends BaselineExperimentFiles {
+        private final AtlasResource<TsvReader> fpkms;
+        private final AtlasResource<TsvReader> tpms;
+        RnaSeqBaselineExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.fpkms = new TsvFile.ReadOnly(dataFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.tpms = new TsvFile.ReadOnly(dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+        }
+
+        public AtlasResource<TsvReader> dataFile(ExpressionUnit.Absolute.Rna unit){
+            switch(unit){
+                case FPKM:
+                    return fpkms;
+                case TPM:
+                    return tpms;
+                default:
+                    throw new RuntimeException("No file for: "+unit);
+            }
+        }
+    }
+
+    public class ProteomicsBaselineExperimentFiles extends BaselineExperimentFiles {
         public final AtlasResource<TsvReader> main;
+        ProteomicsBaselineExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.main = new TsvFile.ReadOnly(dataFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
+        }
+    }
+
+    public class BaselineExperimentFiles extends ExperimentFiles {
         public final AtlasResource<XmlReader> factors;
         public final AtlasResource<CSVReader> coexpressions;
 
         BaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.main = new TsvFile.ReadOnly(dataFilesLocation, EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
             this.factors = new XmlFile.ReadOnly(dataFilesLocation, FACTORS_FILE_PATH_TEMPLATE, experimentAccession);
             this.coexpressions = new TsvFile.ReadCompressed(dataFilesLocation, COEXPRESSION_FILE_TEMPLATE, experimentAccession);
         }

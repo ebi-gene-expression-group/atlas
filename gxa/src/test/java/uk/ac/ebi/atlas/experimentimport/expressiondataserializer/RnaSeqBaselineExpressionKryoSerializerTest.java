@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import static org.hamcrest.Matchers.is;
@@ -20,13 +20,17 @@ public class RnaSeqBaselineExpressionKryoSerializerTest {
     @Before
     public void setUp(){
         dataFileHub = MockDataFileHub.get();
-        dataFileHub.addExpressionFile(accession, ImmutableList.of(
+        dataFileHub.addFpkmsExpressionFile(accession, ImmutableList.of(
+                new String[]{"Gene ID", "Gene name", "g1"},
+                new String[]{"id_1", "name_1", "1.337"}
+        ));
+        dataFileHub.addTpmsExpressionFile(accession, ImmutableList.of(
                 new String[]{"Gene ID", "Gene name", "g1"},
                 new String[]{"id_1", "name_1", "1.337"}
         ));
 
-        if(dataFileHub.getKryoFile(accession).exists()){
-            dataFileHub.getKryoFile(accession).get().delete();
+        if(dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).exists()){
+            dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).get().delete();
         }
 
         subject = new RnaSeqBaselineExpressionKryoSerializer(dataFileHub);
@@ -34,10 +38,10 @@ public class RnaSeqBaselineExpressionKryoSerializerTest {
 
     @Test
     public void testSerializeExpressionData() throws Exception {
-        assertThat(dataFileHub.getKryoFile(accession).exists(), is(false));
+        assertThat(dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).exists(), is(false));
 
-        subject.serializeExpressionData(accession);
+        subject.serializeExpressionData(accession, ExpressionUnit.Absolute.Rna.TPM);
 
-        assertThat(dataFileHub.getKryoFile(accession).exists(), is(true));
+        assertThat(dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).exists(), is(true));
     }
 }

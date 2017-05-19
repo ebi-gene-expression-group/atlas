@@ -1,14 +1,22 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -37,8 +45,10 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
 
         switch (experimentType) {
             case RNASEQ_MRNA_BASELINE:
+                checkRnaSeqBaselineFiles(experimentAccession);
+                break;
             case PROTEOMICS_BASELINE:
-                checkBaselineFiles(experimentAccession);
+                checkProteomicsBaselineFiles(experimentAccession);
                 break;
             case RNASEQ_MRNA_DIFFERENTIAL:
                 checkDifferentialFiles(experimentAccession);
@@ -59,10 +69,47 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         }
     }
 
+    void checkRnaSeqBaselineFiles(String experimentAccession) {
+        DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
+        checkBaselineFiles(experimentFiles);
+        checkResourceExistsAndIsReadable(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM));
+        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM).get().readLine(0)), experimentAccession);
 
-    void checkBaselineFiles(String experimentAccession) {
-        DataFileHub.BaselineExperimentFiles experimentFiles = dataFileHub.getBaselineExperimentFiles(experimentAccession);
+
+        //TODO some experiments won't have this - FANTOM5 will only have TPMs - and it's okay
+        checkResourceExistsAndIsReadable(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM));
+        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM).get().readLine(0)), experimentAccession);
+    }
+
+    String[] rnaSeqIdsFromHeader(String[] header) {
+        return ArrayUtils.subarray(header, 2, header.length);
+    }
+
+    void checkProteomicsBaselineFiles(String experimentAccession) {
+        DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
+        checkBaselineFiles(experimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
+        headerIdsMatchConfigurationXml(proteomicsIdsFromHeader(experimentFiles.main.get().readLine(0)), experimentAccession);
+    }
+
+    String[] proteomicsIdsFromHeader(String[] header) {
+        return StringArrayUtil.substringBefore(StringArrayUtil.filterBySubstring(header, "WithInSampleAbundance"), ".");
+    }
+
+    void headerIdsMatchConfigurationXml(String[] assayGroupIds, String experimentAccession) {
+
+        Preconditions.checkState(ImmutableSet.copyOf(assayGroupIds).equals(FluentIterable.from(configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups()).transform(new Function<AssayGroup, String>() {
+            @Nullable
+            @Override
+            public String apply(@Nullable AssayGroup assayGroup) {
+                return assayGroup.getId();
+            }
+        }).toSet()), "Ids in data file not matching in {0}-configuration.xml", experimentAccession);
+
+    }
+
+
+    void checkBaselineFiles(DataFileHub.BaselineExperimentFiles experimentFiles) {
         checkResourceExistsAndIsReadable(experimentFiles.factors);
     }
 
@@ -99,7 +146,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         checkResourceExistsAndIsReadable(dataFileHub.getExperimentFiles(accession).configuration);
     }
 
-    private void checkResourceExistsAndIsReadable(AtlasResource<?> resource){
+    private void checkResourceExistsAndIsReadable(AtlasResource<?> resource) {
         checkState(resource.exists(), "Required file does not exist: " + resource.toString());
         checkState(resource.isReadable(), "Required file can not be read: " + resource.toString());
     }

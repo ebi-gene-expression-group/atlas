@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class ExpressionSerializerServiceTest {
         for(ExperimentType experimentType : ExperimentType.values()){
             subject.kryoSerializeExpressionData(accession, experimentType);
             int timesExpected = experimentType == ExperimentType.RNASEQ_MRNA_BASELINE ? 1 : 0;
-            verify(rnaSeqBaselineExpressionKryoSerializer, times(timesExpected)).serializeExpressionData(accession);
+            verify(rnaSeqBaselineExpressionKryoSerializer, times(timesExpected)).serializeExpressionData(accession, ExpressionUnit.Absolute.Rna.TPM);
             reset(rnaSeqBaselineExpressionKryoSerializer);
         }
     }

@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
+import com.google.common.base.Preconditions;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import com.google.common.base.Preconditions;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,11 +22,16 @@ public class BaselineAnalyticsInputStreamFactory {
         this.dataFileHub = dataFileHub;
     }
 
+
+
     public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType) throws IOException {
         Preconditions.checkArgument(experimentType.isBaseline());
-        AtlasResource<TsvReader> resource = dataFileHub.getBaselineExperimentFiles(experimentAccession).main;
-        return experimentType.isProteomicsBaseline()
-                ? new ProteomicsBaselineAnalyticsInputStream(resource.getReader(), resource.toString())
-                : new RnaSeqBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
+        if(experimentType.isProteomicsBaseline()){
+            AtlasResource<TsvReader> resource = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main;
+            return new ProteomicsBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
+        } else {
+            AtlasResource<TsvReader> resource = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.TPM);
+            return new RnaSeqBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
+        }
     }
 }

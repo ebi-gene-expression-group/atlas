@@ -35,7 +35,7 @@ public class BaselineProfileStreamFactoryTest {
         for(int i = 0; i< values.length ; i++){
             b.add(new String[]{"Gene ID "+i,"Gene name"+i, new Double(values[i]).toString()});
         }
-        mockDataFileHub.addExpressionFile(baselineExperiment.getAccession(), b.build());
+        mockDataFileHub.addProteomicsExpressionFile(baselineExperiment.getAccession(), b.build());
 
         int [] result = subject.histogram(baselineExperiment, new BaselineRequestContext(BaselineRequestPreferencesTest.get(), baselineExperiment), cutoffBins);
 

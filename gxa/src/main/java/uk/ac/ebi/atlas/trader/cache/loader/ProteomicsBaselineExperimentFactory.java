@@ -15,6 +15,6 @@ public class ProteomicsBaselineExperimentFactory extends BaselineExperimentFacto
     public ProteomicsBaselineExperimentFactory(ConfigurationTrader configurationTrader,
                                                SpeciesFactory speciesFactory,
                                                DataFileHub dataFileHub) {
-        super(ExperimentType.PROTEOMICS_BASELINE, configurationTrader, speciesFactory, dataFileHub);
+        super(ExperimentType.PROTEOMICS_BASELINE, configurationTrader, speciesFactory);
     }
 }

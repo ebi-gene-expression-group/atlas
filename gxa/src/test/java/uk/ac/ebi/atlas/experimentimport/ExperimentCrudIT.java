@@ -113,7 +113,7 @@ public class ExperimentCrudIT {
     @Test
     public void importReloadDeleteRnaSeqBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-RNASEQ-BASELINE", ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentCheckerSpy, times(4)).checkBaselineFiles("TEST-RNASEQ-BASELINE");
+        verify(experimentCheckerSpy, times(4)).checkRnaSeqBaselineFiles("TEST-RNASEQ-BASELINE");
     }
 
     @Test
@@ -139,7 +139,7 @@ public class ExperimentCrudIT {
     @Test
     public void importReloadDeleteProteomicsBaselineExperiment() throws IOException, SolrServerException {
         testImportNewImportExistingAndDelete("TEST-PROTEOMICS-BASELINE", ExperimentType.PROTEOMICS_BASELINE);
-        verify(experimentCheckerSpy, times(4)).checkBaselineFiles("TEST-PROTEOMICS-BASELINE");
+        verify(experimentCheckerSpy, times(4)).checkProteomicsBaselineFiles("TEST-PROTEOMICS-BASELINE");
     }
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {

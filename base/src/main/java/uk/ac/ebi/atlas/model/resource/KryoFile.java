@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model.resource;
 
 import com.esotericsoftware.kryo.io.UnsafeInput;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +16,10 @@ We're never closing the input and output streams.
 I think it doesn't matter - e.g. InputStream's .close() does nothing.
  */
 public class KryoFile extends AtlasResource<KryoFile.Handle> {
-    static final String template = "/serialized_expression/{0}.kryo";
+    static final String template = "/serialized_expression/{0}.{1}.kryo";
 
-    public KryoFile(String dataFilesLocation, String experimentAccession){
-        super(Paths.get(dataFilesLocation, MessageFormat.format(template, experimentAccession)));
+    public KryoFile(String dataFilesLocation, String experimentAccession, ExpressionUnit.Absolute.Rna unit){
+        super(Paths.get(dataFilesLocation, MessageFormat.format(template, experimentAccession, unit.name())));
     }
 
     @Override
