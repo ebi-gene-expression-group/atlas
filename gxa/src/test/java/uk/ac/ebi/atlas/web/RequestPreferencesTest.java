@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.web;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.beans.BeanWrapperImpl;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ public class RequestPreferencesTest {
             MicroarrayRequestPreferences()).getRootInstance();
 
     @Test
-    public void testDefault(){
+    public void testDefaultGeneQuery(){
         assertEquals(new RnaSeqBaselineRequestPreferences().getDefaultGeneQuery(), rnaSeqBaselineDefault.getGeneQuery());
         assertThat(rnaSeqBaselineDefault.getGeneQuery().description(), Matchers.containsString("protein_coding"));
 
@@ -27,6 +28,12 @@ public class RequestPreferencesTest {
 
         assertThat(differentialDefault.getGeneQuery().size(), is(0));
         assertThat(microarrayDefault.getGeneQuery().size(), is(0));
+    }
+
+    @Test
+    public void testDefaultUnit(){
+        assertEquals(new RnaSeqBaselineRequestPreferences().getDefaultUnit(), rnaSeqBaselineDefault.getUnit());
+        assertThat(rnaSeqBaselineDefault.getUnit(), is(ExpressionUnit.Absolute.Rna.TPM));
     }
 
 
