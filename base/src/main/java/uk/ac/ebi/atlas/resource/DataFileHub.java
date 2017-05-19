@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.esotericsoftware.kryo.io.UnsafeInput;
-import com.esotericsoftware.kryo.io.UnsafeOutput;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,12 +65,9 @@ public class DataFileHub {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
-    public AtlasResource<UnsafeInput> getKryoFileForReading(String experimentAccession){
-        return new KryoFiles.Input(dataFilesLocation, experimentAccession);
-    }
-
-    public AtlasResource<UnsafeOutput> getKryoFileForWriting(String experimentAccession){
-        return new KryoFiles.Output(dataFilesLocation, experimentAccession);
+    //TODO move me inside RnaSeqBaselineExperimentFiles!
+    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession){
+        return new KryoFile(dataFilesLocation, experimentAccession);
     }
 
     public class SpeciesPropertiesFile {

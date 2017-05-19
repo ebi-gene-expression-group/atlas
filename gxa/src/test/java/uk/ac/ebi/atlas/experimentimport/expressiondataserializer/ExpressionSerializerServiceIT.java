@@ -49,8 +49,8 @@ public class ExpressionSerializerServiceIT {
         Path tmp = Files.createTempDirectory("serialized_expression");
         serializedExpressionsFileTemplate = tmp.toString() + "/{0}.kryo";
 
-        subject = new ExpressionSerializerService(new RnaSeqBaselineExpressionKryoSerializer(dataFileHub,
-                serializedExpressionsFileTemplate),
+        subject = new ExpressionSerializerService(new RnaSeqBaselineExpressionKryoSerializer(dataFileHub
+        ),
                 experimentChecker);
     }
 

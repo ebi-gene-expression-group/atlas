@@ -1,23 +1,17 @@
 package uk.ac.ebi.atlas.profiles;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoException;
+import com.esotericsoftware.kryo.io.UnsafeInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.KryoException;
-import com.esotericsoftware.kryo.io.UnsafeInput;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.model.resource.KryoFile;
 
 import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class BaselineExpressionsKryoReader implements Closeable {
 
@@ -40,8 +34,8 @@ public class BaselineExpressionsKryoReader implements Closeable {
         return kryo;
     }
 
-    public static BaselineExpressionsKryoReader create(AtlasResource<UnsafeInput> kryoFile) {
-        return new BaselineExpressionsKryoReader(createKryo(), kryoFile.get());
+    public static BaselineExpressionsKryoReader create(AtlasResource<KryoFile.Handle> kryoFile) {
+        return new BaselineExpressionsKryoReader(createKryo(), kryoFile.get().read());
     }
 
     BaselineExpressionsKryoReader(Kryo kryo, UnsafeInput input) {

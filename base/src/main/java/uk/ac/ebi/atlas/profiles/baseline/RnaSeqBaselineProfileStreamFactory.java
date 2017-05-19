@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import com.esotericsoftware.kryo.io.UnsafeInput;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
+import uk.ac.ebi.atlas.model.resource.KryoFile;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.BaselineProfileKryoInputStream;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
@@ -38,7 +38,7 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
          */
         @SuppressWarnings("unused")
         ExpressionUnit.Absolute.Rna unit = baselineProfileStreamOptions.getExpressionUnit();
-        AtlasResource<UnsafeInput> kryoFile = dataFileHub.getKryoFileForReading(experiment.getAccession());
+        AtlasResource<KryoFile.Handle> kryoFile = dataFileHub.getKryoFile(experiment.getAccession());
         if (kryoFile.exists()) {
             return new BaselineProfileKryoInputStream(
                     BaselineExpressionsKryoReader.create(kryoFile), experiment,

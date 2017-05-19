@@ -12,7 +12,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.Collections;
 
 public class MockDataFileHub extends DataFileHub {
 
@@ -69,7 +68,7 @@ public class MockDataFileHub extends DataFileHub {
 //    }
 //
 //    public void addExpressionFile(String accession, Collection<String[]> lines) {
-//        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
+//        addTemporaryTsv(MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
 //    }
 
     public void addFactorsFile(String accession, Collection<String> lines) {

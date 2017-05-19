@@ -6,22 +6,16 @@ import com.esotericsoftware.kryo.io.UnsafeOutput;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.QuartilesArrayBuilder;
+import uk.ac.ebi.atlas.model.resource.KryoFile;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.PosixFilePermission;
-import java.text.MessageFormat;
-import java.util.Set;
 
 @Named
 public class RnaSeqBaselineExpressionKryoSerializer {
@@ -33,14 +27,11 @@ public class RnaSeqBaselineExpressionKryoSerializer {
     private static final int GENE_NAME_COLUMN_INDEX = 1;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
 
-    private String serializedExpressionsFileTemplate;
     private final DataFileHub dataFileHub;
 
     @Inject
-    public RnaSeqBaselineExpressionKryoSerializer(DataFileHub dataFileHub,
-                                                  @Value("#{configuration['experiment.kryo_expressions.path.template']}") String serializedExpressionsFileTemplate) {
+    public RnaSeqBaselineExpressionKryoSerializer(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;
-        this.serializedExpressionsFileTemplate = serializedExpressionsFileTemplate;
     }
 
 
@@ -52,16 +43,13 @@ public class RnaSeqBaselineExpressionKryoSerializer {
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
 
-        String serializedExpressionsFileURL = MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession);
+        KryoFile.Handle kryoFileHandle = dataFileHub.getKryoFile(experimentAccession).get();
 
-        try (FileOutputStream expressionsOutputStream = new FileOutputStream(serializedExpressionsFileURL);
-             UnsafeOutput expressionsOutput = new UnsafeOutput(expressionsOutputStream);
+        try (UnsafeOutput expressionsOutput = kryoFileHandle.write();
              CSVReader tsvReaderForLineCount =
                      new CSVReader(dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(), '\t');
              CSVReader tsvReader =
                      new CSVReader(dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader(), '\t')) {
-
-            LOGGER.debug("Writing full baseline expressions to {}", serializedExpressionsFileURL);
 
             // Count number of genes (lines except the header)
             int geneCount = 0;
@@ -93,9 +81,7 @@ public class RnaSeqBaselineExpressionKryoSerializer {
             }
             LOGGER.info("Files successfully written in {} ms", System.currentTimeMillis() - start);
 
-            Set<PosixFilePermission> perms = Files.getPosixFilePermissions(Paths.get(serializedExpressionsFileURL));
-            perms.add(PosixFilePermission.GROUP_WRITE);
-            Files.setPosixFilePermissions(Paths.get(serializedExpressionsFileURL), perms);
+            kryoFileHandle.addPermissionsAfterWrite();
             return String.format("Serialized %s genes with %s assay groups each", geneCount, assays
                     .length);
         }
