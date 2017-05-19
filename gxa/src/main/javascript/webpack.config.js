@@ -12,7 +12,7 @@ module.exports = {
         expressionAtlasDifferentialExpression: './atlas_bundles/differential-expression',
         expressionAtlasBioentityInformation: './atlas_bundles/bioentity-information',
         expressionAtlasBrowseBySpecies: './atlas_bundles/browse-by-species',
-        polyfills: ['babel-polyfill', 'whatwg-fetch'],
+        // polyfills: ['babel-polyfill', 'whatwg-fetch'],
         dependencies: [
             // Bundled dependencies: expressionAtlasHeatmapHighcharts
             'expression-atlas-heatmap-highcharts',

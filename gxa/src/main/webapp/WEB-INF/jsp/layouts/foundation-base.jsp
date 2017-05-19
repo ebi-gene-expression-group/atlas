@@ -69,7 +69,8 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js-bundles/polyfills.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/babel-polyfill.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/fetch-polyfill.min.js"></script>
 </head>
 
 <body class="level2">

@@ -16,7 +16,7 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}t.__esModule=!0;var s=n(/*! react */2),l=r(s),u=n(/*! prop-types */978),c=r(u),p=n(/*! history/createBrowserHistory */983),f=r(p),d=n(/*! react-router */992),h=function(e){function t(){var n,r,a;o(this,t);for(var s=arguments.length,l=Array(s),u=0;u<s;u++)l[u]=arguments[u];return n=r=i(this,e.call.apply(e,[this].concat(l))),r.history=(0,f.default)(r.props),a=n,i(r,a)}return a(t,e),t.prototype.render=function(){return l.default.createElement(d.Router,{history:this.history,children:this.props.children})},t}(l.default.Component);h.propTypes={basename:c.default.string,forceRefresh:c.default.bool,getUserConfirmation:c.default.func,keyLength:c.default.number,children:c.default.node},t.default=h},/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/prop-types/index.js ***!
   \*************************************************************/
-[3540,979],/*!********************************************************************************!*\
+[3243,979],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/prop-types/factoryWithThrowingShims.js ***!
   \********************************************************************************/
 function(e,t,n){"use strict";var r=n(/*! fbjs/lib/emptyFunction */980),o=n(/*! fbjs/lib/invariant */981),i=n(/*! ./lib/ReactPropTypesSecret */982);e.exports=function(){function e(e,t,n,r,a,s){s!==i&&o(!1,"Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types")}function t(){return e}e.isRequired=e;var n={array:e,bool:e,func:e,number:e,object:e,string:e,symbol:e,any:e,arrayOf:t,element:e,instanceOf:t,node:e,objectOf:t,oneOf:t,oneOfType:t,shape:t};return n.checkPropTypes=r,n.PropTypes=n,n}},/*!*******************************************************************!*\
@@ -154,7 +154,7 @@ function(e,t){"use strict";var n=String.prototype.replace,r=/%20/g;e.exports={de
 function(e,t,n){"use strict";var r=n(/*! ./utils */1021),o=Object.prototype.hasOwnProperty,i={allowDots:!1,allowPrototypes:!1,arrayLimit:20,decoder:r.decode,delimiter:"&",depth:5,parameterLimit:1e3,plainObjects:!1,strictNullHandling:!1},a=function(e,t){for(var n={},r=e.split(t.delimiter,t.parameterLimit===1/0?void 0:t.parameterLimit),i=0;i<r.length;++i){var a,s,l=r[i],u=l.indexOf("]=")===-1?l.indexOf("="):l.indexOf("]=")+1;u===-1?(a=t.decoder(l),s=t.strictNullHandling?null:""):(a=t.decoder(l.slice(0,u)),s=t.decoder(l.slice(u+1))),o.call(n,a)?n[a]=[].concat(n[a]).concat(s):n[a]=s}return n},s=function(e,t,n){if(!e.length)return t;var r,o=e.shift();if("[]"===o)r=[],r=r.concat(s(e,t,n));else{r=n.plainObjects?Object.create(null):{};var i="["===o.charAt(0)&&"]"===o.charAt(o.length-1)?o.slice(1,-1):o,a=parseInt(i,10);!isNaN(a)&&o!==i&&String(a)===i&&a>=0&&n.parseArrays&&a<=n.arrayLimit?(r=[],r[a]=s(e,t,n)):r[i]=s(e,t,n)}return r},l=function(e,t,n){if(e){var r=n.allowDots?e.replace(/\.([^.[]+)/g,"[$1]"):e,i=/(\[[^[\]]*])/,a=/(\[[^[\]]*])/g,l=i.exec(r),u=l?r.slice(0,l.index):r,c=[];if(u){if(!n.plainObjects&&o.call(Object.prototype,u)&&!n.allowPrototypes)return;c.push(u)}for(var p=0;null!==(l=a.exec(r))&&p<n.depth;){if(p+=1,!n.plainObjects&&o.call(Object.prototype,l[1].slice(1,-1))&&!n.allowPrototypes)return;c.push(l[1])}return l&&c.push("["+r.slice(l.index)+"]"),s(c,t,n)}};e.exports=function(e,t){var n=t||{};if(null!==n.decoder&&void 0!==n.decoder&&"function"!=typeof n.decoder)throw new TypeError("Decoder has to be a function.");if(n.delimiter="string"==typeof n.delimiter||r.isRegExp(n.delimiter)?n.delimiter:i.delimiter,n.depth="number"==typeof n.depth?n.depth:i.depth,n.arrayLimit="number"==typeof n.arrayLimit?n.arrayLimit:i.arrayLimit,n.parseArrays=n.parseArrays!==!1,n.decoder="function"==typeof n.decoder?n.decoder:i.decoder,n.allowDots="boolean"==typeof n.allowDots?n.allowDots:i.allowDots,n.plainObjects="boolean"==typeof n.plainObjects?n.plainObjects:i.plainObjects,n.allowPrototypes="boolean"==typeof n.allowPrototypes?n.allowPrototypes:i.allowPrototypes,n.parameterLimit="number"==typeof n.parameterLimit?n.parameterLimit:i.parameterLimit,n.strictNullHandling="boolean"==typeof n.strictNullHandling?n.strictNullHandling:i.strictNullHandling,""===e||null===e||"undefined"==typeof e)return n.plainObjects?Object.create(null):{};for(var o="string"==typeof e?a(e,n):e,s=n.plainObjects?Object.create(null):{},u=Object.keys(o),c=0;c<u.length;++c){var p=u[c],f=l(p,o[p],n);s=r.merge(s,f,n)}return r.compact(s)}},/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/urijs/src/URI.js ***!
   \**********************************************************/
-[3542,1025,1026,1027,1025,1026,1027],/*!***************************************************************!*\
+[3245,1025,1026,1027,1025,1026,1027],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/urijs/src/punycode.js ***!
   \***************************************************************/
 178,/*!***********************************************************!*\
@@ -172,25 +172,25 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},i=n(/*! react */2),a=r(i),s=n(/*! react-bootstrap/lib */1030),l=n(/*! lodash */1295),u=n(/*! pluralize */1296),c=r(u),p=n(/*! urijs */1024),f=r(p),d=n(/*! ./genes/Main.jsx */1297),h=r(d),m=n(/*! ./column-filters/Main.jsx */1308),g=n(/*! ./Cutoff.jsx */1312),y=r(g),v=n(/*! ./CutoffDistribution.jsx */1314),b=r(v),w=n(/*! ./Regulation.jsx */1541),x=r(w),T=n(/*! ./Specificity.jsx */1543),P=r(T),O=n(/*! ./PropTypes.js */1305);n(/*! ./bootstrap-toggle.min.css */1545);var E=function(e){return e.replace(/_/g," ").toLowerCase().replace(/\w\S*/,function(e){return e.charAt(0).toUpperCase()+e.substr(1).toLowerCase()})},C=function(e){var t=e.onClickButton;return a.default.createElement(s.Button,{bsSize:"large",onClick:t,style:{textTransform:"unset",letterSpacing:"unset",height:"unset"}},a.default.createElement(s.Glyphicon,{glyph:"equalizer"}),a.default.createElement("span",{style:{verticalAlign:"middle"}}," Select"))};C.propTypes={onClickButton:a.default.PropTypes.func.isRequired};var _=function(e){var t=e.title,n=e.show,r=e.onCloseModal,o=e.onClickApply,i=e.children;return a.default.createElement(s.Modal,{show:n,onHide:r,bsSize:"large"},a.default.createElement(s.Modal.Header,{closeButton:!0},a.default.createElement(s.Modal.Title,null,t)),a.default.createElement(s.Modal.Body,null,i),a.default.createElement(s.Modal.Footer,null,o&&a.default.createElement(s.Button,{bsStyle:"primary",onClick:o,style:{textTransform:"unset",letterSpacing:"unset",height:"unset"}},"Apply"),a.default.createElement(s.Button,{onClick:r,style:{textTransform:"unset",letterSpacing:"unset",height:"unset"}},"Close")))};_.propTypes={show:a.default.PropTypes.bool.isRequired,onCloseModal:a.default.PropTypes.func.isRequired,onClickApply:a.default.PropTypes.func};var S=function(e){return l.intersection.apply([],e.map(function(e){return l.union.apply([],e.groupings.map(function(e){return e[1]}))}))},k=function(e,t){var n=t.groupings.map(function(e){return e[1]});return(0,l.isEqual)(new Set(e),new Set([].concat.apply([],n)))&&n.every(function(e){return 1===e.length})?(0,c.default)(E(t.name)):""},R=function(e){var t=e.text;return a.default.createElement("h4",null,t)},j=a.default.createClass({displayName:"SidebarAndModal",propTypes:{isDifferential:a.default.PropTypes.bool.isRequired,geneSuggesterUri:a.default.PropTypes.instanceOf(f.default),defaultQuery:a.default.PropTypes.bool.isRequired,genesDistributedByCutoffUrl:a.default.PropTypes.string.isRequired,loadingGifUrl:a.default.PropTypes.string.isRequired,columnGroups:a.default.PropTypes.arrayOf(a.default.PropTypes.shape(O.ColumnGroupPropTypes)).isRequired,queryObjects:a.default.PropTypes.shape(O.QueryObjectsPropTypes).isRequired,onChangeQueryObjects:a.default.PropTypes.func.isRequired},getInitialState:function(){return{showModal:"",geneQuery:this.props.queryObjects.geneQuery,selectedColumnIds:this.props.queryObjects.selectedColumnIds,initialFilters:!0}},render:function(){var e=this,t=["UP","DOWN","UP_DOWN"].includes(this.props.queryObjects.regulation),n=S(this.props.columnGroups),r=this.props.isDifferential?"Comparisons":k(n,this.props.columnGroups[0])||"Experimental variables",i=function(t,n){var r=Object.assign({},e.props.queryObjects);return Object.keys(n).map(function(e){if(void 0===n[e].category&&n[e].value.indexOf("(")!==-1){var t=n[e].value;n[e].value=t.substring(0,t.indexOf("(")-1),n[e].category=t.substring(t.indexOf("(")+1,t.length-1)}}),r[t]=n,e.props.onChangeQueryObjects(r)},u=function(t){return e.setState({showModal:t||""})},c=function(){return e.setState(e.getInitialState())};return a.default.createElement("div",null,a.default.createElement(R,{text:"Genes"}),a.default.createElement(h.default,{geneSuggesterUri:this.props.geneSuggesterUri,geneQuery:this.state.geneQuery,onChangeGeneQuery:function(t){e.setState({geneQuery:t})}}),a.default.createElement("div",{className:"row column margin-top-large"},a.default.createElement(s.Button,{onClick:i.bind(null,"geneQuery",this.state.geneQuery),style:{textTransform:"unset",letterSpacing:"unset",height:"unset",marginRight:"1rem"}},"Apply"),a.default.createElement(s.Button,{onClick:c,style:{textTransform:"unset",letterSpacing:"unset",height:"unset"}},"Reset")),a.default.createElement(P.default,{specific:this.props.queryObjects.specific,onChangeSpecific:i.bind(null,"specific")}),t&&a.default.createElement(x.default,{regulation:this.props.queryObjects.regulation,onChangeRegulation:i.bind(null,"regulation")}),a.default.createElement(y.default,{cutoff:this.props.queryObjects.cutoff,onChangeCutoff:i.bind(null,"cutoff")}),this.props.genesDistributedByCutoffUrl&&a.default.createElement("div",null,a.default.createElement("a",{href:"#",onClick:u.bind(null,"cutoff"),style:{marginBottom:"0.5rem",fontSize:"85%"}},a.default.createElement(s.Glyphicon,{glyph:"stats"}),a.default.createElement("span",{style:{marginLeft:"0.25rem"}},"See distribution")),a.default.createElement(_,{title:"Cutoff - distribution of genes",show:"cutoff"===this.state.showModal,onCloseModal:c},a.default.createElement(b.default,{cutoff:this.props.queryObjects.cutoff,onChangeCutoff:(0,l.flow)([i.bind(null,"cutoff"),u.bind(null,"")]),genesDistributedByCutoffUrl:this.props.genesDistributedByCutoffUrl}))),a.default.createElement("br",null),a.default.createElement(R,{text:r}),a.default.createElement("div",{className:"row column margin-bottom-medium"},a.default.createElement(C,{onClickButton:u.bind(null,"columns")})),a.default.createElement(m.Summary,o({columnGroups:this.props.columnGroups,selectedColumnIds:this.state.selectedColumnIds},{availableColumnIds:n,columnsName:r})),a.default.createElement(_,{title:r,show:"columns"===this.state.showModal,onCloseModal:c,onClickApply:(0,l.flow)([u.bind(null,""),this.setState.bind(this,{initialFilters:this.state.initialFilters&&0===(0,l.xor)(this.state.selectedColumnIds,this.props.queryObjects.selectedColumnIds).length}),i.bind(null,"selectedColumnIds",this.state.selectedColumnIds)])},a.default.createElement(m.Main,o({columnGroups:this.props.columnGroups,selectedColumnIds:this.state.selectedColumnIds},{availableColumnIds:n,columnsName:r},{onNewSelectedColumnIds:function(t){e.setState({selectedColumnIds:t})}}))),this.props.defaultQuery&&this.state.initialFilters&&a.default.createElement("div",{className:"margin-top-medium"},a.default.createElement("p",{className:"margin-bottom-small"},"Initially showing:"),a.default.createElement("ul",{className:"small"},this.props.columnGroups.filter(function(e){return e.groupings.length>1}).map(function(e){return a.default.createElement("li",{key:e.name},E(e.name),": ",e.selected)}))))}});t.default=j},/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/index.js ***!
   \**********************************************************************/
-[3948,1031,1126,1130,1131,1132,1136,1137,1139,1140,1142,1145,1146,1148,1149,1150,1163,1191,1193,1194,1195,1198,1144,1199,1200,1201,1202,1205,1206,1207,1208,1209,1216,1217,1247,1249,1250,1251,1252,1253,1254,1258,1259,1260,1269,1270,1271,1274,1275,1277,1115,1278,1279,1280,1281,1282,1133,1283,1285,1286,1287,1289,1288,1290,1291,1292,1293,1294],/*!**************************************************************************!*\
+[3651,1031,1126,1130,1131,1132,1136,1137,1139,1140,1142,1145,1146,1148,1149,1150,1163,1191,1193,1194,1195,1198,1144,1199,1200,1201,1202,1205,1206,1207,1208,1209,1216,1217,1247,1249,1250,1251,1252,1253,1254,1258,1259,1260,1269,1270,1271,1274,1275,1277,1115,1278,1279,1280,1281,1282,1133,1283,1285,1286,1287,1289,1288,1290,1291,1292,1293,1294],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Accordion.js ***!
   \**************************************************************************/
-[3949,1032,1070,1071,1107,1115],/*!**************************************************************************!*\
+[3652,1032,1070,1071,1107,1115],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/extends.js ***!
   \**************************************************************************/
-[3717,1033],/*!********************************************************************************!*\
+[3420,1033],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/object/assign.js ***!
   \********************************************************************************/
-[3718,1034],/*!*********************************************************************************************!*\
+[3421,1034],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
   \*********************************************************************************************/
-[3719,1035,1038],/*!******************************************************************************************************!*\
+[3422,1035,1038],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
   \******************************************************************************************************/
-[3720,1036,1051],/*!********************************************************************************************!*\
+[3423,1036,1051],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_export.js ***!
   \********************************************************************************************/
-[3721,1037,1038,1039,1041],/*!********************************************************************************************!*\
+[3424,1037,1038,1039,1041],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_global.js ***!
   \********************************************************************************************/
 490,/*!******************************************************************************************!*\
@@ -199,58 +199,58 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 491,/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
   \*****************************************************************************************/
-[3722,1040],/*!************************************************************************************************!*\
+[3425,1040],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
   \************************************************************************************************/
 493,/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
   \******************************************************************************************/
-[3723,1042,1050,1046],/*!***********************************************************************************************!*\
+[3426,1042,1050,1046],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
   \***********************************************************************************************/
-[3724,1043,1045,1049,1046],/*!***********************************************************************************************!*\
+[3427,1043,1045,1049,1046],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
   \***********************************************************************************************/
-[3725,1044],/*!***********************************************************************************************!*\
+[3428,1044],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
   \***********************************************************************************************/
 497,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
   \****************************************************************************************************/
-[3726,1046,1047,1048],/*!*************************************************************************************************!*\
+[3429,1046,1047,1048],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
   \*************************************************************************************************/
-[3727,1047],/*!*******************************************************************************************!*\
+[3430,1047],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
   \*******************************************************************************************/
 500,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
   \************************************************************************************************/
-[3728,1044,1037],/*!**************************************************************************************************!*\
+[3431,1044,1037],/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
   \**************************************************************************************************/
-[3729,1044],/*!***************************************************************************************************!*\
+[3432,1044],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
   \***************************************************************************************************/
 503,/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
   \***************************************************************************************************/
-[3730,1052,1067,1068,1069,1056,1047],/*!*************************************************************************************************!*\
+[3433,1052,1067,1068,1069,1056,1047],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
   \*************************************************************************************************/
-[3731,1053,1066],/*!**********************************************************************************************************!*\
+[3434,1053,1066],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
   \**********************************************************************************************************/
-[3732,1054,1055,1059,1063],/*!*****************************************************************************************!*\
+[3435,1054,1055,1059,1063],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_has.js ***!
   \*****************************************************************************************/
 507,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
   \************************************************************************************************/
-[3733,1056,1058],/*!*********************************************************************************************!*\
+[3436,1056,1058],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
   \*********************************************************************************************/
-[3734,1057],/*!*****************************************************************************************!*\
+[3437,1057],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
   \*****************************************************************************************/
 510,/*!*********************************************************************************************!*\
@@ -259,22 +259,22 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 511,/*!****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
   \****************************************************************************************************/
-[3735,1055,1060,1062],/*!***********************************************************************************************!*\
+[3438,1055,1060,1062],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
   \***********************************************************************************************/
-[3736,1061],/*!************************************************************************************************!*\
+[3439,1061],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
   \************************************************************************************************/
 514,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
   \**********************************************************************************************/
-[3737,1061],/*!************************************************************************************************!*\
+[3440,1061],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
   \************************************************************************************************/
-[3738,1064,1065],/*!********************************************************************************************!*\
+[3441,1064,1065],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
   \********************************************************************************************/
-[3739,1037],/*!*****************************************************************************************!*\
+[3442,1037],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
   \*****************************************************************************************/
 518,/*!***************************************************************************************************!*\
@@ -289,67 +289,67 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 521,/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
   \***********************************************************************************************/
-[3740,1058],/*!*********************************************************************************!*\
+[3443,1058],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/classCallCheck.js ***!
   \*********************************************************************************/
 523,/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
   \********************************************************************************************/
-[3741,1072],/*!*************************************************************************!*\
+[3444,1072],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/typeof.js ***!
   \*************************************************************************/
-[3742,1073,1093],/*!**********************************************************************************!*\
+[3445,1073,1093],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/symbol/iterator.js ***!
   \**********************************************************************************/
-[3743,1074],/*!***********************************************************************************************!*\
+[3446,1074],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
   \***********************************************************************************************/
-[3744,1075,1088,1092],/*!********************************************************************************************************!*\
+[3447,1075,1088,1092],/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
   \********************************************************************************************************/
-[3745,1076,1077],/*!***********************************************************************************************!*\
+[3448,1076,1077],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
   \***********************************************************************************************/
-[3746,1061,1058],/*!*************************************************************************************************!*\
+[3449,1061,1058],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
   \*************************************************************************************************/
-[3747,1078,1036,1079,1041,1054,1080,1081,1085,1087,1086],/*!*********************************************************************************************!*\
+[3450,1078,1036,1079,1041,1054,1080,1081,1085,1087,1086],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_library.js ***!
   \*********************************************************************************************/
 531,/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
   \**********************************************************************************************/
-[3748,1041],/*!***********************************************************************************************!*\
+[3451,1041],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
   \***********************************************************************************************/
 533,/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
   \*************************************************************************************************/
-[3749,1082,1050,1085,1041,1086],/*!***************************************************************************************************!*\
+[3452,1082,1050,1085,1041,1086],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
   \***************************************************************************************************/
-[3750,1043,1083,1066,1063,1048,1084],/*!************************************************************************************************!*\
+[3453,1043,1083,1066,1063,1048,1084],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
   \************************************************************************************************/
-[3751,1042,1043,1052,1046],/*!******************************************************************************************!*\
+[3454,1042,1043,1052,1046],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_html.js ***!
   \******************************************************************************************/
-[3752,1037],/*!*******************************************************************************************************!*\
+[3455,1037],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
   \*******************************************************************************************************/
-[3753,1042,1054,1086],/*!*****************************************************************************************!*\
+[3456,1042,1054,1086],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
   \*****************************************************************************************/
-[3754,1064,1065,1037],/*!************************************************************************************************!*\
+[3457,1064,1065,1037],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
   \************************************************************************************************/
-[3755,1054,1069,1063],/*!*****************************************************************************************************!*\
+[3458,1054,1069,1063],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
   \*****************************************************************************************************/
-[3756,1089,1037,1041,1080,1086],/*!*******************************************************************************************************!*\
+[3459,1089,1037,1041,1080,1086],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
   \*******************************************************************************************************/
-[3757,1090,1091,1080,1055,1077],/*!********************************************************************************************************!*\
+[3460,1090,1091,1080,1055,1077],/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
   \********************************************************************************************************/
 543,/*!***********************************************************************************************!*\
@@ -358,76 +358,76 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 544,/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
   \*********************************************************************************************/
-[3758,1086],/*!*************************************************************************!*\
+[3461,1086],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/symbol.js ***!
   \*************************************************************************/
-[3759,1094],/*!********************************************************************************************!*\
+[3462,1094],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
   \********************************************************************************************/
-[3760,1095,1104,1105,1106,1038],/*!***********************************************************************************************!*\
+[3463,1095,1104,1105,1106,1038],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
   \***********************************************************************************************/
-[3761,1037,1054,1046,1036,1079,1096,1047,1064,1085,1065,1086,1092,1097,1098,1099,1100,1043,1055,1049,1050,1082,1101,1103,1042,1052,1102,1068,1067,1078,1041],/*!******************************************************************************************!*\
+[3464,1037,1054,1046,1036,1079,1096,1047,1064,1085,1065,1086,1092,1097,1098,1099,1100,1043,1055,1049,1050,1082,1101,1103,1042,1052,1102,1068,1067,1078,1041],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
   \******************************************************************************************/
-[3762,1065,1044,1054,1042,1047],/*!************************************************************************************************!*\
+[3465,1065,1044,1054,1042,1047],/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
   \************************************************************************************************/
-[3763,1037,1038,1078,1092,1042],/*!*******************************************************************************************!*\
+[3466,1037,1038,1078,1092,1042],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
   \*******************************************************************************************/
-[3764,1052,1055],/*!***********************************************************************************************!*\
+[3467,1052,1055],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
   \***********************************************************************************************/
-[3765,1052,1067,1068],/*!**********************************************************************************************!*\
+[3468,1052,1067,1068],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
   \**********************************************************************************************/
-[3766,1057],/*!*****************************************************************************************************!*\
+[3469,1057],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
   \*****************************************************************************************************/
-[3767,1055,1102],/*!*************************************************************************************************!*\
+[3470,1055,1102],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
   \*************************************************************************************************/
-[3768,1053,1066],/*!*************************************************************************************************!*\
+[3471,1053,1066],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
   \*************************************************************************************************/
-[3769,1068,1050,1055,1049,1054,1045,1046],/*!*********************************************************************************************************!*\
+[3472,1068,1050,1055,1049,1054,1045,1046],/*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
   \*********************************************************************************************************/
 557,/*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
   \**************************************************************************************************************/
-[3770,1097],/*!**********************************************************************************************************!*\
+[3473,1097],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
   \**********************************************************************************************************/
-[3771,1097],/*!***************************************************************************!*\
+[3474,1097],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/inherits.js ***!
   \***************************************************************************/
-[3772,1108,1112,1072],/*!******************************************************************************************!*\
+[3475,1108,1112,1072],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/object/set-prototype-of.js ***!
   \******************************************************************************************/
-[3773,1109],/*!*******************************************************************************************************!*\
+[3476,1109],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
   \*******************************************************************************************************/
-[3774,1110,1038],/*!****************************************************************************************************************!*\
+[3477,1110,1038],/*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \****************************************************************************************************************/
-[3775,1036,1111],/*!***********************************************************************************************!*\
+[3478,1036,1111],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
   \***********************************************************************************************/
-[3776,1044,1043,1039,1103],/*!********************************************************************************!*\
+[3479,1044,1043,1039,1103],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/object/create.js ***!
   \********************************************************************************/
-[3777,1113],/*!*********************************************************************************************!*\
+[3480,1113],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
   \*********************************************************************************************/
-[3778,1114,1038],/*!******************************************************************************************************!*\
+[3481,1114,1038],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
   \******************************************************************************************************/
-[3779,1036,1082],/*!***************************************************************************!*\
+[3482,1036,1082],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/PanelGroup.js ***!
   \***************************************************************************/
-[3950,1032,1033,1116,1070,1071,1107,1117,1118,1124,1125],/*!******************************************************************************************!*\
+[3653,1032,1033,1116,1070,1071,1107,1117,1118,1124,1125],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/objectWithoutProperties.js ***!
   \******************************************************************************************/
 484,/*!*************************************************************!*\
@@ -436,19 +436,19 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 568,/*!*************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
   \*************************************************************************************/
-[3790,1119,1032,985,1123],/*!*********************************************************************************!*\
+[3493,1119,1032,985,1123],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/object/entries.js ***!
   \*********************************************************************************/
-[3791,1120],/*!**********************************************************************************************!*\
+[3494,1120],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
   \**********************************************************************************************/
-[3792,1121,1038],/*!*******************************************************************************************************!*\
+[3495,1121,1038],/*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
   \*******************************************************************************************************/
-[3793,1036,1122],/*!*****************************************************************************************************!*\
+[3496,1036,1122],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
   \*****************************************************************************************************/
-[3789,1052,1055,1068],/*!**********************************************************************************!*\
+[3492,1052,1055,1068],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/StyleConfig.js ***!
   \**********************************************************************************/
 590,/*!********************************************************************************************!*\
@@ -460,97 +460,97 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 611,/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Alert.js ***!
   \**********************************************************************/
-[3951,1127,1032,1116,1070,1071,1107,1117,1118,1123],/*!********************************************************************************!*\
+[3654,1127,1032,1116,1070,1071,1107,1117,1118,1123],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/object/values.js ***!
   \********************************************************************************/
-[3786,1128],/*!*********************************************************************************************!*\
+[3489,1128],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
   \*********************************************************************************************/
-[3787,1129,1038],/*!******************************************************************************************************!*\
+[3490,1129,1038],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
   \******************************************************************************************************/
-[3788,1036,1122],/*!**********************************************************************!*\
+[3491,1036,1122],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Badge.js ***!
   \**********************************************************************/
-[3952,1032,1116,1070,1071,1107,1117,1118],/*!***************************************************************************!*\
+[3655,1032,1116,1070,1071,1107,1117,1118],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Breadcrumb.js ***!
   \***************************************************************************/
-[3953,1032,1116,1070,1071,1107,1117,1132,1118],/*!*******************************************************************************!*\
+[3656,1032,1116,1070,1071,1107,1117,1132,1118],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/BreadcrumbItem.js ***!
   \*******************************************************************************/
-[3954,1032,1116,1070,1071,1107,1117,1133],/*!***************************************************************************!*\
+[3657,1032,1116,1070,1071,1107,1117,1133],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/SafeAnchor.js ***!
   \***************************************************************************/
-[3794,1032,1116,1070,1071,1107,1134],/*!*****************************************************************************!*\
+[3497,1032,1116,1070,1071,1107,1134],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-prop-types/lib/elementType.js ***!
   \*****************************************************************************/
-[3783,1135],/*!**************************************************************************************************!*\
+[3486,1135],/*!**************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
   \**************************************************************************************************/
 576,/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Button.js ***!
   \***********************************************************************/
-[3785,1127,1116,1032,1070,1071,1107,1117,1134,1118,1123,1133],/*!****************************************************************************!*\
+[3488,1127,1116,1032,1070,1071,1107,1117,1134,1118,1123,1133],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ButtonGroup.js ***!
   \****************************************************************************/
-[3784,1032,1116,1070,1071,1107,1117,1138,1136,1118],/*!*********************************************************************!*\
+[3487,1032,1116,1070,1071,1107,1117,1138,1136,1118],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-prop-types/lib/all.js ***!
   \*********************************************************************/
-[3782,1135],/*!******************************************************************************!*\
+[3485,1135],/*!******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ButtonToolbar.js ***!
   \******************************************************************************/
-[3955,1032,1116,1070,1071,1107,1117,1136,1118],/*!*************************************************************************!*\
+[3658,1032,1116,1070,1071,1107,1117,1136,1118],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Carousel.js ***!
   \*************************************************************************/
-[3956,1032,1116,1070,1071,1107,1117,1141,1142,1144,1133,1118,1125],/*!********************************************************************************!*\
+[3659,1032,1116,1070,1071,1107,1117,1141,1142,1144,1133,1118,1125],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/CarouselCaption.js ***!
   \********************************************************************************/
-[3957,1032,1116,1070,1071,1107,1117,1134,1118],/*!*****************************************************************************!*\
+[3660,1032,1116,1070,1071,1107,1117,1134,1118],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/CarouselItem.js ***!
   \*****************************************************************************/
-[3958,1032,1116,1070,1071,1107,1117,1143],/*!***************************************************************************************!*\
+[3661,1032,1116,1070,1071,1107,1117,1143],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/TransitionEvents.js ***!
   \***************************************************************************************/
 888,/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Glyphicon.js ***!
   \**************************************************************************/
-[3814,1032,1116,1070,1071,1107,1117,1118],/*!*************************************************************************!*\
+[3517,1032,1116,1070,1071,1107,1117,1118],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Checkbox.js ***!
   \*************************************************************************/
-[3959,1032,1116,1070,1071,1107,1117,984,1118],/*!*************************************************************************!*\
+[3662,1032,1116,1070,1071,1107,1117,984,1118],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Clearfix.js ***!
   \*************************************************************************/
-[3960,1032,1116,1070,1071,1107,1117,1134,1118,1147,1123],/*!*********************************************************************************!*\
+[3663,1032,1116,1070,1071,1107,1117,1134,1118,1147,1123],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/capitalize.js ***!
   \*********************************************************************************/
 891,/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ControlLabel.js ***!
   \*****************************************************************************/
-[3961,1032,1116,1070,1071,1107,1117,984,1118],/*!********************************************************************!*\
+[3664,1032,1116,1070,1071,1107,1117,984,1118],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Col.js ***!
   \********************************************************************/
-[3962,1032,1116,1070,1071,1107,1117,1134,1118,1123],/*!*************************************************************************!*\
+[3665,1032,1116,1070,1071,1107,1117,1134,1118,1123],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Collapse.js ***!
   \*************************************************************************/
-[3963,1032,1116,1070,1071,1107,1117,1151,1159,1147,1124],/*!********************************************************************!*\
+[3666,1032,1116,1070,1071,1107,1117,1151,1159,1147,1124],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/style/index.js ***!
   \********************************************************************/
-[3964,1152,1154,1156,1158],/*!***************************************************************************!*\
+[3667,1152,1154,1156,1158],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/camelizeStyle.js ***!
   \***************************************************************************/
-[3965,1153],/*!**********************************************************************!*\
+[3668,1153],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/camelize.js ***!
   \**********************************************************************/
 897,/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/hyphenateStyle.js ***!
   \****************************************************************************/
-[3966,1155],/*!***********************************************************************!*\
+[3669,1155],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/hyphenate.js ***!
   \***********************************************************************/
 899,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/style/getComputedStyle.js ***!
   \*******************************************************************************/
-[3967,1157,1152],/*!**************************************************************************!*\
+[3670,1157,1152],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/babelHelpers.js ***!
   \**************************************************************************/
 570,/*!**************************************************************************!*\
@@ -559,28 +559,28 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 901,/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/Transition.js ***!
   \**************************************************************************/
-[3837,1117,1160,1162],/*!***********************************************************************************!*\
+[3540,1117,1160,1162],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/events/on.js ***!
   \***********************************************************************************/
-[3808,1161],/*!************************************************************************************!*\
+[3511,1161],/*!************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/util/inDOM.js ***!
   \************************************************************************************/
 604,/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/transition/properties.js ***!
   \***********************************************************************************************/
-[3830,1161],/*!*************************************************************************!*\
+[3533,1161],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Dropdown.js ***!
   \*************************************************************************/
-[3716,1116,1032,1070,1071,1107,1117,1164,1166,1168,1138,1134,1169,1170,984,1137,1173,1189,1118,1124,1190,1125],/*!**********************************************************************!*\
+[3419,1116,1032,1070,1071,1107,1117,1164,1166,1168,1138,1134,1169,1170,984,1137,1173,1189,1118,1124,1190,1125],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/activeElement.js ***!
   \**********************************************************************/
-[3780,1157,1165],/*!**********************************************************************!*\
+[3483,1157,1165],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/ownerDocument.js ***!
   \**********************************************************************/
 571,/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/query/contains.js ***!
   \***********************************************************************/
-[3781,1167],/*!*******************************************************************!*\
+[3484,1167],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/inDOM.js ***!
   \*******************************************************************/
 573,/*!**********************************************************!*\
@@ -592,199 +592,199 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 578,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/uncontrollable/index.js ***!
   \*****************************************************************/
-[3711,1171],/*!********************************************************************************!*\
+[3414,1171],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/uncontrollable/createUncontrollable.js ***!
   \********************************************************************************/
-[3712,985,1172],/*!*****************************************************************!*\
+[3415,985,1172],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/uncontrollable/utils.js ***!
   \*****************************************************************/
-[3713,985],/*!*****************************************************************************!*\
+[3416,985],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/DropdownMenu.js ***!
   \*****************************************************************************/
-[3795,1032,1116,1174,1070,1071,1107,1117,1168,1183,1118,1124,1125],/*!*****************************************************************************!*\
+[3498,1032,1116,1174,1070,1071,1107,1117,1168,1183,1118,1124,1125],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/array/from.js ***!
   \*****************************************************************************/
-[3796,1175],/*!******************************************************************************************!*\
+[3499,1175],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/array/from.js ***!
   \******************************************************************************************/
-[3797,1075,1176,1038],/*!***************************************************************************************************!*\
+[3500,1075,1176,1038],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.array.from.js ***!
   \***************************************************************************************************/
-[3798,1039,1036,1069,1177,1178,1060,1179,1180,1182],/*!***********************************************************************************************!*\
+[3501,1039,1036,1069,1177,1178,1060,1179,1180,1182],/*!***********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_iter-call.js ***!
   \***********************************************************************************************/
-[3799,1043],/*!***************************************************************************************************!*\
+[3502,1043],/*!***************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_is-array-iter.js ***!
   \***************************************************************************************************/
-[3800,1080,1086],/*!*****************************************************************************************************!*\
+[3503,1080,1086],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_create-property.js ***!
   \*****************************************************************************************************/
-[3801,1042,1050],/*!*************************************************************************************************************!*\
+[3504,1042,1050],/*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/core.get-iterator-method.js ***!
   \*************************************************************************************************************/
-[3802,1181,1086,1080,1038],/*!*********************************************************************************************!*\
+[3505,1181,1086,1080,1038],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_classof.js ***!
   \*********************************************************************************************/
-[3803,1057,1086],/*!*************************************************************************************************!*\
+[3506,1057,1086],/*!*************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/_iter-detect.js ***!
   \*************************************************************************************************/
-[3804,1086],/*!********************************************************************************!*\
+[3507,1086],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/RootCloseWrapper.js ***!
   \********************************************************************************/
-[3805,1184,1185,1187],/*!****************************************************************************************!*\
+[3508,1184,1185,1187],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/contains.js ***!
   \****************************************************************************************/
-[3806,1161],/*!**************************************************************************************!*\
+[3509,1161],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/utils/addEventListener.js ***!
   \**************************************************************************************/
-[3807,1160,1186],/*!************************************************************************************!*\
+[3510,1160,1186],/*!************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/events/off.js ***!
   \************************************************************************************/
-[3809,1161],/*!***********************************************************************************!*\
+[3512,1161],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/utils/ownerDocument.js ***!
   \***********************************************************************************/
-[3810,1188],/*!***************************************************************************************!*\
+[3513,1188],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/ownerDocument.js ***!
   \***************************************************************************************/
 609,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/DropdownToggle.js ***!
   \*******************************************************************************/
-[3811,1032,1116,1070,1071,1107,1117,1136,1133,1118],/*!********************************************************************************!*\
+[3514,1032,1116,1070,1071,1107,1117,1136,1133,1118],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/PropTypes.js ***!
   \********************************************************************************/
-[3812,1135,1125],/*!*******************************************************************************!*\
+[3515,1135,1125],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/DropdownButton.js ***!
   \*******************************************************************************/
-[3968,1116,1070,1071,1107,1032,1163,1192],/*!******************************************************************************************!*\
+[3671,1116,1070,1071,1107,1032,1163,1192],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/splitComponentProps.js ***!
   \******************************************************************************************/
-[3843,1119],/*!*********************************************************************!*\
+[3546,1119],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Fade.js ***!
   \*********************************************************************/
-[3836,1032,1070,1071,1107,1117,1159],/*!*********************************************************************!*\
+[3539,1032,1070,1071,1107,1117,1159],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Form.js ***!
   \*********************************************************************/
-[3969,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
+[3672,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/FormControl.js ***!
   \****************************************************************************/
-[3932,1032,1116,1070,1071,1107,1117,1134,984,1196,1197,1118],/*!************************************************************************************!*\
+[3635,1032,1116,1070,1071,1107,1117,1134,984,1196,1197,1118],/*!************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/FormControlFeedback.js ***!
   \************************************************************************************/
-[3933,1116,1032,1070,1071,1107,1117,1144,1118],/*!**********************************************************************************!*\
+[3636,1116,1032,1070,1071,1107,1117,1144,1118],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/FormControlStatic.js ***!
   \**********************************************************************************/
-[3934,1032,1116,1070,1071,1107,1117,1134,1118],/*!**************************************************************************!*\
+[3637,1032,1116,1070,1071,1107,1117,1134,1118],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/FormGroup.js ***!
   \**************************************************************************/
-[3931,1032,1116,1070,1071,1107,1117,1118,1123,1125],/*!*********************************************************************!*\
+[3634,1032,1116,1070,1071,1107,1117,1118,1123,1125],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Grid.js ***!
   \*********************************************************************/
-[3970,1032,1116,1070,1071,1107,1117,1134,1118],/*!**************************************************************************!*\
+[3673,1032,1116,1070,1071,1107,1117,1134,1118],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/HelpBlock.js ***!
   \**************************************************************************/
-[3971,1032,1116,1070,1071,1107,1117,1118],/*!**********************************************************************!*\
+[3674,1032,1116,1070,1071,1107,1117,1118],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Image.js ***!
   \**********************************************************************/
-[3972,1032,1116,1070,1071,1107,1117,1118],/*!***************************************************************************!*\
+[3675,1032,1116,1070,1071,1107,1117,1118],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/InputGroup.js ***!
   \***************************************************************************/
-[3973,1032,1116,1070,1071,1107,1117,1203,1204,1118,1123],/*!********************************************************************************!*\
+[3676,1032,1116,1070,1071,1107,1117,1203,1204,1118,1123],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/InputGroupAddon.js ***!
   \********************************************************************************/
-[3974,1032,1116,1070,1071,1107,1117,1118],/*!*********************************************************************************!*\
+[3677,1032,1116,1070,1071,1107,1117,1118],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/InputGroupButton.js ***!
   \*********************************************************************************/
-[3975,1032,1116,1070,1071,1107,1117,1118],/*!**************************************************************************!*\
+[3678,1032,1116,1070,1071,1107,1117,1118],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Jumbotron.js ***!
   \**************************************************************************/
-[3976,1032,1116,1070,1071,1107,1117,1134,1118],/*!**********************************************************************!*\
+[3679,1032,1116,1070,1071,1107,1117,1134,1118],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Label.js ***!
   \**********************************************************************/
-[3977,1127,1032,1116,1070,1071,1107,1117,1118,1123],/*!**************************************************************************!*\
+[3680,1127,1032,1116,1070,1071,1107,1117,1118,1123],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ListGroup.js ***!
   \**************************************************************************/
-[3978,1032,1116,1070,1071,1107,1117,1134,1208,1118,1125],/*!******************************************************************************!*\
+[3681,1032,1116,1070,1071,1107,1117,1134,1208,1118,1125],/*!******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ListGroupItem.js ***!
   \******************************************************************************/
-[3979,1127,1032,1116,1070,1071,1107,1117,1118,1123],/*!**********************************************************************!*\
+[3682,1127,1032,1116,1070,1071,1107,1117,1118,1123],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Media.js ***!
   \**********************************************************************/
-[3980,1032,1116,1070,1071,1107,1117,1134,1210,1211,1212,1213,1214,1215,1118],/*!**************************************************************************!*\
+[3683,1032,1116,1070,1071,1107,1117,1134,1210,1211,1212,1213,1214,1215,1118],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MediaBody.js ***!
   \**************************************************************************/
-[3981,1032,1116,1070,1071,1107,1117,1134,1118],/*!*****************************************************************************!*\
+[3684,1032,1116,1070,1071,1107,1117,1134,1118],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MediaHeading.js ***!
   \*****************************************************************************/
-[3982,1032,1116,1070,1071,1107,1117,1134,1118],/*!**************************************************************************!*\
+[3685,1032,1116,1070,1071,1107,1117,1134,1118],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MediaLeft.js ***!
   \**************************************************************************/
-[3983,1032,1116,1070,1071,1107,1117,1209,1118],/*!**************************************************************************!*\
+[3686,1032,1116,1070,1071,1107,1117,1209,1118],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MediaList.js ***!
   \**************************************************************************/
-[3984,1032,1116,1070,1071,1107,1117,1118],/*!******************************************************************************!*\
+[3687,1032,1116,1070,1071,1107,1117,1118],/*!******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MediaListItem.js ***!
   \******************************************************************************/
-[3985,1032,1116,1070,1071,1107,1117,1118],/*!***************************************************************************!*\
+[3688,1032,1116,1070,1071,1107,1117,1118],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MediaRight.js ***!
   \***************************************************************************/
-[3986,1032,1116,1070,1071,1107,1117,1209,1118],/*!*************************************************************************!*\
+[3689,1032,1116,1070,1071,1107,1117,1209,1118],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/MenuItem.js ***!
   \*************************************************************************/
-[3813,1032,1116,1070,1071,1107,1117,1138,1133,1118,1124],/*!**********************************************************************!*\
+[3516,1032,1116,1070,1071,1107,1117,1138,1133,1118,1124],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Modal.js ***!
   \**********************************************************************/
-[3816,1116,1070,1071,1107,1032,1117,1218,1165,1167,1223,1224,1242,1134,1193,1247,1248,1249,1250,1251,1118,1124,1192,1123],/*!*********************************************************************!*\
+[3519,1116,1070,1071,1107,1032,1117,1218,1165,1167,1223,1224,1242,1134,1193,1247,1248,1249,1250,1251,1118,1124,1192,1123],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/events/index.js ***!
   \*********************************************************************/
-[3817,1219,1220,1221],/*!******************************************************************!*\
+[3520,1219,1220,1221],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/events/on.js ***!
   \******************************************************************/
-[3818,1167],/*!*******************************************************************!*\
+[3521,1167],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/events/off.js ***!
   \*******************************************************************/
-[3819,1167],/*!**********************************************************************!*\
+[3522,1167],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/events/filter.js ***!
   \**********************************************************************/
-[3820,1166,1222],/*!*******************************************************************************!*\
+[3523,1166,1222],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/query/querySelectorAll.js ***!
   \*******************************************************************************/
 622,/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-helpers/util/scrollbarSize.js ***!
   \***************************************************************************/
-[3821,1167],/*!*********************************************************************!*\
+[3524,1167],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/Modal.js ***!
   \*********************************************************************/
-[3822,984,1225,1134,1226,1228,1187,1185,1245,1161,1246,1184,1227],/*!************************************************************************************!*\
+[3525,984,1225,1134,1226,1228,1187,1185,1245,1161,1246,1184,1227],/*!************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-prop-types/lib/componentOrElement.js ***!
   \************************************************************************************/
-[3823,1135],/*!**********************************************************************!*\
+[3526,1135],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/Portal.js ***!
   \**********************************************************************/
-[3824,1225,1187,1227],/*!**********************************************************************************!*\
+[3527,1225,1187,1227],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/utils/getContainer.js ***!
   \**********************************************************************************/
 627,/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/ModalManager.js ***!
   \****************************************************************************/
-[3825,1229,1237,1241,1242,1244],/*!*************************************************************************************!*\
+[3528,1229,1237,1241,1242,1244],/*!*************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/style/index.js ***!
   \*************************************************************************************/
-[3826,1230,1232,1234,1235,1162,1236],/*!********************************************************************************************!*\
+[3529,1230,1232,1234,1235,1162,1236],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/util/camelizeStyle.js ***!
   \********************************************************************************************/
-[3827,1231],/*!***************************************************************************************!*\
+[3530,1231],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/util/camelize.js ***!
   \***************************************************************************************/
 631,/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/util/hyphenateStyle.js ***!
   \*********************************************************************************************/
-[3828,1233],/*!****************************************************************************************!*\
+[3531,1233],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/util/hyphenate.js ***!
   \****************************************************************************************/
 633,/*!************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/style/getComputedStyle.js ***!
   \************************************************************************************************/
-[3829,1230],/*!*******************************************************************************************!*\
+[3532,1230],/*!*******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/style/removeStyle.js ***!
   \*******************************************************************************************/
 635,/*!************************************************************************************************!*\
@@ -793,10 +793,10 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 637,/*!*************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/class/index.js ***!
   \*************************************************************************************/
-[3831,1238,1240,1239],/*!****************************************************************************************!*\
+[3534,1238,1240,1239],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/class/addClass.js ***!
   \****************************************************************************************/
-[3832,1239],/*!****************************************************************************************!*\
+[3535,1239],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/class/hasClass.js ***!
   \****************************************************************************************/
 640,/*!*******************************************************************************************!*\
@@ -805,10 +805,10 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 641,/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/util/scrollbarSize.js ***!
   \********************************************************************************************/
-[3833,1161],/*!***********************************************************************************!*\
+[3536,1161],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/utils/isOverflowing.js ***!
   \***********************************************************************************/
-[3834,1243,1188],/*!****************************************************************************************!*\
+[3537,1243,1188],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/isWindow.js ***!
   \****************************************************************************************/
 644,/*!**************************************************************************************!*\
@@ -820,151 +820,151 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 646,/*!***************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/activeElement.js ***!
   \***************************************************************************************/
-[3835,1188],/*!**************************************************************************!*\
+[3538,1188],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ModalBody.js ***!
   \**************************************************************************/
-[3838,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
+[3541,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ModalDialog.js ***!
   \****************************************************************************/
-[3839,1032,1116,1070,1071,1107,1117,1118,1123],/*!****************************************************************************!*\
+[3542,1032,1116,1070,1071,1107,1117,1118,1123],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ModalFooter.js ***!
   \****************************************************************************/
-[3840,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
+[3543,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ModalHeader.js ***!
   \****************************************************************************/
-[3841,1032,1116,1070,1071,1107,1117,1118,1124],/*!***************************************************************************!*\
+[3544,1032,1116,1070,1071,1107,1117,1118,1124],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ModalTitle.js ***!
   \***************************************************************************/
-[3842,1032,1116,1070,1071,1107,1117,1134,1118],/*!********************************************************************!*\
+[3545,1032,1116,1070,1071,1107,1117,1134,1118],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Nav.js ***!
   \********************************************************************/
-[3987,1032,1116,1070,1071,1107,1117,1168,1138,984,1118,1124,1125],/*!***********************************************************************!*\
+[3690,1032,1116,1070,1071,1107,1117,1168,1138,984,1118,1124,1125],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Navbar.js ***!
   \***********************************************************************/
-[3988,1032,1116,1070,1071,1107,1117,1134,1170,1199,1254,1255,1256,1257,1118,1123,1124],/*!****************************************************************************!*\
+[3691,1032,1116,1070,1071,1107,1117,1134,1170,1199,1254,1255,1256,1257,1118,1123,1124],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/NavbarBrand.js ***!
   \****************************************************************************/
-[3989,1032,1116,1070,1071,1107,1117,1118],/*!*******************************************************************************!*\
+[3692,1032,1116,1070,1071,1107,1117,1118],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/NavbarCollapse.js ***!
   \*******************************************************************************/
-[3990,1032,1116,1070,1071,1107,1150,1118],/*!*****************************************************************************!*\
+[3693,1032,1116,1070,1071,1107,1150,1118],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/NavbarHeader.js ***!
   \*****************************************************************************/
-[3991,1032,1116,1070,1071,1107,1117,1118],/*!*****************************************************************************!*\
+[3694,1032,1116,1070,1071,1107,1117,1118],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/NavbarToggle.js ***!
   \*****************************************************************************/
-[3992,1032,1116,1070,1071,1107,1117,1118,1124],/*!****************************************************************************!*\
+[3695,1032,1116,1070,1071,1107,1117,1118,1124],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/NavDropdown.js ***!
   \****************************************************************************/
-[3993,1116,1070,1071,1107,1032,1117,1163,1192,1125],/*!************************************************************************!*\
+[3696,1116,1070,1071,1107,1032,1117,1163,1192,1125],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/NavItem.js ***!
   \************************************************************************/
-[3994,1032,1116,1070,1071,1107,1117,1133,1124],/*!************************************************************************!*\
+[3697,1032,1116,1070,1071,1107,1117,1133,1124],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Overlay.js ***!
   \************************************************************************/
-[3995,1116,1070,1071,1107,1032,1117,1261,1134,1193],/*!***********************************************************************!*\
+[3698,1116,1070,1071,1107,1032,1117,1261,1134,1193],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/Overlay.js ***!
   \***********************************************************************/
-[3996,1226,1262,1183,1134],/*!************************************************************************!*\
+[3699,1226,1262,1183,1134],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/Position.js ***!
   \************************************************************************/
-[3997,1117,1225,1263,1227,1187],/*!***************************************************************************************!*\
+[3700,1117,1225,1263,1227,1187],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/lib/utils/calculatePosition.js ***!
   \***************************************************************************************/
-[3998,1264,1265,1267,1187],/*!**************************************************************************************!*\
+[3701,1264,1265,1267,1187],/*!**************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/offset.js ***!
   \**************************************************************************************/
-[3999,1184,1243,1188],/*!****************************************************************************************!*\
+[3702,1184,1243,1188],/*!****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/position.js ***!
   \****************************************************************************************/
-[4e3,1264,1266,1267,1268,1229],/*!********************************************************************************************!*\
+[3703,1264,1266,1267,1268,1229],/*!********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/offsetParent.js ***!
   \********************************************************************************************/
-[4001,1188,1229],/*!*****************************************************************************************!*\
+[3704,1188,1229],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/scrollTop.js ***!
   \*****************************************************************************************/
-[4002,1243],/*!******************************************************************************************!*\
+[3705,1243],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-overlays/~/dom-helpers/query/scrollLeft.js ***!
   \******************************************************************************************/
-[4003,1243],/*!*******************************************************************************!*\
+[3706,1243],/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/OverlayTrigger.js ***!
   \*******************************************************************************/
-[4004,1116,1070,1071,1107,1032,1166,984,1260,1124],/*!***************************************************************************!*\
+[3707,1116,1070,1071,1107,1032,1166,984,1260,1124],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/PageHeader.js ***!
   \***************************************************************************/
-[4005,1032,1116,1070,1071,1107,1117,1118],/*!*************************************************************************!*\
+[3708,1032,1116,1070,1071,1107,1117,1118],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/PageItem.js ***!
   \*************************************************************************/
-[4006,1272,1273],/*!**************************************************************************!*\
+[3709,1272,1273],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/PagerItem.js ***!
   \**************************************************************************/
-[4007,1032,1116,1070,1071,1107,1117,1133,1124],/*!*****************************************************************************************!*\
+[3710,1032,1116,1070,1071,1107,1117,1133,1124],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/deprecationWarning.js ***!
   \*****************************************************************************************/
-[4008,1070,1071,1107,1072,984],/*!**********************************************************************!*\
+[3711,1070,1071,1107,1072,984],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Pager.js ***!
   \**********************************************************************/
-[4009,1032,1116,1070,1071,1107,1117,1272,1118,1124,1125],/*!***************************************************************************!*\
+[3712,1032,1116,1070,1071,1107,1117,1272,1118,1124,1125],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Pagination.js ***!
   \***************************************************************************/
-[4010,1116,1032,1070,1071,1107,1117,1134,1276,1118],/*!*********************************************************************************!*\
+[3713,1116,1032,1070,1071,1107,1117,1134,1276,1118],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/PaginationButton.js ***!
   \*********************************************************************************/
-[4011,1032,1116,1070,1071,1107,1117,1134,1133,1124],/*!**********************************************************************!*\
+[3714,1032,1116,1070,1071,1107,1117,1134,1133,1124],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Panel.js ***!
   \**********************************************************************/
-[4012,1127,1116,1032,1070,1071,1107,1117,1150,1118,1123],/*!************************************************************************!*\
+[3715,1127,1116,1032,1070,1071,1107,1117,1150,1118,1123],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Popover.js ***!
   \************************************************************************/
-[4013,1032,1116,1070,1071,1107,1117,1169,1118],/*!****************************************************************************!*\
+[3716,1032,1116,1070,1071,1107,1117,1169,1118],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ProgressBar.js ***!
   \****************************************************************************/
-[4014,1127,1032,1116,1070,1071,1107,1117,1118,1123,1125],/*!**********************************************************************!*\
+[3717,1127,1032,1116,1070,1071,1107,1117,1118,1123,1125],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Radio.js ***!
   \**********************************************************************/
-[4015,1032,1116,1070,1071,1107,1117,984,1118],/*!********************************************************************************!*\
+[3718,1032,1116,1070,1071,1107,1117,984,1118],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/ResponsiveEmbed.js ***!
   \********************************************************************************/
-[4016,1032,1116,1070,1071,1107,1117,984,1118],/*!********************************************************************!*\
+[3719,1032,1116,1070,1071,1107,1117,984,1118],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Row.js ***!
   \********************************************************************/
-[4017,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
+[3720,1032,1116,1070,1071,1107,1117,1134,1118],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/SplitButton.js ***!
   \****************************************************************************/
-[4018,1116,1070,1071,1107,1032,1136,1163,1284,1192],/*!****************************************************************************!*\
+[3721,1116,1070,1071,1107,1032,1136,1163,1284,1192],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/SplitToggle.js ***!
   \****************************************************************************/
-[4019,1032,1070,1071,1107,1189],/*!********************************************************************!*\
+[3722,1032,1070,1071,1107,1189],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Tab.js ***!
   \********************************************************************/
-[4020,1070,1071,1107,1032,1286,1287,1288],/*!*****************************************************************************!*\
+[3723,1070,1071,1107,1032,1286,1287,1288],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/TabContainer.js ***!
   \*****************************************************************************/
-[4021,1116,1070,1071,1107,1170],/*!***************************************************************************!*\
+[3724,1116,1070,1071,1107,1170],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/TabContent.js ***!
   \***************************************************************************/
-[4022,1032,1116,1070,1071,1107,1117,1134,1118],/*!************************************************************************!*\
+[3725,1032,1116,1070,1071,1107,1117,1134,1118],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/TabPane.js ***!
   \************************************************************************/
-[4023,1032,1116,1070,1071,1107,1117,1134,984,1118,1124,1193],/*!**********************************************************************!*\
+[3726,1032,1116,1070,1071,1107,1117,1134,984,1118,1124,1193],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Table.js ***!
   \**********************************************************************/
-[4024,1032,1116,1070,1071,1107,1117,1118],/*!*********************************************************************!*\
+[3727,1032,1116,1070,1071,1107,1117,1118],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Tabs.js ***!
   \*********************************************************************/
-[4025,1032,1116,1070,1071,1107,1169,1170,1252,1259,1286,1287,1118,1125],/*!**************************************************************************!*\
+[3728,1032,1116,1070,1071,1107,1169,1170,1252,1259,1286,1287,1118,1125],/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Thumbnail.js ***!
   \**************************************************************************/
-[4026,1032,1116,1070,1071,1107,1117,1133,1118],/*!************************************************************************!*\
+[3729,1032,1116,1070,1071,1107,1117,1133,1118],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Tooltip.js ***!
   \************************************************************************/
-[4027,1032,1116,1070,1071,1107,1117,1169,1118],/*!*********************************************************************!*\
+[3730,1032,1116,1070,1071,1107,1117,1169,1118],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/Well.js ***!
   \*********************************************************************/
-[4028,1032,1116,1070,1071,1107,1117,1118,1123],/*!****************************************************************************!*\
+[3731,1032,1116,1070,1071,1107,1117,1118,1123],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-bootstrap/lib/utils/index.js ***!
   \****************************************************************************/
-[4029,1118,1124,1125],/*!**********************************************************!*\
+[3732,1118,1124,1125],/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/lodash.js ***!
   \**********************************************************/
 816,/*!****************************************************************!*\
@@ -1027,10 +1027,10 @@ function(e,t,n){e.exports=function(e){function t(r){if(n[r])return n[r].exports;
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function a(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},l=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=n(/*! ./PropTypes.js */1305),c=n(/*! react */2),p=r(c),f=n(/*! react-refetch */1315),d=n(/*! react-highcharts */1539),h=r(d),m=function(e){var t=e.bins,n=e.counts;return t.map(function(e,t){return{x:e,y:n.slice(t).reduce(function(e,t){return e+t},0)}}).filter(function(e){return e.x>0&&e.y>0})},g=function(e){var t=e.cutoff,n=(e.onChangeCutoff,e.histogram);return p.default.createElement("div",null,"Current value: "+t.value,p.default.createElement(h.default,{config:{title:"",xAxis:{title:{text:"Cutoff value"},type:"logarithmic"},yAxis:{title:{text:"# genes"}},type:"line",series:[{cursor:"pointer",name:"Genes expressed in this experiment at value higher than cutoff",data:m(n)}],tooltip:{useHTML:!0,formatter:function(){return"<div>Cutoff: <b> "+this.x+"</b> ("+this.y+" genes past this cutoff)</div>"}},credits:{enabled:!1}}}))};g.propTypes={cutoff:u.CutoffType,histogram:p.default.PropTypes.shape({bins:p.default.PropTypes.arrayOf(p.default.PropTypes.number.isRequired).isRequired,counts:p.default.PropTypes.arrayOf(p.default.PropTypes.number.isRequired).isRequired})};var y=function(e){function t(){return o(this,t),i(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return a(t,e),l(t,[{key:"render",value:function(){var e=this.props,t=e.genesDistributedByCutoffFetch,n=e.loadingGifUrl,r=e.cutoff,o=e.onChangeCutoff;return t.pending?p.default.createElement("img",{src:n}):t.rejected?p.default.createElement("div",null,"Error: ",t.reason):t.fulfilled?p.default.createElement(g,s({histogram:t.value},{cutoff:r,onChangeCutoff:o})):void 0}}]),t}(c.Component);t.default=(0,f.connect)(function(e){return{genesDistributedByCutoffFetch:e.genesDistributedByCutoffUrl}})(y)},/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/index.js ***!
   \********************************************************************/
-[3544,1316,1323],/*!*********************************************************************************!*\
+[3247,1316,1323],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/components/connect.js ***!
   \*********************************************************************************/
-[3545,1317,1318,1319,1321,1322,1323,1005,985,1324,1325],/*!**********************************************************************************!*\
+[3248,1317,1318,1319,1321,1322,1323,1005,985,1324,1325],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/utils/isPlainObject.js ***!
   \**********************************************************************************/
 185,/*!*********************************************************************************!*\
@@ -1039,7 +1039,7 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 186,/*!***********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/utils/handleResponse.js ***!
   \***********************************************************************************/
-[3546,1320],/*!***************************************************************************!*\
+[3249,1320],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/utils/errors.js ***!
   \***************************************************************************/
 188,/*!*********************************************************************************!*\
@@ -1048,7 +1048,7 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 189,/*!*******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/utils/checkTypes.js ***!
   \*******************************************************************************/
-[3547,985,1317],/*!***************************************************************************!*\
+[3250,985,1317],/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-refetch/lib/PromiseState.js ***!
   \***************************************************************************/
 192,/*!****************************************************************************!*\
@@ -1057,13 +1057,13 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 194,/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/fp/omit.js ***!
   \***********************************************************/
-[3548,1326,1532,1329],/*!**************************************************************!*\
+[3251,1326,1532,1329],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/fp/convert.js ***!
   \**************************************************************/
-[3549,1327,1330],/*!*******************************************************************!*\
+[3252,1327,1330],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/fp/_baseConvert.js ***!
   \*******************************************************************/
-[3550,1328,1329],/*!***************************************************************!*\
+[3253,1328,1329],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/fp/_mapping.js ***!
   \***************************************************************/
 198,/*!******************************************************************!*\
@@ -1072,49 +1072,49 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 199,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/fp/_util.js ***!
   \************************************************************/
-[3551,1331,1400,1422,1489,1384,1370,1339,1490,1417,1525,1396,1531],/*!*******************************************************!*\
+[3254,1331,1400,1422,1489,1384,1370,1339,1490,1417,1525,1396,1531],/*!*******************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/ary.js ***!
   \*******************************************************/
-[3552,1332],/*!***************************************************************!*\
+[3255,1332],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createWrap.js ***!
   \***************************************************************/
-[3553,1333,1351,1354,1356,1394,1364,1395,1374,1376,1396],/*!****************************************************************!*\
+[3256,1333,1351,1354,1356,1394,1364,1395,1374,1376,1396],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseSetData.js ***!
   \****************************************************************/
-[3554,1334,1335],/*!************************************************************!*\
+[3257,1334,1335],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/identity.js ***!
   \************************************************************/
 204,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_metaMap.js ***!
   \************************************************************/
-[3555,1336],/*!************************************************************!*\
+[3258,1336],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_WeakMap.js ***!
   \************************************************************/
-[3556,1337,1342],/*!**************************************************************!*\
+[3259,1337,1342],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getNative.js ***!
   \**************************************************************/
-[3557,1338,1350],/*!*****************************************************************!*\
+[3260,1338,1350],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIsNative.js ***!
   \*****************************************************************/
-[3558,1339,1347,1346,1349],/*!**************************************************************!*\
+[3261,1339,1347,1346,1349],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isFunction.js ***!
   \**************************************************************/
-[3559,1340,1346],/*!***************************************************************!*\
+[3262,1340,1346],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseGetTag.js ***!
   \***************************************************************/
-[3560,1341,1344,1345],/*!***********************************************************!*\
+[3263,1341,1344,1345],/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Symbol.js ***!
   \***********************************************************/
-[3561,1342],/*!*********************************************************!*\
+[3264,1342],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_root.js ***!
   \*********************************************************/
-[3562,1343],/*!***************************************************************!*\
+[3265,1343],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_freeGlobal.js ***!
   \***************************************************************/
 213,/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getRawTag.js ***!
   \**************************************************************/
-[3563,1341],/*!*******************************************************************!*\
+[3266,1341],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_objectToString.js ***!
   \*******************************************************************/
 215,/*!************************************************************!*\
@@ -1123,10 +1123,10 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 216,/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isMasked.js ***!
   \*************************************************************/
-[3564,1348],/*!***************************************************************!*\
+[3267,1348],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_coreJsData.js ***!
   \***************************************************************/
-[3565,1342],/*!*************************************************************!*\
+[3268,1342],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_toSource.js ***!
   \*************************************************************/
 219,/*!*************************************************************!*\
@@ -1135,22 +1135,22 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 220,/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createBind.js ***!
   \***************************************************************/
-[3566,1352,1342],/*!***************************************************************!*\
+[3269,1352,1342],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createCtor.js ***!
   \***************************************************************/
-[3567,1353,1346],/*!***************************************************************!*\
+[3270,1353,1346],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseCreate.js ***!
   \***************************************************************/
-[3568,1346],/*!****************************************************************!*\
+[3271,1346],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createCurry.js ***!
   \****************************************************************/
-[3569,1355,1352,1356,1360,1390,1393,1342],/*!**********************************************************!*\
+[3272,1355,1352,1356,1360,1390,1393,1342],/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_apply.js ***!
   \**********************************************************/
 225,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createHybrid.js ***!
   \*****************************************************************/
-[3570,1357,1358,1359,1352,1360,1390,1391,1393,1342],/*!****************************************************************!*\
+[3273,1357,1358,1359,1352,1360,1390,1391,1393,1342],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_composeArgs.js ***!
   \****************************************************************/
 227,/*!*********************************************************************!*\
@@ -1162,34 +1162,34 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 229,/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createRecurry.js ***!
   \******************************************************************/
-[3571,1361,1374,1376],/*!***************************************************************!*\
+[3274,1361,1374,1376],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isLaziable.js ***!
   \***************************************************************/
-[3572,1362,1364,1366,1368],/*!****************************************************************!*\
+[3275,1362,1364,1366,1368],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_LazyWrapper.js ***!
   \****************************************************************/
-[3573,1353,1363],/*!***************************************************************!*\
+[3276,1353,1363],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseLodash.js ***!
   \***************************************************************/
 233,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getData.js ***!
   \************************************************************/
-[3574,1335,1365],/*!********************************************************!*\
+[3277,1335,1365],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/noop.js ***!
   \********************************************************/
 235,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getFuncName.js ***!
   \****************************************************************/
-[3575,1367],/*!**************************************************************!*\
+[3278,1367],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_realNames.js ***!
   \**************************************************************/
 237,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/wrapperLodash.js ***!
   \*****************************************************************/
-[3576,1362,1369,1363,1370,1371,1372],/*!******************************************************************!*\
+[3279,1362,1369,1363,1370,1371,1372],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_LodashWrapper.js ***!
   \******************************************************************/
-[3577,1353,1363],/*!***********************************************************!*\
+[3280,1353,1363],/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isArray.js ***!
   \***********************************************************/
 240,/*!****************************************************************!*\
@@ -1198,19 +1198,19 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 241,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_wrapperClone.js ***!
   \*****************************************************************/
-[3578,1362,1369,1373],/*!**************************************************************!*\
+[3281,1362,1369,1373],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_copyArray.js ***!
   \**************************************************************/
 243,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_setData.js ***!
   \************************************************************/
-[3579,1333,1375],/*!*************************************************************!*\
+[3282,1333,1375],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_shortOut.js ***!
   \*************************************************************/
 245,/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_setWrapToString.js ***!
   \********************************************************************/
-[3580,1377,1378,1379,1383],/*!*******************************************************************!*\
+[3283,1377,1378,1379,1383],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getWrapDetails.js ***!
   \*******************************************************************/
 247,/*!**********************************************************************!*\
@@ -1219,28 +1219,28 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 248,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_setToString.js ***!
   \****************************************************************/
-[3581,1380,1375],/*!********************************************************************!*\
+[3284,1380,1375],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseSetToString.js ***!
   \********************************************************************/
-[3582,1381,1382,1334],/*!************************************************************!*\
+[3285,1381,1382,1334],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/constant.js ***!
   \************************************************************/
 251,/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_defineProperty.js ***!
   \*******************************************************************/
-[3583,1337],/*!**********************************************************************!*\
+[3286,1337],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_updateWrapDetails.js ***!
   \**********************************************************************/
-[3584,1384,1385],/*!**************************************************************!*\
+[3287,1384,1385],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayEach.js ***!
   \**************************************************************/
 254,/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayIncludes.js ***!
   \******************************************************************/
-[3585,1386],/*!****************************************************************!*\
+[3288,1386],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIndexOf.js ***!
   \****************************************************************/
-[3586,1387,1388,1389],/*!******************************************************************!*\
+[3289,1387,1388,1389],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseFindIndex.js ***!
   \******************************************************************/
 257,/*!**************************************************************!*\
@@ -1255,7 +1255,7 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 260,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_reorder.js ***!
   \************************************************************/
-[3587,1373,1392],/*!************************************************************!*\
+[3290,1373,1392],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isIndex.js ***!
   \************************************************************/
 262,/*!*******************************************************************!*\
@@ -1264,64 +1264,64 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 263,/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createPartial.js ***!
   \******************************************************************/
-[3588,1355,1352,1342],/*!**************************************************************!*\
+[3291,1355,1352,1342],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_mergeData.js ***!
   \**************************************************************/
-[3589,1357,1358,1393],/*!*************************************************************!*\
+[3292,1357,1358,1393],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/toInteger.js ***!
   \*************************************************************/
-[3590,1397],/*!************************************************************!*\
+[3293,1397],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/toFinite.js ***!
   \************************************************************/
-[3591,1398],/*!************************************************************!*\
+[3294,1398],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/toNumber.js ***!
   \************************************************************/
-[3592,1346,1399],/*!************************************************************!*\
+[3295,1346,1399],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isSymbol.js ***!
   \************************************************************/
-[3593,1340,1371],/*!***************************************************************!*\
+[3296,1340,1371],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseAssign.js ***!
   \***************************************************************/
-[3594,1401,1405],/*!***************************************************************!*\
+[3297,1401,1405],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_copyObject.js ***!
   \***************************************************************/
-[3595,1402,1403],/*!****************************************************************!*\
+[3298,1402,1403],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_assignValue.js ***!
   \****************************************************************/
-[3596,1403,1404],/*!********************************************************************!*\
+[3299,1403,1404],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseAssignValue.js ***!
   \********************************************************************/
-[3597,1382],/*!******************************************************!*\
+[3300,1382],/*!******************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/eq.js ***!
   \******************************************************/
 274,/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/keys.js ***!
   \********************************************************/
-[3598,1406,1417,1421],/*!******************************************************************!*\
+[3301,1406,1417,1421],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayLikeKeys.js ***!
   \******************************************************************/
-[3599,1407,1408,1370,1410,1392,1412],/*!**************************************************************!*\
+[3302,1407,1408,1370,1410,1392,1412],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseTimes.js ***!
   \**************************************************************/
 277,/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isArguments.js ***!
   \***************************************************************/
-[3600,1409,1371],/*!********************************************************************!*\
+[3303,1409,1371],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIsArguments.js ***!
   \********************************************************************/
-[3601,1340,1371],/*!************************************************************!*\
+[3304,1340,1371],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isBuffer.js ***!
   \************************************************************/
-[3602,1342,1411],/*!*************************************************************!*\
+[3305,1342,1411],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/stubFalse.js ***!
   \*************************************************************/
 281,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isTypedArray.js ***!
   \****************************************************************/
-[3603,1413,1415,1416],/*!*********************************************************************!*\
+[3306,1413,1415,1416],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIsTypedArray.js ***!
   \*********************************************************************/
-[3604,1340,1414,1371],/*!************************************************************!*\
+[3307,1340,1414,1371],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isLength.js ***!
   \************************************************************/
 284,/*!**************************************************************!*\
@@ -1330,55 +1330,55 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 285,/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_nodeUtil.js ***!
   \*************************************************************/
-[3605,1343],/*!*************************************************************!*\
+[3308,1343],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseKeys.js ***!
   \*************************************************************/
-[3606,1418,1419],/*!****************************************************************!*\
+[3309,1418,1419],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isPrototype.js ***!
   \****************************************************************/
 288,/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_nativeKeys.js ***!
   \***************************************************************/
-[3607,1420],/*!************************************************************!*\
+[3310,1420],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_overArg.js ***!
   \************************************************************/
 290,/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isArrayLike.js ***!
   \***************************************************************/
-[3608,1339,1414],/*!*********************************************************!*\
+[3311,1339,1414],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/clone.js ***!
   \*********************************************************/
-[3609,1423],/*!**************************************************************!*\
+[3312,1423],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseClone.js ***!
   \**************************************************************/
-[3610,1424,1384,1402,1400,1453,1457,1373,1458,1462,1466,1468,1469,1473,1474,1488,1370,1410,1346,1405],/*!**********************************************************!*\
+[3313,1424,1384,1402,1400,1453,1457,1373,1458,1462,1466,1468,1469,1473,1474,1488,1370,1410,1346,1405],/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Stack.js ***!
   \**********************************************************/
-[3611,1425,1432,1433,1434,1435,1436],/*!**************************************************************!*\
+[3314,1425,1432,1433,1434,1435,1436],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_ListCache.js ***!
   \**************************************************************/
-[3612,1426,1427,1429,1430,1431],/*!*******************************************************************!*\
+[3315,1426,1427,1429,1430,1431],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_listCacheClear.js ***!
   \*******************************************************************/
 296,/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_listCacheDelete.js ***!
   \********************************************************************/
-[3613,1428],/*!*****************************************************************!*\
+[3316,1428],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_assocIndexOf.js ***!
   \*****************************************************************/
-[3614,1404],/*!*****************************************************************!*\
+[3317,1404],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_listCacheGet.js ***!
   \*****************************************************************/
-[3615,1428],/*!*****************************************************************!*\
+[3318,1428],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_listCacheHas.js ***!
   \*****************************************************************/
-[3616,1428],/*!*****************************************************************!*\
+[3319,1428],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_listCacheSet.js ***!
   \*****************************************************************/
-[3617,1428],/*!***************************************************************!*\
+[3320,1428],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_stackClear.js ***!
   \***************************************************************/
-[3618,1425],/*!****************************************************************!*\
+[3321,1425],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_stackDelete.js ***!
   \****************************************************************/
 303,/*!*************************************************************!*\
@@ -1390,76 +1390,76 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 305,/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_stackSet.js ***!
   \*************************************************************/
-[3619,1425,1437,1438],/*!********************************************************!*\
+[3322,1425,1437,1438],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Map.js ***!
   \********************************************************/
-[3620,1337,1342],/*!*************************************************************!*\
+[3323,1337,1342],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_MapCache.js ***!
   \*************************************************************/
-[3621,1439,1447,1450,1451,1452],/*!******************************************************************!*\
+[3324,1439,1447,1450,1451,1452],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_mapCacheClear.js ***!
   \******************************************************************/
-[3622,1440,1425,1437],/*!*********************************************************!*\
+[3325,1440,1425,1437],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Hash.js ***!
   \*********************************************************/
-[3623,1441,1443,1444,1445,1446],/*!**************************************************************!*\
+[3326,1441,1443,1444,1445,1446],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_hashClear.js ***!
   \**************************************************************/
-[3624,1442],/*!*****************************************************************!*\
+[3327,1442],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_nativeCreate.js ***!
   \*****************************************************************/
-[3625,1337],/*!***************************************************************!*\
+[3328,1337],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_hashDelete.js ***!
   \***************************************************************/
 313,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_hashGet.js ***!
   \************************************************************/
-[3626,1442],/*!************************************************************!*\
+[3329,1442],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_hashHas.js ***!
   \************************************************************/
-[3627,1442],/*!************************************************************!*\
+[3330,1442],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_hashSet.js ***!
   \************************************************************/
-[3628,1442],/*!*******************************************************************!*\
+[3331,1442],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_mapCacheDelete.js ***!
   \*******************************************************************/
-[3629,1448],/*!***************************************************************!*\
+[3332,1448],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getMapData.js ***!
   \***************************************************************/
-[3630,1449],/*!**************************************************************!*\
+[3333,1449],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isKeyable.js ***!
   \**************************************************************/
 319,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_mapCacheGet.js ***!
   \****************************************************************/
-[3631,1448],/*!****************************************************************!*\
+[3334,1448],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_mapCacheHas.js ***!
   \****************************************************************/
-[3632,1448],/*!****************************************************************!*\
+[3335,1448],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_mapCacheSet.js ***!
   \****************************************************************/
-[3633,1448],/*!*****************************************************************!*\
+[3336,1448],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseAssignIn.js ***!
   \*****************************************************************/
-[3634,1401,1454],/*!**********************************************************!*\
+[3337,1401,1454],/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/keysIn.js ***!
   \**********************************************************/
-[3635,1406,1455,1421],/*!***************************************************************!*\
+[3338,1406,1455,1421],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseKeysIn.js ***!
   \***************************************************************/
-[3636,1346,1418,1456],/*!*****************************************************************!*\
+[3339,1346,1418,1456],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_nativeKeysIn.js ***!
   \*****************************************************************/
 326,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneBuffer.js ***!
   \****************************************************************/
-[3637,1342],/*!****************************************************************!*\
+[3340,1342],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_copySymbols.js ***!
   \****************************************************************/
-[3638,1401,1459],/*!***************************************************************!*\
+[3341,1401,1459],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getSymbols.js ***!
   \***************************************************************/
-[3639,1460,1461],/*!****************************************************************!*\
+[3342,1460,1461],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayFilter.js ***!
   \****************************************************************/
 330,/*!*************************************************************!*\
@@ -1468,55 +1468,55 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 331,/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_copySymbolsIn.js ***!
   \******************************************************************/
-[3640,1401,1463],/*!*****************************************************************!*\
+[3343,1401,1463],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getSymbolsIn.js ***!
   \*****************************************************************/
-[3641,1464,1465,1459,1461],/*!**************************************************************!*\
+[3344,1464,1465,1459,1461],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayPush.js ***!
   \**************************************************************/
 334,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getPrototype.js ***!
   \*****************************************************************/
-[3642,1420],/*!***************************************************************!*\
+[3345,1420],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getAllKeys.js ***!
   \***************************************************************/
-[3643,1467,1459,1405],/*!*******************************************************************!*\
+[3346,1467,1459,1405],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseGetAllKeys.js ***!
   \*******************************************************************/
-[3644,1464,1370],/*!*****************************************************************!*\
+[3347,1464,1370],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getAllKeysIn.js ***!
   \*****************************************************************/
-[3645,1467,1463,1454],/*!***********************************************************!*\
+[3348,1467,1463,1454],/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getTag.js ***!
   \***********************************************************/
-[3646,1470,1437,1471,1472,1336,1340,1349],/*!*************************************************************!*\
+[3349,1470,1437,1471,1472,1336,1340,1349],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_DataView.js ***!
   \*************************************************************/
-[3647,1337,1342],/*!************************************************************!*\
+[3350,1337,1342],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Promise.js ***!
   \************************************************************/
-[3648,1337,1342],/*!********************************************************!*\
+[3351,1337,1342],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Set.js ***!
   \********************************************************/
-[3649,1337,1342],/*!*******************************************************************!*\
+[3352,1337,1342],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_initCloneArray.js ***!
   \*******************************************************************/
 343,/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_initCloneByTag.js ***!
   \*******************************************************************/
-[3650,1475,1477,1478,1482,1483,1486,1487],/*!*********************************************************************!*\
+[3353,1475,1477,1478,1482,1483,1486,1487],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneArrayBuffer.js ***!
   \*********************************************************************/
-[3651,1476],/*!***************************************************************!*\
+[3354,1476],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_Uint8Array.js ***!
   \***************************************************************/
-[3652,1342],/*!******************************************************************!*\
+[3355,1342],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneDataView.js ***!
   \******************************************************************/
-[3653,1475],/*!*************************************************************!*\
+[3356,1475],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneMap.js ***!
   \*************************************************************/
-[3654,1479,1480,1481],/*!****************************************************************!*\
+[3357,1479,1480,1481],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_addMapEntry.js ***!
   \****************************************************************/
 349,/*!****************************************************************!*\
@@ -1531,7 +1531,7 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 352,/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneSet.js ***!
   \*************************************************************/
-[3655,1484,1480,1485],/*!****************************************************************!*\
+[3358,1484,1480,1485],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_addSetEntry.js ***!
   \****************************************************************/
 354,/*!***************************************************************!*\
@@ -1540,40 +1540,40 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 355,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneSymbol.js ***!
   \****************************************************************/
-[3656,1341],/*!********************************************************************!*\
+[3359,1341],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_cloneTypedArray.js ***!
   \********************************************************************/
-[3657,1475],/*!********************************************************************!*\
+[3360,1475],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_initCloneObject.js ***!
   \********************************************************************/
-[3658,1353,1465,1418],/*!*********************************************************!*\
+[3361,1353,1465,1418],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/curry.js ***!
   \*********************************************************/
-[3659,1332],/*!************************************************************!*\
+[3362,1332],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/iteratee.js ***!
   \************************************************************/
-[3660,1423,1491],/*!*****************************************************************!*\
+[3363,1423,1491],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIteratee.js ***!
   \*****************************************************************/
-[3661,1492,1507,1334,1370,1522],/*!****************************************************************!*\
+[3364,1492,1507,1334,1370,1522],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseMatches.js ***!
   \****************************************************************/
-[3662,1493,1504,1506],/*!****************************************************************!*\
+[3365,1493,1504,1506],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIsMatch.js ***!
   \****************************************************************/
-[3663,1424,1494],/*!****************************************************************!*\
+[3366,1424,1494],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIsEqual.js ***!
   \****************************************************************/
-[3664,1495,1371],/*!********************************************************************!*\
+[3367,1495,1371],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseIsEqualDeep.js ***!
   \********************************************************************/
-[3665,1424,1496,1502,1503,1469,1370,1410,1412],/*!****************************************************************!*\
+[3368,1424,1496,1502,1503,1469,1370,1410,1412],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_equalArrays.js ***!
   \****************************************************************/
-[3666,1497,1500,1501],/*!*************************************************************!*\
+[3369,1497,1500,1501],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_SetCache.js ***!
   \*************************************************************/
-[3667,1438,1498,1499],/*!****************************************************************!*\
+[3370,1438,1498,1499],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_setCacheAdd.js ***!
   \****************************************************************/
 368,/*!****************************************************************!*\
@@ -1588,118 +1588,118 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 371,/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_equalByTag.js ***!
   \***************************************************************/
-[3668,1341,1476,1404,1496,1481,1485],/*!*****************************************************************!*\
+[3371,1341,1476,1404,1496,1481,1485],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_equalObjects.js ***!
   \*****************************************************************/
-[3669,1466],/*!*****************************************************************!*\
+[3372,1466],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_getMatchData.js ***!
   \*****************************************************************/
-[3670,1505,1405],/*!***********************************************************************!*\
+[3373,1505,1405],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isStrictComparable.js ***!
   \***********************************************************************/
-[3671,1346],/*!****************************************************************************!*\
+[3374,1346],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_matchesStrictComparable.js ***!
   \****************************************************************************/
 376,/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseMatchesProperty.js ***!
   \************************************************************************/
-[3672,1494,1508,1519,1511,1505,1506,1518],/*!*******************************************************!*\
+[3375,1494,1508,1519,1511,1505,1506,1518],/*!*******************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/get.js ***!
   \*******************************************************/
-[3673,1509],/*!************************************************************!*\
+[3376,1509],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseGet.js ***!
   \************************************************************/
-[3674,1510,1518],/*!*************************************************************!*\
+[3377,1510,1518],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_castPath.js ***!
   \*************************************************************/
-[3675,1370,1511,1512,1515],/*!**********************************************************!*\
+[3378,1370,1511,1512,1515],/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isKey.js ***!
   \**********************************************************/
-[3676,1370,1399],/*!*****************************************************************!*\
+[3379,1370,1399],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_stringToPath.js ***!
   \*****************************************************************/
-[3677,1513],/*!******************************************************************!*\
+[3380,1513],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_memoizeCapped.js ***!
   \******************************************************************/
-[3678,1514],/*!***********************************************************!*\
+[3381,1514],/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/memoize.js ***!
   \***********************************************************/
-[3679,1438],/*!************************************************************!*\
+[3382,1438],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/toString.js ***!
   \************************************************************/
-[3680,1516],/*!*****************************************************************!*\
+[3383,1516],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseToString.js ***!
   \*****************************************************************/
-[3681,1341,1517,1370,1399],/*!*************************************************************!*\
+[3384,1341,1517,1370,1399],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayMap.js ***!
   \*************************************************************/
 387,/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_toKey.js ***!
   \**********************************************************/
-[3682,1399],/*!*********************************************************!*\
+[3385,1399],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/hasIn.js ***!
   \*********************************************************/
-[3683,1520,1521],/*!**************************************************************!*\
+[3386,1520,1521],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseHasIn.js ***!
   \**************************************************************/
 390,/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_hasPath.js ***!
   \************************************************************/
-[3684,1510,1408,1370,1392,1414,1518],/*!************************************************************!*\
+[3387,1510,1408,1370,1392,1414,1518],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/property.js ***!
   \************************************************************/
-[3685,1523,1524,1511,1518],/*!*****************************************************************!*\
+[3388,1523,1524,1511,1518],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseProperty.js ***!
   \*****************************************************************/
 393,/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_basePropertyDeep.js ***!
   \*********************************************************************/
-[3686,1509],/*!*********************************************************!*\
+[3389,1509],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/rearg.js ***!
   \*********************************************************/
-[3687,1332,1526],/*!*************************************************************!*\
+[3390,1332,1526],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_flatRest.js ***!
   \*************************************************************/
-[3688,1527,1530,1379],/*!***********************************************************!*\
+[3391,1527,1530,1379],/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/flatten.js ***!
   \***********************************************************/
-[3689,1528],/*!****************************************************************!*\
+[3392,1528],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseFlatten.js ***!
   \****************************************************************/
-[3690,1464,1529],/*!******************************************************************!*\
+[3393,1464,1529],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isFlattenable.js ***!
   \******************************************************************/
-[3691,1341,1408,1370],/*!*************************************************************!*\
+[3394,1341,1408,1370],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_overRest.js ***!
   \*************************************************************/
-[3692,1355],/*!**********************************************************!*\
+[3395,1355],/*!**********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/toPath.js ***!
   \**********************************************************/
-[3693,1517,1373,1370,1399,1512,1518,1515],/*!********************************************************!*\
+[3396,1517,1373,1370,1399,1512,1518,1515],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/omit.js ***!
   \********************************************************/
-[3694,1517,1423,1533,1510,1401,1537,1526,1468],/*!**************************************************************!*\
+[3397,1517,1423,1533,1510,1401,1537,1526,1468],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseUnset.js ***!
   \**************************************************************/
-[3695,1510,1534,1535,1518],/*!********************************************************!*\
+[3398,1510,1534,1535,1518],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/last.js ***!
   \********************************************************/
 404,/*!***********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_parent.js ***!
   \***********************************************************/
-[3696,1509,1536],/*!**************************************************************!*\
+[3399,1509,1536],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseSlice.js ***!
   \**************************************************************/
 406,/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_customOmitClone.js ***!
   \********************************************************************/
-[3697,1538],/*!*****************************************************************!*\
+[3400,1538],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isPlainObject.js ***!
   \*****************************************************************/
-[3698,1340,1465,1371],/*!**********************************************************************************!*\
+[3401,1340,1465,1371],/*!**********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-highcharts/dist/ReactHighcharts.js ***!
   \**********************************************************************************/
-[3861,1540],/*!******************************************************************!*\
+[3564,1540],/*!******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/highcharts/highcharts.js ***!
   \******************************************************************/
 680,/*!**********************************************************************************************************!*\
@@ -1726,19 +1726,19 @@ function(e,t,n){t=e.exports=n(/*! ../../../../../../../~/css-loader/lib/css-base
 function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.toDifferentialRequestPreferences=t.toBaselineRequestPreferences=t.fromConfigAndQuery=t.toQuery=void 0;var r=n(/*! lodash */1295),o=function(e){var t=(e.name,e.groupings),n=e.selected;return[].concat.apply([],["all","ALL"].indexOf(n)>-1?t.map(function(e){return e[1]}):t.filter(function(e){return n.indexOf(e[0])>-1}).map(function(e){return e[1]}))},i=function(e,t){var n=e.name,r=e.groupings;return{name:n,groupings:r,selected:t[n]||"all"}},a=function(e,t){return r.intersection.apply([],e.map(function(e){return o(i(e,t))}))},s=function(e){return r.intersection.apply([],e.map(o))},l=function(e,t,n){var r=Object.assign({},e);return r[t]=n,r},u=function(e,t){var n={};e.forEach(function(e){var o=e.name,i=e.groupings;e.values;n[o]=i.filter(function(e){return(0,r.intersection)(t,e[1]).length}).map(function(e){return e[0]})}),Object.keys(n).sort().forEach(function(o){(0,r.isEqual)(new Set(t),new Set(a(e,l(n,o,"all"))))&&(n[o]="all")});var o={};return Object.keys(n).forEach(function(e){["all","ALL"].indexOf(n[e])==-1&&(o[e]=n[e])}),o},c=function(e,t){return void 0===e?t:JSON.parse(decodeURIComponent(e))},p=function(e){return encodeURIComponent(JSON.stringify(e))},f=function(e,t){var n=e.groups;return Object.assign({specific:p(t.specific),geneQuery:p(t.geneQuery),filterFactors:p(u(n,t.selectedColumnIds)),cutoff:p(t.cutoff)},["UP","DOWN","UP_DOWN"].indexOf(t.regulation)>-1?{regulation:p(t.regulation)}:{})},d=function(e){return"string"==typeof e?[{value:e}]:e},h=function(e){var t=e.isDifferential;return t?"UP_DOWN":"OFF"},m=function(e){var t=e.isDifferential,n=e.isRnaSeq;return t?{foldChange:1,pValue:.05}:{value:n?.5:1e-6}},g=function(e,t){return{specific:c(t.specific,!0),geneQuery:d(c(t.geneQuery,[])),selectedColumnIds:(0,r.isEmpty)(t.filterFactors)?s(e.groups):a(e.groups,c(t.filterFactors)),cutoff:c(t.cutoff,m(e)),regulation:c(t.regulation,h(e))}},y=function(e,t){var n=e.specific,r=e.geneQuery,o=e.selectedColumnIds,i=e.cutoff,a=e.regulation;return Object.assign({specific:n,geneQuery:JSON.stringify(r),selectedColumnIds:o.join(",")},t&&"OFF"!==a?{regulation:a}:{},t?{cutoff:i.pValue,foldChangeCutoff:i.foldChange}:{cutoff:i.value})},v=function(e){return y(e,!1)},b=function(e){return y(e,!0)};t.toQuery=f,t.fromConfigAndQuery=g,t.toBaselineRequestPreferences=v,t.toDifferentialRequestPreferences=b},/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/Main.jsx ***!
   \******************************************************************************************/
-[3533,1549,1024,1562],/*!***************************************************************!*\
+[3236,1549,1024,1562],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-ga/src/index.js ***!
   \***************************************************************/
-[3534,1550,1555,1553,1554,1556,1557],/*!**********************************************************************!*\
+[3237,1550,1555,1553,1554,1556,1557],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-ga/src/utils/format.js ***!
   \**********************************************************************/
-[3535,1551,1552,1554],/*!****************************************************************************!*\
+[3238,1551,1552,1554],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-ga/src/utils/mightBeEmail.js ***!
   \****************************************************************************/
 166,/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-ga/src/utils/toTitleCase.js ***!
   \***************************************************************************/
-[3536,1553],/*!********************************************************************!*\
+[3239,1553],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-ga/src/utils/trim.js ***!
   \********************************************************************/
 168,/*!****************************************************************************!*\
@@ -1753,13 +1753,13 @@ function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.
 171,/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/react-ga/src/components/OutboundLink.js ***!
   \*********************************************************************************/
-[3537,1558,978,1560],/*!*********************************************************************!*\
+[3240,1558,978,1560],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/create-react-class/index.js ***!
   \*********************************************************************/
-[3538,1559],/*!***********************************************************************!*\
+[3241,1559],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/create-react-class/factory.js ***!
   \***********************************************************************/
-[3539,1560,1561,981],/*!****************************************************************!*\
+[3242,1560,1561,981],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/object-assign/index.js ***!
   \****************************************************************/
 4,/*!*****************************************************************!*\
@@ -1768,34 +1768,34 @@ function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.
 19,/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/layout/ContainerLoader.jsx ***!
   \************************************************************************************************************/
-[3543,1315,1024,1563],/*!******************************************************************************************************!*\
+[3246,1315,1024,1563],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/layout/Container.jsx ***!
   \******************************************************************************************************/
-[3699,1024,1564,1630,1631,1632,1734,1735],/*!**************************************************************!*\
+[3402,1024,1564,1630,1631,1632,1734,1735],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/anatomogram/index.js ***!
   \**************************************************************/
-[3700,1565],/*!********************************************************************************!*\
+[3403,1565],/*!********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/anatomogram/src/AnatomogramFactory.jsx ***!
   \********************************************************************************/
-[3701,1566,1570,1628],/*!*************************************************************************!*\
+[3404,1566,1570,1628],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/anatomogram/src/Anatomogram.jsx ***!
   \*************************************************************************/
-[3702,1567,1569],/*!******************************************************************************!*\
+[3405,1567,1569],/*!******************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/anatomogram/src/AnatomogramImage.jsx ***!
   \******************************************************************************/
-[3703,1568],/*!************************************************************************************************************************!*\
+[3406,1568],/*!************************************************************************************************************************!*\
   !*** ./~/imports-loader?this=>window,fix=>module.exports=0!./atlas_bundles/experiment-page/~/snapsvg/dist/snap.svg.js ***!
   \************************************************************************************************************************/
 414,/*!***************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/anatomogram/src/SelectionIcon.jsx ***!
   \***************************************************************************/
-[3704,1570,1626],/*!****************************************************************************!*\
+[3407,1570,1626],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/anatomogram/src/imagesAvailable.js ***!
   \****************************************************************************/
-[3705,1571,1577,1581,1582,1583,1594],/*!****************************************************!*\
+[3408,1571,1577,1581,1582,1583,1594],/*!****************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/url/url.js ***!
   \****************************************************/
-[3706,1572,1573,1574],/*!**************************************************************!*\
+[3409,1572,1573,1574],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/punycode/punycode.js ***!
   \**************************************************************/
 418,/*!*****************************************************!*\
@@ -1804,7 +1804,7 @@ function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.
 419,/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/querystring/index.js ***!
   \**************************************************************/
-[3707,1575,1576],/*!***************************************************************!*\
+[3410,1575,1576],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/querystring/decode.js ***!
   \***************************************************************/
 421,/*!***************************************************************!*\
@@ -1816,7 +1816,7 @@ function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.
 function(e,t,n){(function(t){"use strict";function r(e,t){for(var n=[],r=0;r<e.length;r++){var o=e[r];o&&"."!==o&&(".."===o?n.length&&".."!==n[n.length-1]?n.pop():t&&n.push(".."):n.push(o))}return n}function o(e){for(var t=e.length-1,n=0;n<=t&&!e[n];n++);for(var r=t;r>=0&&!e[r];r--);return 0===n&&r===t?e:n>r?[]:e.slice(n,r+1)}function i(e){var t=p.exec(e),n=(t[1]||"")+(t[2]||""),r=t[3]||"",o=f.exec(r),i=o[1],a=o[2],s=o[3];return[n,i,a,s]}function a(e){var t=p.exec(e),n=t[1]||"",r=!!n&&":"!==n[1];return{device:n,isUnc:r,isAbsolute:r||!!t[2],tail:t[3]}}function s(e){return"\\\\"+e.replace(/^[\\\/]+/,"").replace(/[\\\/]+/g,"\\")}function l(e){return h.exec(e).slice(1)}var u="win32"===t.platform,c=n(/*! util */1578),p=/^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/]+[^\\\/]+)?([\\\/])?([\s\S]*?)$/,f=/^([\s\S]*?)((?:\.{1,2}|[^\\\/]+?|)(\.[^.\/\\]*|))(?:[\\\/]*)$/,d={};d.resolve=function(){for(var e="",n="",o=!1,i=arguments.length-1;i>=-1;i--){var l;if(i>=0?l=arguments[i]:e?(l={NODE_ENV:"production"}["="+e],l&&l.substr(0,3).toLowerCase()===e.toLowerCase()+"\\"||(l=e+"\\")):l=t.cwd(),!c.isString(l))throw new TypeError("Arguments to path.resolve must be strings");if(l){var u=a(l),p=u.device,f=u.isUnc,d=u.isAbsolute,h=u.tail;if((!p||!e||p.toLowerCase()===e.toLowerCase())&&(e||(e=p),o||(n=h+"\\"+n,o=d),e&&o))break}}return f&&(e=s(e)),n=r(n.split(/[\\\/]+/),!o).join("\\"),e+(o?"\\":"")+n||"."},d.normalize=function(e){var t=a(e),n=t.device,o=t.isUnc,i=t.isAbsolute,l=t.tail,u=/[\\\/]$/.test(l);return l=r(l.split(/[\\\/]+/),!i).join("\\"),l||i||(l="."),l&&u&&(l+="\\"),o&&(n=s(n)),n+(i?"\\":"")+l},d.isAbsolute=function(e){return a(e).isAbsolute},d.join=function(){for(var e=[],t=0;t<arguments.length;t++){var n=arguments[t];if(!c.isString(n))throw new TypeError("Arguments to path.join must be strings");n&&e.push(n)}var r=e.join("\\");return/^[\\\/]{2}[^\\\/]/.test(e[0])||(r=r.replace(/^[\\\/]{2,}/,"\\")),d.normalize(r)},d.relative=function(e,t){e=d.resolve(e),t=d.resolve(t);for(var n=e.toLowerCase(),r=t.toLowerCase(),i=o(t.split("\\")),a=o(n.split("\\")),s=o(r.split("\\")),l=Math.min(a.length,s.length),u=l,c=0;c<l;c++)if(a[c]!==s[c]){u=c;break}if(0==u)return t;for(var p=[],c=u;c<a.length;c++)p.push("..");return p=p.concat(i.slice(u)),p.join("\\")},d._makeLong=function(e){if(!c.isString(e))return e;if(!e)return"";var t=d.resolve(e);return/^[a-zA-Z]\:\\/.test(t)?"\\\\?\\"+t:/^\\\\[^?.]/.test(t)?"\\\\?\\UNC\\"+t.substring(2):e},d.dirname=function(e){var t=i(e),n=t[0],r=t[1];return n||r?(r&&(r=r.substr(0,r.length-1)),n+r):"."},d.basename=function(e,t){var n=i(e)[2];return t&&n.substr(-1*t.length)===t&&(n=n.substr(0,n.length-t.length)),n},d.extname=function(e){return i(e)[3]},d.format=function(e){if(!c.isObject(e))throw new TypeError("Parameter 'pathObject' must be an object, not "+typeof e);var t=e.root||"";if(!c.isString(t))throw new TypeError("'pathObject.root' must be a string or undefined, not "+typeof e.root);var n=e.dir,r=e.base||"";return n?n[n.length-1]===d.sep?n+r:n+d.sep+r:r},d.parse=function(e){if(!c.isString(e))throw new TypeError("Parameter 'pathString' must be a string, not "+typeof e);var t=i(e);if(!t||4!==t.length)throw new TypeError("Invalid path '"+e+"'");return{root:t[0],dir:t[0]+t[1].slice(0,-1),base:t[2],ext:t[3],name:t[2].slice(0,t[2].length-t[3].length)}},d.sep="\\",d.delimiter=";";var h=/^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/,m={};m.resolve=function(){for(var e="",n=!1,o=arguments.length-1;o>=-1&&!n;o--){var i=o>=0?arguments[o]:t.cwd();if(!c.isString(i))throw new TypeError("Arguments to path.resolve must be strings");i&&(e=i+"/"+e,n="/"===i[0])}return e=r(e.split("/"),!n).join("/"),(n?"/":"")+e||"."},m.normalize=function(e){var t=m.isAbsolute(e),n=e&&"/"===e[e.length-1];return e=r(e.split("/"),!t).join("/"),e||t||(e="."),e&&n&&(e+="/"),(t?"/":"")+e},m.isAbsolute=function(e){return"/"===e.charAt(0)},m.join=function(){for(var e="",t=0;t<arguments.length;t++){var n=arguments[t];if(!c.isString(n))throw new TypeError("Arguments to path.join must be strings");n&&(e+=e?"/"+n:n)}return m.normalize(e)},m.relative=function(e,t){e=m.resolve(e).substr(1),t=m.resolve(t).substr(1);for(var n=o(e.split("/")),r=o(t.split("/")),i=Math.min(n.length,r.length),a=i,s=0;s<i;s++)if(n[s]!==r[s]){a=s;break}for(var l=[],s=a;s<n.length;s++)l.push("..");return l=l.concat(r.slice(a)),l.join("/")},m._makeLong=function(e){return e},m.dirname=function(e){var t=l(e),n=t[0],r=t[1];return n||r?(r&&(r=r.substr(0,r.length-1)),n+r):"."},m.basename=function(e,t){var n=l(e)[2];return t&&n.substr(-1*t.length)===t&&(n=n.substr(0,n.length-t.length)),n},m.extname=function(e){return l(e)[3]},m.format=function(e){if(!c.isObject(e))throw new TypeError("Parameter 'pathObject' must be an object, not "+typeof e);var t=e.root||"";if(!c.isString(t))throw new TypeError("'pathObject.root' must be a string or undefined, not "+typeof e.root);var n=e.dir?e.dir+m.sep:"",r=e.base||"";return n+r},m.parse=function(e){if(!c.isString(e))throw new TypeError("Parameter 'pathString' must be a string, not "+typeof e);var t=l(e);if(!t||4!==t.length)throw new TypeError("Invalid path '"+e+"'");return t[1]=t[1]||"",t[2]=t[2]||"",t[3]=t[3]||"",{root:t[0],dir:t[0]+t[1].slice(0,-1),base:t[2],ext:t[3],name:t[2].slice(0,t[2].length-t[3].length)}},m.sep="/",m.delimiter=":",u?e.exports=d:e.exports=m,e.exports.posix=m,e.exports.win32=d}).call(t,n(/*! ./../../../../~/node-libs-browser/~/process/browser.js */112))},/*!******************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/util/util.js ***!
   \******************************************************/
-[3862,1579,1580],/*!*************************************************************************!*\
+[3565,1579,1580],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/util/support/isBufferBrowser.js ***!
   \*************************************************************************/
 696,/*!**********************************************************************!*\
@@ -1978,43 +1978,43 @@ function(e,t,n){t=e.exports=n(/*! ../../../../../~/css-loader/lib/css-base.js */
 476,/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/ChartContainer.jsx ***!
   \***************************************************************************************************************/
-[3710,1170,1633,1732,1648],/*!********************************************************************************************************************!*\
+[3413,1170,1633,1732,1648],/*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/HeatmapWithControls.jsx ***!
   \********************************************************************************************************************/
-[3714,1634,1635,1650,1658,1662,1667,1668,1676,1730,1731,1648],/*!***************************************************************************************************************************!*\
+[3417,1634,1635,1650,1658,1662,1667,1668,1676,1730,1731,1648],/*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/OrderingsDropdown.jsx ***!
   \***************************************************************************************************************************/
-[3715,1163,1216,1144],/*!*****************************************************************************************************************************!*\
+[3418,1163,1216,1144],/*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/FiltersModal.jsx ***!
   \*****************************************************************************************************************************/
-[3815,1217,1136,1144,1636,1647,1648],/*!***************************************************************************************************************************!*\
+[3518,1217,1136,1144,1636,1647,1648],/*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/FlatFilter.jsx ***!
   \***************************************************************************************************************************/
-[3844,1637,1645],/*!*******************************************************!*\
+[3547,1637,1645],/*!*******************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/xor.js ***!
   \*******************************************************/
-[3845,1460,1638,1639,1644],/*!*************************************************************!*\
+[3548,1460,1638,1639,1644],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseRest.js ***!
   \*************************************************************/
-[3846,1334,1530,1379],/*!************************************************************!*\
+[3549,1334,1530,1379],/*!************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseXor.js ***!
   \************************************************************/
-[3847,1640,1528,1642],/*!*******************************************************************!*\
+[3550,1640,1528,1642],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseDifference.js ***!
   \*******************************************************************/
-[3848,1497,1385,1641,1517,1415,1501],/*!**********************************************************************!*\
+[3551,1497,1385,1641,1517,1415,1501],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_arrayIncludesWith.js ***!
   \**********************************************************************/
 661,/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseUniq.js ***!
   \*************************************************************/
-[3849,1497,1385,1641,1501,1643,1485],/*!**************************************************************!*\
+[3552,1497,1385,1641,1501,1643,1485],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createSet.js ***!
   \**************************************************************/
-[3850,1472,1365,1485],/*!*********************************************************************!*\
+[3553,1472,1365,1485],/*!*********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/isArrayLikeObject.js ***!
   \*********************************************************************/
-[3851,1421,1371],/*!************************************************************************************************************************!*\
+[3554,1421,1371],/*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/Filter.less ***!
   \************************************************************************************************************************/
 function(e,t,n){var r=n(/*! !../../../../../../../../~/css-loader!../../../../../../../../~/less-loader!./Filter.less */1646);"string"==typeof r&&(r=[[e.id,r,""]]);n(/*! ../../../../../../../../~/style-loader/addStyles.js */472)(r,{});r.locals&&(e.exports=r.locals)},/*!*******************************************************************************************************************************************************!*\
@@ -2023,40 +2023,40 @@ function(e,t,n){var r=n(/*! !../../../../../../../../~/css-loader!../../../../..
 function(e,t,n){t=e.exports=n(/*! ../../../../../../../../~/css-loader/lib/css-base.js */471)(),t.push([e.id,".gxaFilter{padding-bottom:1.25rem}.gxaFilter .filterBody input{margin:.2rem}.gxaFilter .filterBody .groupName{display:inline-block;cursor:pointer}.gxaFilter .filterBody .groupName:first-letter{text-transform:capitalize}.gxaFilter .filterBody .groupName:hover{text-decoration:underline}.gxaFilter .filterBody .groupName:indeterminate{opacity:.75}.gxaFilter .filterBody .options{padding-left:15px;font-size:85%;-webkit-column-width:180px;column-width:180px}",""])},/*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/GroupingFilter.jsx ***!
   \*******************************************************************************************************************************/
-[3853,1137,1136,1144,1637,1645],/*!******************************************************************************************************************!*\
+[3556,1137,1136,1144,1637,1645],/*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/chartDataPropTypes.js ***!
   \******************************************************************************************************************/
-[3854,1649],/*!*************************************************************************************************************!*\
+[3557,1649],/*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/experimentTypeUtils.js ***!
   \*************************************************************************************************************/
 669,/*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/DownloadButton.jsx ***!
   \****************************************************************************************************************************************/
-[3855,1217,1136,1144,1651,1652,1648],/*!*************************************************************************************************************************************!*\
+[3558,1217,1136,1144,1651,1652,1648],/*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/Disclaimers.jsx ***!
   \*************************************************************************************************************************************/
 671,/*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/Download.js ***!
   \*********************************************************************************************************************************/
-[3856,1653,1657],/*!*********************************************************!*\
+[3559,1653,1657],/*!*********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/range.js ***!
   \*********************************************************/
-[3857,1654],/*!****************************************************************!*\
+[3560,1654],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_createRange.js ***!
   \****************************************************************/
-[3858,1655,1656,1397],/*!**************************************************************!*\
+[3561,1655,1656,1397],/*!**************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_baseRange.js ***!
   \**************************************************************/
 675,/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/lodash/_isIterateeCall.js ***!
   \*******************************************************************/
-[3859,1404,1421,1392,1346],/*!****************************************************************!*\
+[3562,1404,1421,1392,1346],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/downloadjs/download.js ***!
   \****************************************************************/
 677,/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/show/HeatmapCanvas.jsx ***!
   \********************************************************************************************************/
-[3860,1539,1659,1660,1661,1648],/*!***********************************************************************!*\
+[3563,1539,1659,1660,1661,1648],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/highcharts/modules/heatmap.js ***!
   \***********************************************************************/
 681,/*!*************************************************************************************!*\
@@ -2068,13 +2068,13 @@ function(e,t,n){t=e.exports=n(/*! ../../../../../../../../~/css-loader/lib/css-b
 683,/*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/heatmapCellTooltipFormatter.jsx ***!
   \***************************************************************************************************************************************/
-[3863,1663,1666],/*!******************************************************************************************************************************!*\
+[3566,1663,1666],/*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/HeatmapCellTooltip.jsx ***!
   \******************************************************************************************************************************/
-[3864,1664],/*!*********************************************************************************!*\
+[3567,1664],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-number-format/index.js ***!
   \*********************************************************************************/
-[3865,1665],/*!*********************************************************************************************!*\
+[3568,1665],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-number-format/src/NumberFormat.jsx ***!
   \*********************************************************************************************/
 750,/*!**************************************************!*\
@@ -2083,13 +2083,13 @@ function(e,t,n){t=e.exports=n(/*! ../../../../../../../../~/css-loader/lib/css-b
 751,/*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/axesFormatters.jsx ***!
   \**************************************************************************************************************************/
-[3866,1666],/*!********************************************************************************************************************!*\
+[3569,1666],/*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/Main.jsx ***!
   \********************************************************************************************************************/
-[3867,1669,1672,1648],/*!***************************************************************************************************************************************!*\
+[3570,1669,1672,1648],/*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.jsx ***!
   \***************************************************************************************************************************************/
-[3868,1670],/*!****************************************************************************************************************************************!*\
+[3571,1670],/*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.less ***!
   \****************************************************************************************************************************************/
 function(e,t,n){var r=n(/*! !../../../../../../../~/css-loader!../../../../../../../~/less-loader!./DataSeriesHeatmapLegend.less */1671);"string"==typeof r&&(r=[[e.id,r,""]]);n(/*! ../../../../../../../~/style-loader/addStyles.js */472)(r,{});r.locals&&(e.exports=r.locals)},/*!***********************************************************************************************************************************************************************!*\
@@ -2098,7 +2098,7 @@ function(e,t,n){var r=n(/*! !../../../../../../../~/css-loader!../../../../../..
 function(e,t,n){t=e.exports=n(/*! ../../../../../../../~/css-loader/lib/css-base.js */471)(),t.push([e.id,'.gxaHeatmapLegend{color:#606060;margin-left:180px;border:0 solid olive}.gxaHeatmapLegend .legend-item{display:inline-block;margin-left:8px;padding:4px;vertical-align:middle;cursor:default}.gxaHeatmapLegend .legend-item.legend-item-off{color:#ccc}.gxaHeatmapLegend .legend-item.legend-item-off div{background-color:#f7f7f7}.gxaHeatmapLegend .legend-item .legend-rectangle{width:12px;height:12px;border:1px solid rgba(0,0,0,.2);display:inline-block;margin-right:4px;vertical-align:middle}.gxaHeatmapLegend .legend-item .gxaInfoIcon:before{font-size:180%;color:#7e7e7e}.gxaHeatmapLegend .legend-item:hover .gxaInfoIcon:before{color:#353535}@font-face{font-family:EBI-Generic;src:url("https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot");src:url("https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix") format("embedded-opentype"),url("https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff") format("woff"),local("\\263A"),url("https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic") format("svg"),url("https://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf") format("truetype");font-weight:400;font-style:normal}.gxaInfoIcon:before{font-family:EBI-Generic;font-size:100%;color:#bbb;content:attr(data-icon);margin:0}',""])},/*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.jsx ***!
   \*************************************************************************************************************************************/
-[3870,1649,1673,1674],/*!******************************************************************************************!*\
+[3573,1649,1673,1674],/*!******************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/utils.js ***!
   \******************************************************************************************/
 758,/*!**************************************************************************************************************************************!*\
@@ -2110,37 +2110,37 @@ function(e,t,n){var r=n(/*! !../../../../../../../~/css-loader!../../../../../..
 function(e,t,n){t=e.exports=n(/*! ../../../../../../../~/css-loader/lib/css-base.js */471)(),t.push([e.id,".gxaGradientLegend{font-size:12px;padding-top:10px;margin-left:10px}.gxaGradientColour{overflow:auto;vertical-align:middle;width:200px;height:15px;margin:2px 6px;display:inline-block}.gxaGradientLevel{white-space:nowrap;font-size:10px;vertical-align:middle;display:table-cell}.gxaGradientLevelMin{text-align:right}.gxaGradientLevelMax{text-align:left}",""])},/*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.jsx ***!
   \********************************************************************************************************************************/
-[3872,1136,1144,1677,1726,1728],/*!****************************************************************!*\
+[3575,1136,1144,1677,1726,1728],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-slider/lib/index.js ***!
   \****************************************************************/
-[3873,1678],/*!*****************************************************************!*\
+[3576,1678],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-slider/lib/Slider.js ***!
   \*****************************************************************/
-[3874,1679,1683,1032,1070,1071,1107,1684,1117,1688,1689,1724,1725],/*!*********************************************************************************!*\
+[3577,1679,1683,1032,1070,1071,1107,1684,1117,1688,1689,1724,1725],/*!*********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/defineProperty.js ***!
   \*********************************************************************************/
-[3875,1680],/*!*****************************************************************************************!*\
+[3578,1680],/*!*****************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/core-js/object/define-property.js ***!
   \*****************************************************************************************/
-[3876,1681],/*!******************************************************************************************************!*\
+[3579,1681],/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/fn/object/define-property.js ***!
   \******************************************************************************************************/
-[3877,1682,1038],/*!***************************************************************************************************************!*\
+[3580,1682,1038],/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/~/core-js/library/modules/es6.object.define-property.js ***!
   \***************************************************************************************************************/
-[3878,1036,1046,1042],/*!************************************************************************************!*\
+[3581,1036,1046,1042],/*!************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/babel-runtime/helpers/toConsumableArray.js ***!
   \************************************************************************************/
-[3879,1174],/*!*****************************************************************************!*\
+[3582,1174],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-util/lib/Dom/addEventListener.js ***!
   \*****************************************************************************/
-[3880,1685],/*!*****************************************************************************!*\
+[3583,1685],/*!*****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/add-dom-event-listener/lib/index.js ***!
   \*****************************************************************************/
-[3881,1686],/*!***********************************************************************************!*\
+[3584,1686],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/add-dom-event-listener/lib/EventObject.js ***!
   \***********************************************************************************/
-[3882,1687,1560],/*!***************************************************************************************!*\
+[3585,1687,1560],/*!***************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/add-dom-event-listener/lib/EventBaseObject.js ***!
   \***************************************************************************************/
 772,/*!****************************************************************!*\
@@ -2149,16 +2149,16 @@ function(e,t,n){t=e.exports=n(/*! ../../../../../../../~/css-loader/lib/css-base
 773,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-slider/lib/Handle.js ***!
   \*****************************************************************/
-[3883,1070,1071,1107,1690],/*!*****************************************************************!*\
+[3586,1070,1071,1107,1690],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-tooltip/lib/index.js ***!
   \*****************************************************************/
-[3884,1691],/*!*******************************************************************!*\
+[3587,1691],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-tooltip/lib/Tooltip.js ***!
   \*******************************************************************/
-[3885,1032,1116,1070,1071,1107,978,1692,1723],/*!*****************************************************************!*\
+[3588,1032,1116,1070,1071,1107,978,1692,1723],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/lib/index.js ***!
   \*****************************************************************/
-[3886,1693],/*!*******************************************************************!*\
+[3589,1693],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/lib/Trigger.js ***!
   \*******************************************************************/
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(){}function i(){return""}function a(){return window.document}Object.defineProperty(t,"__esModule",{value:!0});var s=n(/*! babel-runtime/helpers/extends */1032),l=r(s),u=n(/*! react */2),c=r(u),p=n(/*! prop-types */978),f=r(p),d=n(/*! react-dom */31),h=n(/*! create-react-class */1558),m=r(h),g=n(/*! rc-util/lib/Dom/contains */1694),y=r(g),v=n(/*! rc-util/lib/Dom/addEventListener */1695),b=r(v),w=n(/*! ./Popup */1696),x=r(w),T=n(/*! ./utils */1721),P=n(/*! rc-util/lib/getContainerRenderMixin */1722),O=r(P),E=["onClick","onMouseDown","onTouchStart","onMouseEnter","onMouseLeave","onFocus","onBlur"],C=(0,m.default)({displayName:"Trigger",propTypes:{children:f.default.any,action:f.default.oneOfType([f.default.string,f.default.arrayOf(f.default.string)]),showAction:f.default.any,hideAction:f.default.any,getPopupClassNameFromAlign:f.default.any,onPopupVisibleChange:f.default.func,afterPopupVisibleChange:f.default.func,popup:f.default.oneOfType([f.default.node,f.default.func]).isRequired,popupStyle:f.default.object,prefixCls:f.default.string,popupClassName:f.default.string,popupPlacement:f.default.string,builtinPlacements:f.default.object,popupTransitionName:f.default.oneOfType([f.default.string,f.default.object]),popupAnimation:f.default.any,mouseEnterDelay:f.default.number,mouseLeaveDelay:f.default.number,zIndex:f.default.number,focusDelay:f.default.number,blurDelay:f.default.number,getPopupContainer:f.default.func,getDocument:f.default.func,destroyPopupOnHide:f.default.bool,mask:f.default.bool,maskClosable:f.default.bool,onPopupAlign:f.default.func,popupAlign:f.default.object,popupVisible:f.default.bool,maskTransitionName:f.default.oneOfType([f.default.string,f.default.object]),maskAnimation:f.default.string},mixins:[(0,O.default)({autoMount:!1,isVisible:function(e){return e.state.popupVisible},getContainer:function(e){var t=e.props,n=document.createElement("div");n.style.position="absolute",n.style.top="0",n.style.left="0",n.style.width="100%";var r=t.getPopupContainer?t.getPopupContainer((0,d.findDOMNode)(e)):t.getDocument().body;return r.appendChild(n),n}})],getDefaultProps:function(){return{prefixCls:"rc-trigger-popup",getPopupClassNameFromAlign:i,getDocument:a,onPopupVisibleChange:o,afterPopupVisibleChange:o,onPopupAlign:o,popupClassName:"",mouseEnterDelay:0,mouseLeaveDelay:.1,focusDelay:0,blurDelay:.15,popupStyle:{},destroyPopupOnHide:!1,popupAlign:{},defaultPopupVisible:!1,mask:!1,maskClosable:!0,action:[],showAction:[],hideAction:[]}},getInitialState:function(){var e=this.props,t=void 0;return t="popupVisible"in e?!!e.popupVisible:!!e.defaultPopupVisible,{popupVisible:t}},componentWillMount:function(){var e=this;E.forEach(function(t){e["fire"+t]=function(n){e.fireEvents(t,n)}})},componentDidMount:function(){this.componentDidUpdate({},{popupVisible:this.state.popupVisible})},componentWillReceiveProps:function(e){var t=e.popupVisible;void 0!==t&&this.setState({popupVisible:t})},componentDidUpdate:function(e,t){var n=this.props,r=this.state;if(this.renderComponent(null,function(){t.popupVisible!==r.popupVisible&&n.afterPopupVisibleChange(r.popupVisible)}),r.popupVisible){var o=void 0;return!this.clickOutsideHandler&&this.isClickToHide()&&(o=n.getDocument(),this.clickOutsideHandler=(0,b.default)(o,"mousedown",this.onDocumentClick)),void(this.touchOutsideHandler||(o=o||n.getDocument(),this.touchOutsideHandler=(0,b.default)(o,"touchstart",this.onDocumentClick)))}this.clearOutsideHandler()},componentWillUnmount:function(){this.clearDelayTimer(),this.clearOutsideHandler()},onMouseEnter:function(e){this.fireEvents("onMouseEnter",e),this.delaySetPopupVisible(!0,this.props.mouseEnterDelay)},onMouseLeave:function(e){this.fireEvents("onMouseLeave",e),this.delaySetPopupVisible(!1,this.props.mouseLeaveDelay)},onPopupMouseEnter:function(){this.clearDelayTimer()},onPopupMouseLeave:function(e){e.relatedTarget&&!e.relatedTarget.setTimeout&&this._component&&(0,y.default)(this._component.getPopupDomNode(),e.relatedTarget)||this.delaySetPopupVisible(!1,this.props.mouseLeaveDelay)},onFocus:function(e){this.fireEvents("onFocus",e),this.clearDelayTimer(),this.isFocusToShow()&&(this.focusTime=Date.now(),this.delaySetPopupVisible(!0,this.props.focusDelay))},onMouseDown:function(e){this.fireEvents("onMouseDown",e),this.preClickTime=Date.now()},onTouchStart:function(e){this.fireEvents("onTouchStart",e),this.preTouchTime=Date.now()},onBlur:function(e){this.fireEvents("onBlur",e),this.clearDelayTimer(),this.isBlurToHide()&&this.delaySetPopupVisible(!1,this.props.blurDelay)},onClick:function(e){if(this.fireEvents("onClick",e),this.focusTime){var t=void 0;if(this.preClickTime&&this.preTouchTime?t=Math.min(this.preClickTime,this.preTouchTime):this.preClickTime?t=this.preClickTime:this.preTouchTime&&(t=this.preTouchTime),Math.abs(t-this.focusTime)<20)return;this.focusTime=0}this.preClickTime=0,this.preTouchTime=0,e.preventDefault();var n=!this.state.popupVisible;(this.isClickToHide()&&!n||n&&this.isClickToShow())&&this.setPopupVisible(!this.state.popupVisible)},onDocumentClick:function(e){if(!this.props.mask||this.props.maskClosable){var t=e.target,n=(0,d.findDOMNode)(this),r=this.getPopupDomNode();(0,y.default)(n,t)||(0,y.default)(r,t)||this.close()}},getPopupDomNode:function(){return this._component&&this._component.getPopupDomNode?this._component.getPopupDomNode():null},getRootDomNode:function(){return(0,d.findDOMNode)(this)},getPopupClassNameFromAlign:function(e){var t=[],n=this.props,r=n.popupPlacement,o=n.builtinPlacements,i=n.prefixCls;return r&&o&&t.push((0,T.getPopupClassNameFromAlign)(o,i,e)),n.getPopupClassNameFromAlign&&t.push(n.getPopupClassNameFromAlign(e)),t.join(" ")},getPopupAlign:function(){var e=this.props,t=e.popupPlacement,n=e.popupAlign,r=e.builtinPlacements;return t&&r?(0,T.getAlignFromPlacement)(r,t,n):n},getComponent:function(){var e=this.props,t=this.state,n={};return this.isMouseEnterToShow()&&(n.onMouseEnter=this.onPopupMouseEnter),this.isMouseLeaveToHide()&&(n.onMouseLeave=this.onPopupMouseLeave),c.default.createElement(x.default,(0,l.default)({prefixCls:e.prefixCls,destroyPopupOnHide:e.destroyPopupOnHide,visible:t.popupVisible,className:e.popupClassName,action:e.action,align:this.getPopupAlign(),onAlign:e.onPopupAlign,animation:e.popupAnimation,getClassNameFromAlign:this.getPopupClassNameFromAlign},n,{getRootDomNode:this.getRootDomNode,style:e.popupStyle,mask:e.mask,zIndex:e.zIndex,transitionName:e.popupTransitionName,maskAnimation:e.maskAnimation,maskTransitionName:e.maskTransitionName}),"function"==typeof e.popup?e.popup():e.popup)},setPopupVisible:function(e){this.clearDelayTimer(),this.state.popupVisible!==e&&("popupVisible"in this.props||this.setState({popupVisible:e}),this.props.onPopupVisibleChange(e))},delaySetPopupVisible:function(e,t){var n=this,r=1e3*t;this.clearDelayTimer(),r?this.delayTimer=setTimeout(function(){n.setPopupVisible(e),n.clearDelayTimer()},r):this.setPopupVisible(e)},clearDelayTimer:function(){this.delayTimer&&(clearTimeout(this.delayTimer),this.delayTimer=null)},clearOutsideHandler:function(){this.clickOutsideHandler&&(this.clickOutsideHandler.remove(),this.clickOutsideHandler=null),this.touchOutsideHandler&&(this.touchOutsideHandler.remove(),this.touchOutsideHandler=null)},createTwoChains:function(e){var t=this.props.children.props,n=this.props;return t[e]&&n[e]?this["fire"+e]:t[e]||n[e]},isClickToShow:function(){var e=this.props,t=e.action,n=e.showAction;return t.indexOf("click")!==-1||n.indexOf("click")!==-1},isClickToHide:function(){var e=this.props,t=e.action,n=e.hideAction;return t.indexOf("click")!==-1||n.indexOf("click")!==-1},isMouseEnterToShow:function(){var e=this.props,t=e.action,n=e.showAction;return t.indexOf("hover")!==-1||n.indexOf("mouseEnter")!==-1},isMouseLeaveToHide:function(){var e=this.props,t=e.action,n=e.hideAction;return t.indexOf("hover")!==-1||n.indexOf("mouseLeave")!==-1},isFocusToShow:function(){var e=this.props,t=e.action,n=e.showAction;return t.indexOf("focus")!==-1||n.indexOf("focus")!==-1},isBlurToHide:function(){var e=this.props,t=e.action,n=e.hideAction;return t.indexOf("focus")!==-1||n.indexOf("blur")!==-1},forcePopupAlign:function(){this.state.popupVisible&&this._component&&this._component.alignInstance&&this._component.alignInstance.forceAlign()},fireEvents:function(e,t){var n=this.props.children.props[e];n&&n(t);var r=this.props[e];r&&r(t)},close:function(){this.setPopupVisible(!1)},render:function(){var e=this.props,t=e.children,n=c.default.Children.only(t),r={};return this.isClickToHide()||this.isClickToShow()?(r.onClick=this.onClick,r.onMouseDown=this.onMouseDown,r.onTouchStart=this.onTouchStart):(r.onClick=this.createTwoChains("onClick"),r.onMouseDown=this.createTwoChains("onMouseDown"),r.onTouchStart=this.createTwoChains("onTouchStart")),this.isMouseEnterToShow()?r.onMouseEnter=this.onMouseEnter:r.onMouseEnter=this.createTwoChains("onMouseEnter"),this.isMouseLeaveToHide()?r.onMouseLeave=this.onMouseLeave:r.onMouseLeave=this.createTwoChains("onMouseLeave"),this.isFocusToShow()||this.isBlurToHide()?(r.onFocus=this.onFocus,r.onBlur=this.onBlur):(r.onFocus=this.createTwoChains("onFocus"),r.onBlur=this.createTwoChains("onBlur")),c.default.cloneElement(n,r)}});t.default=C,e.exports=t.default},/*!**********************************************************************************!*\
@@ -2170,37 +2170,37 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(e,t,n){var r=l.default.unstable_batchedUpdates?function(e){l.default.unstable_batchedUpdates(n,e)}:n;return(0,a.default)(e,t,r)}Object.defineProperty(t,"__esModule",{value:!0}),t.default=o;var i=n(/*! add-dom-event-listener */1685),a=r(i),s=n(/*! react-dom */31),l=r(s);e.exports=t.default},/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/lib/Popup.js ***!
   \*****************************************************************/
-[3888,1032,1070,1071,1107,978,1697,1710,1719,1720],/*!***************************************************************!*\
+[3591,1032,1070,1071,1107,978,1697,1710,1719,1720],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-align/lib/index.js ***!
   \***************************************************************/
-[3889,1698],/*!***************************************************************!*\
+[3592,1698],/*!***************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-align/lib/Align.js ***!
   \***************************************************************/
-[3890,978,1699,1708,1709],/*!****************************************************************!*\
+[3593,978,1699,1708,1709],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/index.js ***!
   \****************************************************************/
-[3891,1700,1702,1703,1704,1705,1706],/*!****************************************************************!*\
+[3594,1700,1702,1703,1704,1705,1706],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/utils.js ***!
   \****************************************************************/
-[3892,1701],/*!************************************************************************!*\
+[3595,1701],/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/propertyUtils.js ***!
   \************************************************************************/
 786,/*!**************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/getOffsetParent.js ***!
   \**************************************************************************/
-[3893,1700],/*!***********************************************************************************!*\
+[3596,1700],/*!***********************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/getVisibleRectForElement.js ***!
   \***********************************************************************************/
-[3894,1700,1702],/*!****************************************************************************!*\
+[3597,1700,1702],/*!****************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/adjustForViewport.js ***!
   \****************************************************************************/
-[3895,1700],/*!********************************************************************!*\
+[3598,1700],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/getRegion.js ***!
   \********************************************************************/
-[3896,1700],/*!*************************************************************************!*\
+[3599,1700],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/getElFuturePos.js ***!
   \*************************************************************************/
-[3897,1707],/*!*************************************************************************!*\
+[3600,1707],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/dom-align/lib/getAlignOffset.js ***!
   \*************************************************************************/
 792,/*!****************************************************************************************!*\
@@ -2212,25 +2212,25 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 794,/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-animate/lib/index.js ***!
   \*****************************************************************/
-[3898,1711],/*!*******************************************************************!*\
+[3601,1711],/*!*******************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-animate/lib/Animate.js ***!
   \*******************************************************************/
-[3899,978,1712,1713,1718],/*!*************************************************************************!*\
+[3602,978,1712,1713,1718],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-animate/lib/ChildrenUtils.js ***!
   \*************************************************************************/
 797,/*!************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-animate/lib/AnimateChild.js ***!
   \************************************************************************/
-[3900,978,1714,1718],/*!********************************************************************!*\
+[3603,978,1714,1718],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/css-animation/lib/index.js ***!
   \********************************************************************/
-[3901,1715,1716],/*!********************************************************************!*\
+[3604,1715,1716],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/css-animation/lib/Event.js ***!
   \********************************************************************/
 800,/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/component-classes/index.js ***!
   \********************************************************************/
-[3902,1717,1717],/*!********************************************************************!*\
+[3605,1717,1717],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/component-indexof/index.js ***!
   \********************************************************************/
 802,/*!****************************************************************!*\
@@ -2239,13 +2239,13 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 803,/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/lib/PopupInner.js ***!
   \**********************************************************************/
-[3903,1070,1071,1107,978,1720],/*!*************************************************************************!*\
+[3606,1070,1071,1107,978,1720],/*!*************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/lib/LazyRenderBox.js ***!
   \*************************************************************************/
-[3904,1116,1070,1071,1107,978],/*!*****************************************************************!*\
+[3607,1116,1070,1071,1107,978],/*!*****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/lib/utils.js ***!
   \*****************************************************************/
-[3905,1032],/*!*********************************************************************************************!*\
+[3608,1032],/*!*********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-trigger/~/rc-util/lib/getContainerRenderMixin.js ***!
   \*********************************************************************************************/
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(){var e=document.createElement("div");return document.body.appendChild(e),e}function i(e){function t(e,t,n){if(!c||e._component||c(e)){e._container||(e._container=d(e));var r=void 0;r=e.getComponent?e.getComponent(t):p(e,t),u.default.unstable_renderSubtreeIntoContainer(e,r,e._container,function(){e._component=this,n&&n.call(this)})}}function n(e){if(e._container){var t=e._container;u.default.unmountComponentAtNode(t),t.parentNode.removeChild(t),e._container=null}}var r=e.autoMount,i=void 0===r||r,a=e.autoDestroy,l=void 0===a||a,c=e.isVisible,p=e.getComponent,f=e.getContainer,d=void 0===f?o:f,h=void 0;return i&&(h=(0,s.default)({},h,{componentDidMount:function(){t(this)},componentDidUpdate:function(){t(this)}})),i&&l||(h=(0,s.default)({},h,{renderComponent:function(e,n){t(this,e,n)}})),h=l?(0,s.default)({},h,{componentWillUnmount:function(){n(this)}}):(0,s.default)({},h,{removeContainer:function(){n(this)}})}Object.defineProperty(t,"__esModule",{value:!0});var a=n(/*! babel-runtime/helpers/extends */1032),s=r(a);t.default=i;var l=n(/*! react-dom */31),u=r(l);e.exports=t.default},/*!**********************************************************************!*\
@@ -2254,10 +2254,10 @@ function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}
 808,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-slider/lib/Steps.js ***!
   \****************************************************************/
-[3906,1679,1117,984],/*!****************************************************************!*\
+[3609,1679,1117,984],/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-slider/lib/Marks.js ***!
   \****************************************************************/
-[3907,1032,1072,1679,1117],/*!********************************************************************!*\
+[3610,1032,1072,1679,1117],/*!********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/rc-slider/assets/index.css ***!
   \********************************************************************/
 function(e,t,n){var r=n(/*! !../../../../../~/css-loader!./index.css */1727);"string"==typeof r&&(r=[[e.id,r,""]]);n(/*! ../../../../../~/style-loader/addStyles.js */472)(r,{});r.locals&&(e.exports=r.locals)},/*!***********************************************************************************!*\
@@ -2272,34 +2272,34 @@ function(e,t,n){var r=n(/*! !../../../../../../../~/css-loader!../../../../../..
 function(e,t,n){t=e.exports=n(/*! ../../../../../../../~/css-loader/lib/css-base.js */471)(),t.push([e.id,".gxaDisplayCoexpressionOffer{margin-top:30px}.gxaDisplayCoexpressionOffer .gxaSlider{width:250px;margin:15px;padding-bottom:20px}.gxaDisplayCoexpressionOffer p{font-size:93%}",""])},/*!******************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/Events.js ***!
   \******************************************************************************************************/
-[3911,1295],/*!************************************************************************************************************!*\
+[3614,1295],/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/manipulate/Manipulators.js ***!
   \************************************************************************************************************/
 817,/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/show/BoxplotCanvas.jsx ***!
   \********************************************************************************************************/
-[3912,1539,1733],/*!***********************************************************************!*\
+[3615,1539,1733],/*!***********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/highcharts/highcharts-more.js ***!
   \***********************************************************************/
 819,/*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/layout/jsonPayloadPropTypes.js ***!
   \****************************************************************************************************************/
-[3913,1649],/*!**********************************************************************************************!*\
+[3616,1649],/*!**********************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/main.js ***!
   \**********************************************************************************************/
-[3914,1736,1737,1745,1746,1747,1755],/*!************************************************************************************************************!*\
+[3617,1736,1737,1745,1746,1747,1755],/*!************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/chartConfiguration.js ***!
   \************************************************************************************************************/
-[3915,1649,1673,1024],/*!*****************************************************************************************************!*\
+[3618,1649,1673,1024],/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/heatmapData.js ***!
   \*****************************************************************************************************/
-[3916,1738,1739],/*!***********************************************************************************************************!*\
+[3619,1738,1739],/*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/heatmapDataSeries.js ***!
   \***********************************************************************************************************/
-[3917,1295,1649],/*!***************************************************************************************************************!*\
+[3620,1295,1649],/*!***************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/heatmapAxisCategories.js ***!
   \***************************************************************************************************************/
-[3918,1571,1577,1649,1740],/*!********************************************************************************************************!*\
+[3621,1571,1577,1649,1740],/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/assets ^\.\/.*\-icon\.png$ ***!
   \********************************************************************************************************/
 function(e,t,n){function r(e){return n(o(e))}function o(e){return i[e]||function(){throw new Error("Cannot find module '"+e+"'.")}()}var i={"./gsea_go-icon.png":1741,"./gsea_interpro-icon.png":1742,"./gsea_reactome-icon.png":1743,"./ma-plot-icon.png":1744};r.keys=function(){return Object.keys(i)},r.resolve=o,e.exports=r,r.id=1740},/*!*****************************************************************************************************!*\
@@ -2317,37 +2317,37 @@ function(e,t,n){function r(e){return n(o(e))}function o(e){return i[e]||function
 830,/*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/boxplotData.js ***!
   \*****************************************************************************************************/
-[3919,1649],/*!**********************************************************************************************************!*\
+[3622,1649],/*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/heatmapOrderings.js ***!
   \**********************************************************************************************************/
-[3920,1295,1649],/*!***********************************************************************************************************!*\
+[3623,1295,1649],/*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/heatmapColourAxis.js ***!
   \***********************************************************************************************************/
-[3921,1748,1649],/*!********************************************************!*\
+[3624,1748,1649],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/color/index.js ***!
   \********************************************************/
-[3922,1749,1750,1754],/*!********************************************************!*\
+[3625,1749,1750,1754],/*!********************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/clone/clone.js ***!
   \********************************************************/
 835,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/color-convert/index.js ***!
   \****************************************************************/
-[3923,1751,1753],/*!**********************************************************************!*\
+[3626,1751,1753],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/color-convert/conversions.js ***!
   \**********************************************************************/
-[3924,1752],/*!*************************************************************!*\
+[3627,1752],/*!*************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/color-name/index.js ***!
   \*************************************************************/
 838,/*!****************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/color-convert/route.js ***!
   \****************************************************************/
-[3925,1751],/*!**********************************************************************!*\
+[3628,1751],/*!**********************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/color-string/color-string.js ***!
   \**********************************************************************/
-[3926,1752],/*!********************************************************************************************************!*\
+[3629,1752],/*!********************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-heatmap-highcharts/src/load/heatmapFilters.js ***!
   \********************************************************************************************************/
-[3927,1295],/*!**************************************************************************************************************!*\
+[3630,1295],/*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/experiment-page/~/expression-atlas-experiment-page/src/tabs/experiment-design/Main.jsx ***!
   \**************************************************************************************************************/
 function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=n(/*! react */2),i=r(o),a=n(/*! ./ExperimentDesignTablePropTypes.js */1757),s=r(a),l=n(/*! ./ExperimentDesignTable.jsx */1758),u=n(/*! urijs */1024),c=r(u),p=function(e){var t=e.isDifferential,n=e.downloadUrl,r=e.atlasUrl,o=e.table;return i.default.createElement("div",null,i.default.createElement("div",{className:"row expanded column margin-top-large"},i.default.createElement("a",{className:"button float-right margin-bottom-none",href:(0,c.default)(n,r).toString()},i.default.createElement("span",{className:"glyphicon glyphicon-download-alt margin-right-medium"}),"Download")),i.default.createElement("div",{className:"row expanded column margin-top-large"},t?(0,l.DifferentialExperimentDesign)(o):(0,l.BaselineExperimentDesign)(o)))};p.propTypes={isDifferential:i.default.PropTypes.bool.isRequired,downloadUrl:i.default.PropTypes.string.isRequired,atlasUrl:i.default.PropTypes.string.isRequired,table:i.default.PropTypes.shape(s.default)},t.default=p},/*!***************************************************************************************************************************************!*\

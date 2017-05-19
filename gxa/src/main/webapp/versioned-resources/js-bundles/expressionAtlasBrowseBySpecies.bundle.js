@@ -13,7 +13,7 @@ function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}
 function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var s=r(/*! react */2),n=a(s),l=r(/*! urijs */2442),i=a(l),u=r(/*! react-ebi-species */2446).Icon,d=function(e){var t=(0,i.default)(e.atlasUrl).segment("experiments").addSearch({organism:e.species}),r=(0,i.default)(t).addSearch({experimentType:"differential"}),a=(0,i.default)(t).addSearch({experimentType:"baseline"}),s=e.species[0].toUpperCase()+e.species.substr(1);return n.default.createElement("div",{className:"column column-block text-center combo"},n.default.createElement("a",{href:t},n.default.createElement("span",{className:"large-species-icon"},n.default.createElement(u,{species:e.species})),n.default.createElement("h5",{className:"species"},s)),n.default.createElement("p",{className:"experiments"},e.totalExperiments," experiments",n.default.createElement("br",null),n.default.createElement("a",{href:a,className:"baseline"},n.default.createElement("span",{"data-tooltip":!0,style:{cursor:"unset",fontWeight:"bold"},className:"baseline tiny button-rd",title:"Baseline experiments"},"B"),e.baselineExperiments),n.default.createElement("a",{href:r,className:"differential padding-left-medium"},n.default.createElement("span",{"data-tooltip":!0,style:{cursor:"unset",fontWeight:"bold"},className:"differential tiny button-rd",title:"Differential experiments"},"D"),e.differentialExperiments)))};d.propTypes={atlasUrl:n.default.PropTypes.string.isRequired,species:n.default.PropTypes.string.isRequired,totalExperiments:n.default.PropTypes.number.isRequired,baselineExperiments:n.default.PropTypes.number.isRequired,differentialExperiments:n.default.PropTypes.number.isRequired},t.default=d},2442:/*!************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/urijs/src/URI.js ***!
   \************************************************************/
-[3542,2443,2444,2445,2443,2444,2445],2443:/*!*****************************************************************!*\
+[3245,2443,2444,2445,2443,2444,2445],2443:/*!*****************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/urijs/src/punycode.js ***!
   \*****************************************************************/
 178,2444:/*!*************************************************************!*\
@@ -25,16 +25,16 @@ function(e,t,r){"use strict";function a(e){return e&&e.__esModule?e:{default:e}}
 181,2446:/*!**********************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/index.js ***!
   \**********************************************************************/
-[3943,2447,2452],2447:/*!*********************************************************************************!*\
+[3646,2447,2452],2447:/*!*********************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/src/SpeciesIcon.jsx ***!
   \*********************************************************************************/
-[3944,2448,2451],2448:/*!********************************************************************************************************************************************************!*\
+[3647,2448,2451],2448:/*!********************************************************************************************************************************************************!*\
   !*** ./~/style-loader!./atlas_bundles/browse-by-species/~/css-loader!./atlas_bundles/browse-by-species/~/react-ebi-species/src/ebi-visual-species.css ***!
   \********************************************************************************************************************************************************/
 function(e,t,r){var a=r(/*! !../../css-loader!./ebi-visual-species.css */2449);"string"==typeof a&&(a=[[e.id,a,""]]);r(/*! ../../../../../~/style-loader/addStyles.js */472)(a,{});a.locals&&(e.exports=a.locals)},2449:/*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/css-loader!./atlas_bundles/browse-by-species/~/react-ebi-species/src/ebi-visual-species.css ***!
   \***************************************************************************************************************************************/
-[3946,2450],2450:/*!**********************************************************************!*\
+[3649,2450],2450:/*!**********************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/css-loader/lib/css-base.js ***!
   \**********************************************************************/
 471,2451:/*!****************************************************************************!*\
@@ -43,4 +43,4 @@ function(e,t,r){var a=r(/*! !../../css-loader!./ebi-visual-species.css */2449);"
 874,2452:/*!*****************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/~/react-ebi-species/src/renderer.js ***!
   \*****************************************************************************/
-[3947,2447]});
+[3650,2447]});
