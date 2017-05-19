@@ -26,7 +26,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
     @Override
     public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
         StreamOptions options){
-        return new TsvInputStream<>(openDataFile(experiment.getAccession()),
+        return new TsvInputStream<>(openDataFile(experiment.getAccession(), options.getExpressionUnit()),
                 getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
                 new Function<String[], BaselineProfile>() {
                     @Nullable
@@ -48,7 +48,7 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
         return baselineExpressionFilter;
     }
 
-    protected Reader openDataFile(String experimentAccession) {
+    protected Reader openDataFile(String experimentAccession, ExpressionUnit.Absolute unit) {
         try {
             return dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader();
         } catch (IOException e) {
