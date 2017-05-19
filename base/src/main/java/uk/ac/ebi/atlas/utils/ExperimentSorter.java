@@ -1,11 +1,12 @@
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.Ordering;
+import com.google.common.collect.TreeMultimap;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.TreeMultimap;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
 import java.util.Collections;
 import java.util.Set;
@@ -48,8 +49,9 @@ public class ExperimentSorter {
     private long estimateSizeOfExperiment(String experimentAccession, ExperimentType experimentType) {
         switch (experimentType) {
             case RNASEQ_MRNA_BASELINE:
+                return estimateSizeOfRnaSeqBaselineExperiment(experimentAccession);
             case PROTEOMICS_BASELINE:
-                return estimateSizeOfBaselineExperiment(experimentAccession);
+                return estimateSizeOfProteomicsBaselineExperiment(experimentAccession);
             case RNASEQ_MRNA_DIFFERENTIAL:
                 return estimateSizeOfDifferentialExperiment(experimentAccession);
             case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
@@ -76,8 +78,12 @@ public class ExperimentSorter {
         return dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.size();
     }
 
-    private long estimateSizeOfBaselineExperiment(String experimentAccession) {
-        return dataFileHub.getBaselineExperimentFiles(experimentAccession).main.size();
+    private long estimateSizeOfRnaSeqBaselineExperiment(String experimentAccession) {
+        return dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.TPM).size();
+    }
+
+    private long estimateSizeOfProteomicsBaselineExperiment(String experimentAccession) {
+        return dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main.size();
     }
 
 }

@@ -47,8 +47,8 @@ public class MockDataFileHub extends DataFileHub {
         }
     }
 
-    public void addExpressionFile(String accession, Collection<String[]> lines){
-        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
+    public void addProteomicsExpressionFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public void addExperimentDesignFile(String accession, Collection<String[]> lines) {
@@ -67,7 +67,7 @@ public class MockDataFileHub extends DataFileHub {
 //        addTemporaryTsv(MessageFormat.format(ANALYSIS_METHODS_FILE_PATH_TEMPLATE, accession), lines);
 //    }
 //
-//    public void addExpressionFile(String accession, Collection<String[]> lines) {
+//    public void addProteomicsExpressionFile(String accession, Collection<String[]> lines) {
 //        addTemporaryTsv(MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
 //    }
 

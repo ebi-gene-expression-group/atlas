@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 @Named
 public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFactory<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>> {
@@ -33,18 +34,21 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
     @Override
     public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
                                                      BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> baselineProfileStreamOptions) {
-        /*
-        TODO get the right file from DataFileHub
-         */
-        @SuppressWarnings("unused")
-        ExpressionUnit.Absolute.Rna unit = baselineProfileStreamOptions.getExpressionUnit();
-        AtlasResource<KryoFile.Handle> kryoFile = dataFileHub.getKryoFile(experiment.getAccession());
+        AtlasResource<KryoFile.Handle> kryoFile = dataFileHub.getKryoFile(experiment.getAccession(), baselineProfileStreamOptions.getExpressionUnit());
         if (kryoFile.exists()) {
             return new BaselineProfileKryoInputStream(
                     BaselineExpressionsKryoReader.create(kryoFile), experiment,
                     filterExpressions(experiment, baselineProfileStreamOptions));
         } else {
-            return super.create(experiment, baselineProfileStreamOptions);
+            return createFromTsv(experiment, baselineProfileStreamOptions);
+        }
+    }
+
+    public ObjectInputStream<BaselineProfile> createFromTsv(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
+        try {
+            return create(experiment, options, dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).getReader(), new RnaSeqBaselineExpressionsRowDeserializerBuilder(experiment));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

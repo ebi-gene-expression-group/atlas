@@ -9,6 +9,8 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.profiles.tsv.TsvInputStream;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -23,11 +25,8 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
         super(dataFileHub);
     }
 
-    @Override
-    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
-        StreamOptions options){
-        return new TsvInputStream<>(openDataFile(experiment.getAccession(), options.getExpressionUnit()),
-                getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
+    protected ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, StreamOptions options, Reader dataFile, ExpressionsRowDeserializerBuilder<BaselineExpression> readRowBuilder){
+        return new TsvInputStream<>(dataFile, readRowBuilder, filterExpressions(experiment, options), experiment, 2,
                 new Function<String[], BaselineProfile>() {
                     @Nullable
                     @Override
@@ -46,13 +45,5 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
         // e.g.
         // baselineExpressionFilter.setFilterFactors(filterFactors);
         return baselineExpressionFilter;
-    }
-
-    protected Reader openDataFile(String experimentAccession, ExpressionUnit.Absolute unit) {
-        try {
-            return dataFileHub.getBaselineExperimentFiles(experimentAccession).main.getReader();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTOTest;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -37,6 +38,7 @@ import static org.hamcrest.core.Is.is;
 public class BaselineExpressionsKryoReaderIT {
 
     private static final String accession = "E-MTAB-513";
+    private static final ExpressionUnit.Absolute.Rna unit = ExpressionUnit.Absolute.Rna.TPM;
     private static final int GENE_ID_INDEX = 0;
     private static final int GENE_NAME_INDEX = 1;
     private static final int FIRST_LEVEL_INDEX = 2;
@@ -52,12 +54,12 @@ public class BaselineExpressionsKryoReaderIT {
     @Before
     public void setUp() {
         expressionSerializerService.kryoSerializeExpressionData(ExperimentDTOTest.mockDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE));
-        subject = BaselineExpressionsKryoReader.create(dataFileHub.getKryoFile(accession));
+        subject = BaselineExpressionsKryoReader.create(dataFileHub.getKryoFile(accession, unit));
     }
 
     @Test
     public void serializedFilesAreEqualToTsvFiles() throws IOException {
-        CSVReader csvReader = new CSVReader(dataFileHub.getBaselineExperimentFiles(accession).main.getReader(), '\t');
+        CSVReader csvReader = new CSVReader(dataFileHub.getRnaSeqBaselineExperimentFiles(accession).dataFile(unit).getReader(), '\t');
 
         // Read header
         String[] tsvLine = csvReader.readNext();

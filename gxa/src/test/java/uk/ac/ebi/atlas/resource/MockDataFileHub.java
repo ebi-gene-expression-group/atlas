@@ -33,8 +33,17 @@ public class MockDataFileHub extends DataFileHub {
                 }).toList());
     }
 
-    public void addExpressionFile(String accession, Collection<String[]> lines){
-        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
+    public void addFpkmsExpressionFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+    public void addTpmsExpressionFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+
+    public void addProteomicsExpressionFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public void addTemporaryEmptyFile(String where){

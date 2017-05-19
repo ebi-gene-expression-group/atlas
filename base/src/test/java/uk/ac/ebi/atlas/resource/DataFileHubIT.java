@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 
 import javax.inject.Inject;
@@ -22,10 +23,16 @@ public class DataFileHubIT {
 
     @Test
     public void testGetExperimentFiles() throws Exception {
-        assertAtlasResourceExists(subject.getBaselineExperimentFiles("E-MTAB-513").main);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").analysisMethods);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").condensedSdrf);
         assertAtlasResourceExists(subject.getExperimentFiles("E-MTAB-513").experimentDesign);
+    }
+
+    @Test
+    public void testGetBaselineFiles() throws Exception {
+        assertAtlasResourceExists(subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.TPM));
+        assertAtlasResourceExists(subject.getRnaSeqBaselineExperimentFiles("E-MTAB-513").dataFile(ExpressionUnit.Absolute.Rna.FPKM));
+        assertAtlasResourceExists(subject.getProteomicsBaselineExperimentFiles("E-PROT-1").main);
     }
 
     @Test
