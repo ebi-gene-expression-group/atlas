@@ -5,8 +5,7 @@ import com.esotericsoftware.kryo.io.UnsafeOutput;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.nio.file.attribute.PosixFilePermission;
 import java.text.MessageFormat;
 import java.util.Set;
@@ -38,7 +37,7 @@ public class KryoFile extends AtlasResource<KryoFile.Handle> {
 
         public UnsafeOutput write() {
             try {
-                return new UnsafeOutput(Files.newOutputStream(path));
+                return new UnsafeOutput(Files.newOutputStream(path, StandardOpenOption.CREATE, StandardOpenOption.WRITE));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

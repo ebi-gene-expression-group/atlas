@@ -9,10 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class MockDataFileHub extends DataFileHub{
+public class MockDataFileHub extends DataFileHub {
 
     final File dir;
 
@@ -30,6 +31,10 @@ public class MockDataFileHub extends DataFileHub{
                         return Joiner.on('\t').join(strings);
                     }
                 }).toList());
+    }
+
+    public void addExpressionFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(EXPRESSION_FILE_PATH_TEMPLATE, accession), lines);
     }
 
     public void addTemporaryEmptyFile(String where){
@@ -54,6 +59,7 @@ public class MockDataFileHub extends DataFileHub{
         new File(dir.getAbsolutePath()+"/admin").mkdir();
         new File(dir.getAbsolutePath()+"/magetab").mkdir();
         new File(dir.getAbsolutePath()+"/expdesign").mkdir();
+        new File(dir.getAbsolutePath()+"/serialized_expression").mkdir();
         dir.deleteOnExit();
 
          return new MockDataFileHub(dir);
