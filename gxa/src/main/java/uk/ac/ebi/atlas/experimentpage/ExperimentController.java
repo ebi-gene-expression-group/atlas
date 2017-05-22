@@ -17,9 +17,9 @@ import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesignTable;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -29,16 +29,13 @@ import java.util.List;
 public class ExperimentController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
-    private final ApplicationProperties applicationProperties;
     private final DataFileHub dataFileHub;
     private static final Gson gson = new Gson();
     
     @Inject
     public ExperimentController(ExperimentTrader experimentTrader,
-                                ApplicationProperties applicationProperties,
                                 DataFileHub dataFileHub){
         this.experimentTrader = experimentTrader;
-        this.applicationProperties = applicationProperties;
         this.dataFileHub = dataFileHub;
     }
 
@@ -71,7 +68,8 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(
                 experiment.groupingsForHeatmap(),
-                BaselineBarChartController.geneDistributionUrl(request, experiment.getAccession(), accessKey))
+                BaselineBarChartController.geneDistributionUrl(request, experiment.getAccession(), accessKey),
+                availableDataUnits(experiment.getAccession(), experiment.getType()))
         );
 
         if(experiment.getType().isDifferential()){
@@ -102,6 +100,15 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         result.add("tabs", availableTabs);
 
         return result;
+    }
+
+    private JsonArray availableDataUnits(String experimentAccession, ExperimentType experimentType){
+        if(!experimentType.isRnaSeqBaseline()){
+            return new JsonArray();
+        }
+        else {
+            return gson.toJsonTree(dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFiles()).getAsJsonArray();
+        }
     }
 
     private JsonArray supplementaryInformationTabs(final Experiment experiment, final HttpServletRequest request, final String accessKey) {
@@ -189,10 +196,11 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         return result;
     }
 
-    private JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl){
+    private JsonObject heatmapTab(JsonArray groups, String geneDistributionUrl, JsonArray availableDataUnits){
         JsonObject props = new JsonObject();
         props.add("groups", groups);
         props.addProperty("genesDistributedByCutoffUrl", geneDistributionUrl);
+        props.add("availableDataUnits", availableDataUnits);
         return customContentTab("heatmap", "Results", props);
     }
 
