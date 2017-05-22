@@ -55,7 +55,6 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
                         factorsConfig.getMenuFilterFactorTypes(), factorsConfig.orderCurated()))
                 .withDataProviderURL(factorsConfig.getDataProviderURL())
                 .withDataProviderDescription(factorsConfig.getDataProviderDescription())
-                .withRData(configuration.hasRData())
                 .withAlternativeViews(extractAlternativeViews(factorsConfig))
                 .create();
 

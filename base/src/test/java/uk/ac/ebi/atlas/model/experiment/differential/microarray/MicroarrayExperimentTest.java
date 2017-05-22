@@ -42,7 +42,7 @@ public class MicroarrayExperimentTest {
                                     SortedSet<String> arrayDesignAccessions){
         return new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, accession,
                 new Date(), contrasts,
-                "description", true, new Species("species", SpeciesProperties.UNKNOWN), arrayDesignAccessions,
+                "description", new Species("species", SpeciesProperties.UNKNOWN), arrayDesignAccessions,
                 new TreeSet<String>(), mock(ExperimentDesign.class), Sets.newHashSet(PUBMEDID));
     }
     @Before

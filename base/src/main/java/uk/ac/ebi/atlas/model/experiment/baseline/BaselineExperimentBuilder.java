@@ -29,7 +29,6 @@ public class BaselineExperimentBuilder {
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
     private String displayName;
-    private boolean hasRData;
     private String experimentAccession;
     private Set<String> pubMedIds;
     private ExperimentDesign experimentDesign;
@@ -52,11 +51,6 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDisclaimer(String disclaimer) {
         this.disclaimer = disclaimer;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withRData(boolean hasRData) {
-        this.hasRData = hasRData;
         return this;
     }
 
@@ -123,7 +117,7 @@ public class BaselineExperimentBuilder {
 
         return new
                 BaselineExperiment(experimentType, experimentAccession, lastUpdate, description,
-                displayName, disclaimer, species, hasRData, pubMedIds, experimentDesign, assayGroups, dataProviderURL,
+                displayName, disclaimer, species, pubMedIds, experimentDesign, assayGroups, dataProviderURL,
                 dataProviderDescription, alternativeViews, alternativeViewDescriptions , experimentDisplayDefaults);
     }
 

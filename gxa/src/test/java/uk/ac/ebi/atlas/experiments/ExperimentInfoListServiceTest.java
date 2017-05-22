@@ -93,13 +93,13 @@ public class ExperimentInfoListServiceTest {
         differentialExperiment = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,
-                "description", false, new Species(SPECIES, SpeciesProperties.UNKNOWN),
+                "description", new Species(SPECIES, SpeciesProperties.UNKNOWN),
                 new HashSet<String>(),experimentDesignMock));
 
         microarrayExperiment = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
-                "description", false, new Species(SPECIES, SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
+                "description", new Species(SPECIES, SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
                 Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>

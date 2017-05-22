@@ -45,10 +45,8 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
 
         SortedSet<String> arrayDesignAccessions = microarrayExperimentConfiguration.getArrayDesignAccessions();
 
-        boolean hasRData = microarrayExperimentConfiguration.hasRData();
-
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession,
-                experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasRData,
+                experimentDTO.getLastUpdate(), contrasts, experimentDescription,
                 speciesFactory.create(experimentDTO.getSpecies()),arrayDesignAccessions,
                 arrayDesignTrader.getArrayDesignNames(arrayDesignAccessions), experimentDesign,
                 experimentDTO.getPubmedIds());

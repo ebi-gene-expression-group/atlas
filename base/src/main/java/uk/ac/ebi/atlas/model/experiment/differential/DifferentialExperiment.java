@@ -22,19 +22,19 @@ public class DifferentialExperiment extends Experiment<Contrast> {
     private static final Gson gson = new Gson();
 
     public DifferentialExperiment(String accession, Date lastUpdate, List<Contrast> contrasts, String description,
-                                  boolean hasRData, Species species, Collection<String> pubMedIds,
+                                  Species species, Collection<String> pubMedIds,
                                   ExperimentDesign experimentDesign) {
 
-        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasRData,
+        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description,
                 species, pubMedIds, experimentDesign);
 
     }
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
-                                     List<Contrast> contrasts, String description, boolean hasRData, Species species,
+                                     List<Contrast> contrasts, String description, Species species,
                                      Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
 
-        super(experimentType, accession, lastUpdate,null, description, "", hasRData, species, pubMedIds,
+        super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
                 experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
                 Collections.<String>emptyList(), Collections.<String>emptyList(), contrasts, ExperimentDisplayDefaults.simpleDefaults());
     }
