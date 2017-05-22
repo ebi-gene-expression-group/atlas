@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.resource;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
@@ -139,6 +140,17 @@ public class DataFileHub {
                 default:
                     throw new RuntimeException("No file for: "+unit);
             }
+        }
+
+        public ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles(){
+            ImmutableList.Builder<ExpressionUnit.Absolute.Rna> b = ImmutableList.builder();
+            if(tpms.exists()){
+                b.add(ExpressionUnit.Absolute.Rna.TPM);
+            }
+            if(fpkms.exists()){
+                b.add(ExpressionUnit.Absolute.Rna.FPKM);
+            }
+            return b.build();
         }
     }
 
