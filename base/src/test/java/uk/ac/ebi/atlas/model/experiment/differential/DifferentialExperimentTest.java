@@ -6,11 +6,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -53,7 +51,7 @@ public class DifferentialExperimentTest {
 
     static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts, ExperimentDesign experimentDesign){
         return new DifferentialExperiment(accession, new Date(), contrasts,
-                "description", true, new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
+                "description", new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
                 experimentDesign);
     }
 

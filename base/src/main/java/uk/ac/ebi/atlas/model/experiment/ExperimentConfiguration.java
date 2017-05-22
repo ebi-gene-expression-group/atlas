@@ -22,7 +22,6 @@ import java.util.Set;
 public class ExperimentConfiguration {
 
     private static final String EXPERIMENT_TYPE = "experimentType";
-    private static final String RDATA = "r_data";
 
     private XmlReader xmlReader;
     private XPath xpath = XPathFactory.newInstance().newXPath();
@@ -126,7 +125,4 @@ public class ExperimentConfiguration {
         return experimentType;
     }
 
-    public boolean hasRData() {
-        return "1".equals(xmlReader.getDocument().getDocumentElement().getAttribute(RDATA));
-    }
 }

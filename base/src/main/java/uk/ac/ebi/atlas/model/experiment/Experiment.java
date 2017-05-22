@@ -6,10 +6,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
@@ -35,7 +33,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     protected String description;
     private String displayName;
     private String disclaimer;
-    private boolean hasRData;
     private Date lastUpdate;
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
@@ -45,7 +42,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      String disclaimer, boolean hasRData, Species species, Collection<String> pubMedIds,
+                      String disclaimer, Species species, Collection<String> pubMedIds,
                       ExperimentDesign experimentDesign, List<String> dataProviderURL,
                       List<String> dataProviderDescription, List<String> alternativeViews,
                       List<String> alternativeViewDescriptions, List<DataColumnDescriptor> dataColumnDescriptors,
@@ -58,7 +55,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         this.displayName = displayName;
         this.description = description;
         this.disclaimer = disclaimer;
-        this.hasRData = hasRData;
         this.species = species;
         this.pubMedIds = ImmutableList.copyOf(Sets.newTreeSet(pubMedIds));
         this.dataProviderURL = dataProviderURL;
@@ -136,7 +132,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     public Map<String, Object> getAttributes(){
         Map<String, Object> result = new HashMap<>();
         result.put("type", type);
-        result.put("experimentHasRData", hasRData);
         result.putAll(species.getAttributes());
         result.put("experimentDescription", description);
         result.put("pubMedIds", pubMedIds);

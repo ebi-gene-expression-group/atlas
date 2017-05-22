@@ -77,7 +77,7 @@ public class DifferentialExperimentContrastLinesTest {
 
         List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description",
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
@@ -116,7 +116,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description",
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
@@ -154,7 +154,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", true,
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description",
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
