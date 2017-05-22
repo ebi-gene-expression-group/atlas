@@ -46,7 +46,7 @@ public class DiffAnalyticsQueryBuilder {
         databaseQuery.appendToQueryString(SELECT_QUERY + JOIN_PUBLIC_EXPERIMENTS_ONLY);
 
 
-        databaseQuery.appendToQueryString(MessageFormat.format("WHERE VW_DIFFANALYTICS.ORGANISM=''{0}'' ",geneId));
+        databaseQuery.appendToQueryString(MessageFormat.format("WHERE VW_DIFFANALYTICS.IDENTIFIER=''{0}'' ",geneId));
 
         databaseQuery.appendToQueryString(ORDER_BY_LOG2FOLD);
 
