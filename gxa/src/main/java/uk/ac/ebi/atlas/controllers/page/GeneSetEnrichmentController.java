@@ -2,8 +2,10 @@ package uk.ac.ebi.atlas.controllers.page;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.velocity.util.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -46,9 +48,10 @@ public class GeneSetEnrichmentController {
 
     @RequestMapping(value = "/genesetenrichment", method = RequestMethod.GET)
     public String getExperimentsListParameters(
-            @RequestParam String query,
+            @RequestParam(defaultValue = "") String query,
             Model model) {
         List<String> bioentityIdentifiers = Arrays.asList(query.split("\\W+"));
+        Validate.notEmpty(bioentityIdentifiers, "Please pass a list of genes separated by whitespace: ?query=gene_1 gene_2 ...");
 
         Species species = speciesFactory.create(
                 speciesLookupService.
@@ -66,7 +69,7 @@ public class GeneSetEnrichmentController {
             return "gene-set-enrichment-results";
         } else {
             model.addAttribute("exceptionMessage", result.getLeft().get());
-            return "query-error-page";
+            return "error-page";
         }
     }
 
