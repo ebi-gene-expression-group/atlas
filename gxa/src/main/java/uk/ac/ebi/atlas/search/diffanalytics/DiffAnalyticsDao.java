@@ -53,7 +53,7 @@ public class DiffAnalyticsDao {
 
     }
 
-    private DatabaseQuery<Object> buildSelect(String geneId) {
+    DatabaseQuery<Object> buildSelect(String geneId) {
         return new DiffAnalyticsQueryBuilder(geneId).buildSelect();
     }
 

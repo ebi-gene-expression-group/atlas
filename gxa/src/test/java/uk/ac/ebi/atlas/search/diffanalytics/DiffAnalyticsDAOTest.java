@@ -36,14 +36,9 @@ public class DiffAnalyticsDAOTest {
 
     @Test
     public void weQueryWithSomeReallyGoodSql(){
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Mockito.when(jdbcTemplate.query(captor.capture(), eq(dbeRowMapper),  any())).thenReturn(new ArrayList<DiffAnalytics>());
-
         String geneId = "geneId";
 
-        subject.fetchTopExpressions(geneId);
-
-        String v = captor.getValue();
+        String v = subject.buildSelect(geneId).getQuery();
 
         assertTrue(Pattern.matches("SELECT.*FROM.*", v.toUpperCase()));
         assertTrue(v.toUpperCase().contains("PRIVATE = 'F'"));
