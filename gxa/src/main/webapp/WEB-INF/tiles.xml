@@ -44,8 +44,6 @@
         <put-attribute name="content" value="/WEB-INF/jsp/views/request-diagnostics.jsp"/>
     </definition>
 
-
-
     <!-- Compact header views -->
     <definition name="foundation-base-compact" extends="foundation-base">
         <put-attribute name="masthead" value="/WEB-INF/jsp/tiles/headers/masthead.jsp"/>

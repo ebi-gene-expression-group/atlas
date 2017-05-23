@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -43,10 +44,6 @@ public class SpeciesLookupService {
     }
 
     private Optional<String> fetchFirstSpeciesByField(String fieldName, Collection<String> tokens) {
-        if (StringUtils.isBlank(fieldName)) {
-            fieldName = PROPERTY_LOWER_FIELD;
-        }
-
         for (String token : tokens) {
             Optional<String> species = fetchFirstSpecies(fieldName, token);
             if (species.isPresent()) {
