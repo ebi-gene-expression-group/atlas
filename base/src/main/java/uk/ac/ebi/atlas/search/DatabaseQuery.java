@@ -31,11 +31,6 @@ public class DatabaseQuery<T> {
         return this;
     }
 
-    //used for debugging
-    public String print() {
-        return DatabaseQueryPrinter.print(this);
-    }
-
     @Override
     public String toString(){
         return "query: " + getQuery() + ", params: " + params;
