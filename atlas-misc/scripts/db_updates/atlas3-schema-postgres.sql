@@ -143,6 +143,16 @@ CREATE TABLE RNASEQ_BSLN_CE_PROFILES (
   , PRIMARY KEY (EXPERIMENT, IDENTIFIER)
 );
 
+-- Table for storing single cell expression levels
+DROP TABLE SINGLE_CELL_EXPRESSION CASCADE;
+CREATE TABLE SINGLE_CELL_EXPRESSION (
+    geneid VARCHAR(255) NOT NULL,
+    experimentaccession VARCHAR(255) NOT NULL,
+    cellid  VARCHAR(255) NOT NULL,
+    expressionlevel FLOAT(35),
+    PRIMARY KEY (geneId, experimentAccession, cellId)
+);
+
 -- Data processing in-progress flag table - used for data production in Atlas - no dependency on it exists in the Web services code
 DROP TABLE ATLAS_JOBS CASCADE;
 CREATE TABLE ATLAS_JOBS(

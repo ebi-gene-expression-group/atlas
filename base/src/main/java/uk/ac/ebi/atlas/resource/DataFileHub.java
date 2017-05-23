@@ -46,6 +46,8 @@ public class DataFileHub {
     final static String MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-log-fold-changes.tsv";
     final static String COEXPRESSION_FILE_TEMPLATE = "/magetab/{0}/{0}-coexpressions.tsv.gz";
 
+    final static String SINGLECELL_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
         Validate.notNull(dataFilesLocation, "Data files location not found - if this is a developement environment try maven clean/install");
@@ -81,6 +83,9 @@ public class DataFileHub {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
+    public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {
+        return new SingleCellExperimentFiles(experimentAccession);
+    }
 
     public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession, ExpressionUnit.Absolute.Rna unit){
         return new KryoFile(dataFilesLocation, experimentAccession, unit);
@@ -194,6 +199,15 @@ public class DataFileHub {
             analytics = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
             normalizedExpressions = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
             logFoldChanges = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
+        }
+    }
+
+    public class SingleCellExperimentFiles extends ExperimentFiles {
+        public final AtlasResource<TsvReader> singlecell;
+
+        SingleCellExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.singlecell = new TsvFile.ReadOnly(dataFilesLocation, SINGLECELL_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
