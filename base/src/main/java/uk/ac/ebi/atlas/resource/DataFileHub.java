@@ -48,7 +48,7 @@ public class DataFileHub {
 
     @Inject
     public DataFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation){
-        Validate.notNull(dataFilesLocation);
+        Validate.notNull(dataFilesLocation, "Data files location not found - if this is a developement environment try maven clean/install");
         this.dataFilesLocation = dataFilesLocation;
     }
 
