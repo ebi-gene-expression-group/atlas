@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
@@ -36,6 +37,7 @@ import java.util.List;
 @Scope("request")
 public final class JsonBaselineExperimentsController extends JsonExceptionHandlingController {
 
+    public static final String url = "/json/baseline_experiments";
     private final AnatomogramFactory anatomogramFactory;
     private final SpeciesInferrer speciesInferrer;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
@@ -60,11 +62,11 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             produces = "application/json;charset=UTF-8")
     @Deprecated
     public String analyticsJson() {
-        return "forward:/json/baseline_experiments";
+        return "forward:"+url;
     }
 
     @RequestMapping(
-            value = "/json/baseline_experiments",
+            value = url,
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -74,6 +76,8 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             @RequestParam(value = "source", required = false) String source,
             @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
             HttpServletRequest request, Model model) {
+        Preconditions.checkState(!(SemanticQuery.isEmpty(geneQuery) && SemanticQuery.isEmpty(conditionQuery)),
+                "Please specify a gene query or a condition query");
 
         Species species = speciesInferrer.inferSpecies(geneQuery, conditionQuery, speciesString);
 
