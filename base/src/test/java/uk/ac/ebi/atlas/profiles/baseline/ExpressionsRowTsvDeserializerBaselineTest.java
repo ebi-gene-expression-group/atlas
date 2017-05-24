@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -22,9 +21,9 @@ public class ExpressionsRowTsvDeserializerBaselineTest {
     private AssayGroup g2 = new AssayGroup("g2", "run21");
     private AssayGroup g3 = new AssayGroup("g3", "run31","run32");
 
-    private List<AssayGroup> headers = ImmutableList.of(g1, g2, g3);
-
-    private ExpressionsRowTsvDeserializerBaseline subject = new ExpressionsRowTsvDeserializerBaseline(headers);
+    private ExpressionsRowTsvDeserializerBaseline subject = new ExpressionsRowTsvDeserializerBaseline(ImmutableMap.of(
+            0, g1, 1, g2, 2, g3
+    ));
 
     @Test
     public void pollShouldReturnExpressionsInTheRightOrder() throws Exception {
@@ -50,7 +49,9 @@ public class ExpressionsRowTsvDeserializerBaselineTest {
 
     @Test
     public void canIgnoreColumns() throws Exception {
-        ExpressionsRowTsvDeserializerBaseline subject = new ExpressionsRowTsvDeserializerBaseline(headers, new int[]{0,2,4});
+        ExpressionsRowTsvDeserializerBaseline subject = new ExpressionsRowTsvDeserializerBaseline(ImmutableMap.of(
+                0, g1, 2, g2, 4, g3
+        ));
         String EXPRESSION_LEVEL_1 = "0";
         String EXPRESSION_LEVEL_2 = "42.9134";
         String EXPRESSION_LEVEL_3 = "0.0001";

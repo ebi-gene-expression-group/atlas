@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +15,16 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
+import java.util.List;
+import java.util.Set;
+
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -29,10 +36,16 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     BaselineExperiment baselineExperiment;
 
     AssayGroup assayGroup = new AssayGroup("g1", "r1");
+    AssayGroup secondAssayGroup = new AssayGroup("g2", "r2");
 
     MockDataFileHub dataFileHub;
 
     RnaSeqBaselineProfileStreamFactory subject;
+
+
+    @Mock
+    BaselineExperiment twoAssayGroupBaselineExperiment;
+
 
     @Before
     public void setUp() throws Exception {
@@ -40,8 +53,14 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         when(baselineExperiment.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         when(baselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroup));
         when(baselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
-        dataFileHub = MockDataFileHub.get();
 
+        when(twoAssayGroupBaselineExperiment.getAccession()).thenReturn("second_accession");
+        when(twoAssayGroupBaselineExperiment.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+        when(twoAssayGroupBaselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroup, secondAssayGroup));
+        when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
+        when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g2")).thenReturn(secondAssayGroup);
+
+        dataFileHub = MockDataFileHub.get();
 
         subject = new RnaSeqBaselineProfileStreamFactory(dataFileHub);
     }
@@ -88,6 +107,32 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
 
         assertThat(result.readNext().getExpressionLevel(assayGroup), is(13.37));
+    }
+
+    @Test
+    public void tpmFilesAndFpkmFilesNeedNotHaveColumnsInTheSameOrder(){
+        dataFileHub.addTpmsExpressionFile(twoAssayGroupBaselineExperiment.getAccession(), ImmutableList.of(
+                new String[]{"Gene ID", "Gene name", "g1", "g2"},
+                new String[]{"id_1", "name_1", "1.0", "2.0"}
+        ));
+        dataFileHub.addFpkmsExpressionFile(twoAssayGroupBaselineExperiment.getAccession(), ImmutableList.of(
+                new String[]{"Gene ID", "Gene name", "g2", "g1"},
+                new String[]{"id_1", "name_1", "2.1", "1.1"}
+        ));
+
+        RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
+        rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.TPM);
+        BaselineProfile resultTpms = subject.create(twoAssayGroupBaselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, twoAssayGroupBaselineExperiment)).readNext();
+        rnaSeqBaselineRequestPreferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
+        BaselineProfile resultFpkms = subject.create(twoAssayGroupBaselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, twoAssayGroupBaselineExperiment)).readNext();
+
+
+        assertThat(resultTpms.getExpressionLevel(assayGroup), is(1.0));
+        assertThat(resultTpms.getExpressionLevel(secondAssayGroup), is(2.0));
+
+        assertThat(resultFpkms.getExpressionLevel(assayGroup), is(1.1));
+        assertThat(resultFpkms.getExpressionLevel(secondAssayGroup), is(2.1));
+
     }
 
 }
