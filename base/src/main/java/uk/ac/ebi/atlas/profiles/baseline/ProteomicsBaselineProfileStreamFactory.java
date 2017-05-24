@@ -3,12 +3,10 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.Validate;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
@@ -16,6 +14,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.Map;
 
@@ -37,15 +36,10 @@ public class ProteomicsBaselineProfileStreamFactory extends BaselineProfileStrea
         };
     }
 
-
-
     @Override
-    public ObjectInputStream<BaselineProfile> create(final BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein> options) {
+    protected Reader getDataFileReader(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein> options) {
         try {
-            return create(experiment, options,
-                    dataFileHub.getProteomicsBaselineExperimentFiles(experiment.getAccession()).main.getReader(),
-                    getExpressionsRowDeserializerBuilder(experiment)
-            );
+            return dataFileHub.getProteomicsBaselineExperimentFiles(experiment.getAccession()).main.getReader();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

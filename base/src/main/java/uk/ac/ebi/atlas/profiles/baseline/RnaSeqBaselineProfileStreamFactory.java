@@ -20,6 +20,7 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.Map;
 
@@ -42,6 +43,15 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
     }
 
     @Override
+    protected Reader getDataFileReader(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
+        try {
+            return dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).getReader();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment,
                                                      BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> baselineProfileStreamOptions) {
         AtlasResource<KryoFile.Handle> kryoFile = dataFileHub.getKryoFile(experiment.getAccession(), baselineProfileStreamOptions.getExpressionUnit());
@@ -50,21 +60,10 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
                     BaselineExpressionsKryoReader.create(kryoFile), experiment,
                     filterExpressions(experiment, baselineProfileStreamOptions));
         } else {
-            return createFromTsv(experiment, baselineProfileStreamOptions);
+            return super.create(experiment, baselineProfileStreamOptions);
         }
     }
 
-    public ObjectInputStream<BaselineProfile> createFromTsv(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
-        try {
-            return create(experiment,
-                    options,
-                    dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).getReader(),
-                    getExpressionsRowDeserializerBuilder(experiment)
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers){
         ImmutableMap.Builder<Integer, AssayGroup> b = ImmutableMap.builder();
