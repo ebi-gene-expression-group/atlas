@@ -34,7 +34,7 @@ public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory
     public ObjectInputStream<RnaSeqProfile> create(DifferentialExperiment experiment, RnaSeqRequestContext
             options) {
 
-        return new TsvInputStream<>(openDataFile(experiment.getAccession()),
+        return new TsvInputStream<>(getDataFileReader(experiment, options),
                 getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
                 new Function<String[], RnaSeqProfile>() {
                     @Nullable
@@ -45,17 +45,18 @@ public class RnaSeqProfileStreamFactory extends DifferentialProfileStreamFactory
                 });
     }
 
-    private Reader openDataFile(String experimentAccession){
-        try {
-            return dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics.getReader();
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     protected ExpressionsRowDeserializerBuilder<DifferentialExpression> getExpressionsRowDeserializerBuilder(DifferentialExperiment experiment) {
         return new RnaSeqDifferentialExpressionsRowDeserializerBuilder(experiment);
+    }
+
+    //similar to BaslineProfileStreamFactory but can't extract a common interface because of microarray profiles
+    protected Reader getDataFileReader(DifferentialExperiment experiment, RnaSeqRequestContext options) {
+        try {
+            return dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).analytics.getReader();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
     static class RnaSeqDifferentialExpressionsRowDeserializerBuilder extends DifferentialProfileStreamFactory

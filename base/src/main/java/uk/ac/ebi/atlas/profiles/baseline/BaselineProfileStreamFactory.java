@@ -4,29 +4,28 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
-import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.profiles.tsv.TsvInputStream;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
 import java.io.Reader;
 
 public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends ProfileStreamFactory<AssayGroup, BaselineExpression,
         BaselineExperiment, StreamOptions,BaselineProfile>{
 
+    protected abstract Reader getDataFileReader(BaselineExperiment experiment, StreamOptions options);
+
     BaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
 
-    protected ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, StreamOptions options, Reader dataFile, ExpressionsRowDeserializerBuilder<BaselineExpression> readRowBuilder){
-        return new TsvInputStream<>(dataFile, readRowBuilder, filterExpressions(experiment, options), experiment, 2,
+    @Override
+    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, StreamOptions options){
+        return new TsvInputStream<>(getDataFileReader(experiment, options), getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
                 new Function<String[], BaselineProfile>() {
                     @Nullable
                     @Override
