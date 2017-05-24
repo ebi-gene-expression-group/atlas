@@ -153,30 +153,12 @@ public class RnaSeqProfilesHeatMapIT {
 
     private void assertAbout(DifferentialExperiment experiment, DifferentialProfilesList profiles){
 
-        double maxUp = profiles.getMaxUpRegulatedExpressionLevel();
-        double maxDown = profiles.getMaxDownRegulatedExpressionLevel();
-        double minUp = profiles.getMinUpRegulatedExpressionLevel();
-        double minDown = profiles.getMinDownRegulatedExpressionLevel();
-
         for(Object o: profiles){
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            double maxUpHere = profile.getMaxUpRegulatedExpressionLevel();
-            double maxDownHere = profile.getMaxDownRegulatedExpressionLevel();
-            assertTrue(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
-                    Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere );
 
             assertTrue(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()));
             for(Contrast contrast: profile.getConditions()){
                 assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
-
-                double expressionLevel = profile.getExpressionLevel(contrast);
-                if(! Double.isNaN(expressionLevel)) {
-                    assertTrue(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp);
-                    assertTrue(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown);
-                    assertTrue(Double.isNaN(minUp) || Double.isNaN(minDown) ||
-                            expressionLevel >= minUp ||
-                            expressionLevel <=  minDown);
-                }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
                 assertEquals(contrast.getId(), expression.getDataColumnDescriptorId());

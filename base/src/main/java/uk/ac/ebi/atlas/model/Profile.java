@@ -106,8 +106,6 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return expressionLevel / conditions.size();
     }
 
-    protected abstract void updateStateAfterAddingExpression(Expr expression);
-
     public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
         for(DataColumnDescriptor dataColumnDescriptor : conditions){
             if(expressionsByCondition.containsKey(dataColumnDescriptor)){
@@ -123,7 +121,6 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
 
     public void add(DataColumnDescriptor condition, Expr expression) {
         expressionsByCondition.put(condition, expression);
-        updateStateAfterAddingExpression(expression);
     }
 
     public Expr getExpression(DataColumnDescriptor condition) {

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
@@ -50,11 +49,6 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
                 .compare(other.getSpecificity(), this.getSpecificity())
                 .compare(other.getName(), this.getName())
                 .result();
-    }
-
-    @Override
-    protected void updateStateAfterAddingExpression(BaselineExpression expression) {
-        // used to maintain maxes and mins but it really isn't necessary
     }
 
     @Override
