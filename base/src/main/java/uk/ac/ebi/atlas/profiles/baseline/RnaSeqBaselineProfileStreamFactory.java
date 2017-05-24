@@ -1,6 +1,10 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang.Validate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
@@ -16,6 +20,8 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Map;
 
 @Named
 public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFactory<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna>> {
@@ -26,9 +32,13 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
     }
 
     @Override
-    protected ExpressionsRowDeserializerBuilder<BaselineExpression>
-    getExpressionsRowDeserializerBuilder(BaselineExperiment experiment) {
-        return new RnaSeqBaselineExpressionsRowDeserializerBuilder(experiment);
+    protected ExpressionsRowDeserializerBuilder<BaselineExpression> getExpressionsRowDeserializerBuilder(final BaselineExperiment experiment) {
+        return new ExpressionsRowDeserializerBuilder<BaselineExpression>() {
+            @Override
+            public ExpressionsRowDeserializer<BaselineExpression> build(String... tsvFileHeaders) {
+                return new ExpressionsRowTsvDeserializerBaseline(rowPositionsToDataColumns(experiment, tsvFileHeaders));
+            }
+        };
     }
 
     @Override
@@ -46,28 +56,34 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
 
     public ObjectInputStream<BaselineProfile> createFromTsv(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
         try {
-            return create(experiment, options, dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).getReader(), new RnaSeqBaselineExpressionsRowDeserializerBuilder(experiment));
+            return create(experiment,
+                    options,
+                    dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).getReader(),
+                    getExpressionsRowDeserializerBuilder(experiment)
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers){
+        ImmutableMap.Builder<Integer, AssayGroup> b = ImmutableMap.builder();
 
-    static class RnaSeqBaselineExpressionsRowDeserializerBuilder
-            implements ExpressionsRowDeserializerBuilder<BaselineExpression> {
+        for(int i = 0; i< headers.length ; i++){
+            String s = headers[i];
+            AssayGroup assayGroup = experiment.getDataColumnDescriptor(s);
+            Validate.notNull(assayGroup, MessageFormat.format("Unknown identifier in position {0}: {1}", i, s));
+            b.put(new Integer(i), assayGroup);
 
-        protected final BaselineExperiment baselineExperiment;
-
-        public RnaSeqBaselineExpressionsRowDeserializerBuilder(BaselineExperiment baselineExperiment) {
-            this.baselineExperiment = baselineExperiment;
         }
 
+        Map<Integer, AssayGroup> result = b.build();
 
-        @Override
-        public ExpressionsRowDeserializer<BaselineExpression> build(String... tsvFileHeaders) {
+        Preconditions.checkState(result.size() == experiment.getDataColumnDescriptors().size(),
+                MessageFormat.format("Mismatch between data columns read in from the header:{0}, and data columns in experiment:{1}",
+                        result.size(), experiment.getDataColumnDescriptors().size())
+        );
 
-            return new ExpressionsRowTsvDeserializerBaseline(baselineExperiment.getDataColumnDescriptors());
-        }
-
+        return result;
     }
 }
