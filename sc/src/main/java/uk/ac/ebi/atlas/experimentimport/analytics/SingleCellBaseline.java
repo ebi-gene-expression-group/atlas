@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
+package uk.ac.ebi.atlas.experimentimport.analytics;
 
 /**
  * Created by barrera on 12/05/2017.
