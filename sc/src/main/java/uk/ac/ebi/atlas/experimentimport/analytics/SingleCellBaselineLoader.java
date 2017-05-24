@@ -1,6 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.singlecell;
-
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
+package uk.ac.ebi.atlas.experimentimport.analytics;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -11,6 +11,8 @@ import javax.inject.Named;
 @Named
 public class SingleCellFileHub extends DataFileHub {
 
+    final static String SINGLECELL_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}.tsv";
+
     @Inject
     public SingleCellFileHub(@Value("#{configuration['dataFilesLocation']}") String dataFilesLocation) {
         super(dataFilesLocation);
@@ -19,4 +21,19 @@ public class SingleCellFileHub extends DataFileHub {
     public AtlasResource<TsvReader> getGuysIdentifiers() {
         return new TsvFile.ReadOnly(dataFilesLocation, "/sc/guyIdToEnsemblId.tsv");
     }
+
+    public SingleCellExperimentFiles getSingleCellExperimentFiles(String experimentAccession) {
+        return new SingleCellExperimentFiles(experimentAccession);
+    }
+
+    public class SingleCellExperimentFiles extends ExperimentFiles {
+        public final AtlasResource<TsvReader> singlecell;
+
+        SingleCellExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.singlecell = new TsvFile.ReadOnly(dataFilesLocation, SINGLECELL_FILE_PATH_TEMPLATE, experimentAccession);
+        }
+    }
+
+
 }
