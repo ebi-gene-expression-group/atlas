@@ -155,29 +155,12 @@ public class MicroarrayProfilesHeatMapIT {
 
     private void assertAbout(DifferentialExperiment experiment, DifferentialProfilesList profiles){
 
-        double maxUp = profiles.getMaxUpRegulatedExpressionLevel();
-        double maxDown = profiles.getMaxDownRegulatedExpressionLevel();
-        double minUp = profiles.getMinUpRegulatedExpressionLevel();
-        double minDown = profiles.getMinDownRegulatedExpressionLevel();
-
         for(Object o: profiles){
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            double maxUpHere = profile.getMaxUpRegulatedExpressionLevel();
-            double maxDownHere = profile.getMaxDownRegulatedExpressionLevel();
-            assertThat(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
-                    Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere, is(true) );
 
             assertThat(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()), is(true));
             for(Contrast contrast: profile.getConditions()){
                 assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
-
-                double expressionLevel = profile.getExpressionLevel(contrast);
-                if(! Double.isNaN(expressionLevel)) {
-                    assertThat(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp, is(true));
-                    assertThat(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown, is(true));
-                    assertThat(Double.isNaN(minUp) || Double.isNaN(minDown) ||
-                            expressionLevel >= minUp || expressionLevel <=  minDown, is(true));
-                }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
                 assertThat(expression.getPValue(), greaterThan(0d));
