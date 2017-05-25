@@ -18,7 +18,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 
-public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression> {
+public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression, Self extends Profile<DataColumnDescriptor, Expr, Self>> {
     protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
 
     private String id;
@@ -29,7 +29,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Profile)) return false;
-        Profile<?, ?> profile = (Profile<?, ?>) o;
+        Profile<?, ?, ?> profile = (Profile<?, ?, ?>) o;
         return Objects.equal(expressionsByCondition, profile.expressionsByCondition) &&
                 Objects.equal(getId(), profile.getId()) &&
                 Objects.equal(getName(), profile.getName());
@@ -134,6 +134,17 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return name;
     }
 
+    public Self filter(Predicate<Expr> keepExpressions){
+        Self result = createEmptyCopy();
+        for(Map.Entry<DataColumnDescriptor, Expr> e: expressionsByCondition.entrySet()){
+            if(keepExpressions.apply(e.getValue())){
+                result.add(e.getKey(), e.getValue());
+            }
+        }
+        return result;
+    }
+
+    protected abstract Self createEmptyCopy();
 
     @Override
     public String toString() {

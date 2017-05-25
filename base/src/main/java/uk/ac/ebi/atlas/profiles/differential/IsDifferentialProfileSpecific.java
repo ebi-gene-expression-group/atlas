@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class IsDifferentialProfileSpecific<P extends DifferentialProfile<? extends DifferentialExpression>> implements Predicate<P> {
+public class IsDifferentialProfileSpecific<P extends DifferentialProfile<? extends DifferentialExpression, P>> implements Predicate<P> {
 
     private final Set<Contrast> selectedQueryContrasts;
     private final Sets.SetView<Contrast> nonSelectedQueryContrasts;

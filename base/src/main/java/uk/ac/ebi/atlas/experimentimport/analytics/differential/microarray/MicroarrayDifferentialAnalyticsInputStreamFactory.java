@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -20,7 +19,7 @@ public class MicroarrayDifferentialAnalyticsInputStreamFactory {
 
     public MicroarrayDifferentialAnalyticsInputStream create(String experimentAccession, String arrayDesign)
     throws IOException {
-        AtlasResource<TsvReader> analyticsResource =
+        AtlasResource<?> analyticsResource =
                 dataFileHub.getMicroarrayExperimentFiles(experimentAccession, arrayDesign).analytics;
         return new MicroarrayDifferentialAnalyticsInputStream(analyticsResource.getReader(), experimentAccession);
     }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class ProfileStreamTransforms<DataColumnDescriptor extends DescribesDataColumns,
-        Prof extends Profile<DataColumnDescriptor, ?>>
+        Prof extends Profile<DataColumnDescriptor, ?, Prof>>
     implements Function<Iterable<Prof>, Iterable<Prof>> {
 
     private final List<Function<Iterable<Prof>, Iterable<Prof>>> transforms = new LinkedList<>();

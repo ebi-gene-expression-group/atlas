@@ -39,12 +39,13 @@ public class RnaSeqBaselineExpressionKryoSerializer {
     // This method will automatically block if the serialization is requested concurrently on the same experiment: it will wait
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
     // Kryo instance, as Kryo isn’t thread safe.
+    @Deprecated
     public String serializeExpressionData(final String experimentAccession, ExpressionUnit.Absolute.Rna unit) {
         Kryo kryo = new Kryo();
         ImmutableSetKryoSerializer.registerSerializers(kryo);
         OntologyTermKryoSerializer.registerSerializers(kryo);
 
-        KryoFile.Handle kryoFileHandle = dataFileHub.getKryoFile(experimentAccession, unit).get();
+        KryoFile.Handle kryoFileHandle = dataFileHub.getKryoFile(experimentAccession, null).get();
 
         try (UnsafeOutput expressionsOutput = kryoFileHandle.write();
              CSVReader tsvReaderForLineCount =
@@ -93,7 +94,7 @@ public class RnaSeqBaselineExpressionKryoSerializer {
     }
 
     public boolean delete(final String experimentAccession, ExpressionUnit.Absolute.Rna unit){
-        return dataFileHub.getKryoFile(experimentAccession, unit).get().delete();
+        return dataFileHub.getKryoFile(experimentAccession, null).get().delete();
     }
 
     private BaselineExpression[] parseBaselineExpressions(String[] tsvLine, String[] assays) {

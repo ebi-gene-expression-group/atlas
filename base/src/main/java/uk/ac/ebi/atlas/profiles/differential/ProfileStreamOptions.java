@@ -14,4 +14,6 @@ public interface ProfileStreamOptions<DataColumnDescriptor extends DescribesData
 
     List<DataColumnDescriptor> getAllDataColumns();
 
+    String serializationShortString();
+
 }

@@ -3,18 +3,14 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.Validate;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
-import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.Map;
 
@@ -22,30 +18,17 @@ import java.util.Map;
 public class ProteomicsBaselineProfileStreamFactory extends BaselineProfileStreamFactory<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>> {
     private static final String AGREED_POSTFIX_FOR_DATA_COLUMNS = ".WithInSampleAbundance";
     @Inject
-    ProteomicsBaselineProfileStreamFactory(DataFileHub dataFileHub) {
+    public ProteomicsBaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
 
     @Override
-    protected ExpressionsRowDeserializerBuilder<BaselineExpression> getExpressionsRowDeserializerBuilder(final BaselineExperiment experiment) {
-        return new ExpressionsRowDeserializerBuilder<BaselineExpression>() {
-            @Override
-            public ExpressionsRowDeserializer<BaselineExpression> build(String... tsvFileHeaders) {
-                return new ExpressionsRowTsvDeserializerBaseline(rowPositionsToDataColumns(experiment, tsvFileHeaders));
-            }
-        };
+    protected ObjectInputStream<String[]> getDataFileReader(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein> options) {
+        return dataFileHub.getProteomicsBaselineExperimentFiles(experiment.getAccession()).main.get();
     }
 
     @Override
-    protected Reader getDataFileReader(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein> options) {
-        try {
-            return dataFileHub.getProteomicsBaselineExperimentFiles(experiment.getAccession()).main.getReader();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers){
+    protected Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers){
         ImmutableMap.Builder<Integer, AssayGroup> b = ImmutableMap.builder();
 
         for(int i = 0; i< headers.length ; i++){

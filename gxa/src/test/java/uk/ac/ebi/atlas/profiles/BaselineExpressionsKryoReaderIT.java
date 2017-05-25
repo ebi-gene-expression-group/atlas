@@ -54,7 +54,7 @@ public class BaselineExpressionsKryoReaderIT {
     @Before
     public void setUp() {
         expressionSerializerService.kryoSerializeExpressionData(ExperimentDTOTest.mockDTO(accession, ExperimentType.RNASEQ_MRNA_BASELINE));
-        subject = BaselineExpressionsKryoReader.create(dataFileHub.getKryoFile(accession, unit));
+        subject = BaselineExpressionsKryoReader.create(dataFileHub.getKryoFile(accession, null));
     }
 
     @Test

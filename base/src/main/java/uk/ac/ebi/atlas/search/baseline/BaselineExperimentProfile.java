@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -15,26 +14,29 @@ import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 
 import java.util.Map;
 
-public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression> implements Comparable<BaselineExperimentProfile> {
+public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, BaselineExpression, BaselineExperimentProfile> implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
 
-    private String experimentAccession;
-    private ExperimentType experimentType;
+    private BaselineExperiment experiment;
 
     public BaselineExperimentProfile(BaselineExperiment experiment, FactorGroup filterFactors) {
         super(joinIntoText(
                 experiment.getAccession(),
                 filterFactors),
                 experiment.getDisplayName());
+        this.experiment = experiment;
         this.filterFactors = filterFactors;
-        experimentAccession = experiment.getAccession();
-        experimentType = experiment.getType();
+    }
+
+    @Override
+    protected BaselineExperimentProfile createEmptyCopy() {
+        return new BaselineExperimentProfile(experiment, filterFactors);
     }
 
     @Override
     public String getId() {
-        return experimentAccession;
+        return experiment.getAccession();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
      */
     public int compareTo(BaselineExperimentProfile other) {
         return ComparisonChain.start()
-                .compareFalseFirst(other.experimentType.isRnaSeqBaseline(),this.experimentType.isRnaSeqBaseline())
+                .compareFalseFirst(other.experiment.getType().isRnaSeqBaseline(),this.experiment.getType().isRnaSeqBaseline())
                 .compare(other.getSpecificity(), this.getSpecificity())
                 .compare(other.getName(), this.getName())
                 .result();
@@ -107,11 +109,11 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
     }
 
     public Pair<String, FactorGroup> getExperimentSlice(){
-        return Pair.of(experimentAccession, filterFactors);
+        return Pair.of(experiment.getAccession(), filterFactors);
     }
 
     public String getExperimentType() {
-        return experimentType.toString();
+        return experiment.getType().toString();
     }
 
     @Override
@@ -119,7 +121,7 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
         return ImmutableMap.<String, String>builder()
                 .put("id", super.properties().get("id"))
                 .put("name", getShortName())
-                .put("experimentType", experimentType.toString())
+                .put("experimentType", experiment.getType().toString())
                 .build();
     }
 }

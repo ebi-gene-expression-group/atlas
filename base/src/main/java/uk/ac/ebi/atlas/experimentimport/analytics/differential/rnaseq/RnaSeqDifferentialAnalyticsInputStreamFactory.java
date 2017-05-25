@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
@@ -19,7 +18,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamFactory {
     }
 
     public RnaSeqDifferentialAnalyticsInputStream create(String experimentAccession) throws IOException {
-        AtlasResource<TsvReader> resource = dataFileHub.getDifferentialExperimentFiles(experimentAccession).analytics;
+        AtlasResource<?> resource = dataFileHub.getRnaSeqDifferentialExperimentFiles(experimentAccession).analytics;
         return new RnaSeqDifferentialAnalyticsInputStream(resource.getReader(), resource.toString());
     }
 }

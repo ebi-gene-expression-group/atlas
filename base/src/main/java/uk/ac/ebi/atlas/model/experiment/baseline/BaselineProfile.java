@@ -1,20 +1,18 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
-public class BaselineProfile extends Profile<AssayGroup, BaselineExpression> {
+public class BaselineProfile extends Profile<AssayGroup, BaselineExpression, BaselineProfile> {
 
     public BaselineProfile(String geneId, String geneName) {
         super(geneId, geneName);
+    }
+
+    @Override
+    protected BaselineProfile createEmptyCopy() {
+        return new BaselineProfile(getId(), getName());
     }
 
     // add the expression levels of another profile to this one

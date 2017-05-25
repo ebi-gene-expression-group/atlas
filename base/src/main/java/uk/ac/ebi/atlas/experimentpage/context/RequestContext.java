@@ -27,6 +27,10 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         this.experiment = experiment;
     }
 
+    public String serializationShortString(){
+        return requestPreferences.serializationShortString();
+    }
+
     public String getExperimentAccession() {
         return experiment.getAccession();
     }

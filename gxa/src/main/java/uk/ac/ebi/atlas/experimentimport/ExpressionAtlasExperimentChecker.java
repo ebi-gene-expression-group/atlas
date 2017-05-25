@@ -21,6 +21,9 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
+/*
+Does not close TSV files! :(
+ */
 @Named
 @Scope("prototype")
 public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
@@ -73,12 +76,12 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
         checkBaselineFiles(experimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM));
-        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM).get().readLine(0)), experimentAccession);
+        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM).get().readNext()), experimentAccession);
 
 
         //TODO some experiments won't have this - FANTOM5 will only have TPMs - and it's okay
         checkResourceExistsAndIsReadable(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM));
-        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM).get().readLine(0)), experimentAccession);
+        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM).get().readNext()), experimentAccession);
     }
 
     String[] rnaSeqIdsFromHeader(String[] header) {
@@ -89,7 +92,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
         DataFileHub.ProteomicsBaselineExperimentFiles experimentFiles = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession);
         checkBaselineFiles(experimentFiles);
         checkResourceExistsAndIsReadable(experimentFiles.main);
-        headerIdsMatchConfigurationXml(proteomicsIdsFromHeader(experimentFiles.main.get().readLine(0)), experimentAccession);
+        headerIdsMatchConfigurationXml(proteomicsIdsFromHeader(experimentFiles.main.get().readNext()), experimentAccession);
     }
 
     String[] proteomicsIdsFromHeader(String[] header) {
@@ -114,8 +117,8 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     }
 
     void checkDifferentialFiles(String experimentAccession) {
-        DataFileHub.DifferentialExperimentFiles experimentFiles =
-                dataFileHub.getDifferentialExperimentFiles(experimentAccession);
+        DataFileHub.RnaSeqDifferentialExperimentFiles experimentFiles =
+                dataFileHub.getRnaSeqDifferentialExperimentFiles(experimentAccession);
         checkResourceExistsAndIsReadable(experimentFiles.analytics);
         checkResourceExistsAndIsReadable(experimentFiles.rawCounts);
     }

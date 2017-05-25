@@ -95,20 +95,20 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
     }
 
-    private int compareOnAveragePValue(DifferentialProfile<?> firstProfile, DifferentialProfile<?> otherProfile, Collection<Contrast> contrasts) {
+    private int compareOnAveragePValue(DifferentialProfile<?,?> firstProfile, DifferentialProfile<?,?> otherProfile, Collection<Contrast> contrasts) {
         double firstProfileAverageExpressionLevel = firstProfile.getAveragePValueOn(contrasts);
         double otherProfileAverageExpressionLevel = otherProfile.getAveragePValueOn(contrasts);
         return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
     }
 
-    private int compareOnAverageExpressionLevel(DifferentialProfile<?> firstProfile, DifferentialProfile<?> otherProfile,
+    private int compareOnAverageExpressionLevel(DifferentialProfile<?,?> firstProfile, DifferentialProfile<?,?> otherProfile,
                                                   Collection<Contrast> contrasts) {
         double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts);
         double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts);
         return Double.compare(otherProfileAverageExpressionLevel, firstProfileAverageExpressionLevel);
     }
 
-    public double getExpressionLevelFoldChange(DifferentialProfile<?> differentialProfile) {
+    public double getExpressionLevelFoldChange(DifferentialProfile<?,?> differentialProfile) {
 
         double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMaxExpressionLevelOn(nonSelectedQueryContrasts);
 

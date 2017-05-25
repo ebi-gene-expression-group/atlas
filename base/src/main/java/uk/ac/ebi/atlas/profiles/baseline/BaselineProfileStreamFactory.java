@@ -2,37 +2,34 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.tsv.TsvInputStream;
+import uk.ac.ebi.atlas.profiles.stream.CreatesProfilesFromTsvFiles;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.annotation.Nullable;
-import java.io.Reader;
+import java.util.Map;
 
-public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends ProfileStreamFactory<AssayGroup, BaselineExpression,
-        BaselineExperiment, StreamOptions,BaselineProfile>{
-
-    protected abstract Reader getDataFileReader(BaselineExperiment experiment, StreamOptions options);
+public abstract class BaselineProfileStreamFactory<StreamOptions extends BaselineProfileStreamOptions<?>> extends CreatesProfilesFromTsvFiles<AssayGroup, BaselineExpression,
+        BaselineExperiment, StreamOptions,BaselineProfile> {
 
     BaselineProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
 
     @Override
-    public ObjectInputStream<BaselineProfile> create(BaselineExperiment experiment, StreamOptions options){
-        return new TsvInputStream<>(getDataFileReader(experiment, options), getExpressionsRowDeserializerBuilder(experiment), filterExpressions(experiment, options), experiment, 2,
-                new Function<String[], BaselineProfile>() {
-                    @Nullable
-                    @Override
-                    public BaselineProfile apply(@Nullable String[] identifiers) {
-                        return new BaselineProfile(identifiers[0], identifiers[1]);
-                    }
-                });
+    protected Function<String[], BaselineProfile> createProfileFromIdentifiers() {
+        return new Function<String[], BaselineProfile>() {
+            @Nullable
+            @Override
+            public BaselineProfile apply(@Nullable String[] identifiers) {
+                return new BaselineProfile(identifiers[0], identifiers[1]);
+            }
+        };
     }
 
     @Override
@@ -44,5 +41,17 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
         // e.g.
         // baselineExpressionFilter.setFilterFactors(filterFactors);
         return baselineExpressionFilter;
+    }
+
+    protected abstract Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers);
+
+    @Override
+    protected ExpressionsRowDeserializerBuilder<BaselineExpression> getExpressionsRowDeserializerBuilder(final BaselineExperiment experiment) {
+        return new ExpressionsRowDeserializerBuilder<BaselineExpression>() {
+            @Override
+            public ExpressionsRowDeserializer<BaselineExpression> build(String... tsvFileHeaders) {
+                return new ExpressionsRowTsvDeserializerBaseline(rowPositionsToDataColumns(experiment, tsvFileHeaders));
+            }
+        };
     }
 }

@@ -20,7 +20,7 @@ import java.util.Date;
 
 
 public abstract class DifferentialProfilesWriterFactory<Expr extends DifferentialExpression, Prof extends
-        DifferentialProfile<Expr>, R extends DifferentialRequestContext<?,?>> extends
+        DifferentialProfile<Expr, Prof>, R extends DifferentialRequestContext<?,?>> extends
         ProfilesWriterFactory<Contrast, Expr, Prof, R, DifferentialProfilesWriterFactory.DifferentialDownLoadOptions> {
 
     static class DifferentialDownLoadOptions extends ProfilesWriterFactory.ProfileDownloadOptions {
