@@ -5,6 +5,7 @@ import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -38,7 +39,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
         public Collection<ExternallyAvailableContent> get(DifferentialExperiment experiment) {
             ImmutableList.Builder<ExternallyAvailableContent> b = ImmutableList.builder();
 
-            AtlasResource<TsvReader> analytics = dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).analytics;
+            AtlasResource<ObjectInputStream<String[]>> analytics = dataFileHub.getRnaSeqDifferentialExperimentFiles(experiment.getAccession()).analytics;
             if(analytics.exists()){
                 b.add(new ExternallyAvailableContent(
                                 makeUri("analytics"),
@@ -46,13 +47,13 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                                         "All analytics for the experiment"
                                 ),
                                 streamFile(experiment.getAccession()+"-analytics.tsv",
-                                        readFromResourceAndWriteTsv(analytics, AnalyticsDataHeaderBuilder.rnaSeq(experiment))
+                                        readFromStreamAndWriteTsv(analytics, AnalyticsDataHeaderBuilder.rnaSeq(experiment))
                                 )
                         )
                 );
             }
 
-            AtlasResource<TsvReader> rawCounts = dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).rawCounts;
+            AtlasResource<TsvReader> rawCounts = dataFileHub.getRnaSeqDifferentialExperimentFiles(experiment.getAccession()).rawCounts;
             if(rawCounts.exists()){
                 b.add(new ExternallyAvailableContent(
                                 makeUri("raw-counts"),
@@ -60,7 +61,7 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
                                         "All the raw counts for the experiment"
                                 ),
                                 streamFile(experiment.getAccession()+"-raw-counts.tsv",
-                                        readFromResourceAndWriteTsv(analytics, Functions.<String[]>identity())
+                                        readFromResourceAndWriteTsv(rawCounts, Functions.<String[]>identity())
                                 )
                         )
                 );
@@ -84,11 +85,11 @@ public abstract class DifferentialSecondaryDataFiles<E extends DifferentialExper
 
             List<Pair<String, Function<Writer, Void>>> analytics = new ArrayList<>();
             for(String arrayDesign: experiment.getArrayDesignAccessions()){
-                AtlasResource<TsvReader> r = dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesign).analytics;
+                AtlasResource<ObjectInputStream<String[]>> r = dataFileHub.getMicroarrayExperimentFiles(experiment.getAccession(), arrayDesign).analytics;
                 if(r.exists()){
                     analytics.add(Pair.of(
                             MessageFormat.format("{0}-{1}-analytics.tsv", experiment.getAccession(), arrayDesign),
-                            readFromResourceAndWriteTsv(r, AnalyticsDataHeaderBuilder.microarray(experiment))
+                            readFromStreamAndWriteTsv(r, AnalyticsDataHeaderBuilder.microarray(experiment))
                     ));
                 }
             }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ExternallyViewableProfilesList<DataColumnDescriptor extends DescribesDataColumns,
-        Prof extends Profile<DataColumnDescriptor, ? extends Expression>> {
+        Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>> {
 
     private final GeneProfilesList<Prof> profiles;
 

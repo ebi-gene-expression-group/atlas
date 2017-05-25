@@ -78,4 +78,8 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
                 .toString();
     }
 
+    public String serializationShortString(){
+        return "serialized";
+    }
+
 }

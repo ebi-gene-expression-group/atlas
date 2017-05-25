@@ -3,11 +3,10 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class RnaSeqBaselineExpressionKryoSerializerTest {
 
@@ -29,8 +28,8 @@ public class RnaSeqBaselineExpressionKryoSerializerTest {
                 new String[]{"id_1", "name_1", "1.337"}
         ));
 
-        if(dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).exists()){
-            dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).get().delete();
+        if(dataFileHub.getKryoFile(accession, null).exists()){
+            dataFileHub.getKryoFile(accession, null).get().delete();
         }
 
         subject = new RnaSeqBaselineExpressionKryoSerializer(dataFileHub);
@@ -38,10 +37,10 @@ public class RnaSeqBaselineExpressionKryoSerializerTest {
 
     @Test
     public void testSerializeExpressionData() throws Exception {
-        assertThat(dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).exists(), is(false));
+        assertThat(dataFileHub.getKryoFile(accession, null).exists(), is(false));
 
-        subject.serializeExpressionData(accession, ExpressionUnit.Absolute.Rna.TPM);
+        subject.serializeExpressionData(accession, null);
 
-        assertThat(dataFileHub.getKryoFile(accession, ExpressionUnit.Absolute.Rna.TPM).exists(), is(true));
+        assertThat(dataFileHub.getKryoFile(accession, null).exists(), is(true));
     }
 }

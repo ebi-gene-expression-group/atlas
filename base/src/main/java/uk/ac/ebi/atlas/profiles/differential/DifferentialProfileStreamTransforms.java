@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamTransforms;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
-public class DifferentialProfileStreamTransforms<Prof extends DifferentialProfile<? extends DifferentialExpression>>
+public class DifferentialProfileStreamTransforms<Prof extends DifferentialProfile<? extends DifferentialExpression, Prof>>
         extends ProfileStreamTransforms<Contrast, Prof> {
 
     public DifferentialProfileStreamTransforms(DifferentialProfileStreamOptions options, GeneQueryResponse geneQueryResponse){

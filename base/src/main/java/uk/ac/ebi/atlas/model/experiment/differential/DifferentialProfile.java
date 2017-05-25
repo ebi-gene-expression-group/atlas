@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> {
+public abstract class DifferentialProfile<T extends DifferentialExpression, Self extends Profile<Contrast, T, Self>> extends Profile<Contrast, T, Self> {
 
     private static final double MIN_P_VALUE = 1;
 

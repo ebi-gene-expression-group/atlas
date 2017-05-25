@@ -31,4 +31,9 @@ public class RnaSeqBaselineRequestPreferences extends BaselineRequestPreferences
     public void setUnit(ExpressionUnit.Absolute.Rna unit) {
         this.unit = unit;
     }
+
+    @Override
+    public String serializationShortString(){
+        return super.serializationShortString()+unit;
+    }
 }

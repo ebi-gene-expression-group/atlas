@@ -33,7 +33,7 @@ import java.util.Map;
 public class DifferentialExperimentPageService
         <Expr extends DifferentialExpression, E extends DifferentialExperiment,
          K extends DifferentialRequestPreferences,
-         P extends DifferentialProfile<Expr>,  R extends DifferentialRequestContext<E, K> >
+         P extends DifferentialProfile<Expr, P>,  R extends DifferentialRequestContext<E, K> >
         extends ExperimentPageService {
 
     private final AtlasResourceHub atlasResourceHub;

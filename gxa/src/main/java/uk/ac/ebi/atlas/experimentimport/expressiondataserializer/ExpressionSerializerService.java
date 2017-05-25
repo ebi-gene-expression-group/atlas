@@ -32,10 +32,11 @@ public class ExpressionSerializerService {
         if (experimentType.isRnaSeqBaseline()) {
             String tpmsMessage = rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession, ExpressionUnit.Absolute.Rna.TPM);
             String fpkmsMessage = rnaSeqBaselineExpressionKryoSerializer.serializeExpressionData(experimentAccession, ExpressionUnit.Absolute.Rna.FPKM);
-            return MessageFormat.format("TPMs: {0}, FPKMs: {1}", tpmsMessage, fpkmsMessage);
         } else {
             return "skipped";
         }
+
+        return "success";
     }
 
     public void removeKryoFile(String experimentAccession) {

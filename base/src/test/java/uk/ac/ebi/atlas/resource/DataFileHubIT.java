@@ -37,8 +37,8 @@ public class DataFileHubIT {
 
     @Test
     public void testGetDifferentialExperimentFiles() throws Exception {
-        assertAtlasResourceExists(subject.getDifferentialExperimentFiles("E-GEOD-54705").analytics);
-        assertAtlasResourceExists(subject.getDifferentialExperimentFiles("E-GEOD-54705").rawCounts);
+        assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles("E-GEOD-54705").analytics);
+        assertAtlasResourceExists(subject.getRnaSeqDifferentialExperimentFiles("E-GEOD-54705").rawCounts);
     }
 
     private void assertAtlasResourceExists(AtlasResource<?> resource){

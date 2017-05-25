@@ -8,18 +8,20 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.profiles.ProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.CreatesProfilesFromTsvFiles;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializer;
 import uk.ac.ebi.atlas.profiles.tsv.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class DifferentialProfileStreamFactory<Expr extends DifferentialExpression,
-        E extends DifferentialExperiment, T extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr>>
-        extends ProfileStreamFactory<Contrast, Expr, E, T, Prof> {
+        E extends DifferentialExperiment, T extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>>
+        extends CreatesProfilesFromTsvFiles<Contrast, Expr, E, T, Prof> {
     protected DifferentialProfileStreamFactory(DataFileHub dataFileHub) {
         super(dataFileHub);
     }
