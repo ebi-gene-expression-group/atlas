@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;
 

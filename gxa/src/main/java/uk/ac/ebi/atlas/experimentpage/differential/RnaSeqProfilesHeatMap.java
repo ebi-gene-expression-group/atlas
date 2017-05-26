@@ -4,7 +4,7 @@ import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;

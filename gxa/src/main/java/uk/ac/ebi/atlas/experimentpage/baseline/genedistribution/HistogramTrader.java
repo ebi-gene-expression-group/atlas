@@ -8,11 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineProfileStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 

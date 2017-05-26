@@ -16,7 +16,7 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;

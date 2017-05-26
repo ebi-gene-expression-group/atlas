@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.SelectProfiles;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 

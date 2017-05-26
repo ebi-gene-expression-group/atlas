@@ -1,18 +1,18 @@
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.profiles.stream;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
-
-import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 
@@ -35,14 +35,19 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
     }
 
     @Test
-    public void proteomicsHeaders(){
+    public void proteomicsHeadersCanHaveSpectraclCountStuff(){
         //gene name and gene id gets removed somewhere else
         //future proteomics headers will not even have the extra SpectralCount
-        String[] headers = "g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance".split(" ");
-
+        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(baselineExperiment, Predicates.<BaselineExpression>alwaysTrue())
+                .apply("id name g1.SpectralCount g2.SpectralCount g1.WithInSampleAbundance g2.WithInSampleAbundance".split(" "));
 
         assertThat(
-                subject.rowPositionsToDataColumns(baselineExperiment, headers),
-                Matchers.<Map<Integer, AssayGroup>>is(ImmutableMap.of(2, g1, 3, g2)));
+                profileFromTsvLine.apply(new String[]{"id", "name", "_", "_", "1.0", "2.0"}).getExpression(g1),
+                Matchers.<Expression>is(new BaselineExpression(1.0, g1.getId()))
+        );
     }
+
+
+
+
 }

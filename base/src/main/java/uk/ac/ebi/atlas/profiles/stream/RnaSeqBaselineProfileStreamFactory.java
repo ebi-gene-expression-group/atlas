@@ -1,18 +1,21 @@
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.Validate;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Map;
 
 @Named
@@ -24,15 +27,15 @@ public class RnaSeqBaselineProfileStreamFactory extends BaselineProfileStreamFac
     }
 
     @Override
-    protected ObjectInputStream<String[]> getDataFileReader(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
-        return dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).get();
+    protected Collection<ObjectInputStream<String[]>> getDataFiles(BaselineExperiment experiment, BaselineProfileStreamOptions<ExpressionUnit.Absolute.Rna> options) {
+        return ImmutableList.of(dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFile(options.getExpressionUnit()).get());
     }
 
     @Override
     protected Map<Integer, AssayGroup> rowPositionsToDataColumns(BaselineExperiment experiment, String[] headers){
         ImmutableMap.Builder<Integer, AssayGroup> b = ImmutableMap.builder();
 
-        for(int i = 0; i< headers.length ; i++){
+        for(int i = 2; i< headers.length ; i++){
             String s = headers[i];
             AssayGroup assayGroup = experiment.getDataColumnDescriptor(s);
             Validate.notNull(assayGroup, MessageFormat.format("Unknown identifier in position {0}: {1}", i, s));

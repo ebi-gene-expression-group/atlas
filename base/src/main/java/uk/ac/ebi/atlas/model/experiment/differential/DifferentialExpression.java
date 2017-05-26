@@ -4,6 +4,8 @@ import com.google.common.base.Objects;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.Expression;
 
+import java.text.MessageFormat;
+
 public class DifferentialExpression implements Expression {
     private static final double SMALLEST_P_VALUE_ALLOWED = 1E-125;
     public static final double WEAKEST_LEVEL = 0;
@@ -105,5 +107,10 @@ public class DifferentialExpression implements Expression {
         result.addProperty("foldChange", foldChange);
         result.addProperty("pValue", pValue);
         return result;
+    }
+
+    @Override
+    public String toString(){
+        return MessageFormat.format("DifferentialExpression={0} foldChange={1} pValue={2}", dataColumnDescriptorId, foldChange, pValue);
     }
 }

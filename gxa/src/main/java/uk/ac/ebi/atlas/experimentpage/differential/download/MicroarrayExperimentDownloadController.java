@@ -15,7 +15,7 @@ import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms;
-import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
