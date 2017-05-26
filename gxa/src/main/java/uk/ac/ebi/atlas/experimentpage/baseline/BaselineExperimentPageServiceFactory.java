@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.tracks.TracksUtil;

@@ -1,8 +1,8 @@
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.profiles.stream;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.RnaSeqBaselineExpressionKryoSerializer;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -20,11 +21,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
-import java.util.List;
-import java.util.Set;
-
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -133,6 +130,22 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         assertThat(resultFpkms.getExpressionLevel(assayGroup), is(1.1));
         assertThat(resultFpkms.getExpressionLevel(secondAssayGroup), is(2.1));
 
+    }
+
+    @Test
+    public void canProvideQuartiles(){
+        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(baselineExperiment, Predicates.<BaselineExpression>alwaysTrue())
+                .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()});
+
+        assertThat(
+                profileFromTsvLine.apply(new String[]{"id", "name", "1.0", "2.0"}).getExpression(assayGroup),
+                Matchers.<Expression>is(new BaselineExpression(1.0, assayGroup.getId()))
+        );
+
+        assertThat(
+                profileFromTsvLine.apply(new String[]{"id", "name", "0.1,0.2,0.3,0.4,0.5", "2.0"}).getExpression(assayGroup),
+                Matchers.<Expression>is(new BaselineExpression(new double[]{0.1, 0.2, 0.3, 0.4,0.5}, assayGroup.getId()))
+        );
     }
 
 }

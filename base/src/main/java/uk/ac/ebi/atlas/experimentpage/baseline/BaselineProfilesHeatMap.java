@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.MinMaxProfileRanking;
 import uk.ac.ebi.atlas.profiles.PrescribedOrderProfileSelection;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
