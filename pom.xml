@@ -774,6 +774,32 @@
         </profile>
 
         <profile>
+            <!-- Used for build that is deployed to ves-hx-77 -->
+            <id>test.pg</id>
+            <properties>
+                <data.files.location>/srv/gxa/data</data.files.location>
+                <db.context>pgContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql://pgsql-hxvm-036.ebi.ac.uk:5432/gxpatlastst</jdbc.url>
+                <jdbc.username>atlasprd3</jdbc.username>
+                <jdbc.password>CK5UubSaODCb</jdbc.password>
+                <log.level.root>info</log.level.root>
+                <log.level.atlas>debug</log.level.atlas>
+                <log.prudent>false</log.prudent>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>jdbc.properties</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
+        <profile>
             <id>performance</id>
             <build>
                 <plugins>
