@@ -21,6 +21,7 @@ public class MockDataFileHub extends DataFileHub {
         new File(dataFilesLocation, "magetab").mkdir();
         new File(dataFilesLocation, "expdesign").mkdir();
         new File(dataFilesLocation, "species").mkdir();
+        new File(dataFilesLocation, "serialized_expression").mkdir();
         new File(dataFilesLocation).deleteOnExit();
     }
 
