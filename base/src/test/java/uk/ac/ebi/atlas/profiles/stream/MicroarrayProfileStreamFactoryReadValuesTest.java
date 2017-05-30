@@ -68,13 +68,13 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
     public void shouldReadValuesRight() {
         assertThat(
                 profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g2),
-                Matchers.<Expression>is(new MicroarrayExpression(1, 0.5, 0.47, g1_g2)
+                Matchers.<Expression>is(new MicroarrayExpression(Double.parseDouble(P_VAL_1), Double.parseDouble(FOLD_CHANGE_1), Double.parseDouble(T_VAL_1), g1_g2)
                 )
         );
 
         assertThat(
                 profileFromTsvLine.apply(TWO_CONTRASTS).getExpression(g1_g3),
-                Matchers.<Expression>is(new MicroarrayExpression(1, -0.5, Double.NEGATIVE_INFINITY, g1_g3)
+                Matchers.<Expression>is(new MicroarrayExpression(Double.parseDouble(P_VAL_2), Double.NEGATIVE_INFINITY,Double.parseDouble(T_VAL_2), g1_g3)
                 )
         );
     }

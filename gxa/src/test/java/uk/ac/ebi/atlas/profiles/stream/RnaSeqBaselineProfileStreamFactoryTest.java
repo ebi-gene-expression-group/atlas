@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.RnaSeqBaselineExpressionKryoSerializer;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Expression;
@@ -93,14 +93,16 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
     public void readFromKryoFile() {
         //given the right value can only be read off from kryo files
         ExpressionUnit.Absolute.Rna unit = ExpressionUnit.Absolute.Rna.TPM;
-        new RnaSeqBaselineExpressionKryoSerializer(dataFileHub).delete(baselineExperiment.getAccession(), unit);
+        new ExpressionSerializerService(dataFileHub).removeKryoFile(baselineExperiment);
         setExpressionValuesTpmAndFpkm(13.37, 13.37);
-        new RnaSeqBaselineExpressionKryoSerializer(dataFileHub).serializeExpressionData(baselineExperiment.getAccession(), unit);
+        new ExpressionSerializerService(dataFileHub).kryoSerializeExpressionData(baselineExperiment);
         setExpressionValuesTpmAndFpkm(0.0, 0.0);
 
         RnaSeqBaselineRequestPreferences rnaSeqBaselineRequestPreferences = new RnaSeqBaselineRequestPreferences();
         rnaSeqBaselineRequestPreferences.setUnit(unit);
-        ObjectInputStream<BaselineProfile> result = subject.create(baselineExperiment, new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment));
+        ObjectInputStream<BaselineProfile> result =
+                new RnaSeqBaselineProfileStreamFactory(dataFileHub).create(baselineExperiment,
+                        new BaselineRequestContext<>(rnaSeqBaselineRequestPreferences, baselineExperiment));
 
 
         assertThat(result.readNext().getExpressionLevel(assayGroup), is(13.37));
@@ -134,7 +136,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
     @Test
     public void canProvideQuartiles(){
-        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(baselineExperiment, Predicates.<BaselineExpression>alwaysTrue())
+        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(twoAssayGroupBaselineExperiment, Predicates.<BaselineExpression>alwaysTrue())
                 .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()});
 
         assertThat(

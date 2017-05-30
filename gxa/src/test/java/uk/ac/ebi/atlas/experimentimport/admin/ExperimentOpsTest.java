@@ -68,7 +68,7 @@ public class ExperimentOpsTest {
 
         fileSystem = new HashMap<>();
 
-        when(expressionSerializerService.kryoSerializeExpressionData(Matchers.any(ExperimentDTO.class))).thenReturn("skipped");
+        when(expressionSerializerService.kryoSerializeExpressionData(Matchers.any(Experiment.class))).thenReturn("skipped");
 
         when(experimentMock.getAttributes()).thenReturn(new HashMap<String, Object>());
         when(experimentTrader.getExperiment(anyString(), anyString())).thenReturn(experimentMock);
@@ -238,10 +238,8 @@ public class ExperimentOpsTest {
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
-        ArgumentCaptor<ExperimentDTO> captor = ArgumentCaptor.forClass(ExperimentDTO.class);
         verify(experimentCrud).findExperiment(accession);
-        verify(expressionSerializerService).kryoSerializeExpressionData(captor.capture());
-        assertThat(captor.getValue().getExperimentAccession(), is(accession));
+        verify(expressionSerializerService).kryoSerializeExpressionData(Matchers.any(Experiment.class));
         verify(analyticsIndexerManager).addToAnalyticsIndex(accession);
 
         verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
@@ -279,7 +277,7 @@ public class ExperimentOpsTest {
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled3() throws Exception {
         Mockito.doThrow(new RuntimeException("Serializing failed"))
                 .when(expressionSerializerService)
-                .kryoSerializeExpressionData(Matchers.any(ExperimentDTO.class));
+                .kryoSerializeExpressionData(Matchers.any(Experiment.class));
 
         String response =
                 new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
@@ -288,9 +286,7 @@ public class ExperimentOpsTest {
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
         verify(baselineCoexpressionProfileLoader).loadBaselineCoexpressionsProfile(accession);
         verify(experimentCrud).findExperiment(accession);
-        ArgumentCaptor<ExperimentDTO> captor = ArgumentCaptor.forClass(ExperimentDTO.class);
-        verify(expressionSerializerService).kryoSerializeExpressionData(captor.capture());
-        assertThat(captor.getValue().getExperimentAccession(), is(accession));
+        verify(expressionSerializerService).kryoSerializeExpressionData(Matchers.any(Experiment.class));
 
         verifyNoMoreInteractions(experimentCrud, experimentCrud,analyticsIndexerManager,baselineCoexpressionProfileLoader);
 
@@ -302,7 +298,7 @@ public class ExperimentOpsTest {
     public void loadingExperimentsCanFailAndThenTheRestOfMethodsIsNotCalled4() throws Exception {
         Mockito.doThrow(new NullPointerException())
                 .when(expressionSerializerService)
-                .kryoSerializeExpressionData(Matchers.any(ExperimentDTO.class));
+                .kryoSerializeExpressionData(Matchers.any(Experiment.class));
 
         String response =
                 new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
