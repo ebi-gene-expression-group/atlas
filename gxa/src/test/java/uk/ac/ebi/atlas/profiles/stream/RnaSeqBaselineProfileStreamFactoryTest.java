@@ -37,7 +37,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
     MockDataFileHub dataFileHub;
 
-    RnaSeqBaselineProfileStreamFactory subject;
+    RnaSeqBaselineProfileStreamFactory.Impl subject;
 
 
     @Mock
@@ -59,7 +59,7 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
         dataFileHub = MockDataFileHub.get();
 
-        subject = new RnaSeqBaselineProfileStreamFactory(dataFileHub);
+        subject = new RnaSeqBaselineProfileStreamFactory.Impl(dataFileHub);
     }
 
     private void setExpressionValuesTpmAndFpkm(Double tpm, Double fpkm){

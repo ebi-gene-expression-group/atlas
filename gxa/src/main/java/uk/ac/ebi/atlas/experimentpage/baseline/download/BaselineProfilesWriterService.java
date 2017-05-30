@@ -4,10 +4,15 @@ import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
@@ -30,7 +35,7 @@ import java.util.Map;
 
 import static org.apache.commons.lang3.StringUtils.wrap;
 
-public class BaselineProfilesWriterService extends ExternallyAvailableContent.Supplier<BaselineExperiment>{
+public class BaselineProfilesWriterService<Unit extends ExpressionUnit.Absolute> extends ExternallyAvailableContent.Supplier<BaselineExperiment> {
 
     @Override
     public ExternallyAvailableContent.ContentType contentType() {
@@ -38,7 +43,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
     }
 
     @Named
-    public static class RnaSeq extends BaselineProfilesWriterService {
+    public static class RnaSeq extends BaselineProfilesWriterService<ExpressionUnit.Absolute.Rna> {
         @Inject
         RnaSeq(RnaSeqBaselineProfileStreamFactory inputStreamFactory,
                BaselineProfilesWriterFactory baselineProfilesWriterFactory,
@@ -49,7 +54,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
     }
 
     @Named
-    public static class Proteomics extends BaselineProfilesWriterService {
+    public static class Proteomics extends BaselineProfilesWriterService<ExpressionUnit.Absolute.Protein> {
         @Inject
         Proteomics(ProteomicsBaselineProfileStreamFactory inputStreamFactory,
                    BaselineProfilesWriterFactory baselineProfilesWriterFactory,
@@ -59,7 +64,8 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
         }
     }
 
-    private BaselineProfileStreamFactory inputStreamFactory;
+    private ProfileStreamFactory<AssayGroup, BaselineExpression,
+            BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> inputStreamFactory;
 
     private BaselineProfilesWriterFactory baselineProfilesWriterFactory;
 
@@ -67,10 +73,11 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
 
     private CoexpressedGenesService coexpressedGenesService;
 
-    BaselineProfilesWriterService(BaselineProfileStreamFactory inputStreamFactory,
-                                         BaselineProfilesWriterFactory baselineProfilesWriterFactory,
-                                         SolrQueryService solrQueryService,
-                                         CoexpressedGenesService coexpressedGenesService) {
+    BaselineProfilesWriterService(ProfileStreamFactory<AssayGroup, BaselineExpression,
+            BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> inputStreamFactory,
+                                  BaselineProfilesWriterFactory baselineProfilesWriterFactory,
+                                  SolrQueryService solrQueryService,
+                                  CoexpressedGenesService coexpressedGenesService) {
         this.inputStreamFactory = inputStreamFactory;
         this.baselineProfilesWriterFactory = baselineProfilesWriterFactory;
         this.solrQueryService = solrQueryService;
@@ -78,17 +85,17 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
 
     }
 
-    public long write(Writer writer, BaselineRequestPreferences preferences, BaselineExperiment experiment,
+    public long write(Writer writer, BaselineRequestPreferences<Unit> preferences, BaselineExperiment experiment,
                       Map<String, Integer> coexpressionsRequested) {
         int totalCoexpressionsRequested = 0;
         for (Map.Entry<String, Integer> e : coexpressionsRequested.entrySet()) {
             totalCoexpressionsRequested += e.getValue();
         }
 
-        final BaselineRequestContext requestContext = new BaselineRequestContext(preferences, experiment);
+        final BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         GeneQueryResponse geneQueryResponse =
                 solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies().getReferenceName());
-        if(totalCoexpressionsRequested>0){
+        if (totalCoexpressionsRequested > 0) {
             geneQueryResponse =
                     coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
                             experiment, geneQueryResponse, coexpressionsRequested);
@@ -105,7 +112,7 @@ public class BaselineProfilesWriterService extends ExternallyAvailableContent.Su
 
     private String describe(SemanticQuery geneQuery, int coexpressedGenes) {
         return coexpressedGenes == 0 ? wrap(SearchDescription.get(geneQuery), "'") :
-                geneQuery.description() + " with "+ coexpressedGenes + " similarly expressed genes";
+                geneQuery.description() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 
     @Override

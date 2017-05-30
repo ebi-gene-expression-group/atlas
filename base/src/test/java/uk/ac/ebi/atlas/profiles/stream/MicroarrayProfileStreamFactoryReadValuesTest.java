@@ -53,12 +53,12 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
 
     String[] TWO_CONTRASTS = new String[]{id, name, designElement, P_VAL_1, T_VAL_1, FOLD_CHANGE_1, P_VAL_2, T_VAL_2, FOLD_CHANGE_2};
 
-    MicroarrayProfileStreamFactory subject;
+    MicroarrayProfileStreamFactory.Impl subject;
 
     @Before
     public void setUp() throws Exception {
         dataFileHub = new MockDataFileHub();
-        subject = new MicroarrayProfileStreamFactory(dataFileHub);
+        subject = new MicroarrayProfileStreamFactory.Impl(dataFileHub);
         profileFromTsvLine = subject.howToReadLineStream(experiment, Predicates.<MicroarrayExpression>alwaysTrue()).apply(
                 "Gene ID\tGene Name\tDesign element\tg1_g2.p-value\tg1_g2.tstat\tg1_g2.log2foldchange\tg1_g3.p-value\tg1_g3.tstat\tg1_g3.log2foldchange".split("\t")
         );
