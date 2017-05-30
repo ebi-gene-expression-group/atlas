@@ -2,15 +2,20 @@ package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,6 +23,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class ExperimentAdminController extends JsonExceptionHandlingController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentAdminController.class);
 
     private final ExperimentOps experimentOps;
     private final ExperimentAdminHelpPage helpPage = new ExperimentAdminHelpPage();
@@ -30,9 +37,8 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             value = "",
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String listAllExperiments() {
-        return doOp("all", "list");
+    public void listAllExperiments(HttpServletResponse response) {
+        doOp("all", "list" ,response);
     }
 
     @RequestMapping(
@@ -59,25 +65,32 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             value = "/{accessions}/{op}",
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter) {
+    public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) {
         try {
             final Optional<Collection<String>> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
                     ? Optional.<Collection<String>>absent()
                     : Optional.of(readAccessions(accessionParameter));
 
-
-            return gson.toJson(
-                    maybeOps(opParameter)
-                    .transform(new Function<List<Op>, JsonElement>() {
+            Iterable<JsonElement> result = maybeOps(opParameter)
+                    .transform(new Function<List<Op>, Iterable<JsonElement>>() {
                         @Override
-                        public JsonElement apply(List<Op> ops) {
+                        public Iterable<JsonElement> apply(List<Op> ops) {
                             return experimentOps.perform(accessions, ops);
                         }
-                    }).or(usageMessage(opParameter))
-            );
+                    }).or(ImmutableList.of(usageMessage(opParameter)));
+
+            JsonWriter writer = new JsonWriter(response.getWriter());
+            writer.setIndent("  ");
+            writer.beginArray();
+            for (JsonElement element : result) {
+                gson.toJson(element, writer);
+                writer.flush();
+            }
+            writer.endArray();
+            writer.close();
+
         } catch (Exception e) {
-            return gson.toJson(errorMessage(accessionParameter, e));
+            LOGGER.error(gson.toJson(errorMessage(accessionParameter, e)));
         }
     }
 

@@ -5,6 +5,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterators;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -41,7 +43,7 @@ public class ExperimentOps {
     public static final JsonPrimitive DEFAULT_SUCCESS_RESULT = new JsonPrimitive("success");
 
 
-    public JsonArray perform(Optional<? extends Collection<String>> accessions, Collection<Op> ops){
+    public Iterable<JsonElement> perform(Optional<? extends Collection<String>> accessions, Collection<Op> ops){
         if(ops.size()==1){
             if(accessions.isPresent()){
                 return perform(accessions.get(), ops.iterator().next());
@@ -63,7 +65,7 @@ public class ExperimentOps {
 
 
 
-    private JsonArray perform(Collection<Op> ops){
+    private Iterable<JsonElement> perform(Collection<Op> ops){
         Optional<? extends List<Pair<String,? extends JsonElement>>> r =
                 experimentOpsExecutionService.attemptExecuteForAllAccessions(ops);
         if(r.isPresent()){
@@ -77,7 +79,7 @@ public class ExperimentOps {
         }
     }
 
-    private JsonArray perform(Op op){
+    private Iterable<JsonElement> perform(Op op){
         Optional<? extends List<Pair<String,? extends JsonElement>>> r =
                 experimentOpsExecutionService.attemptExecuteForAllAccessions(op);
         if(r.isPresent()){
@@ -94,16 +96,23 @@ public class ExperimentOps {
 
 
 
-    private JsonArray perform(Collection<String> accessions, Op op) {
-        JsonArray result = new JsonArray();
-        for (String accession : accessions) {
-            Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
-            result.add(showResult(accession, r.getLeft(), r.getRight()));
-        }
-        return result;
+    private Iterable<JsonElement> perform(final Collection<String> accessions, final Op op) {
+        return new Iterable<JsonElement>() {
+            @Override
+            public Iterator<JsonElement> iterator() {
+                return Iterators.transform(accessions.iterator(), new Function<String, JsonElement>() {
+                    @Nullable
+                    @Override
+                    public JsonElement apply(@Nullable String accession) {
+                        Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
+                        return showResult(accession, r.getLeft(), r.getRight());
+                    }
+                });
+            }
+        };
     }
 
-    private JsonArray perform(Collection<String> accessions, Collection<Op> ops) {
+    private Iterable<JsonElement> perform(Collection<String> accessions, Collection<Op> ops) {
         JsonArray result = new JsonArray();
         for (String accession : accessions) {
             result.add(packageResultIntoJsonObject(accession, performManyOpsAndReturnResultingErrorsAndResults

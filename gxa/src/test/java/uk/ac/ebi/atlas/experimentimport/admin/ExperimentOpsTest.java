@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
+import org.springframework.mock.web.MockHttpServletResponse;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTOTest;
@@ -27,6 +28,7 @@ import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 import static org.hamcrest.Matchers.contains;
@@ -148,13 +150,13 @@ public class ExperimentOpsTest {
         ops.add(Op.COEXPRESSION_DELETE); // should not be started
         ops.add(Op.COEXPRESSION_IMPORT); // should not be started
 
-        JsonArray result = subject.perform(Optional.of(Collections.singletonList(accession)),ops);
+        JsonObject result = subject.perform(Optional.of(Collections.singletonList(accession)),ops).iterator().next().getAsJsonObject();
 
-        assertThat(result.get(0).getAsJsonObject().has("accession"), is(true));
-        assertThat(result.get(0).getAsJsonObject().get("accession").getAsJsonPrimitive()
+        assertThat(result.has("accession"), is(true));
+        assertThat(result.get("accession").getAsJsonPrimitive()
                 .getAsString(), is(accession));
-        JsonArray successes = result.get(0).getAsJsonObject().get("result").getAsJsonArray();
-        JsonArray failures = result.get(0).getAsJsonObject().get("error").getAsJsonArray();
+        JsonArray successes = result.get("result").getAsJsonArray();
+        JsonArray failures = result.get("error").getAsJsonArray();
 
         assertThat(successes.toString(), successes.size(), is(new String[]{"success!", "<sth else>"}.length));
         assertThat(failures.toString(),failures.size(), is(new String[]{"<error msg>", "not started"}.length));
@@ -233,7 +235,7 @@ public class ExperimentOpsTest {
                 Op.opsForParameter("LOAD_PUBLIC"),
                 contains(Op.IMPORT_PUBLIC, Op.COEXPRESSION_UPDATE, Op.SERIALIZE, Op.ANALYTICS_IMPORT));
 
-        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -251,7 +253,7 @@ public class ExperimentOpsTest {
                 .when(experimentCrud)
                 .importExperiment(accession,false);
 
-        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC", new MockHttpServletResponse());
 
         verify(experimentCrud).importExperiment(accession, false);
 
@@ -264,7 +266,7 @@ public class ExperimentOpsTest {
                 .when(baselineCoexpressionProfileLoader)
                 .loadBaselineCoexpressionsProfile(accession);
 
-        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",new MockHttpServletResponse());
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -279,8 +281,12 @@ public class ExperimentOpsTest {
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(Matchers.any(Experiment.class));
 
-        String response =
-                new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
+        MockHttpServletResponse responseObject = new MockHttpServletResponse();
+
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",responseObject);
+
+
+        String response = responseObject.getContentAsString();
 
         verify(experimentCrud).importExperiment(accession, false);
         verify(baselineCoexpressionProfileLoader).deleteCoexpressionsProfile(accession);
@@ -300,24 +306,28 @@ public class ExperimentOpsTest {
                 .when(expressionSerializerService)
                 .kryoSerializeExpressionData(Matchers.any(Experiment.class));
 
-        String response =
-                new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC");
+        MockHttpServletResponse responseObject = new MockHttpServletResponse();
+        new ExperimentAdminController(subject).doOp(accession, "LOAD_PUBLIC",responseObject);
+        String response = responseObject.getContentAsString();
 
         assertThat(response, containsString("error"));
     }
 
-    private String readFromStatus(List<OpLogEntry> persisted){
+    private String readFromStatus(List<OpLogEntry> persisted) throws Exception{
         String accession = "ACCESSION-statusReadsOpLog";
         experimentOpLogWriter.persistOpLog(accession, persisted);
 
+        MockHttpServletResponse responseObject = new MockHttpServletResponse();
+        new ExperimentAdminController(subject).doOp(accession, "STATUS",responseObject);
+
         JsonArray response =
-                new Gson().fromJson(new ExperimentAdminController(subject).doOp(accession, "STATUS"), JsonArray.class).getAsJsonArray();
+                new Gson().fromJson(responseObject.getContentAsString(), JsonArray.class).getAsJsonArray();
 
         return response.get(0).getAsJsonObject().get("result").getAsString();
     }
 
     @Test
-    public void statusReadsLastOpLogEntry() {
+    public void statusReadsLastOpLogEntry() throws Exception {
         assertThat(readFromStatus(ImmutableList.<OpLogEntry>of()), is(""));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
