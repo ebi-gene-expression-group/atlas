@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +18,7 @@ import uk.ac.ebi.atlas.utils.StringArrayUtil;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -75,13 +77,12 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
     void checkRnaSeqBaselineFiles(String experimentAccession) {
         DataFileHub.RnaSeqBaselineExperimentFiles experimentFiles = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession);
         checkBaselineFiles(experimentFiles);
-        checkResourceExistsAndIsReadable(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM));
-        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.TPM).get().readNext()), experimentAccession);
-
-
-        //TODO some experiments won't have this - FANTOM5 will only have TPMs - and it's okay
-        checkResourceExistsAndIsReadable(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM));
-        headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(ExpressionUnit.Absolute.Rna.FPKM).get().readNext()), experimentAccession);
+        ImmutableList<ExpressionUnit.Absolute.Rna> dataFiles = experimentFiles.dataFiles();
+        Preconditions.checkState(dataFiles.size()> 0, MessageFormat.format("No data files (FPKM/TPM) present for {0}!", experimentAccession));
+        for(ExpressionUnit.Absolute.Rna dataFile: dataFiles){
+            checkResourceExistsAndIsReadable(experimentFiles.dataFile(dataFile));
+            headerIdsMatchConfigurationXml(rnaSeqIdsFromHeader(experimentFiles.dataFile(dataFile).get().readNext()), experimentAccession);
+        }
     }
 
     String[] rnaSeqIdsFromHeader(String[] header) {
