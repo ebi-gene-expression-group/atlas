@@ -10,8 +10,9 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression,
 
     // is part of the identity of the profile, ie: you can have two profiles for same
     // gene but different design element, eg: http://ves-hx-76:8080/gxa/experiments/E-MTAB-1066?geneQuery=Mbs
-    private final String designElementName;
+    private String designElementName;
 
+    private MicroarrayProfile(){super();}
     /*
     Some experiments have multiple array designs, e.g. E-MEXP-893
     They are read in separately so it should also become part of identity of that profile, but I think it doesn't matter.

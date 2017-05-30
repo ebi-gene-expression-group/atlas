@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.KryoFile;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.stream.serializers.AtlasKryo;
 
 import java.io.IOException;
 
@@ -39,12 +40,16 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
 
     ObjectInputStream<Prof> createFromKryoFile(KryoFile.Handle kryoFile, final Predicate<Expr> filter){
         final UnsafeInput input = kryoFile.read();
-        final Kryo kryo = new Kryo();
+        final Kryo kryo = AtlasKryo.get();
 
         return new ObjectInputStream<Prof>() {
             @Override
             public Prof readNext() {
-                return ((Prof) kryo.readClassAndObject(input)).filter(filter);
+                if(input.eof()){
+                    return null;
+                } else {
+                    return ((Prof) kryo.readClassAndObject(input)).filter(filter);
+                }
             }
 
             @Override
@@ -64,12 +69,12 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
 
     public void persist(E experiment, StreamOptions options){
         KryoFile.Handle kryoFileHandle = getKryoFile(experiment, options).get();
-        final Kryo kryo = new Kryo();
+        final Kryo kryo = AtlasKryo.get();
 
         final UnsafeOutput output = kryoFileHandle.write();
         for(Prof profile : new IterableObjectInputStream<>(
-                createFromTsvFile(experiment, options, Predicates.<Expr>alwaysTrue()))
-                ){
+                createFromTsvFile(experiment, options, Predicates.<Expr>alwaysTrue())
+                )){
             kryo.writeClassAndObject(output, profile);
         }
         output.close();

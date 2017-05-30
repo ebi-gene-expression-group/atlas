@@ -13,6 +13,8 @@ public abstract class DifferentialProfile<T extends DifferentialExpression, Self
 
     private static final double MIN_P_VALUE = 1;
 
+    protected DifferentialProfile(){};
+
     public DifferentialProfile(String geneId, String geneName) {
         super(geneId, geneName);
     }

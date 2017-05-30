@@ -1,27 +1,19 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.KryoSerializable;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class BaselineExpression implements Expression, KryoSerializable {
+public class BaselineExpression implements Expression {
     private double level;
     private boolean known = true;
     private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
-
-    // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
-    private BaselineExpression() {}
 
     public BaselineExpression(double level) {
         this.level = level;
@@ -35,7 +27,8 @@ public class BaselineExpression implements Expression, KryoSerializable {
         this(quartiles[2], dataColumnDescriptorId, quartiles);
     }
 
-    private BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
+    // I got made public for the serializer, do not use otherwise! TODO improve
+    public BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
         this(level);
         this.dataColumnDescriptorId = dataColumnDescriptorId;
         this.quartiles = quartiles;
@@ -113,24 +106,6 @@ public class BaselineExpression implements Expression, KryoSerializable {
                 .add("level", level)
                 .add("id", dataColumnDescriptorId)
                 .toString();
-    }
-
-
-    @Override
-    public void write(Kryo kryo, Output output) {
-        output.writeDouble(level);
-        output.writeString(dataColumnDescriptorId);
-        boolean hasQuartiles = !ArrayUtils.isEmpty(quartiles);
-        output.writeBoolean(hasQuartiles);
-        output.writeDoubles(quartiles);
-    }
-
-    @Override
-    public void read(Kryo kryo, Input input) {
-        level = input.readDouble();
-        dataColumnDescriptorId = input.readString();
-        boolean hasQuartiles = input.readBoolean();
-        quartiles = hasQuartiles ? input.readDoubles(5) : input.readDoubles(0);
     }
 
     /*

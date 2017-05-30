@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.commons.serializers;
+package uk.ac.ebi.atlas.profiles.stream.serializers;
 
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import com.esotericsoftware.kryo.Kryo;

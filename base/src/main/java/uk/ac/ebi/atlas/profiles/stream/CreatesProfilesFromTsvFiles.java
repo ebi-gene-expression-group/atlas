@@ -21,7 +21,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
         E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
         Prof extends Profile<DataColumnDescriptor, Expr, Prof>> extends ProfileStreamFactory<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
 
-    protected final DataFileHub dataFileHub;
+    protected DataFileHub dataFileHub;
 
     protected CreatesProfilesFromTsvFiles(DataFileHub dataFileHub) {
         this.dataFileHub = dataFileHub;

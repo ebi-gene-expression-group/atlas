@@ -1,5 +1,9 @@
 package uk.ac.ebi.atlas.model;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
@@ -7,6 +11,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
@@ -18,7 +23,8 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 
-public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression, Self extends Profile<DataColumnDescriptor, Expr, Self>> {
+public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression, Self extends Profile<DataColumnDescriptor, Expr, Self>>
+        implements KryoSerializable {
     protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
 
     private String id;
@@ -39,6 +45,8 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     public int hashCode() {
         return Objects.hashCode(expressionsByCondition, getId(), getName());
     }
+
+    protected Profile(){}
 
     protected Profile(String id, String name) {
         this.id = id;
@@ -161,5 +169,20 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
 
     public String[] identifiers(){
         return new String[]{id, getName()};
+    }
+
+
+    @Override
+    public void write(Kryo kryo, Output output) {
+        output.writeString(id);
+        output.writeString(name);
+        kryo.writeObject(output, expressionsByCondition);
+    }
+
+    @Override
+    public void read(Kryo kryo, Input input) {
+        id = input.readString();
+        name = input.readString();
+        expressionsByCondition = kryo.readObject(input, HashMap.class);
     }
 }
