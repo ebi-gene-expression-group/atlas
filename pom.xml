@@ -656,15 +656,14 @@
         </profile>
 
         <profile>
-            <id>integration.pg</id>
+            <id>integration</id>
             <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <db.context>pgContext.xml</db.context>
-                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
+                <jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</jdbc.url>
                 <jdbc.username>atlas3it</jdbc.username>
-                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
+                <jdbc.password>atlas3it</jdbc.password>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -681,14 +680,15 @@
         </profile>
 
         <profile>
-            <id>integration</id>
+            <id>integration.pg</id>
             <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</jdbc.url>
+                <db.context>pgContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url>
                 <jdbc.username>atlas3it</jdbc.username>
-                <jdbc.password>atlas3it</jdbc.password>
+                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
