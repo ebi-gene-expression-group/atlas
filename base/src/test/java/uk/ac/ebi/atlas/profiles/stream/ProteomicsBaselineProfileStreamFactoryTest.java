@@ -19,7 +19,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class ProteomicsBaselineProfileStreamFactoryTest {
 
-    ProteomicsBaselineProfileStreamFactory subject;
+    ProteomicsBaselineProfileStreamFactory.Impl subject;
 
     AssayGroup g1 = new AssayGroup("g1", "r1");
     AssayGroup g2 = new AssayGroup("g2", "r2");
@@ -31,7 +31,7 @@ public class ProteomicsBaselineProfileStreamFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new ProteomicsBaselineProfileStreamFactory(new MockDataFileHub());
+        subject = new ProteomicsBaselineProfileStreamFactory.Impl(new MockDataFileHub());
     }
 
     @Test
