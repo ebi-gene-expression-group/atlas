@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 // Used to make ObjectInputStream iterable
@@ -18,7 +19,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
         return new ObjectInputStreamIterator();
     }
 
-    // buffers next object input stream result so we can provide a hasNext method
+    // buffers next object from inputStream result so we can provide a hasNext method
     private final class ObjectInputStreamIterator implements Iterator<T> {
 
         private T next;
@@ -29,6 +30,9 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
 
         private void storeNext() {
             next = inputStream.readNext();
+            if (next == null) {
+                close();
+            }
         }
 
         @Override
@@ -45,7 +49,16 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
 
         @Override
         public void remove() {
+            close();
             throw new UnsupportedOperationException();
+        }
+
+        public void close() {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
