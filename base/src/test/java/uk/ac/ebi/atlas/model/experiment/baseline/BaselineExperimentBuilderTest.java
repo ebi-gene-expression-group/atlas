@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertThat;
 public class BaselineExperimentBuilderTest {
 
     private static final String SPECIES_NAME = "Homo sapiens";
-    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableMap.<String, List<String>>of());
+    private static final SpeciesProperties SPECIES_PROPERTIES = SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
 
     private static final String EXPERIMENT_ACCESSION = "accession";
     private static final String DESCRIPTION = "description";

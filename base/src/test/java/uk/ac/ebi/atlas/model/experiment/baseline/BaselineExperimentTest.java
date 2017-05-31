@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -69,7 +70,7 @@ public class BaselineExperimentTest {
                 new Species("species",
                         SpeciesProperties.create(
                                 "ensemblName", "defaulQueryFactorType",
-                                "kingdom", ImmutableSortedMap.<String, List<String>>of())),
+                                "kingdom", ImmutableList.<ImmutableMap<String, String>>of())),
                 Sets.newHashSet(PUBMEDID), experimentDesign, assayGroups, Collections.<String>emptyList(),
                 Collections.<String>emptyList(), Collections.<String>emptyList(), new ArrayList<String>(), experimentDisplayDefaults);
     }

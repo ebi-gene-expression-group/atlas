@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
@@ -120,9 +121,10 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void getBaselineReferenceExperimentAccession() throws Exception {
-        ImmutableMap<String, List<String>> emptySpeciesResources = ImmutableMap.of();
         SpeciesProperties homoSapiensProperties =
-                SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", emptySpeciesResources);
+                SpeciesProperties.create(
+                        "Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of());
+
         Species species = new Species("Homo sapiens", homoSapiensProperties);
 
         assertThat(ApplicationProperties.getBaselineReferenceExperimentAccession(species), startsWith("E-"));
