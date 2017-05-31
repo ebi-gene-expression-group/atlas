@@ -33,7 +33,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
     public <Unit extends ExpressionUnit.Absolute> JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,
                                                                                           BaselineRequestPreferences<Unit> preferences,
-                                                                                          Model model, boolean isWidget) {
+                                                                                          Model model) {
         JsonObject result = new JsonObject();
 
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
@@ -64,8 +64,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         }
 
         result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).or(JsonNull.INSTANCE));
-
-        model.addAttribute("isWidget", isWidget);
 
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
