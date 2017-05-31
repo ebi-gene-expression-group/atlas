@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentpage;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
@@ -14,15 +15,12 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExperimentPageService {
+public class ExperimentPageService extends ReturnsJsonErrors {
 
-    protected final HeatmapDataToJsonService heatmapDataToJsonService;
     protected final ApplicationProperties applicationProperties;
     protected final Gson gson = new Gson();
 
-    public ExperimentPageService(HeatmapDataToJsonService heatmapDataToJsonService,
-                                 ApplicationProperties applicationProperties) {
-        this.heatmapDataToJsonService = heatmapDataToJsonService;
+    public ExperimentPageService(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 
