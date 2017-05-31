@@ -3,12 +3,13 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import org.hibernate.validator.constraints.Range;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Set;
 
-public abstract class ExperimentPageRequestPreferences extends SearchRequest {
+public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUnit> extends SearchRequest {
 
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
@@ -81,5 +82,7 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     public String serializationShortString(){
         return "serialized";
     }
+
+    public abstract Unit getUnit();
 
 }

@@ -2,11 +2,12 @@
 package uk.ac.ebi.atlas.web;
 
 
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 
 import javax.validation.constraints.Min;
 
-public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences {
+public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences<ExpressionUnit.Relative> {
 
     public static final double DEFAULT_CUTOFF = 0.05d;
 
@@ -44,5 +45,10 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
         if (foldChangeCutoff != null) {
             this.foldChangeCutoff = foldChangeCutoff;
         }
+    }
+
+    @Override
+    public ExpressionUnit.Relative getUnit() {
+        return new ExpressionUnit.Relative();
     }
 }
