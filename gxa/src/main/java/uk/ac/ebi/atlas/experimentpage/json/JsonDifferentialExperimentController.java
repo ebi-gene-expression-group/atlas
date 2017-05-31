@@ -52,19 +52,18 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public JsonDifferentialExperimentController(ExperimentTrader experimentTrader,
                                                 RnaSeqProfilesHeatMap diffRnaSeqProfilesHeatMap,
                                                 MicroarrayProfilesHeatMap microarrayProfilesHeatMap,
-                                                AtlasResourceHub atlasResourceHub,
-                                                ApplicationProperties applicationProperties) {
+                                                AtlasResourceHub atlasResourceHub) {
         super(experimentTrader);
 
         diffRnaSeqExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.RnaSeq(),
                         diffRnaSeqProfilesHeatMap,
-                        atlasResourceHub,applicationProperties);
+                        atlasResourceHub);
 
         diffMicroarrayExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.Microarray(),
                         microarrayProfilesHeatMap,
-                        atlasResourceHub,applicationProperties);
+                        atlasResourceHub);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",

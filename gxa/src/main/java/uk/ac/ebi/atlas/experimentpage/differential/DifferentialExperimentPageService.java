@@ -41,9 +41,7 @@ public class DifferentialExperimentPageService
     public  DifferentialExperimentPageService(
             DifferentialRequestContextFactory<E, K, R> differentialRequestContextFactory,
             DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
-            AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
-
-        super(applicationProperties);
+            AtlasResourceHub atlasResourceHub) {
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
         this.atlasResourceHub = atlasResourceHub;

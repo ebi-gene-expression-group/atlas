@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
-import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
@@ -26,9 +25,8 @@ public class BaselineExperimentPageService extends ExperimentPageService {
     private final BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory;
     private final AnatomogramFactory anatomogramFactory;
 
-    public BaselineExperimentPageService(BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory,
-                                         ApplicationProperties applicationProperties) {
-        super(applicationProperties);
+    public BaselineExperimentPageService(BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory) {
+        super();
         this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatmapWranglerFactory = baselineProfilesHeatmapWranglerFactory;
     }

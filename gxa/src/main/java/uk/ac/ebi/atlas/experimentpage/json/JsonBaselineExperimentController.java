@@ -6,11 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageServiceFactory;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatmapsWranglerFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
+import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
@@ -33,12 +35,17 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     @Inject
     public JsonBaselineExperimentController(
             ExperimentTrader experimentTrader,
-            BaselineExperimentPageServiceFactory baselineExperimentPageServiceFactory,
+            CoexpressedGenesService coexpressedGenesService,
+            SolrQueryService solrQueryService,
             RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory,
             ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory) {
         super(experimentTrader);
-        this.rnaSeqBaselineExperimentPageService = baselineExperimentPageServiceFactory.create(rnaSeqBaselineProfileStreamFactory);
-        this.proteomicsBaselineExperimentPageService = baselineExperimentPageServiceFactory.create(proteomicsBaselineProfileStreamFactory);
+        this.rnaSeqBaselineExperimentPageService = new BaselineExperimentPageService(new BaselineProfilesHeatmapsWranglerFactory(
+                rnaSeqBaselineProfileStreamFactory, solrQueryService, coexpressedGenesService)
+        );
+        this.proteomicsBaselineExperimentPageService = new BaselineExperimentPageService(new BaselineProfilesHeatmapsWranglerFactory(
+                proteomicsBaselineProfileStreamFactory, solrQueryService, coexpressedGenesService)
+        );
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
