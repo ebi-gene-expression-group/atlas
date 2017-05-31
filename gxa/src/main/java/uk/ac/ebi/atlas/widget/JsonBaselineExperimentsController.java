@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
@@ -26,11 +28,11 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
-import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -41,18 +43,15 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
     private final SpeciesInferrer speciesInferrer;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final FactorGroupingService factorGroupingService;
-    private final HeatmapDataToJsonService heatmapDataToJsonService;
 
     @Inject
     private JsonBaselineExperimentsController(SpeciesInferrer speciesInferrer,
                                               BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                                              FactorGroupingService factorGroupingService,
-                                              HeatmapDataToJsonService heatmapDataToJsonService) {
+                                              FactorGroupingService factorGroupingService) {
         this.anatomogramFactory = new AnatomogramFactory();
         this.speciesInferrer = speciesInferrer;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.factorGroupingService = factorGroupingService;
-        this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
     @RequestMapping(
@@ -121,9 +120,8 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         }
 
         model.addAttribute("species", species.getReferenceName());
-        model.addAttribute("isWidget", true);
 
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(model.asMap()));
+        result.add("config", configAsJsonObject(model.asMap()));
         return gson.toJson(result);
     }
 
@@ -135,5 +133,37 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         }
 
         return result;
+    }
+
+    //see also: similar method in ExperimentPageService
+    JsonObject configAsJsonObject(Map<String, Object> model) {
+        JsonObject config = new JsonObject();
+        config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
+        config.addProperty("conditionQuery", get(model, "conditionQuery"));
+        config.addProperty("species", get(model, "species"));
+        config.add("resources", getAsJsonSerializable(model, "resources", new JsonObject()));
+        config.addProperty("columnType", get(model, "queryFactorName").toLowerCase()); //TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
+        config.addProperty("disclaimer", get(model, "disclaimer"));
+        config.addProperty("expressionUnit", "");
+        return config;
+    }
+
+    private JsonElement getAsJsonSerializable(Map<String, Object> model, String key, JsonElement defaultValue) {
+        if(model.containsKey(key)) {
+            return gson.toJsonTree(model.get(key));
+        } else {
+            return defaultValue;
+        }
+    }
+
+    private String getOrDefault(Map<String, Object> model, String key, String defaultValue) {
+        if (model.containsKey(key)) {
+            return model.get(key).toString();
+        } else {
+            return defaultValue;
+        }
+    }
+    private String get(Map<String, Object> model, String key){
+        return getOrDefault(model, key, "");
     }
 }

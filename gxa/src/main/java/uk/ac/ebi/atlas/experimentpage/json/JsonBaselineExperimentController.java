@@ -61,7 +61,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         return gson.toJson(
                 rnaSeqBaselineExperimentPageService.populateModelWithHeatmapData(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,
-                        model, false));
+                        model));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -77,6 +77,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         return gson.toJson(
                 proteomicsBaselineExperimentPageService.populateModelWithHeatmapData(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                        preferences, model, false));
+                        preferences, model));
     }
 }
