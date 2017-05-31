@@ -7,6 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
@@ -34,6 +35,11 @@ public class SpeciesFactoryIT {
 
         assertThat(oryzaJaponica.isPlant(), is(true));
         assertThat(oryzaIndica.isPlant(), is(true));
+    }
+
+    @Test
+    public void speciesComeWithResources() {
+        assertThat(subject.create("homo sapiens").getResources().get("genome_browser").getAsJsonArray().size(), greaterThan(0));
     }
 
     @Test
