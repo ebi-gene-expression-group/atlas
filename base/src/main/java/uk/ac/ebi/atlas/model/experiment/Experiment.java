@@ -109,6 +109,10 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return species;
     }
 
+    public String getDisclaimer(){
+        return disclaimer;
+    }
+
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
@@ -190,4 +194,5 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     protected abstract JsonObject propertiesForAssay(String runOrAssay);
 
     public abstract JsonArray groupingsForHeatmap();
+
 }

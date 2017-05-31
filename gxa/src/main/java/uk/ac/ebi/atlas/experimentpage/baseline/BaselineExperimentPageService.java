@@ -82,7 +82,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             result.add(e.getKey(), e.getValue());
         }
         model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(model.asMap()));
 
         return result;
     }

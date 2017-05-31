@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.species;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,8 @@ public class Species {
         return mappedProperties.ensemblName();
     }
 
-    public Map<String, List<String>> getResources() {
-        return mappedProperties.resources();
+    public JsonObject getResources() {
+        return new Gson().toJsonTree(mappedProperties.resources()).getAsJsonObject();
     }
 
     public String getKingdom() {

@@ -3,7 +3,10 @@ package uk.ac.ebi.atlas.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;

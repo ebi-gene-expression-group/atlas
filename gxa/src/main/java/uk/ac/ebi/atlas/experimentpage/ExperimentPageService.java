@@ -1,14 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
@@ -31,7 +30,8 @@ public class ExperimentPageService {
                                                ExperimentPageRequestPreferences requestPreferences) {
         Map<String, JsonElement> result = new HashMap<>();
 
-        result.put("experiment", prepareExperimentDescription(experiment, requestPreferences));
+        result.put("experiment", experimentDescription(experiment, requestPreferences));
+        result.put("config", config(experiment, requestPreferences));
         return result;
     }
 
@@ -39,8 +39,8 @@ public class ExperimentPageService {
         return applicationProperties.buildDownloadURL(geneQuery, request);
     }
 
-    private JsonElement prepareExperimentDescription(Experiment experiment,
-                                                     ExperimentPageRequestPreferences requestPreferences) {
+    private JsonElement experimentDescription(Experiment experiment,
+                                              ExperimentPageRequestPreferences requestPreferences) {
 
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("accession", experiment.getAccession());
@@ -50,5 +50,17 @@ public class ExperimentPageService {
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
         return experimentDescription;
+    }
+
+    public static JsonObject config(Experiment<?> experiment, ExperimentPageRequestPreferences preferences){
+        JsonObject config = new JsonObject();
+        config.addProperty("geneQuery",preferences.getGeneQuery().toUrlEncodedJson());
+        config.addProperty("species", experiment.getSpecies().getName());
+        config.add("resources", experiment.getSpecies().getResources());
+        config.addProperty("disclaimer", experiment.getDisclaimer());
+        //only for the multiexperiment heatmap
+        config.addProperty("columnType", "");
+        config.addProperty("conditionQuery", "");
+        return config;
     }
 }

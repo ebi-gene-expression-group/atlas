@@ -98,9 +98,6 @@ public class DifferentialExperimentPageService
 
                     model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
 
-                    JsonObject heatmapConfig = heatmapDataToJsonService.configAsJsonObject(model.asMap());
-
-                    result.add("config", heatmapConfig);
                     return result;
                 } else {
                     //copypasted:(
