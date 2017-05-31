@@ -54,7 +54,7 @@ public class SpeciesPropertiesTraderTest {
         assertThat(subject.get("Homo sapiens").referenceName(), is("homo sapiens"));
         assertThat(subject.get("Homo sapiens").ensemblName(), is("Homo_sapiens"));
         assertThat(subject.get("Homo sapiens").kingdom(), is("animals"));
-        assertThat(subject.get("Hordeum vulgare").resources().get("genome_browser"), hasSize(2));
+        assertThat(subject.get("Hordeum vulgare").getResources("type", "genome_browser"), hasSize(2));
     }
 
     @Test

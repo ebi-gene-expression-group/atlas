@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.species;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.stream.JsonReader;
@@ -57,7 +58,7 @@ public class SpeciesPropertiesDao {
         String ensemblName = null;
         String defaultQueryFactorType = null;
         String kingdom = null;
-        Map<String, List<String>> resources = null;
+        ImmutableList.Builder<ImmutableMap<String, String>> resourcesBuilder = null;
 
         reader.beginObject();
         while (reader.hasNext()) {
@@ -70,11 +71,10 @@ public class SpeciesPropertiesDao {
             } else if ("kingdom".equals(name)) {
                 kingdom = reader.nextString();
             } else if ("resources".equals(name) && reader.peek() != JsonToken.NULL) {
-                resources = Maps.newHashMap();
+                resourcesBuilder = ImmutableList.builder();
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    Pair<String, List<String>> resource = readSpeciesResource(reader);
-                    resources.put(resource.getLeft(), resource.getRight());
+                    resourcesBuilder.add(readSpeciesResource(reader));
                 }
                 reader.endArray();
             } else {
@@ -84,37 +84,21 @@ public class SpeciesPropertiesDao {
         reader.endObject();
 
         return SpeciesProperties.create(
-                ensemblName, defaultQueryFactorType, kingdom, resources);
+                ensemblName, defaultQueryFactorType, kingdom, resourcesBuilder.build());
     }
 
-    private Pair<String, List<String>> readSpeciesResource(JsonReader reader) throws IOException {
-        String type = null;
-        List<String> urls = null;
+    private ImmutableMap<String, String> readSpeciesResource(JsonReader reader) throws IOException {
+        ImmutableMap.Builder<String, String> resourceBuilder = ImmutableMap.builder();
 
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-
-            if ("type".equals(name)) {
-                type = reader.nextString();
-            } else if ("urls".equals(name) && reader.peek() != JsonToken.NULL) {
-                urls = readStringsArray(reader);
-            }
+            String value = reader.nextString();
+            resourceBuilder.put(name, value);
         }
         reader.endObject();
-        return Pair.of(type, urls);
-    }
 
-    private List<String> readStringsArray(JsonReader reader) throws IOException {
-        List<String> strings = Lists.newArrayList();
-
-        reader.beginArray();
-        while (reader.hasNext()) {
-            strings.add(reader.nextString());
-        }
-        reader.endArray();
-
-        return strings;
+        return resourceBuilder.build();
     }
 
 }

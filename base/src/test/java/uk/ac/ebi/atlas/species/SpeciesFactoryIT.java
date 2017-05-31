@@ -39,7 +39,7 @@ public class SpeciesFactoryIT {
 
     @Test
     public void speciesComeWithResources() {
-        assertThat(subject.create("homo sapiens").getResources().get("genome_browser").getAsJsonArray().size(), greaterThan(0));
+        assertThat(subject.create("homo sapiens").getResources().size(), greaterThan(0));
     }
 
     @Test

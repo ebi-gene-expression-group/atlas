@@ -4,6 +4,7 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://dinosaurs.ensembl.org/tyrannosaurus_rex"]
+    "name":"Ensembl Dinosaurs",
+    "url":"http://dinosaurs.ensembl.org/tyrannosaurus_rex"
   }]
 }]
