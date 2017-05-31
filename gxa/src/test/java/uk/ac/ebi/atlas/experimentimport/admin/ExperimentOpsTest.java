@@ -26,6 +26,7 @@ import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfile
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,8 +44,6 @@ public class ExperimentOpsTest {
     @Mock
     private ExperimentCrud experimentCrud;
     @Mock
-    private ExperimentOpLogWriter experimentOpLogWriter;
-    @Mock
     private BaselineCoexpressionProfileLoader baselineCoexpressionProfileLoader;
     @Mock
     private AnalyticsIndexerManager analyticsIndexerManager;
@@ -55,20 +54,20 @@ public class ExperimentOpsTest {
     @Mock
     private Experiment experimentMock;
 
-    private Map<String, ImmutableList<OpLogEntry>> fileSystem;
-
     private String accession = "E-EXAMPLE-1";
 
     private ExperimentOps subject;
 
+    private ExperimentOpLogWriter experimentOpLogWriter;
+
     @Before
     public void setUp() {
+        experimentOpLogWriter = new ExperimentOpLogWriter(MockDataFileHub.get());
+
         subject = new ExperimentOps(experimentOpLogWriter,
                 new ExpressionAtlasExperimentOpsExecutionService(
                         experimentCrud, baselineCoexpressionProfileLoader, analyticsIndexerManager,
                         expressionSerializerService,experimentTrader));
-
-        fileSystem = new HashMap<>();
 
         when(expressionSerializerService.kryoSerializeExpressionData(Matchers.any(Experiment.class))).thenReturn("skipped");
 
@@ -87,31 +86,6 @@ public class ExperimentOpsTest {
             }
         }).when(experimentCrud).findExperiment(Matchers.anyString());
 
-
-        Mockito.doAnswer(new Answer<ImmutableList<OpLogEntry>>() {
-            @Override
-            public ImmutableList<OpLogEntry> answer(InvocationOnMock invocationOnMock) throws Throwable {
-                String accession = (String) invocationOnMock.getArguments()[0];
-                if (fileSystem.containsKey(accession)) {
-                    return fileSystem.get(accession);
-                } else {
-                    return ImmutableList.of();
-                }
-            }
-        }).when(experimentOpLogWriter).getCurrentOpLog(Matchers.anyString());
-
-        Mockito.doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                String accession = (String)
-                        invocationOnMock.getArguments()[0];
-                ImmutableList<OpLogEntry> opLog =
-                        (ImmutableList<OpLogEntry>) invocationOnMock.getArguments()[1];
-                fileSystem.put(accession, opLog);
-                return null;
-            }
-        }).when(experimentOpLogWriter)
-                .persistOpLog(Matchers.anyString(), Matchers.<List<OpLogEntry>>any());
     }
 
     @Test
@@ -188,27 +162,18 @@ public class ExperimentOpsTest {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
         for (Op op : Op.values()) {
             if (!op.equals(Op.CLEAR_LOG)) {
-                subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
+                ImmutableList.copyOf(subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op)));
             }
         }
-        assertThat(
-                Op.values().length - Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ).size(),
-                is(fileSystem.get(accession).size()));
-    }
 
-    @Test
-    public void timestampsLookRight() {
-        String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        for (Op op : Op.values()) {
-            subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(op));
+
+        String logResult = ImmutableList.copyOf(subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(Op.LOG))).toString();
+
+        for(Op op: Op.values()){
+            boolean isStateful =! Arrays.asList(Op.LIST, Op.LOG, Op.STATUS, Op.CLEAR_LOG, Op.CACHE_READ).contains(op);
+            assertThat(op.toString(), logResult.contains( op.name()), is(isStateful));
         }
-        for (OpLogEntry p : fileSystem.get(accession)) {
-            Long start = Long.valueOf(p.toArray()[1]);
-            Long finish = Long.valueOf(p.toArray()[2]);
-            assertThat(finish - start >= 0, is (true));
-            Assert.assertNotEquals(ExperimentOps.UNFINISHED, start);
-            Assert.assertNotEquals(ExperimentOps.UNFINISHED, finish);
-        }
+
     }
 
     @Test
@@ -224,7 +189,8 @@ public class ExperimentOpsTest {
         assertThat(result.get("result"), is(nullValue()));
         assertThat(result.get("error"), is(not(nullValue())));
 
-        assertThat(fileSystem.get(accession).iterator().next().toJson().has("error"), is(true));
+        assertThat(ImmutableList.copyOf(subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singletonList(Op.LOG))).toString(),
+                containsString("error"));
 
     }
 

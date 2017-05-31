@@ -37,8 +37,6 @@ public class ExperimentOps {
         this.experimentOpsExecutionService = experimentOpsExecutionService;
     }
 
-    static Long UNFINISHED = new Long(-1);
-
     private enum OpResult {SUCCESS, FAILURE}
     public static final JsonPrimitive DEFAULT_SUCCESS_RESULT = new JsonPrimitive("success");
 
