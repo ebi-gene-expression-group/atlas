@@ -20,7 +20,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpres
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
-import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -53,7 +52,6 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public JsonDifferentialExperimentController(ExperimentTrader experimentTrader,
                                                 RnaSeqProfilesHeatMap diffRnaSeqProfilesHeatMap,
                                                 MicroarrayProfilesHeatMap microarrayProfilesHeatMap,
-                                                TracksUtil tracksUtil,
                                                 AtlasResourceHub atlasResourceHub,
                                                 ApplicationProperties applicationProperties) {
         super(experimentTrader);
@@ -61,12 +59,12 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
         diffRnaSeqExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.RnaSeq(),
                         diffRnaSeqProfilesHeatMap,
-                tracksUtil, atlasResourceHub,applicationProperties);
+                        atlasResourceHub,applicationProperties);
 
         diffMicroarrayExperimentPageService =
                 new DifferentialExperimentPageService<>(new DifferentialRequestContextFactory.Microarray(),
                         microarrayProfilesHeatMap,
-                        tracksUtil, atlasResourceHub,applicationProperties);
+                        atlasResourceHub,applicationProperties);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",

@@ -13,35 +13,29 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.RichFactorGroup;
 import uk.ac.ebi.atlas.model.experiment.summary.AssayGroupSummaryBuilder;
-import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
 public class BaselineExperimentPageService extends ExperimentPageService {
 
-    private final TracksUtil tracksUtil;
     private final BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory;
     private final AnatomogramFactory anatomogramFactory;
 
     public BaselineExperimentPageService(BaselineProfilesHeatmapsWranglerFactory baselineProfilesHeatmapWranglerFactory,
-                                         ApplicationProperties applicationProperties,
-                                         TracksUtil tracksUtil,
-                                         HeatmapDataToJsonService heatmapDataToJsonService) {
-        super(heatmapDataToJsonService, applicationProperties);
+                                         ApplicationProperties applicationProperties) {
+        super(applicationProperties);
         this.anatomogramFactory = new AnatomogramFactory();
         this.baselineProfilesHeatmapWranglerFactory = baselineProfilesHeatmapWranglerFactory;
-        this.tracksUtil = tracksUtil;
     }
 
     public <Unit extends ExpressionUnit.Absolute> JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,
-                                                                                BaselineRequestPreferences<Unit> preferences,
-                                                                                Model model, HttpServletRequest request, boolean isWidget) {
+                                                                                          BaselineRequestPreferences<Unit> preferences,
+                                                                                          Model model, boolean isWidget) {
         JsonObject result = new JsonObject();
 
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
@@ -51,9 +45,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("enableEnsemblLauncher", !isWidget&& !requestContext.getDataColumnsToReturn().isEmpty()
-                && tracksUtil.hasBaselineTracksPath(experiment.getAccession(),
-                requestContext.getDataColumnsToReturn().iterator().next().getId()));
 
         BaselineProfilesHeatmapsWrangler heatmapResults = baselineProfilesHeatmapWranglerFactory.create
                 (preferences,experiment);
@@ -71,7 +62,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
                 result.add("coexpressions", jsonCoexpressions);
             }
         } catch (GenesNotFoundException e){
-            return heatmapDataToJsonService.jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
+            return jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
         }
 
         result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).or(JsonNull.INSTANCE));
@@ -81,8 +72,6 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
         }
-        model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
-
         return result;
     }
 

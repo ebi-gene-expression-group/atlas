@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -51,11 +50,11 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(required = false) String accessKey,
-            Model model, HttpServletRequest request) {
+            Model model) {
         return gson.toJson(
                 rnaSeqBaselineExperimentPageService.populateModelWithHeatmapData(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,
-                        model, request, false));
+                        model, false));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -67,10 +66,10 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(required = false) String accessKey,
-            Model model, HttpServletRequest request    ) {
+            Model model) {
         return gson.toJson(
                 proteomicsBaselineExperimentPageService.populateModelWithHeatmapData(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                        preferences, model, request, false));
+                        preferences, model, false));
     }
 }

@@ -21,12 +21,6 @@ public class HeatmapDataToJsonService {
     public HeatmapDataToJsonService() {
     }
 
-    public JsonObject jsonError(String message){
-        JsonObject result = new JsonObject();
-        result.addProperty("error", message);
-        return result;
-    }
-
     public JsonObject configAsJsonObject(Map<String, Object> model) {
         JsonObject config = new JsonObject();
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
