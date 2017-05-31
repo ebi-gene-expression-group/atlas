@@ -1,25 +1,21 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Named
 public class HeatmapDataToJsonService {
 
     private static final Gson gson = new Gson();
-    private final ApplicationProperties applicationProperties;
 
     @Inject
-    public HeatmapDataToJsonService(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
+    public HeatmapDataToJsonService() {
     }
 
     public JsonObject jsonError(String message){
@@ -28,19 +24,13 @@ public class HeatmapDataToJsonService {
         return result;
     }
 
-    public JsonObject configAsJsonObject(HttpServletRequest request, Map<String, Object> model) {
+    public JsonObject configAsJsonObject(Map<String, Object> model) {
         JsonObject config = new JsonObject();
-        config.addProperty("contextRoot", request.getContextPath());
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
-        config.addProperty("accessKey", request.getParameter("accessKey"));
         config.addProperty("species", get(model, "species"));
         config.add("resources", getAsJsonSerializable(model, "resources", new JsonObject()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase());
-        config.addProperty("enableEnsemblLauncher",
-                model.containsKey("enableEnsemblLauncher") &&
-                Boolean.parseBoolean(model.get("enableEnsemblLauncher").toString()));
-        config.addProperty("downloadProfilesURL", get(model, "downloadProfilesURL"));
         config.addProperty("disclaimer", get(model, "disclaimer"));
         return config;
     }

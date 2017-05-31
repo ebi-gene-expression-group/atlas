@@ -30,7 +30,6 @@ import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -75,7 +74,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
             @RequestParam(value = "source", required = false) String source,
             @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
-            HttpServletRequest request, Model model) {
+            Model model) {
         Preconditions.checkState(!(SemanticQuery.isEmpty(geneQuery) && SemanticQuery.isEmpty(conditionQuery)),
                 "Please specify a gene query or a condition query");
 
@@ -124,7 +123,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         model.addAttribute("species", species.getReferenceName());
         model.addAttribute("isWidget", true);
 
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
+        result.add("config", heatmapDataToJsonService.configAsJsonObject(model.asMap()));
         return gson.toJson(result);
     }
 
