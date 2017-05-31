@@ -4,7 +4,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Anas_platyrhynchos"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Anas_platyrhynchos"
   }]
 },
 {
@@ -13,7 +14,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Anolis_carolinensis"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Anolis_carolinensis"
   }]
 },
 {
@@ -22,7 +24,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://metazoa.ensembl.org/Anopheles_gambiae"]
+    "name":"Ensembl Metazoa",
+    "url":"http://metazoa.ensembl.org/Anopheles_gambiae"
   }]
 },
 {
@@ -31,7 +34,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Arabidopsis_lyrata","http://ensembl.gramene.org/Arabidopsis_lyrata"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Arabidopsis_lyrata"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Arabidopsis_lyrata"
   }]
 },
 {
@@ -40,7 +48,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Arabidopsis_thaliana","http://ensembl.gramene.org/Arabidopsis_thaliana"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Arabidopsis_thaliana"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Arabidopsis_thaliana"
   }]
 },
 {
@@ -49,7 +62,8 @@
   "kingdom":"fungi",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://fungi.ensembl.org/Aspergillus_fumigatus"]
+    "name":"Ensembl Fungi",
+    "url":"http://fungi.ensembl.org/Aspergillus_fumigatus"
   }]
 },
 {
@@ -58,7 +72,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Bos_taurus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Bos_taurus"
   }]
 },
 {
@@ -67,7 +82,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Brachypodium_distachyon","http://ensembl.gramene.org/Brachypodium_distachyon"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Brachypodium_distachyon"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Brachypodium_distachyon"
   }]
 },
 {
@@ -76,7 +96,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Brassica_oleracea","http://ensembl.gramene.org/Brassica_oleracea"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Brassica_oleracea"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Brassica_oleracea"
   }]
 },
 {
@@ -85,7 +110,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Brassica_rapa","http://ensembl.gramene.org/Brassica_rapa"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Brassica_rapa"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Brassica_rapa"
   }]
 },
 {
@@ -94,7 +124,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://parasite.wormbase.org/Caenorhabditis_elegans_prjna13758"]
+    "name":"Wormbase ParaSite",
+    "url":"http://parasite.wormbase.org/Caenorhabditis_elegans_prjna13758"
   }]
 },
 {
@@ -103,7 +134,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Canis_familiaris"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Canis_familiaris"
   }]
 },
 {
@@ -112,7 +144,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Chlorocebus_sabaeus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Chlorocebus_sabaeus"
   }]
 },
 {
@@ -121,7 +154,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Ciona_intestinalis"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Ciona_intestinalis"
   }]
 },
 {
@@ -130,7 +164,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Ciona_savignyi"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Ciona_savignyi"
   }]
 },
 {
@@ -139,7 +174,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Danio_rerio"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Danio_rerio"
   }]
 },
 {
@@ -148,7 +184,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Dasypus_novemcinctus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Dasypus_novemcinctus"
   }]
 },
 {
@@ -157,7 +194,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://metazoa.ensembl.org/Drosophila_melanogaster"]
+    "name":"Ensembl Metazoa",
+    "url":"http://metazoa.ensembl.org/Drosophila_melanogaster"
   }]
 },
 {
@@ -166,7 +204,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Equus_caballus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Equus_caballus"
   }]
 },
 {
@@ -175,7 +214,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Gallus_gallus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Gallus_gallus"
   }]
 },
 {
@@ -184,7 +224,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Glycine_max","http://ensembl.gramene.org/Glycine_max"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Glycine_max"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Glycine_max"
   }]
 },
 {
@@ -193,7 +238,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Gorilla_gorilla"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Gorilla_gorilla"
   }]
 },
 {
@@ -202,7 +248,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Homo_sapiens"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Homo_sapiens"
   }]
 },
 {
@@ -211,7 +258,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Hordeum_vulgare","http://ensembl.gramene.org/Hordeum_vulgare"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Hordeum_vulgare"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Hordeum_vulgare"
   }]
 },
 {
@@ -220,7 +272,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Macaca_mulatta"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Macaca_mulatta"
   }]
 },
 {
@@ -229,7 +282,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Medicago_truncatula","http://ensembl.gramene.org/Medicago_truncatula"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Medicago_truncatula"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Medicago_truncatula"
   }]
 },
 {
@@ -238,7 +296,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Monodelphis_domestica"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Monodelphis_domestica"
   }]
 },
 {
@@ -247,7 +306,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Mus_musculus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Mus_musculus"
   }]
 },
 {
@@ -256,7 +316,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Musa_acuminata","http://ensembl.gramene.org/Musa_acuminata"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Musa_acuminata"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Musa_acuminata"
   }]
 },
 {
@@ -265,7 +330,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Ornithorhynchus_anatinus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Ornithorhynchus_anatinus"
   }]
 },
 {
@@ -274,7 +340,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Oryctolagus_cuniculus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Oryctolagus_cuniculus"
   }]
 },
 {
@@ -283,7 +350,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Oryza_rufipogon","http://ensembl.gramene.org/Oryza_rufipogon"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Oryza_rufipogon"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Oryza_rufipogon"
   }]
 },
 {
@@ -292,7 +364,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Oryza_sativa","http://ensembl.gramene.org/Oryza_sativa"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Oryza_sativa"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Oryza_sativa"
   }]
 },
 {
@@ -301,7 +378,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Ovis_aries"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Ovis_aries"
   }]
 },
 {
@@ -310,7 +388,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Pan_troglodytes"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Pan_troglodytes"
   }]
 },
 {
@@ -319,7 +398,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Papio_anubis"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Papio_anubis"
   }]
 },
 {
@@ -328,7 +408,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Physcomitrella_patens","http://ensembl.gramene.org/Physcomitrella_patens"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Physcomitrella_patens"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Physcomitrella_patens"
   }]
 },
 {
@@ -337,7 +422,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Pongo_abelii"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Pongo_abelii"
   }]
 },
 {
@@ -346,7 +432,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Populus_trichocarpa","http://ensembl.gramene.org/Populus_trichocarpa"]
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Populus_trichocarpa"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Populus_trichocarpa"
   }]
 },
 {
@@ -355,7 +446,8 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Rattus_norvegicus"]
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Rattus_norvegicus"
   }]
 },
 {
@@ -364,115 +456,8 @@
   "kingdom":"fungi",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://fungi.ensembl.org/Saccharomyces_cerevisiae"]
-  }]
-},
-{
-  "name":"Schizosaccharomyces_pombe",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"fungi",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://fungi.ensembl.org/Schizosaccharomyces_pombe"]
-  }]
-},
-{
-  "name":"Solanum_lycopersicum",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Solanum_lycopersicum","http://ensembl.gramene.org/Solanum_lycopersicum"]
-  }]
-},
-{
-  "name":"Solanum_tuberosum",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Solanum_tuberosum","http://ensembl.gramene.org/Solanum_tuberosum"]
-  }]
-},
-{
-  "name":"Sorghum_bicolor",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Sorghum_bicolor","http://ensembl.gramene.org/Sorghum_bicolor"]
-  }]
-},
-{
-  "name":"Sus_scrofa",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"animals",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Sus_scrofa"]
-  }]
-},
-{
-  "name":"Tetraodon_nigroviridis",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"animals",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Tetraodon_nigroviridis"]
-  }]
-},
-{
-  "name":"Theobroma_cacao",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Theobroma_cacao","http://ensembl.gramene.org/Theobroma_cacao"]
-  }]
-},
-{
-  "name":"Triticum_aestivum",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Triticum_aestivum","http://ensembl.gramene.org/Triticum_aestivum"]
-  }]
-},
-{
-  "name":"Vitis_vinifera",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Vitis_vinifera","http://ensembl.gramene.org/Vitis_vinifera"]
-  }]
-},
-{
-  "name":"Xenopus_tropicalis",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"animals",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://www.ensembl.org/Xenopus_tropicalis"]
-  }]
-},
-{
-  "name":"Yarrowia_lipolytica",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"fungi",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://fungi.ensembl.org/Yarrowia_lipolytica"]
-  }]
-},
-{
-  "name":"Zea_mays",
-  "defaultQueryFactorType":"ORGANISM_PART",
-  "kingdom":"plants",
-  "resources":[{
-    "type":"genome_browser",
-    "urls":["http://plants.ensembl.org/Zea_mays","http://ensembl.gramene.org/Zea_mays"]
+    "name":"Ensembl Fungi",
+    "url":"http://fungi.ensembl.org/Saccharomyces_cerevisiae"
   }]
 },
 {
@@ -481,6 +466,155 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "urls":["http://parasite.wormbase.org/Schistosoma_mansoni_prjea36577"]
+    "name":"Wormbase ParaSite",
+    "url":"http://parasite.wormbase.org/Schistosoma_mansoni_prjea36577"
+  }]
+},
+{
+  "name":"Schizosaccharomyces_pombe",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"fungi",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Fungi",
+    "url":"http://fungi.ensembl.org/Schizosaccharomyces_pombe"
+  }]
+},
+{
+  "name":"Solanum_lycopersicum",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Solanum_lycopersicum"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Solanum_lycopersicum"
+  }]
+},
+{
+  "name":"Solanum_tuberosum",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Solanum_tuberosum"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Solanum_tuberosum"
+  }]
+},
+{
+  "name":"Sorghum_bicolor",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Sorghum_bicolor"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Sorghum_bicolor"
+  }]
+},
+{
+  "name":"Sus_scrofa",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"animals",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Sus_scrofa"
+  }]
+},
+{
+  "name":"Tetraodon_nigroviridis",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"animals",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Tetraodon_nigroviridis"
+  }]
+},
+{
+  "name":"Theobroma_cacao",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Theobroma_cacao"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Theobroma_cacao"
+  }]
+},
+{
+  "name":"Triticum_aestivum",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Triticum_aestivum"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Triticum_aestivum"
+  }]
+},
+{
+  "name":"Vitis_vinifera",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Vitis_vinifera"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Vitis_vinifera"
+  }]
+},
+{
+  "name":"Xenopus_tropicalis",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"animals",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl",
+    "url":"http://www.ensembl.org/Xenopus_tropicalis"
+  }]
+},
+{
+  "name":"Yarrowia_lipolytica",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"fungi",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Fungi",
+    "url":"http://fungi.ensembl.org/Yarrowia_lipolytica"
+  }]
+},
+{
+  "name":"Zea_mays",
+  "defaultQueryFactorType":"ORGANISM_PART",
+  "kingdom":"plants",
+  "resources":[{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Zea_mays"
+  },{
+    "type":"genome_browser",
+    "name":"Gramene",
+    "url":"http://ensembl.gramene.org/Zea_mays"
   }]
 }]
