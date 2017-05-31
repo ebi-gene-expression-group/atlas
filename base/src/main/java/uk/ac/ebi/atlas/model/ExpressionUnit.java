@@ -7,6 +7,7 @@ public interface ExpressionUnit {
             FPKM, TPM
         }
 
+
          class Protein implements Absolute {
              @Override
              public String toString(){
@@ -15,10 +16,12 @@ public interface ExpressionUnit {
          }
     }
 
-    class Relative implements ExpressionUnit {
+    enum Relative implements ExpressionUnit {
+        FOLD_CHANGE;
+
         @Override
         public String toString(){
-            return "";
+            return "Log2-fold change";
         }
     }
 

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
@@ -24,6 +25,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 import uk.ac.ebi.atlas.species.Species;
@@ -115,8 +117,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
             result.add(
                     "profiles",
-                    new ExternallyViewableProfilesList<>(
-                            experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns).asJson());
+                    ExternallyViewableProfilesList.createForExperimentProfiles(geneQuery, experimentProfiles, dataColumns).asJson());
         }
 
         model.addAttribute("species", species.getReferenceName());
@@ -144,7 +145,6 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         config.add("resources", getAsJsonSerializable(model, "resources", new JsonObject()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase()); //TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
         config.addProperty("disclaimer", get(model, "disclaimer"));
-        config.addProperty("expressionUnit", "");
         return config;
     }
 

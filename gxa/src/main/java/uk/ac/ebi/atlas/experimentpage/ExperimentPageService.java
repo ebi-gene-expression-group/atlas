@@ -43,7 +43,6 @@ public class ExperimentPageService extends ReturnsJsonErrors {
         config.addProperty("species", experiment.getSpecies().getName());
         config.add("resources", experiment.getSpecies().getResources());
         config.addProperty("disclaimer", experiment.getDisclaimer());
-        config.addProperty("expressionUnit", preferences.getUnit().toString());
         //only for the multiexperiment heatmap
         config.addProperty("columnType", "");
         config.addProperty("conditionQuery", "");

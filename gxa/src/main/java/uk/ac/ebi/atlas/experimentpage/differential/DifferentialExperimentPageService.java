@@ -13,6 +13,7 @@ import org.springframework.validation.ObjectError;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
@@ -84,8 +85,13 @@ public class DifferentialExperimentPageService
                     result.add("columnGroupings", new JsonArray());
                     result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
                     result.add("profiles", new ExternallyViewableProfilesList<>(
-                            differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn()
-                    ).asJson());
+                            differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn(),
+                            new Function<P, ExpressionUnit.Relative>() {
+                                @Override
+                                public ExpressionUnit.Relative apply(P p) {
+                                    return ExpressionUnit.Relative.FOLD_CHANGE;
+                                }
+                            }).asJson());
 
                     return result;
                 } else {

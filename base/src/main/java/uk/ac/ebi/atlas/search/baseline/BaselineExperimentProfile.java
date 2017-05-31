@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -112,8 +113,8 @@ public class BaselineExperimentProfile extends Profile<FactorAcrossExperiments, 
         return Pair.of(experiment.getAccession(), filterFactors);
     }
 
-    public String getExperimentType() {
-        return experiment.getType().toString();
+    public ExperimentType getExperimentType() {
+        return experiment.getType();
     }
 
     @Override

@@ -4,18 +4,19 @@ import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import uk.ac.ebi.atlas.model.DescribesDataColumns;
-import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.search.SemanticQuery;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
+import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 
-import java.net.MalformedURLException;
+import javax.annotation.Nullable;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
 public class ExternallyViewableProfilesList<DataColumnDescriptor extends DescribesDataColumns,
-        Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>> {
+        Prof extends Profile<DataColumnDescriptor, ? extends Expression, Prof>, Unit extends ExpressionUnit> {
 
     private final GeneProfilesList<Prof> profiles;
 
@@ -23,10 +24,27 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
 
     private final List<DataColumnDescriptor> prescribedOrderOfColumns;
 
-    public ExternallyViewableProfilesList(GeneProfilesList<Prof> profiles, Function<Prof, URI> provideLinkToProfile, List<DataColumnDescriptor> prescribedOrderOfColumns){
+    private final Function<Prof, Unit> expressionUnitForProfile;
+
+    public ExternallyViewableProfilesList(GeneProfilesList<Prof> profiles,
+                                          Function<Prof, URI> provideLinkToProfile,
+                                          List<DataColumnDescriptor> prescribedOrderOfColumns,
+                                          Function<Prof, Unit> expressionUnitForProfile){
         this.profiles = profiles;
         this.provideLinkToProfile = provideLinkToProfile;
         this.prescribedOrderOfColumns = prescribedOrderOfColumns;
+        this.expressionUnitForProfile = expressionUnitForProfile;
+    }
+
+    public static ExternallyViewableProfilesList<FactorAcrossExperiments, BaselineExperimentProfile, ExpressionUnit.Absolute>
+    createForExperimentProfiles(SemanticQuery geneQuery, BaselineExperimentProfilesList experimentProfiles, List<FactorAcrossExperiments> dataColumns) {
+        return new ExternallyViewableProfilesList<>(
+                experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns, new Function<BaselineExperimentProfile, ExpressionUnit.Absolute>() {
+            @Override
+            public ExpressionUnit.Absolute apply(@Nullable BaselineExperimentProfile baselineExperimentProfile) {
+                return baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ? ExpressionUnit.Absolute.Rna.TPM : new ExpressionUnit.Absolute.Protein();
+            }
+        });
     }
 
     public JsonObject asJson(){
@@ -60,6 +78,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         }
         result.add("expressions", expressions);
         result.addProperty("uri", provideLinkToProfile.apply(profile).toString());
+        result.addProperty("expressionUnit", expressionUnitForProfile.apply(profile).toString());
 
         return result;
 

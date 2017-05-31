@@ -49,6 +49,6 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
 
     @Override
     public ExpressionUnit.Relative getUnit() {
-        return new ExpressionUnit.Relative();
+        return ExpressionUnit.Relative.FOLD_CHANGE;
     }
 }

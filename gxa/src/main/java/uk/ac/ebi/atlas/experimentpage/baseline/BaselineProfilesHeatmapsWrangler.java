@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
@@ -22,7 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class BaselineProfilesHeatmapsWrangler {
+public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolute> {
 
     private GeneQueryResponse geneQueryResponseForProfiles;
 
@@ -34,7 +35,7 @@ public class BaselineProfilesHeatmapsWrangler {
 
     private final BaselineExperiment experiment;
 
-    private final BaselineRequestContext requestContext;
+    private final BaselineRequestContext<Unit> requestContext;
 
     private final CoexpressedGenesService coexpressedGenesService;
 
@@ -62,18 +63,25 @@ public class BaselineProfilesHeatmapsWrangler {
         }
     };
 
+    private final Function<BaselineProfile, Unit> provideUnits = new Function<BaselineProfile, Unit>() {
+        @Override
+        public Unit apply(BaselineProfile baselineProfile) {
+            return requestContext.getExpressionUnit();
+        }
+    };
+
     public BaselineProfilesHeatmapsWrangler(
             BaselineProfilesHeatMap baselineProfilesHeatMap,
             SolrQueryService solrQueryService,
             CoexpressedGenesService coexpressedGenesService,
-            BaselineRequestPreferences preferences,
+            BaselineRequestPreferences<Unit> preferences,
             BaselineExperiment experiment) {
 
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.solrQueryService = solrQueryService;
         this.coexpressedGenesService = coexpressedGenesService;
         this.experiment = experiment;
-        requestContext = new BaselineRequestContext(preferences, experiment);
+        requestContext = new BaselineRequestContext<>(preferences, experiment);
 
     }
 
@@ -102,7 +110,7 @@ public class BaselineProfilesHeatmapsWrangler {
         fetchProfilesIfMissing();
         return new ExternallyViewableProfilesList<>(jsonProfiles,linkToGenes,
                 requestContext
-                .getDataColumnsToReturn() ).asJson();
+                .getDataColumnsToReturn(),provideUnits).asJson();
     }
 
     public Optional<JsonObject> getJsonProfilesAsGeneSets()  {
@@ -112,7 +120,7 @@ public class BaselineProfilesHeatmapsWrangler {
                         new ExternallyViewableProfilesList<>(
                                 baselineProfilesHeatMap.fetch(experiment, requestContext, geneQueryResponse, true),
                                 linkToGenesets,
-                                requestContext.getDataColumnsToReturn())
+                                requestContext.getDataColumnsToReturn(), provideUnits)
                                 .asJson())
 
                 : Optional.<JsonObject>absent();
@@ -141,7 +149,7 @@ public class BaselineProfilesHeatmapsWrangler {
                                         coexpressedStuff.get().getRight(), experiment, requestContext,
                                         coexpressedStuff.get().getLeft(), false),
                                 linkToGenes,
-                                requestContext.getDataColumnsToReturn())
+                                requestContext.getDataColumnsToReturn(), provideUnits)
                                 .asJson());
 
                 result.add(o);

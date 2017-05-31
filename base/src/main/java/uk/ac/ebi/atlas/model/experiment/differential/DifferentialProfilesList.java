@@ -15,8 +15,4 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
         super(collection);
     }
 
-    public static double negate(double value) {
-        return value == 0 ? 0 : -value;
-    }
-
 }
