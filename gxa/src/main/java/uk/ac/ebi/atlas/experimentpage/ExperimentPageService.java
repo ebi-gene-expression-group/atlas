@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
@@ -56,6 +55,7 @@ public class ExperimentPageService extends ReturnsJsonErrors {
         config.addProperty("species", experiment.getSpecies().getName());
         config.add("resources", experiment.getSpecies().getResources());
         config.addProperty("disclaimer", experiment.getDisclaimer());
+        config.addProperty("expressionUnit", preferences.getUnit().toString());
         //only for the multiexperiment heatmap
         config.addProperty("columnType", "");
         config.addProperty("conditionQuery", "");

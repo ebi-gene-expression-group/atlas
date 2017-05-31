@@ -7,8 +7,19 @@ public interface ExpressionUnit {
             FPKM, TPM
         }
 
-         class Protein implements Absolute { }
+         class Protein implements Absolute {
+             @Override
+             public String toString(){
+                 return "";
+             }
+         }
     }
 
-    // interface Relative extends ExpressionUnit {}
+    class Relative implements ExpressionUnit {
+        @Override
+        public String toString(){
+            return "";
+        }
+    }
+
 }
