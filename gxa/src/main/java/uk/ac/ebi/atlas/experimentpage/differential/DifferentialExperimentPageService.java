@@ -46,7 +46,7 @@ public class DifferentialExperimentPageService
             DifferentialProfilesHeatMap<Expr, E, P, R> profilesHeatMap,
             TracksUtil tracksUtil, AtlasResourceHub atlasResourceHub, ApplicationProperties applicationProperties) {
 
-        super(new HeatmapDataToJsonService(applicationProperties), applicationProperties);
+        super(new HeatmapDataToJsonService(), applicationProperties);
         this.differentialRequestContextFactory = differentialRequestContextFactory;
         this.profilesHeatMap = profilesHeatMap;
         this.tracksUtil = tracksUtil;
@@ -98,7 +98,7 @@ public class DifferentialExperimentPageService
 
                     model.addAttribute("downloadProfilesURL", downloadURL(preferences.getGeneQuery(), request));
 
-                    JsonObject heatmapConfig = heatmapDataToJsonService.configAsJsonObject(request, model.asMap());
+                    JsonObject heatmapConfig = heatmapDataToJsonService.configAsJsonObject(model.asMap());
 
                     result.add("config", heatmapConfig);
                     return result;

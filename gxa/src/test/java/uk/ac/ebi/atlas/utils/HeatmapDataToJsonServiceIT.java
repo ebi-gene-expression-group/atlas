@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,6 @@ import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.client.MockRestServiceServer;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -41,7 +39,7 @@ public class HeatmapDataToJsonServiceIT {
         when(request.getScheme()).thenReturn("");
 
         //there are normally some other attributes too
-        JsonObject result = subject.configAsJsonObject(request,
+        JsonObject result = subject.configAsJsonObject(
                 experimentTrader.getPublicExperiment("E-MTAB-513").getAttributes());
 
         JsonArray resource = result.get("resources").getAsJsonObject().get("genome_browser").getAsJsonArray();
