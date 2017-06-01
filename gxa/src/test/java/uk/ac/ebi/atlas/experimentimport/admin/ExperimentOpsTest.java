@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -29,7 +28,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 import static org.hamcrest.Matchers.contains;
@@ -115,7 +113,7 @@ public class ExperimentOpsTest {
     @Test
     public void aggregateOpsInANeatFashion() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        doThrow(new RuntimeException("Woosh!")).when(experimentCrud).deleteExperiment(accession);
         List<Op> ops= new ArrayList<>();
         ops.add(Op.UPDATE_DESIGN_ONLY); // says "success!"
         ops.add(Op.CLEAR_LOG); // says "success!"
@@ -179,7 +177,7 @@ public class ExperimentOpsTest {
     @Test
     public void errorLeavesLogDirty() {
         String accession = "E-DUMMY-" + new Random().nextInt(10000);
-        when(experimentCrud.deleteExperiment(accession)).thenThrow(new RuntimeException("Woosh!"));
+        doThrow(new RuntimeException("Woosh!")).when(experimentCrud).deleteExperiment(accession);
 
         JsonObject result = subject.perform(Optional.of(Collections.singletonList(accession)), Collections.singleton(Op
                 .DELETE))
