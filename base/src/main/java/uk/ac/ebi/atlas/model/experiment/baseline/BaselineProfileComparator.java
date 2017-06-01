@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
@@ -28,7 +27,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private final double cutoffDivisor;
     private final BaselineProfileCachedStats baselineProfileStats;
 
-    public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions options) {
+    public static Comparator<BaselineProfile> create(BaselineProfileStreamOptions<?> options) {
         return new BaselineProfileComparator(
                 options.isSpecific(),
                 options.getDataColumnsToReturn(),
@@ -117,20 +116,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     }
 
     public double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
-
-        double averageExpressionLevelOnSelectedQueryFactors =
-                baselineProfileStats.getAverageOverSelectedQueryFactors(baselineProfile);
-        double maxExpressionLevelOnNonSelectedQueryFactors =
-                baselineProfileStats.getMaxOverNonSelectedQueryFactors(baselineProfile);
-
-        if (maxExpressionLevelOnNonSelectedQueryFactors == 0) {
-            if (nonSelectedQueryFactorsCachedInstance.isEmpty()) {
-                return averageExpressionLevelOnSelectedQueryFactors;
-            }
-            return averageExpressionLevelOnSelectedQueryFactors / cutoffDivisor;
-        }
-
-        return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
+        return baselineProfileStats.getExpressionLevelFoldChange(baselineProfile);
     }
 
     static private <K, V> Map<K, V> createLRUMap(final int maxEntries) {
@@ -145,12 +131,20 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
     private class BaselineProfileCachedStats {
         private final Map<String, Double> averageOverSelectedQueryFactors;
         private final Map<String, Double> averageOverAllQueryFactors;
-        private final Map<String, Double> maxOverNonSelectedQueryFactors;
+        private final Map<String, Double> expressionLevelFoldChange;
 
         private BaselineProfileCachedStats(int cacheSize) {
             averageOverSelectedQueryFactors = createLRUMap(cacheSize);
             averageOverAllQueryFactors = createLRUMap(cacheSize);
-            maxOverNonSelectedQueryFactors = createLRUMap(cacheSize);
+            expressionLevelFoldChange = createLRUMap(cacheSize);
+        }
+
+        double getExpressionLevelFoldChange(BaselineProfile baselineProfile) {
+            if(!expressionLevelFoldChange.containsKey(baselineProfile.getId())) {
+                expressionLevelFoldChange.put(
+                        baselineProfile.getId(), computeExpressionLevelFoldChange(baselineProfile));
+            }
+            return expressionLevelFoldChange.get(baselineProfile.getId());
         }
 
         double getAverageOverSelectedQueryFactors(BaselineProfile baselineProfile) {
@@ -169,14 +163,23 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
             return averageOverAllQueryFactors.get(baselineProfile.getId());
         }
 
-        double getMaxOverNonSelectedQueryFactors(BaselineProfile baselineProfile) {
-            if(!maxOverNonSelectedQueryFactors.containsKey(baselineProfile.getId())) {
-                maxOverNonSelectedQueryFactors.put(
-                        baselineProfile.getId(),
-                        baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactorsCachedInstance));
+        private double computeExpressionLevelFoldChange(BaselineProfile baselineProfile) {
+
+            double averageExpressionLevelOnSelectedQueryFactors =
+                    baselineProfileStats.getAverageOverSelectedQueryFactors(baselineProfile);
+            double maxExpressionLevelOnNonSelectedQueryFactors =
+                    baselineProfile.getMaxExpressionLevelOn(nonSelectedQueryFactorsCachedInstance);
+
+            if (maxExpressionLevelOnNonSelectedQueryFactors == 0) {
+                if (nonSelectedQueryFactorsCachedInstance.isEmpty()) {
+                    return averageExpressionLevelOnSelectedQueryFactors;
+                }
+                return averageExpressionLevelOnSelectedQueryFactors / cutoffDivisor;
             }
-            return maxOverNonSelectedQueryFactors.get(baselineProfile.getId());
+
+            return averageExpressionLevelOnSelectedQueryFactors / maxExpressionLevelOnNonSelectedQueryFactors;
         }
     }
+
 
 }
