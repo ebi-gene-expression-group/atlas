@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -16,6 +15,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.MessageFormat;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Controller
 public class TracksController extends HtmlExceptionHandlingController {
@@ -75,11 +76,20 @@ public class TracksController extends HtmlExceptionHandlingController {
             throw new RuntimeException("Sorry, this experiment is not compatible with any available genome browser");
         }
 
-        String genomeBrowserUrl = "";
-        for (ImmutableMap<String, String> genomeBrowserResource : speciesPropertiesTrader.get(experiment.getSpecies().getEnsemblName()).getResources("type", "genome_browser")) {
+        String genomeBrowserUrl = null;
+        for (ImmutableMap<String, String> genomeBrowserResource :
+                speciesPropertiesTrader
+                        .get(experiment.getSpecies().getEnsemblName())
+                        .getResources("type", "genome_browser")) {
             if (genomeBrowserName.equalsIgnoreCase(genomeBrowserResource.get("name"))) {
                 genomeBrowserUrl = genomeBrowserResource.get("url");
+                break;
             }
+        }
+        if (isBlank(genomeBrowserUrl)) {
+            throw new RuntimeException(MessageFormat.format(
+                    "The requested genome browser {0} is not compatible with the experiment species {1}",
+                    genomeBrowserName, experiment.getSpecies().getName()));
         }
 
         String atlasServer =
@@ -88,9 +98,11 @@ public class TracksController extends HtmlExceptionHandlingController {
 
         MessageFormat template =
                 experiment.getType().isProteomicsBaseline() ? BASELINE_PROTEOMICS_TRACK_URL_PART_TEMPLATE :
-                experiment.getType().isBaseline() ? BASELINE_RNASEQ_TRACK_URL_PART_TEMPLATE : DIFFERENTIAL_TRACK_URL_PART_TEMPLATE;
+                experiment.getType().isBaseline() ? BASELINE_RNASEQ_TRACK_URL_PART_TEMPLATE :
+                        DIFFERENTIAL_TRACK_URL_PART_TEMPLATE;
 
-        return "redirect:" + genomeBrowserUrl + template.format(new Object[]{geneId, atlasServer, experimentAccession, trackId});
+        return "redirect:" + genomeBrowserUrl +
+                template.format(new Object[]{geneId, atlasServer, experimentAccession, trackId});
     }
 
 }
