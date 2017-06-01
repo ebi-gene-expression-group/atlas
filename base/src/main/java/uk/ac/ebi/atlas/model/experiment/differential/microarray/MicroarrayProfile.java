@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
@@ -36,6 +39,18 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression,
     @Override
     protected MicroarrayProfile createEmptyCopy() {
         return new MicroarrayProfile(getId(), getName(), designElementName);
+    }
+
+    @Override
+    public void write(Kryo kryo, Output output) {
+        super.write(kryo, output);
+        output.writeString(designElementName);
+    }
+
+    @Override
+    public void read(Kryo kryo, Input input) {
+        super.read(kryo, input);
+        designElementName = input.readString();
     }
 
 }
