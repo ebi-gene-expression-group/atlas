@@ -81,15 +81,13 @@ public abstract class ProfileStreamTransforms<DataColumnDescriptor extends Descr
 
     protected Function<Iterable<Prof>, Iterable<Prof>> keepOnlyProfilesOverExpressedOnColumns
             (final Collection<DataColumnDescriptor> selectedColumns, final Collection<DataColumnDescriptor> allColumns){
-        final Set<DataColumnDescriptor> nonSelectedColumns = Sets.difference(ImmutableSet.copyOf(selectedColumns),
-                ImmutableSet.copyOf(allColumns));
+        final Set<DataColumnDescriptor> nonSelectedColumns = Sets.difference(ImmutableSet.copyOf(allColumns),
+                ImmutableSet.copyOf(selectedColumns));
         return fromPredicate(new Predicate<Prof>() {
             @Override
             public boolean apply(@Nullable Prof prof) {
-                return ! prof.isExpressedOnAnyOf(nonSelectedColumns) || prof.getAverageExpressionLevelOn
-                        (selectedColumns) > prof
-                        .getMaxExpressionLevelOn
-                        (nonSelectedColumns);
+                return prof.getAverageExpressionLevelOn(selectedColumns)
+                        > (prof.isExpressedOnAnyOf(nonSelectedColumns) ? prof.getMaxExpressionLevelOn(nonSelectedColumns) : 0.0d);
             }
         });
     }

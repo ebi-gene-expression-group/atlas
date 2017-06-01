@@ -9,17 +9,15 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 public class DifferentialProfileStreamTransforms<Prof extends DifferentialProfile<? extends DifferentialExpression, Prof>>
         extends ProfileStreamTransforms<Contrast, Prof> {
 
-    public DifferentialProfileStreamTransforms(DifferentialProfileStreamOptions options, GeneQueryResponse geneQueryResponse){
-        register(keepOnlyProfilesExpressedOnColumns(options.getAllDataColumns()));
+    public DifferentialProfileStreamTransforms(DifferentialProfileStreamOptions options, GeneQueryResponse geneQueryResponse) {
         if (!geneQueryResponse.getAllGeneIds().isEmpty()) {
             register(keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()));
         }
-        if (!options.getDataColumnsToReturn().isEmpty()) {
-            if (options.isSpecific()) {
-                register(keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns()));
-            } else {
-                register(keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn()));
-            }
+        if (options.isSpecific() && !options.getDataColumnsToReturn().equals(options.getAllDataColumns())) {
+            register(keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns()));
+        } else {
+            register(keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn()));
         }
     }
 }
+
