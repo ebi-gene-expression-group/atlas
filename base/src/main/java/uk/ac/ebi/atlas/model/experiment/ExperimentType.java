@@ -55,6 +55,10 @@ public enum ExperimentType {
         return equals(RNASEQ_MRNA_DIFFERENTIAL) || isMicroarray();
     }
 
+    public boolean isMicroRna() {
+        return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
+    }
+
     public ExperimentType getParent() {
         return parent == null ? this : parent;
     }
