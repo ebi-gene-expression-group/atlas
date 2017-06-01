@@ -5,19 +5,214 @@ webpackJsonp_name_([5],{
 /*!********************************************************!*\
   !*** ./atlas_bundles/differential-expression/index.js ***!
   \********************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! ./src/differentialRenderer.js */ 2471);
+	module.exports = __webpack_require__(/*! ./src/differentialRenderer.js */ 2932);
 
-/***/ }),
+/***/ },
 
-/***/ 2471:
+/***/ 2909:
+/*!****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/querystring-es3/index.js ***!
+  \****************************************************************/
+[4007, 2910, 2911],
+
+/***/ 2910:
+/*!*****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/querystring-es3/decode.js ***!
+  \*****************************************************************/
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	'use strict';
+	
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+	
+	module.exports = function(qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
+	
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
+	
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
+	
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
+	
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
+	
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr, vstr, k, v;
+	
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
+	
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
+	
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
+	
+	  return obj;
+	};
+	
+	var isArray = Array.isArray || function (xs) {
+	  return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+
+/***/ },
+
+/***/ 2911:
+/*!*****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/querystring-es3/encode.js ***!
+  \*****************************************************************/
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	'use strict';
+	
+	var stringifyPrimitive = function(v) {
+	  switch (typeof v) {
+	    case 'string':
+	      return v;
+	
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+	
+	    case 'number':
+	      return isFinite(v) ? v : '';
+	
+	    default:
+	      return '';
+	  }
+	};
+	
+	module.exports = function(obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+	
+	  if (typeof obj === 'object') {
+	    return map(objectKeys(obj), function(k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (isArray(obj[k])) {
+	        return map(obj[k], function(v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+	
+	  }
+	
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+	         encodeURIComponent(stringifyPrimitive(obj));
+	};
+	
+	var isArray = Array.isArray || function (xs) {
+	  return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+	
+	function map (xs, f) {
+	  if (xs.map) return xs.map(f);
+	  var res = [];
+	  for (var i = 0; i < xs.length; i++) {
+	    res.push(f(xs[i], i));
+	  }
+	  return res;
+	}
+	
+	var objectKeys = Object.keys || function (obj) {
+	  var res = [];
+	  for (var key in obj) {
+	    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+	  }
+	  return res;
+	};
+
+
+/***/ },
+
+/***/ 2932:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/differentialRenderer.js ***!
   \***************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -26,7 +221,7 @@ webpackJsonp_name_([5],{
 	
 	//*------------------------------------------------------------------*
 	
-	var DifferentialRouter = __webpack_require__(/*! ./DifferentialRouter.jsx */ 2472);
+	var DifferentialRouter = __webpack_require__(/*! ./DifferentialRouter.jsx */ 2933);
 	
 	//*------------------------------------------------------------------*
 	
@@ -42,19 +237,19 @@ webpackJsonp_name_([5],{
 	    ReactDOM.render(React.createElement(DifferentialRouter, { atlasUrl: atlasUrl, geneQuery: geneQuery, conditionQuery: conditionQuery, species: species }), document.getElementById(target));
 	};
 
-/***/ }),
+/***/ },
 
-/***/ 2472:
+/***/ 2933:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DifferentialRouter.jsx ***!
   \**************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _urijs = __webpack_require__(/*! urijs */ 2473);
+	var _urijs = __webpack_require__(/*! urijs */ 2934);
 	
 	var _urijs2 = _interopRequireDefault(_urijs);
 	
@@ -62,14 +257,14 @@ webpackJsonp_name_([5],{
 	
 	var React = __webpack_require__(/*! react */ 2);
 	
-	var $ = __webpack_require__(/*! jquery */ 2477);
+	var $ = __webpack_require__(/*! jquery */ 2938);
 	$.ajaxSetup({ traditional: true });
 	
 	//*------------------------------------------------------------------*
 	
-	var Results = __webpack_require__(/*! ./DifferentialResults.jsx */ 2478);
-	var Facets = __webpack_require__(/*! ./DifferentialFacetsTree.jsx */ 2635);
-	var UrlManager = __webpack_require__(/*! ./urlManager.js */ 2636);
+	var Results = __webpack_require__(/*! ./DifferentialResults.jsx */ 2939);
+	var Facets = __webpack_require__(/*! ./DifferentialFacetsTree.jsx */ 3096);
+	var UrlManager = __webpack_require__(/*! ./urlManager.js */ 3097);
 	
 	//*------------------------------------------------------------------*
 	
@@ -326,75 +521,75 @@ webpackJsonp_name_([5],{
 	
 	module.exports = DifferentialRouter;
 
-/***/ }),
+/***/ },
 
-/***/ 2473:
+/***/ 2934:
 /*!******************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/urijs/src/URI.js ***!
   \******************************************************************/
-[3268, 2474, 2475, 2476, 2474, 2475, 2476],
+[3842, 2935, 2936, 2937, 2935, 2936, 2937],
 
-/***/ 2474:
+/***/ 2935:
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/urijs/src/punycode.js ***!
   \***********************************************************************/
-189,
+197,
 
-/***/ 2475:
+/***/ 2936:
 /*!*******************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/urijs/src/IPv6.js ***!
   \*******************************************************************/
-191,
+199,
 
-/***/ 2476:
+/***/ 2937:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/urijs/src/SecondLevelDomains.js ***!
   \*********************************************************************************/
-192,
+200,
 
-/***/ 2477:
+/***/ 2938:
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/jquery/dist/jquery.js ***!
   \***********************************************************************/
-887,
+994,
 
-/***/ 2478:
+/***/ 2939:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DifferentialResults.jsx ***!
   \***************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _urijs = __webpack_require__(/*! urijs */ 2473);
+	var _urijs = __webpack_require__(/*! urijs */ 2934);
 	
 	var _urijs2 = _interopRequireDefault(_urijs);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var $ = __webpack_require__(/*! jquery */ 2477);
-	__webpack_require__(/*! jquery.browser */ 2479);
+	var $ = __webpack_require__(/*! jquery */ 2938);
+	__webpack_require__(/*! jquery.browser */ 2940);
 	
 	var React = __webpack_require__(/*! react */ 2);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
 	
 	//*------------------------------------------------------------------*
 	
-	var AtlasFeedback = __webpack_require__(/*! expression-atlas-feedback */ 2480);
-	var EbiSpeciesIcon = __webpack_require__(/*! react-ebi-species */ 2606).Icon;
+	var AtlasFeedback = __webpack_require__(/*! expression-atlas-feedback */ 2941);
+	var EbiSpeciesIcon = __webpack_require__(/*! react-ebi-species */ 3067).Icon;
 	
 	//*------------------------------------------------------------------*
 	
-	var DisplayLevelsButton = __webpack_require__(/*! ./DisplayLevelsButton.jsx */ 2612);
-	var DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton.jsx */ 2614);
-	var Legend = __webpack_require__(/*! ./legend/LegendDifferential.jsx */ 2617);
-	var CellDifferential = __webpack_require__(/*! ./cell-differential/CellDifferential.jsx */ 2623);
+	var DisplayLevelsButton = __webpack_require__(/*! ./DisplayLevelsButton.jsx */ 3073);
+	var DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton.jsx */ 3075);
+	var Legend = __webpack_require__(/*! ./legend/LegendDifferential.jsx */ 3078);
+	var CellDifferential = __webpack_require__(/*! ./cell-differential/CellDifferential.jsx */ 3084);
 	
-	var ContrastTooltips = __webpack_require__(/*! ./contrast-tooltip/contrastTooltipModule.js */ 2629);
+	var ContrastTooltips = __webpack_require__(/*! ./contrast-tooltip/contrastTooltipModule.js */ 3090);
 	
-	__webpack_require__(/*! ./DifferentialResults.css */ 2633);
+	__webpack_require__(/*! ./DifferentialResults.css */ 3094);
 	
 	//*------------------------------------------------------------------*
 	
@@ -659,13 +854,13 @@ webpackJsonp_name_([5],{
 	
 	module.exports = DifferentialResults;
 
-/***/ }),
+/***/ },
 
-/***/ 2479:
+/***/ 2940:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/jquery.browser/dist/jquery.browser.js ***!
   \***************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	 * jQuery Browser Plugin 0.1.0
@@ -686,7 +881,7 @@ webpackJsonp_name_([5],{
 	(function (factory) {
 	  if (true) {
 	    // AMD. Register as an anonymous module.
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 2477)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 2938)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
 	      return factory($);
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -862,813 +1057,813 @@ webpackJsonp_name_([5],{
 	}));
 
 
-/***/ }),
+/***/ },
 
-/***/ 2480:
+/***/ 2941:
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/index.js ***!
   \************************************************************************************/
-[3654, 2481],
+[4194, 2942],
 
-/***/ 2481:
+/***/ 2942:
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/src/Feedback.jsx ***!
   \********************************************************************************************/
-[3655, 2482, 2484, 2485, 2486, 2585, 2587, 2592, 2593, 2602],
+[4195, 2943, 2945, 2946, 2947, 3046, 3048, 3053, 3054, 3063],
 
-/***/ 2482:
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-localstorage/react-localstorage.js ***!
-  \******************************************************************************************/
-[3656, 2483],
+/***/ 2943:
+/*!**********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-localstorage/react-localstorage.js ***!
+  \**********************************************************************************************************************/
+[4196, 2944],
 
-/***/ 2483:
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-localstorage/lib/warning.js ***!
-  \***********************************************************************************/
-856,
+/***/ 2944:
+/*!***************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-localstorage/lib/warning.js ***!
+  \***************************************************************************************************************/
+963,
 
-/***/ 2484:
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-timer-mixin/TimerMixin.js ***!
-  \*********************************************************************************/
-857,
+/***/ 2945:
+/*!*************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-timer-mixin/TimerMixin.js ***!
+  \*************************************************************************************************************/
+964,
 
-/***/ 2485:
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-addons-css-transition-group/index.js ***!
-  \********************************************************************************************/
-858,
+/***/ 2946:
+/*!************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-addons-css-transition-group/index.js ***!
+  \************************************************************************************************************************/
+965,
 
-/***/ 2486:
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/Button.js ***!
-  \*******************************************************************************/
-[3511, 2487, 2522, 2523, 2530, 2531, 2567, 2575, 2576, 2578, 2583, 2584],
+/***/ 2947:
+/*!***********************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/Button.js ***!
+  \***********************************************************************************************************/
+[4083, 2948, 2983, 2984, 2991, 2992, 3028, 3036, 3037, 3039, 3044, 3045],
 
-/***/ 2487:
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/object/values.js ***!
-  \****************************************************************************************/
-[3512, 2488],
+/***/ 2948:
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/values.js ***!
+  \**************************************************************************************************************************************/
+[4084, 2949],
 
-/***/ 2488:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
-  \*****************************************************************************************************/
-[3513, 2489, 2492],
+/***/ 2949:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
+  \***************************************************************************************************************************************************/
+[4085, 2950, 2953],
 
-/***/ 2489:
-/*!**************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
-  \**************************************************************************************************************/
-[3514, 2490, 2505],
+/***/ 2950:
+/*!************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
+  \************************************************************************************************************************************************************/
+[4086, 2951, 2966],
 
-/***/ 2490:
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_export.js ***!
-  \****************************************************************************************************/
-[3447, 2491, 2492, 2493, 2495],
+/***/ 2951:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_export.js ***!
+  \**************************************************************************************************************************************************/
+[4019, 2952, 2953, 2954, 2956],
 
-/***/ 2491:
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_global.js ***!
-  \****************************************************************************************************/
-501,
+/***/ 2952:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_global.js ***!
+  \**************************************************************************************************************************************************/
+510,
 
-/***/ 2492:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_core.js ***!
-  \**************************************************************************************************/
-502,
-
-/***/ 2493:
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
-  \*************************************************************************************************/
-[3448, 2494],
-
-/***/ 2494:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
-  \********************************************************************************************************/
-504,
-
-/***/ 2495:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
-  \**************************************************************************************************/
-[3449, 2496, 2504, 2500],
-
-/***/ 2496:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
-  \*******************************************************************************************************/
-[3450, 2497, 2499, 2503, 2500],
-
-/***/ 2497:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
-  \*******************************************************************************************************/
-[3451, 2498],
-
-/***/ 2498:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
-  \*******************************************************************************************************/
-508,
-
-/***/ 2499:
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
-  \************************************************************************************************************/
-[3452, 2500, 2501, 2502],
-
-/***/ 2500:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
-  \*********************************************************************************************************/
-[3453, 2501],
-
-/***/ 2501:
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
-  \***************************************************************************************************/
+/***/ 2953:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_core.js ***!
+  \************************************************************************************************************************************************/
 511,
 
-/***/ 2502:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
-  \********************************************************************************************************/
-[3454, 2498, 2491],
+/***/ 2954:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
+  \***********************************************************************************************************************************************/
+[4020, 2955],
 
-/***/ 2503:
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
-  \**********************************************************************************************************/
-[3455, 2498],
+/***/ 2955:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
+  \******************************************************************************************************************************************************/
+513,
 
-/***/ 2504:
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
-  \***********************************************************************************************************/
-514,
+/***/ 2956:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
+  \************************************************************************************************************************************************/
+[4021, 2957, 2965, 2961],
 
-/***/ 2505:
-/*!*************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
-  \*************************************************************************************************************/
-[3515, 2506, 2509, 2521],
+/***/ 2957:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
+  \*****************************************************************************************************************************************************/
+[4022, 2958, 2960, 2964, 2961],
 
-/***/ 2506:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
-  \*********************************************************************************************************/
-[3457, 2507, 2520],
+/***/ 2958:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
+  \*****************************************************************************************************************************************************/
+[4023, 2959],
 
-/***/ 2507:
-/*!******************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
-  \******************************************************************************************************************/
-[3458, 2508, 2509, 2513, 2517],
+/***/ 2959:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
+  \*****************************************************************************************************************************************************/
+517,
 
-/***/ 2508:
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_has.js ***!
-  \*************************************************************************************************/
-518,
+/***/ 2960:
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
+  \**********************************************************************************************************************************************************/
+[4024, 2961, 2962, 2963],
 
-/***/ 2509:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
-  \********************************************************************************************************/
-[3459, 2510, 2512],
+/***/ 2961:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
+  \*******************************************************************************************************************************************************/
+[4025, 2962],
 
-/***/ 2510:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
-  \*****************************************************************************************************/
-[3460, 2511],
+/***/ 2962:
+/*!*************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
+  \*************************************************************************************************************************************************/
+520,
 
-/***/ 2511:
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
-  \*************************************************************************************************/
-521,
+/***/ 2963:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
+  \******************************************************************************************************************************************************/
+[4026, 2959, 2952],
 
-/***/ 2512:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_defined.js ***!
-  \*****************************************************************************************************/
-522,
+/***/ 2964:
+/*!********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
+  \********************************************************************************************************************************************************/
+[4027, 2959],
 
-/***/ 2513:
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
-  \************************************************************************************************************/
-[3461, 2509, 2514, 2516],
+/***/ 2965:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
+  \*********************************************************************************************************************************************************/
+523,
 
-/***/ 2514:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
-  \*******************************************************************************************************/
-[3462, 2515],
+/***/ 2966:
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
+  \***********************************************************************************************************************************************************/
+[4087, 2967, 2970, 2982],
 
-/***/ 2515:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
-  \********************************************************************************************************/
-525,
+/***/ 2967:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
+  \*******************************************************************************************************************************************************/
+[4029, 2968, 2981],
 
-/***/ 2516:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
-  \******************************************************************************************************/
-[3463, 2515],
+/***/ 2968:
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
+  \****************************************************************************************************************************************************************/
+[4030, 2969, 2970, 2974, 2978],
 
-/***/ 2517:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
-  \********************************************************************************************************/
-[3464, 2518, 2519],
+/***/ 2969:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_has.js ***!
+  \***********************************************************************************************************************************************/
+527,
 
-/***/ 2518:
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
-  \****************************************************************************************************/
-[3465, 2491],
+/***/ 2970:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
+  \******************************************************************************************************************************************************/
+[4031, 2971, 2973],
 
-/***/ 2519:
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
-  \*************************************************************************************************/
-529,
+/***/ 2971:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
+  \***************************************************************************************************************************************************/
+[4032, 2972],
 
-/***/ 2520:
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_enum-bug-keys.js ***!
-  \***********************************************************************************************************/
+/***/ 2972:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
+  \***********************************************************************************************************************************************/
 530,
 
-/***/ 2521:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-pie.js ***!
-  \********************************************************************************************************/
-532,
-
-/***/ 2522:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/helpers/objectWithoutProperties.js ***!
-  \**************************************************************************************************/
-495,
-
-/***/ 2523:
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/helpers/extends.js ***!
-  \**********************************************************************************/
-[3443, 2524],
-
-/***/ 2524:
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/object/assign.js ***!
-  \****************************************************************************************/
-[3444, 2525],
-
-/***/ 2525:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
-  \*****************************************************************************************************/
-[3445, 2526, 2492],
-
-/***/ 2526:
-/*!**************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
-  \**************************************************************************************************************/
-[3446, 2490, 2527],
-
-/***/ 2527:
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
-  \***********************************************************************************************************/
-[3456, 2506, 2528, 2521, 2529, 2510, 2501],
-
-/***/ 2528:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-gops.js ***!
-  \*********************************************************************************************************/
+/***/ 2973:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_defined.js ***!
+  \***************************************************************************************************************************************************/
 531,
 
-/***/ 2529:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
-  \*******************************************************************************************************/
-[3466, 2512],
+/***/ 2974:
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
+  \**********************************************************************************************************************************************************/
+[4033, 2970, 2975, 2977],
 
-/***/ 2530:
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/helpers/classCallCheck.js ***!
-  \*****************************************************************************************/
+/***/ 2975:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
+  \*****************************************************************************************************************************************************/
+[4034, 2976],
+
+/***/ 2976:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
+  \******************************************************************************************************************************************************/
 534,
 
-/***/ 2531:
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
-  \****************************************************************************************************/
-[3467, 2532],
+/***/ 2977:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
+  \****************************************************************************************************************************************************/
+[4035, 2976],
 
-/***/ 2532:
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/helpers/typeof.js ***!
-  \*********************************************************************************/
-[3468, 2533, 2553],
+/***/ 2978:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
+  \******************************************************************************************************************************************************/
+[4036, 2979, 2980],
 
-/***/ 2533:
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/symbol/iterator.js ***!
-  \******************************************************************************************/
-[3469, 2534],
+/***/ 2979:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
+  \**************************************************************************************************************************************************/
+[4037, 2952],
 
-/***/ 2534:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
-  \*******************************************************************************************************/
-[3470, 2535, 2548, 2552],
+/***/ 2980:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
+  \***********************************************************************************************************************************************/
+538,
 
-/***/ 2535:
-/*!****************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
-  \****************************************************************************************************************/
-[3471, 2536, 2537],
+/***/ 2981:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_enum-bug-keys.js ***!
+  \*********************************************************************************************************************************************************/
+539,
 
-/***/ 2536:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
-  \*******************************************************************************************************/
-[3472, 2515, 2512],
+/***/ 2982:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-pie.js ***!
+  \******************************************************************************************************************************************************/
+541,
 
-/***/ 2537:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
-  \*********************************************************************************************************/
-[3473, 2538, 2490, 2539, 2495, 2508, 2540, 2541, 2545, 2547, 2546],
+/***/ 2983:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/objectWithoutProperties.js ***!
+  \************************************************************************************************************************************************/
+504,
 
-/***/ 2538:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_library.js ***!
-  \*****************************************************************************************************/
-542,
+/***/ 2984:
+/*!********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/extends.js ***!
+  \********************************************************************************************************************************/
+[4015, 2985],
 
-/***/ 2539:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
-  \******************************************************************************************************/
-[3474, 2495],
+/***/ 2985:
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/assign.js ***!
+  \**************************************************************************************************************************************/
+[4016, 2986],
 
-/***/ 2540:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
-  \*******************************************************************************************************/
-544,
+/***/ 2986:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
+  \***************************************************************************************************************************************************/
+[4017, 2987, 2953],
 
-/***/ 2541:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
-  \*********************************************************************************************************/
-[3475, 2542, 2504, 2545, 2495, 2546],
+/***/ 2987:
+/*!************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
+  \************************************************************************************************************************************************************/
+[4018, 2951, 2988],
 
-/***/ 2542:
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
-  \***********************************************************************************************************/
-[3476, 2497, 2543, 2520, 2517, 2502, 2544],
+/***/ 2988:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
+  \*********************************************************************************************************************************************************/
+[4028, 2967, 2989, 2982, 2990, 2971, 2962],
 
-/***/ 2543:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
-  \********************************************************************************************************/
-[3477, 2496, 2497, 2506, 2500],
+/***/ 2989:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gops.js ***!
+  \*******************************************************************************************************************************************************/
+540,
 
-/***/ 2544:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_html.js ***!
-  \**************************************************************************************************/
-[3478, 2491],
+/***/ 2990:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
+  \*****************************************************************************************************************************************************/
+[4038, 2973],
 
-/***/ 2545:
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
-  \***************************************************************************************************************/
-[3479, 2496, 2508, 2546],
+/***/ 2991:
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/classCallCheck.js ***!
+  \***************************************************************************************************************************************/
+543,
 
-/***/ 2546:
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
-  \*************************************************************************************************/
-[3480, 2518, 2519, 2491],
+/***/ 2992:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
+  \**************************************************************************************************************************************************/
+[4039, 2993],
 
-/***/ 2547:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
-  \********************************************************************************************************/
-[3481, 2508, 2529, 2517],
+/***/ 2993:
+/*!*******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/typeof.js ***!
+  \*******************************************************************************************************************************/
+[4040, 2994, 3014],
 
-/***/ 2548:
-/*!*************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
-  \*************************************************************************************************************/
-[3482, 2549, 2491, 2495, 2540, 2546],
+/***/ 2994:
+/*!****************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/symbol/iterator.js ***!
+  \****************************************************************************************************************************************/
+[4041, 2995],
 
-/***/ 2549:
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
-  \***************************************************************************************************************/
-[3483, 2550, 2551, 2540, 2509, 2537],
+/***/ 2995:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
+  \*****************************************************************************************************************************************************/
+[4042, 2996, 3009, 3013],
 
-/***/ 2550:
-/*!****************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
-  \****************************************************************************************************************/
-554,
+/***/ 2996:
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
+  \**************************************************************************************************************************************************************/
+[4043, 2997, 2998],
 
-/***/ 2551:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
-  \*******************************************************************************************************/
-555,
+/***/ 2997:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
+  \*****************************************************************************************************************************************************/
+[4044, 2976, 2973],
 
-/***/ 2552:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
-  \*****************************************************************************************************/
-[3484, 2546],
+/***/ 2998:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
+  \*******************************************************************************************************************************************************/
+[4045, 2999, 2951, 3000, 2956, 2969, 3001, 3002, 3006, 3008, 3007],
 
-/***/ 2553:
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/symbol.js ***!
-  \*********************************************************************************/
-[3485, 2554],
+/***/ 2999:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_library.js ***!
+  \***************************************************************************************************************************************************/
+551,
 
-/***/ 2554:
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
-  \****************************************************************************************************/
-[3486, 2555, 2564, 2565, 2566, 2492],
+/***/ 3000:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
+  \****************************************************************************************************************************************************/
+[4046, 2956],
 
-/***/ 2555:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
-  \*******************************************************************************************************/
-[3487, 2491, 2508, 2500, 2490, 2539, 2556, 2501, 2518, 2545, 2519, 2546, 2552, 2557, 2558, 2559, 2560, 2497, 2509, 2503, 2504, 2542, 2561, 2563, 2496, 2506, 2562, 2521, 2528, 2538, 2495],
+/***/ 3001:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
+  \*****************************************************************************************************************************************************/
+553,
 
-/***/ 2556:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
-  \**************************************************************************************************/
-[3488, 2519, 2498, 2508, 2496, 2501],
+/***/ 3002:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
+  \*******************************************************************************************************************************************************/
+[4047, 3003, 2965, 3006, 2956, 3007],
 
-/***/ 2557:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
-  \********************************************************************************************************/
-[3489, 2491, 2492, 2538, 2552, 2496],
+/***/ 3003:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
+  \*********************************************************************************************************************************************************/
+[4048, 2958, 3004, 2981, 2978, 2963, 3005],
 
-/***/ 2558:
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
-  \***************************************************************************************************/
-[3490, 2506, 2509],
+/***/ 3004:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
+  \******************************************************************************************************************************************************/
+[4049, 2957, 2958, 2967, 2961],
 
-/***/ 2559:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
-  \*******************************************************************************************************/
-[3491, 2506, 2528, 2521],
+/***/ 3005:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_html.js ***!
+  \************************************************************************************************************************************************/
+[4050, 2952],
 
-/***/ 2560:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
-  \******************************************************************************************************/
-[3492, 2511],
+/***/ 3006:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
+  \*************************************************************************************************************************************************************/
+[4051, 2957, 2969, 3007],
 
-/***/ 2561:
-/*!*************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
-  \*************************************************************************************************************/
-[3493, 2509, 2562],
+/***/ 3007:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
+  \***********************************************************************************************************************************************/
+[4052, 2979, 2980, 2952],
 
-/***/ 2562:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
-  \*********************************************************************************************************/
-[3494, 2507, 2520],
+/***/ 3008:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
+  \******************************************************************************************************************************************************/
+[4053, 2969, 2990, 2978],
 
-/***/ 2563:
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
-  \*********************************************************************************************************/
-[3495, 2521, 2504, 2509, 2503, 2508, 2499, 2500],
+/***/ 3009:
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
+  \***********************************************************************************************************************************************************/
+[4054, 3010, 2952, 2956, 3001, 3007],
 
-/***/ 2564:
-/*!*****************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
-  \*****************************************************************************************************************/
-568,
+/***/ 3010:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
+  \*************************************************************************************************************************************************************/
+[4055, 3011, 3012, 3001, 2970, 2998],
 
-/***/ 2565:
+/***/ 3011:
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
+  \**************************************************************************************************************************************************************/
+563,
+
+/***/ 3012:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
+  \*****************************************************************************************************************************************************/
+564,
+
+/***/ 3013:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
+  \***************************************************************************************************************************************************/
+[4056, 3007],
+
+/***/ 3014:
+/*!*******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/symbol.js ***!
+  \*******************************************************************************************************************************/
+[4057, 3015],
+
+/***/ 3015:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
+  \**************************************************************************************************************************************************/
+[4058, 3016, 3025, 3026, 3027, 2953],
+
+/***/ 3016:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
+  \*****************************************************************************************************************************************************/
+[4059, 2952, 2969, 2961, 2951, 3000, 3017, 2962, 2979, 3006, 2980, 3007, 3013, 3018, 3019, 3020, 3021, 2958, 2970, 2964, 2965, 3003, 3022, 3024, 2957, 2967, 3023, 2982, 2989, 2999, 2956],
+
+/***/ 3017:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
+  \************************************************************************************************************************************************/
+[4060, 2980, 2959, 2969, 2957, 2962],
+
+/***/ 3018:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
+  \******************************************************************************************************************************************************/
+[4061, 2952, 2953, 2999, 3013, 2957],
+
+/***/ 3019:
+/*!*************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
+  \*************************************************************************************************************************************************/
+[4062, 2967, 2970],
+
+/***/ 3020:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
+  \*****************************************************************************************************************************************************/
+[4063, 2967, 2989, 2982],
+
+/***/ 3021:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
+  \****************************************************************************************************************************************************/
+[4064, 2972],
+
+/***/ 3022:
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
+  \***********************************************************************************************************************************************************/
+[4065, 2970, 3023],
+
+/***/ 3023:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
+  \*******************************************************************************************************************************************************/
+[4066, 2968, 2981],
+
+/***/ 3024:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
+  \*******************************************************************************************************************************************************/
+[4067, 2982, 2965, 2970, 2964, 2969, 2960, 2961],
+
+/***/ 3025:
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
+  \***************************************************************************************************************************************************************/
+577,
+
+/***/ 3026:
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
+  \********************************************************************************************************************************************************************/
+[4068, 3018],
+
+/***/ 3027:
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
+  \****************************************************************************************************************************************************************/
+[4069, 3018],
+
+/***/ 3028:
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/inherits.js ***!
+  \*********************************************************************************************************************************/
+[4070, 3029, 3033, 2993],
+
+/***/ 3029:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/set-prototype-of.js ***!
+  \************************************************************************************************************************************************/
+[4071, 3030],
+
+/***/ 3030:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
+  \*************************************************************************************************************************************************************/
+[4072, 3031, 2953],
+
+/***/ 3031:
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
+  \**********************************************************************************************************************************************************************/
+[4073, 2951, 3032],
+
+/***/ 3032:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
+  \*****************************************************************************************************************************************************/
+[4074, 2959, 2958, 2954, 3024],
+
+/***/ 3033:
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/create.js ***!
+  \**************************************************************************************************************************************/
+[4075, 3034],
+
+/***/ 3034:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
+  \***************************************************************************************************************************************************/
+[4076, 3035, 2953],
+
+/***/ 3035:
+/*!************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
+  \************************************************************************************************************************************************************/
+[4077, 2951, 3003],
+
+/***/ 3036:
+/*!*******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/classnames/index.js ***!
+  \*******************************************************************************************************************/
+588,
+
+/***/ 3037:
+/*!***********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/elementType.js ***!
+  \***********************************************************************************************************************************/
+[4081, 3038],
+
+/***/ 3038:
+/*!********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
+  \********************************************************************************************************************************************************/
+596,
+
+/***/ 3039:
+/*!*************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
+  \*************************************************************************************************************************/
+[4088, 3040, 2984, 3043, 3044],
+
+/***/ 3040:
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/entries.js ***!
+  \***************************************************************************************************************************************/
+[4089, 3041],
+
+/***/ 3041:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
+  \****************************************************************************************************************************************************/
+[4090, 3042, 2953],
+
+/***/ 3042:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
+  \*************************************************************************************************************************************************************/
+[4091, 2951, 2966],
+
+/***/ 3043:
+/*!********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/invariant/browser.js ***!
+  \********************************************************************************************************************/
+210,
+
+/***/ 3044:
 /*!**********************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/utils/StyleConfig.js ***!
   \**********************************************************************************************************************/
-[3496, 2557],
+614,
 
-/***/ 2566:
-/*!******************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
-  \******************************************************************************************************************/
-[3497, 2557],
-
-/***/ 2567:
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/helpers/inherits.js ***!
-  \***********************************************************************************/
-[3498, 2568, 2572, 2532],
-
-/***/ 2568:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/object/set-prototype-of.js ***!
-  \**************************************************************************************************/
-[3499, 2569],
-
-/***/ 2569:
+/***/ 3045:
 /*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/SafeAnchor.js ***!
   \***************************************************************************************************************/
-[3500, 2570, 2492],
+[4092, 2984, 2983, 2991, 2992, 3028, 3037],
 
-/***/ 2570:
-/*!************************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
-  \************************************************************************************************************************/
-[3501, 2490, 2571],
-
-/***/ 2571:
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
-  \*******************************************************************************************************/
-[3502, 2498, 2497, 2493, 2563],
-
-/***/ 2572:
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/object/create.js ***!
-  \****************************************************************************************/
-[3503, 2573],
-
-/***/ 2573:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
-  \*****************************************************************************************************/
-[3504, 2574, 2492],
-
-/***/ 2574:
+/***/ 3046:
 /*!**************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormGroup.js ***!
   \**************************************************************************************************************/
-[3505, 2490, 2542],
+[4197, 2984, 2983, 2991, 2992, 3028, 3036, 3039, 3044, 3047],
 
-/***/ 2575:
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/classnames/index.js ***!
-  \*********************************************************************/
-579,
+/***/ 3047:
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
+  \*********************************************************************************************************************************/
+632,
 
-/***/ 2576:
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-prop-types/lib/elementType.js ***!
-  \*************************************************************************************/
-[3509, 2577],
+/***/ 3048:
+/*!****************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormControl.js ***!
+  \****************************************************************************************************************/
+[4198, 2984, 2983, 2991, 2992, 3028, 3036, 3037, 3049, 3050, 3052, 3039],
 
-/***/ 2577:
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
-  \**********************************************************************************************************/
-587,
+/***/ 3049:
+/*!******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/warning/browser.js ***!
+  \******************************************************************************************************************/
+213,
 
-/***/ 2578:
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
-  \*********************************************************************************************/
-[3516, 2579, 2523, 2582, 2583],
+/***/ 3050:
+/*!************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormControlFeedback.js ***!
+  \************************************************************************************************************************/
+[4199, 2983, 2984, 2991, 2992, 3028, 3036, 3051, 3039],
 
-/***/ 2579:
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/core-js/object/entries.js ***!
-  \*****************************************************************************************/
-[3517, 2580],
+/***/ 3051:
+/*!**************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/Glyphicon.js ***!
+  \**************************************************************************************************************/
+[4110, 2984, 2983, 2991, 2992, 3028, 3036, 3039],
 
-/***/ 2580:
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
-  \******************************************************************************************************/
-[3518, 2581, 2492],
+/***/ 3052:
+/*!**********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormControlStatic.js ***!
+  \**********************************************************************************************************************/
+[4200, 2984, 2983, 2991, 2992, 3028, 3036, 3037, 3039],
 
-/***/ 2581:
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
-  \***************************************************************************************************************/
-[3519, 2490, 2505],
-
-/***/ 2582:
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/invariant/browser.js ***!
-  \**********************************************************************/
-202,
-
-/***/ 2583:
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/utils/StyleConfig.js ***!
-  \******************************************************************************************/
-601,
-
-/***/ 2584:
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/SafeAnchor.js ***!
-  \***********************************************************************************/
-[3520, 2523, 2522, 2530, 2531, 2567, 2576],
-
-/***/ 2585:
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/FormGroup.js ***!
-  \**********************************************************************************/
-[3657, 2523, 2522, 2530, 2531, 2567, 2575, 2578, 2583, 2586],
-
-/***/ 2586:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
-  \*****************************************************************************************************/
-622,
-
-/***/ 2587:
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/FormControl.js ***!
-  \************************************************************************************/
-[3658, 2523, 2522, 2530, 2531, 2567, 2575, 2576, 2588, 2589, 2591, 2578],
-
-/***/ 2588:
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/warning/browser.js ***!
-  \********************************************************************/
-205,
-
-/***/ 2589:
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/FormControlFeedback.js ***!
-  \********************************************************************************************/
-[3659, 2522, 2523, 2530, 2531, 2567, 2575, 2590, 2578],
-
-/***/ 2590:
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/Glyphicon.js ***!
-  \**********************************************************************************/
-[3540, 2523, 2522, 2530, 2531, 2567, 2575, 2578],
-
-/***/ 2591:
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-bootstrap/lib/FormControlStatic.js ***!
-  \******************************************************************************************/
-[3660, 2523, 2522, 2530, 2531, 2567, 2575, 2576, 2578],
-
-/***/ 2592:
+/***/ 3053:
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/assets/emojione.sprites.png ***!
   \*******************************************************************************************************/
-869,
+976,
 
-/***/ 2593:
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/react-emojione.js ***!
-  \**************************************************************************************/
-[3661, 2594, 2595, 2599],
+/***/ 3054:
+/*!******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/react-emojione.js ***!
+  \******************************************************************************************************************/
+[4201, 3055, 3056, 3060],
 
-/***/ 2594:
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/data/ascii-to-unicode.js ***!
-  \*********************************************************************************************/
-871,
+/***/ 3055:
+/*!*************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/data/ascii-to-unicode.js ***!
+  \*************************************************************************************************************************/
+978,
 
-/***/ 2595:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/renderers/renderer-factory.js ***!
-  \**************************************************************************************************/
-[3662, 2596, 2601],
+/***/ 3056:
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/renderers/renderer-factory.js ***!
+  \******************************************************************************************************************************/
+[4202, 3057, 3062],
 
-/***/ 2596:
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/renderers/emoji-renderer.js ***!
-  \************************************************************************************************/
-[3663, 2597, 2599],
+/***/ 3057:
+/*!****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/renderers/emoji-renderer.js ***!
+  \****************************************************************************************************************************/
+[4203, 3058, 3060],
 
-/***/ 2597:
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/styles/emojione-sprite.js ***!
-  \**********************************************************************************************/
-[3664, 2598],
+/***/ 3058:
+/*!**************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/styles/emojione-sprite.js ***!
+  \**************************************************************************************************************************/
+[4204, 3059],
 
-/***/ 2598:
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
-  \********************************************************************************************************/
-875,
+/***/ 3059:
+/*!************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
+  \************************************************************************************************************************************/
+982,
 
-/***/ 2599:
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
-  \*****************************************************************************************************/
-[3665, 2600],
+/***/ 3060:
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
+  \*********************************************************************************************************************************/
+[4205, 3061],
 
-/***/ 2600:
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/data/emoji-data.js ***!
-  \***************************************************************************************/
-877,
+/***/ 3061:
+/*!*******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/data/emoji-data.js ***!
+  \*******************************************************************************************************************/
+984,
 
-/***/ 2601:
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/react-emojione/lib/renderers/unicode-renderer.js ***!
-  \**************************************************************************************************/
-[3666, 2599],
+/***/ 3062:
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/renderers/unicode-renderer.js ***!
+  \******************************************************************************************************************************/
+[4206, 3060],
 
-/***/ 2602:
+/***/ 3063:
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
   \***********************************************************************************************/
-[3667, 2603, 2605],
+[4207, 3064, 3066],
 
-/***/ 2603:
+/***/ 3064:
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
   \****************************************************************************************************************************************************/
-[3668, 2604],
+[4208, 3065],
 
-/***/ 2604:
+/***/ 3065:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader/lib/css-base.js ***!
   \****************************************************************************/
-482,
+490,
 
-/***/ 2605:
+/***/ 3066:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/style-loader/addStyles.js ***!
   \***************************************************************************/
-483,
+491,
 
-/***/ 2606:
+/***/ 3067:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/react-ebi-species/index.js ***!
   \****************************************************************************/
-[3669, 2607, 2611],
+[4209, 3068, 3072],
 
-/***/ 2607:
+/***/ 3068:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/react-ebi-species/src/SpeciesIcon.jsx ***!
   \***************************************************************************************/
-[3670, 2608, 2610],
+[4210, 3069, 3071],
 
-/***/ 2608:
+/***/ 3069:
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/style-loader!./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/~/react-ebi-species/src/ebi-visual-species.css ***!
   \**********************************************************************************************************************************************************************************************************/
-[3671, 2609, 2605],
+[4211, 3070, 3066],
 
-/***/ 2609:
+/***/ 3070:
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/~/react-ebi-species/src/ebi-visual-species.css ***!
   \***************************************************************************************************************************************************/
-[3672, 2604],
+[4212, 3065],
 
-/***/ 2610:
+/***/ 3071:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/react-ebi-species/src/mapping.js ***!
   \**********************************************************************************/
-885,
+992,
 
-/***/ 2611:
+/***/ 3072:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/react-ebi-species/src/renderer.js ***!
   \***********************************************************************************/
-[3673, 2607],
+[4213, 3068],
 
-/***/ 2612:
+/***/ 3073:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DisplayLevelsButton.jsx ***!
   \***************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
 	
-	var $ = __webpack_require__(/*! jquery */ 2477);
-	__webpack_require__(/*! jquery-ui-bundle */ 2613);
+	var $ = __webpack_require__(/*! jquery */ 2938);
+	__webpack_require__(/*! jquery-ui-bundle */ 3074);
 	
 	var DisplayLevelsButton = React.createClass({
 	    displayName: 'DisplayLevelsButton',
@@ -1719,13 +1914,13 @@ webpackJsonp_name_([5],{
 	
 	module.exports = DisplayLevelsButton;
 
-/***/ }),
+/***/ },
 
-/***/ 2613:
+/***/ 3074:
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/jquery-ui-bundle/jquery-ui.js ***!
   \*******************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.11.4 - 2015-03-11
 	* http://jqueryui.com
@@ -1736,7 +1931,7 @@ webpackJsonp_name_([5],{
 		if ( true ) {
 	
 			// AMD. Register as an anonymous module.
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(/*! jquery */ 2477) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(/*! jquery */ 2938) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else {
 	
 			// Browser globals
@@ -18345,20 +18540,20 @@ webpackJsonp_name_([5],{
 	
 	}));
 
-/***/ }),
+/***/ },
 
-/***/ 2614:
+/***/ 3075:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DifferentialDownloadButton.jsx ***!
   \**********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var $ = __webpack_require__(/*! jquery */ 2477);
-	__webpack_require__(/*! jquery-ui-bundle */ 2613);
+	var $ = __webpack_require__(/*! jquery */ 2938);
+	__webpack_require__(/*! jquery-ui-bundle */ 3074);
 	//TODO: make this button consistently styled, using Bootstrap or Foundation
 	//remove this dependency on jquery
 	
@@ -18367,7 +18562,7 @@ webpackJsonp_name_([5],{
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./DifferentialDownloadButton.css */ 2615);
+	__webpack_require__(/*! ./DifferentialDownloadButton.css */ 3076);
 	
 	//*------------------------------------------------------------------*
 	
@@ -18440,28 +18635,28 @@ webpackJsonp_name_([5],{
 	
 	module.exports = DownloadDifferentialButton;
 
-/***/ }),
+/***/ },
 
-/***/ 2615:
+/***/ 3076:
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DifferentialDownloadButton.css ***!
   \**********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../~/css-loader!./DifferentialDownloadButton.css */ 2616);
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialDownloadButton.css */ 3077);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../node_modules/css-loader/index.js!./DifferentialDownloadButton.css", function() {
-				var newContent = require("!!../node_modules/css-loader/index.js!./DifferentialDownloadButton.css");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./DifferentialDownloadButton.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./DifferentialDownloadButton.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18470,15 +18665,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2616:
+/***/ 3077:
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/DifferentialDownloadButton.css ***!
   \***************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -18488,29 +18683,29 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2617:
+/***/ 3078:
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/legend/LegendDifferential.jsx ***!
   \*********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var $ = __webpack_require__(/*! jquery */ 2477);
-	__webpack_require__(/*! jquery-ui-bundle */ 2613);
+	var $ = __webpack_require__(/*! jquery */ 2938);
+	__webpack_require__(/*! jquery-ui-bundle */ 3074);
 	
 	var React = __webpack_require__(/*! react */ 2);
 	
 	//*------------------------------------------------------------------*
 	
-	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 2618);
+	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 3079);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaGradient.css */ 2619);
-	__webpack_require__(/*! ./gxaHelpTooltip.css */ 2621);
+	__webpack_require__(/*! ./gxaGradient.css */ 3080);
+	__webpack_require__(/*! ./gxaHelpTooltip.css */ 3082);
 	
 	//*------------------------------------------------------------------*
 	
@@ -18577,19 +18772,19 @@ webpackJsonp_name_([5],{
 	
 	module.exports = LegendDifferential;
 
-/***/ }),
+/***/ },
 
-/***/ 2618:
+/***/ 3079:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/legend/LegendRow.jsx ***!
   \************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2);
 	
-	__webpack_require__(/*! ./gxaGradient.css */ 2619);
+	__webpack_require__(/*! ./gxaGradient.css */ 3080);
 	
 	var LegendRow = React.createClass({
 	    displayName: 'LegendRow',
@@ -18631,28 +18826,28 @@ webpackJsonp_name_([5],{
 	
 	module.exports = LegendRow;
 
-/***/ }),
+/***/ },
 
-/***/ 2619:
+/***/ 3080:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/legend/gxaGradient.css ***!
   \**************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../~/css-loader!./gxaGradient.css */ 2620);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaGradient.css */ 3081);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./gxaGradient.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./gxaGradient.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./gxaGradient.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./gxaGradient.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18661,15 +18856,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2620:
+/***/ 3081:
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/legend/gxaGradient.css ***!
   \*******************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -18679,28 +18874,28 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2621:
+/***/ 3082:
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/legend/gxaHelpTooltip.css ***!
   \*****************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../~/css-loader!./gxaHelpTooltip.css */ 2622);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaHelpTooltip.css */ 3083);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./gxaHelpTooltip.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./gxaHelpTooltip.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./gxaHelpTooltip.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./gxaHelpTooltip.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18709,15 +18904,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2622:
+/***/ 3083:
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/legend/gxaHelpTooltip.css ***!
   \**********************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -18727,26 +18922,26 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2623:
+/***/ 3084:
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/cell-differential/CellDifferential.jsx ***!
   \******************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
-	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 755);
-	var $ = __webpack_require__(/*! jquery */ 2477);
-	__webpack_require__(/*! jquery-ui-bundle */ 2613);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 762);
+	var $ = __webpack_require__(/*! jquery */ 2938);
+	__webpack_require__(/*! jquery-ui-bundle */ 3074);
 	
-	var NumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 2624).default;
+	var NumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 3085).default;
 	
-	__webpack_require__(/*! ./gxaShowHideCell.css */ 2625);
-	__webpack_require__(/*! ./gxaDifferentialCellTooltip.css */ 2627);
+	__webpack_require__(/*! ./gxaShowHideCell.css */ 3086);
+	__webpack_require__(/*! ./gxaDifferentialCellTooltip.css */ 3088);
 	
 	var CellDifferential = React.createClass({
 	    displayName: 'CellDifferential',
@@ -18876,34 +19071,34 @@ webpackJsonp_name_([5],{
 	
 	module.exports = CellDifferential;
 
-/***/ }),
+/***/ },
 
-/***/ 2624:
+/***/ 3085:
 /*!***************************************************!*\
   !*** ./~/expression-atlas-number-format/index.js ***!
   \***************************************************/
-[3591, 761],
+[4151, 768],
 
-/***/ 2625:
+/***/ 3086:
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/cell-differential/gxaShowHideCell.css ***!
   \*****************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../~/css-loader!./gxaShowHideCell.css */ 2626);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaShowHideCell.css */ 3087);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./gxaShowHideCell.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./gxaShowHideCell.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./gxaShowHideCell.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./gxaShowHideCell.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18912,15 +19107,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2626:
+/***/ 3087:
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/cell-differential/gxaShowHideCell.css ***!
   \**********************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -18930,28 +19125,28 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2627:
+/***/ 3088:
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/cell-differential/gxaDifferentialCellTooltip.css ***!
   \****************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../~/css-loader!./gxaDifferentialCellTooltip.css */ 2628);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaDifferentialCellTooltip.css */ 3089);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./gxaDifferentialCellTooltip.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./gxaDifferentialCellTooltip.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./gxaDifferentialCellTooltip.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./gxaDifferentialCellTooltip.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18960,15 +19155,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2628:
+/***/ 3089:
 /*!*********************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/cell-differential/gxaDifferentialCellTooltip.css ***!
   \*********************************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -18978,29 +19173,29 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2629:
+/***/ 3090:
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/contrast-tooltip/contrastTooltipModule.js ***!
   \*********************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2);
-	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 755);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 762);
 	
-	var $ = __webpack_require__(/*! jquery */ 2477);
-	__webpack_require__(/*! jquery-ui-bundle */ 2613);
-	
-	//*------------------------------------------------------------------*
-	
-	var ContrastTooltip = __webpack_require__(/*! ./ContrastTooltip.jsx */ 2630);
+	var $ = __webpack_require__(/*! jquery */ 2938);
+	__webpack_require__(/*! jquery-ui-bundle */ 3074);
 	
 	//*------------------------------------------------------------------*
 	
-	__webpack_require__(/*! ./gxaContrastTooltip.css */ 2631);
+	var ContrastTooltip = __webpack_require__(/*! ./ContrastTooltip.jsx */ 3091);
+	
+	//*------------------------------------------------------------------*
+	
+	__webpack_require__(/*! ./gxaContrastTooltip.css */ 3092);
 	
 	//*------------------------------------------------------------------*
 	
@@ -19054,13 +19249,13 @@ webpackJsonp_name_([5],{
 	    initTooltip(contextRoot, accessKey, element, experimentAccession, contrastId);
 	};
 
-/***/ }),
+/***/ },
 
-/***/ 2630:
+/***/ 3091:
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/contrast-tooltip/ContrastTooltip.jsx ***!
   \****************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
@@ -19179,28 +19374,28 @@ webpackJsonp_name_([5],{
 	
 	module.exports = ContrastTooltip;
 
-/***/ }),
+/***/ },
 
-/***/ 2631:
+/***/ 3092:
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/contrast-tooltip/gxaContrastTooltip.css ***!
   \*******************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../~/css-loader!./gxaContrastTooltip.css */ 2632);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaContrastTooltip.css */ 3093);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./gxaContrastTooltip.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./gxaContrastTooltip.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./gxaContrastTooltip.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./gxaContrastTooltip.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -19209,15 +19404,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2632:
+/***/ 3093:
 /*!************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/contrast-tooltip/gxaContrastTooltip.css ***!
   \************************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -19227,28 +19422,28 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2633:
+/***/ 3094:
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DifferentialResults.css ***!
   \***************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../~/css-loader!./DifferentialResults.css */ 2634);
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialResults.css */ 3095);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../~/style-loader/addStyles.js */ 2605)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 3066)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../node_modules/css-loader/index.js!./DifferentialResults.css", function() {
-				var newContent = require("!!../node_modules/css-loader/index.js!./DifferentialResults.css");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./DifferentialResults.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./DifferentialResults.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -19257,15 +19452,15 @@ webpackJsonp_name_([5],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ }),
+/***/ },
 
-/***/ 2634:
+/***/ 3095:
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/DifferentialResults.css ***!
   \********************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../~/css-loader/lib/css-base.js */ 2604)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 3065)();
 	// imports
 	
 	
@@ -19275,13 +19470,13 @@ webpackJsonp_name_([5],{
 	// exports
 
 
-/***/ }),
+/***/ },
 
-/***/ 2635:
+/***/ 3096:
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/DifferentialFacetsTree.jsx ***!
   \******************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -19452,18 +19647,18 @@ webpackJsonp_name_([5],{
 	
 	module.exports = DifferentialFacetsTree;
 
-/***/ }),
+/***/ },
 
-/***/ 2636:
+/***/ 3097:
 /*!*****************************************************************!*\
   !*** ./atlas_bundles/differential-expression/src/urlManager.js ***!
   \*****************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Url = __webpack_require__(/*! url */ 2637);
-	var QueryString = __webpack_require__(/*! querystring */ 2640);
+	var Url = __webpack_require__(/*! url */ 436);
+	var QueryString = __webpack_require__(/*! querystring */ 2909);
 	
 	/**
 	 * Stringify the `query` object, assign it to the `ds` search field in the URL and store it in the History
@@ -19499,43 +19694,7 @@ webpackJsonp_name_([5],{
 	    return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
 	};
 
-/***/ }),
-
-/***/ 2637:
-/*!************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/url/url.js ***!
-  \************************************************************/
-[3432, 2638, 2639, 2640],
-
-/***/ 2638:
-/*!****************************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/url/~/punycode/punycode.js ***!
-  \****************************************************************************/
-429,
-
-/***/ 2639:
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/url/util.js ***!
-  \*************************************************************/
-430,
-
-/***/ 2640:
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/querystring/index.js ***!
-  \**********************************************************************/
-[3433, 2641, 2642],
-
-/***/ 2641:
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/querystring/decode.js ***!
-  \***********************************************************************/
-432,
-
-/***/ 2642:
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/differential-expression/~/querystring/encode.js ***!
-  \***********************************************************************/
-433
+/***/ }
 
 });
 //# sourceMappingURL=expressionAtlasDifferentialExpression.bundle.js.map
