@@ -35,7 +35,6 @@ public abstract class HtmlExceptionHandlingController {
         return mav;
     }
 
-
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {
