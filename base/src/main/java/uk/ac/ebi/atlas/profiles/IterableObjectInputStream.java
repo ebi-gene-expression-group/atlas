@@ -53,7 +53,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
             throw new UnsupportedOperationException();
         }
 
-        public void close() {
+        private void close() {
             try {
                 inputStream.close();
             } catch (IOException e) {

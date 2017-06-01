@@ -15,6 +15,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,8 +43,8 @@ public class IterableObjectInputStreamTest {
         for (int i = 0 ; i < streamSize ; i++) {
             assertThat(subjectIterator.next(), is(not(nullValue())));
         }
-        verify(spyInputStream).close();
         assertThat(subjectIterator.next(), is(nullValue()));
+        verify(spyInputStream, atLeastOnce()).close();
     }
 
     @Test
