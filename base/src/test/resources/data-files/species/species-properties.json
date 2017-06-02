@@ -34,12 +34,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Arabidopsis_lyrata"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Arabidopsis_lyrata"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Arabidopsis_lyrata"
   }]
 },
 {
@@ -48,12 +48,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Arabidopsis_thaliana"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Arabidopsis_thaliana"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Arabidopsis_thaliana"
   }]
 },
 {
@@ -82,12 +82,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Brachypodium_distachyon"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Brachypodium_distachyon"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Brachypodium_distachyon"
   }]
 },
 {
@@ -96,12 +96,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Brassica_oleracea"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Brassica_oleracea"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Brassica_oleracea"
   }]
 },
 {
@@ -110,12 +110,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Brassica_rapa"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Brassica_rapa"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Brassica_rapa"
   }]
 },
 {
@@ -224,12 +224,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Glycine_max"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Glycine_max"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Glycine_max"
   }]
 },
 {
@@ -258,12 +258,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Hordeum_vulgare"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Hordeum_vulgare"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Hordeum_vulgare"
   }]
 },
 {
@@ -282,12 +282,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Medicago_truncatula"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Medicago_truncatula"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Medicago_truncatula"
   }]
 },
 {
@@ -316,12 +316,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Musa_acuminata"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Musa_acuminata"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Musa_acuminata"
   }]
 },
 {
@@ -350,12 +350,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Oryza_rufipogon"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Oryza_rufipogon"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Oryza_rufipogon"
   }]
 },
 {
@@ -364,12 +364,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Oryza_sativa"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Oryza_sativa"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Oryza_sativa"
   }]
 },
 {
@@ -408,12 +408,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Physcomitrella_patens"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Physcomitrella_patens"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Physcomitrella_patens"
   }]
 },
 {
@@ -432,12 +432,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Populus_trichocarpa"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Populus_trichocarpa"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Populus_trichocarpa"
   }]
 },
 {
@@ -486,12 +486,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Solanum_lycopersicum"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Solanum_lycopersicum"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Solanum_lycopersicum"
   }]
 },
 {
@@ -500,12 +500,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Solanum_tuberosum"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Solanum_tuberosum"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Solanum_tuberosum"
   }]
 },
 {
@@ -514,12 +514,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Sorghum_bicolor"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Sorghum_bicolor"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Sorghum_bicolor"
   }]
 },
 {
@@ -548,12 +548,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Theobroma_cacao"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Theobroma_cacao"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Theobroma_cacao"
   }]
 },
 {
@@ -562,12 +562,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Triticum_aestivum"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Triticum_aestivum"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Triticum_aestivum"
   }]
 },
 {
@@ -576,12 +576,12 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Vitis_vinifera"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Vitis_vinifera"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Vitis_vinifera"
   }]
 },
 {
@@ -610,11 +610,11 @@
   "kingdom":"plants",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
-    "url":"http://plants.ensembl.org/Zea_mays"
-  },{
-    "type":"genome_browser",
     "name":"Gramene",
     "url":"http://ensembl.gramene.org/Zea_mays"
+  },{
+    "type":"genome_browser",
+    "name":"Ensembl Plants",
+    "url":"http://plants.ensembl.org/Zea_mays"
   }]
 }]
