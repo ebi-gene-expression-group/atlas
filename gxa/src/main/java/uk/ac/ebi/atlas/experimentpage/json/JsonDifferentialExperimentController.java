@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.json;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
@@ -24,7 +23,6 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -72,11 +70,10 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public String differentialMicroarrayExperimentData(
             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey,
-            BindingResult result, HttpServletRequest request) {
+            @RequestParam(required = false) String accessKey) {
         return gson.toJson(diffMicroarrayExperimentPageService.getResultsForExperiment(
-                request, (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, result));
+                (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                preferences));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -87,10 +84,9 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public String differentialRnaSeqExperimentData(
             @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey,
-            BindingResult result, HttpServletRequest request) {
+            @RequestParam(required = false) String accessKey) {
         return gson.toJson(diffRnaSeqExperimentPageService.getResultsForExperiment(
-                request, (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, result));
+                (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                preferences));
     }
 }

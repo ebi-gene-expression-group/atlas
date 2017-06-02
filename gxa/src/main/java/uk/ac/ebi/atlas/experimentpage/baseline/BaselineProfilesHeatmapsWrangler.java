@@ -51,18 +51,6 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
         }
     };
 
-    private final Function<BaselineProfile, URI> linkToGenesets = new Function<BaselineProfile, URI>() {
-        @Nullable
-        @Override
-        public URI apply(@Nullable BaselineProfile baselineProfile) {
-            try {
-                return new URI("genesets/"+baselineProfile.getId());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    };
-
     private final Function<BaselineProfile, Unit> provideUnits = new Function<BaselineProfile, Unit>() {
         @Override
         public Unit apply(BaselineProfile baselineProfile) {

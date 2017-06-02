@@ -1,15 +1,10 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import uk.ac.ebi.atlas.experimentpage.ExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
@@ -18,12 +13,10 @@ import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.summary.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -49,15 +42,13 @@ public class DifferentialExperimentPageService
 
     }
 
-    public JsonObject getResultsForExperiment(HttpServletRequest request, E experiment, K preferences,
-                                              BindingResult bindingResult) {
-        final String serverURL = ApplicationProperties.buildServerURL(request);
+    public JsonObject getResultsForExperiment(E experiment, K preferences) {
         Function<P, URI> linkToGenes = new Function<P, URI>() {
             @Nullable
             @Override
             public URI apply(@Nullable P differentialProfile) {
                 try {
-                    return new URI(serverURL+"/genes/"+differentialProfile.getId());
+                    return new URI("genes/"+differentialProfile.getId());
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }
@@ -72,46 +63,33 @@ public class DifferentialExperimentPageService
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
         }
-        if (!bindingResult.hasErrors()) {
 
-            try {
+        try {
 
-                DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
-                if (!differentialProfiles.isEmpty()) {
-                    result.add("columnGroupings", new JsonArray());
-                    result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
-                    result.add("profiles", new ExternallyViewableProfilesList<>(
-                            differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn(),
-                            new Function<P, ExpressionUnit.Relative>() {
-                                @Override
-                                public ExpressionUnit.Relative apply(P p) {
-                                    return ExpressionUnit.Relative.FOLD_CHANGE;
-                                }
-                            }).asJson());
+            DifferentialProfilesList<P> differentialProfiles = profilesHeatMap.fetch(requestContext);
+            if (!differentialProfiles.isEmpty()) {
+                result.add("columnGroupings", new JsonArray());
+                result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
+                result.add("profiles", new ExternallyViewableProfilesList<>(
+                        differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn(),
+                        new Function<P, ExpressionUnit.Relative>() {
+                            @Override
+                            public ExpressionUnit.Relative apply(P p) {
+                                return ExpressionUnit.Relative.FOLD_CHANGE;
+                            }
+                        }).asJson());
 
-                    return result;
-                } else {
-                    //copypasted:(
-                    String msg = "No genes found matching query: '" + preferences.getGeneQuery().description() + "'";
-                    bindingResult.addError(new ObjectError("requestPreferences",msg ));
-                    return jsonError(msg);
-                }
-            } catch (GenesNotFoundException e) {
-                String msg = "No genes found matching query: '" + preferences.getGeneQuery().description() + "'";
-                bindingResult.addError(new ObjectError("requestPreferences",msg ));//I'm not sure if this works- on error
-                // Spring MVC magic kicks in?
-                return jsonError(msg);
+                return result;
+            } else {
+                return noMatchError(preferences);
             }
-
-        } else {
-            return jsonError(FluentIterable.from(bindingResult.getAllErrors()).transform(new Function<ObjectError, String>() {
-                @Nullable
-                @Override
-                public String apply(ObjectError objectError) {
-                    return objectError.toString();
-                }
-            }).join(Joiner.on(',')));
+        } catch (GenesNotFoundException e) {
+            return noMatchError(preferences);
         }
+    }
+
+    JsonObject noMatchError(K preferences){
+        return jsonError("No genes found matching query: '" + preferences.getGeneQuery().description() + "'");
     }
 
     private JsonArray constructColumnHeaders(Iterable<Contrast> contrasts, DifferentialExperiment
