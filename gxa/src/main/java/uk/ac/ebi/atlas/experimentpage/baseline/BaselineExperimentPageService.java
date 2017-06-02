@@ -31,18 +31,12 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         this.baselineProfilesHeatmapWranglerFactory = baselineProfilesHeatmapWranglerFactory;
     }
 
-    public <Unit extends ExpressionUnit.Absolute> JsonObject populateModelWithHeatmapData(BaselineExperiment experiment,
-                                                                                          BaselineRequestPreferences<Unit> preferences,
-                                                                                          Model model) {
+    public <Unit extends ExpressionUnit.Absolute> JsonObject getResultsForExperiment(BaselineExperiment experiment,
+                                                                                     BaselineRequestPreferences<Unit> preferences) {
         JsonObject result = new JsonObject();
 
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         List<AssayGroup> dataColumnsToReturn = requestContext.getDataColumnsToReturn();
-
-        /*From here on preferences are immutable, variables not required for request-preferences.jsp*/
-        model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
-        model.addAllAttributes(experiment.getAttributes());
-
 
         BaselineProfilesHeatmapsWrangler heatmapResults = baselineProfilesHeatmapWranglerFactory.create
                 (preferences,experiment);

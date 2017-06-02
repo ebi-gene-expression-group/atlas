@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.json;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfil
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.resource.AtlasResourceHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -75,10 +73,10 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(required = false) String accessKey,
-            BindingResult result, Model model, HttpServletRequest request) {
-        return gson.toJson(diffMicroarrayExperimentPageService.populateModelWithHeatmapData(
+            BindingResult result, HttpServletRequest request) {
+        return gson.toJson(diffMicroarrayExperimentPageService.getResultsForExperiment(
                 request, (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, result, model));
+                preferences, result));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -90,9 +88,9 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
             @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(required = false) String accessKey,
-            BindingResult result, Model model,HttpServletRequest request) {
-        return gson.toJson(diffRnaSeqExperimentPageService.populateModelWithHeatmapData(
+            BindingResult result, HttpServletRequest request) {
+        return gson.toJson(diffRnaSeqExperimentPageService.getResultsForExperiment(
                 request, (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                preferences, result, model));
+                preferences, result));
     }
 }

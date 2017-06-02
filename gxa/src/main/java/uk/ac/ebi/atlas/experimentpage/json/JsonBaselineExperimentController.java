@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.json;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
@@ -68,12 +67,11 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public String baselineRnaSeqExperimentData(
             @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey,
-            Model model) {
+            @RequestParam(required = false) String accessKey) {
         return gson.toJson(
-                rnaSeqBaselineExperimentPageService.populateModelWithHeatmapData(
-                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences,
-                        model));
+                rnaSeqBaselineExperimentPageService.getResultsForExperiment(
+                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences
+                ));
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -84,14 +82,13 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public String baselineProteomicsExperimentData(
             @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey,
-            Model model) {
+            @RequestParam(required = false) String accessKey) {
         return gson.toJson(
-                proteomicsBaselineExperimentPageService.populateModelWithHeatmapData(
+                proteomicsBaselineExperimentPageService.getResultsForExperiment(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
-                        preferences, model));
+                        preferences));
     }
-    
+
     @RequestMapping(
             value = "/json/baseline_refexperiment",
             method = RequestMethod.GET,
@@ -100,8 +97,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     public String jsonBaselineRefExperiment(
             @RequestParam(value = "geneQuery") SemanticQuery geneQuery,
             @RequestParam(value = "species", required = false) String speciesString,
-            @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences, HttpServletRequest request, Model model) {
+            @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences, HttpServletRequest request) {
 
+        //different default - reference experiments always had FPKMs, no need to change this now
         if(!request.getParameterMap().containsKey("unit")){
             preferences.setUnit(ExpressionUnit.Absolute.Rna.FPKM);
         }
@@ -113,6 +111,6 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             throw new ResourceNotFoundException("No reference baseline experiment for species " + speciesString);
         }
 
-        return baselineRnaSeqExperimentData(preferences, experimentAccession, "", model);
+        return baselineRnaSeqExperimentData(preferences, experimentAccession, "");
     }
 }

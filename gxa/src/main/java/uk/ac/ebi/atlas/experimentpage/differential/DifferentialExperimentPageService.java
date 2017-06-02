@@ -49,8 +49,8 @@ public class DifferentialExperimentPageService
 
     }
 
-    public JsonObject populateModelWithHeatmapData(HttpServletRequest request, E experiment, K preferences,
-                                                   BindingResult bindingResult, Model model) {
+    public JsonObject getResultsForExperiment(HttpServletRequest request, E experiment, K preferences,
+                                              BindingResult bindingResult) {
         final String serverURL = ApplicationProperties.buildServerURL(request);
         Function<P, URI> linkToGenes = new Function<P, URI>() {
             @Nullable
@@ -67,10 +67,6 @@ public class DifferentialExperimentPageService
         JsonObject result = new JsonObject();
         R requestContext = differentialRequestContextFactory.create(experiment, preferences);
         List<Contrast> contrasts = requestContext.getDataColumnsToReturn();
-        model.addAttribute("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
-        model.addAllAttributes(experiment.getAttributes());
-        model.addAllAttributes(experiment.getDifferentialAttributes());
-
 
         result.add("anatomogram", JsonNull.INSTANCE);
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
