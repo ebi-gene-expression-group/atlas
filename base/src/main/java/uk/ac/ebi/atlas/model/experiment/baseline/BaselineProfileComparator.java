@@ -43,7 +43,7 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
         this(isSpecific, selectedQueryFactors, allQueryFactors, cutoff, DEFAULT_CACHE_SIZE);
     }
 
-    protected BaselineProfileComparator(boolean isSpecific,
+    private BaselineProfileComparator(boolean isSpecific,
                                         Collection<AssayGroup> selectedQueryFactors,
                                         Collection<AssayGroup> allQueryFactors,
                                         double cutoff,
@@ -92,14 +92,14 @@ public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
     }
 
-    protected int compareOnAverageExpressionLevelOverAllQueryFactors(BaselineProfile firstBaselineProfile,
+    private int compareOnAverageExpressionLevelOverAllQueryFactors(BaselineProfile firstBaselineProfile,
                                                                      BaselineProfile otherBaselineProfile) {
         return Ordering.natural().reverse().
                 compare(baselineProfileStats.getAverageOverAllQueryFactors(firstBaselineProfile),
                         baselineProfileStats.getAverageOverAllQueryFactors(otherBaselineProfile));
     }
 
-    protected int compareOnAverageExpressionLevelOverSelectedQueryFactors(BaselineProfile firstBaselineProfile,
+    private int compareOnAverageExpressionLevelOverSelectedQueryFactors(BaselineProfile firstBaselineProfile,
                                                                           BaselineProfile otherBaselineProfile) {
         return Ordering.natural().reverse().
                 compare(baselineProfileStats.getAverageOverSelectedQueryFactors(firstBaselineProfile),
