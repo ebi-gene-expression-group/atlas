@@ -141,19 +141,11 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("species", get(model, "species"));
-        config.add("resources", getAsJsonSerializable(model, "resources", new JsonObject()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase()); //TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
         config.addProperty("disclaimer", get(model, "disclaimer"));
         config.addProperty("expressionUnit", "");
+        config.add("genomeBrowsers", new JsonArray());
         return config;
-    }
-
-    private JsonElement getAsJsonSerializable(Map<String, Object> model, String key, JsonElement defaultValue) {
-        if(model.containsKey(key)) {
-            return gson.toJsonTree(model.get(key));
-        } else {
-            return defaultValue;
-        }
     }
 
     private String getOrDefault(Map<String, Object> model, String key, String defaultValue) {
