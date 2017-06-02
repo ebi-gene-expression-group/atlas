@@ -22,8 +22,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentCrudTest {
@@ -120,15 +119,30 @@ public class ExperimentCrudTest {
 
     @Test
     public void updateExperimentToPrivateShouldDelegateToDAO() throws Exception {
+        ExperimentDTO publicMock = mock(ExperimentDTO.class);
+        ExperimentDTO privateMock = mock(ExperimentDTO.class);
+        when(publicMock.isPrivate()).thenReturn(false);
+        when(privateMock.isPrivate()).thenReturn(true);
+        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, false)).willReturn(publicMock);
+        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, true)).willReturn(privateMock);
         subject.makeExperimentPrivate(EXPERIMENT_ACCESSION);
         verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, true);
+        verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
     public void updateExperimentToPublicShouldDelegateToDAO() throws Exception {
-        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, false)).willReturn(experimentDTOMock);
+        ExperimentDTO publicMock = mock(ExperimentDTO.class);
+        ExperimentDTO privateMock = mock(ExperimentDTO.class);
+        when(publicMock.isPrivate()).thenReturn(false);
+        when(privateMock.isPrivate()).thenReturn(true);
+        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, false)).willReturn(publicMock);
+        given(experimentDAOMock.findExperiment(EXPERIMENT_ACCESSION, true)).willReturn(privateMock);
+
         subject.makeExperimentPublic(EXPERIMENT_ACCESSION);
         verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, false);
+        verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, true);
+
     }
 
     @Test
