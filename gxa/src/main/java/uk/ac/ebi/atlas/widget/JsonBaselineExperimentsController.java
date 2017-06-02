@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
@@ -19,15 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentpage.baseline.AnatomogramFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.grouping.FactorGroupingService;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.FactorAcrossExperiments;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
-import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 
@@ -142,18 +137,11 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
         config.addProperty("conditionQuery", get(model, "conditionQuery"));
         config.addProperty("species", get(model, "species"));
-        config.add("resources", getAsJsonSerializable(model, "resources", new JsonObject()));
         config.addProperty("columnType", get(model, "queryFactorName").toLowerCase()); //TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
         config.addProperty("disclaimer", get(model, "disclaimer"));
+        config.addProperty("expressionUnit", "");
+        config.add("genomeBrowsers", new JsonArray());
         return config;
-    }
-
-    private JsonElement getAsJsonSerializable(Map<String, Object> model, String key, JsonElement defaultValue) {
-        if(model.containsKey(key)) {
-            return gson.toJsonTree(model.get(key));
-        } else {
-            return defaultValue;
-        }
     }
 
     private String getOrDefault(Map<String, Object> model, String key, String defaultValue) {
