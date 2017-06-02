@@ -33,23 +33,12 @@ public class JsonBaselineRefExperimentControllerWIT {
     }
 
     @Test
-    public void oldReferenceExperiment() throws Exception {
-        this.mockMvc.perform(
-                get("/widgets/heatmap/referenceExperiment")
-                        .param("geneQuery", "zinc finger")
-                        .param("species", "caenorhabditis elegans"))
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/json/baseline_refexperiment"));
-    }
-
-    @Test
     public void jsonBaselineRefExperiment() throws Exception {
         this.mockMvc.perform(
                 get("/json/baseline_refexperiment")
                         .param("geneQuery", "zinc finger")
                         .param("species", "caenorhabditis elegans"))
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/json/experiments/E-MTAB-2812"));
+                .andExpect(status().isOk());
     }
 
     @Test
