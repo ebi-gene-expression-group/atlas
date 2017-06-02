@@ -26,7 +26,6 @@ import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.text.MessageFormat;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -92,19 +91,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                         preferences, model));
     }
-
-
-
-    @RequestMapping(
-            value = "/widgets/heatmap/referenceExperiment",
-            method = RequestMethod.GET,
-            produces = "application/json;charset=UTF-8")
-    @Deprecated
-    public String oldReferenceExperiment() {
-        return "forward:/json/baseline_refexperiment";
-    }
-
-
+    
     @RequestMapping(
             value = "/json/baseline_refexperiment",
             method = RequestMethod.GET,
