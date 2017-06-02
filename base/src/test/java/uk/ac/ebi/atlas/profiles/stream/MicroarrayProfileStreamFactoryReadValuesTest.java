@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.base.Predicates;
@@ -11,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
@@ -36,7 +36,8 @@ public class MicroarrayProfileStreamFactoryReadValuesTest {
     CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine;
 
     MicroarrayExperiment experiment = MicroarrayExperimentTest.get(
-            "accession", ImmutableList.of(g1_g2, g1_g3), ImmutableSortedSet.of("A-AFFY-1")
+            "accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, ImmutableList.of(g1_g2, g1_g3),
+            ImmutableSortedSet.of("A-AFFY-1")
     );
 
     String id = "id";

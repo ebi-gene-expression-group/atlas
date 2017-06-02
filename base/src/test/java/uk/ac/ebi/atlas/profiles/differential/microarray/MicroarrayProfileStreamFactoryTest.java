@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
@@ -113,7 +114,7 @@ public class MicroarrayProfileStreamFactoryTest {
         dataFileHub.addTemporaryFile("/magetab/accession/accession_array-analytics.tsv", sequenceLines);
         MicroarrayProfileStreamFactory microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
 
-        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", contrasts, ImmutableSortedSet.of("array"));
+        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, contrasts, ImmutableSortedSet.of("array"));
         MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
         microarrayRequestPreferences.setFoldChangeCutoff(0.0);
         microarrayRequestPreferences.setCutoff(1.0);

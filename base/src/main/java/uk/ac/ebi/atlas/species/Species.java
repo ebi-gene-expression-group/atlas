@@ -1,12 +1,7 @@
 package uk.ac.ebi.atlas.species;
 
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import java.util.List;
-import java.util.Map;
 
 public class Species {
 
@@ -32,10 +27,6 @@ public class Species {
         return mappedProperties.ensemblName();
     }
 
-    public JsonArray getResources() {
-        return new Gson().toJsonTree(mappedProperties.resources()).getAsJsonArray();
-    }
-
     public String getKingdom() {
         return mappedProperties.kingdom();
     }
@@ -52,11 +43,12 @@ public class Species {
         return mappedProperties == SpeciesProperties.UNKNOWN;
     }
 
-    public Map<String, Object> getAttributes(){
-        return ImmutableMap.<String, Object>builder()
-                .put("species",name)
-                .put("speciesReferenceName", getReferenceName())
-                .put("resources",getResources())
-                .build();
+    public ImmutableCollection<ImmutableMap<String, String>> getGenomeBrowsers() {
+        return mappedProperties.getResourcesOfType(SpeciesProperties.GENOME_BROWSER_TYPE);
     }
+
+    public ImmutableMap<String, String> getAttributes(){
+        return ImmutableMap.of("species", name, "speciesReferenceName", getReferenceName());
+    }
+
 }

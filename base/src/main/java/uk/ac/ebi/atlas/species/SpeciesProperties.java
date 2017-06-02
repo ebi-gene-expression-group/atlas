@@ -23,6 +23,8 @@ public abstract class SpeciesProperties {
     public final static SpeciesProperties UNKNOWN =
             SpeciesProperties.create("", "", "", ImmutableList.<ImmutableMap<String, String>>of());
 
+    public static final String GENOME_BROWSER_TYPE = "genome_browser";
+
     public String referenceName() {
         return StringUtils.lowerCase(ensemblName().replace("_", " "));
     }
@@ -31,15 +33,15 @@ public abstract class SpeciesProperties {
     public abstract String kingdom();
     public abstract ImmutableCollection<ImmutableMap<String, String>> resources();
 
-    public ImmutableCollection<ImmutableMap<String, String>> getResources(String key, String value) {
-        ImmutableList.Builder<ImmutableMap<String, String>> matchedResourcesBuilder = ImmutableList.builder();
+    public ImmutableCollection<ImmutableMap<String, String>> getResourcesOfType(String typeValue) {
+        ImmutableList.Builder<ImmutableMap<String, String>> matchedTypeResourcesBuilder = ImmutableList.builder();
 
         for (ImmutableMap<String, String> resource : resources()) {
-            if (resource.containsKey(key) && value.equals(resource.get(key))) {
-                matchedResourcesBuilder.add(resource);
+            if (resource.containsKey("type") && typeValue.equals(resource.get("type"))) {
+                matchedTypeResourcesBuilder.add(resource);
             }
         }
 
-        return matchedResourcesBuilder.build();
+        return matchedTypeResourcesBuilder.build();
     }
 }
