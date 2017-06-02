@@ -23,12 +23,9 @@ public class BaselineProfilesWriterFactory<Unit extends ExpressionUnit.Absolute>
         BaselineProfile, BaselineRequestContext<Unit>, BaselineProfilesWriterFactory.BaselineDownloadOptions> {
 
     static class BaselineDownloadOptions extends ProfilesWriterFactory.ProfileDownloadOptions {
-        public final boolean isGeneSet;
 
-        public BaselineDownloadOptions(String queryDescription,
-                                       boolean isGeneSet){
+        public BaselineDownloadOptions(String queryDescription){
             super(queryDescription);
-            this.isGeneSet = isGeneSet;
         }
 
     }
@@ -48,14 +45,14 @@ public class BaselineProfilesWriterFactory<Unit extends ExpressionUnit.Absolute>
 
     public ProfilesWriter<BaselineProfile> create(Writer responseWriter,
                                                   BaselineRequestContext requestContext,
-                                                  String queryDescription, boolean isGeneSet){
-        return create(responseWriter, requestContext, new BaselineDownloadOptions(queryDescription, isGeneSet));
+                                                  String queryDescription){
+        return create(responseWriter, requestContext, new BaselineDownloadOptions(queryDescription));
     }
 
 
     @Override
     protected String getTsvFileMasthead(BaselineRequestContext requestContext, BaselineDownloadOptions profileDownloadOptions) {
-        String responseType = profileDownloadOptions.isGeneSet ? "Gene sets" : "Genes";
+        String responseType = "Genes";
         String geneQuery = profileDownloadOptions.queryDescription;
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String selectedQueryFactors = selectedAssayGroups(requestContext);
@@ -72,15 +69,6 @@ public class BaselineProfilesWriterFactory<Unit extends ExpressionUnit.Absolute>
             return MessageFormat.format("{0}/{1} ", requestContext.getDataColumnsToReturn().size() ,
                     requestContext.getAllDataColumns().size());
         }
-    }
-
-
-
-    @Override
-    protected String[] getProfileIdColumnHeaders(BaselineRequestContext requestContext, BaselineDownloadOptions profileDownloadOption) {
-        return profileDownloadOption.isGeneSet
-                ? new String[] {"Gene set ID", "Gene Name"}
-                : super.getProfileIdColumnHeaders(requestContext, profileDownloadOption);
     }
 
 }

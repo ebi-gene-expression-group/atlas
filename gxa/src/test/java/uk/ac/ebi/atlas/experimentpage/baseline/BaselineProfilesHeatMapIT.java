@@ -76,7 +76,7 @@ public class BaselineProfilesHeatMapIT {
                 (baselineRequestContext.getGeneQuery(),baselineRequestContext.getSpecies().getReferenceName());
 
         BaselineProfilesList profiles = subject.fetch(baselineExperiment, baselineRequestContext,
-                geneQueryResponse, true);
+                geneQueryResponse);
 
         assertThat(profiles.size(), greaterThan(0));
     }

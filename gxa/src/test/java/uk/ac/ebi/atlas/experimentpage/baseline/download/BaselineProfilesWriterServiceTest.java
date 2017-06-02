@@ -79,8 +79,8 @@ public class BaselineProfilesWriterServiceTest {
 
         baselineRequestContext = new BaselineRequestContext(preferencesMock, baselineExperimentMock);
 
-        when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString(),
-                anyBoolean())).thenReturn(profilesWriter);
+        when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString()
+        )).thenReturn(profilesWriter);
 
         when(profilesWriter.write(anyCollection())).thenReturn(123L);
 

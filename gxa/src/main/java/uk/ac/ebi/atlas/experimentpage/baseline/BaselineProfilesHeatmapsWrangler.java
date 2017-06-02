@@ -100,7 +100,7 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
     private void fetchProfilesIfMissing()   {
         if (jsonProfiles == null) {
             jsonProfiles =
-                    baselineProfilesHeatMap.fetch(experiment,requestContext, getGeneQueryResponseForProfiles(), false);
+                    baselineProfilesHeatMap.fetch(experiment,requestContext, getGeneQueryResponseForProfiles());
         }
     }
 
@@ -111,19 +111,6 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
         return new ExternallyViewableProfilesList<>(jsonProfiles,linkToGenes,
                 requestContext
                 .getDataColumnsToReturn(),provideUnits).asJson();
-    }
-
-    public Optional<JsonObject> getJsonProfilesAsGeneSets()  {
-        GeneQueryResponse geneQueryResponse = getGeneQueryResponseForProfiles();
-        return geneQueryResponse.containsGeneSets()
-                ? Optional.of(
-                        new ExternallyViewableProfilesList<>(
-                                baselineProfilesHeatMap.fetch(experiment, requestContext, geneQueryResponse, true),
-                                linkToGenesets,
-                                requestContext.getDataColumnsToReturn(), provideUnits)
-                                .asJson())
-
-                : Optional.<JsonObject>absent();
     }
 
     public JsonArray getJsonCoexpressions()   {
@@ -147,7 +134,7 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
                         new ExternallyViewableProfilesList<>(
                                 baselineProfilesHeatMap.fetchInPrescribedOrder(
                                         coexpressedStuff.get().getRight(), experiment, requestContext,
-                                        coexpressedStuff.get().getLeft(), false),
+                                        coexpressedStuff.get().getLeft()),
                                 linkToGenes,
                                 requestContext.getDataColumnsToReturn(), provideUnits)
                                 .asJson());

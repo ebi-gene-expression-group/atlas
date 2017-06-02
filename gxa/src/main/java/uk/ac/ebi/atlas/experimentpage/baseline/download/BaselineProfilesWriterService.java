@@ -100,13 +100,12 @@ public class BaselineProfilesWriterService<Unit extends ExpressionUnit.Absolute>
                     coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
                             experiment, geneQueryResponse, coexpressionsRequested);
         }
-        final boolean asGeneSets = false;
 
         return inputStreamFactory.write(experiment, requestContext,
-                new BaselineProfileStreamTransforms(requestContext, geneQueryResponse, asGeneSets),
+                new BaselineProfileStreamTransforms(requestContext, geneQueryResponse),
                 baselineProfilesWriterFactory.create(writer, requestContext,
-                        describe(requestContext.getGeneQuery(), totalCoexpressionsRequested),
-                        asGeneSets));
+                        describe(requestContext.getGeneQuery(), totalCoexpressionsRequested)
+                ));
     }
 
 
