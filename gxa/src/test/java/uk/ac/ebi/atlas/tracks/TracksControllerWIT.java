@@ -76,7 +76,7 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://ensembl.gramene.org/Arabidopsis_thaliana/Location/View?g=AT4G08874;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-GEOD-55482/tracks/E-GEOD-55482.g1.genes.expressions.bedGraph;format=BEDGRAPH"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-55482/tracks/E-GEOD-55482.g1.genes.expressions.bedGraph;format=BEDGRAPH"));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://plants.ensembl.org/Arabidopsis_thaliana/Location/View?g=AT4G08874;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-GEOD-55482/tracks/E-GEOD-55482.g1.genes.expressions.bedGraph;format=BEDGRAPH"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-55482/tracks/E-GEOD-55482.g1.genes.expressions.bedGraph;format=BEDGRAPH"));
     }
 
     @Test
@@ -100,8 +100,8 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://ensembl.gramene.org/Glycine_max/Location/View?g=GLYMA11G00580;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling,url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
     @Test
@@ -113,8 +113,8 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://plants.ensembl.org/Glycine_max/Location/View?g=GLYMA11G00580;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling,url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-57252/tracks/E-GEOD-57252.g1_g6.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://parasite.wormbase.org/Caenorhabditis_elegans_prjna13758/Location/View?g=WBGene00009892;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-MTAB-2812/tracks/E-MTAB-2812.g31.genes.expressions.bedGraph;format=BEDGRAPH"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-MTAB-2812/tracks/E-MTAB-2812.g31.genes.expressions.bedGraph;format=BEDGRAPH"));
     }
 
     @Test
@@ -138,8 +138,8 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://parasite.wormbase.org/Caenorhabditis_elegans_prjna13758/Location/View?g=WBGene00003778;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.log2foldchange.bedGraph=tiling,url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-MEXP-1810/tracks/E-MEXP-1810.g3_g1.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://www.ensembl.org/Homo_sapiens/Location/View?g=ENSG00000102970;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-MTAB-3827/tracks/E-MTAB-3827.g13.genes.expressions.bedGraph;format=BEDGRAPH"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-MTAB-3827/tracks/E-MTAB-3827.g13.genes.expressions.bedGraph;format=BEDGRAPH"));
     }
 
     @Test
@@ -163,8 +163,8 @@ public class TracksControllerWIT {
         String redirectedUrl = result.getResponse().getRedirectedUrl();
 
         assertThat(redirectedUrl, startsWith("http://www.ensembl.org/Mus_musculus/Location/View?g=ENSMUSG00000029816;contigviewbottom=url:http"));
-        assertThat(redirectedUrl, containsString("/experiments/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.log2foldchange.bedGraph=tiling,url:http"));
-        assertThat(redirectedUrl, endsWith("/experiments/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
+        assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.log2foldchange.bedGraph=tiling,url:http"));
+        assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
     }
 
 }

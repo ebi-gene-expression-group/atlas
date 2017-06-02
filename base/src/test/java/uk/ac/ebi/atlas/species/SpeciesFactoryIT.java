@@ -38,8 +38,9 @@ public class SpeciesFactoryIT {
     }
 
     @Test
-    public void speciesComeWithResources() {
-        assertThat(subject.create("homo sapiens").getResources().size(), greaterThan(0));
+    public void speciesComeWithGenomeBrowsers() {
+        // Currently this is the only resource we care about
+        assertThat(subject.create("homo sapiens").getGenomeBrowsers().size(), greaterThan(0));
     }
 
     @Test

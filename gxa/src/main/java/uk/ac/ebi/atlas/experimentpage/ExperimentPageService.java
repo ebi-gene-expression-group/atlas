@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;
@@ -41,7 +42,7 @@ public class ExperimentPageService extends ReturnsJsonErrors {
         JsonObject config = new JsonObject();
         config.addProperty("geneQuery",preferences.getGeneQuery().toUrlEncodedJson());
         config.addProperty("species", experiment.getSpecies().getName());
-        config.add("resources", experiment.getSpecies().getResources());
+        config.add("genomeBrowsers", gson.toJsonTree(experiment.getGenomeBrowserNames()));
         config.addProperty("disclaimer", experiment.getDisclaimer());
         config.addProperty("expressionUnit", preferences.getUnit().toString());
         //only for the multiexperiment heatmap

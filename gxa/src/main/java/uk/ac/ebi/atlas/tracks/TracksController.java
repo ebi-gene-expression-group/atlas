@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.tracks;
 
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class TracksController extends HtmlExceptionHandlingController {
             new MessageFormat(
                 "/Location/View" +
                 "?g={0};" +
-                "contigviewbottom=url:{1}/experiments/{2}/tracks/{2}.{3}.genes.expressions.bedGraph;" +
+                "contigviewbottom=url:{1}/experiments-content/{2}/tracks/{2}.{3}.genes.expressions.bedGraph;" +
                 "format=BEDGRAPH");
 
     private static final MessageFormat DIFFERENTIAL_TRACK_URL_PART_TEMPLATE =
@@ -38,21 +39,19 @@ public class TracksController extends HtmlExceptionHandlingController {
                 "/Location/View" +
                 "?g={0};" +
                 "contigviewbottom=" +
-                        "url:{1}/experiments/{2}/tracks/{2}.{3}.genes.log2foldchange.bedGraph=tiling," +
-                        "url:{1}/experiments/{2}/tracks/{2}.{3}.genes.pval.bedGraph=pvalue;" +
+                        "url:{1}/experiments-content/{2}/tracks/{2}.{3}.genes.log2foldchange.bedGraph=tiling," +
+                        "url:{1}/experiments-content/{2}/tracks/{2}.{3}.genes.pval.bedGraph=pvalue;" +
                 "format=BEDGRAPH");
 
 
     private final ExperimentTrader experimentTrader;
-    private final SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Inject
-    public TracksController(ExperimentTrader experimentTrader, SpeciesPropertiesTrader speciesPropertiesTrader) {
+    public TracksController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.speciesPropertiesTrader = speciesPropertiesTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/tracks/{trackFileName:.*}",
+    @RequestMapping(value = "/experiments-content/{experimentAccession}/tracks/{trackFileName:.*}",
                     method = {RequestMethod.GET})
     public String forwardToQcResource(@PathVariable String experimentAccession,@PathVariable String trackFileName)
     throws IOException {
@@ -60,8 +59,10 @@ public class TracksController extends HtmlExceptionHandlingController {
         return "forward:" + path;
     }
 
+
     @RequestMapping(value = "/experiments-content/{experimentAccession}/redirect/genomeBrowser/{genomeBrowserName}",
                     method = {RequestMethod.GET, RequestMethod.HEAD})
+
     public String redirectToGenomeBrowser(@PathVariable String experimentAccession,
                                           @PathVariable String genomeBrowserName,
                                           @RequestParam String geneId,
@@ -72,24 +73,19 @@ public class TracksController extends HtmlExceptionHandlingController {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        if (experiment.getType().isMicroRna()) {
-            throw new RuntimeException("Sorry, this experiment is not compatible with any available genome browser");
-        }
-
         String genomeBrowserUrl = null;
-        for (ImmutableMap<String, String> genomeBrowserResource :
-                speciesPropertiesTrader
-                        .get(experiment.getSpecies().getEnsemblName())
-                        .getResources("type", "genome_browser")) {
-            if (genomeBrowserName.equalsIgnoreCase(genomeBrowserResource.get("name"))) {
-                genomeBrowserUrl = genomeBrowserResource.get("url");
+        ImmutableCollection<ImmutableMap<String, String>> genomeBrowsers = experiment.getGenomeBrowsers();
+
+        for (ImmutableMap<String, String> genomeBrowser : genomeBrowsers) {
+            if (genomeBrowserName.equalsIgnoreCase(genomeBrowser.get("name"))) {
+                genomeBrowserUrl = genomeBrowser.get("url");
                 break;
             }
         }
         if (isBlank(genomeBrowserUrl)) {
             throw new RuntimeException(MessageFormat.format(
-                    "The requested genome browser {0} is not compatible with the experiment species {1}",
-                    genomeBrowserName, experiment.getSpecies().getName()));
+                    "The requested genome browser {0} is not compatible with experiment {1} ({2})",
+                    genomeBrowserName, experiment.getAccession(), experiment.getSpecies().getName()));
         }
 
         String atlasServer =
@@ -103,6 +99,7 @@ public class TracksController extends HtmlExceptionHandlingController {
 
         return "redirect:" + genomeBrowserUrl +
                 template.format(new Object[]{geneId, atlasServer, experimentAccession, trackId});
+
     }
 
 }
