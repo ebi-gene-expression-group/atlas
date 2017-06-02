@@ -5,7 +5,17 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
-// Used to make ObjectInputStream iterable
+/* Used to make ObjectInputStream iterable
+
+ Unsafe - does not close the underlying stream - unless you iterate until the end!
+
+ Okay:
+ for(T t = new IterableObjectInputStream<>(inputStream){
+    doStuff(t);
+ }
+ Dangerous:
+ T t = new IterableObjectInputStream<>(inputStream).iterator().next();
+*/
 public class IterableObjectInputStream<T> implements Iterable<T> {
 
     private final ObjectInputStream<T> inputStream;

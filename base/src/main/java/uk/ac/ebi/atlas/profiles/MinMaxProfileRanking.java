@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles;
 
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import com.google.common.collect.MinMaxPriorityQueue;
 import uk.ac.ebi.atlas.model.Profile;
@@ -17,13 +18,13 @@ public class MinMaxProfileRanking<T extends Profile, L extends GeneProfilesList<
     }
 
     @Override
-    public L select(Iterable<T> profiles, int maxSize) {
+    public L select(ObjectInputStream<T> profiles, int maxSize) {
 
         MinMaxPriorityQueue<T> rankingQueue =  MinMaxPriorityQueue.orderedBy(comparator).maximumSize(maxSize).create();
 
         int count = 0;
 
-        for (T profile : profiles) {
+        for (T profile : new IterableObjectInputStream<>(profiles)) {
             rankingQueue.add(profile);
             count++;
         }

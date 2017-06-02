@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -82,7 +83,7 @@ public class BaselineProfilesWriterServiceTest {
         when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString()
         )).thenReturn(profilesWriter);
 
-        when(profilesWriter.write(anyCollection())).thenReturn(123L);
+        when(profilesWriter.write(any(ObjectInputStream.class))).thenReturn(123L);
 
         subject = new BaselineProfilesWriterService(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
                 coexpressedGenesService);

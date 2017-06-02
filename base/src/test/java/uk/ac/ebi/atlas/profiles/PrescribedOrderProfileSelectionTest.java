@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesListBuilder;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static uk.ac.ebi.atlas.commons.streams.ObjectInputStreamTest.convert;
 
 public class PrescribedOrderProfileSelectionTest {
 
@@ -41,7 +43,9 @@ public class PrescribedOrderProfileSelectionTest {
                 (ImmutableList.of("AC197246.3_FG003"), new BaselineProfilesListBuilder());
 
 
-        Iterable<BaselineProfile> result = subject.select(ImmutableList.of(p), 1);
+
+
+        Iterable<BaselineProfile> result = subject.select(convert(ImmutableList.of(p)), 1);
 
         assertThat(result.iterator().next(), is(p));
 
@@ -53,9 +57,9 @@ public class PrescribedOrderProfileSelectionTest {
                 (Arrays.asList(order), new BaselineProfilesListBuilder());
 
 
-        Iterable<BaselineProfile> result = subject.select(ps(underlying), maxRows);
+        List<BaselineProfile> result = subject.select(ps(underlying), maxRows);
 
-        assertThat(result, is(ps(expected)));
+        assertThat(result, is((List) ImmutableList.copyOf(new IterableObjectInputStream<>(ps(expected)))));
     }
 
     private void test(String order, String underlying, String expected, int maxRows){
@@ -70,12 +74,12 @@ public class PrescribedOrderProfileSelectionTest {
         test(order, underlying, expected, 100);
     }
 
-    private Iterable<BaselineProfile> ps(String ... ns){
+    private ObjectInputStream<BaselineProfile> ps(String ... ns){
         List<BaselineProfile> r = new ArrayList<>();
-        for(String n: ns){
+        for(String n: ns) {
             r.add(p(n));
         }
-        return r;
+        return convert(r);
     }
 
     private BaselineProfile p(String n){

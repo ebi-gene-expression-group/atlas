@@ -12,9 +12,10 @@ import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
+import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamTransforms;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFilter;
 import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.MicroarrayProfilesWriterFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -105,7 +106,7 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
                 microarrayProfileStreamFactory.write(
                         experiment,
                         context,
-                        new DifferentialProfileStreamTransforms<MicroarrayProfile>(context, geneQueryResponse),
+                        new ProfileStreamFilter<Contrast, MicroarrayRequestContext, MicroarrayProfile>(context, geneQueryResponse),
                         microarrayProfilesWriterFactory.create(writer, context));
                 return null;
             }

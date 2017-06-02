@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.profiles.stream;
 
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStreams;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -16,27 +18,24 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
         E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
         Prof extends Profile<DataColumnDescriptor, Expr, Prof>> implements CreatesProfileStream<DataColumnDescriptor, Expr, E, StreamOptions, Prof> {
 
-    private Iterable<Prof> getProfiles(E experiment, StreamOptions streamOptions, Function<Iterable<Prof>,
-            Iterable<Prof>>
-            transform) {
-        return transform.apply(new IterableObjectInputStream<>(create(experiment, streamOptions)));
+    private ObjectInputStream<Prof> getProfiles(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles) {
+        return ObjectInputStreams.filter(create(experiment, streamOptions), keepProfiles);
     }
 
-    public <L extends GeneProfilesList<Prof>> L select(E experiment, StreamOptions streamOptions, Function<Iterable<Prof>,
-            Iterable<Prof>> transform, SelectProfiles<Prof, L> selectProfiles) {
-        return selectProfiles.select(getProfiles(experiment, streamOptions, transform),
+    public <L extends GeneProfilesList<Prof>> L select(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles,
+                                                       SelectProfiles<Prof, L> selectProfiles) {
+        return selectProfiles.select(getProfiles(experiment, streamOptions, keepProfiles),
                 streamOptions.getHeatmapMatrixSize());
     }
 
-    public long write(E experiment, StreamOptions streamOptions, Function<Iterable<Prof>,
-            Iterable<Prof>> transform, ProfilesWriter<Prof> profilesWriter) {
-        return profilesWriter.write(getProfiles(experiment, streamOptions, transform));
+    public long write(E experiment, StreamOptions streamOptions, Predicate<Prof> keepProfiles, ProfilesWriter<Prof> profilesWriter) {
+        return profilesWriter.write(getProfiles(experiment, streamOptions, keepProfiles));
     }
 
     public int[] histogram(E experiment, StreamOptions streamOptions, double[] cutoffBins) {
         int[] result = new int[cutoffBins.length];
 
-        for (Prof prof : getProfiles(experiment, streamOptions, Functions.<Iterable<Prof>>identity())) {
+        for (Prof prof : new IterableObjectInputStream<>(getProfiles(experiment, streamOptions, Predicates.<Prof>alwaysTrue()))) {
 
             double expressionValue = prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn());
 

@@ -10,8 +10,8 @@ import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFilter;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamTransforms;
 import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
@@ -102,7 +102,7 @@ public class BaselineProfilesWriterService<Unit extends ExpressionUnit.Absolute>
         }
 
         return inputStreamFactory.write(experiment, requestContext,
-                new BaselineProfileStreamTransforms(requestContext, geneQueryResponse),
+                new ProfileStreamFilter<AssayGroup, BaselineProfileStreamOptions<Unit>, BaselineProfile>(requestContext, geneQueryResponse),
                 baselineProfilesWriterFactory.create(writer, requestContext,
                         describe(requestContext.getGeneQuery(), totalCoexpressionsRequested)
                 ));
