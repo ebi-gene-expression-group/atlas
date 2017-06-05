@@ -21,6 +21,7 @@ import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
@@ -139,6 +140,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey) {
+        BaselineRequestPreferences.setRequestAllData(preferences);
         return gson.toJson(
                 rnaSeqHistograms.get(experimentAccession, accessKey, preferences).asJson()
         );
@@ -153,6 +155,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @Valid ProteomicsBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
             @RequestParam(defaultValue = "") String accessKey) {
+        BaselineRequestPreferences.setRequestAllData(preferences);
         return gson.toJson(
                 proteomicsHistograms.get(experimentAccession, accessKey, preferences).asJson()
         );
