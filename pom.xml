@@ -729,6 +729,33 @@
         </profile>
         <profile>
             <!--build used for staging and production -->
+            <id>production.pg</id>
+            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
+            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
+            <properties>
+                <db.context>pgContext.xml</db.context>
+                <jdbc.url>jdbc:postgresql://pgsql-hxvm-035.ebi.ac.uk:5432/gxpatlaspro</jdbc.url>
+                <jdbc.username>atlasprd3</jdbc.username>
+                <jdbc.password>Ir0N403QStxf</jdbc.password>
+                <data.files.location>/srv/gxa/data</data.files.location>
+                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
+                <mail.smtp.port>25</mail.smtp.port>
+                <mail.smtp.auth>false</mail.smtp.auth>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <excludes>
+                            <exclude>jdbc.properties</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <!--build used for staging and production -->
             <id>production-sc</id>
             <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
