@@ -57,7 +57,7 @@ public class ExperimentPageJsonEIT {
     @Test
     public void testBaselineRnaSeq(){
         assertAboutBaselineColumnHeaders(getExperimentHeaderSummary("E-MTAB-513"));
-        assertAboutBaselineColumnHeaders(getExperimentHeaderSummary("E-MTAB-3028"));
+        assertAboutBaselineColumnHeaders(getExperimentHeaderSummary("E-MTAB-3028?unit=FPKM"));
     }
 
     @Test

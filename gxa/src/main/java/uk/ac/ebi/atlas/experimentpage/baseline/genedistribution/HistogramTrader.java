@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
@@ -46,10 +47,12 @@ public class HistogramTrader {
                 int [] histogram;
                 if(experiment.getType().isProteomicsBaseline()){
                     bins = new CutoffScale.Logarithmic().get();
-                    histogram = proteomicsBaselineProfileStreamFactory.histogram(experiment, new BaselineRequestContext(ProteomicsBaselineRequestPreferences.requestAllData(), experiment), bins);
+                    histogram = proteomicsBaselineProfileStreamFactory.histogram(experiment,
+                            new BaselineRequestContext(ProteomicsBaselineRequestPreferences.requestAllData(), experiment), bins);
                 } else {
                     bins = new CutoffScale.Scaled().get();
-                    histogram = rnaSeqBaselineProfileStreamFactory.histogram(experiment, new BaselineRequestContext(RnaSeqBaselineRequestPreferences.requestAllData(), experiment), bins);
+                    histogram = rnaSeqBaselineProfileStreamFactory.histogram(experiment,
+                            new BaselineRequestContext(RnaSeqBaselineRequestPreferences.requestAllData(ExpressionUnit.Absolute.Rna.TPM), experiment), bins);
                 }
                 return new HistogramAcrossGenes(histogram, bins);
             }

@@ -13,9 +13,10 @@ public class RnaSeqBaselineRequestPreferences extends BaselineRequestPreferences
         return DEFAULT_CUTOFF;
     }
 
-    public static RnaSeqBaselineRequestPreferences requestAllData(){
+    public static RnaSeqBaselineRequestPreferences requestAllData(ExpressionUnit.Absolute.Rna unit){
         RnaSeqBaselineRequestPreferences preferences = new RnaSeqBaselineRequestPreferences();
         BaselineRequestPreferences.setRequestAllData(preferences);
+        preferences.setUnit(unit);
         return preferences;
     }
 
