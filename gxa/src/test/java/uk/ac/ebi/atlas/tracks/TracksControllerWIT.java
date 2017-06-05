@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.text.MessageFormat;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
@@ -25,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
 public class TracksControllerWIT {
+    static final String URL_TEMPLATE = "/external-services/genome-browser/%s?experimentAccession=%s&geneId=%s&trackId=%s";
+
     @Autowired
     WebApplicationContext wac;
 
@@ -37,28 +41,28 @@ public class TracksControllerWIT {
 
     @Test
     public void invalidGenomeBrowserForExperimentSpecies() throws Exception {
-        this.mockMvc.perform(get("/experiments-content/E-MTAB-3827/redirect/genomeBrowser/Ensembl Plants?geneId=ENSG00000102970&trackId=g13"))
+        this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensemblgenomes", "E-MTAB-3827", "ENSG00000102970", "g13")))
                 .andExpect(status().isBadRequest())
                 .andExpect(forwardedUrl("error-page"));
     }
 
     @Test
     public void experimentNotFound() throws Exception {
-        this.mockMvc.perform(get("/experiments-content/E-FOO-BAR/redirect/genomeBrowser/Ensembl?geneId=ENSG00000102970&trackId=g13"))
+        this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-FOO-BAR", "ENSG00000102970", "g13")))
                 .andExpect(status().isNotFound())
                 .andExpect(forwardedUrl("error-page"));
     }
 
     @Test
     public void miRNAExperimentsDontHaveEnsembleIdsAndCantShowTheGenomeBrowser() throws Exception {
-        this.mockMvc.perform(get("/experiments-content/E-GEOD-13316/redirect/genomeBrowser/Ensembl?geneId=ENSG00000102970&trackId=g13"))
+        this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-GEOD-13316", "ENSG00000102970", "g13")))
                 .andExpect(status().isBadRequest())
                 .andExpect(forwardedUrl("error-page"));
     }
 
     @Test
     public void proteomicsExperiment() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-PROT-1/redirect/genomeBrowser/Ensembl?geneId=ENSG00000013297&trackId=g1"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-PROT-1", "ENSG00000013297", "any")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -69,7 +73,7 @@ public class TracksControllerWIT {
 
     @Test
     public void baselinePlantExperimentGramene() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-GEOD-55482/redirect/genomeBrowser/Gramene?geneId=AT4G08874&trackId=g1"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "gramene", "E-GEOD-55482", "AT4G08874", "g1")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -81,7 +85,7 @@ public class TracksControllerWIT {
 
     @Test
     public void baselinePlantExperimentEnsemblGenomes() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-GEOD-55482/redirect/genomeBrowser/Ensembl Plants?geneId=AT4G08874&trackId=g1"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensemblgenomes", "E-GEOD-55482", "AT4G08874", "g1")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -93,7 +97,7 @@ public class TracksControllerWIT {
 
     @Test
     public void differentialPlantExperimentGramene() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-GEOD-57252/redirect/genomeBrowser/Gramene?geneId=GLYMA11G00580&trackId=g1_g6"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "gramene", "E-GEOD-57252", "GLYMA11G00580", "g1_g6")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -106,7 +110,7 @@ public class TracksControllerWIT {
 
     @Test
     public void differentialPlantExperimentEnsemblGenomes() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-GEOD-57252/redirect/genomeBrowser/Ensembl Plants?geneId=GLYMA11G00580&trackId=g1_g6"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensemblgenomes", "E-GEOD-57252", "GLYMA11G00580", "g1_g6")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -119,7 +123,7 @@ public class TracksControllerWIT {
 
     @Test
     public void baselineWormExperimentWormbaseParaSite() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-MTAB-2812/redirect/genomeBrowser/Wormbase ParaSite?geneId=WBGene00009892&trackId=g31"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "wormbaseparasite", "E-MTAB-2812", "WBGene00009892", "g31")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -131,7 +135,7 @@ public class TracksControllerWIT {
 
     @Test
     public void differentialWormExperimentWormbaseParaSite() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-MEXP-1810/redirect/genomeBrowser/Wormbase ParaSite?geneId=WBGene00003778&trackId=g3_g1"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "wormbaseparasite", "E-MEXP-1810", "WBGene00003778", "g3_g1")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -144,7 +148,7 @@ public class TracksControllerWIT {
 
     @Test
     public void baselineVertebrateExperimentEnsembl() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-MTAB-3827/redirect/genomeBrowser/Ensembl?geneId=ENSG00000102970&trackId=g13"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-MTAB-3827", "ENSG00000102970", "g13")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -156,7 +160,7 @@ public class TracksControllerWIT {
 
     @Test
     public void differentialVertebrateExperimentEnsembl() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/experiments-content/E-GEOD-22351/redirect/genomeBrowser/Ensembl?geneId=ENSMUSG00000029816&trackId=g1_g2"))
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-GEOD-22351", "ENSMUSG00000029816", "g1_g2")))
                 .andExpect(status().isFound())
                 .andReturn();
 
@@ -165,6 +169,16 @@ public class TracksControllerWIT {
         assertThat(redirectedUrl, startsWith("http://www.ensembl.org/Mus_musculus/Location/View?g=ENSMUSG00000029816;contigviewbottom=url:http"));
         assertThat(redirectedUrl, containsString("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.log2foldchange.bedGraph=tiling,url:http"));
         assertThat(redirectedUrl, endsWith("/experiments-content/E-GEOD-22351/tracks/E-GEOD-22351.g1_g2.genes.pval.bedGraph=pvalue;format=BEDGRAPH"));
+    }
+
+    @Test
+    public void privateExperimentWithoutAccessKey() throws Exception {
+        assertThat(true, is(false));
+    }
+
+    @Test
+    public void privateExperimentWithAccessKey() throws Exception {
+        assertThat(true, is(false));
     }
 
 }
