@@ -48,7 +48,8 @@ public class SingleCellExperimentAdminController extends ExperimentAdminControll
                                         experimentChecker,
                                         analyticsLoaderFactory,
                                         configurationTrader),
-                                experimentTrader
+                                experimentTrader,
+                                analyticsLoaderFactory
                         )
                 )
         );
