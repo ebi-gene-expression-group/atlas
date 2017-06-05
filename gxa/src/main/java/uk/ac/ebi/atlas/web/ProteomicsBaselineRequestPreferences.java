@@ -19,6 +19,6 @@ public class ProteomicsBaselineRequestPreferences extends BaselineRequestPrefere
 
     @Override
     public ExpressionUnit.Absolute getUnit() {
-        return new ExpressionUnit.Absolute.Protein();
+        return ExpressionUnit.Absolute.Protein.ANY;
     }
 }

@@ -42,7 +42,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
                 experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns, new Function<BaselineExperimentProfile, ExpressionUnit.Absolute>() {
             @Override
             public ExpressionUnit.Absolute apply(@Nullable BaselineExperimentProfile baselineExperimentProfile) {
-                return baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ? ExpressionUnit.Absolute.Rna.TPM : new ExpressionUnit.Absolute.Protein();
+                return baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ? ExpressionUnit.Absolute.Rna.TPM : ExpressionUnit.Absolute.Protein.ANY;
             }
         });
     }

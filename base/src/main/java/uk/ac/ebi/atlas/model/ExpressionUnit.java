@@ -8,12 +8,21 @@ public interface ExpressionUnit {
         }
 
 
-         class Protein implements Absolute {
-             @Override
-             public String toString(){
-                 return "";
-             }
-         }
+        enum Protein implements Absolute {
+            ANY("");
+
+            String name;
+
+            Protein(String name){
+                this.name = name;
+            }
+
+            @Override
+            public String toString(){
+                return "";
+            }
+
+        }
     }
 
     enum Relative implements ExpressionUnit {
