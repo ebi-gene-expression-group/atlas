@@ -70,7 +70,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public String differentialMicroarrayExperimentData(
             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey) {
+            @RequestParam(defaultValue = "") String accessKey) {
         return gson.toJson(diffMicroarrayExperimentPageService.getResultsForExperiment(
                 (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 preferences));
@@ -84,7 +84,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
     public String differentialRnaSeqExperimentData(
             @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey) {
+            @RequestParam(defaultValue = "") String accessKey) {
         return gson.toJson(diffRnaSeqExperimentPageService.getResultsForExperiment(
                 (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
                 preferences));

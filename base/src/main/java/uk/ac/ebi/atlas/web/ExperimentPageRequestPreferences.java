@@ -79,10 +79,31 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
                 .toString();
     }
 
+    public abstract Unit getUnit();
+
+    /*
+    Used for equality of cache keys.
+    Currently:
+    - Kryo serialized files
+    - Histograms
+    This combined with experiment accession should 1-1 map to a data file.
+    A bit of a design wart -
+     */
     public String serializationShortString(){
-        return "serialized";
+        return getClass().getSimpleName();
     }
 
-    public abstract Unit getUnit();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExperimentPageRequestPreferences that = (ExperimentPageRequestPreferences) o;
+        return serializationShortString().equals(that.serializationShortString());
+    }
+
+    @Override
+    public int hashCode() {
+        return serializationShortString().hashCode();
+    }
 
 }

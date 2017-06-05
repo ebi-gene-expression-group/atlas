@@ -9,7 +9,9 @@ import uk.ac.ebi.atlas.experimentpage.baseline.BaselineExperimentPageService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatmapsWranglerFactory;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineRequestPreferencesValidator;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
+import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.HistogramService;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
@@ -40,6 +42,8 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
     private final BaselineExperimentPageService rnaSeqBaselineExperimentPageService;
     private final BaselineExperimentPageService proteomicsBaselineExperimentPageService;
     private final SpeciesInferrer speciesInferrer;
+    private final HistogramService.RnaSeq rnaSeqHistograms;
+    private final HistogramService.Proteomics proteomicsHistograms;
 
     @Inject
     public JsonBaselineExperimentController(
@@ -57,6 +61,8 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                 proteomicsBaselineProfileStreamFactory, solrQueryService, coexpressedGenesService)
         );
         this.speciesInferrer = speciesInferrer;
+        this.rnaSeqHistograms = new HistogramService.RnaSeq(rnaSeqBaselineProfileStreamFactory, experimentTrader);
+        this.proteomicsHistograms = new HistogramService.Proteomics(proteomicsBaselineProfileStreamFactory, experimentTrader);
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}",
@@ -65,9 +71,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                     params = "type=RNASEQ_MRNA_BASELINE")
     @ResponseBody
     public String baselineRnaSeqExperimentData(
-            @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
+            @Valid RnaSeqBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey) {
+            @RequestParam(defaultValue = "") String accessKey) {
         return gson.toJson(
                 rnaSeqBaselineExperimentPageService.getResultsForExperiment(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences
@@ -80,9 +86,9 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
                     params = "type=PROTEOMICS_BASELINE")
     @ResponseBody
     public String baselineProteomicsExperimentData(
-            @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
+            @Valid ProteomicsBaselineRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(required = false) String accessKey) {
+            @RequestParam(defaultValue = "") String accessKey) {
         return gson.toJson(
                 proteomicsBaselineExperimentPageService.getResultsForExperiment(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
@@ -113,4 +119,46 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
         return baselineRnaSeqExperimentData(preferences, experimentAccession, "");
     }
+
+    public static final String GENE_DISTRIBUTION_URL = "/json/experiments/{experimentAccession}/genedistribution";
+
+    public static final String geneDistributionUrl(HttpServletRequest request, String experimentAccession, String accessKey, ExperimentType experimentType){
+        return request.getContextPath()
+                +GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)
+                + "?experimentType="+experimentType.name()
+                +(
+                org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "&accessKey="+accessKey : ""
+        );
+    }
+
+    @RequestMapping(value = GENE_DISTRIBUTION_URL,
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8",
+            params = "type=RNASEQ_MRNA_BASELINE")
+    @ResponseBody
+    public String baselineRnaSeqHistogram(
+            @Valid RnaSeqBaselineRequestPreferences preferences,
+            @PathVariable String experimentAccession,
+            @RequestParam(defaultValue = "") String accessKey) {
+        return gson.toJson(
+                rnaSeqHistograms.get(experimentAccession, accessKey, preferences).asJson()
+        );
+    }
+
+    @RequestMapping(value = GENE_DISTRIBUTION_URL,
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8",
+            params = "type=PROTEOMICS_BASELINE")
+    @ResponseBody
+    public String baselineProteomicsHistogram(
+            @Valid ProteomicsBaselineRequestPreferences preferences,
+            @PathVariable String experimentAccession,
+            @RequestParam(defaultValue = "") String accessKey) {
+        return gson.toJson(
+                proteomicsHistograms.get(experimentAccession, accessKey, preferences).asJson()
+        );
+    }
+
+
+
 }

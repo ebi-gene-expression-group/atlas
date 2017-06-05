@@ -37,4 +37,5 @@ public class RnaSeqBaselineRequestPreferences extends BaselineRequestPreferences
     public String serializationShortString(){
         return super.serializationShortString()+unit;
     }
+
 }

@@ -29,7 +29,7 @@ public final class ExperimentDownloadDispatcher {
     @RequestMapping(value = url)
     public String dispatch(HttpServletRequest request,
                            @PathVariable String experimentAccession,
-                           @RequestParam(required = false) String accessKey) {
+                           @RequestParam(defaultValue = "") String accessKey) {
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
             throw new NoExperimentSubResourceException();

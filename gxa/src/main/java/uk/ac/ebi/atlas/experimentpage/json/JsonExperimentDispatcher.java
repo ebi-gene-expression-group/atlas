@@ -25,7 +25,7 @@ public class JsonExperimentDispatcher extends JsonExperimentController {
     @RequestMapping(value = {"/json/experiments/{experimentAccession}", "/json/experiments/{experimentAccession}/*"})
     public String dispatchData(HttpServletRequest request,
                                @PathVariable String experimentAccession,
-                               @RequestParam(required = false) String accessKey) {
+                               @RequestParam(defaultValue = "") String accessKey) {
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
             // throw new ExperimentDispatcher.NoExperimentSubResourceException();

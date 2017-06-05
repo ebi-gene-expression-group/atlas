@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
-import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BaselineBarChartController;
+import uk.ac.ebi.atlas.experimentpage.json.JsonBaselineExperimentController;
 import uk.ac.ebi.atlas.experimentpage.qc.MicroarrayQCFiles;
 import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
@@ -43,7 +43,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     public String showExperimentPage(Model model,
                                      HttpServletRequest request,
                                      @PathVariable String experimentAccession,
-                                     @RequestParam(required = false) String accessKey) {
+                                     @RequestParam(defaultValue = "") String accessKey) {
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
@@ -68,7 +68,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(
                 experiment.groupingsForHeatmap(),
-                BaselineBarChartController.geneDistributionUrl(request, experiment.getAccession(), accessKey),
+                JsonBaselineExperimentController.geneDistributionUrl(request, experiment.getAccession(), accessKey, experiment.getType()),
                 availableDataUnits(experiment.getAccession(), experiment.getType()))
         );
 
