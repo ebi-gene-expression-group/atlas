@@ -120,11 +120,10 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         return baselineRnaSeqExperimentData(preferences, experimentAccession, "");
     }
 
-    public static final String GENE_DISTRIBUTION_URL = "/json/experiments/{experimentAccession}/genedistribution";
+    public static final String GENE_DISTRIBUTION_URL = "json/experiments/{experimentAccession}/genedistribution";
 
-    public static final String geneDistributionUrl(HttpServletRequest request, String experimentAccession, String accessKey, ExperimentType experimentType){
-        return request.getContextPath()
-                +GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)
+    public static final String geneDistributionUrl(String experimentAccession, String accessKey, ExperimentType experimentType){
+        return GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)
                 + "?experimentType="+experimentType.name()
                 +(
                 org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "&accessKey="+accessKey : ""

@@ -68,7 +68,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         // everything wants to have a heatmap
         availableTabs.add(heatmapTab(
                 experiment.groupingsForHeatmap(),
-                JsonBaselineExperimentController.geneDistributionUrl(request, experiment.getAccession(), accessKey, experiment.getType()),
+                JsonBaselineExperimentController.geneDistributionUrl(experiment.getAccession(), accessKey, experiment.getType()),
                 availableDataUnits(experiment.getAccession(), experiment.getType()))
         );
 
