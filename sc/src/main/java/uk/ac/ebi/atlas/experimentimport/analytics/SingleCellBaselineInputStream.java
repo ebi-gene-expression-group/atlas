@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.experimentimport.analytics;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import java.io.IOException;
@@ -68,9 +66,9 @@ public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCe
                 String expressionLevelString = expressionLevels.next();
                 double expressionLevel = Double.parseDouble(expressionLevelString);
 
-                SingleCellBaseline scb = new SingleCellBaseline(geneId, cellId, expressionLevel);
-
-                builder.add(scb);
+                if(expressionLevel > 0.0){
+                    builder.add(new SingleCellBaseline(geneId, cellId, expressionLevel));
+                }
             }
 
             singleCellBaselines = builder.build();
