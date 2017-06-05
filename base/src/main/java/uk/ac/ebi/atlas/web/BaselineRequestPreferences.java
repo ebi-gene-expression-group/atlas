@@ -25,7 +25,7 @@ public abstract class BaselineRequestPreferences<Unit extends ExpressionUnit.Abs
         }
     }
 
-    protected static void setRequestAllData(BaselineRequestPreferences preferences){
+    public static void setRequestAllData(BaselineRequestPreferences preferences){
         preferences.setCutoff(0.0d);
         preferences.setGeneQuery(SemanticQuery.create());
     }
