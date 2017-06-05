@@ -1,8 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.model.resource.AtlasResource;
-import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.resource.SingleCellFileHub;
 
 import javax.inject.Inject;
@@ -20,7 +17,6 @@ public class SingleCellBaselineInputStreamFactory {
     }
 
     public SingleCellBaselineInputStream create(String experimentAccession) throws IOException {
-        AtlasResource<TsvReader> resource = dataFileHub.getSingleCellExperimentFiles(experimentAccession).singlecell;
-        return new SingleCellBaselineInputStream(resource.getReader(), resource.toString());
+        return new SingleCellBaselineInputStream(dataFileHub.getSingleCellExperimentFiles(experimentAccession).data.get());
     }
 }

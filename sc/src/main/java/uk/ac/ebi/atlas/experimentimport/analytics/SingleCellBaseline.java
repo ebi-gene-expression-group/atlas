@@ -1,9 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
-/**
- * Created by barrera on 12/05/2017.
- *
- */
 public class SingleCellBaseline {
 
     private String geneId;
