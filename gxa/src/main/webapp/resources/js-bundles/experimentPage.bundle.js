@@ -5427,7 +5427,7 @@ webpackJsonp_name_([1],[
 	        _react2.default.createElement(_QuerySelectingSidebar2.default, {
 	          isDifferential: this.props.isDifferential,
 	          geneSuggesterUri: (0, _urijs2.default)('json/suggestions', this.props.atlasUrl).addSearch(this.props.species ? { species: this.props.species } : {}),
-	          genesDistributedByCutoffUrl: this.props.isDifferential ? "" : this.props.genesDistributedByCutoffUrl,
+	          genesDistributedByCutoffUrl: this.props.isDifferential ? "" : (0, _urijs2.default)(this.props.genesDistributedByCutoffUrl, this.props.atlasUrl).addSearch(this.props.isRnaSeq ? { unit: queryObjects.unit } : {}).toString(),
 	          loadingGifUrl: (0, _urijs2.default)('resources/images/loading.gif', this.props.atlasUrl).toString(),
 	          columnGroups: this.props.groups,
 	          defaultQuery: Object.keys(this.props.query).length === 0,
@@ -5724,7 +5724,9 @@ webpackJsonp_name_([1],[
 	            title: 'Cutoff - distribution of genes',
 	            show: this.state.showModal === 'cutoff',
 	            onCloseModal: resetState },
-	          _react2.default.createElement(_CutoffDistribution2.default, { cutoff: this.props.queryObjects.cutoff,
+	          _react2.default.createElement(_CutoffDistribution2.default, {
+	            cutoff: this.props.queryObjects.cutoff,
+	            unit: this.props.queryObjects.unit,
 	            onChangeCutoff: (0, _lodash.flow)([onChangeProperty.bind(null, "cutoff"), toggleModal.bind(null, "")]),
 	            genesDistributedByCutoffUrl: this.props.genesDistributedByCutoffUrl
 	          })
@@ -13448,13 +13450,14 @@ webpackJsonp_name_([1],[
 	};
 	
 	var CutoffDistribution = function CutoffDistribution(_ref2) {
-	  var cutoff = _ref2.cutoff,
+	  var unit = _ref2.unit,
+	      cutoff = _ref2.cutoff,
 	      onChangeCutoff = _ref2.onChangeCutoff,
 	      histogram = _ref2.histogram;
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    'Current value: ' + cutoff.value,
+	    'Current value: ' + cutoff.value + (unit ? ' ' + unit : ""),
 	    _react2.default.createElement(_reactHighcharts2.default, {
 	      config: {
 	        title: '',
@@ -13491,6 +13494,7 @@ webpackJsonp_name_([1],[
 	CutoffDistribution.propTypes = {
 	  cutoff: _PropTypes.CutoffType,
 	  //onChangeCutoff: React.PropTypes.func.isRequired,
+	  unit: _PropTypes.UnitType.isRequired,
 	  histogram: _react2.default.PropTypes.shape({
 	    bins: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.number.isRequired).isRequired,
 	    counts: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.number.isRequired).isRequired
@@ -13513,7 +13517,8 @@ webpackJsonp_name_([1],[
 	          genesDistributedByCutoffFetch = _props.genesDistributedByCutoffFetch,
 	          loadingGifUrl = _props.loadingGifUrl,
 	          cutoff = _props.cutoff,
-	          onChangeCutoff = _props.onChangeCutoff;
+	          onChangeCutoff = _props.onChangeCutoff,
+	          unit = _props.unit;
 	
 	
 	      if (genesDistributedByCutoffFetch.pending) {
@@ -13528,7 +13533,7 @@ webpackJsonp_name_([1],[
 	      } else if (genesDistributedByCutoffFetch.fulfilled) {
 	        return _react2.default.createElement(CutoffDistribution, _extends({
 	          histogram: genesDistributedByCutoffFetch.value
-	        }, { cutoff: cutoff, onChangeCutoff: onChangeCutoff }));
+	        }, { cutoff: cutoff, onChangeCutoff: onChangeCutoff, unit: unit }));
 	      }
 	    }
 	  }]);
@@ -16812,7 +16817,7 @@ webpackJsonp_name_([1],[
 	
 	
 	// module
-	exports.push([module.id, ".gxaGradientLegend {\n  font-size: 12px;\n  padding-top: 10px;\n  margin-left: 10px;\n}\n.gxaGradientColour {\n  overflow: auto;\n  vertical-align: middle;\n  width: 200px;\n  height: 15px;\n  margin: 2px 6px 2px 6px;\n  display: inline-block;\n}\n.gxaGradientLevel {\n  white-space: nowrap;\n  font-size: 10px;\n  vertical-align: middle;\n  display: table-cell;\n}\n.gxaGradientLevelMin {\n  text-align: right;\n}\n.gxaGradientLevelMax {\n  text-align: left;\n}\n", ""]);
+	exports.push([module.id, ".gxaGradientLegend {\n  font-size: 12px;\n  padding-top: 10px;\n  margin-left: 10px;\n  text-align: center;\n  display: inline-block;\n}\n.gxaGradientColour {\n  overflow: auto;\n  height: 15px;\n  margin: 2px 6px 2px 6px;\n  vertical-align: middle;\n  width: 200px;\n  display: inline-block;\n}\n.gxaGradientLevel {\n  white-space: nowrap;\n  font-size: 10px;\n  vertical-align: middle;\n  display: table-cell;\n}\n.gxaGradientLevelMin {\n  text-align: right;\n}\n.gxaGradientLevelMax {\n  text-align: left;\n}\n", ""]);
 	
 	// exports
 
