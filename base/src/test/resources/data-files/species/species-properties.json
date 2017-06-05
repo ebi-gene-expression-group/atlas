@@ -24,7 +24,7 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Metazoa",
+    "name":"Ensembl Genomes",
     "url":"http://metazoa.ensembl.org/Anopheles_gambiae"
   }]
 },
@@ -38,7 +38,7 @@
     "url":"http://ensembl.gramene.org/Arabidopsis_lyrata"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Arabidopsis_lyrata"
   }]
 },
@@ -52,7 +52,7 @@
     "url":"http://ensembl.gramene.org/Arabidopsis_thaliana"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Arabidopsis_thaliana"
   }]
 },
@@ -62,7 +62,7 @@
   "kingdom":"fungi",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Fungi",
+    "name":"Ensembl Genomes",
     "url":"http://fungi.ensembl.org/Aspergillus_fumigatus"
   }]
 },
@@ -86,7 +86,7 @@
     "url":"http://ensembl.gramene.org/Brachypodium_distachyon"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Brachypodium_distachyon"
   }]
 },
@@ -100,7 +100,7 @@
     "url":"http://ensembl.gramene.org/Brassica_oleracea"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Brassica_oleracea"
   }]
 },
@@ -114,7 +114,7 @@
     "url":"http://ensembl.gramene.org/Brassica_rapa"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Brassica_rapa"
   }]
 },
@@ -194,7 +194,7 @@
   "kingdom":"animals",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Metazoa",
+    "name":"Ensembl Genomes",
     "url":"http://metazoa.ensembl.org/Drosophila_melanogaster"
   }]
 },
@@ -228,7 +228,7 @@
     "url":"http://ensembl.gramene.org/Glycine_max"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Glycine_max"
   }]
 },
@@ -262,7 +262,7 @@
     "url":"http://ensembl.gramene.org/Hordeum_vulgare"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Hordeum_vulgare"
   }]
 },
@@ -286,7 +286,7 @@
     "url":"http://ensembl.gramene.org/Medicago_truncatula"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Medicago_truncatula"
   }]
 },
@@ -320,7 +320,7 @@
     "url":"http://ensembl.gramene.org/Musa_acuminata"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Musa_acuminata"
   }]
 },
@@ -354,7 +354,7 @@
     "url":"http://ensembl.gramene.org/Oryza_rufipogon"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Oryza_rufipogon"
   }]
 },
@@ -368,7 +368,7 @@
     "url":"http://ensembl.gramene.org/Oryza_sativa"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Oryza_sativa"
   }]
 },
@@ -412,7 +412,7 @@
     "url":"http://ensembl.gramene.org/Physcomitrella_patens"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Physcomitrella_patens"
   }]
 },
@@ -436,7 +436,7 @@
     "url":"http://ensembl.gramene.org/Populus_trichocarpa"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Populus_trichocarpa"
   }]
 },
@@ -456,7 +456,7 @@
   "kingdom":"fungi",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Fungi",
+    "name":"Ensembl Genomes",
     "url":"http://fungi.ensembl.org/Saccharomyces_cerevisiae"
   }]
 },
@@ -476,7 +476,7 @@
   "kingdom":"fungi",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Fungi",
+    "name":"Ensembl Genomes",
     "url":"http://fungi.ensembl.org/Schizosaccharomyces_pombe"
   }]
 },
@@ -490,7 +490,7 @@
     "url":"http://ensembl.gramene.org/Solanum_lycopersicum"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Solanum_lycopersicum"
   }]
 },
@@ -504,7 +504,7 @@
     "url":"http://ensembl.gramene.org/Solanum_tuberosum"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Solanum_tuberosum"
   }]
 },
@@ -518,7 +518,7 @@
     "url":"http://ensembl.gramene.org/Sorghum_bicolor"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Sorghum_bicolor"
   }]
 },
@@ -552,7 +552,7 @@
     "url":"http://ensembl.gramene.org/Theobroma_cacao"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Theobroma_cacao"
   }]
 },
@@ -566,7 +566,7 @@
     "url":"http://ensembl.gramene.org/Triticum_aestivum"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Triticum_aestivum"
   }]
 },
@@ -580,7 +580,7 @@
     "url":"http://ensembl.gramene.org/Vitis_vinifera"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Vitis_vinifera"
   }]
 },
@@ -600,7 +600,7 @@
   "kingdom":"fungi",
   "resources":[{
     "type":"genome_browser",
-    "name":"Ensembl Fungi",
+    "name":"Ensembl Genomes",
     "url":"http://fungi.ensembl.org/Yarrowia_lipolytica"
   }]
 },
@@ -614,7 +614,7 @@
     "url":"http://ensembl.gramene.org/Zea_mays"
   },{
     "type":"genome_browser",
-    "name":"Ensembl Plants",
+    "name":"Ensembl Genomes",
     "url":"http://plants.ensembl.org/Zea_mays"
   }]
 }]
