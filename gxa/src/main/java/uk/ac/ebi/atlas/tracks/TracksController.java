@@ -60,11 +60,11 @@ public class TracksController extends HtmlExceptionHandlingController {
     }
 
 
-    @RequestMapping(value = "/experiments-content/{experimentAccession}/redirect/genomeBrowser/{genomeBrowserName}",
+    @RequestMapping(value = "/external-services/genome-browser/{genomeBrowserName}",
                     method = {RequestMethod.GET, RequestMethod.HEAD})
 
-    public String redirectToGenomeBrowser(@PathVariable String experimentAccession,
-                                          @PathVariable String genomeBrowserName,
+    public String redirectToGenomeBrowser(@PathVariable String genomeBrowserName,
+                                          @RequestParam String experimentAccession,
                                           @RequestParam String geneId,
                                           @RequestParam(required = false, defaultValue = "") String trackId,
                                           @RequestParam(required = false, defaultValue = "") String accessKey,
@@ -77,7 +77,7 @@ public class TracksController extends HtmlExceptionHandlingController {
         ImmutableCollection<ImmutableMap<String, String>> genomeBrowsers = experiment.getGenomeBrowsers();
 
         for (ImmutableMap<String, String> genomeBrowser : genomeBrowsers) {
-            if (genomeBrowserName.equalsIgnoreCase(genomeBrowser.get("name"))) {
+            if (genomeBrowserName.equalsIgnoreCase(genomeBrowser.get("name").replaceAll("\\s+", ""))) {
                 genomeBrowserUrl = genomeBrowser.get("url");
                 break;
             }
