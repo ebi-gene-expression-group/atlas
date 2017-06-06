@@ -11,6 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
+
+import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
@@ -24,13 +27,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"/applicationContext.xml", "/solrContext.xml", "/dbContext.xml"})
-public class GenomeBrowserWIT {
+public class GenomeBrowserControllerWIT {
     static final String URL_TEMPLATE = "/external-services/genome-browser/%s?experimentAccession=%s&geneId=%s&trackId=%s";
 
     @Autowired
     WebApplicationContext wac;
 
     MockMvc mockMvc;
+
+    @Inject
+    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Before
     public void setUp() {
@@ -171,12 +177,19 @@ public class GenomeBrowserWIT {
 
     @Test
     public void privateExperimentWithoutAccessKey() throws Exception {
-        assertThat(true, is(false));
+        this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-MTAB-3871", "ENSG00000043355", "g1")))
+                .andExpect(status().isNotFound())
+                .andReturn();
     }
 
     @Test
     public void privateExperimentWithAccessKey() throws Exception {
-        assertThat(true, is(false));
+        MvcResult result = this.mockMvc.perform(get(String.format(URL_TEMPLATE, "ensembl", "E-MTAB-3871", "ENSG00000043355", "g1") + "&accessKey=9fc53802-bc7f-4404-bce6-2eb7851d10bf"))
+                .andExpect(status().isFound())
+                .andReturn();
+
+        assertThat(result.getResponse().getRedirectedUrl(), containsString("/experiments-content/E-MTAB-3871/tracks/E-MTAB-3871.g1.genes.expressions.bedGraph?accessKey=9fc53802-bc7f-4404-bce6-2eb7851d10bf"));
+
     }
 
 }
