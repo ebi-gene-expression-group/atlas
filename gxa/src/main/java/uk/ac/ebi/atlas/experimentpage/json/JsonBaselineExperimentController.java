@@ -77,7 +77,8 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
             @RequestParam(defaultValue = "") String accessKey) {
         return gson.toJson(
                 rnaSeqBaselineExperimentPageService.getResultsForExperiment(
-                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey), preferences
+                        (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                        accessKey, preferences
                 ));
     }
 
@@ -93,6 +94,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
         return gson.toJson(
                 proteomicsBaselineExperimentPageService.getResultsForExperiment(
                         (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey),
+                        accessKey,
                         preferences));
     }
 

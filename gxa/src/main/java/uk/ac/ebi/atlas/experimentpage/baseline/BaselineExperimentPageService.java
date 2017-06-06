@@ -31,8 +31,11 @@ public class BaselineExperimentPageService extends ExperimentPageService {
         this.baselineProfilesHeatmapWranglerFactory = baselineProfilesHeatmapWranglerFactory;
     }
 
-    public <Unit extends ExpressionUnit.Absolute> JsonObject getResultsForExperiment(BaselineExperiment experiment,
-                                                                                     BaselineRequestPreferences<Unit> preferences) {
+    public <Unit extends ExpressionUnit.Absolute> JsonObject getResultsForExperiment(
+            BaselineExperiment experiment,
+            String accessKey,
+            BaselineRequestPreferences<Unit> preferences) {
+
         JsonObject result = new JsonObject();
 
         BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
@@ -59,7 +62,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
 
         result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).or(JsonNull.INSTANCE));
 
-        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
+        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
         }
         return result;

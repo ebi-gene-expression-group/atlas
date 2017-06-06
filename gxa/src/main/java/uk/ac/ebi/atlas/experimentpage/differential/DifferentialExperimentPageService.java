@@ -42,7 +42,7 @@ public class DifferentialExperimentPageService
 
     }
 
-    public JsonObject getResultsForExperiment(E experiment, K preferences) {
+    public JsonObject getResultsForExperiment(E experiment, String accessKey, K preferences) {
         Function<P, URI> linkToGenes = new Function<P, URI>() {
             @Nullable
             @Override
@@ -60,7 +60,7 @@ public class DifferentialExperimentPageService
         List<Contrast> contrasts = requestContext.getDataColumnsToReturn();
 
         result.add("anatomogram", JsonNull.INSTANCE);
-        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, preferences).entrySet()){
+        for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
         }
 

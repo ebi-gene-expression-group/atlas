@@ -12,29 +12,36 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 public class ExperimentPageService extends ReturnsJsonErrors {
 
     protected final Gson gson = new Gson();
 
     protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
-                                               ExperimentPageRequestPreferences requestPreferences) {
+                                               String accessKey, ExperimentPageRequestPreferences requestPreferences) {
         Map<String, JsonElement> result = new HashMap<>();
 
-        result.put("experiment", experimentDescription(experiment, requestPreferences));
+        result.put("experiment", experimentDescription(experiment, accessKey, requestPreferences));
         result.put("config", config(experiment, requestPreferences));
         return result;
     }
 
     private JsonElement experimentDescription(Experiment experiment,
-                                              ExperimentPageRequestPreferences requestPreferences) {
+                                              String accessKey, ExperimentPageRequestPreferences requestPreferences) {
 
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("accession", experiment.getAccession());
         experimentDescription.addProperty("type", experiment.getType().getDescription());
         experimentDescription.addProperty("relUrl",
-                MessageFormat.format("experiments/{0}?geneQuery={1}", experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson() ));
+                MessageFormat.format(
+                        "experiments/{0}?geneQuery={1}",
+                        experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
+                + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey)
+        );
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
+        experimentDescription.addProperty("accessKey", accessKey);
         return experimentDescription;
     }
 
