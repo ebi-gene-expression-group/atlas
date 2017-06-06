@@ -21,9 +21,9 @@
 
         <property name="dataSourceProperties">
             <props>
-                <prop key="url">${filtered.jdbc.url}</prop>
-                <prop key="user">${filtered.jdbc.username}</prop>
-                <prop key="password">${filtered.jdbc.password}</prop>
+                <prop key="url">${jdbc.url.postgresql}</prop>
+                <prop key="user">${jdbc.username.postgresql}</prop>
+                <prop key="password">${jdbc.password.postgresql}</prop>
             </props>
         </property>
     </bean>
