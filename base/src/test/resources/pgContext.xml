@@ -13,6 +13,7 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="poolName" value="baseHikari" />
         <property name="connectionTestQuery" value="SELECT 1" />
         <property name="dataSourceClassName" value="org.postgresql.ds.PGSimpleDataSource" />
         <!--<property name="maximumPoolSize" value="10" />-->
