@@ -32,6 +32,9 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyService {
 
+    private final static ImmutableList<BioentityPropertyName> DISPLAYED_PROPERTY_LIST =
+            ImmutableList.of(BioentityPropertyName.DESCRIPTION, BioentityPropertyName.SYMBOL);
+
     private final UniProtClient uniProtClient;
     private final ArrayDesignDAO arrayDesignDAO;
     private final BioEntityPropertyLinkBuilder linkBuilder;
@@ -87,26 +90,20 @@ public class BioEntityPropertyService {
         return FluentIterable.from(desiredOrderOfPropertyNames).filter(new Predicate<BioentityPropertyName>() {
             @Override
             public boolean apply(@Nullable BioentityPropertyName propertyName) {
-                return isDisplayedInPropertyList(propertyName) && propertyValuesByType.containsKey(propertyName);
+                return !DISPLAYED_PROPERTY_LIST.contains(propertyName) &&
+                        propertyValuesByType.containsKey(propertyName);
             }
         }).toList();
 
     }
-
-    private boolean isDisplayedInPropertyList(BioentityPropertyName propertyName) {
-
-        return !ImmutableList.of(BioentityPropertyName.DESCRIPTION, BioentityPropertyName.SYMBOL)
-                .contains(propertyName);
-
-    }
-
     private JsonArray bioentityProperties(String identifier, Species species,
                                           List<BioentityPropertyName> desiredOrderOfPropertyNames,
                                           Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
         JsonArray result = new JsonArray();
 
-        for(BioentityPropertyName bioentityPropertyName : propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType)) {
+        for(BioentityPropertyName bioentityPropertyName :
+                propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType)) {
             JsonArray values = new JsonArray();
 
             for (PropertyLink propertyLink :
