@@ -568,9 +568,9 @@
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <db.context>oracleContext.xml</db.context>
-                <jdbc.url.oracle>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</jdbc.url.oracle>
-                <jdbc.username.oracle>atlas3dev</jdbc.username.oracle>
-                <jdbc.password.oracle>atlas3dev</jdbc.password.oracle>
+                <_jdbc.url.oracle>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</_jdbc.url.oracle>
+                <_jdbc.username.oracle>atlas3dev</_jdbc.username.oracle>
+                <_jdbc.password.oracle>atlas3dev</_jdbc.password.oracle>
                 <solr.host>lime</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -591,9 +591,9 @@
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <db.context>pgContext.xml</db.context>
-                <jdbc.url.postgresql>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</jdbc.url.postgresql>
-                <jdbc.username.postgresql>atlas3dev</jdbc.username.postgresql>
-                <jdbc.password.postgreqsl>YxyR9PKvOAtY</jdbc.password.postgreqsl>
+                <_jdbc.url.postgresql>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasdev</_jdbc.url.postgresql>
+                <_jdbc.username.postgresql>atlas3dev</_jdbc.username.postgresql>
+                <_jdbc.password.postgresql>YxyR9PKvOAtY</_jdbc.password.postgresql>
                 <solr.host>lime</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -614,9 +614,9 @@
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <db.context>pgContext.xml</db.context>
-                <jdbc.url.postgresql>jdbc:postgresql:gxpatlasloc</jdbc.url.postgresql>
-                <jdbc.username.postgresql>atlas3dev</jdbc.username.postgresql>
-                <jdbc.password.postgresql>atlas3dev</jdbc.password.postgresql>
+                <_jdbc.url.postgresql>jdbc:postgresql:gxpatlasloc</_jdbc.url.postgresql>
+                <_jdbc.username.postgresql>atlas3dev</_jdbc.username.postgresql>
+                <_jdbc.password.postgresql>atlas3dev</_jdbc.password.postgresql>
                 <solr.host>localhost</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -639,9 +639,9 @@
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <db.context>oracleContext.xml</db.context>
-                <jdbc.url.oracle>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</jdbc.url.oracle>
-                <jdbc.username.oracle>atlas3it</jdbc.username.oracle>
-                <jdbc.password.oracle>atlas3it</jdbc.password.oracle>
+                <_jdbc.url.oracle>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</_jdbc.url.oracle>
+                <_jdbc.username.oracle>atlas3it</_jdbc.username.oracle>
+                <_jdbc.password.oracle>atlas3it</_jdbc.password.oracle>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
@@ -664,9 +664,9 @@
                 <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
                 <db.context>pgContext.xml</db.context>
-                <jdbc.url.postgresql>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</jdbc.url.postgresql>
-                <jdbc.username.postgresql>atlas3it</jdbc.username.postgresql>
-                <jdbc.password>Ujp2HSSVc3MN</jdbc.password>
+                <_jdbc.url.postgresql>jdbc:postgresql://pgsql-hxvm-037.ebi.ac.uk:5432/gxpatlasit</_jdbc.url.postgresql>
+                <_jdbc.username.postgresql>atlas3it</_jdbc.username.postgresql>
+                <_jdbc.password.postgresql>Ujp2HSSVc3MN</_jdbc.password.postgresql>
                 <solr.host>lime.ebi.ac.uk</solr.host>
                 <log.level.root>info</log.level.root>
                 <log.level.atlas>debug</log.level.atlas>
