@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
+import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.stream.DifferentialProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.species.Species;
@@ -25,7 +26,7 @@ public class EvidenceServiceTest {
 
     String accession = "E-GEOD-59612";
 
-    EvidenceService<?,DifferentialExperiment,?,?> subject;
+    EvidenceService<DifferentialExpression,DifferentialExperiment,?,?> subject;
 
     MockDataFileHub mockDataFileHub;
 
@@ -74,5 +75,13 @@ public class EvidenceServiceTest {
         assertThat(subject.getPercentileRanks(experiment).get("ENSG00000000003").get(c1),
                 is(89));
         assertThat(subject.getPercentileRanks(experiment).get("ENSG00000000003").get(c2), nullValue());
+    }
+
+    @Test
+    public void pValuesRoundedLikeWeDid() {
+        assertThat(
+                subject.getPValueString(new DifferentialExpression(5.21107983317421e-10, 0.0, c1)),
+                is("5.21e-10")
+        );
     }
 }

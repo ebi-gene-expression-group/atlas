@@ -6,7 +6,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -45,7 +44,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
     private final ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory;
     private final DataFileHub dataFileHub;
-    private static final Gson gson = new Gson();
 
 
     public EvidenceService(ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory, DataFileHub dataFileHub){
@@ -161,7 +159,15 @@ public class EvidenceService<Expr extends DifferentialExpression,
     JsonObject  withLiteratureReferences(JsonObject object, List<String> pubmedIds){
         if(! pubmedIds.isEmpty()){
             JsonObject literature = new JsonObject();
-            literature.add("references", gson.toJsonTree(pubmedIds).getAsJsonArray());
+            JsonArray references = new JsonArray();
+            for(String pubmedId: pubmedIds){
+                JsonObject reference = new JsonObject();
+                reference.addProperty("lit_id", MessageFormat.format(
+                        "http://europepmc.org/abstract/MED/{0}", pubmedId
+                ));
+                references.add(reference);
+            }
+            literature.add("references", references);
             object.add("literature", literature);
         }
 
@@ -183,7 +189,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         result.add("log2_fold_change", log2FoldChange(expression, foldChangeRank));
         result.addProperty("test_sample", testAndReferenceLabels.getLeft());
         result.addProperty("reference_sample", testAndReferenceLabels.getRight());
-        result.addProperty("date_asserted", new SimpleDateFormat("YYYY-MM-DD'T'HH:MM:SS'Z'").format(experiment.getLastUpdate()));
+        result.addProperty("date_asserted", new SimpleDateFormat("YYYY-MM-dd'T'HH:MM:SS'Z'").format(experiment.getLastUpdate()));
         result.addProperty("experiment_overview", experiment.getDescription());
         result.addProperty("comparison_name", contrast.getDisplayName());
         result.addProperty("test_replicates_n", contrast.getTestAssayGroup().getReplicates());
@@ -243,13 +249,17 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
+    String getPValueString(Expr expression){
+        return String.format("%3.2e",expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue());
+    }
+
     JsonObject resourceScore(Expr expression, String methodDescription){
         JsonObject result = new JsonObject();
         /*
         probability estimates shouldn't be zero but sometimes we get them from the pipeline as rounding errors
         use the smallest positive double greater than zero,
          */
-        result.addProperty("value", expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue());
+        result.addProperty("value", getPValueString(expression));
 
         JsonObject method = new JsonObject();
         method.addProperty("description", methodDescription);
@@ -302,7 +312,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
 					};
          */
         JsonObject result = new JsonObject();
-        result.addProperty("id", geneUri(ensemblGeneId));
+        result.addProperty("geneID", geneUri(ensemblGeneId));
         result.addProperty("study_id", experimentAccessionUri(experimentAccession));
         result.addProperty("comparison_name", comparisonName);
         return result;
@@ -321,7 +331,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
     JsonObject target(String ensemblGeneId, boolean isCttvPrimary, Expr expression) {
         JsonObject result = new JsonObject();
-        result.addProperty("id", ensemblGeneId);
+        result.addProperty("id", geneUri(ensemblGeneId));
         result.addProperty("target_type", "http://identifiers.org/cttv.target/transcript_evidence");
         result.addProperty("activity", activity(isCttvPrimary, expression));
 
