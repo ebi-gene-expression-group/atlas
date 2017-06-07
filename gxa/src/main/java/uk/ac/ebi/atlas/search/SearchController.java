@@ -83,7 +83,7 @@ public class SearchController extends HtmlExceptionHandlingController {
             StringBuilder stringBuilder = new StringBuilder("redirect:/genesets/" + geneSetId);
             // Reactome IDs are species-specific
             if (!GeneSetUtil.matchesReactomeID(geneSetId) && !species.isUnknown()) {
-                stringBuilder.append("?").append("organism=").append(species.getName());
+                stringBuilder.append("?").append("organism=").append(species.getReferenceName());
             }
 
             copyModelAttributesToFlashAttributes(model, redirectAttributes);
