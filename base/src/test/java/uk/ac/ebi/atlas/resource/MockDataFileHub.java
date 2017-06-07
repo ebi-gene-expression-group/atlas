@@ -60,6 +60,11 @@ public class MockDataFileHub extends DataFileHub {
         addTemporaryTsv(MessageFormat.format(CONDENSED_SDRF_FILE_PATH_TEMPLATE, accession), lines);
     }
 
+    public void addTemporaryPercentileRanksFile(String accession, Collection<String[]> lines){
+        addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, accession), lines);
+    }
+
+
 //    public void addRawCountsFile(String accession, Collection<String[]> lines) {
 //        addTemporaryTsv(MessageFormat.format(DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, accession), lines);
 //    }

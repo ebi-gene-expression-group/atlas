@@ -41,6 +41,7 @@ public class DataFileHub {
 
     final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
     final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
+    final static String DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-percentile-ranks.tsv";
     final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
     final static String QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
     final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
@@ -72,6 +73,10 @@ public class DataFileHub {
 
     public ProteomicsBaselineExperimentFiles getProteomicsBaselineExperimentFiles(String experimentAccession) {
         return new ProteomicsBaselineExperimentFiles(experimentAccession);
+    }
+
+    public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession){
+        return new DifferentialExperimentFiles(experimentAccession);
     }
 
 
@@ -174,7 +179,16 @@ public class DataFileHub {
         }
     }
 
-    public class RnaSeqDifferentialExperimentFiles extends ExperimentFiles {
+    public class DifferentialExperimentFiles extends ExperimentFiles {
+        public final AtlasResource<ObjectInputStream<String[]>> percentileRanks;
+
+        DifferentialExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.percentileRanks = new TsvFile.ReadAsStream(dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
+        }
+    }
+
+    public class RnaSeqDifferentialExperimentFiles extends DifferentialExperimentFiles {
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
         public final AtlasResource<TsvReader> rawCounts;
 
@@ -185,7 +199,7 @@ public class DataFileHub {
         }
     }
 
-    public class MicroarrayExperimentFiles extends ExperimentFiles {
+    public class MicroarrayExperimentFiles extends DifferentialExperimentFiles {
         public final AtlasResource<ObjectInputStream<String[]>> analytics;
         public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1 colour specific
         public final AtlasResource<TsvReader> logFoldChanges;   // Microarray 2 colour specific

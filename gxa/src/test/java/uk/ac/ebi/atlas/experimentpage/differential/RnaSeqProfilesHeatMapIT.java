@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.collect.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,6 +10,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -28,18 +31,25 @@ import static org.junit.Assert.*;
 public class RnaSeqProfilesHeatMapIT {
 
     @Inject
-    private ExpressionAtlasExperimentTrader experimentTrader;
+    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    private RnaSeqDiffExperimentsCache experimentsCache;
+    RnaSeqDiffExperimentsCache experimentsCache;
 
     @Inject
-    private RnaSeqProfilesHeatMap subject;
+    RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory;
 
-    private DifferentialRequestPreferences requestPreferences;
+    @Inject
+    SolrQueryService solrQueryService;
 
+    DifferentialProfilesHeatMap<DifferentialExpression, DifferentialExperiment, RnaSeqProfile, RnaSeqRequestContext> subject;
+
+    DifferentialRequestPreferences requestPreferences;
+
+    @Before
     public void setUp(){
         requestPreferences = new DifferentialRequestPreferences();
+        subject = new DifferentialProfilesHeatMap<>(rnaSeqProfileStreamFactory,solrQueryService);
     }
 
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws Exception {

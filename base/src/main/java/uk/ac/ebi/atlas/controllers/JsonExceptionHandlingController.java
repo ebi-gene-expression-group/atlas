@@ -11,7 +11,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 //TODO Make all controllers that produce JSON data inherit from this class
 public abstract class JsonExceptionHandlingController extends ReturnsJsonErrors {
-    protected final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    protected final Gson gson = new Gson();
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.collect.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,7 +10,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -28,17 +32,24 @@ import static org.hamcrest.Matchers.*;
 public class MicroarrayProfilesHeatMapIT {
 
     @Inject
-    private ExpressionAtlasExperimentTrader experimentTrader;
+    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    private MicroarrayExperimentsCache experimentsCache;
+    MicroarrayExperimentsCache experimentsCache;
 
     @Inject
-    private MicroarrayProfilesHeatMap subject;
+    MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
 
-    private MicroarrayRequestPreferences requestPreferences;
+    @Inject
+    SolrQueryService solrQueryService;
 
+    DifferentialProfilesHeatMap<MicroarrayExpression, MicroarrayExperiment, MicroarrayProfile, MicroarrayRequestContext> subject;
+
+    MicroarrayRequestPreferences requestPreferences;
+
+    @Before
     public void setUp(){
+        subject = new DifferentialProfilesHeatMap<>(microarrayProfileStreamFactory, solrQueryService) ;
         requestPreferences = new MicroarrayRequestPreferences();
     }
 

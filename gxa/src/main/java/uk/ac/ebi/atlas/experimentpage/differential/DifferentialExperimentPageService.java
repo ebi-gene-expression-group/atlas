@@ -42,18 +42,19 @@ public class DifferentialExperimentPageService
 
     }
 
-    public JsonObject getResultsForExperiment(E experiment, String accessKey, K preferences) {
-        Function<P, URI> linkToGenes = new Function<P, URI>() {
-            @Nullable
-            @Override
-            public URI apply(@Nullable P differentialProfile) {
-                try {
-                    return new URI("genes/"+differentialProfile.getId());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
+    Function<P, URI> linkToGenes = new Function<P, URI>() {
+        @Nullable
+        @Override
+        public URI apply(@Nullable P differentialProfile) {
+            try {
+                return new URI("genes/"+differentialProfile.getId());
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
             }
-        };
+        }
+    };
+
+    public JsonObject getResultsForExperiment(E experiment,String accessKey, K preferences) {
 
         JsonObject result = new JsonObject();
         R requestContext = differentialRequestContextFactory.create(experiment, preferences);

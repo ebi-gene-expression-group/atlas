@@ -115,6 +115,14 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return disclaimer;
     }
 
+    public Date getLastUpdate(){
+        return lastUpdate;
+    }
+
+    public List<String> getPubMedIds(){
+        return pubMedIds;
+    }
+
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
