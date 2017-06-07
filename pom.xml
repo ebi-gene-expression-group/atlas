@@ -737,7 +737,7 @@
             <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
             <properties>
                 <data.files.location>/srv/gxa/data-sc</data.files.location>
-                <db.context>oracleContext.xml</db.context>
+                <db.context>pgContext.xml</db.context>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
