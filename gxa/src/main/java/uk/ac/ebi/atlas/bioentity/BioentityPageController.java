@@ -12,7 +12,6 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
-import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
@@ -28,7 +27,6 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
 
     protected SpeciesFactory speciesFactory;
     protected AnalyticsSearchService analyticsSearchService;
-    protected SpeciesLookupService speciesLookupService;
     protected DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
     protected BioEntityPropertyDao bioentityPropertyDao;
 
@@ -53,10 +51,6 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
     }
 
     @Inject
-    public void setSpeciesLookupService(SpeciesLookupService speciesLookupService){
-        this.speciesLookupService = speciesLookupService;
-    }
-    @Inject
     public void setSpeciesFactory(SpeciesFactory speciesFactory) {
         this.speciesFactory = speciesFactory;
     }
@@ -68,9 +62,13 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
 
     // identifier (gene) = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
     // identifier (gene set) = a Reactome id, Plant Ontology or Gene Ontology accession or an InterPro term
-    public String showBioentityPage(String identifier, Species species, String entityName, Model model, Set<String>
-            experimentTypes, List<BioentityPropertyName> desiredOrderOfPropertyNames, Map<BioentityPropertyName,
-            Set<String>> propertyValuesByType) {
+    public String showBioentityPage(String identifier,
+                                    String speciesReferenceName,
+                                    String entityName,
+                                    Model model,
+                                    Set<String> experimentTypes,
+                                    List<BioentityPropertyName> desiredOrderOfPropertyNames,
+                                    Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
         boolean hasDifferentialResults = ExperimentType.containsDifferential(experimentTypes);
         boolean hasBaselineResults = ExperimentType.containsBaseline(experimentTypes);
@@ -82,6 +80,9 @@ public abstract class BioentityPageController extends HtmlExceptionHandlingContr
 
         model.addAttribute("hasBaselineResults", hasBaselineResults);
         model.addAttribute("hasDifferentialResults", hasDifferentialResults);
+
+        Species species = speciesFactory.create(speciesReferenceName);
+        model.addAttribute("species", species.getName());
 
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         if (hasBaselineResults) {

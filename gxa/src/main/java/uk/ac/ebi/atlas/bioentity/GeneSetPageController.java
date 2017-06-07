@@ -32,22 +32,17 @@ public class GeneSetPageController extends BioentityPageController {
 
     @RequestMapping(value = "/genesets/{identifier:.*}", produces = "text/html;charset=UTF-8")
     public String showGeneSetPage(@PathVariable String identifier,
-                                  @RequestParam(value = "organism", required = false) String speciesString,
+                                  @RequestParam(value = "organism", required = false) String speciesReferenceName,
                                   Model model) {
 
-        Species species = speciesFactory.create(matchesReactomeID(identifier) ? speciesLookupService.fetchSpeciesForGeneSet(identifier).or("") : speciesString);
-
-        model.addAttribute("species", species.getName());
-
         ImmutableSet<String> experimentTypes =
-                analyticsSearchService.fetchExperimentTypes(
-                        SemanticQuery.create(identifier), species.getReferenceName());
+                analyticsSearchService.fetchExperimentTypes(SemanticQuery.create(identifier), speciesReferenceName);
 
         if (experimentTypes.isEmpty()) {
             throw new BioentityNotFoundException("Gene set <em>" + identifier + "</em> not found.");
         }
 
-        return super.showBioentityPage(identifier, species, identifier, model, experimentTypes,
+        return super.showBioentityPage(identifier, speciesReferenceName, identifier, model, experimentTypes,
                 GeneSetPropertyService.all, geneSetPropertyService.propertyValuesByType(identifier));
     }
 
