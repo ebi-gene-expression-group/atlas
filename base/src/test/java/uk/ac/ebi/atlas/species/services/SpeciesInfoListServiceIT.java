@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.species;
+package uk.ac.ebi.atlas.species.services;
 
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
+import uk.ac.ebi.atlas.species.services.SpeciesInfoListService;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import javax.inject.Inject;

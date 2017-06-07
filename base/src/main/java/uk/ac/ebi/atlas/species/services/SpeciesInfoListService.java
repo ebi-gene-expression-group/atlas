@@ -1,10 +1,12 @@
-package uk.ac.ebi.atlas.species;
+package uk.ac.ebi.atlas.species.services;
 
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
+import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.util.ArrayList;
