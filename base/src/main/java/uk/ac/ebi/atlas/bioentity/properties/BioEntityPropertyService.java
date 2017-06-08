@@ -64,7 +64,7 @@ public class BioEntityPropertyService {
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
 //        addReactomePropertyValues(propertyValuesByType);
-        addDesignElements(identifier, propertyValuesByType);
+//        addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
 
@@ -82,8 +82,8 @@ public class BioEntityPropertyService {
 
         result.put("propertyNames", propertiesWeWillDisplay(orderedPropertyNames, propertyValuesByType));
 
-        result.put("bioentityProperties",
-                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames,propertyValuesByType)));
+//        result.put("bioentityProperties",
+//                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames,propertyValuesByType)));
 
         return result;
 
