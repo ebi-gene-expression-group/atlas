@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
@@ -19,6 +21,7 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,12 +65,22 @@ public class ExperimentCrud {
     public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
         checkNotNull(experimentAccession);
 
-        ExperimentConfiguration experimentConfiguration = loadExperimentConfiguration(experimentAccession);
-        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
-
-        new ExperimentFilesCrossValidator(experimentConfiguration, condensedSdrfParserOutput.getExperimentDesign()).validate();
+        Pair<ExperimentConfiguration, CondensedSdrfParserOutput> files = loadAndValidateFiles(experimentAccession);
+        ExperimentConfiguration experimentConfiguration = files.getLeft();
+        CondensedSdrfParserOutput condensedSdrfParserOutput = files.getRight();
 
         Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
+
+        ExperimentDTO experimentDTO = ExperimentDTO.createNew(
+                condensedSdrfParserOutput,
+                condensedSdrfParserOutput
+                        .getExperimentDesign()
+                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(new Function<AssayGroup, Iterable<String>>() {
+                            @Override
+                            public Iterable<String> apply(AssayGroup assayGroup) {
+                                return assayGroup.assaysAnalyzedForThisDataColumn();
+                            }
+                        }).toSet()), isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
@@ -78,20 +91,11 @@ public class ExperimentCrud {
             analyticsLoaderFactory.getLoader(experimentConfiguration.getExperimentType()).loadAnalytics(experimentAccession);
         }
 
-        updateExperimentDesign(experimentAccession, experimentConfiguration.getExperimentType(),
-                isPrivate,
-                condensedSdrfParserOutput.getExperimentDesign());
+        UUID result = experimentDAO.addExperiment(experimentDTO, accessKey);
 
-        return experimentDAO.addExperiment(ExperimentDTO.createNew(
-                condensedSdrfParserOutput,
-                condensedSdrfParserOutput
-                        .getExperimentDesign()
-                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(new Function<AssayGroup, Iterable<String>>() {
-                            @Override
-                            public Iterable<String> apply(AssayGroup assayGroup) {
-                                return assayGroup.assaysAnalyzedForThisDataColumn();
-                            }
-                        }).toSet()), isPrivate), accessKey);
+        updateWithNewExperimentDesign(condensedSdrfParserOutput.getExperimentDesign(), experimentDTO);
+
+        return result;
 
     }
 
@@ -106,17 +110,15 @@ public class ExperimentCrud {
 
 
 
-    public String deleteExperiment(String experimentAccession) {
+    public void deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = findExperiment(experimentAccession);
-        ExperimentConfiguration experimentConfiguration = loadExperimentConfiguration(experimentAccession);
+        checkNotNull(experimentDTO, MessageFormat.format("Experiment not found: {0}", experimentAccession));
 
         // We only insert in the DB differential experiments expressions
-        if (experimentConfiguration.getExperimentType().isDifferential()) {
+        if (experimentDTO.getExperimentType().isDifferential()) {
             AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
             analyticsLoader.deleteAnalytics(experimentAccession);
         }
-
-        checkNotNull(experimentDTO);
 
         if (!experimentDTO.isPrivate()) {
             conditionsIndexingService.removeConditions(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
@@ -124,7 +126,6 @@ public class ExperimentCrud {
 
         experimentDAO.deleteExperiment(experimentDTO.getExperimentAccession());
 
-        return experimentDTO.getAccessKey();
     }
 
     public ExperimentDTO findExperiment(String experimentAccession) {
@@ -136,25 +137,35 @@ public class ExperimentCrud {
     }
 
     public void makeExperimentPrivate(String experimentAccession) throws IOException {
-        experimentDAO.updateExperiment(experimentAccession, true);
-        updateExperimentDesign(experimentAccession);
+        setExperimentPrivacyStatus(experimentAccession, true);
     }
 
     public void makeExperimentPublic(String experimentAccession) throws IOException {
-        experimentDAO.updateExperiment(experimentAccession, false);
-        updateExperimentDesign(experimentAccession);
+        setExperimentPrivacyStatus(experimentAccession, false);
+    }
+
+    private void setExperimentPrivacyStatus(String experimentAccession, boolean newPrivacyStatus){
+        ExperimentDesign newDesign = loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign();
+        experimentDAO.updateExperiment(experimentAccession, newPrivacyStatus);
+        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, newPrivacyStatus);
+        Preconditions.checkState(newPrivacyStatus == experimentDTO.isPrivate(), "Failed to change experiment status in the db! (?)");
+
+        updateWithNewExperimentDesign(newDesign, experimentDTO);
     }
 
     public void updateExperimentDesign(String experimentAccession) {
-        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
-        updateExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(),
-                experimentDTO.isPrivate(),
-                condensedSdrfParser.parse(experimentDTO.getExperimentAccession(),
-                        experimentDTO.getExperimentType())
-                        .getExperimentDesign());
+        updateWithNewExperimentDesign(
+                loadAndValidateFiles(experimentAccession).getRight().getExperimentDesign(),
+                experimentDAO.findExperiment(experimentAccession, true)
+        );
     }
 
-    private void updateExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
+    private void updateWithNewExperimentDesign(ExperimentDesign newDesign, ExperimentDTO experimentDTO){
+        updateWithNewExperimentDesign(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType(),experimentDTO.isPrivate(), newDesign);
+
+    }
+
+    private void updateWithNewExperimentDesign(String accession, ExperimentType type, boolean isPrivate,
                                         ExperimentDesign experimentDesign) {
         try {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
@@ -168,9 +179,11 @@ public class ExperimentCrud {
         }
     }
 
-    private ExperimentConfiguration loadExperimentConfiguration(String experimentAccession) {
-        ExperimentConfiguration configuration = configurationTrader.getExperimentConfiguration(experimentAccession);
-        experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
-        return configuration;
+    private Pair<ExperimentConfiguration, CondensedSdrfParserOutput> loadAndValidateFiles(String experimentAccession){
+        ExperimentConfiguration experimentConfiguration = configurationTrader.getExperimentConfiguration(experimentAccession);
+        experimentChecker.checkAllFiles(experimentAccession, experimentConfiguration.getExperimentType());
+        CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(experimentAccession, experimentConfiguration.getExperimentType());
+        new ExperimentFilesCrossValidator(experimentConfiguration, condensedSdrfParserOutput.getExperimentDesign()).validate();
+        return Pair.of(experimentConfiguration, condensedSdrfParserOutput);
     }
 }

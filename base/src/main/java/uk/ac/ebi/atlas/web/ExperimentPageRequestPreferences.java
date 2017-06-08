@@ -3,12 +3,13 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import org.hibernate.validator.constraints.Range;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Set;
 
-public abstract class ExperimentPageRequestPreferences extends SearchRequest {
+public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUnit> extends SearchRequest {
 
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
@@ -76,6 +77,33 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
                 .add("cutoff", cutoff)
                 .add("specific", specific)
                 .toString();
+    }
+
+    public abstract Unit getUnit();
+
+    /*
+    Used for equality of cache keys.
+    Currently:
+    - Kryo serialized files
+    - Histograms
+    This combined with experiment accession should 1-1 map to a data file.
+    A bit of a design wart -
+     */
+    public String serializationShortString(){
+        return getClass().getSimpleName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExperimentPageRequestPreferences that = (ExperimentPageRequestPreferences) o;
+        return serializationShortString().equals(that.serializationShortString());
+    }
+
+    @Override
+    public int hashCode() {
+        return serializationShortString().hashCode();
     }
 
 }

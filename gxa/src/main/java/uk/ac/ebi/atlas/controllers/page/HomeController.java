@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
-import uk.ac.ebi.atlas.species.SpeciesInfoListService;
+import uk.ac.ebi.atlas.species.services.SpeciesInfoListService;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.species.SpeciesPropertiesTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;

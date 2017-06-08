@@ -5,6 +5,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Function;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
@@ -63,6 +64,32 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
             }
         };
     }
+
+
+    protected Function<Writer, Void> readFromStreamAndWriteTsv(final AtlasResource<ObjectInputStream<String[]>> resource,
+                                                                 final Function<String[], String[]> whatToDoWithTheHeaders){
+        return new Function<Writer, Void>() {
+            @Override
+            public Void apply(Writer writer) {
+                try (ObjectInputStream<String[]> stream = resource.get();
+                     CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                    String[] headers = whatToDoWithTheHeaders.apply(stream.readNext());
+
+                    csvWriter.writeNext(headers);
+
+                    String[] inputLine;
+                    while ((inputLine = stream.readNext()) != null) {
+                        csvWriter.writeNext(inputLine);
+                    }
+                    csvWriter.flush();
+                } catch (IOException e) {
+                    throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
+                }
+                return null;
+            }
+        };
+    }
+
 
     protected Function<Writer, Void> readFromResourceAndWriteTsv(final AtlasResource<TsvReader> resource,
                                                                  final Function<String[], String[]> whatToDoWithTheHeaders){

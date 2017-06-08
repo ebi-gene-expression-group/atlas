@@ -11,10 +11,6 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * Created by barrera on 12/05/2017.
- *
- */
 @Named
 public class SingleCellBaselineDao {
 

@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.base.*;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -12,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.species.Species;
+import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
@@ -109,6 +111,18 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         return species;
     }
 
+    public String getDisclaimer(){
+        return disclaimer;
+    }
+
+    public Date getLastUpdate(){
+        return lastUpdate;
+    }
+
+    public List<String> getPubMedIds(){
+        return pubMedIds;
+    }
+
     public List<Pair<String, String>> alternativeViews(){
         List<Pair<String, String>> result = new ArrayList<>();
         Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
@@ -161,7 +175,6 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     }
 
     public ExperimentInfo buildExperimentInfo(){
-
         ExperimentInfo experimentInfo = new ExperimentInfo();
         experimentInfo.setExperimentAccession(accession);
         experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
@@ -172,6 +185,22 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
         experimentInfo.setNumberOfAssays(getAnalysedRowsAccessions().size());
         return experimentInfo;
+    }
+
+    public ImmutableCollection<ImmutableMap<String, String>> getGenomeBrowsers() {
+        return type.isMicroRna() ? ImmutableList.<ImmutableMap<String, String>>of() : species.getGenomeBrowsers();
+    }
+
+    public ImmutableCollection<String> getGenomeBrowserNames() {
+        if (type.isMicroRna()) {
+            return ImmutableList.of();
+        }
+
+        ImmutableList.Builder<String> genomeBrowserNamesBuilder = ImmutableList.builder();
+        for (ImmutableMap<String, String> genomeBrowser : getGenomeBrowsers()) {
+            genomeBrowserNamesBuilder.add(genomeBrowser.get("name"));
+        }
+        return genomeBrowserNamesBuilder.build();
     }
 
     @Override
@@ -190,4 +219,5 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     protected abstract JsonObject propertiesForAssay(String runOrAssay);
 
     public abstract JsonArray groupingsForHeatmap();
+
 }

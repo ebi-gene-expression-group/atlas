@@ -31,9 +31,6 @@ public class GenePageController extends BioentityPageController {
             }
         }
 
-        Species species = speciesFactory.create(speciesLookupService.fetchSpeciesForBioentityId(identifier).or(""));
-        model.addAttribute("species", species.getName());
-
         Map<BioentityPropertyName, Set<String>> propertyValuesByType = bioentityPropertyDao.fetchGenePageProperties(identifier);
         Set<String> symbols =
                 bioentityPropertyDao.fetchPropertyValuesForGeneId(identifier, BioentityPropertyName.SYMBOL);
@@ -41,10 +38,9 @@ public class GenePageController extends BioentityPageController {
                 ? ""
                 : Joiner.on("/").join(symbols);
 
-
         ImmutableSet<String> experimentTypes = analyticsSearchService.fetchExperimentTypes(identifier);
 
-        return super.showBioentityPage(identifier, species, geneName, model, experimentTypes,
+        return super.showBioentityPage(identifier, "", geneName, model, experimentTypes,
                 BioEntityCardProperties.bioentityPropertyNames, propertyValuesByType);
     }
 

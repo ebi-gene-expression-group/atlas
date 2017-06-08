@@ -23,15 +23,13 @@ import uk.ac.ebi.atlas.profiles.json.ExternallyViewableProfilesList;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
-import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesInferrer;
-import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -42,18 +40,15 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
     private final SpeciesInferrer speciesInferrer;
     private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private final FactorGroupingService factorGroupingService;
-    private final HeatmapDataToJsonService heatmapDataToJsonService;
 
     @Inject
     private JsonBaselineExperimentsController(SpeciesInferrer speciesInferrer,
                                               BaselineAnalyticsSearchService baselineAnalyticsSearchService,
-                                              FactorGroupingService factorGroupingService,
-                                              HeatmapDataToJsonService heatmapDataToJsonService) {
+                                              FactorGroupingService factorGroupingService) {
         this.anatomogramFactory = new AnatomogramFactory();
         this.speciesInferrer = speciesInferrer;
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.factorGroupingService = factorGroupingService;
-        this.heatmapDataToJsonService = heatmapDataToJsonService;
     }
 
     @RequestMapping(
@@ -75,7 +70,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
             @RequestParam(value = "conditionQuery", required = false, defaultValue = "") SemanticQuery conditionQuery,
             @RequestParam(value = "source", required = false) String source,
             @RequestParam(value = "species", required = false, defaultValue = "") String speciesString,
-            HttpServletRequest request, Model model) {
+            Model model) {
         Preconditions.checkState(!(SemanticQuery.isEmpty(geneQuery) && SemanticQuery.isEmpty(conditionQuery)),
                 "Please specify a gene query or a condition query");
 
@@ -117,14 +112,12 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
 
             result.add(
                     "profiles",
-                    new ExternallyViewableProfilesList<>(
-                            experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns).asJson());
+                    ExternallyViewableProfilesList.createForExperimentProfiles(geneQuery, experimentProfiles, dataColumns).asJson());
         }
 
         model.addAttribute("species", species.getReferenceName());
-        model.addAttribute("isWidget", true);
 
-        result.add("config", heatmapDataToJsonService.configAsJsonObject(request, model.asMap()));
+        result.add("config", configAsJsonObject(model.asMap()));
         return gson.toJson(result);
     }
 
@@ -136,5 +129,29 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
         }
 
         return result;
+    }
+
+    //see also: similar method in ExperimentPageService
+    JsonObject configAsJsonObject(Map<String, Object> model) {
+        JsonObject config = new JsonObject();
+        config.addProperty("geneQuery", getOrDefault(model, "query", get(model, "geneQuery")));
+        config.addProperty("conditionQuery", get(model, "conditionQuery"));
+        config.addProperty("species", get(model, "species"));
+        config.addProperty("columnType", get(model, "queryFactorName").toLowerCase()); //TODO this looks broken - never populated, and the frontend has to default to "Experimental Condition"
+        config.addProperty("disclaimer", get(model, "disclaimer"));
+        config.addProperty("expressionUnit", "");
+        config.add("genomeBrowsers", new JsonArray());
+        return config;
+    }
+
+    private String getOrDefault(Map<String, Object> model, String key, String defaultValue) {
+        if (model.containsKey(key)) {
+            return model.get(key).toString();
+        } else {
+            return defaultValue;
+        }
+    }
+    private String get(Map<String, Object> model, String key){
+        return getOrDefault(model, key, "");
     }
 }

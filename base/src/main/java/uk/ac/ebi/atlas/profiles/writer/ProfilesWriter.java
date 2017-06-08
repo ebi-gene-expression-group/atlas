@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.profiles.writer;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Function;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -24,13 +26,13 @@ public class ProfilesWriter<Prof extends Profile> {
         this.profileToLine = profileToLine;
     }
 
-    public long write(Iterable<Prof> profiles){
+    public long write(ObjectInputStream<Prof> profiles){
         try {
             responseWriter.write(masthead+"\n");
             CSVWriter csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER, NO_ESCAPE_CHARACTER);
             csvWriter.writeNext(columnHeaders);
             long count = 0L;
-            for(Prof p : profiles){
+            for(Prof p : new IterableObjectInputStream<>(profiles)){
                 csvWriter.writeNext(profileToLine.apply(p));
                 count++;
             }

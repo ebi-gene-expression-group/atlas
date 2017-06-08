@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.profiles;
 
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 
@@ -19,12 +20,12 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
 
 
     @Override
-    public L select(Iterable<T> profiles, int maxSize) {
+    public L select(ObjectInputStream<T> profiles, int maxSize) {
         List<LinkedList<T>> ans = new ArrayList<>(geneNamesInOrder.size());
         for (String _ : geneNamesInOrder) {
             ans.add(new LinkedList<T>());
         }
-        for (T profile : profiles) {
+        for (T profile : new IterableObjectInputStream<>(profiles)) {
             int pos = geneNamesInOrder.indexOf(profile.getId());
             if (pos > -1) {
                 LinkedList<T> l = ans.get(pos);

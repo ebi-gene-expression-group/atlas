@@ -1,54 +1,59 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import uk.ac.ebi.atlas.model.experiment.Experiment;
-import uk.ac.ebi.atlas.resource.AtlasResourceHub;
-import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.utils.HeatmapDataToJsonService;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExperimentPageService {
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
-    protected final HeatmapDataToJsonService heatmapDataToJsonService;
-    protected final ApplicationProperties applicationProperties;
+public class ExperimentPageService extends ReturnsJsonErrors {
+
     protected final Gson gson = new Gson();
 
-    public ExperimentPageService(HeatmapDataToJsonService heatmapDataToJsonService,
-                                 ApplicationProperties applicationProperties) {
-        this.heatmapDataToJsonService = heatmapDataToJsonService;
-        this.applicationProperties = applicationProperties;
-    }
-
     protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
-                                               ExperimentPageRequestPreferences requestPreferences) {
+                                               String accessKey, ExperimentPageRequestPreferences requestPreferences) {
         Map<String, JsonElement> result = new HashMap<>();
 
-        result.put("experiment", prepareExperimentDescription(experiment, requestPreferences));
+        result.put("experiment", experimentDescription(experiment, accessKey, requestPreferences));
+        result.put("config", config(experiment, requestPreferences));
         return result;
     }
 
-    protected String downloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
-        return applicationProperties.buildDownloadURL(geneQuery, request);
-    }
-
-    private JsonElement prepareExperimentDescription(Experiment experiment,
-                                                     ExperimentPageRequestPreferences requestPreferences) {
+    private JsonElement experimentDescription(Experiment experiment,
+                                              String accessKey, ExperimentPageRequestPreferences requestPreferences) {
 
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("accession", experiment.getAccession());
         experimentDescription.addProperty("type", experiment.getType().getDescription());
         experimentDescription.addProperty("relUrl",
-                MessageFormat.format("experiments/{0}?geneQuery={1}", experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson() ));
+                MessageFormat.format(
+                        "experiments/{0}?geneQuery={1}",
+                        experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
+                + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey)
+        );
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
+        experimentDescription.addProperty("accessKey", accessKey);
         return experimentDescription;
+    }
+
+    public JsonObject config(Experiment<?> experiment, ExperimentPageRequestPreferences preferences){
+        JsonObject config = new JsonObject();
+        config.addProperty("geneQuery",preferences.getGeneQuery().toUrlEncodedJson());
+        config.addProperty("species", experiment.getSpecies().getName());
+        config.add("genomeBrowsers", gson.toJsonTree(experiment.getGenomeBrowserNames()));
+        config.addProperty("disclaimer", experiment.getDisclaimer());
+        //only for the multiexperiment heatmap
+        config.addProperty("columnType", "");
+        config.addProperty("conditionQuery", "");
+        return config;
     }
 }

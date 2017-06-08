@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.collect.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,6 +10,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -28,18 +31,25 @@ import static org.junit.Assert.*;
 public class RnaSeqProfilesHeatMapIT {
 
     @Inject
-    private ExpressionAtlasExperimentTrader experimentTrader;
+    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    private RnaSeqDiffExperimentsCache experimentsCache;
+    RnaSeqDiffExperimentsCache experimentsCache;
 
     @Inject
-    private RnaSeqProfilesHeatMap subject;
+    RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory;
 
-    private DifferentialRequestPreferences requestPreferences;
+    @Inject
+    SolrQueryService solrQueryService;
 
+    DifferentialProfilesHeatMap<DifferentialExpression, DifferentialExperiment, RnaSeqProfile, RnaSeqRequestContext> subject;
+
+    DifferentialRequestPreferences requestPreferences;
+
+    @Before
     public void setUp(){
         requestPreferences = new DifferentialRequestPreferences();
+        subject = new DifferentialProfilesHeatMap<>(rnaSeqProfileStreamFactory,solrQueryService);
     }
 
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws Exception {
@@ -153,30 +163,12 @@ public class RnaSeqProfilesHeatMapIT {
 
     private void assertAbout(DifferentialExperiment experiment, DifferentialProfilesList profiles){
 
-        double maxUp = profiles.getMaxUpRegulatedExpressionLevel();
-        double maxDown = profiles.getMaxDownRegulatedExpressionLevel();
-        double minUp = profiles.getMinUpRegulatedExpressionLevel();
-        double minDown = profiles.getMinDownRegulatedExpressionLevel();
-
         for(Object o: profiles){
             RnaSeqProfile profile = (RnaSeqProfile) o;
-            double maxUpHere = profile.getMaxUpRegulatedExpressionLevel();
-            double maxDownHere = profile.getMaxDownRegulatedExpressionLevel();
-            assertTrue(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
-                    Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere );
 
             assertTrue(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()));
             for(Contrast contrast: profile.getConditions()){
                 assertEquals(true, profile.isExpressedOnAnyOf(Collections.singleton(contrast)));
-
-                double expressionLevel = profile.getExpressionLevel(contrast);
-                if(! Double.isNaN(expressionLevel)) {
-                    assertTrue(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp);
-                    assertTrue(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown);
-                    assertTrue(Double.isNaN(minUp) || Double.isNaN(minDown) ||
-                            expressionLevel >= minUp ||
-                            expressionLevel <=  minDown);
-                }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
                 assertEquals(contrast.getId(), expression.getDataColumnDescriptorId());

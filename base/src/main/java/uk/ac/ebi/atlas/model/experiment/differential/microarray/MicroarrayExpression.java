@@ -10,7 +10,12 @@ public class MicroarrayExpression extends DifferentialExpression {
     private double tstatistic;
 
     public MicroarrayExpression(double pValue, double foldChange, double tstatistic, Contrast contrast) {
-        super(pValue, foldChange, contrast);
+        this(pValue, foldChange, tstatistic, contrast.getId());
+
+    }
+
+    public MicroarrayExpression(double pValue, double foldChange, double tstatistic, String dataColumnDescriptor) {
+        super(pValue, foldChange, dataColumnDescriptor);
         this.tstatistic = tstatistic;
     }
 

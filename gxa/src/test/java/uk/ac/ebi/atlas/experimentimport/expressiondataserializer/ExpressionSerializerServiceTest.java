@@ -1,13 +1,26 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentChecker;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.resource.DataFileHub;
+import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.io.IOException;
 
@@ -15,52 +28,63 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpressionSerializerServiceTest {
 
-    static final String accession = "E-MTAB-513";
+    String accession = "accession";
 
-    @Mock
-    ExperimentChecker experimentChecker;
+    MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
+    RnaSeqProfileStreamFactory rnaSeqProfileStreamFactory;
+    RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory;
+    ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory;
+    MockDataFileHub dataFileHub;
 
-    @Mock
-    RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer;
 
     ExpressionSerializerService subject;
 
 
     @Before
     public void setUp() throws IOException {
-        subject = new ExpressionSerializerService(rnaSeqBaselineExpressionKryoSerializer, experimentChecker);
+        dataFileHub = MockDataFileHub.get();
+        microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
+        rnaSeqProfileStreamFactory = new RnaSeqProfileStreamFactory(dataFileHub);
+        rnaSeqBaselineProfileStreamFactory = Mockito.spy(new RnaSeqBaselineProfileStreamFactory(dataFileHub));
+        proteomicsBaselineProfileStreamFactory = new ProteomicsBaselineProfileStreamFactory(dataFileHub);
+
+        subject = new ExpressionSerializerService(
+                microarrayProfileStreamFactory,
+                rnaSeqProfileStreamFactory,
+                rnaSeqBaselineProfileStreamFactory,
+                proteomicsBaselineProfileStreamFactory,
+                dataFileHub);
     }
 
     @Test
-    public void weCheckTheFileExistsBeforeWeAttemptToSerializeIt(){
-        subject.kryoSerializeExpressionData(accession, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentChecker).checkAllFiles(eq(accession), any(ExperimentType.class));
-    }
+    public void persistTwoFilesForRnaSeqBaseline(){
 
-    @Test
-    public void skipIffNotRnaSeqBaseline(){
-        for(ExperimentType experimentType : ExperimentType.values()){
-            String result = subject.kryoSerializeExpressionData(accession, experimentType);
-            assertThat("skipped".equals(result), is(experimentType != ExperimentType.RNASEQ_MRNA_BASELINE));
-        }
-    }
+        dataFileHub.addTpmsExpressionFile(accession, ImmutableList.of(
+                new String[]{"Gene ID", "Gene name", "g1"},
+                new String[]{"id_1", "name_1", "1.23"}
+        ));
+        dataFileHub.addFpkmsExpressionFile(accession, ImmutableList.of(
+                new String[]{"Gene ID", "Gene name", "g1"},
+                new String[]{"id_1", "name_1", "4.56"}
+        ));
 
-    @Test
-    public void delegateToRnaSeqBaselineSerializer(){
-        for(ExperimentType experimentType : ExperimentType.values()){
-            subject.kryoSerializeExpressionData(accession, experimentType);
-            int timesExpected = experimentType == ExperimentType.RNASEQ_MRNA_BASELINE ? 1 : 0;
-            verify(rnaSeqBaselineExpressionKryoSerializer, times(timesExpected)).serializeExpressionData(accession, ExpressionUnit.Absolute.Rna.TPM);
-            reset(rnaSeqBaselineExpressionKryoSerializer);
-        }
+        AssayGroup assayGroup = new AssayGroup("g1", "r1");
+
+        BaselineExperiment experiment = mock(BaselineExperiment.class);
+        when(experiment.getAccession()).thenReturn(accession);
+        when(experiment.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+        when(experiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroup));
+        when(experiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
+        subject.kryoSerializeExpressionData(experiment);
+
+        verify(rnaSeqBaselineProfileStreamFactory, times(2)).persist(eq(experiment), Matchers.any(BaselineProfileStreamOptions.class));
+
     }
 
 }

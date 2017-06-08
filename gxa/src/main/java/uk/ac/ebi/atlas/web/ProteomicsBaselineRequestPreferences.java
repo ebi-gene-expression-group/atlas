@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 
-public class ProteomicsBaselineRequestPreferences extends BaselineRequestPreferences {
+public class ProteomicsBaselineRequestPreferences extends BaselineRequestPreferences<ExpressionUnit.Absolute.Protein>{
     public static final double DEFAULT_CUTOFF = 0.0d;
 
     @Override
@@ -18,7 +18,7 @@ public class ProteomicsBaselineRequestPreferences extends BaselineRequestPrefere
     }
 
     @Override
-    public ExpressionUnit.Absolute getUnit() {
-        return new ExpressionUnit.Absolute.Protein();
+    public ExpressionUnit.Absolute.Protein getUnit() {
+        return ExpressionUnit.Absolute.Protein.ANY;
     }
 }

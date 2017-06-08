@@ -63,29 +63,4 @@ public class GeneProfilesListTest {
         assertThat(geneProfiles, hasSize(5));
     }
 
-    @Test
-    public void getMaxExpressionLevelTest() {
-        //given
-        when(profile_1.getMaxExpressionLevel()).thenReturn(55d);
-        when(profile_2.getMaxExpressionLevel()).thenReturn(15d);
-        when(profile_3.getMaxExpressionLevel()).thenReturn(25d);
-        when(profile_4.getMaxExpressionLevel()).thenReturn(115d);
-        when(profile_5.getMaxExpressionLevel()).thenReturn(35d);
-        //then
-        assertThat(subject.getMaxExpressionLevel(), is(115d));
-    }
-
-    @Test
-    public void getMinExpressionLevelTest() {
-        //given
-        when(profile_1.getMinExpressionLevel()).thenReturn(55d);
-        when(profile_2.getMinExpressionLevel()).thenReturn(15d);
-        when(profile_3.getMinExpressionLevel()).thenReturn(25d);
-        when(profile_4.getMinExpressionLevel()).thenReturn(115d);
-        when(profile_5.getMinExpressionLevel()).thenReturn(35d);
-        //then
-        assertThat(subject.getMinExpressionLevel(), is(15d));
-    }
-
-
 }

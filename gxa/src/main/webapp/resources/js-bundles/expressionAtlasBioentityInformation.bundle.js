@@ -5,45 +5,45 @@ webpackJsonp_name_([3],{
 /*!******************************************************!*\
   !*** ./atlas_bundles/bioentity-information/index.js ***!
   \******************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(/*! ./src/renderer.js */ 2903);
+	module.exports = __webpack_require__(/*! ./src/renderer.js */ 2454);
 
-/***/ },
+/***/ }),
 
-/***/ 2903:
+/***/ 2454:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/src/renderer.js ***!
   \*************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(/*! react */ 2);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
 	
-	var BioentityInformation = __webpack_require__(/*! ./BioentityInformation.jsx */ 2904);
+	var BioentityInformation = __webpack_require__(/*! ./BioentityInformation.jsx */ 2455);
 	
 	exports.render = function (options) {
 	    ReactDOM.render(React.createElement(BioentityInformation, { bioentityProperties: options.payload }), typeof options.target === "string" ? document.getElementById(options.target) : options.target);
 	};
 
-/***/ },
+/***/ }),
 
-/***/ 2904:
+/***/ 2455:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/src/BioentityInformation.jsx ***!
   \**************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var React = __webpack_require__(/*! react */ 2);
-	__webpack_require__(/*! ./BioentityInformation.css */ 2905);
+	__webpack_require__(/*! ./BioentityInformation.css */ 2456);
 	
 	var PropertyLinkShape = {
 	  text: React.PropTypes.string.isRequired,
@@ -173,28 +173,28 @@ webpackJsonp_name_([3],{
 	
 	module.exports = BioentityInformation;
 
-/***/ },
+/***/ }),
 
-/***/ 2905:
+/***/ 2456:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/src/BioentityInformation.css ***!
   \**************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./BioentityInformation.css */ 2906);
+	var content = __webpack_require__(/*! !../~/css-loader!./BioentityInformation.css */ 2457);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 2908)(content, {});
+	var update = __webpack_require__(/*! ../~/style-loader/addStyles.js */ 2459)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./BioentityInformation.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./BioentityInformation.css");
+			module.hot.accept("!!../node_modules/css-loader/index.js!./BioentityInformation.css", function() {
+				var newContent = require("!!../node_modules/css-loader/index.js!./BioentityInformation.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -203,15 +203,15 @@ webpackJsonp_name_([3],{
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ },
+/***/ }),
 
-/***/ 2906:
+/***/ 2457:
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/~/css-loader!./atlas_bundles/bioentity-information/src/BioentityInformation.css ***!
   \*****************************************************************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 2907)();
+	exports = module.exports = __webpack_require__(/*! ../~/css-loader/lib/css-base.js */ 2458)();
 	// imports
 	
 	
@@ -221,19 +221,19 @@ webpackJsonp_name_([3],{
 	// exports
 
 
-/***/ },
+/***/ }),
 
-/***/ 2907:
+/***/ 2458:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/~/css-loader/lib/css-base.js ***!
   \**************************************************************************/
-490,
+482,
 
-/***/ 2908:
+/***/ 2459:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/bioentity-information/~/style-loader/addStyles.js ***!
   \*************************************************************************/
-491
+483
 
 });
 //# sourceMappingURL=expressionAtlasBioentityInformation.bundle.js.map

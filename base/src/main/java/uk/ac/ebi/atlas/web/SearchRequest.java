@@ -17,5 +17,5 @@ public class SearchRequest {
     public void setGeneQuery(SemanticQuery geneQuery) {
         this.geneQuery = geneQuery;
     }
-
+    
 }

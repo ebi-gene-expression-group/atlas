@@ -7,9 +7,11 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.writers.TsvWriter;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.resource.*;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,6 +41,7 @@ public class DataFileHub {
 
     final static String FACTORS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-factors.xml";
     final static String DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-analytics.tsv";
+    final static String DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-percentile-ranks.tsv";
     final static String DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}-raw-counts.tsv";
     final static String QC_DIRECTORY_PATH_TEMPLATE = "/magetab/{0}/qc";
     final static String MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE = "/magetab/{0}/{0}_{1}-analytics.tsv";
@@ -72,17 +75,21 @@ public class DataFileHub {
         return new ProteomicsBaselineExperimentFiles(experimentAccession);
     }
 
-
-    public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession) {
+    public DifferentialExperimentFiles getDifferentialExperimentFiles(String experimentAccession){
         return new DifferentialExperimentFiles(experimentAccession);
+    }
+
+
+    public RnaSeqDifferentialExperimentFiles getRnaSeqDifferentialExperimentFiles(String experimentAccession) {
+        return new RnaSeqDifferentialExperimentFiles(experimentAccession);
     }
 
     public MicroarrayExperimentFiles getMicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
         return new MicroarrayExperimentFiles(experimentAccession, arrayDesign);
     }
 
-    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession, ExpressionUnit.Absolute.Rna unit){
-        return new KryoFile(dataFilesLocation, experimentAccession, unit);
+    public AtlasResource<KryoFile.Handle> getKryoFile(String experimentAccession, ProfileStreamOptions<?> profileStreamOptions){
+        return new KryoFile(dataFilesLocation, experimentAccession, profileStreamOptions);
     }
 
     public class SpeciesPropertiesFile {
@@ -122,15 +129,15 @@ public class DataFileHub {
     }
 
     public class RnaSeqBaselineExperimentFiles extends BaselineExperimentFiles {
-        private final AtlasResource<TsvReader> fpkms;
-        private final AtlasResource<TsvReader> tpms;
+        private final AtlasResource<ObjectInputStream<String[]>> fpkms;
+        private final AtlasResource<ObjectInputStream<String[]>> tpms;
         RnaSeqBaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.fpkms = new TsvFile.ReadOnly(dataFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
-            this.tpms = new TsvFile.ReadOnly(dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.fpkms = new TsvFile.ReadAsStream(dataFilesLocation, RNASEQ_BASELINE_FPKMS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.tpms = new TsvFile.ReadAsStream(dataFilesLocation, RNASEQ_BASELINE_TPMS_FILE_PATH_TEMPLATE, experimentAccession);
         }
 
-        public AtlasResource<TsvReader> dataFile(ExpressionUnit.Absolute.Rna unit){
+        public AtlasResource<ObjectInputStream<String[]>> dataFile(ExpressionUnit.Absolute.Rna unit){
             switch(unit){
                 case FPKM:
                     return fpkms;
@@ -154,10 +161,10 @@ public class DataFileHub {
     }
 
     public class ProteomicsBaselineExperimentFiles extends BaselineExperimentFiles {
-        public final AtlasResource<TsvReader> main;
+        public final AtlasResource<ObjectInputStream<String[]>> main;
         ProteomicsBaselineExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.main = new TsvFile.ReadOnly(dataFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
+            this.main = new TsvFile.ReadAsStream(dataFilesLocation, PROTEOMICS_BASELINE_EXPRESSION_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
@@ -173,24 +180,33 @@ public class DataFileHub {
     }
 
     public class DifferentialExperimentFiles extends ExperimentFiles {
-        public final AtlasResource<TsvReader> analytics;
-        public final AtlasResource<TsvReader> rawCounts;
+        public final AtlasResource<ObjectInputStream<String[]>> percentileRanks;
 
         DifferentialExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.analytics = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
+            this.percentileRanks = new TsvFile.ReadAsStream(dataFilesLocation, DIFFERENTIAL_PERCENTILE_RANKS_FILE_PATH_TEMPLATE, experimentAccession);
+        }
+    }
+
+    public class RnaSeqDifferentialExperimentFiles extends DifferentialExperimentFiles {
+        public final AtlasResource<ObjectInputStream<String[]>> analytics;
+        public final AtlasResource<TsvReader> rawCounts;
+
+        RnaSeqDifferentialExperimentFiles(String experimentAccession) {
+            super(experimentAccession);
+            this.analytics = new TsvFile.ReadAsStream(dataFilesLocation, DIFFERENTIAL_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession);
             this.rawCounts = new TsvFile.ReadOnly(dataFilesLocation, DIFFERENTIAL_RAW_COUNTS_FILE_PATH_TEMPLATE, experimentAccession);
         }
     }
 
-    public class MicroarrayExperimentFiles extends ExperimentFiles {
-        public final AtlasResource<TsvReader> analytics;
+    public class MicroarrayExperimentFiles extends DifferentialExperimentFiles {
+        public final AtlasResource<ObjectInputStream<String[]>> analytics;
         public final AtlasResource<TsvReader> normalizedExpressions;    // Microarray 1 colour specific
         public final AtlasResource<TsvReader> logFoldChanges;   // Microarray 2 colour specific
 
         MicroarrayExperimentFiles(String experimentAccession, String arrayDesign) {
             super(experimentAccession);
-            analytics = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
+            analytics = new TsvFile.ReadAsStream(dataFilesLocation, MICROARRAY_ANALYTICS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
             normalizedExpressions = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_NORMALIZED_EXPRESSIONS_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
             logFoldChanges = new TsvFile.ReadOnly(dataFilesLocation, MICROARRAY_LOG_FOLD_CHANGES_FILE_PATH_TEMPLATE, experimentAccession, arrayDesign);
         }

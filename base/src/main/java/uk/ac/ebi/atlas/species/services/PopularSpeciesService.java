@@ -1,0 +1,44 @@
+package uk.ac.ebi.atlas.species.services;
+
+import com.atlassian.util.concurrent.LazyReference;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import java.util.List;
+
+public class PopularSpeciesService {
+
+    private final PopularSpeciesDao popularSpeciesDao;
+    private final LazyReference<List<PopularSpeciesInfo>> sortedList = new LazyReference<List<PopularSpeciesInfo>>() {
+        @Override
+        protected List<PopularSpeciesInfo> create() throws Exception {
+            return FluentIterable.from(popularSpeciesDao.popularSpecies()).toSortedList(PopularSpeciesInfo.ReverseComparator);
+        }
+    };
+
+    @Inject
+    public PopularSpeciesService(PopularSpeciesDao popularSpeciesDao) {
+        this.popularSpeciesDao = popularSpeciesDao;
+    }
+
+    public List<PopularSpeciesInfo> getPopularSpecies() {
+        return sortedList.get();
+    }
+
+    public List<PopularSpeciesInfo> getPopularSpecies(int howMany) {
+        return sortedList.get().subList(0, howMany);
+    }
+
+    public ImmutableList<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
+        return FluentIterable.from(sortedList.get()).filter(new Predicate<PopularSpeciesInfo>() {
+            @Override
+            public boolean apply(@Nullable PopularSpeciesInfo input) {
+                return kingdom.equalsIgnoreCase(input.kingdom());
+            }
+        }).toList().subList(0, howMany);
+    }
+
+}

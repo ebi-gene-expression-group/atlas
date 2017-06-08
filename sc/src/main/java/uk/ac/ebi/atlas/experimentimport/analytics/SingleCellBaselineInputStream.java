@@ -1,56 +1,30 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
-import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalytics;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-/**
- * Created by barrera on 12/05/2017.
- *
- * Reads SingleCellBaseline data from TSV file
- *
- */
 public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCellBaseline>{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineInputStream.class);
-
-    private final CSVReader csvReader;
-    private final String name;
-    private int lineNumber = 0;
     private final Queue<SingleCellBaseline> queue = new LinkedList<>();
     private final ImmutableList<String> cellsIds;
+    private final ObjectInputStream<String[]> lines;
 
 
-    public SingleCellBaselineInputStream(Reader reader, String name) throws IOException {
-        this.name = name;
-        this.csvReader = new CSVReader(reader, '\t');
-        String[] headers = readCsvLine();
+    public SingleCellBaselineInputStream(ObjectInputStream<String[]> lines) throws IOException {
+        String[] headers = lines.readNext();
         String[] cellsHeaders = ArrayUtils.subarray(headers, 1, headers.length);
 
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         this.cellsIds = builder.add(cellsHeaders).build();
-    }
-
-    private String[] readCsvLine() {
-        lineNumber++;
-        try {
-            return csvReader.readNext();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
-        }
+        this.lines = lines;
     }
 
     @Override
@@ -74,7 +48,7 @@ public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCe
         ImmutableList<SingleCellBaseline> singleCellBaselines;
 
         do {
-            String[] line = readCsvLine();
+            String[] line = lines.readNext();
             if (line == null) {
                 // EOF
                 return null;
@@ -88,14 +62,13 @@ public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCe
             ImmutableList.Builder<SingleCellBaseline> builder = ImmutableList.builder();
 
             for (String cellId: cellsIds) {
-                checkState(expressionLevels.hasNext(), String.format("%s line %s: missing expression level for gene %s, cell %s",
-                        name, lineNumber, geneId, cellId));
+                checkState(expressionLevels.hasNext(), String.format("missing expression level for gene %s, cell %s", geneId, cellId));
                 String expressionLevelString = expressionLevels.next();
                 double expressionLevel = Double.parseDouble(expressionLevelString);
 
-                SingleCellBaseline scb = new SingleCellBaseline(geneId, cellId, expressionLevel);
-
-                builder.add(scb);
+                if(expressionLevel > 0.0){
+                    builder.add(new SingleCellBaseline(geneId, cellId, expressionLevel));
+                }
             }
 
             singleCellBaselines = builder.build();
@@ -107,7 +80,7 @@ public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCe
 
     @Override
     public void close() throws IOException {
-        csvReader.close();
+        lines.close();
     }
 
 }

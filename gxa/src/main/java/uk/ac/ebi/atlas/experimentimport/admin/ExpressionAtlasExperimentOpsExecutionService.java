@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.coexpression.BaselineCoexpressionProfileLoader;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Nullable;
@@ -70,11 +71,15 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
             case LIST:
                 return Optional.of((JsonElement) experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
-                return Optional.of(gson.toJsonTree(experimentTrader.getExperiment(accession,
-                                experimentCrud.findExperiment(accession).getAccessKey()).getAttributes()));
+                return Optional.of(gson.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
             default:
                 return Optional.absent();
         }
+    }
+
+    private final Experiment<?> getAnyExperimentWithAdminAccess(String accession){
+        return experimentTrader.getExperiment(accession,
+                experimentCrud.findExperiment(accession).getAccessKey());
     }
 
     @Override
@@ -132,13 +137,13 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 resultOfTheOp = new JsonPrimitive("success, access key UUID: " + accessKeyUUID);
                 break;
             case SERIALIZE:
-                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(experimentCrud.findExperiment(accession)));
+                resultOfTheOp = new JsonPrimitive(expressionSerializerService.kryoSerializeExpressionData(getAnyExperimentWithAdminAccess(accession)));
                 break;
             case DELETE:
                 experimentTrader.removeExperimentFromCache(accession);
                 analyticsIndexerManager.deleteFromAnalyticsIndex(accession);
                 experimentCrud.deleteExperiment(accession);
-                expressionSerializerService.removeKryoFile(accession);
+                expressionSerializerService.removeKryoFile(getAnyExperimentWithAdminAccess(accession));
                 break;
             case COEXPRESSION_UPDATE:
                 deleteCount = baselineCoexpressionProfileLoader.deleteCoexpressionsProfile(accession);

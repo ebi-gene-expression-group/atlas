@@ -7,8 +7,31 @@ public interface ExpressionUnit {
             FPKM, TPM
         }
 
-         class Protein implements Absolute { }
+
+        enum Protein implements Absolute {
+            ANY("");
+
+            String name;
+
+            Protein(String name){
+                this.name = name;
+            }
+
+            @Override
+            public String toString(){
+                return "";
+            }
+
+        }
     }
 
-    // interface Relative extends ExpressionUnit {}
+    enum Relative implements ExpressionUnit {
+        FOLD_CHANGE;
+
+        @Override
+        public String toString(){
+            return "Log2-fold change";
+        }
+    }
+
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class ProfilesWriterFactory<DataColumnDescriptor extends DescribesDataColumns,
         Expr extends Expression,
-        Prof extends Profile<DataColumnDescriptor, Expr>,
+        Prof extends Profile<DataColumnDescriptor, Expr, Prof>,
         R extends RequestContext<DataColumnDescriptor,?, ?>,
         DownloadOptions extends ProfilesWriterFactory.ProfileDownloadOptions> {
 

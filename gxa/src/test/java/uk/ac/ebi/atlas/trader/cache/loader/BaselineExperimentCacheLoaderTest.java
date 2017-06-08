@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedMap;
 import org.junit.Before;
@@ -83,7 +84,7 @@ public class BaselineExperimentCacheLoaderTest {
 
         when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
                         SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals",
-                                ImmutableSortedMap.<String, List<String>>of())));
+                                ImmutableList.<ImmutableMap<String, String>>of())));
 
     }
 

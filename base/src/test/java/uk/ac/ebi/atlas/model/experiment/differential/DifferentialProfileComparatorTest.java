@@ -12,9 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactoryTest;
-import uk.ac.ebi.atlas.profiles.tsv.MicroarrayExpressionsRowDeserializer;
 
 import java.util.*;
 
@@ -39,10 +37,10 @@ public class DifferentialProfileComparatorTest {
     DifferentialProfileComparator<DifferentialProfile> subject = new DifferentialProfileComparator<>(true, selectedContrasts, allContrasts, Regulation.UP);
 
     @Mock
-    DifferentialProfile<DifferentialExpression> profileMock1;
+    DifferentialProfile<DifferentialExpression, ?> profileMock1;
 
     @Mock
-    DifferentialProfile<DifferentialExpression> profileMock2;
+    DifferentialProfile<DifferentialExpression, ?> profileMock2;
 
     Predicate<DifferentialExpression> anyExpression = Predicates.alwaysTrue();
 

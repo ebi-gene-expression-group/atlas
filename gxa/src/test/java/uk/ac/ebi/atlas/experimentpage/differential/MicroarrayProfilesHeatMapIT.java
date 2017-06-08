@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential;
 
 import com.google.common.collect.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,7 +10,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.*;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -28,17 +32,24 @@ import static org.hamcrest.Matchers.*;
 public class MicroarrayProfilesHeatMapIT {
 
     @Inject
-    private ExpressionAtlasExperimentTrader experimentTrader;
+    ExpressionAtlasExperimentTrader experimentTrader;
 
     @Inject
-    private MicroarrayExperimentsCache experimentsCache;
+    MicroarrayExperimentsCache experimentsCache;
 
     @Inject
-    private MicroarrayProfilesHeatMap subject;
+    MicroarrayProfileStreamFactory microarrayProfileStreamFactory;
 
-    private MicroarrayRequestPreferences requestPreferences;
+    @Inject
+    SolrQueryService solrQueryService;
 
+    DifferentialProfilesHeatMap<MicroarrayExpression, MicroarrayExperiment, MicroarrayProfile, MicroarrayRequestContext> subject;
+
+    MicroarrayRequestPreferences requestPreferences;
+
+    @Before
     public void setUp(){
+        subject = new DifferentialProfilesHeatMap<>(microarrayProfileStreamFactory, solrQueryService) ;
         requestPreferences = new MicroarrayRequestPreferences();
     }
 
@@ -155,29 +166,12 @@ public class MicroarrayProfilesHeatMapIT {
 
     private void assertAbout(DifferentialExperiment experiment, DifferentialProfilesList profiles){
 
-        double maxUp = profiles.getMaxUpRegulatedExpressionLevel();
-        double maxDown = profiles.getMaxDownRegulatedExpressionLevel();
-        double minUp = profiles.getMinUpRegulatedExpressionLevel();
-        double minDown = profiles.getMinDownRegulatedExpressionLevel();
-
         for(Object o: profiles){
             MicroarrayProfile profile = (MicroarrayProfile) o;
-            double maxUpHere = profile.getMaxUpRegulatedExpressionLevel();
-            double maxDownHere = profile.getMaxDownRegulatedExpressionLevel();
-            assertThat(String.format("%s %s %s >= %s", experiment.getAccession(), profile.getName(), maxUpHere, maxDownHere),
-                    Double.isNaN(maxUpHere)|| Double.isNaN(maxDownHere) || maxUpHere >= maxDownHere, is(true) );
 
             assertThat(experiment.getDataColumnDescriptors().containsAll(profile.getConditions()), is(true));
             for(Contrast contrast: profile.getConditions()){
                 assertThat(profile.isExpressedOnAnyOf(Collections.singleton(contrast)), is(true));
-
-                double expressionLevel = profile.getExpressionLevel(contrast);
-                if(! Double.isNaN(expressionLevel)) {
-                    assertThat(expressionLevel+"<="+maxUp, Double.isNaN(maxUp) || expressionLevel <= maxUp, is(true));
-                    assertThat(expressionLevel+">="+maxDown, Double.isNaN(maxDown) || expressionLevel >= maxDown, is(true));
-                    assertThat(Double.isNaN(minUp) || Double.isNaN(minDown) ||
-                            expressionLevel >= minUp || expressionLevel <=  minDown, is(true));
-                }
 
                 DifferentialExpression expression = profile.getExpression(contrast);
                 assertThat(expression.getPValue(), greaterThan(0d));

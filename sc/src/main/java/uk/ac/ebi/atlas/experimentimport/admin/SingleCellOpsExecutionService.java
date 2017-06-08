@@ -11,6 +11,8 @@ import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.annotation.Nullable;
@@ -23,12 +25,15 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
 
     private final ExperimentCrud experimentCrud;
     private final ExperimentTrader experimentTrader;
+    private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final Gson gson = new Gson();
 
     public SingleCellOpsExecutionService(ExperimentCrud experimentCrud,
-                                         ExperimentTrader experimentTrader) {
+                                         ExperimentTrader experimentTrader,
+                                         AnalyticsLoaderFactory analyticsLoaderFactory) {
         this.experimentCrud = experimentCrud;
         this.experimentTrader = experimentTrader;
+        this.analyticsLoaderFactory = analyticsLoaderFactory;
     }
 
     private FluentIterable<ExperimentDTO> allDtos(){
@@ -119,8 +124,22 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 experimentTrader.removeExperimentFromCache(accession);
                 experimentCrud.deleteExperiment(accession);
                 break;
+            /*
+            ANALYTICS_IMPORT and ANALYTICS_DELETE
+            are currently different than the Expression Atlas equivalents
+            (uses database not Solr)
+             */
+            case ANALYTICS_IMPORT:
+                analyticsLoaderFactory.getLoader(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE)
+                        .loadAnalytics(accession);
+                break;
+            case ANALYTICS_DELETE:
+                analyticsLoaderFactory.getLoader(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE)
+                        .deleteAnalytics(accession);
+                break;
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
+
             default:
                 throw new RuntimeException("Op not supported in Single Cell: "+op.name());
         }

@@ -1,15 +1,17 @@
 package uk.ac.ebi.atlas.profiles.differential.microarray;
 
-import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.ContrastTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfilesList;
@@ -17,7 +19,9 @@ import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperi
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.profiles.SelectProfiles;
+import uk.ac.ebi.atlas.profiles.stream.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -110,7 +114,7 @@ public class MicroarrayProfileStreamFactoryTest {
         dataFileHub.addTemporaryFile("/magetab/accession/accession_array-analytics.tsv", sequenceLines);
         MicroarrayProfileStreamFactory microarrayProfileStreamFactory = new MicroarrayProfileStreamFactory(dataFileHub);
 
-        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", contrasts, ImmutableSortedSet.of("array"));
+        MicroarrayExperiment experiment = MicroarrayExperimentTest.get("accession", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, contrasts, ImmutableSortedSet.of("array"));
         MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
         microarrayRequestPreferences.setFoldChangeCutoff(0.0);
         microarrayRequestPreferences.setCutoff(1.0);
@@ -119,11 +123,10 @@ public class MicroarrayProfileStreamFactoryTest {
         MicroarrayRequestContext microarrayRequestContext = new MicroarrayRequestContext(microarrayRequestPreferences,experiment);
 
         return microarrayProfileStreamFactory.select(experiment,
-                microarrayRequestContext, Functions
-                        .<Iterable<MicroarrayProfile>>identity(), new SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>() {
+                microarrayRequestContext, Predicates.<MicroarrayProfile>alwaysTrue(), new SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>() {
                     @Override
-                    public GeneProfilesList<MicroarrayProfile> select(Iterable<MicroarrayProfile> profiles, int maxSize) {
-                        return new DifferentialProfilesList<>( Lists.newArrayList(profiles));
+                    public GeneProfilesList<MicroarrayProfile> select(ObjectInputStream<MicroarrayProfile> profiles, int maxSize) {
+                        return new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles)));
                     }
                 });
     }

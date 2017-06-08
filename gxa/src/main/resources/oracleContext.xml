@@ -14,9 +14,9 @@
 
     <bean id="dataSource" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
         <property name="connectionPoolName" value="gxa"/>
-        <property name="URL" value="${filtered.jdbc.url}"/>
-        <property name="user" value="${filtered.jdbc.username}"/>
-        <property name="password" value="${filtered.jdbc.password}"/>
+        <property name="URL" value="${jdbc.url.oracle}"/>
+        <property name="user" value="${jdbc.username.oracle}"/>
+        <property name="password" value="${jdbc.password.oracle}"/>
         <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
         <property name="initialPoolSize" value="3"/>
         <property name="minPoolSize" value="3"/>
@@ -27,7 +27,7 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
-    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
 

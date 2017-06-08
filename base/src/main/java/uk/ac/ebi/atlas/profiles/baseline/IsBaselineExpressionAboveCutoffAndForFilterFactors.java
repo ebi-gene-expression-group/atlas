@@ -16,6 +16,8 @@ import java.util.HashSet;
 I am being questionable in my logic to include only the columns that will later be picked up.
 Unfortunately I affect the number of columns in a profile, that matters for "foldProfile" used in gene sets.
 Feel free to rethink me or get rid of me if the gene set code is gone after all.o
+
+Update: the gene set code is gone. Now you only need to rethink me ! :)
  */
 @Named
 @Scope("prototype")

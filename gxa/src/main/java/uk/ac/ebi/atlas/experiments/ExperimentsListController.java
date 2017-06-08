@@ -58,7 +58,7 @@ public class ExperimentsListController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String getExperimentInfo(@PathVariable String experimentAccession,
-                                    @RequestParam(required = false) String accessKey) {
+                                    @RequestParam(defaultValue = "") String accessKey) {
         return experimentInfoListService.getExperimentJson(experimentAccession, accessKey);
     }
 

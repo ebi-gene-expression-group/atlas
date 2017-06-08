@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -12,11 +11,11 @@ public class BaselineRequestPreferencesValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        if(aClass.isAssignableFrom(RnaSeqBaselineRequestPreferences.class)) {
+        if (aClass.isAssignableFrom(RnaSeqBaselineRequestPreferences.class)) {
             return RnaSeqBaselineRequestPreferences.class.equals(aClass);
         }
 
-        if(aClass.isAssignableFrom(ProteomicsBaselineRequestPreferences.class)) {
+        if (aClass.isAssignableFrom(ProteomicsBaselineRequestPreferences.class)) {
             return ProteomicsBaselineRequestPreferences.class.equals(aClass);
         }
 
@@ -30,4 +29,5 @@ public class BaselineRequestPreferencesValidator implements Validator {
             errors.reject("cutoffOutOfRange", "The expression level cutoff must be greater than 0");
         }
     }
+
 }

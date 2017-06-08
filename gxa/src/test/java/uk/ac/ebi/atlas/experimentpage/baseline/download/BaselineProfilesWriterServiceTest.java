@@ -9,14 +9,18 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
+import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.search.SemanticQuery;
@@ -27,11 +31,7 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
@@ -79,13 +79,18 @@ public class BaselineProfilesWriterServiceTest {
 
         baselineRequestContext = new BaselineRequestContext(preferencesMock, baselineExperimentMock);
 
-        when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString(),
-                anyBoolean())).thenReturn(profilesWriter);
+        when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString()
+        )).thenReturn(profilesWriter);
 
-        when(profilesWriter.write(anyCollection())).thenReturn(123L);
+        when(profilesWriter.write(any(ObjectInputStream.class))).thenReturn(123L);
 
-        subject = new BaselineProfilesWriterService(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
-                coexpressedGenesService);
+        subject = new BaselineProfilesWriterService<ExpressionUnit.Absolute>(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
+                coexpressedGenesService){
+            @Override
+            public Collection<ExternallyAvailableContent> get(BaselineExperiment experiment) {
+                return ImmutableList.of();
+            }
+        };
 
         when(experimentDisplayDefaultsMock.preserveColumnOrder()).thenReturn(true);
 

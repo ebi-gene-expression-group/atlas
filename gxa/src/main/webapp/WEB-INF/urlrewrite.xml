@@ -39,4 +39,9 @@
         <from>/experiments/(.*)/experiments/(.*)/experiment-design</from>
         <to type="permanent-redirect">/gxa/experiments/$1/Experiment Design</to>
     </rule>
+    <rule>
+        <note>Redirect the query results from query=? to search=?</note>
+        <from>^/query</from>
+        <to type="permanent-redirect" qsappend="true">/gxa/search</to>
+    </rule>
 </urlrewrite>

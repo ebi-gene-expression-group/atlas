@@ -16,6 +16,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
+import static uk.ac.ebi.atlas.commons.streams.ObjectInputStreamTest.convert;
 
 public class MinMaxProfileRankingTest {
 
@@ -35,8 +36,8 @@ public class MinMaxProfileRankingTest {
         }
     }
 
-    private BaselineProfilesList selectAverageExpressionsOnly(final double cutoff, Iterable<BaselineProfile> profiles,
-                                                             int maxSize) {
+    private BaselineProfilesList selectAverageExpressionsOnly(final double cutoff, final Iterable<BaselineProfile> profiles,
+                                                              int maxSize) {
         final boolean isSpecific = true;
         final List<AssayGroup> selectedQueryFactors = ImmutableList.of();
         final List<AssayGroup> allQueryFactors = ImmutableList.of();
@@ -52,7 +53,9 @@ public class MinMaxProfileRankingTest {
 
         MinMaxProfileRanking<BaselineProfile, BaselineProfilesList> subject = new MinMaxProfileRanking<>(comparatorThatTestsAverageExpressionsOnly, new BaselineProfilesListBuilder());
 
-        return subject.select(profiles,maxSize);
+
+
+        return subject.select(convert(profiles), maxSize);
     }
 
     private BaselineProfile mockProfile(double averageExpression){
@@ -138,7 +141,7 @@ public class MinMaxProfileRankingTest {
 
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(false,
                 allFactors, allFactors,cutoff), new BaselineProfilesListBuilder()).select
-                (l,5);
+                (convert(l),5);
 
         assertEquals("profileWeWant",result.iterator().next().getName());
 
@@ -170,7 +173,7 @@ public class MinMaxProfileRankingTest {
 
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true,
                 allFactors, allFactors,cutoff), new BaselineProfilesListBuilder()).select
-                (l,50);
+                (convert(l),50);
 
         if(!"profileWeWant".equals(result.iterator().next().getName())){
             fail();
@@ -227,7 +230,7 @@ public class MinMaxProfileRankingTest {
             cutoff, int queueSize) {
         BaselineProfilesList result = new MinMaxProfileRanking<>(new VisibleBaselineProfileComparator(true,
                 selectedFactors, allFactors,cutoff), new BaselineProfilesListBuilder()).select
-                (l,queueSize);
+                (convert(l),queueSize);
 
         return result.iterator().next();
     }

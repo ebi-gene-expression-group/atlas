@@ -1,5 +1,8 @@
 package uk.ac.ebi.atlas.species;
 
+import com.google.common.collect.ImmutableMap;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,8 +11,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.inject.Inject;
 
 import java.util.Collection;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
@@ -31,7 +38,7 @@ public class SpeciesPropertiesTraderIT {
         assertThat(subject.get("Homo sapiens").referenceName(), is("homo sapiens"));
         assertThat(subject.get("Homo sapiens").ensemblName(), is("Homo_sapiens"));
         assertThat(subject.get("Homo sapiens").kingdom(), is("animals"));
-        assertThat(subject.get("Hordeum vulgare").resources().get("genome_browser"), hasSize(2));
+        assertThat(subject.get("Hordeum vulgare").getResourcesOfType("genome_browser"), hasSize(2));
     }
 
     public void plantsHaveTwoGenomeBrowsers() throws Exception {
@@ -39,7 +46,7 @@ public class SpeciesPropertiesTraderIT {
 
         for (SpeciesProperties speciesProperties : allSpeciesProperties) {
             if ("plants".equalsIgnoreCase(speciesProperties.kingdom())) {
-                assertThat(speciesProperties.resources().get("genome_browser"), hasSize(2));
+                assertThat(speciesProperties.getResourcesOfType("genome_browser"), hasSize(2));
             }
         }
     }
@@ -49,10 +56,21 @@ public class SpeciesPropertiesTraderIT {
         SpeciesProperties caenorhabditisElegans = subject.get("Caenorhabditis elegans");
         SpeciesProperties schistosomaMansoni = subject.get("Schistosoma mansoni");
 
-        assertThat(caenorhabditisElegans.resources().get("genome_browser").get(0), startsWith("http://parasite"));
-        assertThat(schistosomaMansoni.resources().get("genome_browser").get(0), startsWith("http://parasite"));
         assertThat(caenorhabditisElegans.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
+        assertThat(caenorhabditisElegans.getResourcesOfType("genome_browser"), hasSize(1));
+        for (ImmutableMap<String, String> resource : caenorhabditisElegans.resources()) {
+            if (resource.containsKey("type") && SpeciesProperties.GENOME_BROWSER_TYPE.equalsIgnoreCase(resource.get("type"))) {
+                assertThat(resource, hasEntry(is("url"), startsWith("http://parasite")));
+            }
+        }
+
         assertThat(schistosomaMansoni.defaultQueryFactorType(), is("DEVELOPMENTAL_STAGE"));
+        assertThat(schistosomaMansoni.getResourcesOfType("genome_browser"), hasSize(1));
+        for (ImmutableMap<String, String> resource : caenorhabditisElegans.resources()) {
+            if (resource.containsKey("type") && SpeciesProperties.GENOME_BROWSER_TYPE.equalsIgnoreCase(resource.get("type"))) {
+                assertThat(resource, hasEntry(is("url"), startsWith("http://parasite")));
+            }
+        }
     }
 
     @Test

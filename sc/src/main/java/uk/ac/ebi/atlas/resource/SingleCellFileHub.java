@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.resource;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.resource.AtlasResource;
 import uk.ac.ebi.atlas.model.resource.TsvFile;
 
@@ -27,13 +28,12 @@ public class SingleCellFileHub extends DataFileHub {
     }
 
     public class SingleCellExperimentFiles extends ExperimentFiles {
-        public final AtlasResource<TsvReader> singlecell;
+        public final AtlasResource<ObjectInputStream<String[]>> data;
 
         SingleCellExperimentFiles(String experimentAccession) {
             super(experimentAccession);
-            this.singlecell = new TsvFile.ReadOnly(dataFilesLocation, SINGLECELL_FILE_PATH_TEMPLATE, experimentAccession);
+            this.data = new TsvFile.ReadAsStream(dataFilesLocation, SINGLECELL_FILE_PATH_TEMPLATE, experimentAccession);
+
         }
     }
-
-
 }

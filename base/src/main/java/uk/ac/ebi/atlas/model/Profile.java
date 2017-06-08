@@ -1,5 +1,9 @@
 package uk.ac.ebi.atlas.model;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
@@ -7,6 +11,7 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
@@ -18,7 +23,8 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 
-public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression> {
+public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression, Self extends Profile<DataColumnDescriptor, Expr, Self>>
+        implements KryoSerializable {
     protected Map<DataColumnDescriptor, Expr> expressionsByCondition = new HashMap<>();
 
     private String id;
@@ -29,7 +35,7 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Profile)) return false;
-        Profile<?, ?> profile = (Profile<?, ?>) o;
+        Profile<?, ?, ?> profile = (Profile<?, ?, ?>) o;
         return Objects.equal(expressionsByCondition, profile.expressionsByCondition) &&
                 Objects.equal(getId(), profile.getId()) &&
                 Objects.equal(getName(), profile.getName());
@@ -39,6 +45,8 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     public int hashCode() {
         return Objects.hashCode(expressionsByCondition, getId(), getName());
     }
+
+    protected Profile(){}
 
     protected Profile(String id, String name) {
         this.id = id;
@@ -106,8 +114,6 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return expressionLevel / conditions.size();
     }
 
-    protected abstract void updateStateAfterAddingExpression(Expr expression);
-
     public boolean isExpressedOnAnyOf(Collection<DataColumnDescriptor> conditions) {
         for(DataColumnDescriptor dataColumnDescriptor : conditions){
             if(expressionsByCondition.containsKey(dataColumnDescriptor)){
@@ -123,7 +129,6 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
 
     public void add(DataColumnDescriptor condition, Expr expression) {
         expressionsByCondition.put(condition, expression);
-        updateStateAfterAddingExpression(expression);
     }
 
     public Expr getExpression(DataColumnDescriptor condition) {
@@ -137,6 +142,17 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
         return name;
     }
 
+    public Self filter(Predicate<Expr> keepExpressions){
+        Self result = createEmptyCopy();
+        for(Map.Entry<DataColumnDescriptor, Expr> e: expressionsByCondition.entrySet()){
+            if(keepExpressions.apply(e.getValue())){
+                result.add(e.getKey(), e.getValue());
+            }
+        }
+        return result;
+    }
+
+    protected abstract Self createEmptyCopy();
 
     @Override
     public String toString() {
@@ -153,5 +169,20 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
 
     public String[] identifiers(){
         return new String[]{id, getName()};
+    }
+
+
+    @Override
+    public void write(Kryo kryo, Output output) {
+        output.writeString(id);
+        output.writeString(name);
+        kryo.writeObject(output, expressionsByCondition);
+    }
+
+    @Override
+    public void read(Kryo kryo, Input input) {
+        id = input.readString();
+        name = input.readString();
+        expressionsByCondition = kryo.readObject(input, HashMap.class);
     }
 }

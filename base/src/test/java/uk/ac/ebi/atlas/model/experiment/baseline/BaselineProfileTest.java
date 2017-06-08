@@ -13,7 +13,6 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -69,52 +68,4 @@ public class BaselineProfileTest {
         averageExpressionLevel = subject.getAverageExpressionLevelOn(Sets.newHashSet(g1, g3, g4));
         assertThat(averageExpressionLevel, is(1.733666666666667D));
     }
-
-    @Test
-    public void testSumProfile(){
-        subject.sumProfile(buildOtherProfile());
-        assertThat(subject.getId(), is(subject.getId()));
-        assertThat(subject.getExpressionLevel(g1), is(2.2D + 1D));
-        assertThat(subject.getExpressionLevel(g2), is(3D + 2D));
-        assertThat(subject.getExpressionLevel(g3), is(3.001D + 3D));
-        assertThat(subject.getExpressionLevel(g4), is(300D));
-    }
-
-    @Test
-    public void sumProfileShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
-        BaselineProfile otherProfile = new BaselineProfile("other profile", "other name");
-        otherProfile.add(g2, expression_2);
-
-        subject.sumProfile(otherProfile);
-        assertThat(subject.getId(), is(GENE_ID));
-        assertThat(subject.getExpressionLevel(g1), is(subject.getExpressionLevel(g1)));
-        assertThat(subject.getExpressionLevel(g2), is(6D));
-        assertThat(subject.getExpressionLevel(g3), is(subject.getExpressionLevel(g3)));
-        assertThat(subject.getExpressionLevel(g4), is(nullValue()));
-    }
-
-    @Test
-    public void testFold(){
-        BaselineProfile sumProfile = subject.foldProfile(3);
-        assertThat(sumProfile.getId(), is(subject.getId()));
-        assertThat(sumProfile.getExpressionLevel(g1), is(0.7D));
-        assertThat(sumProfile.getExpressionLevel(g2), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(g3), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(g4), is(nullValue()));
-    }
-
-
-    BaselineProfile buildOtherProfile(){
-
-
-        BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID", "OTHER_NAME");
-
-        baselineProfile.add(g1,new BaselineExpression(1D, "g1"));
-        baselineProfile.add(g2, new BaselineExpression(2D, "g2"));
-        baselineProfile.add(g3, new BaselineExpression(3D, "g3"));
-        baselineProfile.add(g4, new BaselineExpression(300D, "g4"));
-
-        return baselineProfile;
-    }
-
 }

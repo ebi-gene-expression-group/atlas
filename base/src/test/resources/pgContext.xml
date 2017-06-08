@@ -13,6 +13,7 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="poolName" value="baseHikari" />
         <property name="connectionTestQuery" value="SELECT 1" />
         <property name="dataSourceClassName" value="org.postgresql.ds.PGSimpleDataSource" />
         <!--<property name="maximumPoolSize" value="10" />-->
@@ -20,9 +21,9 @@
 
         <property name="dataSourceProperties">
             <props>
-                <prop key="url">${filtered.jdbc.url}</prop>
-                <prop key="user">${filtered.jdbc.username}</prop>
-                <prop key="password">${filtered.jdbc.password}</prop>
+                <prop key="url">${jdbc.url.postgresql}</prop>
+                <prop key="user">${jdbc.username.postgresql}</prop>
+                <prop key="password">${jdbc.password.postgresql}</prop>
             </props>
         </property>
     </bean>
@@ -32,10 +33,10 @@
         <constructor-arg ref="hikariConfig" />
     </bean>
 
-    <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
-    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
 

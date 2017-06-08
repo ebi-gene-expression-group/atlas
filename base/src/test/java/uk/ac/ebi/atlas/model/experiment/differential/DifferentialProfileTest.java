@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 
 import java.util.List;
 
@@ -20,21 +21,13 @@ public class DifferentialProfileTest {
 
     private List<Contrast> fakeContrasts = ContrastTest.get(2);
 
-    private DifferentialProfile<DifferentialExpression> subject;
+    private RnaSeqProfile subject;
 
     @Before
     public void setUp() throws Exception {
-        this.subject = new DifferentialProfile<>(GENE_ID, GENE_NAME);
+        this.subject = new RnaSeqProfile(GENE_ID, GENE_NAME);
     }
 
-    @Test
-    public void testDefaultMinMaxExpressionLevels() throws Exception {
-        //given
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.NaN));
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.NaN));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NaN));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NaN));
-    }
 
 
     @Test
@@ -49,12 +42,6 @@ public class DifferentialProfileTest {
         subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0.6D));
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(0.4D));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NaN));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NaN));
-
-        //and
         assertThat(subject.getSpecificity(Regulation.UP), is(2));
         assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2));
         assertThat(subject.getSpecificity(Regulation.DOWN), is(0));
@@ -72,12 +59,6 @@ public class DifferentialProfileTest {
         subject.add(fakeContrasts.get(1),differentialExpressionMock2);
 
         //then
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.NaN));
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.NaN));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(-0.5D));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-0.3D));
-
-        //and
         assertThat(subject.getSpecificity(Regulation.DOWN), is(2));
         assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2));
         assertThat(subject.getSpecificity(Regulation.UP), is(0));
@@ -113,63 +94,6 @@ public class DifferentialProfileTest {
         //then
         double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(fakeContrasts));
         assertThat(averageExpressionLevelOn, is(0.4D));
-    }
-
-    @Test
-    public void getMinDownRegulatedWhen1ExpressionIsNegativeInfinity() {
-        DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, Double.NEGATIVE_INFINITY, fakeContrasts.get(0));
-
-        //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-
-        //then
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
-    }
-
-
-    @Test
-    public void getMinDownRegulatedWhen1of2ExpressionIsNegativeInfinity() {
-        DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, -5D, fakeContrasts.get(0));
-        DifferentialExpression differentialExpressionMock2
-                = new DifferentialExpression(0.05, Double.NEGATIVE_INFINITY, fakeContrasts.get(1));
-
-        //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-        subject.add(fakeContrasts.get(1),differentialExpressionMock2);
-
-        //then
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-5D));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
-    }
-
-
-
-    @Test
-    public void getMaxDownRegulatedWhen1ExpressionIsNegativeInfinity() {
-        DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, Double.NEGATIVE_INFINITY, fakeContrasts.get(0));
-
-        //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-
-        //then
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
-    }
-
-
-    @Test
-    public void getMinUpRegulatedWhen1ExpressionIsInfinity() {
-        DifferentialExpression differentialExpressionMock1
-                = new DifferentialExpression(0.05, Double.POSITIVE_INFINITY, fakeContrasts.get(0));
-
-        //when
-        subject.add(fakeContrasts.get(0),differentialExpressionMock1);
-
-        //then
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
     }
 
 }

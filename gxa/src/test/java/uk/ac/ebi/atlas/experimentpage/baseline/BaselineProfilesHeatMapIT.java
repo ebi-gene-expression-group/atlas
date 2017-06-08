@@ -9,7 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.profiles.baseline.RnaSeqBaselineProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -76,7 +76,7 @@ public class BaselineProfilesHeatMapIT {
                 (baselineRequestContext.getGeneQuery(),baselineRequestContext.getSpecies().getReferenceName());
 
         BaselineProfilesList profiles = subject.fetch(baselineExperiment, baselineRequestContext,
-                geneQueryResponse, true);
+                geneQueryResponse);
 
         assertThat(profiles.size(), greaterThan(0));
     }

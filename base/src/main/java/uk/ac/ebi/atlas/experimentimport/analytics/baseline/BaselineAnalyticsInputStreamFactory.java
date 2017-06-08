@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import com.google.common.base.Preconditions;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -27,10 +26,10 @@ public class BaselineAnalyticsInputStreamFactory {
     public ObjectInputStream<BaselineAnalytics> create(String experimentAccession, ExperimentType experimentType) throws IOException {
         Preconditions.checkArgument(experimentType.isBaseline());
         if(experimentType.isProteomicsBaseline()){
-            AtlasResource<TsvReader> resource = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main;
+            AtlasResource<?> resource = dataFileHub.getProteomicsBaselineExperimentFiles(experimentAccession).main;
             return new ProteomicsBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
         } else {
-            AtlasResource<TsvReader> resource = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.TPM);
+            AtlasResource<?> resource = dataFileHub.getRnaSeqBaselineExperimentFiles(experimentAccession).dataFile(ExpressionUnit.Absolute.Rna.TPM);
             return new RnaSeqBaselineAnalyticsInputStream(resource.getReader(), resource.toString());
         }
     }

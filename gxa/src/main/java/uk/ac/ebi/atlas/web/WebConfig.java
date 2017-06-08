@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.interceptors.AdminInterceptor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -20,7 +19,7 @@ import javax.inject.Inject;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Inject
-    Environment props;
+    private Environment props;
 
     @Inject
     private AdminInterceptor adminInterceptor;
@@ -34,10 +33,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     // equivalent to mvc:resources
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
+
         registry.addResourceHandler("/versioned-resources-" + props.getProperty("resources.version") + "/**")
                 .addResourceLocations("/versioned-resources/");
-        registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
+
+        registry.addResourceHandler("/expdata/**")
+                .addResourceLocations("file:" + dataFileHub.getExperimentDataLocation());
     }
 
     // equivalent to mvc:interceptors
