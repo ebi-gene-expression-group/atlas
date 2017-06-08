@@ -118,7 +118,7 @@ public class BioEntityPropertyService {
                                           Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
         JsonArray result = new JsonArray();
 
-        StopWatch stopwatch = new StopWatch("BioentityPropertyService.modelAttributes");
+        StopWatch stopwatch = new StopWatch("bioentityProperties");
 
         stopwatch.start("propertiesWeWillDisplay");
         List<BioentityPropertyName> propertiesToDisplay = propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType);
