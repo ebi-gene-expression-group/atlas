@@ -112,14 +112,20 @@ public class BioEntityPropertyService {
         }).toList();
 
     }
+
     private JsonArray bioentityProperties(String identifier, Species species,
                                           List<BioentityPropertyName> desiredOrderOfPropertyNames,
                                           Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
-
         JsonArray result = new JsonArray();
 
-        for(BioentityPropertyName bioentityPropertyName :
-                propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType)) {
+        StopWatch stopwatch = new StopWatch("BioentityPropertyService.modelAttributes");
+
+        stopwatch.start("propertiesWeWillDisplay");
+        List<BioentityPropertyName> propertiesToDisplay = propertiesWeWillDisplay(desiredOrderOfPropertyNames, propertyValuesByType);
+        stopwatch.stop();
+
+        stopwatch.start("loop: propertyLinks & JSON serialization");
+        for(BioentityPropertyName bioentityPropertyName : propertiesToDisplay) {
             JsonArray values = new JsonArray();
 
             for (PropertyLink propertyLink :
@@ -137,8 +143,11 @@ public class BioEntityPropertyService {
                 result.add(o);
             }
         }
-        return result;
+        stopwatch.stop();
 
+        LOGGER.debug(stopwatch.prettyPrint());
+
+        return result;
     }
 
     private List<PropertyLink> fetchPropertyLinks(String identifier, Species species,
