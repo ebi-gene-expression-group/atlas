@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.json;
 
+import com.google.gson.JsonElement;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -27,7 +28,9 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @Scope("request")
@@ -114,27 +117,30 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
      */
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
             method = RequestMethod.GET,
-            produces = "application/json;charset=UTF-8",
+            produces = "application/json-seq;charset=UTF-8",
             params = "type=MICROARRAY_ANY")
-    @ResponseBody
-    public String differentialMicroarrayExperimentEvidence(
+    public void differentialMicroarrayExperimentEvidence(
             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(defaultValue = "") String accessKey) {
+            @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-        return gson.toJson(diffMicroarrayEvidenceService.evidenceForExperiment(experiment,new MicroarrayRequestContext(preferences, experiment)));
+        for( JsonElement e: diffMicroarrayEvidenceService.evidenceForExperiment(experiment,new MicroarrayRequestContext(preferences, experiment))){
+            response.getWriter().println(gson.toJson(e));
+        };
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",
             method = RequestMethod.GET,
-            produces = "application/json;charset=UTF-8",
+            produces = "application/json-seq;charset=UTF-8",
             params = "type=RNASEQ_MRNA_DIFFERENTIAL")
-    @ResponseBody
-    public String differentialRnaSeqExperimentEvidence(
+    public void differentialRnaSeqExperimentEvidence(
             @ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences,
             @PathVariable String experimentAccession,
-            @RequestParam(defaultValue = "") String accessKey) {
+            @RequestParam(defaultValue = "") String accessKey, HttpServletResponse response) throws IOException {
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
-        return gson.toJson(diffRnaSeqEvidenceService.evidenceForExperiment(experiment, new RnaSeqRequestContext(preferences, experiment)));
+
+        for( JsonElement e: diffRnaSeqEvidenceService.evidenceForExperiment(experiment, new RnaSeqRequestContext(preferences, experiment))){
+            response.getWriter().println(gson.toJson(e));
+        }
     }
 }
