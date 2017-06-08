@@ -71,7 +71,7 @@ public class PopularSpeciesDaoTest {
             int differentialExperimentsCount = 0;
             for (ExperimentType experimentType : ExperimentType.values()) {
 
-                int experimentsCount = ThreadLocalRandom.current().nextInt(0, 100);
+                int experimentsCount = ThreadLocalRandom.current().nextInt(0, 100 + 1);
                 if (experimentType.isBaseline()) {
                     baselineExperimentsCount += experimentsCount;
                 } else { //if (experimentType.isDifferential()) {
