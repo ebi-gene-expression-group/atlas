@@ -8,10 +8,12 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Named
 public class PopularSpeciesDao {
 
     protected static final String SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY =
@@ -34,17 +36,17 @@ public class PopularSpeciesDao {
         List<Map<String, Object>> results =
                 jdbcTemplate.queryForList(SPECIES_WITH_EXPERIMENT_TYPE_COUNT_QUERY);
 
-        HashMap<String, Pair<Integer, Integer>> speciesToExperimentCounts = Maps.newHashMap();
+        HashMap<String, Pair<Long, Long>> speciesToExperimentCounts = Maps.newHashMap();
         for (Map<String, Object> resultRow: results) {
             String species = (String) resultRow.get("organism");
             ExperimentType experimentType = ExperimentType.valueOf((String) resultRow.get("type"));
-            int experimentCount = (int) resultRow.get("c");
+            long experimentCount = (long) resultRow.get("c");
 
             if (!speciesToExperimentCounts.containsKey(species)) {
-                speciesToExperimentCounts.put(species, Pair.of(0, 0));
+                speciesToExperimentCounts.put(species, Pair.of(0L, 0L));
             }
 
-            Pair<Integer, Integer> experimentCounts = speciesToExperimentCounts.get(species);
+            Pair<Long, Long> experimentCounts = speciesToExperimentCounts.get(species);
             if (experimentType.isBaseline()) {
                 speciesToExperimentCounts.put(species, Pair.of(experimentCounts.getLeft() + experimentCount, experimentCounts.getRight()));
             } else { //if (experimentType.isDifferential()) {
@@ -53,11 +55,11 @@ public class PopularSpeciesDao {
         }
 
         ImmutableList.Builder<PopularSpeciesInfo> popularSpeciesInfoBuilder = ImmutableList.builder();
-        for (Map.Entry<String, Pair<Integer, Integer>> speciesToExperimentCount : speciesToExperimentCounts.entrySet()) {
+        for (Map.Entry<String, Pair<Long, Long>> speciesToExperimentCount : speciesToExperimentCounts.entrySet()) {
             String speciesName = speciesToExperimentCount.getKey();
             String kingdom = speciesFactory.create(speciesName).getKingdom();
-            int baselineExperimentsCount = speciesToExperimentCount.getValue().getLeft();
-            int differentialExperimentsCount = speciesToExperimentCount.getValue().getRight();
+            long baselineExperimentsCount = speciesToExperimentCount.getValue().getLeft();
+            long differentialExperimentsCount = speciesToExperimentCount.getValue().getRight();
             popularSpeciesInfoBuilder.add(
                     PopularSpeciesInfo.create(speciesName, kingdom, baselineExperimentsCount, differentialExperimentsCount)
             );

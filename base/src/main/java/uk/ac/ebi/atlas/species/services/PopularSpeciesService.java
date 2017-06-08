@@ -4,11 +4,14 @@ import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import com.sun.org.apache.bcel.internal.generic.POP;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
+@Named
 public class PopularSpeciesService {
 
     private final PopularSpeciesDao popularSpeciesDao;
@@ -29,16 +32,19 @@ public class PopularSpeciesService {
     }
 
     public List<PopularSpeciesInfo> getPopularSpecies(int howMany) {
-        return sortedList.get().subList(0, howMany);
+        return howMany > sortedList.get().size() ? sortedList.get() : sortedList.get().subList(0, howMany);
     }
 
-    public ImmutableList<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
-        return FluentIterable.from(sortedList.get()).filter(new Predicate<PopularSpeciesInfo>() {
-            @Override
-            public boolean apply(@Nullable PopularSpeciesInfo input) {
-                return kingdom.equalsIgnoreCase(input.kingdom());
-            }
-        }).toList().subList(0, howMany);
+    public List<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
+        List<PopularSpeciesInfo> filteredList =
+                FluentIterable.from(sortedList.get()).filter(new Predicate<PopularSpeciesInfo>() {
+                    @Override
+                    public boolean apply(@Nullable PopularSpeciesInfo input) {
+                        return kingdom.equalsIgnoreCase(input.kingdom());
+                    }
+                }).toList();
+
+        return howMany > filteredList.size() ? filteredList : filteredList.subList(0, howMany);
     }
 
 }

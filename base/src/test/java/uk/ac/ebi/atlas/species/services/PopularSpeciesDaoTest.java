@@ -71,7 +71,7 @@ public class PopularSpeciesDaoTest {
             int differentialExperimentsCount = 0;
             for (ExperimentType experimentType : ExperimentType.values()) {
 
-                int experimentsCount = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+                long experimentsCount = ThreadLocalRandom.current().nextLong(0, 100 + 1);
                 if (experimentType.isBaseline()) {
                     baselineExperimentsCount += experimentsCount;
                 } else { //if (experimentType.isDifferential()) {
@@ -97,8 +97,8 @@ public class PopularSpeciesDaoTest {
         assertThat(subject.popularSpecies(), hasSize(ANIMAL_SPECIES_NAMES.size() + PLANT_SPECIES_NAMES.size() + FUNGI_SPECIES_NAMES.size()));
 
         for (PopularSpeciesInfo popularSpeciesInfo : subject.popularSpecies()) {
-            assertThat(popularSpeciesInfo.baselineExperiments(), is(expectedValues.get(popularSpeciesInfo.species()).getLeft()));
-            assertThat(popularSpeciesInfo.differentialExperiments(), is(expectedValues.get(popularSpeciesInfo.species()).getRight()));
+            assertThat(popularSpeciesInfo.baselineExperiments(), is((long) expectedValues.get(popularSpeciesInfo.species()).getLeft()));
+            assertThat(popularSpeciesInfo.differentialExperiments(), is((long) expectedValues.get(popularSpeciesInfo.species()).getRight()));
             assertThat(popularSpeciesInfo.kingdom(), is(speciesFactoryMock.create(popularSpeciesInfo.species()).getKingdom()));
         }
     }

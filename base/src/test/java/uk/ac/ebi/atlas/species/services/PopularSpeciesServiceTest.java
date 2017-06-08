@@ -101,4 +101,9 @@ public class PopularSpeciesServiceTest {
             }
         }
     }
+
+    @Test
+    public void askMoreThanThereAre() throws Exception {
+        assertThat(true, is(false));
+    }
 }
