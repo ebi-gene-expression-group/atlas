@@ -16,6 +16,7 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 import javax.inject.Inject;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,13 +62,21 @@ public class LatestExperimentsServiceIT {
             ExperimentInfo nextElement = iterator.hasNext() ? iterator.next() : null;
 
             if (nextElement != null) {
-                assertThat(DATE_FORMAT.parse(thisElement.getLastUpdate()).after(DATE_FORMAT.parse(nextElement.getLastUpdate())), is(true));
+                Date thisDate = DATE_FORMAT.parse(thisElement.getLastUpdate());
+                Date nextDate = DATE_FORMAT.parse(nextElement.getLastUpdate());
+
+                if (!thisDate.equals(nextDate)) {
+                    assertThat(
+                            DATE_FORMAT.parse(thisElement.getLastUpdate())
+                                    .after(DATE_FORMAT.parse(nextElement.getLastUpdate())),
+                            is(true));
+                }
             }
         }
     }
 
     @Test
-    public void blah() throws Exception {
+    public void fetchLatestExperimentsAttributes() throws Exception {
         assertThat(subject.fetchLatestExperimentsAttributes().get("latestExperiments"), instanceOf(List.class));
         assertThatExperimentsAreSortedByDate(
                 (List<ExperimentInfo>) subject.fetchLatestExperimentsAttributes().get("latestExperiments")
