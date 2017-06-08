@@ -4,26 +4,30 @@ import com.google.common.collect.ImmutableSet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.experiments.ExperimentInfoListService;
+import uk.ac.ebi.atlas.experiments.LatestExperimentsDao;
+import uk.ac.ebi.atlas.experiments.LatestExperimentsService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
 
 import javax.inject.Inject;
 
 @Controller
 public class SingleCellHomeController {
 
-    ExperimentInfoListService experimentInfoListService;
+    private final LatestExperimentsService latestExperimentsService;
 
     @Inject
-    public SingleCellHomeController(ExperimentTrader experimentTrader){
-        experimentInfoListService = new ExperimentInfoListService(experimentTrader,
-                ImmutableSet.of(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE));
+    public SingleCellHomeController(LatestExperimentsDao latestExperimentsDao,
+                                    SingleCellExperimentTrader experimentTrader) {
+        latestExperimentsService =
+                new LatestExperimentsService(
+                        latestExperimentsDao, experimentTrader,
+                        ImmutableSet.of(ExperimentType.SINGLE_CELL_RNASEQ_MRNA_BASELINE));
     }
 
     @RequestMapping(value = "/home")
     public String getHomePage(Model model) {
-        model.addAllAttributes(experimentInfoListService.getLatestExperimentsListAttributes());
+        model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
         return "home";
     }
 }
