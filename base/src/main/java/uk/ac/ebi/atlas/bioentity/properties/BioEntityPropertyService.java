@@ -64,7 +64,7 @@ public class BioEntityPropertyService {
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
 //        addReactomePropertyValues(propertyValuesByType);
-//        addDesignElements(identifier, propertyValuesByType);
+        addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
 
