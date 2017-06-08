@@ -46,15 +46,15 @@ public class EvidenceService<Expr extends DifferentialExpression,
     private final DataFileHub dataFileHub;
 
 
-    public EvidenceService(ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory, DataFileHub dataFileHub){
+    public EvidenceService(ProfileStreamFactory<Contrast, Expr, E, StreamOptions, Prof> differentialProfileStreamFactory, DataFileHub dataFileHub) {
         this.differentialProfileStreamFactory = differentialProfileStreamFactory;
         this.dataFileHub = dataFileHub;
     }
 
-    public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions){
+    public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions) {
 
         Map<Contrast, DiseaseAssociation> diseaseAssociations = getDiseaseAssociations(experiment);
-        if(diseaseAssociations.size() == 0){
+        if (diseaseAssociations.size() == 0) {
             return new JsonArray();
         }
 
@@ -66,11 +66,11 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         JsonArray result = new JsonArray();
 
-        for(Prof profile: new IterableObjectInputStream<>(differentialProfileStreamFactory.create(experiment, streamOptions))){
-            for(Contrast contrast: diseaseAssociations.keySet()){
-                boolean isCttvPrimary = true ; //TODO
+        for (Prof profile : new IterableObjectInputStream<>(differentialProfileStreamFactory.create(experiment, streamOptions))) {
+            for (Contrast contrast : diseaseAssociations.keySet()) {
+                boolean isCttvPrimary = true; //TODO
                 Expr expression = profile.getExpression(contrast);
-                if(expression != null){
+                if (expression != null) {
                     result.addAll(piecesOfEvidence(
                             experiment,
                             methodDescription,
@@ -94,15 +94,15 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                DiseaseAssociation linkToDisease,
                                Expr expression, Integer foldChangeRank,
                                String ensemblGeneId, Contrast contrast, boolean isCttvPrimary,
-                               String expressionAtlasVersion){
+                               String expressionAtlasVersion) {
         JsonArray result = new JsonArray();
-        for(OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()){
+        for (OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()) {
             result.add(pieceOfEvidence(
                     experiment,
                     methodDescription,
                     diseaseUri,
                     linkToDisease.biosampleInfo(),
-                    Pair.of(linkToDisease.testSampleLabel(),linkToDisease.referenceSampleLabel()),
+                    Pair.of(linkToDisease.testSampleLabel(), linkToDisease.referenceSampleLabel()),
                     linkToDisease.confidence(),
                     expression,
                     foldChangeRank,
@@ -122,45 +122,45 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                DiseaseAssociation.CONFIDENCE confidence,
                                Expr expression, Integer foldChangeRank,
                                String ensemblGeneId, Contrast contrast,
-                               boolean isCttvPrimary, String expressionAtlasVersion){
+                               boolean isCttvPrimary, String expressionAtlasVersion) {
 
         return withLiteratureReferences(
                 associationRecord(
-                    uniqueAssociationFields(
-                            ensemblGeneId,
-                            experiment.getAccession(),
-                            contrast.getDisplayName()
-                    ),
-                    target(ensemblGeneId,
-                            isCttvPrimary,
-                            expression
-                    ),
-                    disease(
-                            diseaseUri,
-                            biosampleInfo
-                    ),
-                    withLiteratureReferences(
-                            evidence(
-                                experiment,
+                        uniqueAssociationFields(
                                 ensemblGeneId,
-                                expression,
-                                foldChangeRank,
-                                testAndReferenceLabels,
-                                contrast,
-                                confidence,
-                                methodDescription,
-                                expressionAtlasVersion
-                        ),experiment.getPubMedIds()
-                    )
+                                experiment.getAccession(),
+                                contrast.getDisplayName()
+                        ),
+                        target(ensemblGeneId,
+                                isCttvPrimary,
+                                expression
+                        ),
+                        disease(
+                                diseaseUri,
+                                biosampleInfo
+                        ),
+                        withLiteratureReferences(
+                                evidence(
+                                        experiment,
+                                        ensemblGeneId,
+                                        expression,
+                                        foldChangeRank,
+                                        testAndReferenceLabels,
+                                        contrast,
+                                        confidence,
+                                        methodDescription,
+                                        expressionAtlasVersion
+                                ), experiment.getPubMedIds()
+                        )
                 ), experiment.getPubMedIds()
         );
     }
 
-    JsonObject  withLiteratureReferences(JsonObject object, List<String> pubmedIds){
-        if(! pubmedIds.isEmpty()){
+    JsonObject withLiteratureReferences(JsonObject object, List<String> pubmedIds) {
+        if (!pubmedIds.isEmpty()) {
             JsonObject literature = new JsonObject();
             JsonArray references = new JsonArray();
-            for(String pubmedId: pubmedIds){
+            for (String pubmedId : pubmedIds) {
                 JsonObject reference = new JsonObject();
                 reference.addProperty("lit_id", MessageFormat.format(
                         "http://europepmc.org/abstract/MED/{0}", pubmedId
@@ -180,7 +180,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                         Contrast contrast,
                         DiseaseAssociation.CONFIDENCE confidence,
                         String methodDescription,
-                        String expressionAtlasVersion){
+                        String expressionAtlasVersion) {
         JsonObject result = new JsonObject();
         result.addProperty("is_associated", true);
         result.addProperty("unique_experiment_reference", MessageFormat.format("STUDYID_{0}", experiment.getAccession()));
@@ -200,7 +200,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    JsonObject linkUrl(String niceName, String url){
+    JsonObject linkUrl(String niceName, String url) {
         JsonObject result = new JsonObject();
         result.addProperty("nice_name", niceName);
         result.addProperty("url", url);
@@ -208,7 +208,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    JsonArray linkUrls(String experimentAccession, String ensemblGeneId){
+    JsonArray linkUrls(String experimentAccession, String ensemblGeneId) {
         JsonArray result = new JsonArray();
         result.add(linkUrl(
                 "ArrayExpress Experiment overview",
@@ -232,28 +232,28 @@ public class EvidenceService<Expr extends DifferentialExpression,
 	http://purl.obolibrary.org/obo/ECO:0000359 differential geneset expression evidence from RNA-seq experiment
 	But we are not including this data in the JSON report for now.
      */
-    JsonArray evidenceCodes(ExperimentType experimentType){
+    JsonArray evidenceCodes(ExperimentType experimentType) {
         JsonArray result = new JsonArray();
-        if(experimentType.isMicroarray()){
+        if (experimentType.isMicroarray()) {
             result.add(new JsonPrimitive("http://purl.obolibrary.org/obo/ECO_0000356"));
-        } else if (experimentType.isRnaSeqDifferential()){
+        } else if (experimentType.isRnaSeqDifferential()) {
             result.add(new JsonPrimitive("http://purl.obolibrary.org/obo/ECO_0000357"));
         }
         return result;
     }
 
-    JsonObject log2FoldChange(Expr expression, Integer foldChangeRank){
+    JsonObject log2FoldChange(Expr expression, Integer foldChangeRank) {
         JsonObject result = new JsonObject();
         result.addProperty("value", expression.getFoldChange());
         result.addProperty("percentile_rank", foldChangeRank);
         return result;
     }
 
-    String getPValueString(Expr expression){
-        return String.format("%3.2e",expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue());
+    String getPValueString(Expr expression) {
+        return String.format("%3.2e", expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue());
     }
 
-    JsonObject resourceScore(Expr expression, String methodDescription){
+    JsonObject resourceScore(Expr expression, String methodDescription) {
         JsonObject result = new JsonObject();
         /*
         probability estimates shouldn't be zero but sometimes we get them from the pipeline as rounding errors
@@ -268,7 +268,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    JsonObject provenanceType(String expressionAtlasVersion){
+    JsonObject provenanceType(String expressionAtlasVersion) {
         JsonObject result = new JsonObject();
         JsonObject database = new JsonObject();
         database.addProperty("version", expressionAtlasVersion);
@@ -277,35 +277,35 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    String geneUri(String ensemblGeneId){
+    String geneUri(String ensemblGeneId) {
         return MessageFormat.format("http://identifiers.org/ensembl/{0}", ensemblGeneId);
     }
 
-    String experimentAccessionUri(String experimentAccession){
+    String experimentAccessionUri(String experimentAccession) {
         return MessageFormat.format("http://identifiers.org/gxa.expt/{0}", experimentAccession);
     }
 
     //https://github.com/opentargets/json_schema/blob/master/src/bioentity/disease.json
-    JsonObject disease(OntologyTerm diseaseUri, SampleCharacteristic biosampleInfo){
+    JsonObject disease(OntologyTerm diseaseUri, SampleCharacteristic biosampleInfo) {
         JsonObject result = new JsonObject();
         result.addProperty("id", diseaseUri.uri());
         result.add("biosample", biosampleInfo(biosampleInfo));
         return result;
     }
 
-    JsonObject biosampleInfo(SampleCharacteristic biosampleInfo){
+    JsonObject biosampleInfo(SampleCharacteristic biosampleInfo) {
         JsonObject result = new JsonObject();
         result.addProperty("name", biosampleInfo.value());
         Optional<OntologyTerm> ontologyTerm = FluentIterable.from(biosampleInfo.valueOntologyTerms()).first();
-        if(ontologyTerm.isPresent()){
+        if (ontologyTerm.isPresent()) {
             result.addProperty("id", ontologyTerm.get().uri());
         }
         return result;
     }
 
-    JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName){
+    JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName) {
         /*
-        					my $uniqueAssocFields = {
+                            my $uniqueAssocFields = {
 						"geneID" 			=> $geneIDuri,
 						"study_id"			=> $gxaExptIDuri,
 						"comparison_name"	=> $comparisonName
@@ -323,10 +323,10 @@ public class EvidenceService<Expr extends DifferentialExpression,
                 "http://identifiers.org/cttv.activity/{0}",
                 isCttvPrimary
                         ? expression.getFoldChange() > 0
-                            ? "increased_transcript_level"
-                            : "decreased_transcript_level"
+                        ? "increased_transcript_level"
+                        : "decreased_transcript_level"
                         : "unknown"
-        ) ;
+        );
     }
 
     JsonObject target(String ensemblGeneId, boolean isCttvPrimary, Expr expression) {
@@ -341,7 +341,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     JsonObject associationRecord(JsonObject uniqueAssociationFields,
                                  JsonObject target,
                                  JsonObject disease,
-                                 JsonObject evidence){
+                                 JsonObject evidence) {
         JsonObject result = new JsonObject();
         result.addProperty("sourceID", "expression_atlas");
         result.addProperty("validated_against_schema_version", "1.2.5"); //TODO remove this line, add on validation side
@@ -355,13 +355,13 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
 
-    Map<Contrast, DiseaseAssociation> getDiseaseAssociations(DifferentialExperiment experiment){
+    Map<Contrast, DiseaseAssociation> getDiseaseAssociations(DifferentialExperiment experiment) {
         Map<Contrast, DiseaseAssociation> result = new HashMap<>();
-        for(Contrast contrast : experiment.getDataColumnDescriptors()){
+        for (Contrast contrast : experiment.getDataColumnDescriptors()) {
             Optional<SampleCharacteristic> biosampleInfo = getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
 
-            if(biosampleInfo.isPresent() ){
-                for(SampleCharacteristic diseaseInfo : getDiseaseInfos(experiment.getExperimentDesign(), contrast.getTestAssayGroup())){
+            if (biosampleInfo.isPresent()) {
+                for (SampleCharacteristic diseaseInfo : getDiseaseInfos(experiment.getExperimentDesign(), contrast.getTestAssayGroup())) {
                     result.put(contrast, DiseaseAssociation.create(
                             biosampleInfo.get(),
                             factorBasedSummaryLabel(experiment.getExperimentDesign(), contrast.getReferenceAssayGroup()),
@@ -381,16 +381,21 @@ public class EvidenceService<Expr extends DifferentialExpression,
         enum CONFIDENCE {
             LOW, MEDIUM, HIGH
         }
+
         public abstract SampleCharacteristic biosampleInfo();
+
         public abstract String referenceSampleLabel();
+
         public abstract String testSampleLabel();
+
         public abstract SampleCharacteristic diseaseInfo();
+
         public abstract CONFIDENCE confidence();
 
 
         public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, String referenceSampleLabel, String testSampleLabel,
-                                                SampleCharacteristic diseaseInfo, CONFIDENCE confidence){
-            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo,  referenceSampleLabel, testSampleLabel, diseaseInfo, confidence);
+                                                SampleCharacteristic diseaseInfo, CONFIDENCE confidence) {
+            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence);
         }
     }
 
@@ -400,7 +405,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     https://github.com/opentargets/json_schema/blob/master/src/evidence/expression.json
     "test_sample", "reference_sample"
      */
-    String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup){
+    String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
         return Joiner.on("; ").join(FluentIterable.from(experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values()).filter(new Predicate<String>() {
             @Override
             public boolean apply(@Nullable String s) {
@@ -414,9 +419,9 @@ public class EvidenceService<Expr extends DifferentialExpression,
     This will either be an organism part, a cell line, or a cell type.
     When we couldn't determine this we used to issue a warning asking curators to curate this.
      */
-    Optional<SampleCharacteristic> getBiosampleInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup){
+    Optional<SampleCharacteristic> getBiosampleInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
         return FluentIterable.from(
-                new SampleCharacteristic [] {
+                new SampleCharacteristic[]{
                         experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), "organism part"),
                         experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), "cell line"),
                         experimentDesign.getSampleCharacteristic(testAssayGroup.getFirstAssayAccession(), "cell type")
@@ -429,14 +434,14 @@ public class EvidenceService<Expr extends DifferentialExpression,
     Original comment:
     # Go through the types (should probably always only be one)...
      */
-    Set<SampleCharacteristic> getDiseaseInfos(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup){
+    Set<SampleCharacteristic> getDiseaseInfos(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
         return FluentIterable.from(experimentDesign.getSampleCharacteristics(testAssayGroup.getFirstAssayAccession())).filter(
                 new Predicate<SampleCharacteristic>() {
                     @Override
                     public boolean apply(@Nullable SampleCharacteristic sampleCharacteristic) {
                         return sampleCharacteristic.header().toLowerCase().contains("disease")
-                                && ! StringUtils.containsAny(sampleCharacteristic.value().toLowerCase(),
-                                    "normal", "healthy", "control");
+                                && !StringUtils.containsAny(sampleCharacteristic.value().toLowerCase(),
+                                "normal", "healthy", "control");
                     }
                 }
         ).toSet();
@@ -451,12 +456,12 @@ public class EvidenceService<Expr extends DifferentialExpression,
     characteristics and something else is the factor e.g a treatment, the
     confidence is "low".
     */
-    private DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic, AssayGroup testAssayGroup){
+    private DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic, AssayGroup testAssayGroup) {
         FactorSet factors = experimentDesign.getFactors(testAssayGroup.getFirstAssayAccession());
-        if(!factors.factorsByType.keySet().contains(Factor.normalize(diseaseCharacteristic.header()))){
+        if (!factors.factorsByType.keySet().contains(Factor.normalize(diseaseCharacteristic.header()))) {
             return DiseaseAssociation.CONFIDENCE.LOW;
         } else {
-            if(factors.size() > 1){
+            if (factors.size() > 1) {
                 return DiseaseAssociation.CONFIDENCE.MEDIUM;
             } else {
                 return DiseaseAssociation.CONFIDENCE.HIGH;
@@ -465,19 +470,19 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
 
-    Map<String, Map<Contrast, Integer>> getPercentileRanks(E experiment){
+    Map<String, Map<Contrast, Integer>> getPercentileRanks(E experiment) {
         return readPercentileRanks(experiment, dataFileHub.getDifferentialExperimentFiles(experiment.getAccession()).percentileRanks.get());
     }
 
-    private Map<String, Map<Contrast, Integer>> readPercentileRanks(E experiment, ObjectInputStream<String[]> lines){
+    private Map<String, Map<Contrast, Integer>> readPercentileRanks(E experiment, ObjectInputStream<String[]> lines) {
         Map<Integer, Contrast> whichContrastInWhichLine = percentileRanksColumnsFromHeader(lines.readNext(), experiment);
         Map<String, Map<Contrast, Integer>> result = new HashMap<>();
-        for(String[] line : new IterableObjectInputStream<>(lines)){
+        for (String[] line : new IterableObjectInputStream<>(lines)) {
             Map<Contrast, Integer> resultForThisGene = new HashMap<>();
 
-            for(Map.Entry<Integer, Contrast> e: whichContrastInWhichLine.entrySet()){
+            for (Map.Entry<Integer, Contrast> e : whichContrastInWhichLine.entrySet()) {
                 String value = line[e.getKey()];
-                if(!"NA".equals(value)){
+                if (!"NA".equals(value)) {
                     resultForThisGene.put(e.getValue(), Integer.parseInt(value));
                 }
             }
@@ -486,17 +491,17 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    private Map<Integer, Contrast> percentileRanksColumnsFromHeader(String [] header, E experiment){
+    private Map<Integer, Contrast> percentileRanksColumnsFromHeader(String[] header, E experiment) {
         ImmutableMap.Builder<Integer, Contrast> b = ImmutableMap.builder();
-        for(int i = 1; i < header.length ; i++){
-            b.put(i,experiment.getDataColumnDescriptor(StringUtils.trim(header[i])) );
+        for (int i = 1; i < header.length; i++) {
+            b.put(i, experiment.getDataColumnDescriptor(StringUtils.trim(header[i])));
         }
         return b.build();
     }
 
-    String getMethodDescriptionFromAnalysisMethodsFile(E experiment){
-        for(String[] line: dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()){
-            if(line[0].toLowerCase().contains("differential expression")){
+    String getMethodDescriptionFromAnalysisMethodsFile(E experiment) {
+        for (String[] line : dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.get().readAll()) {
+            if (line[0].toLowerCase().contains("differential expression")) {
                 return line[1].trim().replace("<.+?>", "");
             }
         }
