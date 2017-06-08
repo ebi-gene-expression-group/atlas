@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import com.google.common.base.Stopwatch;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -14,6 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 @Named
 public class BioEntityPropertyService {
@@ -63,8 +62,15 @@ public class BioEntityPropertyService {
                                                List<BioentityPropertyName> orderedPropertyNames, String entityName,
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-//        addReactomePropertyValues(propertyValuesByType);
+        StopWatch stopwatch = new StopWatch("BioentityPropertyService.modelAttributes");
+
+        stopwatch.start("addReactomePropertyValues");
+        addReactomePropertyValues(propertyValuesByType);
+        stopwatch.stop();
+
+        stopwatch.start("addDesignElements");
         addDesignElements(identifier, propertyValuesByType);
+        stopwatch.stop();
 
         Map<String, Object> result = new HashMap<>();
 
@@ -82,8 +88,12 @@ public class BioEntityPropertyService {
 
         result.put("propertyNames", propertiesWeWillDisplay(orderedPropertyNames, propertyValuesByType));
 
-//        result.put("bioentityProperties",
-//                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames,propertyValuesByType)));
+        stopwatch.start("bioentityProperties");
+        result.put("bioentityProperties",
+                gson.toJson(bioentityProperties(identifier, species, orderedPropertyNames,propertyValuesByType)));
+        stopwatch.stop();
+
+        LOGGER.debug(stopwatch.prettyPrint());
 
         return result;
 
@@ -190,8 +200,6 @@ public class BioEntityPropertyService {
 
     private void addReactomePropertyValues(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
         // When we update to Java 1.8 we’ll be able to use .getOrDefault instead of having this check
         if (propertyValuesByType.get(BioentityPropertyName.UNIPROT) != null) {
             Set<String> reactomeIds = new HashSet<>();
@@ -206,8 +214,6 @@ public class BioEntityPropertyService {
                 propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
             }
         }
-
-        LOGGER.debug("addReactomePropertyValues: {} seconds", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) / 1000F);
 
     }
 
