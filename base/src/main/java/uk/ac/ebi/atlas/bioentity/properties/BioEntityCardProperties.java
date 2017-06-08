@@ -57,7 +57,7 @@ public class BioEntityCardProperties {
     public static final ImmutableList<BioentityPropertyName> bioentityPropertyNames = ImmutableList.of(
             DESCRIPTION, SYMBOL, //not displayed in the table but useful for other things
             SYNONYM,
-            ORTHOLOG,
+//            ORTHOLOG,
             GO,
             PO,
             INTERPRO,
@@ -69,12 +69,12 @@ public class BioEntityCardProperties {
             WBPSTRANSCRIPT,
             WBPSPROTEIN,
             ENTREZGENE,
-            UNIPROT,
+//            UNIPROT,
             MGI_ID,
             MGI_DESCRIPTION,
             GENE_BIOTYPE,
             DESIGN_ELEMENT,
-            REACTOME,
+//            REACTOME,
             MIRBASE_ID,
             MIRBASE_ACCESSION,
             MIRBASE_SEQUENCE
