@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -11,6 +12,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTrader;
 import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -28,9 +31,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Named
 public class BioEntityPropertyService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(BioEntityPropertyService.class);
 
     private final static ImmutableList<BioentityPropertyName> DISPLAYED_PROPERTY_LIST =
             ImmutableList.of(BioentityPropertyName.DESCRIPTION, BioentityPropertyName.SYMBOL);
@@ -57,7 +63,7 @@ public class BioEntityPropertyService {
                                                List<BioentityPropertyName> orderedPropertyNames, String entityName,
                                                Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-        addReactomePropertyValues(propertyValuesByType);
+//        addReactomePropertyValues(propertyValuesByType);
         addDesignElements(identifier, propertyValuesByType);
 
         Map<String, Object> result = new HashMap<>();
@@ -184,6 +190,8 @@ public class BioEntityPropertyService {
 
     private void addReactomePropertyValues(Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
         // When we update to Java 1.8 we’ll be able to use .getOrDefault instead of having this check
         if (propertyValuesByType.get(BioentityPropertyName.UNIPROT) != null) {
             Set<String> reactomeIds = new HashSet<>();
@@ -198,6 +206,8 @@ public class BioEntityPropertyService {
                 propertyValuesByType.put(BioentityPropertyName.REACTOME, reactomeIds);
             }
         }
+
+        LOGGER.debug("addReactomePropertyValues: {} seconds", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) / 1000F);
 
     }
 
