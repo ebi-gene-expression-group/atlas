@@ -103,7 +103,7 @@ public class PopularSpeciesServiceTest {
     }
 
     @Test
-    public void askMoreThanThereAre() throws Exception {
-        assertThat(true, is(false));
+    public void requestMoreThanAvailable() throws Exception {
+        assertThat(subject.getPopularSpecies(getKingdomToSpeciesTotalSize() + 10), hasSize(getKingdomToSpeciesTotalSize()));
     }
 }

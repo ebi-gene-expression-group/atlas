@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.species.services;
 import com.atlassian.util.concurrent.LazyReference;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.sun.org.apache.bcel.internal.generic.POP;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -32,7 +30,7 @@ public class PopularSpeciesService {
     }
 
     public List<PopularSpeciesInfo> getPopularSpecies(int howMany) {
-        return howMany > sortedList.get().size() ? sortedList.get() : sortedList.get().subList(0, howMany);
+        return sortedList.get().subList(0, Math.min(sortedList.get().size(), howMany));
     }
 
     public List<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
@@ -44,7 +42,7 @@ public class PopularSpeciesService {
                     }
                 }).toList();
 
-        return howMany > filteredList.size() ? filteredList : filteredList.subList(0, howMany);
+        return filteredList.subList(0, Math.min(filteredList.size(), howMany));
     }
 
 }
