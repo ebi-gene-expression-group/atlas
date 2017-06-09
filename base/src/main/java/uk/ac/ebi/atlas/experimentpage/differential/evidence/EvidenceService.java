@@ -187,7 +187,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         result.add("log2_fold_change", log2FoldChange(expression, foldChangeRank));
         result.addProperty("test_sample", testAndReferenceLabels.getLeft());
         result.addProperty("reference_sample", testAndReferenceLabels.getRight());
-        result.addProperty("date_asserted", new SimpleDateFormat("YYYY-MM-dd'T'HH:MM:SS'Z'").format(experiment.getLastUpdate()));
+        result.addProperty("date_asserted", new SimpleDateFormat("YYYY-MM-dd'T'HH:mm:ss'Z'").format(experiment.getLastUpdate()));
         result.addProperty("experiment_overview", experiment.getDescription());
         result.addProperty("comparison_name", contrast.getDisplayName());
         result.addProperty("test_replicates_n", contrast.getTestAssayGroup().getReplicates());
