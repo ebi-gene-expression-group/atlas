@@ -342,7 +342,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                  JsonObject evidence) {
         JsonObject result = new JsonObject();
         result.addProperty("sourceID", "expression_atlas");
-        result.addProperty("validated_against_schema_version", "1.2.5"); //TODO remove this line, add on validation side
         result.addProperty("type", "rna_expression");
         result.addProperty("access_level", "public");
         result.add("unique_association_fields", uniqueAssociationFields);
