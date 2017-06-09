@@ -41,7 +41,7 @@
     </rule>
     <rule>
         <note>Redirect the query results from query=? to search=?</note>
-        <from>/query</from>
-        <to type="permanent-redirect" qsappend="true">/gxa/search?</to>
+        <from>^/query</from>
+        <to type="permanent-redirect" qsappend="true">/gxa/search</to>
     </rule>
 </urlrewrite>
