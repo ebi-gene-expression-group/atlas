@@ -139,18 +139,16 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                 diseaseUri,
                                 biosampleInfo
                         ),
-                        withLiteratureReferences(
-                                evidence(
-                                        experiment,
-                                        ensemblGeneId,
-                                        expression,
-                                        foldChangeRank,
-                                        testAndReferenceLabels,
-                                        contrast,
-                                        confidence,
-                                        methodDescription,
-                                        expressionAtlasVersion
-                                ), experiment.getPubMedIds()
+                        evidence(
+                                experiment,
+                                ensemblGeneId,
+                                expression,
+                                foldChangeRank,
+                                testAndReferenceLabels,
+                                contrast,
+                                confidence,
+                                methodDescription,
+                                expressionAtlasVersion
                         )
                 ), experiment.getPubMedIds()
         );
