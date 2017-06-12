@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -60,9 +59,6 @@ public class ExperimentCrudTest {
 
     @Mock
     ExperimentDesignFileWriterService experimentDesignFileWriterService;
-
-    @Mock
-    ConditionsIndexingService conditionsIndexingService;
 
     @Mock
     ExperimentChecker experimentChecker;
@@ -112,7 +108,7 @@ public class ExperimentCrudTest {
 
         subject = new ExperimentCrud(condensedSdrfParserMock,
                 experimentDesignFileWriterService,
-                conditionsIndexingService,experimentDAOMock,
+                experimentDAOMock,
                 experimentChecker,
                 analyticsLoaderFactory,configurationTrader );
     }
@@ -143,24 +139,6 @@ public class ExperimentCrudTest {
         verify(experimentDAOMock).updateExperiment(EXPERIMENT_ACCESSION, false);
         verify(experimentDAOMock, times(0)).updateExperiment(EXPERIMENT_ACCESSION, true);
 
-    }
-
-    @Test
-    public void updateExperimentDesignAlsoIndexesConditions() throws Exception {
-        subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
-        verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
-    }
-
-    @Test
-    public void importExperimentIndexesConditions() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, false);
-        verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
-    }
-
-    @Test
-    public void updateExperimentIndexesConditions() throws Exception {
-        subject.updateExperimentDesign(EXPERIMENT_ACCESSION);
-        verify(conditionsIndexingService).indexConditions(EXPERIMENT_ACCESSION, experimentType, experimentDesignMock);
     }
 
     @Test

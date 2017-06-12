@@ -12,10 +12,6 @@
         <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
     </bean>
 
-    <bean id="solrClientDifferentialConditions" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://${solr.host}:8983/solr/differentialConditions"/>
-    </bean>
-
     <bean id="solrSuggestionServerURL" class="java.lang.String">
         <constructor-arg value="http://${solr.host}:8983/solr/gxa/"/>
     </bean>

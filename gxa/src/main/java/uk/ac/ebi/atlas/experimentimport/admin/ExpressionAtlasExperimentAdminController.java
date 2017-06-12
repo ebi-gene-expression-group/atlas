@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -28,7 +27,6 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
     public ExpressionAtlasExperimentAdminController(DataFileHub dataFileHub,
                                                     CondensedSdrfParser condensedSdrfParser,
                                                     ExperimentDesignFileWriterService experimentDesignFileWriterService,
-                                                    ConditionsIndexingService conditionsIndexingService,
                                                     ExperimentDAO experimentDAO,
                                                     ExpressionAtlasExperimentChecker experimentChecker,
                                                     AnalyticsLoaderFactory analyticsLoaderFactory,
@@ -47,7 +45,6 @@ public class ExpressionAtlasExperimentAdminController extends ExperimentAdminCon
                     new ExperimentCrud(
                         condensedSdrfParser,
                         experimentDesignFileWriterService,
-                        conditionsIndexingService,
                         experimentDAO,
                         experimentChecker,
                         analyticsLoaderFactory,
