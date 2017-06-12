@@ -7,7 +7,6 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -247,8 +246,8 @@ public class EvidenceService<Expr extends DifferentialExpression,
         return result;
     }
 
-    String getPValueString(Expr expression) {
-        return String.format("%3.2e", expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue());
+    double getPValue(Expr expression) {
+        return Double.valueOf(String.format("%3.2e", expression.getPValue() == 0.0 ? 1e-234 : expression.getPValue()));
     }
 
     JsonObject resourceScore(Expr expression, String methodDescription) {
@@ -257,7 +256,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
         probability estimates shouldn't be zero but sometimes we get them from the pipeline as rounding errors
         use the smallest positive double greater than zero,
          */
-        result.addProperty("value", getPValueString(expression));
+        result.addProperty("value", getPValue(expression));
 
         JsonObject method = new JsonObject();
         method.addProperty("description", methodDescription);
@@ -302,13 +301,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
     JsonObject uniqueAssociationFields(String ensemblGeneId, String experimentAccession, String comparisonName) {
-        /*
-                            my $uniqueAssocFields = {
-						"geneID" 			=> $geneIDuri,
-						"study_id"			=> $gxaExptIDuri,
-						"comparison_name"	=> $comparisonName
-					};
-         */
         JsonObject result = new JsonObject();
         result.addProperty("geneID", geneUri(ensemblGeneId));
         result.addProperty("study_id", experimentAccessionUri(experimentAccession));

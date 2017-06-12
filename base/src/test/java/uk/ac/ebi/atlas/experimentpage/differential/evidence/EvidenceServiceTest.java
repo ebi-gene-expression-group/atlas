@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.differential.evidence;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -12,13 +11,8 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.profiles.stream.DifferentialProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
-import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesProperties;
-
-import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.*;
 
@@ -80,8 +74,8 @@ public class EvidenceServiceTest {
     @Test
     public void pValuesRoundedLikeWeDid() {
         assertThat(
-                subject.getPValueString(new DifferentialExpression(5.21107983317421e-10, 0.0, c1)),
-                is("5.21e-10")
+                subject.getPValue(new DifferentialExpression(5.21107983317421e-10, 0.0, c1)),
+                is(Double.valueOf("5.21e-10"))
         );
     }
 }
