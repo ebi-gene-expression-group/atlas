@@ -7,9 +7,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -17,7 +18,10 @@ import static org.junit.Assert.assertThat;
 public class SpeciesFactoryIT {
 
     @Inject
-    private SpeciesFactory subject;
+    SpeciesFactory subject;
+
+    @Inject
+    SpeciesPropertiesTrader speciesPropertiesTrader;
 
     @Test
     public void differentSpeciesSameProperties() {
@@ -61,5 +65,18 @@ public class SpeciesFactoryIT {
     @Test
     public void createUnknownSpecies() {
         assertThat(subject.createUnknownSpecies().isUnknown(), is(true));
+    }
+
+    @Test
+    public void oneSpeciesIsHuman(){
+        Set<String> result = new HashSet<>();
+        for(SpeciesProperties speciesProperties: speciesPropertiesTrader.getAll())
+            if(subject.create(speciesProperties.ensemblName()).isUs()){
+                result.add(speciesProperties.ensemblName());
+            }
+        assertThat(
+                result,
+                hasSize(1)
+        );
     }
 }

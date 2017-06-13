@@ -51,6 +51,9 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
     public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions) {
+        if(experiment.getType().isMicroRna() || ! experiment.getSpecies().isUs()){
+            return new JsonArray();
+        }
 
         Map<Contrast, DiseaseAssociation> diseaseAssociations = getDiseaseAssociations(experiment);
         if (diseaseAssociations.size() == 0) {
@@ -496,4 +499,5 @@ public class EvidenceService<Expr extends DifferentialExpression,
         }
         return "";
     }
+
 }
