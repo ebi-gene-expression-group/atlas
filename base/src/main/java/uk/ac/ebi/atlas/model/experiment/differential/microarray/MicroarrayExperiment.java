@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
+import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
@@ -14,7 +15,7 @@ public class MicroarrayExperiment extends DifferentialExperiment {
     private SortedSet<String> arrayDesignAccessions;
     private SortedSet<String> arrayDesignNames;
 
-    public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, List<Contrast> contrasts,
+    public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts,
                                 String description, Species species,
                                 SortedSet<String> arrayDesignAccessions, SortedSet<String> arrayDesignNames,
                                 ExperimentDesign experimentDesign, Set<String> pubMedIds) {

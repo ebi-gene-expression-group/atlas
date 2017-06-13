@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
@@ -75,9 +76,8 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putSampleCharacteristic(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
-        List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description",
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), ImmutableList.of(Pair.of(contrast1, true)), "description",
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
@@ -114,9 +114,8 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         //Adding the contrasts
-        List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description",
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), ImmutableList.of(Pair.of(contrast1, true)), "description",
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
@@ -152,9 +151,8 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         //Adding the contrasts
-        List<Contrast> contrasts = ImmutableList.of(contrast1);
         DifferentialExperiment experiment =
-                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description",
+                new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), ImmutableList.of(Pair.of(contrast1, true)), "description",
                         new Species("species", SpeciesProperties.UNKNOWN), ImmutableSet.<String>of(), experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);

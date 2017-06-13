@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,7 +90,7 @@ public class ExperimentInfoListServiceTest {
 
         when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", ASSAY_1,ASSAY_2));
         when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test",ASSAY_1));
-        List<Contrast> contrasts = ImmutableList.of(contrast);
+        List<Pair<Contrast, Boolean>> contrasts = ImmutableList.of(Pair.of(contrast, true));
         differentialExperiment = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,

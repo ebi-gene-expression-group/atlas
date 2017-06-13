@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.model.experiment;
 
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -17,7 +19,6 @@ import javax.xml.xpath.*;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 public class ExperimentConfiguration {
 
@@ -30,9 +31,9 @@ public class ExperimentConfiguration {
         this.xmlReader = xmlReader;
     }
 
-    public List<Contrast> getContrasts() {
+    public List<Pair<Contrast, Boolean>> getContrastAndAnnotationPairs() {
 
-        List<Contrast> contrasts = new ArrayList<>();
+        List<Pair<Contrast, Boolean>> contrasts = new ArrayList<>();
 
         NodeList arrayDesigns = xmlReader.getDocument().getElementsByTagName("array_design");
         for (int i = 0; i < arrayDesigns.getLength(); i++) {
@@ -49,20 +50,30 @@ public class ExperimentConfiguration {
         return contrasts;
     }
 
-    private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Contrast> contrasts) {
+    public List<Contrast> getContrasts(){
+        return FluentIterable.from(getContrastAndAnnotationPairs()).transform(new Function<Pair<Contrast,Boolean>, Contrast>() {
+            @Override
+            public Contrast apply(Pair<Contrast, Boolean> p) {
+                return p.getLeft();
+            }
+        }).toList();
+    }
+
+    private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Pair<Contrast, Boolean>> contrasts) {
         String[] ids = xmlReader.getStringArray(query);
         for (String id : ids) {
-            Contrast contrast = getContrast(id, arrayDesignAccession);
-            contrasts.add(contrast);
+            contrasts.add(getContrastAndCttvPrimaryPair(id, arrayDesignAccession));
         }
     }
 
-    private Contrast getContrast(String id, String arrayDesignAccession) {
+    private Pair<Contrast,Boolean> getContrastAndCttvPrimaryPair(String id, String arrayDesignAccession) {
         Configuration configuration = xmlReader.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
         String test = configuration.getString("test_assay_group");
-        return new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name);
+
+        return Pair.of(new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name),
+                new Integer(1).equals(configuration.getInt("cttv_primary", -1)));
     }
 
     private AssayGroup getAssayGroup(String id) {

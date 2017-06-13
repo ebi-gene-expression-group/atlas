@@ -31,7 +31,7 @@ public class ExperimentConfigurationTest {
 
     private static Path tmpFilePath;
 
-    private static final String RNASEQ_BASELINE_CONFIGURATION_XML =
+    private static final String MICROARRAY_CONFIGURATION_XML =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                     "<configuration experimentType=\"microarray_1colour_mrna_differential\" r_data=\"1\">\n" +
                     "    <analytics>\n" +
@@ -66,14 +66,21 @@ public class ExperimentConfigurationTest {
                     "            </assay_group>\n" +
                     "        </assay_groups>\n" +
                     "        <contrasts>\n" +
-                    "            <contrast id=\"g1_g2\">\n" +
+                    "            <contrast id=\"g1_g2\" >\n" +
                     "                <name>'g1' vs 'g2'</name>\n" +
                     "                <reference_assay_group>g1</reference_assay_group>\n" +
                     "                <test_assay_group>g2</test_assay_group>\n" +
                     "            </contrast>\n" +
+                    "            <contrast id=\"g1_g3\" cttv_primary=\"1\">\n" +
+                    "                <name>'g1' vs 'g3'</name>\n" +
+                    "                <reference_assay_group>g1</reference_assay_group>\n" +
+                    "                <test_assay_group>g3</test_assay_group>\n" +
+                    "            </contrast>\n" +
                     "        </contrasts>\n" +
                     "    </analytics>\n" +
                     "</configuration>\n";
+
+
 
     private ExperimentConfiguration subject;
 
@@ -92,7 +99,7 @@ public class ExperimentConfigurationTest {
 
     @Before
     public void setUp() throws Exception {
-        InputStream inputStream = new ByteArrayInputStream(RNASEQ_BASELINE_CONFIGURATION_XML.getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream(MICROARRAY_CONFIGURATION_XML.getBytes(StandardCharsets.UTF_8));
 
         Parameters params = new Parameters();
         FileBasedConfigurationBuilder<XMLConfiguration> fileBuilder =
@@ -140,13 +147,17 @@ public class ExperimentConfigurationTest {
     @Test
     public void testGetContrasts()  {
         List<Contrast> contrasts = subject.getContrasts();
-        assertThat(contrasts, hasSize(1));
-        Contrast contrast = contrasts.iterator().next();
+        assertThat(contrasts, hasSize(2));
+        Contrast contrast = contrasts.get(0);
         assertThat(contrast.getId(), is("g1_g2"));
         assertThat(contrast.getDisplayName(), is("'g1' vs 'g2'"));
         assertThat(contrast.getReferenceAssayGroup(), contains("A"));
         assertThat(contrast.getTestAssayGroup(), contains("A", "B"));
+        Contrast otherContrast = contrasts.get(1);
+        assertThat(otherContrast.getId(), not(is(contrast.getId())));
     }
+
+
 
     @Test
     public void testGetExperimentType() {

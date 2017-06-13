@@ -351,11 +351,10 @@ public class EvidenceService<Expr extends DifferentialExpression,
             Optional<SampleCharacteristic> diseaseInfo = getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
 
             if (biosampleInfo.isPresent() && diseaseInfo.isPresent()) {
-                boolean isCttvPrimary=true;
                 result.put(
                         contrast,
                         DiseaseAssociation.create(
-                                biosampleInfo.get(), experiment.getExperimentDesign(), contrast, isCttvPrimary, diseaseInfo.get()
+                                biosampleInfo.get(), experiment.getExperimentDesign(), contrast, experiment.doesContrastHaveCttvPrimaryAnnotation(contrast), diseaseInfo.get()
                         )
                 );
             }

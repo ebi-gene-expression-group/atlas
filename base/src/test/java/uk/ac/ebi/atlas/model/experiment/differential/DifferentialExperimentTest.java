@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialExperimentTest {
@@ -50,7 +50,12 @@ public class DifferentialExperimentTest {
     }
 
     static DifferentialExperiment mockExperiment(String accession, List<Contrast> contrasts, ExperimentDesign experimentDesign){
-        return new DifferentialExperiment(accession, new Date(), contrasts,
+        return new DifferentialExperiment(accession, new Date(), FluentIterable.from(contrasts).transform(new Function<Contrast, Pair<Contrast,Boolean>>() {
+            @Override
+            public Pair<Contrast, Boolean> apply(Contrast contrast) {
+                return Pair.of(contrast, true);
+            }
+        }).toList(),
                 "description", new Species("species", SpeciesProperties.UNKNOWN), Sets.newHashSet(PUBMEDID),
                 experimentDesign);
     }

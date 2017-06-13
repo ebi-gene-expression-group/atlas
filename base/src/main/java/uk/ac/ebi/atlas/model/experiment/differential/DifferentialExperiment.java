@@ -1,10 +1,12 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.collect.Sets;
-import com.google.gson.Gson;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
@@ -19,24 +21,40 @@ import java.util.*;
 
 public class DifferentialExperiment extends Experiment<Contrast> {
 
-    private static final Gson gson = new Gson();
+    private final ImmutableSet<Contrast> contrastsWithCttvPrimaryAnnotation;
 
-    public DifferentialExperiment(String accession, Date lastUpdate, List<Contrast> contrasts, String description,
+    public DifferentialExperiment(String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts, String description,
                                   Species species, Collection<String> pubMedIds,
                                   ExperimentDesign experimentDesign) {
-
         this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description,
                 species, pubMedIds, experimentDesign);
 
     }
 
+    private static final Function<Pair<Contrast,Boolean>, Contrast> unpack = new Function<Pair<Contrast,Boolean>, Contrast>() {
+        @Override
+        public Contrast apply(Pair<Contrast, Boolean> contrastBooleanPair) {
+            return contrastBooleanPair.getLeft();
+        }
+    };
+
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
-                                     List<Contrast> contrasts, String description, Species species,
+                                     List<Pair<Contrast, Boolean>> contrasts, String description, Species species,
                                      Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
 
         super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
                 experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
-                Collections.<String>emptyList(), Collections.<String>emptyList(), contrasts, ExperimentDisplayDefaults.simpleDefaults());
+                Collections.<String>emptyList(), Collections.<String>emptyList(), FluentIterable.from(contrasts).transform(unpack).toList(), ExperimentDisplayDefaults.simpleDefaults());
+        this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(new Predicate<Pair<Contrast, Boolean>>() {
+            @Override
+            public boolean apply(Pair<Contrast, Boolean> contrastBooleanPair) {
+                return contrastBooleanPair.getRight();
+            }
+        }).transform(unpack).toSet();
+    }
+
+    public boolean doesContrastHaveCttvPrimaryAnnotation(Contrast contrast){
+        return contrastsWithCttvPrimaryAnnotation.contains(contrast);
     }
 
     @Override
@@ -48,26 +66,6 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         result.put("contrasts", this.getDataColumnDescriptors());
 
         return result;
-    }
-
-    public Map<String, ?> getDifferentialAttributes() {
-        //you only have a selected contrast when you're on an experiment design page
-        return getDifferentialAttributes("");
-    }
-
-    public Map<String, ?> getDifferentialAttributes(String selectedContrast) {
-
-        Map<String, Object> result = new HashMap<>();
-        if (StringUtils.isBlank(selectedContrast)) {
-            selectedContrast = getDataColumnDescriptors().iterator().next().getId();
-        }
-
-        Contrast contrast = getDataColumnDescriptor(selectedContrast);
-        result.put("referenceAssays", gson.toJson(Sets.newHashSet(contrast.getReferenceAssayGroup())));
-        result.put("testAssays", gson.toJson(Sets.newHashSet(contrast.getTestAssayGroup())));
-
-        return result;
-
     }
 
     @Override

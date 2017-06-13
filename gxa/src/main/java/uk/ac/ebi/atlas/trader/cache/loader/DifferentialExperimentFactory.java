@@ -29,11 +29,11 @@ public class DifferentialExperimentFactory implements ExperimentFactory<Differen
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
-        ExperimentConfiguration experimentConfiguration =
+        final ExperimentConfiguration experimentConfiguration =
                 configurationTrader.getExperimentConfiguration(experimentAccession);
 
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(),
-                experimentConfiguration.getContrasts(), experimentDescription,
+                experimentConfiguration.getContrastAndAnnotationPairs(), experimentDescription,
                 speciesFactory.create(experimentDTO.getSpecies()), experimentDTO.getPubmedIds(), experimentDesign);
 
     }

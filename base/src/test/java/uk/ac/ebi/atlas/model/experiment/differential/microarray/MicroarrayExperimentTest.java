@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.model.experiment.differential.microarray;
 
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,7 +50,12 @@ public class MicroarrayExperimentTest {
         SpeciesProperties speciesProperties =
                 SpeciesProperties.create("Homo_sapiens", "ORGANISM_TYPE", "animals", ImmutableList.of(genomeBrowser));
 
-        return new MicroarrayExperiment(type, accession, new Date(), contrasts, "description",
+        return new MicroarrayExperiment(type, accession, new Date(), FluentIterable.from(contrasts).transform(new Function<Contrast, Pair<Contrast, Boolean>>() {
+            @Override
+            public Pair<Contrast, Boolean> apply(Contrast contrast) {
+                return Pair.of(contrast, true);
+            }
+        }).toList(), "description",
                 new Species("Homo sapiens", speciesProperties), arrayDesignAccessions, new TreeSet<String>(),
                 mock(ExperimentDesign.class),
                 Sets.newHashSet(PUBMEDID));
