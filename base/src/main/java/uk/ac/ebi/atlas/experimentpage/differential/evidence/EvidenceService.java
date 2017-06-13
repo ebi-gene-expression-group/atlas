@@ -35,7 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class EvidenceService<Expr extends DifferentialExpression,
         E extends DifferentialExperiment, StreamOptions extends DifferentialProfileStreamOptions, Prof extends Profile<Contrast, Expr, Prof>> {
@@ -70,7 +69,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         for (Prof profile : new IterableObjectInputStream<>(differentialProfileStreamFactory.create(experiment, streamOptions))) {
             for (Contrast contrast : diseaseAssociations.keySet()) {
-                boolean isCttvPrimary = true; //TODO
                 Expr expression = profile.getExpression(contrast);
                 if (expression != null) {
                     result.addAll(piecesOfEvidence(
@@ -81,7 +79,6 @@ public class EvidenceService<Expr extends DifferentialExpression,
                             rankPerContrastPerGene.get(profile.getId()).get(contrast),
                             profile.getId(),
                             contrast,
-                            isCttvPrimary,
                             expressionAtlasVersion
                             )
                     );
@@ -95,7 +92,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     JsonArray piecesOfEvidence(E experiment, String methodDescription,
                                DiseaseAssociation linkToDisease,
                                Expr expression, Integer foldChangeRank,
-                               String ensemblGeneId, Contrast contrast, boolean isCttvPrimary,
+                               String ensemblGeneId, Contrast contrast,
                                String expressionAtlasVersion) {
         JsonArray result = new JsonArray();
         for (OntologyTerm diseaseUri : linkToDisease.diseaseInfo().valueOntologyTerms()) {
@@ -110,7 +107,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                     foldChangeRank,
                     ensemblGeneId,
                     contrast,
-                    isCttvPrimary,
+                    linkToDisease.isCttvPrimary(),
                     expressionAtlasVersion)
             );
         }
@@ -351,18 +348,16 @@ public class EvidenceService<Expr extends DifferentialExpression,
         Map<Contrast, DiseaseAssociation> result = new HashMap<>();
         for (Contrast contrast : experiment.getDataColumnDescriptors()) {
             Optional<SampleCharacteristic> biosampleInfo = getBiosampleInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
+            Optional<SampleCharacteristic> diseaseInfo = getDiseaseInfo(experiment.getExperimentDesign(), contrast.getTestAssayGroup());
 
-            if (biosampleInfo.isPresent()) {
-                for (SampleCharacteristic diseaseInfo : getDiseaseInfos(experiment.getExperimentDesign(), contrast.getTestAssayGroup())) {
-                    result.put(contrast, DiseaseAssociation.create(
-                            biosampleInfo.get(),
-                            factorBasedSummaryLabel(experiment.getExperimentDesign(), contrast.getReferenceAssayGroup()),
-                            factorBasedSummaryLabel(experiment.getExperimentDesign(), contrast.getTestAssayGroup()),
-                            diseaseInfo,
-                            determineStudyConfidence(experiment.getExperimentDesign(), diseaseInfo, contrast.getTestAssayGroup(), true)
-                    ));
-                }
-
+            if (biosampleInfo.isPresent() && diseaseInfo.isPresent()) {
+                boolean isCttvPrimary=true;
+                result.put(
+                        contrast,
+                        DiseaseAssociation.create(
+                                biosampleInfo.get(), experiment.getExperimentDesign(), contrast, isCttvPrimary, diseaseInfo.get()
+                        )
+                );
             }
         }
         return result;
@@ -384,10 +379,15 @@ public class EvidenceService<Expr extends DifferentialExpression,
 
         public abstract CONFIDENCE confidence();
 
+        public abstract boolean isCttvPrimary();
 
-        public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, String referenceSampleLabel, String testSampleLabel,
-                                                SampleCharacteristic diseaseInfo, CONFIDENCE confidence) {
-            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence);
+
+        public static DiseaseAssociation create(SampleCharacteristic biosampleInfo, ExperimentDesign experimentDesign, Contrast contrast,
+                                                boolean isCttvPrimary, SampleCharacteristic diseaseInfo){
+            String referenceSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getReferenceAssayGroup());
+            String testSampleLabel = factorBasedSummaryLabel(experimentDesign, contrast.getTestAssayGroup());
+            DiseaseAssociation.CONFIDENCE confidence = determineStudyConfidence(experimentDesign, diseaseInfo, contrast.getTestAssayGroup(), isCttvPrimary);
+            return new AutoValue_EvidenceService_DiseaseAssociation(biosampleInfo, referenceSampleLabel, testSampleLabel, diseaseInfo, confidence, isCttvPrimary);
         }
     }
 
@@ -397,7 +397,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     https://github.com/opentargets/json_schema/blob/master/src/evidence/expression.json
     "test_sample", "reference_sample"
      */
-    String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
+    static String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
         return Joiner.on("; ").join(FluentIterable.from(experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values()).filter(new Predicate<String>() {
             @Override
             public boolean apply(@Nullable String s) {
@@ -422,11 +422,11 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
     /*
-    We expect zero or one but the original code represents this as a set.
+    We expect zero or one but the original code represented this as a set.
     Original comment:
     # Go through the types (should probably always only be one)...
      */
-    Set<SampleCharacteristic> getDiseaseInfos(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
+    Optional<SampleCharacteristic> getDiseaseInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
         return FluentIterable.from(experimentDesign.getSampleCharacteristics(testAssayGroup.getFirstAssayAccession())).filter(
                 new Predicate<SampleCharacteristic>() {
                     @Override
@@ -436,7 +436,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                                 "normal", "healthy", "control");
                     }
                 }
-        ).toSet();
+        ).first();
     }
 
     /*
@@ -448,7 +448,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     characteristics and something else is the factor e.g a treatment, the
     confidence is "low".
     */
-    private DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic,
+    private static DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic,
                                                                    AssayGroup testAssayGroup, boolean isCttvPrimary) {
         FactorSet factors = experimentDesign.getFactors(testAssayGroup.getFirstAssayAccession());
         if (!factors.factorsByType.keySet().contains(Factor.normalize(diseaseCharacteristic.header()))) {
