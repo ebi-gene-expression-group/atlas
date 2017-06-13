@@ -359,7 +359,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
                             factorBasedSummaryLabel(experiment.getExperimentDesign(), contrast.getReferenceAssayGroup()),
                             factorBasedSummaryLabel(experiment.getExperimentDesign(), contrast.getTestAssayGroup()),
                             diseaseInfo,
-                            determineStudyConfidence(experiment.getExperimentDesign(), diseaseInfo, contrast.getTestAssayGroup())
+                            determineStudyConfidence(experiment.getExperimentDesign(), diseaseInfo, contrast.getTestAssayGroup(), true)
                     ));
                 }
 
@@ -448,12 +448,13 @@ public class EvidenceService<Expr extends DifferentialExpression,
     characteristics and something else is the factor e.g a treatment, the
     confidence is "low".
     */
-    private DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic, AssayGroup testAssayGroup) {
+    private DiseaseAssociation.CONFIDENCE determineStudyConfidence(ExperimentDesign experimentDesign, SampleCharacteristic diseaseCharacteristic,
+                                                                   AssayGroup testAssayGroup, boolean isCttvPrimary) {
         FactorSet factors = experimentDesign.getFactors(testAssayGroup.getFirstAssayAccession());
         if (!factors.factorsByType.keySet().contains(Factor.normalize(diseaseCharacteristic.header()))) {
             return DiseaseAssociation.CONFIDENCE.LOW;
         } else {
-            if (factors.size() > 1) {
+            if (factors.size() > 1 || !isCttvPrimary) {
                 return DiseaseAssociation.CONFIDENCE.MEDIUM;
             } else {
                 return DiseaseAssociation.CONFIDENCE.HIGH;
