@@ -49,6 +49,6 @@ public class BioentityPropertiesStreamBuilder {
     }
 
     String getSpecies() {
-        return StringUtils.substringBefore(getFileName(), ".").replaceAll("_", " ");
+        return StringUtils.substringBefore(getFileName(), ".");
     }
 }

@@ -6,17 +6,8 @@ import javax.inject.Named;
 @Named
 public class SolrQueryBuilderFactory {
 
-    public FacetedPropertyValueQueryBuilder createFacetedPropertyValueQueryBuilder(){
-        return new FacetedPropertyValueQueryBuilder();
-    }
-
     public BioentityIdentifierQueryBuilder createGeneBioentityIdentifierQueryBuilder(){
         return new BioentityIdentifierQueryBuilder();
     }
-
-    public AutocompleteGroupedPropertyValueQueryBuilder createAutocompleteGroupedPropertyValueQueryBuilder() {
-        return new AutocompleteGroupedPropertyValueQueryBuilder();
-    }
-
 
 }

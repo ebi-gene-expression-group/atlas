@@ -13,13 +13,12 @@ import java.util.Set;
 
 import static org.junit.Assert.assertThat;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
-public class GxaSolrClientIT {
+public class BioentitiesSolrClientIT {
 
     @Inject
-    public GxaSolrClient subject;
+    public BioentitiesSolrClient subject;
 
     @Test
     public void testGetBioentityIdentifiers() throws Exception {

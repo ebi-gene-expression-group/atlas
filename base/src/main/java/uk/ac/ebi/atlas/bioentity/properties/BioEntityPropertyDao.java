@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
-import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
+import uk.ac.ebi.atlas.solr.query.BioentitiesSolrClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,10 +15,10 @@ import java.util.Set;
 @Named
 public class BioEntityPropertyDao {
 
-    private final GxaSolrClient solrClient;
+    private final BioentitiesSolrClient solrClient;
 
     @Inject
-    public BioEntityPropertyDao(GxaSolrClient gxaSolrClient) {
+    public BioEntityPropertyDao(BioentitiesSolrClient gxaSolrClient) {
         this.solrClient = gxaSolrClient;
     }
 

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.controllers.rest;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -10,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.solr.query.SuggestionService;
+import uk.ac.ebi.atlas.solr.query.SolrBioentitiesSuggesterService;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
@@ -29,7 +28,7 @@ public class AutoCompleteControllerTest {
     private static final String HOMO_SAPIENS = "Homo sapiens";
 
     @Mock
-    private SuggestionService suggestionServiceMock;
+    private SolrBioentitiesSuggesterService suggesterServiceMock;
 
     @Mock
     private SpeciesFactory speciesFactoryMock;
@@ -44,15 +43,15 @@ public class AutoCompleteControllerTest {
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
         when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of())));
-        when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, "homo sapiens")).thenReturn(suggestions);
+//        when(suggesterServiceMock.fetchTopSuggestions(QUERY_STRING, "homo sapiens")).thenReturn(suggestions);
 
-        subject = new AutoCompleteController(suggestionServiceMock, speciesFactoryMock);
+        subject = new AutoCompleteController(suggesterServiceMock, speciesFactoryMock);
     }
 
     @Test
     public void fetchTopSuggestions() throws Exception {
         //given
-        String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS);
+        String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS, 15);
 
         //then
         assertThat(jsonResponse, is("[{\"value\":\"Value1\",\"category\":\"\"},{\"value\":\"Value2\",\"category\":\"\"}]"));

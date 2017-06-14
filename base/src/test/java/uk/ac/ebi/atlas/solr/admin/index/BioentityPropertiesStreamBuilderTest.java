@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import org.junit.Before;
@@ -15,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BioentityPropertiesStreamBuilderTest {
-    private static final String ANOPHELES_GAMBIAE = "anopheles gambiae";
+    private static final String ANOPHELES_GAMBIAE = "anopheles_gambiae";
 
     private BioentityPropertiesStreamBuilder subject;
 
