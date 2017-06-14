@@ -33,7 +33,7 @@ public class DifferentialAnalyticsSearchDaoIT {
         ReadContext jsonCtx = JsonPath.parse(json);
 
         List<String> speciesFromJson = jsonCtx.read("$.response.docs[*].species");
-        List<String> experimentTypesFromJson = jsonCtx.read("$.response.docs[*].experimentType");
+        List<String> experimentTypesFromJson = jsonCtx.read("$.response.docs[*].experiment_type");
 
         assertThat(speciesFromJson, hasItem("mus musculus"));
         assertThat(experimentTypesFromJson, hasItem("MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL"));

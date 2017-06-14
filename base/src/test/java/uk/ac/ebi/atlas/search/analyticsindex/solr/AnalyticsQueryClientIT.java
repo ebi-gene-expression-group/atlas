@@ -89,8 +89,8 @@ public class AnalyticsQueryClientIT {
 
         assertThat(queryMade, containsString("ENSG00000006432"));
         assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, not(containsString("identifierSearch")));
-        assertThat(queryMade, containsString("bioentityIdentifier"));
+        assertThat(queryMade, not(containsString("identifier_search")));
+        assertThat(queryMade, containsString("bioentity_identifier"));
 
     }
 
@@ -116,7 +116,7 @@ public class AnalyticsQueryClientIT {
                 .fetch();
 
         assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, containsString("identifierSearch"));
+        assertThat(queryMade, containsString("identifier_search"));
         assertThat(queryMade, containsString("zinc finger"));
         assertThat(queryMade, containsString("E-MTAB-513"));
     }
@@ -137,7 +137,7 @@ public class AnalyticsQueryClientIT {
                 .fetch();
 
         assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, containsString("identifierSearch"));
+        assertThat(queryMade, containsString("identifier_search"));
         assertThat(queryMade, containsString("zinc finger"));
         assertThat(queryMade, containsString("E-MTAB-513"));
 
@@ -153,10 +153,10 @@ public class AnalyticsQueryClientIT {
                 .fetch();
 
         assertThat(queryMade, not(containsString("keyword_")));
-        assertThat(queryMade, containsString("identifierSearch"));
+        assertThat(queryMade, containsString("identifier_search"));
         assertThat(queryMade, containsString("zinc finger"));
 
-        assertThat(queryMade, containsString("conditionsSearch"));
+        assertThat(queryMade, containsString("conditions_search"));
         assertThat(queryMade, containsString("liver"));
     }
 
@@ -168,8 +168,8 @@ public class AnalyticsQueryClientIT {
                 .fetch();
 
         assertThat(queryMade, not(containsString("keyword_"))); //two words so this is not a keyword
-        assertThat(queryMade, containsString("identifierSearch"));
-        assertThat(queryMade, containsString("conditionsSearch"));
+        assertThat(queryMade, containsString("identifier_search"));
+        assertThat(queryMade, containsString("conditions_search"));
         assertThat(queryMade.split("tasty pancake").length, greaterThan(2));
     }
 

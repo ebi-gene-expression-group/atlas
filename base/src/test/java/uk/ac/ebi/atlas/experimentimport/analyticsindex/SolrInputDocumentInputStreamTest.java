@@ -68,15 +68,15 @@ public class SolrInputDocumentInputStreamTest {
 
         //Generic fields for any record
         assertThat(result.keySet(),
-                hasItems("bioentityIdentifier", "species", "kingdom",  "experimentAccession", "experimentType"));
+                hasItems("bioentity_identifier", "species", "kingdom",  "experiment_accession", "experiment_type"));
 
         //Baseline specific
-        assertThat(result.keySet(), hasItems("defaultQueryFactorType", "expressionLevel"));
-        assertThat(result.get("expressionLevel").getValue(), is((Object) 13.37));
+        assertThat(result.keySet(), hasItems("default_query_factor_type", "expression_level"));
+        assertThat(result.get("expression_level").getValue(), is(13.37));
 
         //identifier search
-        assertThat(result.keySet(), hasItems(GO.asAnalyticsIndexKeyword(), "identifierSearch"));
-        assertThat(result.get("identifierSearch").toString(), containsString("pancake"));
+        assertThat(result.keySet(), hasItems(GO.asAnalyticsIndexKeyword(), "identifier_search"));
+        assertThat(result.get("identifier_search").toString(), containsString("pancake"));
 
         //we do not index everything
         assertThat(result.keySet(), not(hasItem(ORTHOLOG.asAnalyticsIndexKeyword())));
