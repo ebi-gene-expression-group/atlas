@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+
 public abstract class HtmlExceptionHandlingController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlExceptionHandlingController.class);
@@ -43,8 +45,7 @@ public abstract class HtmlExceptionHandlingController {
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {
-        LOGGER.error(e.getMessage());
-        e.printStackTrace();
+        LOGGER.error("{} - {}", e.getMessage(), Arrays.deepToString(e.getStackTrace()));
         ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;
