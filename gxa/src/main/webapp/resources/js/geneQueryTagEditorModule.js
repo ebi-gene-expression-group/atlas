@@ -2,6 +2,10 @@
 
 var geneQueryTagEditorModule = (function($) {
 
+    function sanitize(str) {
+        return $('<span>' + str + '</span>').text();
+    }
+
     function initAutocomplete(element, species, onChange, placeholderText, contextPath) {
         $(element)
         // TODO paste items
@@ -61,7 +65,7 @@ var geneQueryTagEditorModule = (function($) {
                         .appendTo(ul);
                 },
                 select: function(event, ui) {
-                    ui.item.value = '{"value":"' + ui.item.value + '", "category":"' + ui.item.category + '"}';
+                    ui.item.value = '{"value":"' + sanitize(ui.item.value) + '", "category":"' + ui.item.category + '"}';
                 }
             },
             onChange: onChange,
