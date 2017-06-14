@@ -18,6 +18,6 @@ public class EmbeddedSolrServerFactory {
             System.setProperty("solr.indexes.dir", System.getProperty("java.io.tmpdir"));
             CoreContainer coreContainer =  new CoreContainer(solrConfDir);
             coreContainer.load();
-            return new EmbeddedSolrServer(coreContainer, "gxa");
+            return new EmbeddedSolrServer(coreContainer, "bioentities");
     }
 }
