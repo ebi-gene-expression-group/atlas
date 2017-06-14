@@ -1,5 +1,6 @@
 {
-  "experimentType": { "terms": {
-    "field": "experimentType"
-  }}
+  "experimentType": {
+    "type": "terms",
+    "field": "experiment_type"
+  }
 }

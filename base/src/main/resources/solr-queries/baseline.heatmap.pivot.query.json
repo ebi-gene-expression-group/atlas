@@ -1,7 +1,7 @@
 {
   "experimentType": {
     "terms": {
-      "field": "experimentType",
+      "field": "experiment_type",
       "facet": {
         "species": {
           "terms": {
@@ -10,23 +10,23 @@
             "facet": {
               "defaultQueryFactorType": {
                 "terms": {
-                  "field": "defaultQueryFactorType",
+                  "field": "default_query_factor_type",
                   "facet": {
                     "experimentAccession": {
                       "terms": {
-                        "field": "experimentAccession",
+                        "field": "experiment_accession",
                         "limit": 5000,
                         "facet": {
                           "assayGroupId": {
                             "terms": {
-                              "field": "assayGroupId",
+                              "field": "assay_group_id",
                               "limit": 1000,
                               "facet": {
-                                "sumExpressionLevel": "sum(expressionLevel)"
+                                "sumExpressionLevel": "sum(expression_level)"
                               }
                             }
                           },
-                          "uniqueIdentifiers": "unique(bioentityIdentifier)"
+                          "uniqueIdentifiers": "unique(bioentity_identifier)"
                         }
                       }
                     }

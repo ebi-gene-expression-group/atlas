@@ -1,22 +1,28 @@
 {
-  "kingdom": { "terms": {
+  "kingdom": {
+    "type": "terms",
     "field": "kingdom"
-  }},
-  "species": { "terms": {
+  },
+  "species": {
+    "type": "terms",
     "field": "species",
     "limit": 40
-  }},
-  "experimentType": { "terms": {
-    "field": "experimentType"
-  }},
-  "factors": { "terms" : {
+  },
+  "experimentType": {
+    "type": "terms",
+    "field": "experiment_type"
+  },
+  "factors": {
+    "type": "terms",
     "field": "factors",
     "limit": 100
-  }},
-  "numReplicates": { "terms" : {
-    "field": "numReplicates"
-  }},
-  "regulation": { "terms" : {
+  },
+  "numReplicates": {
+    "type": "terms",
+    "field": "num_replicates"
+  },
+  "regulation": {
+    "type": "terms",
     "field": "regulation"
-  }}
+  }
 }
