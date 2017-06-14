@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperimentTest;
@@ -77,5 +78,51 @@ public class EvidenceServiceTest {
                 subject.getPValue(new DifferentialExpression(5.21107983317421e-10, 0.0, c1)),
                 is(Double.valueOf("5.21e-10"))
         );
+    }
+
+    @Test
+    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorExcludeTypicalExperimentUsingDiseaseCellLinesForSomething(){
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+
+        experimentDesign.putSampleCharacteristic("g1", "cell line", "A1");
+        experimentDesign.putSampleCharacteristic("g2", "cell line", "A1");
+        experimentDesign.putSampleCharacteristic("g1", "disease", "cancer");
+        experimentDesign.putSampleCharacteristic("g2", "disease", "cancer");
+        experimentDesign.putSampleCharacteristic("g1", "lighting conditions", "light");
+        experimentDesign.putSampleCharacteristic("g2", "lighting conditions", "dark");
+        experimentDesign.putFactor("g1", "lighting conditions", "light");
+        experimentDesign.putFactor("g2", "lighting conditions", "dark");
+
+        assertThat(subject.cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experimentDesign), is(true));
+    }
+
+    @Test
+    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorDoNotExcludeExperimentStudyingDiseases(){
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+
+        experimentDesign.putSampleCharacteristic("g1", "cell line", "A1");
+        experimentDesign.putSampleCharacteristic("g2", "cell line", "A2");
+        experimentDesign.putSampleCharacteristic("g1", "disease", "cancer");
+        experimentDesign.putFactor("g1", "disease", "cancer");
+        experimentDesign.putSampleCharacteristic("g2", "disease", "normal");
+        experimentDesign.putSampleCharacteristic("g2", "disease", "normal");
+
+
+        assertThat(subject.cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experimentDesign), is(false));
+    }
+
+    @Test
+    public void cellLineAsSampleCharacteristicButNoDiseaseAsFactorDoNotExcludeTypicalExperiment(){
+        ExperimentDesign experimentDesign = new ExperimentDesign();
+
+        experimentDesign.putSampleCharacteristic("g1", "disease", "cancer");
+        experimentDesign.putSampleCharacteristic("g2", "disease", "normal");
+        experimentDesign.putSampleCharacteristic("g1", "age", "32");
+        experimentDesign.putSampleCharacteristic("g2", "age", "25");
+        experimentDesign.putFactor("g1", "disease", "cancer");
+        experimentDesign.putFactor("g2", "disease", "normal");
+
+
+        assertThat(subject.cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experimentDesign), is(false));
     }
 }

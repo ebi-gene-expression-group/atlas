@@ -50,7 +50,9 @@ public class EvidenceService<Expr extends DifferentialExpression,
     }
 
     public JsonArray evidenceForExperiment(E experiment, StreamOptions streamOptions) {
-        if(experiment.getType().isMicroRna() || ! experiment.getSpecies().isUs()){
+        if(! experiment.getSpecies().isUs()
+                || experiment.getType().isMicroRna()
+                || cellLineAsSampleCharacteristicButNoDiseaseAsFactor(experiment.getExperimentDesign())){
             return new JsonArray();
         }
 
@@ -498,6 +500,10 @@ public class EvidenceService<Expr extends DifferentialExpression,
             }
         }
         return "";
+    }
+
+    boolean cellLineAsSampleCharacteristicButNoDiseaseAsFactor(ExperimentDesign experimentDesign){
+        return experimentDesign.getSampleHeaders().contains("cell line") && ! experimentDesign.getFactorHeaders().contains("disease");
     }
 
 }
