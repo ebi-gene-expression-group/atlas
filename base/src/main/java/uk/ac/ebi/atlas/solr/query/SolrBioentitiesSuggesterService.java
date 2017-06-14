@@ -29,9 +29,9 @@ public class SolrBioentitiesSuggesterService {
         return solrClient.query(solrQuery).getSuggesterResponse().getSuggestions().values().stream()
                 .flatMap(List::stream)
                 .distinct()
+                .limit(numberOfSuggestions)
                 .map(suggestion -> SemanticQueryTerm.create(suggestion.getTerm(), suggestion.getPayload()))
-                .collect(Collectors.toList())
-                .subList(0, numberOfSuggestions);
+                .collect(Collectors.toList());
     }
 
 }
