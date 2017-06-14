@@ -16,10 +16,8 @@ import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
@@ -28,8 +26,6 @@ import java.io.IOException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -41,9 +37,6 @@ public class ExperimentCrudIT {
     @Spy
     @Inject
     private ExpressionAtlasExperimentChecker experimentCheckerSpy;
-
-    @Mock
-    private ConditionsIndexingService conditionsIndexingService;
 
     // Used to check the DB
     @Inject
@@ -78,7 +71,6 @@ public class ExperimentCrudIT {
         MockitoAnnotations.initMocks(this);
 
         subject = new ExperimentCrud(condensedSdrfParser, experimentDesignFileWriterService,
-                conditionsIndexingService,
                 experimentDAO, experimentCheckerSpy,
                 analyticsLoaderFactory, configurationTrader);
 
@@ -144,9 +136,7 @@ public class ExperimentCrudIT {
 
     public void testImportNewImportExistingAndDelete(String experimentAccession, ExperimentType experimentType) throws IOException, SolrServerException {
         importNewExperimentInsertsDB(experimentAccession, experimentType);
-        verifyConditionsAddedToSolr(experimentAccession, experimentType);
         importExistingExperimentUpdatesDB(experimentAccession, experimentType);
-        verifyConditionsAddedToSolr(experimentAccession, experimentType);
         deleteExperimentDeletesDB(experimentAccession, experimentType);
     }
 
@@ -173,12 +163,6 @@ public class ExperimentCrudIT {
 
         ExperimentDTO newExperimentDTO = subject.findExperiment(experimentAccession);
         assertThat(originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
-    }
-
-    public void verifyConditionsAddedToSolr(String experimentAccession, ExperimentType experimentType) throws SolrServerException,
-            IOException {
-        verify(conditionsIndexingService, atLeastOnce()).indexConditions(eq(experimentAccession), eq(experimentType), Matchers
-                .<ExperimentDesign>any());
     }
 
     public void deleteExperimentDeletesDB(String experimentAccession, ExperimentType experimentType) {

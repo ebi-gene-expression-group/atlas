@@ -1,0 +1,39 @@
+<!-- Add this to bioentities/conf/solrconfig.xml -->
+
+<searchComponent name="suggest" class="solr.SuggestComponent">
+    <lst name="suggester">
+        <str name="name">propertySuggester</str>
+        <str name="lookupImpl">AnalyzingInfixLookupFactory</str>
+        <str name="dictionaryImpl">DocumentDictionaryFactory</str>
+        <str name="field">property_value</str>
+        <str name="contextField">species</str>
+        <str name="weightField">property_weight</str>
+        <str name="payloadField">property_name</str>
+        <str name="suggestAnalyzerFieldType">text_en</str>
+        <str name="queryAnalyzerFieldType">text_en</str>
+        <str name="buildOnStartup">false</str>
+    </lst>
+
+    <lst name="suggester">
+        <str name="name">bioentitySuggester</str>
+        <str name="lookupImpl">AnalyzingInfixLookupFactory</str>
+        <str name="dictionaryImpl">DocumentDictionaryFactory</str>
+        <str name="field">property_value</str>
+        <str name="contextField">species</str>
+        <str name="weightField">property_weight</str>
+        <str name="payloadField">bioentity_identifier</str>
+        <str name="suggestAnalyzerFieldType">text_en</str>
+        <str name="queryAnalyzerFieldType">text_en</str>
+        <str name="buildOnStartup">false</str>
+    </lst>
+</searchComponent>
+
+<requestHandler name="/suggest" class="solr.SearchHandler" startup="lazy">
+<lst name="defaults">
+    <str name="suggest">true</str>
+    <str name="suggest.count">100</str>
+</lst>
+<arr name="components">
+    <str>suggest</str>
+</arr>
+</requestHandler>

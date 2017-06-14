@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.controllers.rest;
 
-import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.solr.query.SuggestionService;
 import com.google.gson.Gson;
+import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
+import uk.ac.ebi.atlas.solr.query.SolrBioentitiesSuggesterService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -11,18 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
 import javax.inject.Inject;
-import java.util.List;
 
 @Controller
 @Scope("request")
-public class AutoCompleteController {
+public class AutoCompleteController extends JsonExceptionHandlingController {
 
-    private final SuggestionService suggestionService;
+    private final SolrBioentitiesSuggesterService suggesterService;
     private final SpeciesFactory speciesFactory;
 
     @Inject
-    public AutoCompleteController(SuggestionService suggestionService, SpeciesFactory speciesFactory) {
-        this.suggestionService = suggestionService;
+    public AutoCompleteController(SolrBioentitiesSuggesterService suggesterService, SpeciesFactory speciesFactory) {
+        this.suggesterService = suggesterService;
         this.speciesFactory = speciesFactory;
     }
 
@@ -32,15 +31,14 @@ public class AutoCompleteController {
     @ResponseBody
     public String fetchTopSuggestions(
             @RequestParam(value = "query") String query,
-            @RequestParam(value = "species", required = false, defaultValue="") String species) {
+            @RequestParam(value = "species", required = false, defaultValue = "") String species,
+            @RequestParam(value = "suggestCount", required = false, defaultValue = "15") int suggestCount) {
 
-        if (StringUtils.isBlank(query)) {
-            return StringUtils.EMPTY;
-        }
+//        if (StringUtils.isBlank(query)) {
+//            return StringUtils.EMPTY;
+//        }
 
-        List<SemanticQueryTerm> suggestions =
-                suggestionService.fetchTopSuggestions(query, speciesFactory.create(species).getReferenceName());
-        return new Gson().toJson(suggestions);
+        return new Gson().toJson(suggesterService.fetchSuggestions(query, speciesFactory.create(species), suggestCount));
     }
 
 }

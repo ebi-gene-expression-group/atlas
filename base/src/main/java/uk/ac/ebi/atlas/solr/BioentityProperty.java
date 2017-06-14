@@ -1,6 +1,6 @@
-
 package uk.ac.ebi.atlas.solr;
 
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.beans.Field;
 
@@ -9,6 +9,13 @@ import java.util.Objects;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class BioentityProperty {
+
+    private static final ImmutableMap<String, Integer> PROPERTY_TO_WEIGHTS = ImmutableMap.of(
+            "symbol", 20,
+            "ensgene", 15,
+            "synonym", 10
+    );
+    private static final int DEFAULT_WEIGHT = 0;
 
     @Field("bioentity_identifier")
     private String bioentityIdentifier;
@@ -21,6 +28,9 @@ public class BioentityProperty {
 
     @Field("property_value")
     private String value;
+
+    @Field("property_weight")
+    private int propertyWeight;
 
     @Field("property_name")
     private String name;
@@ -38,6 +48,7 @@ public class BioentityProperty {
         this.bioentityIdentifier = bioentityIdentifier;
         this.value = value;
 
+        this.propertyWeight = PROPERTY_TO_WEIGHTS.getOrDefault(name, DEFAULT_WEIGHT);
     }
 
     public String getBioentityType() {
@@ -70,6 +81,14 @@ public class BioentityProperty {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPropertyWeight() {
+        return propertyWeight;
+    }
+
+    public void setPropertyWeight(int propertyWeight) {
+        this.propertyWeight = propertyWeight;
     }
 
     public String getBioentityIdentifier() {

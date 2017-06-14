@@ -19,10 +19,10 @@ public class SpeciesLookupService {
     private static final String SPECIES_FIELD = "species";
     private static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
 
-    private GxaSolrClient solrServer;
+    private BioentitiesSolrClient solrServer;
 
     @Inject
-    public SpeciesLookupService(GxaSolrClient solrServer) {
+    public SpeciesLookupService(BioentitiesSolrClient solrServer) {
         this.solrServer = solrServer;
     }
 

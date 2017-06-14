@@ -7,7 +7,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
-import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
 import java.util.List;
@@ -79,8 +78,8 @@ public class ExperimentDesignTest {
         subject.putFactor(ASSAY2, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
         subject.putFactor(ASSAY2, FACTOR_HEADER3, FACTOR_VALUE3, FACTOR_ONTOLOGY_TERM3);
 
-        assertThat(subject.getFactors(ASSAY1), contains(factor2, factor1));
-        assertThat(subject.getFactors(ASSAY2), contains(factor3, factor2, factor1));
+        assertThat(subject.getFactors(ASSAY1), containsInAnyOrder(factor2, factor1));
+        assertThat(subject.getFactors(ASSAY2), containsInAnyOrder(factor3, factor2, factor1));
 
         assertThat(subject.getFactorValue(ASSAY1, FACTOR_HEADER), is(FACTOR_VALUE));
 

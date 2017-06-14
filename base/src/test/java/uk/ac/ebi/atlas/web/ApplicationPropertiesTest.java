@@ -43,9 +43,8 @@ public class ApplicationPropertiesTest {
 
     private static final Map<String, String[]> REQUEST_PARAMETERS_MAP =
             ImmutableMap.of("p1",new String[]{"1"},"p2",new String[]{"2"});
-    private static final String REQUEST_PARAMETERS = "p2=2&p1=1";
     private static final String DOWNLOAD_URL =
-            "/experiments/X.tsv?" + REQUEST_PARAMETERS+"&geneQuery="+SemanticQuery.create().toUrlEncodedJson();
+            "/experiments/X.tsv?p1=1&geneQuery="+SemanticQuery.create().toUrlEncodedJson()+"&p2=2";
 
     @Mock
     private HttpServletRequest httpServletRequestMock;
@@ -104,6 +103,7 @@ public class ApplicationPropertiesTest {
         //when
         String downloadUrl = subject.buildDownloadURL(SemanticQuery.create(),httpServletRequestMock);
 
+        // TODO Assert that the parameters are present with the required values in any order
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
     }

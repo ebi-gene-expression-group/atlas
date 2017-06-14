@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import com.google.common.collect.Lists;
@@ -73,14 +72,8 @@ public class BioentityPropertiesBuilderTest {
                 .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
                 .withPropertyValues(poPropertyValues)
                 .build();
-        //then
-        BioentityProperty bioentityProperty1 = new BioentityProperty(BIOENTITY_IDENTIFIER, BIOENTITY_TYPE, SPECIES, "po", poPropertyValues.get(0));
-        BioentityProperty bioentityProperty2 = new BioentityProperty(BIOENTITY_IDENTIFIER, BIOENTITY_TYPE, SPECIES, poPropertyNames.get(1), poPropertyValues.get(1));
 
         assertThat(bioentityProperties, hasSize(3));
-        assertThat(bioentityProperties.get(0), is(bioentityProperty1));
-        assertThat(bioentityProperties.get(1), is(bioentityProperty2));
-
     }
 
     @Test

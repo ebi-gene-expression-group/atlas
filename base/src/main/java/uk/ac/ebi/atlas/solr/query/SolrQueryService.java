@@ -28,24 +28,21 @@ public class SolrQueryService {
     static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
     static final String PROPERTY_NAME_FIELD = "property_name";
 
-    static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
-
-    private final GxaSolrClient solrServer;
+    private final BioentitiesSolrClient solrClient;
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
     private final SpeciesFactory speciesFactory;
 
     @Inject
-    public SolrQueryService(GxaSolrClient solrServer,
+    public SolrQueryService(BioentitiesSolrClient solrClient,
                             SolrQueryBuilderFactory solrQueryBuilderFactory,
                             SpeciesFactory speciesFactory) {
-        this.solrServer = solrServer;
+        this.solrClient = solrClient;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.speciesFactory = speciesFactory;
     }
 
-
-    private GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(SemanticQuery geneQuery, String speciesReferenceName) {
-
+    private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery,
+                                                                  String speciesReferenceName) {
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         //associate gene ids with each token in the query string
@@ -53,44 +50,40 @@ public class SolrQueryService {
             geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, speciesReferenceName));
         }
         return geneQueryResponse;
-
     }
 
     private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String speciesReferenceName) {
-
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        //eg: {!lucene q.op=OR df=property_value_lower}(property_value_lower:Q9NHV9) AND (bioentity_type:"mirna" OR bioentity_type:"ensgene")
-        // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forTerm(queryTerm)
                 .withSpecies(speciesReferenceName)
                 .withBioentityTypes(BioentityType.GENE.getSolrAliases())
                 .build();
-
-        Set<String> geneIds = solrServer.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
+        Set<String> geneIds = solrClient.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
 
         stopwatch.stop();
-        LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", queryTerm.toString(), geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        LOGGER.debug(
+                String.format("Fetched gene ids for %s: returned %s results in %s secs",
+                        queryTerm.toString(), geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         return geneIds;
     }
 
     public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String speciesReferenceName) {
-
         if (isEmpty(geneQuery)) {
             return new GeneQueryResponse();
         }
 
         GeneQueryResponse geneQueryResponse =
-                fetchGeneIdsOrSetsGroupedByGeneQueryToken(
+                fetchGeneIdsGroupedByGeneQueryToken(
                         geneQuery, speciesFactory.create(speciesReferenceName).getReferenceName());
 
         if (geneQueryResponse.isEmpty()) {
-            throw new GenesNotFoundException("No genes found for searchText = " + geneQuery.toJson() + ", species = " + speciesReferenceName);
+            throw new GenesNotFoundException(
+                    "No genes found for searchText = " + geneQuery.toJson() + ", species = " + speciesReferenceName);
         }
 
         return geneQueryResponse;
     }
-
 }

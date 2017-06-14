@@ -28,22 +28,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
 @Named
-public class GxaSolrClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GxaSolrClient.class);
+public class BioentitiesSolrClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BioentitiesSolrClient.class);
 
     private SolrClient solrClient;
 
     @Inject
-    public GxaSolrClient(@Qualifier("solrClientGxa") SolrClient solrClient){
+    public BioentitiesSolrClient(@Qualifier("solrClientBioentities") SolrClient solrClient){
         this.solrClient = solrClient;
     }
 
     public QueryResponse query(SolrQuery solrQuery) {
         try {
             QueryResponse queryResponse = solrClient.query(solrQuery);
-            LOGGER.debug("<query> Solr query time: {} ms, status code: {}", queryResponse.getStatus(), queryResponse.getQTime() );
+
+            LOGGER.debug("<query> Solr query: {}", solrQuery.toString());
+            LOGGER.debug(
+                    "<query> Solr query time: {} ms, status code: {}",
+                    queryResponse.getStatus(), queryResponse.getQTime());
+
             return queryResponse;
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);

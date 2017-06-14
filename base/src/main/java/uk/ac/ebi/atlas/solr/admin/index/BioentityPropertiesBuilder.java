@@ -58,13 +58,11 @@ public class BioentityPropertiesBuilder {
     }
 
     public List<BioentityProperty> build(){
-
         checkState(CollectionUtils.isNotEmpty(propertyNames)
                 && StringUtils.isNotBlank(bioentityType)
                 && StringUtils.isNotBlank(species)
                 && StringUtils.isNotBlank(bioentityIdentifier)
                 && CollectionUtils.isNotEmpty(propertyValues));
-
 
         if (isDesignElementProperty()) {
             return buildDesignMappingProperty();
@@ -91,10 +89,11 @@ public class BioentityPropertiesBuilder {
                 if (StringUtils.isNotBlank(value)){
                     String propertyName = propertyNames.get(i);
 
-                    //Split the input from ensembl into separate PO property when the accession starts with PO:
-                    if(value.startsWith("PO:") && propertyNames.get(i).equals("go")){
-                        propertyName = "po";
-                    }
+                    // TODO Sometimes PO: terms appear under go header (this seems to be a legacy thing that could go away)
+//                    if(value.startsWith("PO:") && propertyNames.get(i).equals("go")){
+//                        propertyName = "po";
+//                    }
+
                     BioentityProperty bioentityProperty =
                             new BioentityProperty(bioentityIdentifier, bioentityType,
                                     species, propertyName, value);

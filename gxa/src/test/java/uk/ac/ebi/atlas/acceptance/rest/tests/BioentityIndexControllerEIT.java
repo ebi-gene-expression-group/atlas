@@ -10,7 +10,7 @@ public class BioentityIndexControllerEIT extends RestAssuredAuthenticatedFixture
 
     @Test
     public void statusShouldBeInitialized() {
-        expect().statusCode(200).and().body(is("INITIALIZED")).when().get("buildIndex/status");
+        expect().statusCode(200).and().body(is("INITIALIZED")).when().get("bioentitiesIndex/buildIndex/status");
     }
 
 }

@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -9,14 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import uk.ac.ebi.atlas.controllers.JsonExceptionHandlingController;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 
 import javax.inject.Inject;
-import java.io.IOException;
 
 /*
 On 4 Oct 2016, at 12:04, Andrea Cristofori via RT <www-prod@ebi.ac.uk> wrote:
@@ -53,9 +52,8 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
 
     @RequestMapping(value = "/json/dbsolr/status", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ModelAndView dbAndSolrStatus(){
-        ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());
-
+    @ResponseBody
+    public String dbAndSolrStatus(){
         //check database is up or down
         Integer experimentsSize = experimentDAO.countExperiments();
         String dbStatus = (experimentsSize > 0) ? "UP" : "DOWN";
@@ -66,13 +64,11 @@ public final class DBSolrStatusController extends JsonExceptionHandlingControlle
             if(solrClient.ping().getStatus() == 0) {
                 solrStatus = "UP";
             }
-        } catch (SolrServerException | IOException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
             solrStatus = "DOWN";
         }
 
-        mav.addObject("DB", dbStatus);
-        mav.addObject("Solr", solrStatus);
-        return mav;
+        return new Gson().toJson(ImmutableMap.of("DB", dbStatus, "Solr", solrStatus));
     }
 }

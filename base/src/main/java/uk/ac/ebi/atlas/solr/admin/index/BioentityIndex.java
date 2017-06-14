@@ -41,7 +41,7 @@ public class BioentityIndex {
     }
 
     @Inject
-    public void setSolrClient(@Qualifier("solrClientGxa") SolrClient solrClient) {
+    public void setSolrClient(@Qualifier("solrClientBioentities") SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 

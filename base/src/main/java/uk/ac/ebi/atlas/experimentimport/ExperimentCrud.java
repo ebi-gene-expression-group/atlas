@@ -17,7 +17,6 @@ import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexingService;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import java.io.IOException;
@@ -39,14 +38,12 @@ public class ExperimentCrud {
     private final ExperimentDesignFileWriterService experimentDesignFileWriterService;
     private final CondensedSdrfParser condensedSdrfParser;
     private final ExperimentDAO experimentDAO;
-    private final ConditionsIndexingService conditionsIndexingService;
     private final ExperimentChecker experimentChecker;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
     private final ConfigurationTrader configurationTrader;
 
     public ExperimentCrud(CondensedSdrfParser condensedSdrfParser,
                           ExperimentDesignFileWriterService experimentDesignFileWriterService,
-                          ConditionsIndexingService conditionsIndexingService,
                           ExperimentDAO experimentDAO,
                           ExperimentChecker experimentChecker,
                           AnalyticsLoaderFactory analyticsLoaderFactory,
@@ -54,7 +51,6 @@ public class ExperimentCrud {
 
         this.condensedSdrfParser = condensedSdrfParser;
         this.experimentDesignFileWriterService = experimentDesignFileWriterService;
-        this.conditionsIndexingService = conditionsIndexingService;
         this.experimentDAO = experimentDAO;
         this.experimentChecker = experimentChecker;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
@@ -120,10 +116,6 @@ public class ExperimentCrud {
             analyticsLoader.deleteAnalytics(experimentAccession);
         }
 
-        if (!experimentDTO.isPrivate()) {
-            conditionsIndexingService.removeConditions(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
-        }
-
         experimentDAO.deleteExperiment(experimentDTO.getExperimentAccession());
 
     }
@@ -171,9 +163,6 @@ public class ExperimentCrud {
             experimentDesignFileWriterService.writeExperimentDesignFile(accession, type, experimentDesign);
             LOGGER.info("updated design for experiment {}", accession);
 
-            if (!isPrivate) {
-                conditionsIndexingService.indexConditions(accession, type, experimentDesign);
-            }
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }

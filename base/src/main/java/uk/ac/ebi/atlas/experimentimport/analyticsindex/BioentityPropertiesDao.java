@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
+import uk.ac.ebi.atlas.solr.query.BioentitiesSolrClient;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +18,10 @@ public class BioentityPropertiesDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityPropertiesDao.class);
 
-    private GxaSolrClient gxaSolrClient;
+    private BioentitiesSolrClient gxaSolrClient;
 
     @Inject
-    public BioentityPropertiesDao(GxaSolrClient gxaSolrClient) {
+    public BioentityPropertiesDao(BioentitiesSolrClient gxaSolrClient) {
         this.gxaSolrClient = gxaSolrClient;
     }
 
