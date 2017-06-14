@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -87,7 +88,7 @@ public class BioEntityPropertyLinkBuilderIT {
         assertThat(propertyLink.isPresent(), is(false));
     }
 
-    @Test
+    @Ignore
     public void createValidOrthologLink() throws Exception {
         Optional<PropertyLink> propertyLink =
                 subject.createLink("ENSG00000079263", BioentityPropertyName.ORTHOLOG, "ENSMUSG00000052477",
@@ -95,7 +96,7 @@ public class BioEntityPropertyLinkBuilderIT {
         assertThat(propertyLink.isPresent(), is(true));
     }
 
-    @Test
+    @Ignore
     public void createInvalidOrthologLink() throws Exception {
         Optional<PropertyLink> propertyLink =
                 subject.createLink("ENSG00000079263", BioentityPropertyName.ORTHOLOG, "ENSFOOBAR",
