@@ -184,7 +184,7 @@ public class AnalyticsSolrQueryTree {
     private static String decideOnKeywordField(SemanticQueryTerm term){
         if(term.hasNoCategory()){
             if(ensemblIdRegexFromTheInternet.matcher(term.value()).matches()){
-                return "bioentityIdentifierLower";
+                return "bioentity_identifier";
             }
             //a multiword string cannot be a keyword
             if(term.value().trim().contains(" ")){

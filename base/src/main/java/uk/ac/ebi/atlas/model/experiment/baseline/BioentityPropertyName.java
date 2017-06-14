@@ -8,7 +8,7 @@ import java.text.MessageFormat;
 
 public enum BioentityPropertyName {
     UNKNOWN,
-    BIOENTITY_IDENTIFIER("bioentityIdentifier", false),
+    BIOENTITY_IDENTIFIER("bioentity_identifier", false),
     DESCRIPTION("description", false),
     DESIGN_ELEMENT("design_element", true),
     ENSFAMILY_DESCRIPTION("ensfamily_description", false, "Ensembl Family"),
@@ -21,7 +21,7 @@ public enum BioentityPropertyName {
     GO("go", true,"Gene Ontology"),
     GOTERM("goterm", false, "Gene Ontology"),
     HGNC_SYMBOL("hgnc_symbol", true),
-    IDENTIFIER_SEARCH("identifierSearch", false),
+    IDENTIFIER_SEARCH("identifier_search", false),
     INTERPRO("interpro", true,"InterPro"),
     INTERPROTERM("interproterm", false, "InterPro"),
     MGI_DESCRIPTION("mgi_description", false),

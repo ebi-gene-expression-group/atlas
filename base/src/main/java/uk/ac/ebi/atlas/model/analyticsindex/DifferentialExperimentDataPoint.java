@@ -17,10 +17,10 @@ public class DifferentialExperimentDataPoint extends ExperimentDataPoint{
         propertyMap.put("factors", experiment.getExperimentDesign().getFactorHeaders());
         //TODO differentialConditions -> ConditionsSearch
         propertyMap.put("regulation", Regulation.valueOf(differentialAnalytics.getFoldChange()));
-        propertyMap.put("contrastId", differentialAnalytics.getContrastId());
-        propertyMap.put("numReplicates", numReplicates);
-        propertyMap.put("foldChange", differentialAnalytics.getFoldChange());
-        propertyMap.put("pValue", differentialAnalytics.getpValue());
+        propertyMap.put("contrast_id", differentialAnalytics.getContrastId());
+        propertyMap.put("num_replicates", numReplicates);
+        propertyMap.put("fold_change", differentialAnalytics.getFoldChange());
+        propertyMap.put("p_value", differentialAnalytics.getpValue());
     }
 
     @Override

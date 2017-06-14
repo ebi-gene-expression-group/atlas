@@ -39,14 +39,14 @@ public abstract class ExperimentDataPoint {
 
     public ExperimentDataPoint(String bioentityIdentifier, Experiment experiment, String conditionSearch) {
         this.bioentityIdentifier = bioentityIdentifier;
-        propertyMap.put("bioentityIdentifier", bioentityIdentifier);
+        propertyMap.put("bioentity_identifier", bioentityIdentifier);
         propertyMap.put("species", experiment.getSpecies().getReferenceName());
         propertyMap.put("kingdom", experiment.getSpecies().getKingdom());
-        propertyMap.put("experimentAccession", experiment.getAccession());
+        propertyMap.put("experiment_accession", experiment.getAccession());
         //propertyMap.put("experimentType", experiment.getType().getDescription());
-        propertyMap.put("experimentType", experiment.getType().name().toUpperCase());
+        propertyMap.put("experiment_type", experiment.getType().name().toUpperCase());
 
-        propertyMap.put("conditionsSearch", conditionSearch);
+        propertyMap.put("conditions_search", conditionSearch);
     }
 
     public Map<String, Object> getProperties(){

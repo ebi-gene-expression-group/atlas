@@ -105,7 +105,7 @@ public class AnalyticsQueryClient {
              we put some more data than matches the 0.05 pValue limit to give ourselves some wiggle
              room but we don't actually want them
              */
-            solrQuery.addFilterQuery("-pValue:[0.05 TO *]");
+            solrQuery.addFilterQuery("-p_value:[0.05 TO *]");
             solrQuery.set("omitHeader", true);
         }
 
@@ -120,12 +120,12 @@ public class AnalyticsQueryClient {
 
         public Builder baselineFacets() {
             setFacets(baselineFacetsQueryJSON);
-            solrQuery.addFilterQuery("experimentType:(RNASEQ_MRNA_BASELINE OR PROTEOMICS_BASELINE)");
+            solrQuery.addFilterQuery("experiment_type:(RNASEQ_MRNA_BASELINE OR PROTEOMICS_BASELINE)");
             return this;
         }
 
         private Builder differential() {
-            solrQuery.addFilterQuery("experimentType:(" +
+            solrQuery.addFilterQuery("experiment_type:(" +
                     "RNASEQ_MRNA_DIFFERENTIAL " +
                     "OR MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL " +
                     "OR MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL " +
@@ -144,7 +144,7 @@ public class AnalyticsQueryClient {
 
         public Builder differentialResults() {
             solrQuery.setRows(1000);
-            solrQuery.set("sort", "abs(foldChange)desc,pValue asc");
+            solrQuery.set("sort", "abs(fold_change)desc,p_value asc");
             return differential();
         }
 
@@ -253,13 +253,13 @@ public class AnalyticsQueryClient {
     }
 
     enum Field {
-        EXPERIMENT_TYPE("experimentType"),
-        EXPERIMENT_ACCESSION("experimentAccession"),
-        BIOENTITY_IDENTIFIER("bioentityIdentifierLower"),
+        EXPERIMENT_TYPE("experiment_type"),
+        EXPERIMENT_ACCESSION("experiment_accession"),
+        BIOENTITY_IDENTIFIER("bioentity_identifier"),
         SPECIES("species"),
-        IDENTIFIER_SEARCH("identifierSearch"),
-        CONDITIONS_SEARCH("conditionsSearch"),
-        FACTOR_TYPE("defaultQueryFactorType");
+        IDENTIFIER_SEARCH("identifier_search"),
+        CONDITIONS_SEARCH("conditions_search"),
+        FACTOR_TYPE("default_query_factor_type");
         final String name;
 
         Field(String name){

@@ -75,7 +75,7 @@ public class AnalyticsIndexerService {
     public synchronized void deleteExperimentFromIndex(String accession) {
         LOGGER.info("Deleting documents for {}", accession);
         try {
-            solrClient.deleteByQuery("experimentAccession:" + accession);
+            solrClient.deleteByQuery("experiment_accession:" + accession);
             solrClient.commit();
         } catch (IOException | SolrServerException e) {
             rollBackAndPropagateException(e);

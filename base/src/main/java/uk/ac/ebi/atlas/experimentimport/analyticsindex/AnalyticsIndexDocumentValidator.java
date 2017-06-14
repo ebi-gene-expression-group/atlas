@@ -32,21 +32,20 @@ public class AnalyticsIndexDocumentValidator {
                         .setPValueCutoff(DIFFERENTIAL_P_VALUE_CUTOFF);
 
     public boolean validate(SolrInputDocument analyticsInputDocument) {
-        ExperimentType experimentType = ExperimentType.valueOf((String) analyticsInputDocument.getFieldValue("experimentType"));
+        ExperimentType experimentType = ExperimentType.valueOf((String) analyticsInputDocument.getFieldValue("experiment_type"));
 
         return (experimentType.isRnaSeqBaseline() &&
                 rnaSeqBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(
-                        (Double) analyticsInputDocument.getFieldValue("expressionLevel"))) ||
+                        (Double) analyticsInputDocument.getFieldValue("expression_level"))) ||
 
                 experimentType.isProteomicsBaseline() &&
                 proteomicsBaselineExpressionAboveDefaultCutoff.apply(new BaselineExpression(
-                        (Double) analyticsInputDocument.getFieldValue("expressionLevel"))) ||
+                        (Double) analyticsInputDocument.getFieldValue("expression_level"))) ||
 
                 experimentType.isDifferential() &&
                 differentialExpressionAboveDefaultCutoff.apply(new DifferentialExpression(
-                        (Double) analyticsInputDocument.getFieldValue("pValue"),
-                        (Double) analyticsInputDocument.getFieldValue("foldChange"),
+                        (Double) analyticsInputDocument.getFieldValue("p_value"),
+                        (Double) analyticsInputDocument.getFieldValue("fold_change"),
                         "")));
     }
 }
-
