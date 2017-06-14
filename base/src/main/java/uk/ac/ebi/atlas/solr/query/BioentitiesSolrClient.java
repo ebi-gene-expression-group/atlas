@@ -32,6 +32,7 @@ import java.util.Set;
 public class BioentitiesSolrClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentitiesSolrClient.class);
 
+    private static final int ROWS = 10000;
     private SolrClient solrClient;
 
     @Inject
@@ -71,7 +72,7 @@ public class BioentitiesSolrClient {
             bioentityPropertyName, String
             bioentityPropertyValue){
         SolrQuery query = new SolrQuery();
-        query.setRows(1000);
+        query.setRows(ROWS);
         query.setQuery(MessageFormat.format("property_name:\"{0}\" AND property_value:\"{1}\" AND bioentity_type:({2})",
                 bioentityPropertyName.name, bioentityPropertyValue,  Joiner.on("\" OR \"").join(bioentityType
                         .getSolrAliases())));
@@ -87,7 +88,7 @@ public class BioentitiesSolrClient {
     public Map<BioentityPropertyName, Set<String>> getMap(String bioentityIdentifier, Collection<BioentityPropertyName> bioentityPropertyNames) {
         SolrQuery query = new SolrQuery();
 
-        query.setRows(1000);
+        query.setRows(ROWS);
         query.setFilterQueries("property_name:(\"" +
                 Joiner.on("\" OR \"").join(FluentIterable.from(bioentityPropertyNames).transform(
                         new Function<BioentityPropertyName, String>() {
