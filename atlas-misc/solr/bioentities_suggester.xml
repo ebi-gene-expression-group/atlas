@@ -4,6 +4,7 @@
     <lst name="suggester">
         <str name="name">propertySuggester</str>
         <str name="lookupImpl">AnalyzingInfixLookupFactory</str>
+        <str name="indexPath">analyzingInfixSuggesterIndexDir/propertySuggester</str>
         <str name="dictionaryImpl">DocumentDictionaryFactory</str>
         <str name="field">property_value</str>
         <str name="contextField">species</str>
@@ -17,6 +18,7 @@
     <lst name="suggester">
         <str name="name">bioentitySuggester</str>
         <str name="lookupImpl">AnalyzingInfixLookupFactory</str>
+        <str name="indexPath">analyzingInfixSuggesterIndexDir/bioentitySuggester</str>
         <str name="dictionaryImpl">DocumentDictionaryFactory</str>
         <str name="field">property_value</str>
         <str name="contextField">species</str>
