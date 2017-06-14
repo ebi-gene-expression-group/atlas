@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <bean id="solrClientGxa" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://${solr.host}:8983/solr/gxa"/>
+    <bean id="solrClientBioentities" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
+        <constructor-arg value="http://${solr.host}:8983/solr/bioentities"/>
     </bean>
 
     <bean id="solrClientAnalytics" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
@@ -13,7 +13,7 @@
     </bean>
 
     <bean id="solrSuggestionServerURL" class="java.lang.String">
-        <constructor-arg value="http://${solr.host}:8983/solr/gxa/"/>
+        <constructor-arg value="http://${solr.host}:8983/solr/bioentities/"/>
     </bean>
 
     <bean id="solrAnalyticsServerURL" class="java.lang.String">

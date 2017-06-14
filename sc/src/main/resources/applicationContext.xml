@@ -30,10 +30,7 @@
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="customEditors">
             <map>
-                <entry key="uk.ac.ebi.atlas.search.SemanticQuery">
-                    <bean class="uk.ac.ebi.atlas.search.SemanticQueryPropertyEditor">
-                    </bean>
-                </entry>
+                <entry key="uk.ac.ebi.atlas.search.SemanticQuery" value="uk.ac.ebi.atlas.search.SemanticQueryPropertyEditor" />
             </map>
         </property>
     </bean>
