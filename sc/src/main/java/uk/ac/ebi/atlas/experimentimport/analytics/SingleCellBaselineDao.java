@@ -3,13 +3,15 @@ package uk.ac.ebi.atlas.experimentimport.analytics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
+import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 public class SingleCellBaselineDao {
@@ -32,35 +34,47 @@ public class SingleCellBaselineDao {
     }
 
     public void loadAnalytics(final String experimentAccession, SingleCellBaselineInputStream singleCellInputStream) {
+
         LOGGER.info("loadSingleCellExpression for experiment {} begin", experimentAccession);
 
-        // will autoclose if DataAccessException thrown by jdbcTemplate
+        final int bufferSize = 2000;
         try (SingleCellBaselineInputStream source = singleCellInputStream) {
 
-            jdbcTemplate.batchUpdate(SCEXPRESSION_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
+            SingleCellBaseline scb = source.readNext();
+            while (scb != null) {
+                final List<SingleCellBaseline> scbList = new ArrayList<>();
 
-                @Override
-                protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
-                    SingleCellBaseline scb = source.readNext();
+                int bufferRead = 0;
+                while (scb != null && bufferRead < bufferSize) {
+                    //populate list
+                    scbList.add(scb);
 
-                    if (scb == null) {
-                        return false;
+                    if (bufferRead < bufferSize) {
+                        scb = source.readNext();
                     }
 
-                    ps.setString(GENE_ID, scb.getGeneId());
-                    ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
-                    ps.setString(CELL_ID, scb.getCellId());
-                    ps.setDouble(EXPRESSION_LEVEL, scb.getExpressionLevel());
-
-                    return true;
+                    bufferRead++;
                 }
-            });
+
+                //Add the chunk of data to db
+                jdbcTemplate.batchUpdate(SCEXPRESSION_INSERT, scbList, bufferSize, new ParameterizedPreparedStatementSetter<SingleCellBaseline>() {
+                    @Override
+                    public void setValues(PreparedStatement ps, SingleCellBaseline singleCellBaseline) throws SQLException {
+                        ps.setString(GENE_ID, singleCellBaseline.getGeneId());
+                        ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
+                        ps.setString(CELL_ID, singleCellBaseline.getCellId());
+                        ps.setDouble(EXPRESSION_LEVEL, singleCellBaseline.getExpressionLevel());
+                    }
+                });
+            }
+
+            source.close();
+
         } catch (IOException e) {
             LOGGER.warn("Cannot close SingleCellBaselineInputStream: {}", e.getMessage());
         }
 
         LOGGER.info("loadSingleCellExpression for experiment {} complete", experimentAccession);
-
     }
 
     public void deleteAnalytics(String experimentAccession) {
