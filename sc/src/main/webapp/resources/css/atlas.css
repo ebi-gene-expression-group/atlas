@@ -1,0 +1,521 @@
+/***Over-writting EBI  global***/
+
+ul#global-nav {padding-top:0;} /*remove space on top of page for EBI menu*/
+#content {padding: 1rem 0 1.5rem;} /*extra space on top page*/
+
+#local-masthead nav ul#secondary-menu-links.menu li a:hover:after, #local-masthead nav ul#global-nav.menu li a:hover:after, #local-masthead nav ul.dropdown.menu.float-left li a:hover:after {border-left: 0px solid transparent;    border-right: 0px solid transparent;} /*remove arrows*/
+#local-masthead nav ul.menu li {border-right: 1px solid rgba(248, 248, 248, 0.2);}/*hide division between menu items*/
+#local-masthead ul li.is-active a, #local-masthead ul li a:hover, #local-masthead nav ul li a.hover, #local-masthead nav ul li a:hover {color: #000;;}
+#local-masthead nav ul li a:active {border-bottom:3px white solid;} /*important - fill the gap when menu click*/
+
+.button:focus, .button:hover, .button.hover {
+    background-color: #1583cc;
+    opacity: 1;
+} /*remove EBI style from mouse over button back to foundation*/
+
+a, a:visited {
+    color: #2199e8; border-bottom-width: 0px;
+}
+
+footer a {
+    color: #222;
+}
+
+/*SEARCH*/
+.local-site-search {position: absolute; top: 113px;  right: 10px; }/*let the text field appear with no size problem*/
+
+.local-offcanvas-menu  {position: absolute; top: 68px;  right: 10px; }
+
+.local-site-search .button {cursor: pointer;margin:0; float:right;}
+.local-site-search .button, .local-offcanvas-menu .button {background-color: transparent;}
+.local-offcanvas-menu .button {margin:0;}
+.local-site-search .button:hover, .local-offcanvas-menu .button:hover {background-color: transparent;}
+.local-site-search .icon-functional:before, .local-offcanvas-menu .icon-functional:before {font-size: 40px; margin:0;}
+
+.search-box {-webkit-transition-duration: 0.2s; transition-duration: 0.2s;-webkit-transition-timing-function: ease;transition-timing-function: ease;-webkit-transition-property: width,margin-right;transition-property: width,margin-right;}
+.search-box {width: 0; display: block; float: right; padding: 0;/*background-color: rgba(255, 255, 255, 0.07);*/background-color: rgba(255, 255, 255, 0); box-shadow: none; outline: 0;border-bottom: 1px solid rgba(255, 255, 255, 0.4); border-top:none;border-left:none;  border-right:none;font-size: 1rem;  color: rgba(255, 255, 255, 0.5);}
+
+.local-site-search:hover  .tool-search .search-box, .search-box:focus {width: 70%; margin-right: 0px; color:white;}
+
+.local-site-search [type='text']:focus {
+    border-bottom: 1px solid white;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    color:white;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+    transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+}
+
+/***Overwriting Foundation***/
+
+.tabs {border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;}
+
+.tabs-title > a:hover {
+    background-color:aliceblue ;
+}
+
+/*Local style*/
+.tabs-title > a[aria-selected='true'] {
+    background: #e6e6e6;
+    color: #0a0a0a;
+}/*tabs home*/
+
+.button-rd {
+    text-align: center;
+    line-height: 1;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    padding: 0.75em 1em;
+    margin:0;
+    font-size: 0.9rem;
+    background-color: #2199e8;
+    color: #fefefe;
+    font-weight: bold;
+}
+
+.button-rd.tiny { font-size: 0.6rem; }
+.button-rd.differential {background-color: #5E8CC0; }
+.button-rd.baseline {background-color: #23afa5; }
+
+a.differential {color: #5E8CC0; }
+a.baseline {color: #23afa5; }
+
+/*!*TABLE*!*/
+/*table {font-size: 94%; border-collapse: collapse;}!*reduce default font-size for tables*!*/
+/*table a, table a:visited {color:#222;}*/
+/*table a:hover  {border-bottom: solid 1px #222;}*/
+/*.pagination .current {background: #2199e8;} !*overwritte foundation default? style for table anvigation*!*/
+
+title {font-size: 1rem;}
+.accordion-title:before {content: "\25B6";}
+.is-active > .accordion-title::before {content: "\25BC";}
+
+body .has-tip {
+    border-bottom-width: 0px;
+    background: none
+}
+
+#local-masthead h1 small, #local-masthead h2 small, #local-masthead h3 small, #local-masthead h4 small, #local-masthead h5 small, #local-masthead h6 small {color: #cacaca;}
+h1 small, h2 small, h3 small, h4 small, h5 small,h6 small {color: #8b8b8b;}
+
+H5  {color: #000;}/*make the H5 darker otherwise difficult to see it*/
+
+.search-eg a {color: #0a0a0a;}
+.search-eg a:hover {border-bottom: 1px solid  #0a0a0a;}
+
+/* sub menu*/
+#local-masthead .menu .active  {
+    color: #0a0a0a;
+    background: #fff;
+}
+
+.horizontal.menu > li > a {
+    border-bottom-style: solid;
+    border-bottom-width:3px;
+    border-bottom-color:transparent;
+} /*to make all menu items same height*/
+
+.menu.badge {background: rgba(0, 0, 0, 0.23);padding: 0.6em 0.1em;font-weight: normal; /*avoid bold on badge when activated*/}
+
+/*section {position: relative;}*/
+
+.mega_footer {
+    color:white;
+    background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url(../images/cell/Spencer_cells.jpg);
+    background-repeat: no-repeat, no-repeat;
+    background-position:  left, top right;
+    filter: hue-rotate(-711deg);
+    background-position-y: 23%; }
+
+.mega_footer h5 {color:white;}
+.publication-list .media-object {display:block; color: #0a0a0a;}
+.combo:hover, .publication-list .media-object:hover {
+    color: #0a0a0a;
+    background-color: aliceblue;
+    border-radius:6px;
+
+}
+
+.experiment-list-latest ul {list-style: none; padding: 0;  margin: 0; font-size: 94%;}/*smaller font-size for list elements*/
+/*previous list element style*/
+.experiment-list-latest .list-project-l ul  li {padding: 0.2em 0.5em; border-radius:6px;}
+.experiment-list-latest .list-project-l ul li span {margin-right: 0.5em; margin-bottom: 0;}
+.browse-by-species ul.tabs li a {color:#0a0a0a;} /*tab*/
+.experiment-list-latest .list-project-l a, .tabs a {color:#0a0a0a;} /*remove color from the tab link*/
+.experiment-list-latest .list-project-l a.base-res {color: #1f9e95;} /*add underline for specific link in the list items*/
+.experiment-list-latest .list-project-l a.base-res:hover {border-bottom: 1px solid #1f9e95;} /*add underline for specific link in the list items*/
+.experiment-list-latest .list-project-l ul li:hover { background-color:aliceblue;}
+.experiment-list-latest .list-project-l ul li:hover span {background-color:#2d3e51;}
+.list-project-l { margin-bottom: 1rem;}
+/*/previous list element style*/
+
+/*new list element style using flex*/
+.flex-list a {color:#0a0a0a;}
+.flex-list .flex-container {padding: 0.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap;}/*can't make a wrapping exception for first eleemnts*/
+.flex-table {display: flex;justify-content: space-between;} /*search result page button*/
+.flex-table span {margin-right: 0.1rem;margin-bottom: 0;} /*search result page button*/
+.flex-list ul li:hover {background-color:aliceblue;}
+.flex-list ul li .button-rd {margin-right: 0.5rem;}
+.flex-list ul li:hover .button-rd {background-color:#2d3e51;}
+.flex-list ul li:hover .button {background-color:#2d3e51;}
+.flex-list ul li:hover .button:hover {opacity:0.6;}
+.flex-list ul li .button {margin-bottom:0;}
+.flex-list ul li .button .button.primary { background-color:#23afa5; }
+/*/new list element style using flex*/
+
+.flex-item .button.primary {
+    background-color:#23afa5 ;
+}
+
+.jumbo-news-container {
+    text-align: center;
+    background-color: #eee;
+    padding: 72px 0 72px 0;
+}
+.jumbo-news-centred {
+    color: #454545;
+    font-size: 130%;
+    width: 38%;
+    margin: 0 auto;
+}
+
+.cell_3d_intro {background: url(../images/cell/cell-3d_01.png) no-repeat 35% 52.2%; background-size:70%; height: 13em;}
+
+/*.anatomogram {background:url(../../images/anatomogram/atlas_human_male.svg) no-repeat;display:inline-block;height:20em;width:20em;background-size:contain; position: relative; }*/
+/*.anatomogram_heatmap {float:left; background: url(../images/atlas-anato-heatmap.png) no-repeat; display:inline-block;height:24em;width:12em;background-size:contain; margin-right: 0.6em;}*/
+/*.anatomogram_heatmap_not {background: url(../../images/anatomogram/atlas-anato-heatmap-notitle.png) no-repeat; height:16em;}*/
+/*.anatomogram_heatmap_orange {background: url(../../images/anatomogram/atlas-anato-heatmap-orange.png) no-repeat; height:16em;}*/
+/*.what-is {float:left; background:url(../../images/atlas-what-is.jpg) no-repeat;height:13em;width:37em;background-size:contain; margin: 0 0.6em 0.6em 0;}*/
+
+/*.panel a {color:#4c4c4c;}*/
+
+/*ul.chevron li:before {*/
+    /*content:'';*/
+    /*display:inline-block;*/
+    /*height:1em;*/
+    /*width:1em;*/
+    /*background-image:url(../../images/chevron.svg);*/
+    /*background-size:contain;*/
+    /*background-repeat:no-repeat;*/
+    /*padding-left: 2em;*/
+/*}*/
+
+
+/*solve bug offset title/sticky*/
+.anchor {display: block;
+    position: relative;
+    width: 0;
+    height: 0;
+    z-index: -1;
+    top: -80px; /*change depending on banner width*/
+    left: 0;
+    visibility: hidden;}
+
+/*duplicate - temp*/
+.dropdown.menu .submenu:not(.js-dropdown-nohover) > .is-dropdown-submenu-parent:hover > .dropdown.menu .submenu, .dropdown.menu .submenu.js-dropdown-active {
+    display: block; } /*missing in the latest foundation css*/
+/*duplicate - temp*/
+
+
+#local-masthead img {margin-left: -82px;width: 65px;}/*to make logo look like an icon -IMPORTANT limit width of image or banner show black bgd at bottom*/
+
+#local-masthead {
+    background-image:linear-gradient(to right, rgba(45, 39, 68, 0.9),rgba(45, 193, 173, 0.65),rgba(0, 158, 122, 0.9) ), url(../images/cell/Spencer_cells.jpg);
+    background-repeat: no-repeat, no-repeat;
+    background-position:  left, top right;
+    filter: hue-rotate(-711deg);}
+.button {background-color: #3497c5;}/*custom color for button*/
+.button:hover, .button.hover {background-color: #2f5767;}
+
+.isvisible {display: block;}
+/*go term etiquette*/
+
+body .has-tip.go-bp {background-color: #058dc7; color:white;}
+body .has-tip.go-mf {background-color: #50b432; color:white;}
+body .has-tip.go-cc {background-color: #ed561b; color:white;}
+
+.show {display:block;}
+
+/*offset mobile menu*/
+.js-off-canvas-exit.is-visible {position:relative;}/*temp remove the freeze effect ... just fro testing*/
+.js-off-canvas-exit {background: rgba(0, 0, 0, 0.25);}
+.off-canvas {border: 1px red solid; max-height: inherit;}/*overwitte foundation to view the menu full height*/
+
+
+/*off-canvas style from Foundation offcanvas.css*/
+ul.off-canvas-list li label {
+    background: #444444;
+    border-bottom: none;
+    border-top: 1px solid #5e5e5e;
+    color: #999999;
+    display: block;
+    font-size: 0.66667rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.3rem 0.83333rem;
+    text-transform: uppercase;
+}
+
+ul.off-canvas-list {
+    background: #333333;
+    bottom: 0;
+    box-sizing: content-box;
+    -webkit-overflow-scrolling: touch;
+    outline:0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.off-canvas-submenu {list-style-type: none;}
+
+
+ul.off-canvas-list li a {
+    border-bottom: 1px solid #262626;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    padding: 0.66667rem;
+    transition: background 300ms ease;
+}
+ul.off-canvas-list li a:hover {
+    background: #242424;
+}
+
+.mobile-ofc {
+    background: #3f71a5;
+    font-size: 0.8125rem;
+    font-weight: bold;
+}
+.mobile-ofc .menu a {
+    height: 45px;
+    line-height: 45px;
+    color: #e6e6e6;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.mobile-ofc .title {
+    color: #a1bbc5;
+    padding: 10px;
+    padding-left: 15px;
+    font-size: 1em;
+    background: rgba(0, 0, 0, 0.19);
+}
+/*/offset mobile menu*/
+
+#back-top {position: fixed; bottom: 0;  right: 19px; z-index: 100;}
+#back-top span.topicon {font-size: 1.5em;color:white;opacity: 0.18; background-color: black;padding: 6px 7px;}
+#back-top:hover span.topicon {opacity: 0.4; }
+
+#back-top span.text {opacity: 0; color: grey; font-size: 0.8em;}
+#back-top:hover span.text {opacity: 1;}
+#back-top:hover {padding-bottom: 14px;}
+
+@-webkit-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}@-moz-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}@-ms-keyframes bg-shift{0%{background-position:0px;}100%{background-position:800px;}}
+
+.anim {-webkit-transition: all .3s; /* Safari */ -moz-transition: all .3s; -o-transition: all .3s; -ms-transition: all .3s; transition: all .3s;}
+.extra {background-color: white;height: 0.8rem; } /*if we want to add a border and shadow*/
+
+/*sticky*/
+
+#local-masthead.is-stuck div#local-title h1 {transform: scale(0.6) translate(-350px,131px);}/*transform logo*/
+#local-masthead.is-stuck h4 {transform: scale(0.8) translate(136px,24px);}/*transform tagline*/
+#local-masthead.is-stuck .local-site-search {top:164px; right:72px;}
+#local-masthead.is-stuck .local-offcanvas-menu  {top:164px;}
+
+/*filter menu option*/
+.sub-nav { background-color: #e7f2ff;  padding: 0.2rem 0.2rem 0.2rem 0;margin-bottom:1rem;}
+.sub-nav li {color: #686868;  font-size: 0.77778rem;  padding-left: 0.88889rem; }
+.sub-nav li.active a {border-radius: 3px; color: #fff; cursor: default;font-weight: normal; padding: 0.16667rem 0.88889rem;}
+
+/*END sticky*/
+
+.image-container {
+    float: left;
+    width: 27%;
+    margin: 0 2em 1em 0;
+    overflow: hidden;}
+
+.image-container-nof {margin: 0 2em 1em 0;}
+
+
+.cell_type_gradient {background: url(../images/cell/cell-type_01.svg) no-repeat 51% 53%; background-size: 219%; height: 7em;}
+.cell_type_real {background: url(../../images/cell/cell-type_02.svg) no-repeat 51% 53%; background-size: 203%; height: 7em;}
+.cell_type {background: url(../../images/cell/cell-type_02.svg) no-repeat 50% 89%; background-size: 160%; height: 7em;}
+.tissue_type {background: url(../images/tissue/tissue-type_01.svg) no-repeat 21% 26%; background-size: 128%; height: 7em;}
+.tissue_type {background: url(../images/tissue/tissue-type_01.svg) no-repeat 21% 50%; background-size: 128%; height: 7em;}
+
+/*********** TISSUE type ************/
+
+/* flat black tissues*/
+.tissue_type_flate .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 2% 49%; background-size: 1200%;  height: 4em;filter: opacity(70%);}
+.tissue_type_flate .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 14% 47%; background-size: 1200%; height: 4em;filter:  opacity(70%); }
+.tissue_type_flate .tissue_eye {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4em;filter: opacity(70%); }
+.tissue_type_flate .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 27% 49%; background-size: 1200%;  height: 4em;filter: opacity(70%);}
+.tissue_type_flate .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 39% 48%; background-size: 1200%;  height: 4em;filter:  opacity(70%);}
+.tissue_type_flate .tissue_spleen {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4em;}
+/* plain round tissues*/
+.tissue_type_rd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0% 102%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
+.tissue_type_rd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 102%; background-size: 1140%; height: 4em;filter:  opacity(70%); }
+.tissue_type_rd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 102%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
+.tissue_type_rd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 102%; background-size: 1140%;  height: 4em;filter:  opacity(70%);}
+/* light round tissues*/
+.tissue_type_lrd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0 85%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
+.tissue_type_lrd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 85%; background-size: 1140%; height: 4em;filter:  opacity(70%); }
+.tissue_type_lrd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 85%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
+.tissue_type_lrd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 85%; background-size: 1140%;  height: 4em;filter:  opacity(70%);}
+
+
+/*********** CEll type ************/
+.flex-cell .cell_bipolar {background: url(../images/cell/cell-type_03.svg) no-repeat 32% 75%; background-size: 700%; height: 7em;}
+.flex-cell .cell_muscle {background: url(../images/cell/cell-type_03.svg) no-repeat 50% 75%; background-size: 700%;}
+.flex-cell .cell_epi {background: url(../images/cell/cell-type_03.svg) no-repeat 66% 75%; background-size: 700%;}
+.flex-cell .cell_fat {background: url(../images/cell/cell-type_03.svg) no-repeat 82% 75%; background-size: 700%;}
+
+.flex-cell {display: flex;justify-content: space-between;}
+.flex-cell div {width: 22%;}
+.flex-anato {display: flex;justify-content: space-between; align-items: center;}
+.flex-anato div {width: 12%;}
+
+.callout.atlas {
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    border: 1px solid rgba(10, 10, 10, 0.25);
+    border-radius: 0;
+    position: relative;
+    color: #0a0a0a;
+    background-color: white;}
+/* custom light callout*/
+
+
+/*EBI font*/
+@font-face{ font-family:'EBI-Conceptual';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
+local('â˜º'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+@font-face{font-family:'EBI-Functional';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
+local('â˜º'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+@font-face{font-family:'EBI-Generic';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
+local('â˜º'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+@font-face{font-family:'EBI-Species';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),
+local('â˜º'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+@font-face{
+    font-family:'EBI-SocialMedia';src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),
+local('â˜º'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-Species') format('svg'),
+url('http://www.ebi.ac.uk/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');font-weight:normal;font-style:normal}
+
+span.green:before {
+    font-size: 600%;
+    color: #5cb85c;
+}
+span.red:before {font-size: 600%;
+    color: #d9534f;
+}
+span.blue:before {font-size: 600%;color:#5bc0de;}
+.icon-socialmedia:before {
+    font-family: 'EBI-SocialMedia';
+    font-size: 100%;
+    color: black;
+    content: attr(data-icon);
+    margin: 0 0.3em 0 0;
+}
+
+.publication-list .icon-conceptual:before {color: #5688b3;  }
+
+/*.icon-species.green {background-color: #12b176;}*/
+/*.icon-species.red {background-color: #d9534f;}*/
+/*.icon-species.blue {background-color: #539eb3;}*/
+/*.icon-species.green:before,.icon-species.red:before, .icon-species.blue:before {color:white;}*/
+
+
+.icon-species:before {
+    font-family: 'EBI-Species';
+    font-size: 100%;
+    color: black;
+    content: attr(data-icon);
+    margin: 0 0 0 0;
+}
+.icon {
+    text-decoration: none;
+    font-style: normal;
+}
+
+.icon-static:before, .icon-generic:before {
+    font-family: 'EBI-Generic';
+    font-size: 100%;
+    color: #BBB;
+    content: attr(data-icon);
+    margin: 0 0 0 0;
+}
+
+.icon-functional:before {
+    font-family: 'EBI-Functional';
+    font-size: 100%;
+    color: white;
+    content: attr(data-icon);
+    margin: 0 0 0 0;
+}
+/*END EBI Font*/
+
+
+
+
+/*RESPONSIVE D.*/
+@media screen and (max-width: 86em){
+    /*.cell_type, .tissue_type {height:9em;}*/
+    /*#local-masthead.is-stuck img {margin-left: 0px;}*/
+    /*#local-masthead.is-stuck h4 {opacity: 0;}*/
+    #local-masthead h1 {transform: translateX(80px);} /*move the logo +text inside banner area for smaller screens*/
+}
+
+@media screen and (max-width: 39.9375em){
+    .cell_type, .tissue_type {height:9em;}
+    /*Menu*/
+    /*#local-masthead nav ul li a.hover, #local-masthead nav ul li a:hover*/
+    #local-masthead nav ul.dropdown.menu.float-left li a:hover:after {display: none;} /*remove foundation "bar" after that bug and makes the elements move*/
+    #local-masthead ul.submenu li a:hover, #local-masthead ul.submenu li.is-active a:hover {background-color:#79b4d4;color:white;} /*menu style*/
+    #local-masthead nav ul.dropdown.menu.float-left li a:hover:after { border-bottom: 3px;} /*remove extra space that makes the banner move just for small screen*/
+    /*remove the main menu - shouldn't this be done using foundation?*/
+    #local-masthead nav ul.dropdown.menu.float-left > li:first-child {
+        display: inline-block;
+        border-right: none;}
+    #local-masthead nav ul.dropdown.menu.float-left > li {
+        display: none;}
+
+
+    #local-masthead nav ul li a:active {border-bottom:0px white solid;} /*important to keep - remove  gap when Entry menu click otherwise banner is moving*/
+    header .masthead {
+        padding-top: 1rem;
+    }
+    body h1 {
+        font-size: 2.2rem;}
+    #local-masthead img {margin-left: -10px;transform: scale(0.7)}
+    .local-site-search:hover .tool-search .search-box, .search-box:focus {
+        width: 50%;
+    }
+    .my-svg-container {width: 50%; float: none; margin: 0 auto 1em;}/*added some margin at the bottom too*/
+    #local-masthead h1 {transform: translateX(0px);} /*remove translation*/
+    .anchor { top: -16px;}/*change anchor position as no sticky for small screens*/
+}
