@@ -23,7 +23,9 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
     @Override
     public L select(ObjectInputStream<T> profiles, int maxSize) {
         List<LinkedList<T>> ans = new ArrayList<>(geneNamesInOrder.size());
-        ans.addAll(geneNamesInOrder.stream().map(_ -> new LinkedList<>()).collect(Collectors.toList()));
+        for (String _ : geneNamesInOrder) {
+            ans.add(new LinkedList<T>());
+        }
         for (T profile : new IterableObjectInputStream<>(profiles)) {
             int pos = geneNamesInOrder.indexOf(profile.getId());
             if (pos > -1) {
