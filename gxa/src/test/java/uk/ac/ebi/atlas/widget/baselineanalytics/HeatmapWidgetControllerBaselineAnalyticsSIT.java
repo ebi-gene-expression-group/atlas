@@ -25,8 +25,8 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].id"), is("E-MTAB-2836"));
-        assertThat((String)json.get("profiles.rows[1].id"), is("E-MTAB-1733"));
+        assertThat(json.get("profiles.rows[0].id"), is("E-MTAB-2836"));
+        assertThat(json.get("profiles.rows[1].id"), is("E-MTAB-1733"));
     }
 
     @Test
@@ -38,8 +38,8 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].id"), is("E-MTAB-2836"));
-        assertThat((String)json.get("profiles.rows[1].id"), is("E-MTAB-1733"));
+        assertThat(json.get("profiles.rows[0].id"), is("E-MTAB-2836"));
+        assertThat(json.get("profiles.rows[1].id"), is("E-MTAB-1733"));
     }
 
     @Test
@@ -51,12 +51,12 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].id"), is("E-GEOD-26284"));
-        assertThat((String)json.get("profiles.rows[0].name"), is("ENCODE cell lines - long polyA RNA, whole cell"));
+        assertThat(json.get("profiles.rows[0].id"), is("E-GEOD-26284"));
+        assertThat(json.get("profiles.rows[0].name"), is("ENCODE cell lines - long polyA RNA, whole cell"));
         assertThat(((Collection)json.get("profiles.rows[0].expressions")).size(), is(48));
 
-        assertThat((String)json.get("profiles.rows[1].id"), is("E-GEOD-26284"));
-        assertThat((String)json.get("profiles.rows[1].name"), is("ENCODE cell lines - long polyA RNA, cytosol"));
+        assertThat(json.get("profiles.rows[1].id"), is("E-GEOD-26284"));
+        assertThat(json.get("profiles.rows[1].name"), is("ENCODE cell lines - long polyA RNA, cytosol"));
         assertThat(((Collection)json.get("profiles.rows[1].expressions")).size(), is(48));
     }
 
@@ -80,8 +80,8 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].name"), is("CHPF2"));
-        assertThat((String)json.get("profiles.rows[0].expressions[0].value"), is("UNKNOWN"));
+        assertThat(json.get("profiles.rows[0].name"), is("CHPF2"));
+        assertThat(json.get("profiles.rows[0].expressions[0].value"), is("UNKNOWN"));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
         JsonPath json = response.jsonPath();
 
         //TODO: fix experiment URL
-        assertThat((String) json.get("experiment.URL"), is("/experiments/E-MTAB-2836?geneQuery=A1A4S6 Q13177&serializedFilterFactors="));
+        assertThat(json.get("experiment.URL"), is("/experiments/E-MTAB-2836?geneQuery=A1A4S6 Q13177&serializedFilterFactors="));
     }
 
 }
