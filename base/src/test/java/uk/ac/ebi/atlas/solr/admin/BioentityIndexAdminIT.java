@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 public class BioentityIndexAdminIT implements Observer {
 
     @Inject
-    private EmbeddedSolrServer embeddedSolrServer;
+    private EmbeddedSolrServer embeddedBioentitiesSolrServer;
 
     @Inject
     private BioentityIndex bioentityIndex;
@@ -49,7 +49,7 @@ public class BioentityIndexAdminIT implements Observer {
 
     @Before
     public void setUp() throws IOException {
-        bioentityIndex.setSolrClient(embeddedSolrServer);
+        bioentityIndex.setSolrClient(embeddedBioentitiesSolrServer);
         subject.setBioentityIndex(bioentityIndex);
 
         updateEventLatch = new CountDownLatch(1);
@@ -58,8 +58,8 @@ public class BioentityIndexAdminIT implements Observer {
 
     @After
     public void tearDown() throws IOException, SolrServerException {
-        embeddedSolrServer.deleteByQuery("*:*");
-        embeddedSolrServer.commit();
+        embeddedBioentitiesSolrServer.deleteByQuery("*:*");
+        embeddedBioentitiesSolrServer.commit();
     }
 
     @Test(timeout = 3000)
@@ -69,7 +69,7 @@ public class BioentityIndexAdminIT implements Observer {
         updateEventLatch.await();
 
         SolrParams solrQuery = new SolrQuery("*:*").setRows(1000);
-        QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
+        QueryResponse queryResponse = embeddedBioentitiesSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
         assertThat(bioentityProperties, hasSize(325));
 

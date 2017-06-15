@@ -7,7 +7,8 @@
     <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory">
     </bean>
 
-    <bean id="embeddedSolrServer"
+    <bean id="embeddedBioentitiesSolrServer"
           factory-bean="embeddedSolrServerFactory" factory-method="createEmbeddedSolrServerInstance">
+        <constructor-arg type="java.lang.String" value="bioentities"/>
     </bean>
 </beans>

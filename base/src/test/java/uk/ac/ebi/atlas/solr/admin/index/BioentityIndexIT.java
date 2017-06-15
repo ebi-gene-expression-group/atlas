@@ -32,14 +32,14 @@ public class BioentityIndexIT {
     private String bioentityPropertyDirectory;
 
     @Inject
-    private EmbeddedSolrServer embeddedSolrServer;
+    private EmbeddedSolrServer embeddedBioentitiesSolrServer;
 
     @Inject
     private BioentityIndex subject;
 
     @Before
     public void setUp() {
-        subject.setSolrClient(embeddedSolrServer);
+        subject.setSolrClient(embeddedBioentitiesSolrServer);
     }
 
     @After
@@ -50,10 +50,10 @@ public class BioentityIndexIT {
     @Test
     public void indexFile() throws IOException, SolrServerException {
         subject.indexFile(Paths.get(bioentityPropertyDirectory, "ensembl/anopheles_gambiae.A-AFFY-102.tsv"), false);
-        embeddedSolrServer.commit();
+        embeddedBioentitiesSolrServer.commit();
 
         SolrParams solrQuery = new SolrQuery("*:*");
-        QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
+        QueryResponse queryResponse = embeddedBioentitiesSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
         assertThat(bioentityProperties, hasSize(10));
     }
@@ -61,10 +61,10 @@ public class BioentityIndexIT {
     @Test
     public void addBioentityProperties() throws IOException, SolrServerException {
         subject.indexFile(Paths.get(bioentityPropertyDirectory, "ensembl/anopheles_gambiae.ensgene.tsv"), false);
-        embeddedSolrServer.commit();
+        embeddedBioentitiesSolrServer.commit();
 
         SolrParams solrQuery = new SolrQuery("*:*").setRows(10000);
-        QueryResponse queryResponse = embeddedSolrServer.query(solrQuery);
+        QueryResponse queryResponse = embeddedBioentitiesSolrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = queryResponse.getBeans(BioentityProperty.class);
         assertThat(bioentityProperties, hasSize(315));
     }
