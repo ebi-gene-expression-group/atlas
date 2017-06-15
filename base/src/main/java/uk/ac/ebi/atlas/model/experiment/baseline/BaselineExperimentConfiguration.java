@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
 import java.util.*;

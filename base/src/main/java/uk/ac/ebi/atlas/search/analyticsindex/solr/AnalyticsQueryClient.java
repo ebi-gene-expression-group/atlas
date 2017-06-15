@@ -193,7 +193,8 @@ public class AnalyticsQueryClient {
             conditionQuery.terms().stream().filter(term -> term.hasValue()).forEach(term -> {
                 b.add(term.value());
             });
-            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), b.build().toArray(new String[0]));
+            ImmutableList<String> var = b.build();
+            return new AnalyticsSolrQueryTree(CONDITIONS_SEARCH.toString(), var.toArray(new String[var.size()]));
         }
 
         public Builder queryConditionsSearch(SemanticQuery conditionQuery) {

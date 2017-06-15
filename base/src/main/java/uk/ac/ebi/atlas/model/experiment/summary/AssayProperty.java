@@ -46,9 +46,8 @@ public class AssayProperty implements Comparable<AssayProperty> {
         AssayProperty that = (AssayProperty) o;
 
         if (propertyName != null ? !propertyName.equalsIgnoreCase(that.propertyName) : that.propertyName != null) return false;
-        if (testValue != null ? !testValue.equalsIgnoreCase(that.testValue) : that.testValue != null) return false;
+        return testValue != null ? testValue.equalsIgnoreCase(that.testValue) : that.testValue == null;
 
-        return true;
     }
 
     @Override

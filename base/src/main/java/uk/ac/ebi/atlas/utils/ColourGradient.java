@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;

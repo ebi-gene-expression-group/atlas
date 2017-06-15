@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.controllers.UnparseableSemanticQueryException;
 
 import java.beans.PropertyEditorSupport;
-import java.io.UnsupportedEncodingException;
 
 public class SemanticQueryPropertyEditor extends PropertyEditorSupport {
 

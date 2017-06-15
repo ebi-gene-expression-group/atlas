@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
@@ -30,7 +28,7 @@ public class RichFactorGroup {
     }
 
     public Set<OntologyTerm> getOntologyTerms(){
-        return FluentIterable.from(factorGroup).transformAndConcat(factor -> factor.getValueOntologyTerms()).toSet();
+        return FluentIterable.from(factorGroup).transformAndConcat(Factor::getValueOntologyTerms).toSet();
     }
 
     public String asUrlEncodedJson(){
@@ -59,7 +57,7 @@ public class RichFactorGroup {
                 allValuesPerType.put(factor.getType(), factor.getValue());
             }
         }
-       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(stringCollectionEntry -> ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2).transform(stringCollectionEntry -> stringCollectionEntry.getKey()).toSet();
+       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(stringCollectionEntry -> ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2).transform(Map.Entry::getKey).toSet();
     }
 
     public static List<String> filterOutTypesWithCommonValues(List<String> types, Iterable<FactorGroup> factorGroups){
@@ -69,11 +67,9 @@ public class RichFactorGroup {
     //apache commons' ListUtils.removeAll but with generic types
     private static <T>  List<T> removeAll(Collection<T> collection, Collection<T> remove) {
         ArrayList<T> list = new ArrayList<>();
-        Iterator<T> iter = collection.iterator();
 
-        while(iter.hasNext()) {
-            T obj = iter.next();
-            if(!remove.contains(obj)) {
+        for (T obj : collection) {
+            if (!remove.contains(obj)) {
                 list.add(obj);
             }
         }

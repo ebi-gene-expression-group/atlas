@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.species.services;
 
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;

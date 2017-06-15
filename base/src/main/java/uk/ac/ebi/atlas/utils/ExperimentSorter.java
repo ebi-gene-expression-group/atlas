@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.utils;
 
 import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;

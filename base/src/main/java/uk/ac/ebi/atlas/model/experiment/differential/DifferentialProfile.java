@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;

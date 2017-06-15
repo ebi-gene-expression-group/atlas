@@ -58,10 +58,7 @@ public class Contrast extends DescribesDataColumns implements Comparable<Contras
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Contrast) {
-            return Objects.equal(id, ((Contrast) other).id);
-        }
-        return false;
+        return other instanceof Contrast && Objects.equal(id, ((Contrast) other).id);
     }
 
     @Override

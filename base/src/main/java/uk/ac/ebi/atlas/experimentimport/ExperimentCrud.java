@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
@@ -71,7 +70,7 @@ public class ExperimentCrud {
                 condensedSdrfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
-                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(assayGroup -> assayGroup.assaysAnalyzedForThisDataColumn()).toSet()), isPrivate);
+                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(AssayGroup::assaysAnalyzedForThisDataColumn).toSet()), isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);

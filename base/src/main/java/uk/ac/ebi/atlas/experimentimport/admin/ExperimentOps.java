@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -186,9 +185,7 @@ public class ExperimentOps {
         return attemptPerformOneOpRelatedToTheOpLog(accession, op)
                 .or(
                         experimentOpsExecutionService.attemptExecuteOneStatelessOp(accession, op)
-                ).transform((Function<JsonElement, Pair<OpResult, ? extends JsonElement>>) jsonElement -> Pair.of(OpResult.SUCCESS, jsonElement)).or((Supplier<Pair<OpResult, ? extends JsonElement>>) () -> {
-                    return performStatefulOp(accession, op);
-                });
+                ).transform((Function<JsonElement, Pair<OpResult, ? extends JsonElement>>) jsonElement -> Pair.of(OpResult.SUCCESS, jsonElement)).or((Supplier<Pair<OpResult, ? extends JsonElement>>) () -> performStatefulOp(accession, op));
     }
 
     private Optional<JsonElement> attemptPerformOneOpRelatedToTheOpLog(String accession, Op op){

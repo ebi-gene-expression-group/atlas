@@ -53,7 +53,7 @@ public class ProteomicsBaselineProfileStreamFactory extends ProfileStreamKryoLay
                 if (s.endsWith(AGREED_POSTFIX_FOR_DATA_COLUMNS)) {
                     AssayGroup assayGroup = experiment.getDataColumnDescriptor(s.replace(AGREED_POSTFIX_FOR_DATA_COLUMNS, ""));
                     Validate.notNull(assayGroup, MessageFormat.format("Unknown identifier in position {0}: {1}", i, s));
-                    b.put(new Integer(i), assayGroup);
+                    b.put(i, assayGroup);
                 }
             }
 

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.model.experiment;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -51,7 +50,7 @@ public class ExperimentConfiguration {
     }
 
     public List<Contrast> getContrasts(){
-        return FluentIterable.from(getContrastAndAnnotationPairs()).transform(p -> p.getLeft()).toList();
+        return FluentIterable.from(getContrastAndAnnotationPairs()).transform(Pair::getLeft).toList();
     }
 
     private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Pair<Contrast, Boolean>> contrasts) {

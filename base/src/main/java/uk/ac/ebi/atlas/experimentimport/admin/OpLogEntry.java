@@ -11,7 +11,7 @@ import org.joda.time.Period;
 
 public class OpLogEntry {
 
-    static Long UNFINISHED = new Long(-1);
+    static Long UNFINISHED = (long) -1;
 
     static String FAILED = "FAILED: ";
 

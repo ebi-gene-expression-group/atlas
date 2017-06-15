@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.context;
 
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
@@ -45,9 +44,9 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
 
         List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
                 RichFactorGroup.filterOutTypesWithCommonValues(
-                        FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters()).transform(factorHeader -> Factor.normalize(factorHeader)).toList(),
+                        FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters()).transform(Factor::normalize).toList(),
 
-                        dataColumnsToBeReturned().transform(assayGroup -> experiment.getFactors(assayGroup))
+                        dataColumnsToBeReturned().transform(experiment::getFactors)
                 );
         return typesWhoseValuesVaryAcrossSelectedDescriptors.isEmpty()
                 ? experiment.getDisplayDefaults().prescribedOrderOfFilters().subList(0, 1)

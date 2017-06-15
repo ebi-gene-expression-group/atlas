@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
@@ -31,7 +30,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     }
 
-    private static final Function<Pair<Contrast,Boolean>, Contrast> unpack = contrastBooleanPair -> contrastBooleanPair.getLeft();
+    private static final Function<Pair<Contrast,Boolean>, Contrast> unpack = Pair::getLeft;
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                                      List<Pair<Contrast, Boolean>> contrasts, String description, Species species,
@@ -40,9 +39,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
                 experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
                 Collections.<String>emptyList(), Collections.<String>emptyList(), FluentIterable.from(contrasts).transform(unpack).toList(), ExperimentDisplayDefaults.simpleDefaults());
-        this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(contrastBooleanPair -> {
-            return contrastBooleanPair.getRight();
-        }).transform(unpack).toSet();
+        this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(Pair::getRight).transform(unpack).toSet();
     }
 
     public boolean doesContrastHaveCttvPrimaryAnnotation(Contrast contrast){

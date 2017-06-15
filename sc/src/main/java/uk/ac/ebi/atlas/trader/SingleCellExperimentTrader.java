@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -46,10 +44,6 @@ public class SingleCellExperimentTrader extends ExperimentTrader {
 
     public void removeExperimentFromCache(String experimentAccession) {
         baselineExperimentsCache.invalidate(experimentAccession);
-    }
-
-    public void removeAllExperimentsFromCache(){
-        baselineExperimentsCache.invalidateAll();
     }
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {

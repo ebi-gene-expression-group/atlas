@@ -1,13 +1,11 @@
 package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

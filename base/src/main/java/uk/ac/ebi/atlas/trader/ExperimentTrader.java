@@ -22,8 +22,6 @@ public abstract class ExperimentTrader {
 
     public abstract void removeExperimentFromCache(String experimentAccession);
 
-    public abstract void removeAllExperimentsFromCache();
-
     public abstract Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) throws ExecutionException;
 
     public Set<Experiment> getPublicExperiments(ExperimentType... experimentTypes) {
@@ -31,7 +29,7 @@ public abstract class ExperimentTrader {
         for(String accession : getPublicExperimentAccessions(experimentTypes)) {
             try {
                 b.add(getPublicExperiment(accession));
-            } catch (ResourceNotFoundException e) {}
+            } catch (ResourceNotFoundException e) {/*Yum!*/}
         }
         return b.build();
     }

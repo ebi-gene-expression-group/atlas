@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;

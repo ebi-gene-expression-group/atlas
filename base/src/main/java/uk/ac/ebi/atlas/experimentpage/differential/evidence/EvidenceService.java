@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.experimentpage.differential.evidence;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
@@ -29,7 +28,6 @@ import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.ProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 
-import javax.annotation.Nullable;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -399,9 +397,7 @@ public class EvidenceService<Expr extends DifferentialExpression,
     "test_sample", "reference_sample"
      */
     static String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
-        return Joiner.on("; ").join(FluentIterable.from(experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values()).filter(s -> {
-            return StringUtils.isNotEmpty(s);
-        }));
+        return Joiner.on("; ").join(FluentIterable.from(experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values()).filter(StringUtils::isNotEmpty));
     }
 
     /*

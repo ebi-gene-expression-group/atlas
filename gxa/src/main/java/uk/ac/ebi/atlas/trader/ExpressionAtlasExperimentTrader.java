@@ -93,14 +93,6 @@ public class ExpressionAtlasExperimentTrader extends ExperimentTrader {
     }
 
     @Override
-    public void removeAllExperimentsFromCache() {
-        for(ExperimentsCache cache: experimentCachesPerType.values()){
-            cache.evictAll();
-        }
-        publicExperimentTypesCache.evictAll();
-    }
-
-    @Override
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) throws ExecutionException {
         return experimentCachesPerType.get(experimentType).getExperiment(experimentAccession);
     }

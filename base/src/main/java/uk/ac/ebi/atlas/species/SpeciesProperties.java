@@ -5,11 +5,6 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tiles.request.collection.MapEntry;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @AutoValue
 public abstract class SpeciesProperties {

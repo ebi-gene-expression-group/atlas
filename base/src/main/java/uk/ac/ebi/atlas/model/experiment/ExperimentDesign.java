@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.model.experiment;
 
 import com.google.common.collect.*;
-import com.google.gson.Gson;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;

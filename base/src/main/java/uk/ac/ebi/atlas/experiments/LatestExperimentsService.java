@@ -34,7 +34,7 @@ public class LatestExperimentsService {
                                 public Experiment apply(String experimentAccession) {
                                     return experimentTrader.getPublicExperiment(experimentAccession);
                                 }})
-                            .transform(experiment -> experiment.buildExperimentInfo()).toList();
+                            .transform(Experiment::buildExperimentInfo).toList();
 
             return ImmutableMap.of(
                     "experimentCount", experimentCount,

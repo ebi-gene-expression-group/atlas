@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experiments;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import org.springframework.jdbc.core.JdbcTemplate;

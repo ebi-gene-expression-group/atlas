@@ -1,14 +1,11 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.base.Supplier;
 import com.google.common.collect.FluentIterable;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 
-import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.List;

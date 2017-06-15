@@ -11,9 +11,7 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class RequestContext<DataColumnDescriptor extends DescribesDataColumns,E extends
@@ -51,7 +49,7 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
         Predicate<DataColumnDescriptor> keepColumns =
                 selectedIds.isEmpty() ? Predicates.<DataColumnDescriptor>alwaysTrue()
-                        : (Predicate<DataColumnDescriptor>) dataColumnDescriptor -> selectedIds.contains(dataColumnDescriptor.getId());
+                        : dataColumnDescriptor -> selectedIds.contains(dataColumnDescriptor.getId());
         return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(keepColumns);
     }
 

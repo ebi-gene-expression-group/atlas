@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;

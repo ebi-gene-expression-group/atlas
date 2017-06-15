@@ -8,10 +8,6 @@ import javax.annotation.Nullable;
 import javax.inject.Named;
 import java.util.*;
 
-/**
- * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 20/07/15.
- */
-
 @Named
 @Scope("singleton")
 public class AnalyticsIndexerMonitor implements Observer {

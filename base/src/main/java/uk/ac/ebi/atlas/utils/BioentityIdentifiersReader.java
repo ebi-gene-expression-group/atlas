@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 public abstract class BioentityIdentifiersReader {

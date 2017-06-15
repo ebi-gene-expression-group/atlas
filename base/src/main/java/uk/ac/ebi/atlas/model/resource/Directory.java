@@ -1,9 +1,7 @@
 package uk.ac.ebi.atlas.model.resource;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -11,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.Map;
 import java.util.Set;
 
 public class Directory extends AtlasResource<Set<Path>> {

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;

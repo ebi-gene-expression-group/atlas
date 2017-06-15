@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.model.resource;
 
 import com.esotericsoftware.kryo.io.UnsafeInput;
 import com.esotericsoftware.kryo.io.UnsafeOutput;
-import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import java.io.File;

@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.LinkToBaselineProfile;
 
-import javax.annotation.Nullable;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;

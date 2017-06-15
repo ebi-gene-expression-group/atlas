@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.dao;
 
 import com.google.common.collect.ImmutableMap;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;

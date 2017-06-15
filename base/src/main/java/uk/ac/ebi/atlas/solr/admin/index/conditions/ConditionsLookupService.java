@@ -12,8 +12,6 @@ import javax.inject.Named;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @Named
 public class ConditionsLookupService {
 
