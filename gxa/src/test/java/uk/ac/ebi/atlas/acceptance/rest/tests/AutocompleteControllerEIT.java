@@ -12,15 +12,17 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.startsWith;
 
 public class AutocompleteControllerEIT {
 
     private static final String END_POINT_URL = "/gxa/json/suggestions";
+    private static final String QUERY_TEXT = "ASP";
 
-    private EndPoint subject = new EndPoint(END_POINT_URL,"query=ASP&species=homo sapiens");
+    private EndPoint subject = new EndPoint(END_POINT_URL,"query=" + QUERY_TEXT + "&species=homo_sapiens");
 
     @Test
     public void verifyHeader() {
@@ -43,25 +45,25 @@ public class AutocompleteControllerEIT {
         SemanticQuery query = SemanticQuery.fromJson(jsonString);
         SemanticQueryTerm firstTerm = query.iterator().next();
         //then
-        assertThat(firstTerm.value(), is("ASPA"));
+        assertThat(firstTerm.value(), startsWith(QUERY_TEXT));
         assertThat(firstTerm.category(), is("symbol"));
-        assertEquals(query.size(), 15);
+        assertThat(query.size(), greaterThan(5));
 
     }
 
     @Test
-    public void shouldReturnNonEmptyJSonObjectForBlankSpecies(){
+    public void shouldReturnNonEmptyJSonObjectForBlankSpecies() {
         //given
-        EndPoint emptySpeciesRequest = new EndPoint(END_POINT_URL,"query=ASP");
+        EndPoint emptySpeciesRequest = new EndPoint(END_POINT_URL,"query=" + QUERY_TEXT);
         ResponseBody responseBody = emptySpeciesRequest.getResponse().body();
         String jsonString = responseBody.asString();
         //when
         SemanticQuery query = SemanticQuery.fromJson(jsonString);
         List<SemanticQueryTerm> suggestionList = Lists.newArrayList(query);
         //then
-        assertThat(suggestionList, hasSize(15));
+        assertThat(suggestionList, hasSize(greaterThan(0)));
         for (SemanticQueryTerm queryTerm : suggestionList) {
-            assertThat(queryTerm.value().toLowerCase(), containsString("asp"));
+            assertThat(queryTerm.value().toLowerCase(), containsString(QUERY_TEXT.toLowerCase()));
         }
     }
 
