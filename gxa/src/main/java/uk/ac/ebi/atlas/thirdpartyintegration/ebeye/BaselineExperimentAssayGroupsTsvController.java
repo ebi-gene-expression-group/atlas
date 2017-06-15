@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.Iterator;
 
 /**
  * Generates a tsv url with a List of all assayGroups_id details for all baseline experiments
@@ -64,10 +63,7 @@ public class BaselineExperimentAssayGroupsTsvController {
 
     private void extractLinesToTSVFormat(BaselineExperimentAssayGroupsLines baselineExperimentAssayGroupsLines, PrintWriter writer ) throws IOException {
 
-        Iterator<String[]> lines = baselineExperimentAssayGroupsLines.iterator();
-
-        while (lines.hasNext()){
-            String[] line = lines.next();
+        for (String[] line : baselineExperimentAssayGroupsLines) {
             String lineTab = Joiner.on("\t").join(line);
             writer.write(lineTab + "\n");
         }

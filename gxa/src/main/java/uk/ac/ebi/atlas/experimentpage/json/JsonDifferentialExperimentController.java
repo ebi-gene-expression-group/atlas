@@ -126,7 +126,7 @@ public class JsonDifferentialExperimentController extends JsonExperimentControll
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         for( JsonElement e: diffMicroarrayEvidenceService.evidenceForExperiment(experiment,new MicroarrayRequestContext(preferences, experiment))){
             response.getWriter().println(gson.toJson(e));
-        };
+        }
     }
 
     @RequestMapping(value = "/json/experiments/{experimentAccession}/evidence",

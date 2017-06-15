@@ -11,9 +11,7 @@ import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.differential.DifferentialRequestPreferencesValidator;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
-import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.experiment.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.ProfileStreamFilter;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqDifferentialProfilesWriterFactory;
@@ -93,7 +91,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
         rnaSeqProfileStreamFactory.write(
                 experiment,
                 context,
-                new ProfileStreamFilter<Contrast, RnaSeqRequestContext, RnaSeqProfile>(context,
+                new ProfileStreamFilter<>(context,
                         solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
                 rnaSeqDifferentialProfilesWriterFactory.create(responseWriter, context));
     }
@@ -109,7 +107,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
                 rnaSeqProfileStreamFactory.write(
                         experiment,
                         context,
-                        new ProfileStreamFilter<Contrast, RnaSeqRequestContext, RnaSeqProfile>(context,
+                        new ProfileStreamFilter<>(context,
                                 solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
                         rnaSeqDifferentialProfilesWriterFactory.create(writer, context));
                 return null;

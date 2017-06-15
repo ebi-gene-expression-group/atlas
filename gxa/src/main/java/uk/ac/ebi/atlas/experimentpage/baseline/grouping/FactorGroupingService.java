@@ -50,7 +50,7 @@ public class FactorGroupingService {
         for (OntologyTerm ontologyTerm : ontologyTerms) {
             for (AnatomicalSystem a : anatomicalSystemTrader.getAnatomicalSystemsIncluding(ontologyTerm.accession())) {
                 if (!groupings.containsKey(a)) {
-                    groupings.put(a, new HashSet<OntologyTerm>());
+                    groupings.put(a, new HashSet<>());
                 }
                 groupings.get(a).add(ontologyTerm);
 

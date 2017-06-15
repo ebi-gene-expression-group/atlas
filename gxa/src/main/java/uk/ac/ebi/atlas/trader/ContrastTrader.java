@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.trader;
 
 import uk.ac.ebi.atlas.model.experiment.Experiment;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;

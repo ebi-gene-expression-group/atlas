@@ -29,7 +29,7 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
                                              ExperimentTrader experimentTrader) {
         this.baselineProfilesWriterService = baselineProfilesWriterService;
         this.experimentTrader = experimentTrader;
-    };
+    }
 
     public void download(String experimentAccession, HttpServletRequest request, T preferences,
                          HttpServletResponse response, String accessKey)
@@ -50,7 +50,7 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
     Map<String, Integer> readCoexpressionsRequested(HttpServletRequest request) {
         return request.getParameterMap().containsKey("coexpressions")
                 ? coexpressionsRequested(request.getParameter("coexpressions"))
-                : new HashMap<String, Integer>();
+                : new HashMap<>();
     }
 
     private Map<String, Integer> coexpressionsRequested(String argument) {

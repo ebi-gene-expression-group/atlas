@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.sitemaps;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.species.SpeciesProperties;

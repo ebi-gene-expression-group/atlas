@@ -85,7 +85,7 @@ public class ExpressionSerializerService {
 
     private ImmutableList<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>> proteomicsBaselineStreamOptions(BaselineExperiment experiment) {
         return ImmutableList.<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>>of(
-                new BaselineRequestContext<ExpressionUnit.Absolute.Protein>(new ProteomicsBaselineRequestPreferences(), experiment)
+                new BaselineRequestContext<>(new ProteomicsBaselineRequestPreferences(), experiment)
         );
     }
 

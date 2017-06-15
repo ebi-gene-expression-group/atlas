@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.qc;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Supplier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.controllers.ResourceNotFoundException;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.text.MessageFormat;
 
 @Controller
@@ -26,8 +23,8 @@ public class QCReportController {
 
     private static final String QC_REPORT_URL = "/experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
-    public static final String getQcReportUrl(HttpServletRequest request, String experimentAccession,
-                                              String arrayDesign, String accessKey) {
+    public static String getQcReportUrl(HttpServletRequest request, String experimentAccession,
+                                        String arrayDesign, String accessKey) {
         return ApplicationProperties.buildServerURL(request) +
                 QC_REPORT_URL
                         .replace("{experimentAccession}", experimentAccession)

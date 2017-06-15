@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.resource;
 import uk.ac.ebi.atlas.model.resource.ResourceType;
 import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
@@ -13,7 +12,6 @@ import uk.ac.ebi.atlas.model.resource.ContrastImage;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 

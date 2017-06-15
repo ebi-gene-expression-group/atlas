@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.baseline.grouping;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,11 +32,9 @@ public class AnatomicalSystemTrader {
                 csvReader.readNext();
 
                 ImmutableMultimap.Builder<String, AnatomicalSystem> b = ImmutableMultimap.builder();
-                for (String[] row : csvReader.readAll()) {
-                    if (!row[0].startsWith("#")) {
-                        b.put(row[2], AnatomicalSystem.create(row[0], row[1]));
-                    }
-                }
+                csvReader.readAll().stream().filter(row -> !row[0].startsWith("#")).forEach(row -> {
+                    b.put(row[2], AnatomicalSystem.create(row[0], row[1]));
+                });
                 return b.build();
 
             } catch (IOException e) {

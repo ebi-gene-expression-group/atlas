@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentpage.qc;
 
 import org.apache.commons.io.IOUtils;
 
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;

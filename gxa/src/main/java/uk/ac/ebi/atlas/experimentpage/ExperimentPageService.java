@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;

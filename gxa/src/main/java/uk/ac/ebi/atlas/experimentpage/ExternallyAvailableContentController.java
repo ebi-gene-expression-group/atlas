@@ -26,14 +26,14 @@ public class ExternallyAvailableContentController {
     private static final String LIST_RESOURCES_URL = "json/experiments/{experimentAccession}/resources/{contentType}";
     private static final String STREAM_RESOURCES_URL = "experiments-content/{experimentAccession}/resources/**";
 
-    public static final String listResourcesUrl(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
+    public static String listResourcesUrl(String experimentAccession, String accessKey, ExternallyAvailableContent.ContentType contentType){
         return LIST_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
                 .replace("{contentType}", contentType.name())
                 + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
     }
 
-    public static final String streamResourcesUrl(String experimentAccession, String accessKey, String resourceName){
+    public static String streamResourcesUrl(String experimentAccession, String accessKey, String resourceName){
         return STREAM_RESOURCES_URL
                 .replace("{experimentAccession}", experimentAccession)
                 .replace("**", resourceName)

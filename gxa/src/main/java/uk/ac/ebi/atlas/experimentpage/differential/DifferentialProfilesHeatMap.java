@@ -36,10 +36,10 @@ public class DifferentialProfilesHeatMap<Expr extends DifferentialExpression,
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         DifferentialProfilesList<Prof> profiles = profileStreamFactory.select(requestContext.getExperiment(), requestContext,
-                new ProfileStreamFilter<Contrast, R, Prof>(requestContext, geneQueryResponse),
+                new ProfileStreamFilter<>(requestContext, geneQueryResponse),
                 new MinMaxProfileRanking<>(
                         DifferentialProfileComparator.<Prof>create(requestContext),
-                        new DifferentialProfilesListBuilder<Prof>()));
+                        new DifferentialProfilesListBuilder<>()));
 
         stopwatch.stop();
 

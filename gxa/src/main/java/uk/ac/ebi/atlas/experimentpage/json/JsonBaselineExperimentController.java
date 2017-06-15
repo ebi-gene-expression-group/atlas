@@ -125,7 +125,7 @@ public class JsonBaselineExperimentController extends JsonExperimentController {
 
     public static final String GENE_DISTRIBUTION_URL = "json/experiments/{experimentAccession}/genedistribution";
 
-    public static final String geneDistributionUrl(String experimentAccession, String accessKey, ExperimentType experimentType){
+    public static String geneDistributionUrl(String experimentAccession, String accessKey, ExperimentType experimentType){
         return GENE_DISTRIBUTION_URL.replace("{experimentAccession}", experimentAccession)
                 + "?experimentType="+experimentType.name()
                 +(

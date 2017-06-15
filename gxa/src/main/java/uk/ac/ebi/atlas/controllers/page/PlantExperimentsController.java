@@ -66,7 +66,7 @@ public class PlantExperimentsController {
         // Get number of all public plant experiments in Atlas
         numberOfPlantExperiments = 0;
 
-        Comparator<String> keyComparator = (o1, o2) -> o1.compareTo(o2);
+        Comparator<String> keyComparator = String::compareTo;
         // experiments should be sorted by their display name, not accession
         Comparator<String> valueComparator = (o1, o2) -> experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
         baselineExperimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);

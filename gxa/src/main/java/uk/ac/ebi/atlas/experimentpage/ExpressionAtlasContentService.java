@@ -2,13 +2,11 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.controllers.rest.experimentdesign.ExperimentDesignFile;
 import uk.ac.ebi.atlas.experimentpage.baseline.download.BaselineProfilesWriterService;
 import uk.ac.ebi.atlas.experimentpage.differential.download.DifferentialSecondaryDataFiles;
 import uk.ac.ebi.atlas.experimentpage.differential.download.MicroarrayExperimentDownloadController;
 import uk.ac.ebi.atlas.experimentpage.differential.download.RnaSeqExperimentDownloadController;
-import uk.ac.ebi.atlas.experimentpage.qc.QCReportController;
 import uk.ac.ebi.atlas.experimentpage.qc.RnaSeqQCReport;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -17,8 +15,6 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.resource.ContrastImageSupplier;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-
-import static uk.ac.ebi.atlas.model.download.ExternallyAvailableContent.ContentType.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;

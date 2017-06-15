@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage;
 
-import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.*;
 import org.apache.commons.lang3.tuple.Pair;
@@ -149,10 +148,10 @@ public class ExperimentController extends HtmlExceptionHandlingController {
     private JsonArray formatTable(List<String []> rows){
 
         JsonArray result = new JsonArray();
-        for(int i = 0 ; i< rows.size() ; i ++){
+        for (String[] row : rows) {
             //skip empty rows and other unexpected input
-            if(rows.get(i).length == 2) {
-                result.add(twoElementArray(rows.get(i)[0], rows.get(i)[1]));
+            if (row.length == 2) {
+                result.add(twoElementArray(row[0], row[1]));
             }
         }
 

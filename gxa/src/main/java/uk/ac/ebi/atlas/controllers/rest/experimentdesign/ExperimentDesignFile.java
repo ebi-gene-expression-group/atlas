@@ -16,7 +16,6 @@ import uk.ac.ebi.atlas.resource.DataFileHub;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.*;

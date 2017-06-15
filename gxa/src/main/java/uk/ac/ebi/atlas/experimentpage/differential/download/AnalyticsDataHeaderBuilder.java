@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -32,9 +33,7 @@ public class AnalyticsDataHeaderBuilder implements Function<String[], String[]> 
     public String[] apply(String[] header) {
 
         List<String> result = new ArrayList<>();
-        for (int i = 0; i < fixedColumnNumber; i++) {
-            result.add(header[i]);
-        }
+        result.addAll(Arrays.asList(header).subList(0, fixedColumnNumber));
 
         for (int i = fixedColumnNumber; i < header.length; i++) {
             result.add(replaceContrastIdWithName(header[i]));

@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport;
 
-import java.util.UUID;
-
 public class ExperimentLoad {
 
     void makePublicExperimentPrivate(String accession){
