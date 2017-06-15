@@ -52,7 +52,7 @@
 
     <!-- Use this CSS file for any custom styling -->
     <!-- <link rel="stylesheet" href="css/custom.css" type="text/css" media="all"> -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/atlasnew.css" type="text/css" media="all">--%>
 
     <!-- If you have a custom header image or colour -->
     <!-- <meta name="ebi:localmasthead-color" content="#000"> -->
@@ -61,7 +61,8 @@
     <!-- you can replace this with theme-[projectname].css. See http://www.ebi.ac.uk/web/style/colour for details of how to do this -->
     <!-- also inform ES so we can host your colour palette file -->
     <%--<link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/theme-embl-petrol.css" type="text/css" media="all">--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme-atlas.css" type="text/css" media="all">
     <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/customized-bootstrap-3.3.5.css">
 
 
@@ -102,14 +103,16 @@
 </div>
 
 <div id="content" role="main" class="row">
-    <tiles:insertAttribute name="body"/>
+    <div class="sections">
+        <tiles:insertAttribute name="body"/>
+    </div>
 </div>
 
 <div class="text-center jumbo-news-container padding-top-xlarge padding-bottom-xlarge">
     <tiles:insertAttribute name="news"/>
 </div>
 
-<div class="mega-footer padding-top-xlarge padding-bottom-xlarge">
+<div id="local-masthead" class="mega-footer padding-top-xlarge padding-bottom-xlarge">
     <tiles:insertAttribute name="mega-footer"/>
 </div>
 

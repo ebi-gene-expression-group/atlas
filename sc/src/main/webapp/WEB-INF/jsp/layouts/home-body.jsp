@@ -5,13 +5,17 @@
     <tiles:insertAttribute name="home-hero"/>
 </section>
 
-<section class="margin-top-large">
-    <div class="row small-up-1 medium-up-1 large-up-2" data-equalizer>
-        <div class="columns">
-            <tiles:insertAttribute name="experiment-list-latest-box"/>
-        </div>
-        <div class="columns">
-            <tiles:insertAttribute name="publications-box"/>
-        </div>
+<section>
+    <div class="row margin-bottom-xlarge">
+        <tiles:insertAttribute name="experiment-list-latest-box"/>
     </div>
 </section>
+
+<div class="row margin-top-xlarge">
+    <tiles:insertAttribute name="type-cell"/>
+    <tiles:insertAttribute name="type-tissue"/>
+</div>
+
+<div class="row margin-top-xlarge">
+    <tiles:insertAttribute name="publications-box"/>
+</div>
