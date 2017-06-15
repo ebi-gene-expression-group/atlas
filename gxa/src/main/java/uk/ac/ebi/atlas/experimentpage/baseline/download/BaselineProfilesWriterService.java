@@ -111,7 +111,7 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
 
         final BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         GeneQueryResponse geneQueryResponse =
-                solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies().getReferenceName());
+                solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
         if (totalCoexpressionsRequested > 0) {
             geneQueryResponse =
                     coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(

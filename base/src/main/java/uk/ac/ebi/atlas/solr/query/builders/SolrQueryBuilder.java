@@ -5,8 +5,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
+import uk.ac.ebi.atlas.species.Species;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -30,9 +30,10 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
 
     protected StringBuilder queryStringBuilder = new StringBuilder();
 
-    public T withSpecies(String speciesReferenceName){
-        if (StringUtils.isNotBlank(speciesReferenceName)){
-            queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(speciesReferenceName).append("\"");
+    public T withSpecies(Species species){
+        // No need to lowercase the species field, it is of type lowercase in Solr
+        if (!species.isUnknown()){
+            queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(species.getEnsemblName()).append("\"");
         }
         return getThis();
     }

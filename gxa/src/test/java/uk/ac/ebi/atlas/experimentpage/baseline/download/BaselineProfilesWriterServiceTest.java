@@ -15,7 +15,6 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
-import uk.ac.ebi.atlas.model.experiment.Experiment;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDisplayDefaults;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfile;
@@ -103,7 +102,7 @@ public class BaselineProfilesWriterServiceTest {
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
 
-        when(solrQueryService.fetchResponse(geneQuery, species.getReferenceName())).thenReturn(new GeneQueryResponse());
+        when(solrQueryService.fetchResponse(geneQuery, species)).thenReturn(new GeneQueryResponse());
     }
 
     @Test
@@ -134,7 +133,7 @@ public class BaselineProfilesWriterServiceTest {
         }
         extendedResponse.addGeneIds(geneName + ":coexpressions", range);
 
-        when(solrQueryService.fetchResponse(eq(geneQuery), anyString())).thenReturn(response);
+        when(solrQueryService.fetchResponse(eq(geneQuery), any(Species.class))).thenReturn(response);
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
                 coexpressions)).thenReturn(extendedResponse);
@@ -168,12 +167,12 @@ public class BaselineProfilesWriterServiceTest {
             extendedResponse.addGeneIds(geneName + ":coexpressions", range);
         }
 
-        when(solrQueryService.fetchResponse(eq(geneQuery), anyString())).thenReturn(response);
+        when(solrQueryService.fetchResponse(eq(geneQuery), any(Species.class))).thenReturn(response);
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
                 baselineExperimentMock, response, coexpressions)).thenReturn(extendedResponse);
 
-        when(solrQueryService.fetchResponse(any(SemanticQuery.class), anyString())).thenReturn(response);
+        when(solrQueryService.fetchResponse(any(SemanticQuery.class), any(Species.class))).thenReturn(response);
 
         subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
     }

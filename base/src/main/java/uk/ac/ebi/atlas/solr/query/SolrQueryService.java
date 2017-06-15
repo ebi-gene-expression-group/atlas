@@ -8,6 +8,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
+import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
@@ -42,22 +43,22 @@ public class SolrQueryService {
     }
 
     private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery,
-                                                                  String speciesReferenceName) {
+                                                                  Species species) {
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         //associate gene ids with each token in the query string
         for (SemanticQueryTerm queryTerm : geneQuery) {
-            geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, speciesReferenceName));
+            geneQueryResponse.addGeneIds(queryTerm.toString(), fetchGeneIds(queryTerm, species));
         }
         return geneQueryResponse;
     }
 
-    private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, String speciesReferenceName) {
+    private Set<String> fetchGeneIds(SemanticQueryTerm queryTerm, Species species) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forTerm(queryTerm)
-                .withSpecies(speciesReferenceName)
+                .withSpecies(species)
                 .withBioentityTypes(BioentityType.GENE.getSolrAliases())
                 .build();
         Set<String> geneIds = solrClient.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
@@ -70,18 +71,16 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, String speciesReferenceName) {
+    public GeneQueryResponse fetchResponse(SemanticQuery geneQuery, Species species) {
         if (isEmpty(geneQuery)) {
             return new GeneQueryResponse();
         }
 
-        GeneQueryResponse geneQueryResponse =
-                fetchGeneIdsGroupedByGeneQueryToken(
-                        geneQuery, speciesFactory.create(speciesReferenceName).getReferenceName());
+        GeneQueryResponse geneQueryResponse = fetchGeneIdsGroupedByGeneQueryToken(geneQuery, species);
 
         if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException(
-                    "No genes found for searchText = " + geneQuery.toJson() + ", species = " + speciesReferenceName);
+                    "No genes found for searchText = " + geneQuery.toJson() + ", species = " + species.getName());
         }
 
         return geneQueryResponse;

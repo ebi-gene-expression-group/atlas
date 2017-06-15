@@ -6,7 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDownloadDispatcher;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
@@ -87,14 +92,14 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
     void fetchAndWriteGeneProfiles(Writer responseWriter, MicroarrayExperiment experiment, MicroarrayRequestPreferences
             preferences){
         fetchAndWriteGeneProfiles(experiment, preferences, solrQueryService.fetchResponse(preferences
-                .getGeneQuery(), "")).apply(responseWriter);
+                .getGeneQuery(), experiment.getSpecies())).apply(responseWriter);
     }
 
 
 
-    Function<Writer, Void> fetchAndWriteGeneProfiles(final MicroarrayExperiment experiment,
-                                                     final MicroarrayRequestPreferences preferences,
-                                                     final GeneQueryResponse geneQueryResponse){
+    private Function<Writer, Void> fetchAndWriteGeneProfiles(final MicroarrayExperiment experiment,
+                                                             final MicroarrayRequestPreferences preferences,
+                                                             final GeneQueryResponse geneQueryResponse){
         final MicroarrayRequestContext context =
                 new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
 
@@ -108,9 +113,10 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
         };
     }
 
-    Function<HttpServletResponse, Void> stream(MicroarrayExperiment experiment, MicroarrayRequestPreferences preferences){
-        //TODO code is not using species for microarray experiments - I think it's wrong
-        GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse(preferences.getGeneQuery(), "");
+    private Function<HttpServletResponse, Void> stream(MicroarrayExperiment experiment,
+                                                       MicroarrayRequestPreferences preferences) {
+        GeneQueryResponse geneQueryResponse =
+                solrQueryService.fetchResponse(preferences.getGeneQuery(), experiment.getSpecies());
 
         List<Pair<String, Function<Writer, Void>>> documents = new ArrayList<>();
         for(String arrayDesign: experiment.getArrayDesignAccessions()){

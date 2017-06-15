@@ -30,8 +30,7 @@ public class DifferentialProfilesHeatMap<Expr extends DifferentialExpression,
 
     public DifferentialProfilesList<Prof> fetch(R requestContext) {
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
-                (requestContext.getGeneQuery(), requestContext.getExperiment().getType().isMicroarray()? ""  :
-                        requestContext.getSpecies().getReferenceName());
+                (requestContext.getGeneQuery(), requestContext.getSpecies());
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 

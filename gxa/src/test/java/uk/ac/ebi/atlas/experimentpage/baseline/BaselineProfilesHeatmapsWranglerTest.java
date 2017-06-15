@@ -88,15 +88,14 @@ public class BaselineProfilesHeatmapsWranglerTest {
     @Test
     public void rightQueriesToDataSources() throws Exception{
         GeneQueryResponse response = mock(GeneQueryResponse.class);
-        when(solrQueryServiceMock.fetchResponse((SemanticQuery) Mockito.any(),anyString()))
+        when(solrQueryServiceMock.fetchResponse(Mockito.any(), any(Species.class)))
                 .thenReturn(response);
-        when(baselineProfilesHeatMapMock.fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
-                        .any(), eq(response)
+        when(baselineProfilesHeatMapMock.fetch(any(BaselineExperiment.class), Mockito.any(), eq(response)
         )).thenReturn(new BaselineProfilesList());
 
         subject.getJsonProfiles();
 
-        verify(solrQueryServiceMock).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
+        verify(solrQueryServiceMock).fetchResponse(Mockito.any(SemanticQuery.class), any(Species.class));
         verify(baselineProfilesHeatMapMock).fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
                 .any(), eq(response)
         );
@@ -104,19 +103,17 @@ public class BaselineProfilesHeatmapsWranglerTest {
 
     @Test
     public void cachingWorks() throws Exception{
-        when(baselineProfilesHeatMapMock.fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito.any()
-                , any
-                        (GeneQueryResponse.class)
-        )).thenReturn(new BaselineProfilesList());
+        when(baselineProfilesHeatMapMock
+                .fetch(any(BaselineExperiment.class),Mockito.any(), any(GeneQueryResponse.class)))
+                .thenReturn(new BaselineProfilesList());
 
         for(int i = 0; i<5; i++) {
             subject.getJsonProfiles();
         }
 
-        verify(solrQueryServiceMock).fetchResponse(Mockito.any(SemanticQuery.class) ,anyString());
-        verify(baselineProfilesHeatMapMock).fetch(any(BaselineExperiment.class),(BaselineProfileStreamOptions) Mockito
-                .any(), any
-                (GeneQueryResponse.class)
+        verify(solrQueryServiceMock).fetchResponse(Mockito.any(SemanticQuery.class), any(Species.class));
+        verify(baselineProfilesHeatMapMock)
+                .fetch(any(BaselineExperiment.class), Mockito.any(), any(GeneQueryResponse.class)
         );
     }
 

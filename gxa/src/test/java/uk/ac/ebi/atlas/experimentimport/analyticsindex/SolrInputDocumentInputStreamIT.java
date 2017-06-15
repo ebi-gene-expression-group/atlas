@@ -83,7 +83,7 @@ public class SolrInputDocumentInputStreamIT {
 
             assertThat(solrInputDocument.size(), greaterThan(6));
             assertThat(experiment.getType().name().toUpperCase(),
-                    is(solrInputDocument.getField("experimentType").getValue()));
+                    is(solrInputDocument.getField("experiment_type").getValue()));
             assertThat(experiment.getSpecies().getReferenceName(), is(solrInputDocument.getField("species").getValue()));
         }
         assertThat(count, is(greaterThan(100)));
@@ -109,7 +109,7 @@ public class SolrInputDocumentInputStreamIT {
 
         for(SolrInputDocument solrInputDocument: results) {
             if (analyticsIndexDocumentValidator.validate(solrInputDocument)) {
-                String bioentityIdentifier = solrInputDocument.getField("bioentityIdentifier").getValue().toString();
+                String bioentityIdentifier = solrInputDocument.getField("bioentity_identifier").getValue().toString();
                 assertThat(identifiersForThatExperiment, hasItem(bioentityIdentifier));
             }
          }

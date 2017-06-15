@@ -5,7 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.ExperimentDownloadDispatcher;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextFactory;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
@@ -92,7 +96,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
                 experiment,
                 context,
                 new ProfileStreamFilter<>(context,
-                        solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
+                        solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies())),
                 rnaSeqDifferentialProfilesWriterFactory.create(responseWriter, context));
     }
 
@@ -108,7 +112,7 @@ public class RnaSeqExperimentDownloadController extends CanStreamSupplier<Differ
                         experiment,
                         context,
                         new ProfileStreamFilter<>(context,
-                                solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies().getReferenceName())),
+                                solrQueryService.fetchResponse(context.getGeneQuery(), experiment.getSpecies())),
                         rnaSeqDifferentialProfilesWriterFactory.create(writer, context));
                 return null;
             }

@@ -73,14 +73,10 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
 
     }
 
-    private String getSpecies() {
-        return requestContext.getSpecies().getReferenceName();
-    }
-
     private GeneQueryResponse getGeneQueryResponseForProfiles()  {
         if (geneQueryResponseForProfiles == null) {
             geneQueryResponseForProfiles =
-                    solrQueryService.fetchResponse(requestContext.getGeneQuery(), getSpecies());
+                    solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
         }
         return geneQueryResponseForProfiles;
     }

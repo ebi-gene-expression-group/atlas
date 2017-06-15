@@ -73,7 +73,7 @@ public class BaselineProfilesHeatMapIT {
         }
 
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
-                (baselineRequestContext.getGeneQuery(),baselineRequestContext.getSpecies().getReferenceName());
+                (baselineRequestContext.getGeneQuery(), baselineRequestContext.getSpecies());
 
         BaselineProfilesList profiles = subject.fetch(baselineExperiment, baselineRequestContext,
                 geneQueryResponse);
