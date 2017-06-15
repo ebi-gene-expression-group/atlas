@@ -57,9 +57,9 @@ public class DifferentialResultsReader {
         JsonArray results = new JsonArray();
         goThroughDocuments:
         for (Map<String, Object> document : documents) {
-            String experimentAccession = (String) document.get("experimentAccession");
-            String contrastId = (String) document.get("contrastId");
-            ExperimentType experimentType = ExperimentType.get((String) document.get("experimentType"));
+            String experimentAccession = (String) document.get("experiment_accession");
+            String contrastId = (String) document.get("contrast_id");
+            ExperimentType experimentType = ExperimentType.get((String) document.get("experiment_type"));
 
             String bioentityName = "";
             Object bioentityNamesOrEmpty = document.get("keyword_symbol");
@@ -67,7 +67,7 @@ public class DifferentialResultsReader {
                 bioentityName = ((Collection) bioentityNamesOrEmpty).iterator().next().toString();
             }
 
-            Object foldChangeSymbol = document.get("foldChange");
+            Object foldChangeSymbol = document.get("fold_change");
             double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
 
             if (foldChange > 0.0) {
