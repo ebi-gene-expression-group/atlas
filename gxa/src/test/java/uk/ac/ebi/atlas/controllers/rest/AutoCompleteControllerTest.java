@@ -43,7 +43,7 @@ public class AutoCompleteControllerTest {
         List<SemanticQueryTerm> suggestions = Lists.newArrayList(queryTerm1, queryTerm2);
 
         when(speciesFactoryMock.create(HOMO_SAPIENS)).thenReturn(new Species(HOMO_SAPIENS, SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.<ImmutableMap<String, String>>of())));
-//        when(suggesterServiceMock.fetchTopSuggestions(QUERY_STRING, "homo sapiens")).thenReturn(suggestions);
+        when(suggesterServiceMock.fetchSuggestions(QUERY_STRING, speciesFactoryMock.create(HOMO_SAPIENS), 15)).thenReturn(suggestions);
 
         subject = new AutoCompleteController(suggesterServiceMock, speciesFactoryMock);
     }
