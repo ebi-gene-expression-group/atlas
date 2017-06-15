@@ -11,11 +11,13 @@
     </div>
 </section>
 
-<div class="row margin-top-xlarge">
-    <tiles:insertAttribute name="type-cell"/>
-    <tiles:insertAttribute name="type-tissue"/>
-</div>
+<section>
+    <div class="row margin-top-xlarge">
+        <tiles:insertAttribute name="type-cell"/>
+        <tiles:insertAttribute name="type-tissue"/>
+    </div>
 
-<div class="row margin-top-xlarge">
-    <tiles:insertAttribute name="publications-box"/>
-</div>
+    <div class="row margin-top-xlarge">
+        <tiles:insertAttribute name="publications-box"/>
+    </div>
+</section>
