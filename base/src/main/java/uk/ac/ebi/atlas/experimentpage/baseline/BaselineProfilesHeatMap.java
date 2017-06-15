@@ -32,7 +32,7 @@ public class BaselineProfilesHeatMap<StreamOptions extends BaselineProfileStream
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         BaselineProfilesList profiles = baselineProfileStreamFactory.select(experiment, options,
-                new ProfileStreamFilter<AssayGroup, StreamOptions, BaselineProfile>(options, geneQueryResponse),
+                new ProfileStreamFilter<>(options, geneQueryResponse),
                 new MinMaxProfileRanking<>(BaselineProfileComparator.create(options), new BaselineProfilesListBuilder()));
 
         stopwatch.stop();
@@ -50,7 +50,7 @@ public class BaselineProfilesHeatMap<StreamOptions extends BaselineProfileStream
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         BaselineProfilesList profiles = baselineProfileStreamFactory.select(experiment, options,
-                new ProfileStreamFilter<AssayGroup, StreamOptions, BaselineProfile>(options, geneQueryResponse),
+                new ProfileStreamFilter<>(options, geneQueryResponse),
                 new PrescribedOrderProfileSelection<>(geneNamesInOrder, new BaselineProfilesListBuilder()));
 
         stopwatch.stop();

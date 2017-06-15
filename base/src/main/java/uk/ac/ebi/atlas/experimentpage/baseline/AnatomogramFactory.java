@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AnatomogramFactory {
 
@@ -28,10 +29,7 @@ public class AnatomogramFactory {
     }
 
     public Optional<JsonElement> get(List<AssayGroup> selectedDataColumns, final BaselineExperiment baselineExperiment) {
-        Set<String> s = new HashSet<>();
-        for (AssayGroup assayGroup : selectedDataColumns) {
-            s.add(safeFactorValue(baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram)));
-        }
+        Set<String> s = selectedDataColumns.stream().map(assayGroup -> safeFactorValue(baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram))).collect(Collectors.toSet());
         if(s.size() > 1){
             return Optional.of(getAnatomogramProperties(baselineExperiment.getSpecies(), FluentIterable.from(selectedDataColumns).transformAndConcat(
                     assayGroup -> baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram).getValueOntologyTerms()

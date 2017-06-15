@@ -120,11 +120,9 @@ public class ApplicationProperties {
                         .replaceFirst("^.*"+request.getContextPath(), "")
                         .replace("/json/experiments", "/experiments")
                         .replaceFirst("\\??$", TSV_FILE_EXTENSION+"?"));
-        for(Map.Entry<String, String[]> e: allParameters.entrySet()){
-            if(e.getValue().length>0) {
-                sourceURLBuilder.append(e.getKey()).append("=").append(e.getValue()[0]).append("&");
-            }
-        }
+        allParameters.entrySet().stream().filter(e -> e.getValue().length > 0).forEach(e -> {
+            sourceURLBuilder.append(e.getKey()).append("=").append(e.getValue()[0]).append("&");
+        });
         sourceURLBuilder.deleteCharAt(sourceURLBuilder.lastIndexOf("&"));
         return sourceURLBuilder.toString();
     }

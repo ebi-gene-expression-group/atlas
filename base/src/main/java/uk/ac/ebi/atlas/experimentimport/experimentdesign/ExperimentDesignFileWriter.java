@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 
@@ -76,9 +77,7 @@ public class ExperimentDesignFileWriter {
 
     List<String[]> asTableOntologyTermsData(ExperimentDesign experimentDesign) {
         List<String[]> tableData = Lists.newArrayList();
-        for (String runOrAssay : experimentDesign.getAllRunOrAssay()) {
-            tableData.add(composeTableRowWithOntologyTerms(experimentDesign, runOrAssay));
-        }
+        tableData.addAll(experimentDesign.getAllRunOrAssay().stream().map(runOrAssay -> composeTableRowWithOntologyTerms(experimentDesign, runOrAssay)).collect(Collectors.toList()));
         return tableData;
     }
 

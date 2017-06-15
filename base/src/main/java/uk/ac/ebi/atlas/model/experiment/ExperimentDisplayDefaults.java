@@ -92,11 +92,7 @@ public abstract class ExperimentDisplayDefaults {
     static ExperimentDisplayDefaults create(Map<String, String> defaultFilterValues,
                                             List<String> prescribedOrderOfFilters, boolean preserveColumnOrder){
         ImmutableList.Builder<String> b = ImmutableList.<String>builder().addAll(prescribedOrderOfFilters);
-        for(String filterType: defaultFilterValues.keySet()){
-            if(!prescribedOrderOfFilters.contains(filterType)){
-                b.add(filterType);
-            }
-        }
+        defaultFilterValues.keySet().stream().filter(filterType -> !prescribedOrderOfFilters.contains(filterType)).forEach(b::add);
         return new AutoValue_ExperimentDisplayDefaults(defaultFilterValues,prescribedOrderOfFilters, preserveColumnOrder);
     }
 

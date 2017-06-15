@@ -64,11 +64,7 @@ public class DataColumnGroup<DataColumnDescriptor extends DescribesDataColumns> 
 
     private static <T> List<T> uniqueSublist(Collection<T> collection){
         List<T> result = new ArrayList<>();
-        for(T element: collection){
-            if(!result.contains(element)){
-                result.add(element);
-            }
-        }
+        collection.stream().filter(element -> !result.contains(element)).forEach(result::add);
         return result;
     }
 
@@ -86,7 +82,7 @@ public class DataColumnGroup<DataColumnDescriptor extends DescribesDataColumns> 
         public void addDataColumnGroupIfNotPresent(String factorOrSampleHeaderFromTheDesignFileOrFactorsXml, boolean primary){
             String name = Factor.normalize(factorOrSampleHeaderFromTheDesignFileOrFactorsXml);
             if(!dataColumnGroupsByType.containsKey(name)){
-                dataColumnGroupsByType.put(name, new DataColumnGroup<DataColumnDescriptor>(name, experimentDisplayDefaults.defaultFilterValuesForFactor(name), primary));
+                dataColumnGroupsByType.put(name, new DataColumnGroup<>(name, experimentDisplayDefaults.defaultFilterValuesForFactor(name), primary));
             }
         }
 

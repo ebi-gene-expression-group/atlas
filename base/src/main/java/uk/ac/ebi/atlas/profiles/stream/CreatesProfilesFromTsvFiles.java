@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends DescribesDataColumns, Expr extends Expression,
         E extends Experiment<DataColumnDescriptor>, StreamOptions extends ProfileStreamOptions<DataColumnDescriptor>,
@@ -35,11 +36,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
 
     ObjectInputStream<Prof> create(E experiment, StreamOptions options, Predicate<Expr> filterExpressions){
 
-        Vector<ObjectInputStream<Prof>> outputs = new Vector<>();
-
-        for(ObjectInputStream<String[]> dataFile : getDataFiles(experiment, options)){
-            outputs.add(readNextLineStream(howToReadLineStream(experiment, filterExpressions), dataFile));
-        }
+        Vector<ObjectInputStream<Prof>> outputs = getDataFiles(experiment, options).stream().map(dataFile -> readNextLineStream(howToReadLineStream(experiment, filterExpressions), dataFile)).collect(Collectors.toCollection(Vector::new));
 
         return new SequenceObjectInputStream<>(outputs.elements());
 

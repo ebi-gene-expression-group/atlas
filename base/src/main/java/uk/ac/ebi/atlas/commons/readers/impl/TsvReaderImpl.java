@@ -47,11 +47,7 @@ public class TsvReaderImpl implements TsvReader {
         try (CSVReader csvReader = new CSVReader(tsvReader, '\t')) {
 
             ImmutableList.Builder<String[]> rowsBuilder = new ImmutableList.Builder<>();
-            for (String[] row : csvReader.readAll()) {
-                if (acceptanceCriteria.apply(row[0])) {
-                    rowsBuilder.add(row);
-                }
-            }
+            csvReader.readAll().stream().filter(row -> acceptanceCriteria.apply(row[0])).forEach(rowsBuilder::add);
             return rowsBuilder.build();
 
         } catch (IOException e) {

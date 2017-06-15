@@ -136,11 +136,9 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
 
     public Self filter(Predicate<Expr> keepExpressions){
         Self result = createEmptyCopy();
-        for(Map.Entry<DataColumnDescriptor, Expr> e: expressionsByCondition.entrySet()){
-            if(keepExpressions.apply(e.getValue())){
-                result.add(e.getKey(), e.getValue());
-            }
-        }
+        expressionsByCondition.entrySet().stream().filter(e -> keepExpressions.apply(e.getValue())).forEach(e -> {
+            result.add(e.getKey(), e.getValue());
+        });
         return result;
     }
 

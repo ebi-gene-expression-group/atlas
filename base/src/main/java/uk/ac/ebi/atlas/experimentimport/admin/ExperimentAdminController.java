@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ExperimentAdminController extends JsonExceptionHandlingController {
 
@@ -117,11 +118,7 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
         if (accessionParameter.contains("*")) {
             List<String> result = new ArrayList<>();
             Pattern pattern = Pattern.compile(accessionParameter.replaceAll("\\*", ".*"));
-            for (String experimentAccession : experimentOps.findAllExperiments()) {
-                if (pattern.matcher(experimentAccession).matches()) {
-                    result.add(experimentAccession);
-                }
-            }
+            result.addAll(experimentOps.findAllExperiments().stream().filter(experimentAccession -> pattern.matcher(experimentAccession).matches()).collect(Collectors.toList()));
             return result;
         } else {
             return Arrays.asList(accessionParameter.split(","));

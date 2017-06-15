@@ -14,7 +14,7 @@ public class FactorSet implements FactorGroup {
     public final Map<String, Factor> factorsByType;
 
     public FactorSet() {
-        this(new HashMap<String, Factor>());
+        this(new HashMap<>());
     }
 
     private FactorSet(Map<String, Factor> factorsByType) {
@@ -98,11 +98,9 @@ public class FactorSet implements FactorGroup {
     @Override
     public FactorGroup withoutTypes(Collection<String> factorTypes) {
         HashMap<String, Factor> result = new HashMap<>();
-        for(String type : factorsByType.keySet()){
-            if(!factorTypes.contains(type)){
-                result.put(type, factorsByType.get(type));
-            }
-        }
+        factorsByType.keySet().stream().filter(type -> !factorTypes.contains(type)).forEach(type -> {
+            result.put(type, factorsByType.get(type));
+        });
         return new FactorSet(result);
     }
 

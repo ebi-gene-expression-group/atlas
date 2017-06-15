@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class BaselineExperimentSearchResultProducer {
 
@@ -32,12 +33,7 @@ public class BaselineExperimentSearchResultProducer {
     }
 
     private BaselineExperimentProfilesList trimAndSort(Collection<BaselineExperimentProfile> profiles){
-        BaselineExperimentProfilesList result = new BaselineExperimentProfilesList();
-        for(BaselineExperimentProfile profile: profiles){
-            if(!profile.hasAllExpressionsEqualZero()){
-                result.add(profile);
-            }
-        }
+        BaselineExperimentProfilesList result = profiles.stream().filter(profile -> !profile.hasAllExpressionsEqualZero()).collect(Collectors.toCollection(BaselineExperimentProfilesList::new));
         Collections.sort(result);
         result.setTotalResultCount(result.size());
         return result;

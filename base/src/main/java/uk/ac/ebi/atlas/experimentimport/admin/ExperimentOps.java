@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 consider support for async:
@@ -177,10 +178,7 @@ public class ExperimentOps {
     }
 
     private String niceEnoughKeyName(Collection<Op> ops){
-        Collection<String> names = new ArrayList<>();
-        for(Op op: ops){
-            names.add(op.name());
-        }
+        Collection<String> names = ops.stream().map(Op::name).collect(Collectors.toCollection(ArrayList::new));
         return Joiner.on(',').join(names);
     }
 

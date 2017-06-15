@@ -48,7 +48,7 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
         String title = StringUtils.isEmpty(resultSet.getString("title")) ? "" : resultSet.getString("title");
 
         String pubMedIdsString = resultSet.getString("pubmed_Ids");
-        Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString)? new HashSet<String>() : Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
+        Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString)? new HashSet<>() : Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
 
         return new ExperimentDTO(experimentAccession
                 , experimentType

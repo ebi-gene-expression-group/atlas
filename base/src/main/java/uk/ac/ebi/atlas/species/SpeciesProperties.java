@@ -36,11 +36,7 @@ public abstract class SpeciesProperties {
     public ImmutableCollection<ImmutableMap<String, String>> getResourcesOfType(String typeValue) {
         ImmutableList.Builder<ImmutableMap<String, String>> matchedTypeResourcesBuilder = ImmutableList.builder();
 
-        for (ImmutableMap<String, String> resource : resources()) {
-            if (resource.containsKey("type") && typeValue.equals(resource.get("type"))) {
-                matchedTypeResourcesBuilder.add(resource);
-            }
-        }
+        resources().stream().filter(resource -> resource.containsKey("type") && typeValue.equals(resource.get("type"))).forEach(matchedTypeResourcesBuilder::add);
 
         return matchedTypeResourcesBuilder.build();
     }

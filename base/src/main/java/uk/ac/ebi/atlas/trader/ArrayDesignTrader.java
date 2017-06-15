@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 @Named
 public class ArrayDesignTrader {
@@ -39,9 +40,7 @@ public class ArrayDesignTrader {
     public SortedSet<String> getArrayDesignNames(SortedSet<String> arrayDesignAccessions) {
         SortedSet<String> arrayDesignNames = Sets.newTreeSet();
 
-        for(String arrayDesign : arrayDesignAccessions) {
-            arrayDesignNames.add(getArrayDesignByName(arrayDesign));
-        }
+        arrayDesignNames.addAll(arrayDesignAccessions.stream().map(this::getArrayDesignByName).collect(Collectors.toList()));
 
         return arrayDesignNames;
     }

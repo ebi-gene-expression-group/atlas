@@ -38,7 +38,7 @@ public class XmlReader {
 
     public List<String> getList(String key) {
         List<String> list = xmlConfiguration.getList(String.class, key);
-        return list == null ? new ArrayList<String>() : list;
+        return list == null ? new ArrayList<>() : list;
     }
 
     public List<HierarchicalConfiguration<ImmutableNode>> configurationsAt(String key) {

@@ -63,11 +63,9 @@ public class EFOLookupService {
         }
 
         ImmutableSet.Builder<String> builder = ImmutableSet.builder();
-        for (String id : ids) {
-            if(idToEFONode.containsKey(id)){
-                builder.add(idToEFONode.get(id).getTerm());
-            }
-        }
+        ids.stream().filter(id -> idToEFONode.containsKey(id)).forEach(id -> {
+            builder.add(idToEFONode.get(id).getTerm());
+        });
         return builder.build();
     }
 

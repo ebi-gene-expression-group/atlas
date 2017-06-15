@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.model.Profile;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PrescribedOrderProfileSelection<T extends Profile, L extends GeneProfilesList<T>> implements SelectProfiles<T, L> {
 
@@ -22,9 +23,7 @@ public class PrescribedOrderProfileSelection<T extends Profile, L extends GenePr
     @Override
     public L select(ObjectInputStream<T> profiles, int maxSize) {
         List<LinkedList<T>> ans = new ArrayList<>(geneNamesInOrder.size());
-        for (String _ : geneNamesInOrder) {
-            ans.add(new LinkedList<T>());
-        }
+        ans.addAll(geneNamesInOrder.stream().map(_ -> new LinkedList<>()).collect(Collectors.toList()));
         for (T profile : new IterableObjectInputStream<>(profiles)) {
             int pos = geneNamesInOrder.indexOf(profile.getId());
             if (pos > -1) {

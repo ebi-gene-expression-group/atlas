@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.commons.readers.XmlReader;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BaselineExperimentConfiguration {
 
@@ -30,11 +31,7 @@ public class BaselineExperimentConfiguration {
 
     public Set<Factor> getDefaultFilterFactors() {
 
-        Set<Factor> defaultFilterFactors = new HashSet<>();
-
-        for (Map.Entry<String, String> e: xmlReader.getMap("defaultFilterFactors", "type", "value").entrySet()) {
-            defaultFilterFactors.add(new Factor(e.getKey(), e.getValue()));
-        }
+        Set<Factor> defaultFilterFactors = xmlReader.getMap("defaultFilterFactors", "type", "value").entrySet().stream().map(e -> new Factor(e.getKey(), e.getValue())).collect(Collectors.toSet());
 
         return defaultFilterFactors;
     }
@@ -60,12 +57,7 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getAlternativeViews() {
-        List<String> result = new ArrayList<>();
-        for(Object o:  xmlReader.getList("alternativeView")){
-            if(o.toString().matches("E-\\w+-\\d+")){
-                result.add(o.toString());
-            }
-        }
+        List<String> result = xmlReader.getList("alternativeView").stream().filter(o -> o.toString().matches("E-\\w+-\\d+")).map(Object::toString).collect(Collectors.toList());
 
         return result;
     }

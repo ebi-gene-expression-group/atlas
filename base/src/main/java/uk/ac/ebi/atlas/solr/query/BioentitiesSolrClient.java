@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Named
 public class BioentitiesSolrClient {
@@ -78,10 +79,7 @@ public class BioentitiesSolrClient {
                         .getSolrAliases())));
         query.setFields("bioentity_identifier");
 
-        Set<String> result = new HashSet<>();
-        for(SolrDocument d: query(query).getResults()){
-            result.add(d.getFieldValue("bioentity_identifier").toString());
-        }
+        Set<String> result = query(query).getResults().stream().map(d -> d.getFieldValue("bioentity_identifier").toString()).collect(Collectors.toSet());
         return result;
     }
 
@@ -109,7 +107,7 @@ public class BioentitiesSolrClient {
             String value = document.getFieldValue("property_value").toString();
 
             if(!result.containsKey(key)){
-                result.put(key, new HashSet<String>());
+                result.put(key, new HashSet<>());
             }
             result.get(key).add(value);
         }

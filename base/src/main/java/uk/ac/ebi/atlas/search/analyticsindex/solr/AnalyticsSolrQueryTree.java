@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static uk.ac.ebi.atlas.search.analyticsindex.solr.AnalyticsSolrQueryTree.Operator.OR;
 
@@ -191,16 +192,11 @@ public class AnalyticsSolrQueryTree {
     //package
     public static AnalyticsSolrQueryTree createForIdentifierSearch(SemanticQuery geneQuery) {
         Multimap<String, String> m = HashMultimap.create();
-        for (SemanticQueryTerm term : geneQuery.terms()) {
-            if (term.hasValue()) {
-                m.put(decideOnKeywordField(term),term.value());
-            }
-        }
-        List<AnalyticsSolrQueryTree> possibleIdentifiers = new ArrayList<>();
-        for (Map.Entry<String, Collection<String>> e : m.asMap().entrySet()) {
-            possibleIdentifiers.add(new AnalyticsSolrQueryTree(e.getKey(),
-                    ImmutableList.copyOf(e.getValue()).toArray(new String[0])));
-        }
+        geneQuery.terms().stream().filter(term -> term.hasValue()).forEach(term -> {
+            m.put(decideOnKeywordField(term), term.value());
+        });
+        List<AnalyticsSolrQueryTree> possibleIdentifiers = m.asMap().entrySet().stream().map(e -> new AnalyticsSolrQueryTree(e.getKey(),
+                ImmutableList.copyOf(e.getValue()).toArray(new String[0]))).collect(Collectors.toList());
         if (possibleIdentifiers.size() == 1) {
             return possibleIdentifiers.get(0);
         } else {
@@ -221,12 +217,7 @@ public class AnalyticsSolrQueryTree {
              */
             Function<Leaf, TreeNode> makeTreeWithKeywordQueriesForIdentifiers = leaf -> {
                 if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
-                    return new Parent(OR, Collections2.transform(possibleIdentifierKeywords(), new Function<String, TreeNode>() {
-                        @Override
-                        public TreeNode apply(String possibleIdentifierSearch) {
-                            return new Leaf(possibleIdentifierSearch, leaf.searchValue);
-                        }
-                    }));
+                    return new Parent(OR, Collections2.transform(possibleIdentifierKeywords(), (Function<String, TreeNode>) possibleIdentifierSearch -> new Leaf(possibleIdentifierSearch, leaf.searchValue)));
                 } else {
                     return leaf;
                 }
@@ -250,11 +241,9 @@ public class AnalyticsSolrQueryTree {
 
     private static ImmutableList<String> possibleIdentifierKeywords(){
         ImmutableList.Builder<String> b = ImmutableList.builder();
-        for(BioentityPropertyName bioentityPropertyName: ExperimentDataPoint.bioentityPropertyNames){
-            if(bioentityPropertyName.isId){
-                b.add(bioentityPropertyName.asAnalyticsIndexKeyword());
-            }
-        }
+        ExperimentDataPoint.bioentityPropertyNames.stream().filter(bioentityPropertyName -> bioentityPropertyName.isId).forEach(bioentityPropertyName -> {
+            b.add(bioentityPropertyName.asAnalyticsIndexKeyword());
+        });
         b.add(BioentityPropertyName.BIOENTITY_IDENTIFIER.name);
         return b.build();
     }

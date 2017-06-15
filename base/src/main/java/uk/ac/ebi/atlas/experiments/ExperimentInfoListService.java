@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExperimentInfoListService {
     private final ExperimentTrader experimentTrader;
@@ -55,9 +56,7 @@ public class ExperimentInfoListService {
     public List<ExperimentInfo> listPublicExperiments() {
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
         for (ExperimentType experimentType : experimentTypes) {
-            for (Experiment experiment : experimentTrader.getPublicExperiments(experimentType)) {
-                experimentInfos.add(experiment.buildExperimentInfo());
-            }
+            experimentInfos.addAll(experimentTrader.getPublicExperiments(experimentType).stream().map(Experiment::buildExperimentInfo).collect(Collectors.toList()));
         }
         return experimentInfos;
     }

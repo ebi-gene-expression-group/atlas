@@ -50,9 +50,8 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
         AssayGroupFactor that = (AssayGroupFactor) o;
 
         if (!assayGroupId.equals(that.assayGroupId)) return false;
-        if (!factor.equals(that.factor)) return false;
+        return factor.equals(that.factor);
 
-        return true;
     }
 
     @Override

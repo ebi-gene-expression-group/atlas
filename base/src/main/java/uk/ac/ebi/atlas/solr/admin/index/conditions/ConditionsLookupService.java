@@ -29,9 +29,7 @@ public class ConditionsLookupService {
                                                                                                experimentDesign,
                                                                                         Collection<Contrast> contrasts){
         DifferentialConditionsBuilder b = new DifferentialConditionsBuilder(experimentAccession,experimentDesign);
-        for(Contrast c: contrasts){
-            b.addContrast(c);
-        }
+        contrasts.forEach(b::addContrast);
         return b.build();
     }
 
@@ -39,9 +37,7 @@ public class ConditionsLookupService {
                                                                                    ExperimentDesign experimentDesign,
                                                                                    Collection<AssayGroup> assayGroups){
         BaselineConditionsBuilder b = new BaselineConditionsBuilder(experimentAccession,experimentDesign);
-        for(AssayGroup assayGroup: assayGroups){
-            b.addCondition(assayGroup);
-        }
+        assayGroups.forEach(b::addCondition);
         return b.build();
     }
 

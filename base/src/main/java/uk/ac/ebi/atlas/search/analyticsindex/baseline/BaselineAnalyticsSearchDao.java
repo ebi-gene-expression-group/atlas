@@ -76,7 +76,7 @@ public class BaselineAnalyticsSearchDao {
                                 sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
 
                 if(!result.containsKey(experimentAccession)){
-                    result.put(experimentAccession, new HashMap<String, Double>());
+                    result.put(experimentAccession, new HashMap<>());
                 }
                 result.get(experimentAccession).put(assayGroupId, expression);
             }
