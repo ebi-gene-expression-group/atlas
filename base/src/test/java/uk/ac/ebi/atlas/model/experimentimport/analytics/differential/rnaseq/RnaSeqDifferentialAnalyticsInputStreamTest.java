@@ -67,7 +67,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     private static String tsvContents1Contrast = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1, TSV_LINE_2});
     private static String tsvContents2Contrasts = Joiner.on("\n").join(new String[]{TSV_HEADER_2_CONTRASTS, TSV_LINE_2_CONTRASTS});
     private static String tsvContents1ContrastNA = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_NA, TSV_LINE_2});
-    private static String tsvContents1ContrastZero = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_ZERO, TSV_LINE_2});;
+    private static String tsvContents1ContrastZero = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_ZERO, TSV_LINE_2});
     private static String tsvContents1ContrastINF = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_INF, TSV_LINE_2_NEGATIVE_INF});
 
     private static final String TSV_CONTENTS_MANY_NAS = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_MANY_NA_LINES, TSV_LINE_2});
