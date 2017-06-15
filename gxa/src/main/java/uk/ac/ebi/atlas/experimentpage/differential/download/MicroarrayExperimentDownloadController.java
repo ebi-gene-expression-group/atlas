@@ -100,16 +100,13 @@ public class MicroarrayExperimentDownloadController extends CanStreamSupplier<Mi
         final MicroarrayRequestContext context =
                 new DifferentialRequestContextFactory.Microarray().create(experiment, preferences);
 
-        return new Function<Writer, Void>(){
-            @Override
-            public Void apply(Writer writer) {
-                microarrayProfileStreamFactory.write(
-                        experiment,
-                        context,
-                        new ProfileStreamFilter<Contrast, MicroarrayRequestContext, MicroarrayProfile>(context, geneQueryResponse),
-                        microarrayProfilesWriterFactory.create(writer, context));
-                return null;
-            }
+        return writer -> {
+            microarrayProfileStreamFactory.write(
+                    experiment,
+                    context,
+                    new ProfileStreamFilter<Contrast, MicroarrayRequestContext, MicroarrayProfile>(context, geneQueryResponse),
+                    microarrayProfilesWriterFactory.create(writer, context));
+            return null;
         };
     }
 

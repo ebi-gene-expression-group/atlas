@@ -50,16 +50,13 @@ public class BioentityIndexAdmin {
 
         if (bioentityIndexMonitor.start()){
 
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        bioentityIndex.deleteAll();
-                        bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
-                    } catch (Exception e) {
-                        LOGGER.error(e.getMessage(), e);
-                        bioentityIndexMonitor.failed(e);
-                    }
+            executorService.execute(() -> {
+                try {
+                    bioentityIndex.deleteAll();
+                    bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage(), e);
+                    bioentityIndexMonitor.failed(e);
                 }
             });
             executorService.shutdown();

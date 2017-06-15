@@ -30,12 +30,7 @@ public class RichFactorGroup {
     }
 
     public Set<OntologyTerm> getOntologyTerms(){
-        return FluentIterable.from(factorGroup).transformAndConcat(new Function<Factor, Iterable<OntologyTerm>>() {
-            @Override
-            public Iterable<OntologyTerm> apply(Factor factor) {
-                return factor.getValueOntologyTerms();
-            }
-        }).toSet();
+        return FluentIterable.from(factorGroup).transformAndConcat(factor -> factor.getValueOntologyTerms()).toSet();
     }
 
     public String asUrlEncodedJson(){
@@ -64,17 +59,7 @@ public class RichFactorGroup {
                 allValuesPerType.put(factor.getType(), factor.getValue());
             }
         }
-       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(new Predicate<Map.Entry<String, Collection<String>>>() {
-            @Override
-            public boolean apply(Map.Entry<String, Collection<String>> stringCollectionEntry) {
-                return ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2;
-            }
-        }).transform(new Function<Map.Entry<String,Collection<String>>, String>() {
-            @Override
-            public String apply(Map.Entry<String, Collection<String>> stringCollectionEntry) {
-                return stringCollectionEntry.getKey();
-            }
-        }).toSet();
+       return FluentIterable.from(allValuesPerType.asMap().entrySet()).filter(stringCollectionEntry -> ImmutableSet.copyOf(stringCollectionEntry.getValue()).size() < 2).transform(stringCollectionEntry -> stringCollectionEntry.getKey()).toSet();
     }
 
     public static List<String> filterOutTypesWithCommonValues(List<String> types, Iterable<FactorGroup> factorGroups){

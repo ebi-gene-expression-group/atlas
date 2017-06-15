@@ -132,17 +132,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                     pairsToArrayOfObjects("name", "url",
                             FluentIterable.from(new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experiment.getAccession()).qcFolder)
                                     .getArrayDesignsThatHaveQcReports())
-                            .transform(new Function<String, Pair<String, String>>() {
-                                @Override
-                                public Pair<String, String> apply(String arrayDesign) {
-                                    return Pair.of(
-                                            "QC for array design " +arrayDesign,
-                                            QCReportController.getQcReportUrl(
-                                                    request,experiment.getAccession(), arrayDesign, accessKey
-                                            )
-                                    );
-                                }
-                            }).toList()
+                            .transform(arrayDesign -> Pair.of(
+                                    "QC for array design " +arrayDesign,
+                                    QCReportController.getQcReportUrl(
+                                            request,experiment.getAccession(), arrayDesign, accessKey
+                                    )
+                            )).toList()
                     )
             ));
         }

@@ -50,12 +50,7 @@ public class MicroarrayExperimentTest {
         SpeciesProperties speciesProperties =
                 SpeciesProperties.create("Homo_sapiens", "ORGANISM_TYPE", "animals", ImmutableList.of(genomeBrowser));
 
-        return new MicroarrayExperiment(type, accession, new Date(), FluentIterable.from(contrasts).transform(new Function<Contrast, Pair<Contrast, Boolean>>() {
-            @Override
-            public Pair<Contrast, Boolean> apply(Contrast contrast) {
-                return Pair.of(contrast, true);
-            }
-        }).toList(), "description",
+        return new MicroarrayExperiment(type, accession, new Date(), FluentIterable.from(contrasts).transform(contrast1 -> Pair.of(contrast1, true)).toList(), "description",
                 new Species("Homo sapiens", speciesProperties), arrayDesignAccessions, new TreeSet<String>(),
                 mock(ExperimentDesign.class),
                 Sets.newHashSet(PUBMEDID));

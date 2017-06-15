@@ -72,12 +72,7 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
                     : Optional.of(readAccessions(accessionParameter));
 
             Iterable<JsonElement> result = maybeOps(opParameter)
-                    .transform(new Function<List<Op>, Iterable<JsonElement>>() {
-                        @Override
-                        public Iterable<JsonElement> apply(List<Op> ops) {
-                            return experimentOps.perform(accessions, ops);
-                        }
-                    }).or(ImmutableList.of(usageMessage(opParameter)));
+                    .transform(ops -> experimentOps.perform(accessions, ops)).or(ImmutableList.of(usageMessage(opParameter)));
 
             JsonWriter writer = new JsonWriter(response.getWriter());
             writer.setIndent("  ");

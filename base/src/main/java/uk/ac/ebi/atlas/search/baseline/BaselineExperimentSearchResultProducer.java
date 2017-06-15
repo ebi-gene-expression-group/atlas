@@ -53,33 +53,22 @@ public class BaselineExperimentSearchResultProducer {
             Map<String, Double> assayGroupIdAndExpression = e.getValue();
 
             final Set<String> commonFactorTypes =
-                    RichFactorGroup.typesWithCommonValues(FluentIterable.from(assayGroupIdAndExpression.keySet()).transform(new Function<String, FactorGroup>() {
-                        @Override
-                        public FactorGroup apply(String idOfAssayGroupWithExpression) {
-                            return experiment.getFactors(experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression)).withoutTypes(ImmutableList.of(factorType));
-                        }
-                    }));
+                    RichFactorGroup.typesWithCommonValues(FluentIterable.from(assayGroupIdAndExpression.keySet()).transform(idOfAssayGroupWithExpression -> experiment.getFactors(experiment.getDataColumnDescriptor(idOfAssayGroupWithExpression)).withoutTypes(ImmutableList.of(factorType))));
 
-            final Set<FactorGroup> factorGroups = FluentIterable.from(experiment.getDataColumnDescriptors()).transform(new Function<AssayGroup, FactorGroup>() {
-                @Override
-                public FactorGroup apply(AssayGroup assayGroup) {
-                    FactorGroup factorGroup = experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType));
-                    if(factorGroup.withoutTypes(commonFactorTypes).size() > 0){
-                        return factorGroup.withoutTypes(commonFactorTypes);
-                    } else {
-                        return factorGroup;
-                    }
+            final Set<FactorGroup> factorGroups = FluentIterable.from(experiment.getDataColumnDescriptors()).transform(assayGroup -> {
+                FactorGroup factorGroup = experiment.getFactors(assayGroup).withoutTypes(ImmutableList.of(factorType));
+                if(factorGroup.withoutTypes(commonFactorTypes).size() > 0){
+                    return factorGroup.withoutTypes(commonFactorTypes);
+                } else {
+                    return factorGroup;
                 }
             }).toSet();
 
             for(final FactorGroup factorGroup: factorGroups){
                 BaselineExperimentProfile baselineExperimentProfile =
                         new BaselineExperimentProfile(experiment,factorGroup);
-                for(AssayGroup assayGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).filter(new Predicate<AssayGroup>() {
-                    @Override
-                    public boolean apply(AssayGroup assayGroup) {
-                        return RichFactorGroup.isSubgroup(experiment.getFactors(assayGroup), factorGroup);
-                    }
+                for(AssayGroup assayGroup: FluentIterable.from(experiment.getDataColumnDescriptors()).filter(assayGroup1 -> {
+                    return RichFactorGroup.isSubgroup(experiment.getFactors(assayGroup1), factorGroup);
                 })){
                     baselineExperimentProfile.add(
                             new FactorAcrossExperiments(experiment.getFactors(assayGroup).factorOfType(factorType)),

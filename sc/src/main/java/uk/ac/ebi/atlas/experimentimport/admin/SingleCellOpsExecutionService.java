@@ -37,11 +37,8 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     private FluentIterable<ExperimentDTO> allDtos(){
-        return FluentIterable.from(experimentCrud.findAllExperiments()).filter(new Predicate<ExperimentDTO>() {
-            @Override
-            public boolean apply(@Nullable ExperimentDTO experimentDTO) {
-                return experimentDTO.getExperimentType().isSingleCell();
-            }
+        return FluentIterable.from(experimentCrud.findAllExperiments()).filter(experimentDTO -> {
+            return experimentDTO.getExperimentType().isSingleCell();
         });
     }
 

@@ -34,12 +34,7 @@ public class LatestExperimentsService {
                                 public Experiment apply(String experimentAccession) {
                                     return experimentTrader.getPublicExperiment(experimentAccession);
                                 }})
-                            .transform(new Function<Experiment, ExperimentInfo>() {
-                                @Override
-                                public ExperimentInfo apply(Experiment experiment) {
-                                    return experiment.buildExperimentInfo();
-                                }
-                            }).toList();
+                            .transform(experiment -> experiment.buildExperimentInfo()).toList();
 
             return ImmutableMap.of(
                     "experimentCount", experimentCount,

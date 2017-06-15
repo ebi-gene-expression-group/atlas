@@ -73,12 +73,7 @@ public class DifferentialExperimentPageService
                 result.add("columnHeaders", constructColumnHeaders(contrasts,experiment));
                 result.add("profiles", new ExternallyViewableProfilesList<>(
                         differentialProfiles, linkToGenes, requestContext.getDataColumnsToReturn(),
-                        new Function<P, ExpressionUnit.Relative>() {
-                            @Override
-                            public ExpressionUnit.Relative apply(P p) {
-                                return ExpressionUnit.Relative.FOLD_CHANGE;
-                            }
-                        }).asJson());
+                        p -> ExpressionUnit.Relative.FOLD_CHANGE).asJson());
 
                 return result;
             } else {

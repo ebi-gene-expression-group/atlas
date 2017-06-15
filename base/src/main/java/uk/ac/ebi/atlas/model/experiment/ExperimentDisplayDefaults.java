@@ -76,12 +76,7 @@ public abstract class ExperimentDisplayDefaults {
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,
                                                    final String defaultQueryFactorType,
                                                    List<String> menuFilterFactorTypes, boolean preserveColumnOrder){
-        return create(defaultFilterFactors, ImmutableList.<String>builder().add(defaultQueryFactorType).addAll(Collections2.filter(menuFilterFactorTypes, new Predicate<String>() {
-            @Override
-            public boolean apply(@Nullable String s) {
-                return !s.equals(defaultQueryFactorType);
-            }
-        })).build(), preserveColumnOrder);
+        return create(defaultFilterFactors, ImmutableList.<String>builder().add(defaultQueryFactorType).addAll(Collections2.filter(menuFilterFactorTypes, s -> !s.equals(defaultQueryFactorType))).build(), preserveColumnOrder);
     }
 
     public static ExperimentDisplayDefaults create(Collection<Factor> defaultFilterFactors,

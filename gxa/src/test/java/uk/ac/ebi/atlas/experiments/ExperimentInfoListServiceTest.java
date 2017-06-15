@@ -112,13 +112,10 @@ public class ExperimentInfoListServiceTest {
         );
 
 
-        doAnswer(new Answer() {
-            @Override
-            public Set<?> answer(InvocationOnMock invocationOnMock) throws Throwable {
-                ExperimentType experimentType = (ExperimentType) invocationOnMock.getArguments()[0];
-                return experimentAccessionsPerType.containsKey(experimentType) ? experimentAccessionsPerType.get
-                        (experimentType) : ImmutableSet.of();
-            }
+        doAnswer(invocationOnMock -> {
+            ExperimentType experimentType = (ExperimentType) invocationOnMock.getArguments()[0];
+            return experimentAccessionsPerType.containsKey(experimentType) ? experimentAccessionsPerType.get
+                    (experimentType) : ImmutableSet.of();
         }).when(experimentTraderMock).getPublicExperiments(Mockito.<ExperimentType[]>anyVararg());
 
         //call real method on big method, small one takes from this map

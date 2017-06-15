@@ -114,12 +114,7 @@ public class ExternallyViewableProfilesListTest {
         profiles.add(p2);
 
         JsonObject result =
-                new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments, new Function<BaselineProfile, ExpressionUnit.Absolute.Rna>() {
-                    @Override
-                    public ExpressionUnit.Absolute.Rna apply( BaselineProfile baselineProfile) {
-                        return ExpressionUnit.Absolute.Rna.TPM;
-                    }
-                }).asJson();
+                new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments, baselineProfile -> ExpressionUnit.Absolute.Rna.TPM).asJson();
 
 
         assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));
@@ -169,12 +164,7 @@ public class ExternallyViewableProfilesListTest {
         profiles.add(p1);
         profiles.add(p2);
 
-        JsonObject result = new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments, new Function<RnaSeqProfile, ExpressionUnit.Relative>() {
-            @Override
-            public ExpressionUnit.Relative apply(RnaSeqProfile rnaSeqProfile) {
-                return ExpressionUnit.Relative.FOLD_CHANGE;
-            }
-        }).asJson();
+        JsonObject result = new ExternallyViewableProfilesList<>(profiles, provideLinkToProfile, factorsAcrossExperiments, rnaSeqProfile -> ExpressionUnit.Relative.FOLD_CHANGE).asJson();
 
 
         assertThat(result.get("rows").getAsJsonArray().size(), is(ImmutableList.of(p1, p2).size()));

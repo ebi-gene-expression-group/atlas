@@ -21,12 +21,7 @@ public class ExperimentsTablePagePlantsMusMusculusSIT extends SinglePageSelenium
         subject = new ExperimentsTablePage(driver, PLANTS_KINGDOM_PARAMETER);
         subject.get();
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.pollingEvery(5, TimeUnit.SECONDS).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return !subject.getExperimentsTableInfo().startsWith("Showing 0");
-            }
-        });
+        wait.pollingEvery(5, TimeUnit.SECONDS).until((ExpectedCondition<Boolean>) webDriver -> !subject.getExperimentsTableInfo().startsWith("Showing 0"));
     }
 
     @Test

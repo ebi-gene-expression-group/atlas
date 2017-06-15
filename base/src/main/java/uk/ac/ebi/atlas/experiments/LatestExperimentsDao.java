@@ -33,12 +33,7 @@ public class LatestExperimentsDao {
 
         return String.format(
                 "AND (%s)",
-                FluentIterable.from(experimentTypes).transform(new Function<ExperimentType, String>() {
-                    @Override
-                    public String apply(ExperimentType experimentType) {
-                        return String.format("type='%s'", experimentType.name());
-                    }
-                }).join(Joiner.on(" OR ")));
+                FluentIterable.from(experimentTypes).transform(experimentType -> String.format("type='%s'", experimentType.name())).join(Joiner.on(" OR ")));
     }
 
 //    public List<String> fetchLatestExperimentAccessions() {

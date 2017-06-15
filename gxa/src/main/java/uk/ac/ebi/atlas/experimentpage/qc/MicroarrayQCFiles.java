@@ -30,12 +30,7 @@ public class MicroarrayQCFiles {
 
     public Optional<Path> get(final String experimentAccession, final String arrayDesignAccession){
         return FluentIterable.from(qcDirectory).firstMatch(
-                new Predicate<Path>() {
-                    @Override
-                    public boolean apply(@Nullable Path path) {
-                        return path.getFileName().toString().equals(folderName(experimentAccession, arrayDesignAccession));
-                    }
-                }
+                path -> path.getFileName().toString().equals(folderName(experimentAccession, arrayDesignAccession))
         ).transform(new Function<Path, Path>() {
             @Nullable
             @Override

@@ -22,34 +22,18 @@ public class ExternallyAvailableContentService<E extends Experiment> {
     }
 
     private Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>> extractContentFromSupplier(final E experiment){
-        return new Function<ExternallyAvailableContent.Supplier<E>, Iterable<ExternallyAvailableContent>>() {
-            @Override
-            public Iterable<ExternallyAvailableContent> apply(ExternallyAvailableContent.Supplier<E> supplier) {
-                return supplier.get(experiment);
-            }
-        };
+        return supplier -> supplier.get(experiment);
     }
 
     public Function<HttpServletResponse, Void> stream(E experiment, final URI uri){
-        return FluentIterable.from(suppliers).firstMatch(new Predicate<ExternallyAvailableContent.Supplier<E>>() {
-            @Override
-            public boolean apply(ExternallyAvailableContent.Supplier<E> eSupplier) {
-                return eSupplier.comesFromThisSupplier(uri);
-            }
-        }).or(new Supplier<ExternallyAvailableContent.Supplier<E>>() {
-            @Override
-            public ExternallyAvailableContent.Supplier<E> get() {
-                throw new ResourceNotFoundException(uri.toString());
-            }
+        return FluentIterable.from(suppliers).firstMatch(eSupplier -> eSupplier.comesFromThisSupplier(uri)).or(() -> {
+            throw new ResourceNotFoundException(uri.toString());
         }).get(experiment, uri).stream;
     }
 
     public List<ExternallyAvailableContent> list(final E experiment, final ExternallyAvailableContent.ContentType contentType){
-        return FluentIterable.from(suppliers).filter(new Predicate<ExternallyAvailableContent.Supplier<E>>() {
-            @Override
-            public boolean apply(@Nullable ExternallyAvailableContent.Supplier<E> eSupplier) {
-                return eSupplier.contentType().equals(contentType);
-            }
+        return FluentIterable.from(suppliers).filter(eSupplier -> {
+            return eSupplier.contentType().equals(contentType);
         }).transformAndConcat(extractContentFromSupplier(experiment)).toList();
     }
 

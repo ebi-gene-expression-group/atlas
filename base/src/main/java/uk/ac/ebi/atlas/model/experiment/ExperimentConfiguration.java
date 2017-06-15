@@ -51,12 +51,7 @@ public class ExperimentConfiguration {
     }
 
     public List<Contrast> getContrasts(){
-        return FluentIterable.from(getContrastAndAnnotationPairs()).transform(new Function<Pair<Contrast,Boolean>, Contrast>() {
-            @Override
-            public Contrast apply(Pair<Contrast, Boolean> p) {
-                return p.getLeft();
-            }
-        }).toList();
+        return FluentIterable.from(getContrastAndAnnotationPairs()).transform(p -> p.getLeft()).toList();
     }
 
     private void parseContrastConfiguration(String query, String arrayDesignAccession, List<Pair<Contrast, Boolean>> contrasts) {

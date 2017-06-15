@@ -12,17 +12,14 @@ public abstract class ObjectInputStreamer {
                                   final int concurrentThreads,
                                   final int concurrentStreamsPerThread) {
         for(int i = 0; i< concurrentThreads; i++){
-            new Runnable(){
-                @Override
-                public void run() {
-                    try {
-                        testSinglethreaded(experimentAccession,concurrentStreamsPerThread);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
+            ((Runnable) () -> {
+                try {
+                    testSinglethreaded(experimentAccession, concurrentStreamsPerThread);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            }.run();
+
+            }).run();
         }
     }
 

@@ -53,13 +53,10 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
 
     private void waitForAjaxDataToLoad(){
         Wait<WebDriver> wait = new WebDriverWait(driver, 5);
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                String lastYTick = webDriver.findElement(By.className("y1Axis")).findElement(By.className("tickLabel")).getText();
-                String lastXTick = webDriver.findElement(By.className("x1Axis")).findElement(By.className("tickLabel")).getText();
-                return !lastXTick.isEmpty() && !lastYTick.isEmpty();
-            }
+        wait.until(webDriver -> {
+            String lastYTick = webDriver.findElement(By.className("y1Axis")).findElement(By.className("tickLabel")).getText();
+            String lastXTick = webDriver.findElement(By.className("x1Axis")).findElement(By.className("tickLabel")).getText();
+            return !lastXTick.isEmpty() && !lastYTick.isEmpty();
         });
     }
 

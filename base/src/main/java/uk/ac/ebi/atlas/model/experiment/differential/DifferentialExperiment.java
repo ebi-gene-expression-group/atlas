@@ -31,12 +31,7 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     }
 
-    private static final Function<Pair<Contrast,Boolean>, Contrast> unpack = new Function<Pair<Contrast,Boolean>, Contrast>() {
-        @Override
-        public Contrast apply(Pair<Contrast, Boolean> contrastBooleanPair) {
-            return contrastBooleanPair.getLeft();
-        }
-    };
+    private static final Function<Pair<Contrast,Boolean>, Contrast> unpack = contrastBooleanPair -> contrastBooleanPair.getLeft();
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate,
                                      List<Pair<Contrast, Boolean>> contrasts, String description, Species species,
@@ -45,11 +40,8 @@ public class DifferentialExperiment extends Experiment<Contrast> {
         super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
                 experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
                 Collections.<String>emptyList(), Collections.<String>emptyList(), FluentIterable.from(contrasts).transform(unpack).toList(), ExperimentDisplayDefaults.simpleDefaults());
-        this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(new Predicate<Pair<Contrast, Boolean>>() {
-            @Override
-            public boolean apply(Pair<Contrast, Boolean> contrastBooleanPair) {
-                return contrastBooleanPair.getRight();
-            }
+        this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(contrastBooleanPair -> {
+            return contrastBooleanPair.getRight();
         }).transform(unpack).toSet();
     }
 

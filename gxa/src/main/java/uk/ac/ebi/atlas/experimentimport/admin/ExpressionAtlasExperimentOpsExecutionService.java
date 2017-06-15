@@ -45,12 +45,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     }
 
     private FluentIterable<ExperimentDTO> allDtos(){
-        return FluentIterable.from(experimentCrud.findAllExperiments()).filter(new Predicate<ExperimentDTO>() {
-            @Override
-            public boolean apply(@Nullable ExperimentDTO experimentDTO) {
-                return ! experimentDTO.getExperimentType().isSingleCell();
-            }
-        });
+        return FluentIterable.from(experimentCrud.findAllExperiments()).filter(experimentDTO -> ! experimentDTO.getExperimentType().isSingleCell());
     }
 
     @Override

@@ -27,12 +27,7 @@ public class HeatmapTableWithMaPlotButtonsPage extends HeatmapTablePage {
     public HeatmapTableWithMaPlotButtonsPage clickMaPlotButton(int zeroBasedButtonIndex) {
         maPlotButtons.get(zeroBasedButtonIndex).click();
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return driver.findElement(By.className("fancybox-image")) != null;
-            }
-        });
+        wait.until(webDriver -> driver.findElement(By.className("fancybox-image")) != null);
         return this;
     }
 

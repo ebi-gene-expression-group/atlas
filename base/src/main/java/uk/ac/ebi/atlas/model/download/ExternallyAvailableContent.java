@@ -35,13 +35,10 @@ public class ExternallyAvailableContent {
     public ExternallyAvailableContent(final String redirect, Description description){
         this.uri = URI.create("redirect:"+redirect);
         this.description = description;
-        this.stream = new Function<HttpServletResponse, Void>() {
-            @Override
-            public Void apply(HttpServletResponse response) {
-                throw new NotImplementedException(MessageFormat.format(
-                        "This content doesn't stream. This shouldn't be reachable as {0} is a redirect.", redirect)
-                );
-            }
+        this.stream = response -> {
+            throw new NotImplementedException(MessageFormat.format(
+                    "This content doesn't stream. This shouldn't be reachable as {0} is a redirect.", redirect)
+            );
         };
     }
 
@@ -136,16 +133,8 @@ public class ExternallyAvailableContent {
         Subclasses could override this method for efficiency
         */
         public ExternallyAvailableContent get(E experiment, final URI uri){
-            return FluentIterable.from(get(experiment)).firstMatch(new Predicate<ExternallyAvailableContent>() {
-                @Override
-                public boolean apply(ExternallyAvailableContent externallyAvailableContent) {
-                    return externallyAvailableContent.uri.equals(uri) || matchesReservedUri(uri);
-                }
-            }).or(new com.google.common.base.Supplier<ExternallyAvailableContent>() {
-                @Override
-                public ExternallyAvailableContent get() {
-                    throw new ResourceNotFoundException(uri.toString());
-                }
+            return FluentIterable.from(get(experiment)).firstMatch(externallyAvailableContent -> externallyAvailableContent.uri.equals(uri) || matchesReservedUri(uri)).or(() -> {
+                throw new ResourceNotFoundException(uri.toString());
             });
         }
     }

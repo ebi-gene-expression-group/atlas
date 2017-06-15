@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
@@ -28,7 +27,6 @@ import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.MessageFormat;
@@ -48,6 +46,7 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
     @Named
     public static class RnaSeq extends BaselineProfilesWriterService<ExpressionUnit.Absolute.Rna> {
         private final DataFileHub dataFileHub;
+
         @Inject
         RnaSeq(RnaSeqBaselineProfileStreamFactory inputStreamFactory,
                BaselineProfilesWriterFactory baselineProfilesWriterFactory,
@@ -58,16 +57,11 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
         }
 
         @Override
-        public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment){
+        public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
             return FluentIterable.from(dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles())
-                    .transform(new Function<ExpressionUnit.Absolute.Rna, ExternallyAvailableContent>() {
-                @Override
-                public ExternallyAvailableContent apply(ExpressionUnit.Absolute.Rna unit) {
-                    return getOne(experiment,RnaSeqBaselineRequestPreferences.requestAllData(unit),
+                    .transform(unit -> getOne(experiment, RnaSeqBaselineRequestPreferences.requestAllData(unit),
                             MessageFormat.format("{0}s.tsv", unit.toString().toLowerCase()),
-                            MessageFormat.format("Expression values across all genes ({0})", unit));
-                }
-            }).toList();
+                            MessageFormat.format("Expression values across all genes ({0})", unit))).toList();
         }
     }
 
@@ -82,8 +76,8 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
         }
 
         @Override
-        public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment){
-            return Collections.singleton(getOne(experiment,ProteomicsBaselineRequestPreferences.requestAllData(), "tsv" , "Expression values across all genes"));
+        public Collection<ExternallyAvailableContent> get(final BaselineExperiment experiment) {
+            return Collections.singleton(getOne(experiment, ProteomicsBaselineRequestPreferences.requestAllData(), "tsv", "Expression values across all genes"));
         }
     }
 
@@ -137,23 +131,20 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
                 geneQuery.description() + " with " + coexpressedGenes + " similarly expressed genes";
     }
 
-    ExternallyAvailableContent getOne(final BaselineExperiment experiment, final BaselineRequestPreferences<Unit> preferences, final String id, String description){
+    ExternallyAvailableContent getOne(final BaselineExperiment experiment, final BaselineRequestPreferences<Unit> preferences, final String id, String description) {
         return new ExternallyAvailableContent(makeUri(id),
-                ExternallyAvailableContent.Description.create("icon-tsv", description), new Function<HttpServletResponse, Void>() {
-            @Override
-            public Void apply(HttpServletResponse response) {
-                try {
-                    response.setHeader(
-                            "Content-Disposition",
-                            MessageFormat.format("attachment; filename=\"{0}-query-results.{1}\"", experiment.getAccession(), id));
-                    response.setContentType("text/plain; charset=utf-8");
+                ExternallyAvailableContent.Description.create("icon-tsv", description), response -> {
+            try {
+                response.setHeader(
+                        "Content-Disposition",
+                        MessageFormat.format("attachment; filename=\"{0}-query-results.{1}\"", experiment.getAccession(), id));
+                response.setContentType("text/plain; charset=utf-8");
 
-                    write(response.getWriter(), preferences, experiment, ImmutableMap.<String,Integer>of());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                return null;
+                write(response.getWriter(), preferences, experiment, ImmutableMap.<String, Integer>of());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            return null;
         });
     }
 

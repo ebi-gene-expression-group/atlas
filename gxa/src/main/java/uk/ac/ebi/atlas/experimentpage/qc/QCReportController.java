@@ -80,14 +80,11 @@ public class QCReportController {
 
         request.setAttribute("contentPath",
                 new MicroarrayQCFiles(dataFileHub.getExperimentFiles(experimentAccession).qcFolder)
-                        .get(experimentAccession, arrayDesign).or(new Supplier<Path>() {
-                    @Override
-                    public Path get() {
-                        throw new ResourceNotFoundException(
-                                MessageFormat.format("Not found: QC report for experiment {0} and array design {1}",
-                                        experimentAccession, arrayDesign));
-                    }
-                }));
+                        .get(experimentAccession, arrayDesign).or(() -> {
+                            throw new ResourceNotFoundException(
+                                    MessageFormat.format("Not found: QC report for experiment {0} and array design {1}",
+                                            experimentAccession, arrayDesign));
+                        }));
 
         return "qc-template";
     }

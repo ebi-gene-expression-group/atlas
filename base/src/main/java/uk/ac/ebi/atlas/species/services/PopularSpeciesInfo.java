@@ -16,10 +16,5 @@ public abstract class PopularSpeciesInfo {
     public abstract long baselineExperiments();
     public abstract long differentialExperiments();
 
-    static Comparator<PopularSpeciesInfo> ReverseComparator = new Comparator<PopularSpeciesInfo>() {
-        @Override
-        public int compare(PopularSpeciesInfo o1, PopularSpeciesInfo o2) {
-            return -Long.compare(o1.totalExperiments(), o2.totalExperiments());
-        }
-    };
+    static Comparator<PopularSpeciesInfo> ReverseComparator = (o1, o2) -> -Long.compare(o1.totalExperiments(), o2.totalExperiments());
 }

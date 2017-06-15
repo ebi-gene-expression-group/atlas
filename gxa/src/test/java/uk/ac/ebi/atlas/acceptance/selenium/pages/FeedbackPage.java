@@ -65,24 +65,14 @@ abstract class FeedbackPage extends AtlasPage {
         ((JavascriptExecutor) driver).executeScript("$('#sendemail').val('false')");
         send.click();
         Wait<WebDriver> wait = new WebDriverWait(driver, 15);
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return !FeedbackPage.this.getFeedbackTipsText().equals(feedbackTipsBeforeClick);
-            }
-        });
+        wait.until(webDriver -> !FeedbackPage.this.getFeedbackTipsText().equals(feedbackTipsBeforeClick));
 
     }
 
     public void clickCancelButton() {
         cancel.click();
         Wait<WebDriver> wait = new WebDriverWait(driver, 15);
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return !FeedbackPage.this.tips.isDisplayed();
-            }
-        });
+        wait.until(webDriver -> !FeedbackPage.this.tips.isDisplayed());
     }
 
     public String getCancelButtonText() {

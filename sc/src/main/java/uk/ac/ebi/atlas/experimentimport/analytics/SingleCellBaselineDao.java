@@ -57,14 +57,11 @@ public class SingleCellBaselineDao {
                 }
 
                 //Add the chunk of data to db
-                jdbcTemplate.batchUpdate(SCEXPRESSION_INSERT, scbList, bufferSize, new ParameterizedPreparedStatementSetter<SingleCellBaseline>() {
-                    @Override
-                    public void setValues(PreparedStatement ps, SingleCellBaseline singleCellBaseline) throws SQLException {
-                        ps.setString(GENE_ID, singleCellBaseline.getGeneId());
-                        ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
-                        ps.setString(CELL_ID, singleCellBaseline.getCellId());
-                        ps.setDouble(EXPRESSION_LEVEL, singleCellBaseline.getExpressionLevel());
-                    }
+                jdbcTemplate.batchUpdate(SCEXPRESSION_INSERT, scbList, bufferSize, (ps, singleCellBaseline) -> {
+                    ps.setString(GENE_ID, singleCellBaseline.getGeneId());
+                    ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
+                    ps.setString(CELL_ID, singleCellBaseline.getCellId());
+                    ps.setDouble(EXPRESSION_LEVEL, singleCellBaseline.getExpressionLevel());
                 });
             }
 

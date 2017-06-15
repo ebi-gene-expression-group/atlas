@@ -123,12 +123,7 @@ public class MicroarrayProfileStreamFactoryTest {
         MicroarrayRequestContext microarrayRequestContext = new MicroarrayRequestContext(microarrayRequestPreferences,experiment);
 
         return microarrayProfileStreamFactory.select(experiment,
-                microarrayRequestContext, Predicates.<MicroarrayProfile>alwaysTrue(), new SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>() {
-                    @Override
-                    public GeneProfilesList<MicroarrayProfile> select(ObjectInputStream<MicroarrayProfile> profiles, int maxSize) {
-                        return new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles)));
-                    }
-                });
+                microarrayRequestContext, Predicates.<MicroarrayProfile>alwaysTrue(), (SelectProfiles<MicroarrayProfile, GeneProfilesList<MicroarrayProfile>>) (profiles, maxSize) -> new DifferentialProfilesList<>( Lists.newArrayList(new IterableObjectInputStream<>(profiles))));
     }
 
 }

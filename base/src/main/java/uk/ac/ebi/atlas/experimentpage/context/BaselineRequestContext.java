@@ -45,18 +45,9 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
 
         List<String> typesWhoseValuesVaryAcrossSelectedDescriptors =
                 RichFactorGroup.filterOutTypesWithCommonValues(
-                        FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters()).transform(new Function<String, String>() {
-                            public String apply(String factorHeader) {
-                                return Factor.normalize(factorHeader);
-                            }
-                        }).toList(),
+                        FluentIterable.from(experiment.getDisplayDefaults().prescribedOrderOfFilters()).transform(factorHeader -> Factor.normalize(factorHeader)).toList(),
 
-                        dataColumnsToBeReturned().transform(new Function<AssayGroup, FactorGroup>() {
-                            @Override
-                            public FactorGroup apply(AssayGroup assayGroup) {
-                                return experiment.getFactors(assayGroup);
-                            }
-                        })
+                        dataColumnsToBeReturned().transform(assayGroup -> experiment.getFactors(assayGroup))
                 );
         return typesWhoseValuesVaryAcrossSelectedDescriptors.isEmpty()
                 ? experiment.getDisplayDefaults().prescribedOrderOfFilters().subList(0, 1)
@@ -71,12 +62,7 @@ public class BaselineRequestContext<Unit extends ExpressionUnit.Absolute> extend
             final FactorGroup factorGroup = experiment.getFactors(assayGroup);
 
             b.put(assayGroup, FluentIterable.from
-                    (typesWhoseValuesToDisplay()).transform(new Function<String, String>() {
-                @Override
-                public String apply(String type) {
-                    return factorGroup.factorOfType(Factor.normalize(type)).getValue();
-                }
-            }).join(Joiner.on(", ")));
+                    (typesWhoseValuesToDisplay()).transform(type -> factorGroup.factorOfType(Factor.normalize(type)).getValue()).join(Joiner.on(", ")));
         }
 
         return b.build();

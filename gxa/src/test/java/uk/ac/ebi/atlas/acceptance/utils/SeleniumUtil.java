@@ -37,11 +37,7 @@ public class SeleniumUtil {
                 .pollingEvery(500, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
-        return wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver webDriver) {
-                return driver.findElement(locator);
-            }
-        });
+        return wait.until(webDriver -> driver.findElement(locator));
     }
 
     public static void waitForElementByIdUntilVisible(final WebDriver driver, final String id) {
@@ -63,11 +59,7 @@ public class SeleniumUtil {
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
-        return wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver webDriver) {
-                return driver.findElement(By.cssSelector(css));
-            }
-        });
+        return wait.until(webDriver -> driver.findElement(By.cssSelector(css)));
     }
 
     public static WebElement findChildElementWaitingUntilAvailable(final WebDriver driver, final WebElement parent, final By by) {
@@ -76,11 +68,7 @@ public class SeleniumUtil {
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
-        return wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver webDriver) {
-                return parent.findElement(by);
-            }
-        });
+        return wait.until(webDriver -> parent.findElement(by));
     }
 
     public static List<WebElement> findChildElements(WebElement element) {
@@ -89,12 +77,9 @@ public class SeleniumUtil {
 
     public static ExpectedCondition<Boolean> numberOfWindowsToBe(final int numberOfWindows) {
 
-        return new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                driver.getWindowHandles();
-                return driver.getWindowHandles().size() == numberOfWindows;
-            }
+        return driver -> {
+            driver.getWindowHandles();
+            return driver.getWindowHandles().size() == numberOfWindows;
         };
 
     }

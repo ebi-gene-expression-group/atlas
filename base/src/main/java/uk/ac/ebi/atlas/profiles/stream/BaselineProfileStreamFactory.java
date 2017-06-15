@@ -23,22 +23,17 @@ public abstract class BaselineProfileStreamFactory<StreamOptions extends Baselin
 
     @Override
     protected Function<String[], ProfileFromTsvLine> howToReadLineStream(final BaselineExperiment experiment, final Predicate<BaselineExpression> expressionFilter) {
-        return new Function<String[], ProfileFromTsvLine>() {
+        return strings -> new ProfileFromTsvLine(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
+            @Nullable
             @Override
-            public ProfileFromTsvLine apply(String[] strings) {
-                return new ProfileFromTsvLine(rowPositionsToDataColumns(experiment, strings), expressionFilter) {
-                    @Nullable
-                    @Override
-                    protected BaselineExpression nextExpression(Integer index,AssayGroup assayGroup, String[] currentLine) {
+            protected BaselineExpression nextExpression(Integer index,AssayGroup assayGroup, String[] currentLine) {
 
-                        return createExpression(currentLine[index], assayGroup);
-                    }
+                return createExpression(currentLine[index], assayGroup);
+            }
 
-                    @Override
-                    protected BaselineProfile newProfile(String[] currentLine) {
-                        return new BaselineProfile(currentLine[0], currentLine[1]);
-                    }
-                };
+            @Override
+            protected BaselineProfile newProfile(String[] currentLine) {
+                return new BaselineProfile(currentLine[0], currentLine[1]);
             }
         };
     }

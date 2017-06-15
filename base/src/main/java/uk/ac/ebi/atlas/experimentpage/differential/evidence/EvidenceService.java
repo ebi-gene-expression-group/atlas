@@ -399,11 +399,8 @@ public class EvidenceService<Expr extends DifferentialExpression,
     "test_sample", "reference_sample"
      */
     static String factorBasedSummaryLabel(final ExperimentDesign experimentDesign, AssayGroup assayGroup) {
-        return Joiner.on("; ").join(FluentIterable.from(experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values()).filter(new Predicate<String>() {
-            @Override
-            public boolean apply(@Nullable String s) {
-                return StringUtils.isNotEmpty(s);
-            }
+        return Joiner.on("; ").join(FluentIterable.from(experimentDesign.getFactorValues(assayGroup.getFirstAssayAccession()).values()).filter(s -> {
+            return StringUtils.isNotEmpty(s);
         }));
     }
 
@@ -429,14 +426,9 @@ public class EvidenceService<Expr extends DifferentialExpression,
      */
     Optional<SampleCharacteristic> getDiseaseInfo(final ExperimentDesign experimentDesign, AssayGroup testAssayGroup) {
         return FluentIterable.from(experimentDesign.getSampleCharacteristics(testAssayGroup.getFirstAssayAccession())).filter(
-                new Predicate<SampleCharacteristic>() {
-                    @Override
-                    public boolean apply(@Nullable SampleCharacteristic sampleCharacteristic) {
-                        return sampleCharacteristic.header().toLowerCase().contains("disease")
-                                && !StringUtils.containsAny(sampleCharacteristic.value().toLowerCase(),
-                                "normal", "healthy", "control");
-                    }
-                }
+                sampleCharacteristic -> sampleCharacteristic.header().toLowerCase().contains("disease")
+                        && !StringUtils.containsAny(sampleCharacteristic.value().toLowerCase(),
+                        "normal", "healthy", "control")
         ).first();
     }
 

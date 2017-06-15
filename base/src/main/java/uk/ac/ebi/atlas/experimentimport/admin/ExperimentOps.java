@@ -95,19 +95,14 @@ public class ExperimentOps {
 
 
     private Iterable<JsonElement> perform(final Collection<String> accessions, final Op op) {
-        return new Iterable<JsonElement>() {
+        return () -> Iterators.transform(accessions.iterator(), new Function<String, JsonElement>() {
+            @Nullable
             @Override
-            public Iterator<JsonElement> iterator() {
-                return Iterators.transform(accessions.iterator(), new Function<String, JsonElement>() {
-                    @Nullable
-                    @Override
-                    public JsonElement apply(@Nullable String accession) {
-                        Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
-                        return showResult(accession, r.getLeft(), r.getRight());
-                    }
-                });
+            public JsonElement apply(@Nullable String accession) {
+                Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
+                return showResult(accession, r.getLeft(), r.getRight());
             }
-        };
+        });
     }
 
     private Iterable<JsonElement> perform(Collection<String> accessions, Collection<Op> ops) {
@@ -193,16 +188,8 @@ public class ExperimentOps {
         return attemptPerformOneOpRelatedToTheOpLog(accession, op)
                 .or(
                         experimentOpsExecutionService.attemptExecuteOneStatelessOp(accession, op)
-                ).transform(new Function<JsonElement, Pair<OpResult, ? extends JsonElement>>() {
-                    @Override
-                    public Pair<OpResult, ? extends JsonElement> apply(@Nullable JsonElement jsonElement) {
-                        return Pair.of(OpResult.SUCCESS, jsonElement);
-                    }
-                }).or(new Supplier<Pair<OpResult, ? extends JsonElement>>() {
-                    @Override
-                    public Pair<OpResult, ? extends JsonElement> get() {
-                        return performStatefulOp(accession, op);
-                    }
+                ).transform((Function<JsonElement, Pair<OpResult, ? extends JsonElement>>) jsonElement -> Pair.of(OpResult.SUCCESS, jsonElement)).or((Supplier<Pair<OpResult, ? extends JsonElement>>) () -> {
+                    return performStatefulOp(accession, op);
                 });
     }
 

@@ -36,12 +36,7 @@ public class ObjectInputStreamsTest {
     }
 
     void keepOnlyOne(final Integer toKeep){
-        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), new Predicate<Integer>() {
-            @Override
-            public boolean apply(Integer integer) {
-                return integer.equals(toKeep);
-            }
-        });
+        ObjectInputStream<Integer> out = ObjectInputStreams.filter(oneTwoThreeNull(), integer -> integer.equals(toKeep));
         assertThat(out.readNext(), is(toKeep));
         assertNull(out.readNext());
     }

@@ -62,19 +62,11 @@ public abstract class Profile<DataColumnDescriptor extends DescribesDataColumns,
     }
 
     public boolean hasAllExpressionsEqualZero(){
-        return FluentIterable.from(expressionsByCondition.values()).filter(new Predicate<Expr>() {
-            public boolean apply(Expr expr) {
-                return expr.getLevel() != 0;
-            }
-        }).isEmpty();
+        return FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0).isEmpty();
     }
 
     public int getSpecificity() {
-        return FluentIterable.from(expressionsByCondition.values()).filter(new Predicate<Expr>() {
-            public boolean apply(Expr expr) {
-                return expr.getLevel() != 0;
-            }
-        }).size();
+        return FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0).size();
     }
 
     @Nullable

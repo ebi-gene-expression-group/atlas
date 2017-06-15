@@ -24,30 +24,15 @@ public class SitemapWriter {
 
     public void writeSitemapIndex(OutputStream outputStream, Collection<SpeciesProperties> speciesProperties) throws XMLStreamException {
 
-        writeDocument(outputStream,Collections2.transform(speciesProperties, new Function<SpeciesProperties, String>() {
-            @Override
-            public String apply(SpeciesProperties s) {
-                return ourAddress+"/species/"+ s.ensemblName() + "/sitemap.xml";
-            }
-        }), "sitemapindex", "sitemap", ImmutableMap.<String,String>of());
+        writeDocument(outputStream,Collections2.transform(speciesProperties, s -> ourAddress+"/species/"+ s.ensemblName() + "/sitemap.xml"), "sitemapindex", "sitemap", ImmutableMap.<String,String>of());
     }
 
     public void writeGenes(OutputStream outputStream, Collection<String> various, Collection<String> genes)
             throws
             XMLStreamException {
         List<String> urls = new ArrayList<>();
-        urls.addAll(Collections2.transform(various, new Function<String, String>() {
-            @Override
-            public String apply(String s) {
-                return ourAddress+s;
-            }
-        }));
-        urls.addAll(Collections2.transform(genes, new Function<String, String>() {
-            @Override
-            public String apply(String s) {
-                return ourAddress+"/genes/"+s;
-            }
-        }));
+        urls.addAll(Collections2.transform(various, s -> ourAddress+s));
+        urls.addAll(Collections2.transform(genes, s -> ourAddress+"/genes/"+s));
         writeDocument(outputStream,urls, "urlset", "url", ImmutableMap.of("changefreq","monthly"));
     }
 

@@ -72,16 +72,13 @@ public class ExperimentOpsTest {
         when(experimentMock.getAttributes()).thenReturn(new HashMap<String, Object>());
         when(experimentTrader.getExperiment(anyString(), anyString())).thenReturn(experimentMock);
 
-        Mockito.doAnswer(new Answer<ExperimentDTO>() {
-            @Override
-            public ExperimentDTO answer(InvocationOnMock invocationOnMock) throws Throwable {
-                String accession = (String) invocationOnMock.getArguments()[0];
+        Mockito.doAnswer(invocationOnMock -> {
+            String accession1 = (String) invocationOnMock.getArguments()[0];
 
-                ExperimentType experimentType = ExperimentType.values()
-                        [new Random().nextInt(ExperimentType.values().length)];
+            ExperimentType experimentType = ExperimentType.values()
+                    [new Random().nextInt(ExperimentType.values().length)];
 
-                return ExperimentDTOTest.mockDTO(accession, experimentType);
-            }
+            return ExperimentDTOTest.mockDTO(accession1, experimentType);
         }).when(experimentCrud).findExperiment(Matchers.anyString());
 
     }

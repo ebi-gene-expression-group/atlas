@@ -121,29 +121,14 @@ public class AnalyticsSolrQueryTree {
         @Override
         TreeNode map(final Function<Leaf, TreeNode> f) {
             return new Parent(operator,
-                    Collections2.transform(children, new Function<TreeNode,TreeNode>() {
-                @Override
-                public TreeNode apply(TreeNode child) {
-                    return child.map(f);
-                }
-            }));
+                    Collections2.transform(children, child -> child.map(f)));
         }
 
         @Override
         TreeNode filter(final Predicate<Leaf> f) {
 
             Collection<TreeNode> newChildren = FluentIterable.from(children)
-                    .transform(new Function<TreeNode, TreeNode>() {
-                        @Override
-                        public TreeNode apply(TreeNode child) {
-                            return child.filter(f);
-                        }
-                    }).filter(new Predicate<TreeNode>() {
-                        @Override
-                        public boolean apply(TreeNode treeNode) {
-                            return !treeNode.equals(Null.INSTANCE);
-                        }
-                    }).toList();
+                    .transform(child -> child.filter(f)).filter(treeNode -> !treeNode.equals(Null.INSTANCE)).toList();
 
             return newChildren.size() == 0
                     ? Null.INSTANCE
@@ -225,12 +210,7 @@ public class AnalyticsSolrQueryTree {
 
 
     List<String> toQueryPlan() {
-        TreeNode n = root.filter(new Predicate<Leaf>() {
-            @Override
-            public boolean apply(Leaf leaf) {
-                return leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE);
-            }
-        });
+        TreeNode n = root.filter(leaf -> leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE));
         if(n.equals(Null.INSTANCE)){
             return ImmutableList.of(toString());
         } else {
@@ -239,30 +219,24 @@ public class AnalyticsSolrQueryTree {
             both as keywords and then for both as text, missing the case when one matches as keyword and the other as
              text.
              */
-            Function<Leaf, TreeNode> makeTreeWithKeywordQueriesForIdentifiers = new Function<Leaf, TreeNode>() {
-                @Override
-                public TreeNode apply(final Leaf leaf) {
-                    if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
-                        return new Parent(OR, Collections2.transform(possibleIdentifierKeywords(), new Function<String, TreeNode>() {
-                            @Override
-                            public TreeNode apply(String possibleIdentifierSearch) {
-                                return new Leaf(possibleIdentifierSearch, leaf.searchValue);
-                            }
-                        }));
-                    } else {
-                        return leaf;
-                    }
+            Function<Leaf, TreeNode> makeTreeWithKeywordQueriesForIdentifiers = leaf -> {
+                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
+                    return new Parent(OR, Collections2.transform(possibleIdentifierKeywords(), new Function<String, TreeNode>() {
+                        @Override
+                        public TreeNode apply(String possibleIdentifierSearch) {
+                            return new Leaf(possibleIdentifierSearch, leaf.searchValue);
+                        }
+                    }));
+                } else {
+                    return leaf;
                 }
             };
 
-            Function<Leaf, TreeNode> makeTreeWithTextSearchForIdentifiers = new Function<Leaf, TreeNode>() {
-                @Override
-                public TreeNode apply(final Leaf leaf) {
-                    if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
-                        return new Leaf(AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name, leaf.searchValue);
-                    } else {
-                        return leaf;
-                    }
+            Function<Leaf, TreeNode> makeTreeWithTextSearchForIdentifiers = leaf -> {
+                if(leaf.searchField.equals(UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE)){
+                    return new Leaf(AnalyticsQueryClient.Field.IDENTIFIER_SEARCH.name, leaf.searchValue);
+                } else {
+                    return leaf;
                 }
             };
 

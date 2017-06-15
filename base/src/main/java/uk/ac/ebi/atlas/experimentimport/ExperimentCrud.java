@@ -71,12 +71,7 @@ public class ExperimentCrud {
                 condensedSdrfParserOutput,
                 condensedSdrfParserOutput
                         .getExperimentDesign()
-                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(new Function<AssayGroup, Iterable<String>>() {
-                            @Override
-                            public Iterable<String> apply(AssayGroup assayGroup) {
-                                return assayGroup.assaysAnalyzedForThisDataColumn();
-                            }
-                        }).toSet()), isPrivate);
+                        .getSpeciesForAssays(FluentIterable.from(experimentConfiguration.getAssayGroups()).transformAndConcat(assayGroup -> assayGroup.assaysAnalyzedForThisDataColumn()).toSet()), isPrivate);
 
         if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);

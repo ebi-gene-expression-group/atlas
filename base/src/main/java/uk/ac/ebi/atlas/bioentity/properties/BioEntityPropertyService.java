@@ -93,13 +93,8 @@ public class BioEntityPropertyService {
             List<BioentityPropertyName> desiredOrderOfPropertyNames,
             final Map<BioentityPropertyName, Set<String>> propertyValuesByType) {
 
-        return FluentIterable.from(desiredOrderOfPropertyNames).filter(new Predicate<BioentityPropertyName>() {
-            @Override
-            public boolean apply(@Nullable BioentityPropertyName propertyName) {
-                return !DISPLAYED_PROPERTY_LIST.contains(propertyName) &&
-                        propertyValuesByType.containsKey(propertyName);
-            }
-        }).toList();
+        return FluentIterable.from(desiredOrderOfPropertyNames).filter(propertyName -> !DISPLAYED_PROPERTY_LIST.contains(propertyName) &&
+                propertyValuesByType.containsKey(propertyName)).toList();
 
     }
     private JsonArray bioentityProperties(String identifier, Species species,

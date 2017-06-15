@@ -34,13 +34,7 @@ public class AnatomogramFactory {
         }
         if(s.size() > 1){
             return Optional.of(getAnatomogramProperties(baselineExperiment.getSpecies(), FluentIterable.from(selectedDataColumns).transformAndConcat(
-                    new Function<AssayGroup, Iterable<OntologyTerm>>() {
-                        @Override
-                        public Iterable<OntologyTerm>
-                        apply(AssayGroup assayGroup) {
-                            return baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram).getValueOntologyTerms();
-                        }
-                    }
+                    assayGroup -> baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram).getValueOntologyTerms()
             )));
         } else {
             return Optional.absent();

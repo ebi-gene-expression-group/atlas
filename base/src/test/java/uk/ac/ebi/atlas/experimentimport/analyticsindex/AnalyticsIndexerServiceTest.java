@@ -100,12 +100,7 @@ public class AnalyticsIndexerServiceTest {
         final ExperimentDataPoint experimentDataPoint = Mockito.mock(ExperimentDataPoint.class);
         when(experimentDataPoint.getRelevantBioentityPropertyNames()).thenThrow(new RuntimeException("Woosh!"));
 
-        Mockito.doAnswer(new Answer() {
-            @Override
-            public Iterable<? extends ExperimentDataPoint> answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return ImmutableList.of(experimentDataPoint);
-            }
-        }).when(experimentDataPointStreamFactory).stream(experiment);
+        Mockito.doAnswer(invocationOnMock -> ImmutableList.of(experimentDataPoint)).when(experimentDataPointStreamFactory).stream(experiment);
 
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
         int batchSize = 1;
@@ -144,12 +139,7 @@ public class AnalyticsIndexerServiceTest {
                 experimentDataPoints[0],
                 Arrays.copyOfRange(experimentDataPoints, 1, experimentDataPoints.length));
 
-        Mockito.doAnswer(new Answer() {
-            @Override
-            public ObjectInputStream<? extends ExperimentDataPoint> answer(InvocationOnMock invocationOnMock) {
-                return baselineExperimentDataPointStreamMock;
-            }
-        }).when(experimentDataPointStreamFactory).stream(experiment);
+        Mockito.doAnswer(invocationOnMock -> baselineExperimentDataPointStreamMock).when(experimentDataPointStreamFactory).stream(experiment);
 
     }
 }

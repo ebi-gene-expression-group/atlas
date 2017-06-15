@@ -66,31 +66,25 @@ public class BaselineExperimentsController {
             experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
 
-        Comparator<String> keyComparator = new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                // Services review: Alvis' edict for Homo sapiens experiments to always come up on top of baseline landing page
-                if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens"))
-                    return -1;
-                else if (o2.equals("Homo sapiens") && !o1.equals("Homo sapiens"))
-                    return 1;
-                else
-                    return o1.compareTo(o2);
-            }
+        Comparator<String> keyComparator = (o1, o2) -> {
+            // Services review: Alvis' edict for Homo sapiens experiments to always come up on top of baseline landing page
+            if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens"))
+                return -1;
+            else if (o2.equals("Homo sapiens") && !o1.equals("Homo sapiens"))
+                return 1;
+            else
+                return o1.compareTo(o2);
         };
         // experiments should be sorted by their display name, not accession
-        Comparator<String> valueComparator = new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                // Services review: Alvis' edict for proteomics experiments to always come up at the bottom of
-                // the list of experiments within each species
-                if (o1.contains("-PROT-") && !o2.contains("-PROT-"))
-                    return 1;
-                else if (o2.contains("-PROT-") && !o1.contains("-PROT-"))
-                    return -1;
-                else
-                    return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
-            }
+        Comparator<String> valueComparator = (o1, o2) -> {
+            // Services review: Alvis' edict for proteomics experiments to always come up at the bottom of
+            // the list of experiments within each species
+            if (o1.contains("-PROT-") && !o2.contains("-PROT-"))
+                return 1;
+            else if (o2.contains("-PROT-") && !o1.contains("-PROT-"))
+                return -1;
+            else
+                return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
         };
         experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 

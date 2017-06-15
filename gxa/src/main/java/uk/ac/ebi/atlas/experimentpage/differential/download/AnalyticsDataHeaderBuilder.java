@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import com.google.common.base.Function;
@@ -15,16 +14,17 @@ public class AnalyticsDataHeaderBuilder implements Function<String[], String[]> 
     private final DifferentialExperiment experiment;
     private final int fixedColumnNumber;
 
-    private AnalyticsDataHeaderBuilder(DifferentialExperiment experiment, int fixedColumnNumber){
+    private AnalyticsDataHeaderBuilder(DifferentialExperiment experiment, int fixedColumnNumber) {
         checkNotNull(experiment, "Experiment should be not null!");
         this.experiment = experiment;
         this.fixedColumnNumber = fixedColumnNumber;
     }
 
-    public static AnalyticsDataHeaderBuilder microarray(MicroarrayExperiment experiment){
+    public static AnalyticsDataHeaderBuilder microarray(MicroarrayExperiment experiment) {
         return new AnalyticsDataHeaderBuilder(experiment, 3);
     }
-    public static AnalyticsDataHeaderBuilder rnaSeq(DifferentialExperiment experiment){
+
+    public static AnalyticsDataHeaderBuilder rnaSeq(DifferentialExperiment experiment) {
         return new AnalyticsDataHeaderBuilder(experiment, 2);
     }
 

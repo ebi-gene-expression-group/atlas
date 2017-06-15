@@ -20,11 +20,7 @@ public abstract class DifferentialProfile<T extends DifferentialExpression, Self
     }
 
     public int getSpecificity(final Regulation regulation) {
-        return  FluentIterable.from(expressionsByCondition.values()).filter(new Predicate<T>() {
-            public boolean apply(T expr) {
-                return expr.getLevel() != 0 && expr.isRegulatedLike(regulation);
-            }
-        }).size();
+        return  FluentIterable.from(expressionsByCondition.values()).filter(expr -> expr.getLevel() != 0 && expr.isRegulatedLike(regulation)).size();
     }
 
     public double getAveragePValueOn(Collection<Contrast> contrasts) {

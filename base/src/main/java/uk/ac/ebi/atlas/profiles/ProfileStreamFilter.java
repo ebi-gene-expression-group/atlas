@@ -50,33 +50,18 @@ public class ProfileStreamFilter<DataColumnDescriptor extends DescribesDataColum
 
         final ImmutableSet<String> uppercaseGeneIds = builder.build();
 
-        return new Predicate<Prof>() {
-            @Override
-            public boolean apply(Prof prof) {
-                return uppercaseGeneIds.contains(prof.getId().toUpperCase());
-            }
-        };
+        return prof -> uppercaseGeneIds.contains(prof.getId().toUpperCase());
     }
 
     Predicate<Prof> keepOnlyProfilesExpressedOnColumns(final Collection<DataColumnDescriptor>  selectedColumns){
-        return new Predicate<Prof>() {
-            @Override
-            public boolean apply(Prof prof) {
-                return prof.isExpressedOnAnyOf(selectedColumns);
-            }
-        };
+        return prof -> prof.isExpressedOnAnyOf(selectedColumns);
     }
 
     Predicate<Prof> keepOnlyProfilesOverExpressedOnColumns
             (final Collection<DataColumnDescriptor> selectedColumns, final Collection<DataColumnDescriptor> allColumns){
         final Set<DataColumnDescriptor> nonSelectedColumns = Sets.difference(ImmutableSet.copyOf(allColumns),
                 ImmutableSet.copyOf(selectedColumns));
-        return new Predicate<Prof>() {
-            @Override
-            public boolean apply(Prof prof) {
-                return prof.getAverageExpressionLevelOn(selectedColumns)
-                        > (prof.isExpressedOnAnyOf(nonSelectedColumns) ? prof.getMaxExpressionLevelOn(nonSelectedColumns) : 0.0d);
-            }
-        };
+        return prof -> prof.getAverageExpressionLevelOn(selectedColumns)
+                > (prof.isExpressedOnAnyOf(nonSelectedColumns) ? prof.getMaxExpressionLevelOn(nonSelectedColumns) : 0.0d);
     }
 }

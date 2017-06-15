@@ -44,12 +44,7 @@ public class MinMaxProfileRankingTest {
 
         final VisibleBaselineProfileComparator c = new VisibleBaselineProfileComparator(isSpecific,selectedQueryFactors,allQueryFactors,cutoff);
 
-        Comparator<BaselineProfile> comparatorThatTestsAverageExpressionsOnly = new Comparator<BaselineProfile>(){
-            @Override
-            public int compare(BaselineProfile o1, BaselineProfile o2) {
-                return c.compareOnAverageExpressionLevel(o1,o2,allQueryFactors);
-            }
-        };
+        Comparator<BaselineProfile> comparatorThatTestsAverageExpressionsOnly = (o1, o2) -> c.compareOnAverageExpressionLevel(o1,o2,allQueryFactors);
 
         MinMaxProfileRanking<BaselineProfile, BaselineProfilesList> subject = new MinMaxProfileRanking<>(comparatorThatTestsAverageExpressionsOnly, new BaselineProfilesListBuilder());
 

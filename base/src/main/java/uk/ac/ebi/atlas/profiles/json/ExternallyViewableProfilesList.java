@@ -39,12 +39,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
     public static ExternallyViewableProfilesList<FactorAcrossExperiments, BaselineExperimentProfile, ExpressionUnit.Absolute>
     createForExperimentProfiles(SemanticQuery geneQuery, BaselineExperimentProfilesList experimentProfiles, List<FactorAcrossExperiments> dataColumns) {
         return new ExternallyViewableProfilesList<>(
-                experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns, new Function<BaselineExperimentProfile, ExpressionUnit.Absolute>() {
-            @Override
-            public ExpressionUnit.Absolute apply(@Nullable BaselineExperimentProfile baselineExperimentProfile) {
-                return baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ? ExpressionUnit.Absolute.Rna.TPM : ExpressionUnit.Absolute.Protein.ANY;
-            }
-        });
+                experimentProfiles, new LinkToBaselineProfile(geneQuery), dataColumns, (Function<BaselineExperimentProfile, ExpressionUnit.Absolute>) baselineExperimentProfile -> baselineExperimentProfile.getExperimentType().isRnaSeqBaseline() ? ExpressionUnit.Absolute.Rna.TPM : ExpressionUnit.Absolute.Protein.ANY);
     }
 
     public JsonObject asJson(){

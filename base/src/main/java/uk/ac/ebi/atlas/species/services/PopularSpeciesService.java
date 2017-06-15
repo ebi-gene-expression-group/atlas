@@ -35,11 +35,8 @@ public class PopularSpeciesService {
 
     public List<PopularSpeciesInfo> getPopularSpecies(final String kingdom, int howMany) {
         List<PopularSpeciesInfo> filteredList =
-                FluentIterable.from(sortedList.get()).filter(new Predicate<PopularSpeciesInfo>() {
-                    @Override
-                    public boolean apply(@Nullable PopularSpeciesInfo input) {
-                        return kingdom.equalsIgnoreCase(input.kingdom());
-                    }
+                FluentIterable.from(sortedList.get()).filter(input -> {
+                    return kingdom.equalsIgnoreCase(input.kingdom());
                 }).toList();
 
         return filteredList.subList(0, Math.min(filteredList.size(), howMany));

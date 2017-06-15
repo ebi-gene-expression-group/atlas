@@ -51,24 +51,14 @@ public abstract class RequestContext<DataColumnDescriptor extends DescribesDataC
         final Collection<String> selectedIds = requestPreferences.getSelectedColumnIds();
         Predicate<DataColumnDescriptor> keepColumns =
                 selectedIds.isEmpty() ? Predicates.<DataColumnDescriptor>alwaysTrue()
-                        : new Predicate<DataColumnDescriptor>() {
-                    @Override
-                    public boolean apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
-                        return selectedIds.contains(dataColumnDescriptor.getId());
-                    }
-                };
+                        : (Predicate<DataColumnDescriptor>) dataColumnDescriptor -> selectedIds.contains(dataColumnDescriptor.getId());
         return FluentIterable.from(experiment.getDataColumnDescriptors()).filter(keepColumns);
     }
 
     public List<DataColumnDescriptor> getDataColumnsToReturn() {
         return experiment.getDisplayDefaults().preserveColumnOrder()
                 ? dataColumnsToBeReturned().toList()
-                : dataColumnsToBeReturned().toSortedList(new Comparator<DataColumnDescriptor>() {
-            @Override
-            public int compare(DataColumnDescriptor o1, DataColumnDescriptor o2) {
-                return displayNameForColumn(o1).compareTo(displayNameForColumn(o2));
-            }
-        });
+                : dataColumnsToBeReturned().toSortedList((o1, o2) -> displayNameForColumn(o1).compareTo(displayNameForColumn(o2)));
     }
 
 

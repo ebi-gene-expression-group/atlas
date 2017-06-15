@@ -72,12 +72,7 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
     }
 
     private <V> Collection<String> transformToConditions(final String fieldName, List<V> values){
-        return FluentIterable.from(values).transform(new Function<V, String>() {
-            @Override
-            public String apply(V bioEntityType) {
-                return fieldName.concat(":\"").concat(bioEntityType.toString()).concat("\"");
-            }
-        }).toList();
+        return FluentIterable.from(values).transform(bioEntityType -> fieldName.concat(":\"").concat(bioEntityType.toString()).concat("\"")).toList();
 
     }
 

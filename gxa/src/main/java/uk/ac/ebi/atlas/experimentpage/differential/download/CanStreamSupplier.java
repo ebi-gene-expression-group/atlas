@@ -22,25 +22,22 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
 
     protected Function<HttpServletResponse, Void> streamFolder(final String folderName,
                                                      final List<Pair<String, Function<Writer, Void>>> documents){
-        return new Function<HttpServletResponse, Void>() {
-            @Override
-            public Void apply(final HttpServletResponse response) {
-                response.setHeader("Content-Disposition", "attachment; filename=\"" + folderName + ".zip\"");
-                response.setContentType("application/octet-stream");
-                try {
-                    ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
-                    for (Pair<String, Function<Writer, Void>> p : documents) {
-                        ZipEntry ze = new ZipEntry(p.getLeft());
-                        zipOutputStream.putNextEntry(ze);
-                        p.getRight().apply(new PrintWriter(zipOutputStream));
-                        zipOutputStream.closeEntry();
-                    }
-                    zipOutputStream.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        return response -> {
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + folderName + ".zip\"");
+            response.setContentType("application/octet-stream");
+            try {
+                ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+                for (Pair<String, Function<Writer, Void>> p : documents) {
+                    ZipEntry ze = new ZipEntry(p.getLeft());
+                    zipOutputStream.putNextEntry(ze);
+                    p.getRight().apply(new PrintWriter(zipOutputStream));
+                    zipOutputStream.closeEntry();
                 }
-                return null;
+                zipOutputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            return null;
         };
     }
 
@@ -49,69 +46,60 @@ public abstract class CanStreamSupplier<E extends Experiment> extends Externally
     }
 
     protected Function<HttpServletResponse, Void> streamFile(final String fileName, final Function<Writer, Void> document){
-        return new Function<HttpServletResponse, Void>() {
-            @Override
-            public Void apply(HttpServletResponse response) {
-                response.setHeader("Content-Disposition", "attachment; filename=\""+fileName + "\"");
-                response.setContentType("text/plain; charset=utf-8");
+        return response -> {
+            response.setHeader("Content-Disposition", "attachment; filename=\""+fileName + "\"");
+            response.setContentType("text/plain; charset=utf-8");
 
-                try(Writer writer = response.getWriter()){
-                    document.apply(writer);
-                } catch (IOException e){
-                    throw new RuntimeException(e);
-                }
-                return null;
+            try(Writer writer = response.getWriter()){
+                document.apply(writer);
+            } catch (IOException e){
+                throw new RuntimeException(e);
             }
+            return null;
         };
     }
 
 
     protected Function<Writer, Void> readFromStreamAndWriteTsv(final AtlasResource<ObjectInputStream<String[]>> resource,
                                                                  final Function<String[], String[]> whatToDoWithTheHeaders){
-        return new Function<Writer, Void>() {
-            @Override
-            public Void apply(Writer writer) {
-                try (ObjectInputStream<String[]> stream = resource.get();
-                     CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
-                    String[] headers = whatToDoWithTheHeaders.apply(stream.readNext());
+        return writer -> {
+            try (ObjectInputStream<String[]> stream = resource.get();
+                 CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                String[] headers = whatToDoWithTheHeaders.apply(stream.readNext());
 
-                    csvWriter.writeNext(headers);
+                csvWriter.writeNext(headers);
 
-                    String[] inputLine;
-                    while ((inputLine = stream.readNext()) != null) {
-                        csvWriter.writeNext(inputLine);
-                    }
-                    csvWriter.flush();
-                } catch (IOException e) {
-                    throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
+                String[] inputLine;
+                while ((inputLine = stream.readNext()) != null) {
+                    csvWriter.writeNext(inputLine);
                 }
-                return null;
+                csvWriter.flush();
+            } catch (IOException e) {
+                throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
             }
+            return null;
         };
     }
 
 
     protected Function<Writer, Void> readFromResourceAndWriteTsv(final AtlasResource<TsvReader> resource,
                                                                  final Function<String[], String[]> whatToDoWithTheHeaders){
-        return new Function<Writer, Void>() {
-            @Override
-            public Void apply(Writer writer) {
-                try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t');
-                     CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
-                    String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
+        return writer -> {
+            try (CSVReader csvReader = new CSVReader(resource.getReader(), '\t');
+                 CSVWriter csvWriter = new CSVWriter(writer, '\t',CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER)) {
+                String[] headers = whatToDoWithTheHeaders.apply(csvReader.readNext());
 
-                    csvWriter.writeNext(headers);
+                csvWriter.writeNext(headers);
 
-                    String[] inputLine;
-                    while ((inputLine = csvReader.readNext()) != null) {
-                        csvWriter.writeNext(inputLine);
-                    }
-                    csvWriter.flush();
-                } catch (IOException e) {
-                    throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
+                String[] inputLine;
+                while ((inputLine = csvReader.readNext()) != null) {
+                    csvWriter.writeNext(inputLine);
                 }
-                return null;
+                csvWriter.flush();
+            } catch (IOException e) {
+                throw new IllegalStateException("Exception thrown while reading next csv line: " + e.getMessage());
             }
+            return null;
         };
     }
 }

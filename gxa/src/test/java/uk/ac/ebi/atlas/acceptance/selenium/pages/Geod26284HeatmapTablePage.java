@@ -84,12 +84,7 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
 
         // wait until jQuery has rendered the menu
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return !lastMenuElement.getText().equals("");
-            }
-        });
+        wait.until(webDriver -> !lastMenuElement.getText().equals(""));
 
         // the last menu item does not use hyperlink
         if (lastMenuElement.getAttribute("data-serialized-factors") == null) {
