@@ -20,6 +20,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +68,7 @@ public class DifferentialResultsReader {
                 bioentityName = ((Collection) bioentityNamesOrEmpty).iterator().next().toString();
             }
 
-            Object foldChangeSymbol = document.get("fold_change");
-            double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
+            double foldChange = castObjectToDouble(document.get("fold_change"));
 
             if (foldChange > 0.0) {
                 minUpLevel = Math.min(minUpLevel, foldChange);
@@ -77,6 +77,8 @@ public class DifferentialResultsReader {
                 minDownLevel = Math.max(minDownLevel, foldChange);
                 maxDownLevel = Math.min(maxDownLevel, foldChange);
             }
+
+            double pValue = castObjectToDouble(document.get("p_value"));
 
             DifferentialExperiment experiment;
             try {
@@ -89,20 +91,26 @@ public class DifferentialResultsReader {
             Contrast contrast = experiment.getDataColumnDescriptor(contrastId);
 
             JsonObject o = gson.toJsonTree(document).getAsJsonObject();
-            o.addProperty("bioentityIdentifier", (String) document.get("bioentityIdentifier"));
+            o.addProperty("bioentityIdentifier", (String) document.get("bioentity_identifier"));
+            o.addProperty("numReplicates", (int) document.get("num_replicates"));
             o.addProperty("bioentityName", bioentityName);
             o.addProperty("experimentAccession", experimentAccession);
             o.addProperty("experimentType", experimentType.toString());
             o.addProperty("contrastId", contrastId);
             o.addProperty("foldChange", foldChange);
+            o.addProperty("pValue", pValue);
             o.addProperty("comparison", contrast.getDisplayName());
             o.addProperty("experimentName",experiment.getDescription());
             o.addProperty("uri", linkToContrast.apply(Pair.of(experimentAccession, contrast)).toString());
 
+            if (document.containsKey("t_statistic")) {
+                o.addProperty("tStatistic", castObjectToDouble(document.get("t_statistic")));
+            }
+
             filteredDocuments.add(o);
         }
         for (JsonObject document : filteredDocuments) {
-            double foldChange = document.get("foldChange").getAsDouble();
+            double foldChange = document.get("fold_change").getAsDouble();
             String colour = foldChange > 0.0
                     ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red")
                     : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
@@ -118,6 +126,12 @@ public class DifferentialResultsReader {
         addDoublePropertyIfValid(resultsWithLevels,"maxUpLevel",maxUpLevel);
 
         return resultsWithLevels;
+    }
+
+    private double castObjectToDouble(Object object) {
+        return object instanceof BigDecimal ? ((BigDecimal) object).doubleValue() :
+               object instanceof Double ? (double) object :
+               Double.parseDouble((String) object);
     }
 
     private void addDoublePropertyIfValid(JsonObject resultsWithLevels, String name, double value){

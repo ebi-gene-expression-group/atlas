@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.analyticsindex.differential.DifferentialAnalyticsSearchService;
@@ -93,15 +94,32 @@ public class BaselineAndDifferentialAnalyticsServiceIT extends RestAssuredFixtur
             "contrastId",
             "comparison",
             "foldChange",
+            "pValue",
             "colour",
             "id");
 
-    private void testDifferentialResultsAreInRightFormat(JsonObject result){
+    private ImmutableList<String> fieldsNeededInMicroarrayDifferentialResults =
+            ImmutableList.<String>builder()
+                    .addAll(fieldsNeededInDifferentialResults)
+                    .add("tStatistic")
+                    .build();
+
+    private void testDifferentialResultsAreInRightFormat(JsonObject result) {
         assertTrue(new Gson().toJson(result), result.has("results"));
         assertThat(result.get("results").getAsJsonArray().size(), greaterThan(0));
-        for(JsonElement e: result.get("results").getAsJsonArray()){
-            for(String fieldName: fieldsNeededInDifferentialResults) {
-                assertTrue("result has "+fieldName, e.getAsJsonObject().has(fieldName));
+
+        for (JsonElement jsonElement: result.get("results").getAsJsonArray()) {
+            ExperimentType experimentType =
+                    ExperimentType.valueOf(jsonElement.getAsJsonObject().get("experimentType").getAsString());
+
+            if (experimentType.isMicroarray()) {
+                for (String fieldName: fieldsNeededInMicroarrayDifferentialResults) {
+                    assertTrue("result has "+fieldName, jsonElement.getAsJsonObject().has(fieldName));
+                }
+            } else {
+                for (String fieldName: fieldsNeededInDifferentialResults) {
+                    assertTrue("result has "+fieldName, jsonElement.getAsJsonObject().has(fieldName));
+                }
             }
         }
     }
