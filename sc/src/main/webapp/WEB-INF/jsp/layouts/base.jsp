@@ -112,7 +112,7 @@
     <tiles:insertAttribute name="news"/>
 </div>
 
-<div id="local-masthead" class="mega-footer padding-top-xlarge padding-bottom-xlarge">
+<div id="local-footer" class="mega-footer padding-top-xlarge padding-bottom-xlarge">
     <tiles:insertAttribute name="mega-footer"/>
 </div>
 
@@ -128,16 +128,15 @@
 
 <!-- JavaScript -->
 
-<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-<!--
-<script>window.jQuery || document.write('<script src="../js/libs/jquery-1.10.2.min.js"><\/script>')</script>
--->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- Grab jQuery from CDN -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
 <!-- Your custom JavaScript file scan go here... change names accordingly -->
 <!--
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
 -->
+
 <script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
 <script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
 <script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
@@ -147,13 +146,6 @@
 <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
 <script type="text/JavaScript">$(document).foundation();</script>
 <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
-
-<!-- JSON Tag Editor -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.foundation.css" media="screen">
-<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.caret.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-json-tag-editor/jquery.json-tag-editor.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
-<!--! end of JSON Tag Editor -->
 
 <!-- Google Analytics details... -->
 <!-- Change UA-XXXXX-X to be your site's ID -->
@@ -165,30 +157,6 @@
   });
 </script>
 -->
-
-<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-
-<script>
-    geneQueryTagEditorModule.init('#home-search-atlas-input', '', function(){}, 'Enter your search');
-    $('#home-search-atlas-clear-button').on('click' , function () {
-        // Remove all tags
-        var $atlasSearchInput = $('#home-search-atlas-input'),
-            atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
-        atlasSearchTags.forEach(function (searchTag) {
-            $atlasSearchInput.jsonTagEditor('removeTag', searchTag.value);
-        })
-    });
-
-    $('#home-search-atlas-form').submit(function(event) {
-        var $atlasSearchInput = $('#home-search-atlas-input'),
-            atlasSearchTags = $atlasSearchInput.jsonTagEditor('getTags')[0].tags;
-        console.log(JSON.stringify(atlasSearchTags));
-        $atlasSearchInput.val(JSON.stringify(atlasSearchTags));
-    });
-
-    geneQueryTagEditorModule.init('#local-searchbox', '', function(){}, 'Enter your search');
-</script>
 
 </body>
 </html>
