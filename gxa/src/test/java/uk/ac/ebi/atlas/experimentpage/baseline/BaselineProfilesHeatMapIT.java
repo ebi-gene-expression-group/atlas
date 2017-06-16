@@ -14,8 +14,8 @@ import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
@@ -34,15 +34,12 @@ public class BaselineProfilesHeatMapIT {
     private BaselineProfilesHeatMap subject;
 
     @Inject
-    private RnaSeqBaselineExperimentsCache rnaSeqBaselineExperimentsCache;
-
-    @Inject
     SolrQueryService solrQueryService;
 
     @Inject
     RnaSeqBaselineProfileStreamFactory inputStreamFactory;
 
-    private BaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+    private BaselineRequestPreferences requestPreferences;
 
     private BaselineRequestContext baselineRequestContext;
 
@@ -53,9 +50,13 @@ public class BaselineProfilesHeatMapIT {
 
     @Before
     public void initRequestContext() throws ExecutionException {
+        String randomAccession = experimentTrader.getAllBaselineExperimentAccessions().iterator().next();
+        baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(randomAccession);
 
-        String randomAccession = experimentTrader.getRnaSeqDifferentialExperimentAccessions().iterator().next();
-        baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(randomAccession);
+        requestPreferences =
+                baselineExperiment.getType().isRnaSeqBaseline() ? new RnaSeqBaselineRequestPreferences() :
+                baselineExperiment.getType().isProteomicsBaseline() ? new ProteomicsBaselineRequestPreferences() :
+                null;
 
         baselineRequestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
 
@@ -69,20 +70,19 @@ public class BaselineProfilesHeatMapIT {
             setNotSpecific();
         }
         if(Math.random() < 0.5) {
-            setGeneQuery("protein_coding");
+            setGeneQueryProteinCoding();
         }
 
         GeneQueryResponse geneQueryResponse = solrQueryService.fetchResponse
                 (baselineRequestContext.getGeneQuery(), baselineRequestContext.getSpecies());
 
-        BaselineProfilesList profiles = subject.fetch(baselineExperiment, baselineRequestContext,
-                geneQueryResponse);
+        BaselineProfilesList profiles = subject.fetch(baselineExperiment, baselineRequestContext, geneQueryResponse);
 
         assertThat(profiles.size(), greaterThan(0));
     }
 
-    private void setGeneQuery(String geneQueryString) {
-        requestPreferences.setGeneQuery(SemanticQuery.create(geneQueryString));
+    private void setGeneQueryProteinCoding() {
+        requestPreferences.setGeneQuery(SemanticQuery.create("protein_coding"));
     }
 
     private void setNotSpecific() {
