@@ -23,6 +23,7 @@ import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -143,14 +144,14 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         Iterator<SampleCharacteristic> sampleCharacteristicIterator = experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
 
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
-        assertThat(sampleCharacteristic.header(), is(ORGANISM_PART));
-        assertThat(sampleCharacteristic.value(), is("ovary"));
-        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://www.ebi.ac.uk/efo/EFO_0000973"));
-
-        sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(ORGANISM));
         assertThat(sampleCharacteristic.value(), is("Homo sapiens"));
         assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), is(ORGANISM_PART));
+        assertThat(sampleCharacteristic.value(), is("ovary"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(DEVELOPMENTAL_STAGE));
