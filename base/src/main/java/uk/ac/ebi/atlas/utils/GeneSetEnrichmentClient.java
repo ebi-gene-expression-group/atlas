@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.tuple.Pair;
@@ -15,7 +14,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.StringReader;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Named
 public class GeneSetEnrichmentClient {
@@ -24,8 +28,8 @@ public class GeneSetEnrichmentClient {
 
     private final RestTemplate restTemplate;
     private static final String urlPattern = "https://www.ebi.ac.uk/fg/gsa/api/tsv/getOverlappingComparisons/{0}/{1}";
-    private static final String [] expectedHeader =("EXPERIMENT\tCOMPARISON_ID\tP-VALUE\tOBSERVED\tEXPECTED\tADJUSTED " +
-            "P-VALUE\tEFFECT SIZE\tCOMPARISON_TITLE\tEXPERIMENT_URL").split("\t");
+    private static final String [] expectedHeader =("EXPERIMENT\tCOMPARISON_ID\tP-VALUE\tOBSERVED\tEXPECTED\t" +
+            "ADJUSTED P-VALUE\tEFFECT SIZE\tCOMPARISON_TITLE\tEXPERIMENT_URL").split("\t");
 
     @Inject
     public GeneSetEnrichmentClient(RestTemplate restTemplate) {
@@ -54,22 +58,22 @@ public class GeneSetEnrichmentClient {
     Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
         if(lines.isEmpty()) {
             return Pair.of(Optional.of("Result empty!"),
-                    Optional.<JsonArray>absent());
+                    Optional.<JsonArray>empty());
         }
         else if (lines.size() == 1){
             return Pair.of(Optional.of("Error: "+Joiner.on("\t").join(lines.get(0))),
-                    Optional.<JsonArray>absent());
+                    Optional.<JsonArray>empty());
         }
         else if(!Arrays.deepEquals(expectedHeader, lines.get(0))){
             return Pair.of(Optional.of("Header not as expected: "+Joiner.on("\t").join(lines.get(0))),
-                    Optional.<JsonArray>absent());
+                    Optional.<JsonArray>empty());
         }
         else if(! linesHaveCorrectDimensions(lines)){
             return Pair.of(Optional.of("Data malformed, expected a matrix" ),
-                    Optional.<JsonArray>absent());
+                    Optional.<JsonArray>empty());
         }
         else {
-            return Pair.of(Optional.<String>absent(),
+            return Pair.of(Optional.<String>empty(),
                     Optional.of(formatLines(lines.subList(1, lines.size()))));
         }
     }
@@ -109,7 +113,7 @@ public class GeneSetEnrichmentClient {
             errors.add("Please use at least 10 gene identifiers, was: " + bioentityIdentifiers.size());
         }
 
-        return errors.isEmpty() ? Optional.<String>absent() : Optional.of(Joiner.on("\n").join(errors));
+        return errors.isEmpty() ? Optional.<String>empty() : Optional.of(Joiner.on("\n").join(errors));
     }
 
     public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
@@ -117,12 +121,12 @@ public class GeneSetEnrichmentClient {
         try {
             Optional<String> maybeError = validateInput(species,bioentityIdentifiers);
             return maybeError.isPresent()?
-                    Pair.of(maybeError, Optional.<JsonArray>absent()) :
+                    Pair.of(maybeError, Optional.<JsonArray>empty()) :
                     formatResponse(fetchResponse(species, bioentityIdentifiers));
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            return Pair.of(Optional.of("Exception occurred: \n" + e.getMessage()), Optional.<JsonArray>absent());
+            return Pair.of(Optional.of("Exception occurred: \n" + e.getMessage()), Optional.<JsonArray>empty());
         }
     }
 

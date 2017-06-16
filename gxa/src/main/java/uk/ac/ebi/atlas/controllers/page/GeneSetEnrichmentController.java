@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.controllers.page;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import org.apache.commons.lang3.Validate;
@@ -23,6 +22,7 @@ import uk.ac.ebi.atlas.utils.GeneSetEnrichmentClient;
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Scope("request")

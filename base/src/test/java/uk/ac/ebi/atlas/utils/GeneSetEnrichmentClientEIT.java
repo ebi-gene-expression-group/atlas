@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.utils;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,13 +17,13 @@ import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/applicationContext.xml", "/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
