@@ -7,11 +7,12 @@ import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.velocity.util.StringUtils;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experiments.ExperimentMetadataEnrichmentService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.species.Species;
@@ -26,7 +27,7 @@ import java.util.Optional;
 
 @Controller
 @Scope("request")
-public class GeneSetEnrichmentController {
+public class GeneSetEnrichmentController extends HtmlExceptionHandlingController {
 
     private final Gson gson = new Gson();
     private final ExperimentMetadataEnrichmentService experimentMetadataEnrichmentService;
@@ -36,7 +37,9 @@ public class GeneSetEnrichmentController {
 
     @Inject
     public GeneSetEnrichmentController(ExperimentTrader experimentTrader,
-                                       GeneSetEnrichmentClient geneSetEnrichmentClient,SpeciesFactory speciesFactory,SpeciesLookupService speciesLookupService){
+                                       GeneSetEnrichmentClient geneSetEnrichmentClient,
+                                       SpeciesFactory speciesFactory,
+                                       SpeciesLookupService speciesLookupService) {
         this.experimentMetadataEnrichmentService = new ExperimentMetadataEnrichmentService(experimentTrader);
         this.geneSetEnrichmentClient = geneSetEnrichmentClient;
         this.speciesFactory = speciesFactory;
@@ -45,11 +48,10 @@ public class GeneSetEnrichmentController {
 
 
     @RequestMapping(value = "/genesetenrichment", method = RequestMethod.GET)
-    public String getExperimentsListParameters(
-            @RequestParam(defaultValue = "") String query,
-            Model model) {
+    public String getExperimentsListParameters(@RequestParam(defaultValue = "") String query, Model model) {
         List<String> bioentityIdentifiers = Arrays.asList(query.split("\\W+"));
-        Validate.notEmpty(bioentityIdentifiers, "Please pass a list of genes separated by whitespace: ?query=gene_1 gene_2 ...");
+        Validate.notEmpty(
+                bioentityIdentifiers, "Please pass a list of genes separated by whitespace: ?query=gene_1 gene_2 ...");
 
         Species species = speciesFactory.create(
                 speciesLookupService.
@@ -57,26 +59,18 @@ public class GeneSetEnrichmentController {
                         .or("could not be determined for query")
         );
 
-        Pair<Optional<String>, Optional<JsonArray>> result = geneSetEnrichmentClient.fetchEnrichedGenes(species, bioentityIdentifiers);
+        Pair<Optional<String>, Optional<JsonArray>> result =
+                geneSetEnrichmentClient.fetchEnrichedGenes(species, bioentityIdentifiers);
 
-        if(GeneSetEnrichmentClient.isSuccess(result)){
+        if (GeneSetEnrichmentClient.isSuccess(result)) {
             model.addAttribute("species", StringUtils.capitalizeFirstLetter(species.getReferenceName()));
             model.addAttribute("queryShort", Joiner.on(" ").join(Arrays.asList(query.split("\\W+")).subList(0,3)));
             model.addAttribute("query", query);
-            model.addAttribute("data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
+            model.addAttribute(
+                    "data", gson.toJson(experimentMetadataEnrichmentService.enrich(result.getRight().get())));
             return "gene-set-enrichment-results";
         } else {
-            model.addAttribute("exceptionMessage", result.getLeft().get());
-            return "error-page";
+            throw new RuntimeException(result.getLeft().get());
         }
     }
-
-    @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ModelAndView InternalServerHandleException(Exception e) {
-        ModelAndView mav = new ModelAndView("error-page");
-        mav.addObject("exceptionMessage", e.getMessage());
-        return mav;
-    }
-
 }
