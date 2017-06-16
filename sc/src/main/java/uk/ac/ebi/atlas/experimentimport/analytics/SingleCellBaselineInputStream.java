@@ -27,6 +27,19 @@ public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCe
         this.lines = lines;
     }
 
+    public boolean hasNext() {
+        if (queue.isEmpty()) {
+            String[] line = lines.readNext();
+            if (line == null) {
+                return false;
+            } else {
+                queue.addAll(readExpressionsLevels(line));
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public SingleCellBaseline readNext() {
         if (queue.isEmpty()) {
@@ -54,28 +67,31 @@ public class SingleCellBaselineInputStream implements ObjectInputStream<SingleCe
                 return null;
             }
 
-            String geneId = line[0];
-            String[] expressionLevelsArray = ArrayUtils.subarray(line, 1, line.length);
-            ImmutableList<String> expressionLevelsList = ImmutableList.<String>builder().add(expressionLevelsArray).build();
-            UnmodifiableIterator<String> expressionLevels = expressionLevelsList.iterator();
-
-            ImmutableList.Builder<SingleCellBaseline> builder = ImmutableList.builder();
-
-            for (String cellId: cellsIds) {
-                checkState(expressionLevels.hasNext(), String.format("missing expression level for gene %s, cell %s", geneId, cellId));
-                String expressionLevelString = expressionLevels.next();
-                double expressionLevel = Double.parseDouble(expressionLevelString);
-
-                if(expressionLevel > 0.0){
-                    builder.add(new SingleCellBaseline(geneId, cellId, expressionLevel));
-                }
-            }
-
-            singleCellBaselines = builder.build();
-
+            singleCellBaselines = readExpressionsLevels(line);
         } while (singleCellBaselines.isEmpty());
 
         return singleCellBaselines;
+    }
+
+    private ImmutableList<SingleCellBaseline> readExpressionsLevels(String[] line) {
+        String geneId = line[0];
+        String[] expressionLevelsArray = ArrayUtils.subarray(line, 1, line.length);
+        ImmutableList<String> expressionLevelsList = ImmutableList.<String>builder().add(expressionLevelsArray).build();
+        UnmodifiableIterator<String> expressionLevels = expressionLevelsList.iterator();
+
+        ImmutableList.Builder<SingleCellBaseline> builder = ImmutableList.builder();
+
+        for (String cellId: cellsIds) {
+            checkState(expressionLevels.hasNext(), String.format("missing expression level for gene %s, cell %s", geneId, cellId));
+            String expressionLevelString = expressionLevels.next();
+            double expressionLevel = Double.parseDouble(expressionLevelString);
+
+            if(expressionLevel > 0.0){
+                builder.add(new SingleCellBaseline(geneId, cellId, expressionLevel));
+            }
+        }
+
+        return builder.build();
     }
 
     @Override
