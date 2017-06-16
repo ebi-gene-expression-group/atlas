@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +8,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
@@ -20,6 +24,7 @@ import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -29,19 +34,20 @@ import static org.hamcrest.Matchers.greaterThan;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
 public class BaselineProfilesHeatMapIT {
 
-    public static final String ORGANISM_PART = "ORGANISM_PART";
-
-    private BaselineProfilesHeatMap subject;
+    BaselineProfilesHeatMap<BaselineProfileStreamOptions<? extends ExpressionUnit.Absolute>> subject;
 
     @Inject
     SolrQueryService solrQueryService;
 
     @Inject
-    RnaSeqBaselineProfileStreamFactory inputStreamFactory;
+    RnaSeqBaselineProfileStreamFactory rnaSeqBaselineProfileStreamFactory;
 
-    private BaselineRequestPreferences requestPreferences;
+    @Inject
+    ProteomicsBaselineProfileStreamFactory proteomicsBaselineProfileStreamFactory;
 
-    private BaselineRequestContext baselineRequestContext;
+    BaselineRequestPreferences<? extends ExpressionUnit.Absolute> requestPreferences;
+
+    BaselineRequestContext<? extends ExpressionUnit.Absolute> baselineRequestContext;
 
     BaselineExperiment baselineExperiment;
 
@@ -50,20 +56,21 @@ public class BaselineProfilesHeatMapIT {
 
     @Before
     public void initRequestContext() throws ExecutionException {
-        String randomAccession = experimentTrader.getAllBaselineExperimentAccessions().iterator().next();
-        baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(randomAccession);
+        ImmutableList<String> experimentAccessions = ImmutableList.copyOf(experimentTrader.getAllBaselineExperimentAccessions());
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, experimentAccessions.size());
+        baselineExperiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccessions.get(randomIndex));
 
-        requestPreferences =
-                baselineExperiment.getType().isRnaSeqBaseline() ? new RnaSeqBaselineRequestPreferences() :
-                baselineExperiment.getType().isProteomicsBaseline() ? new ProteomicsBaselineRequestPreferences() :
-                null;
-
-        baselineRequestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
-
-        subject = new BaselineProfilesHeatMap(inputStreamFactory);
+        if (baselineExperiment.getType().isRnaSeqBaseline()) {
+            requestPreferences = new RnaSeqBaselineRequestPreferences();
+            baselineRequestContext = new BaselineRequestContext<>(requestPreferences, baselineExperiment);
+            subject = new BaselineProfilesHeatMap(rnaSeqBaselineProfileStreamFactory);
+        } else { //if (baselineExperiment.getType().isProteomicsBaseline()) {
+            requestPreferences = new ProteomicsBaselineRequestPreferences();
+            baselineRequestContext = new BaselineRequestContext<>(requestPreferences, baselineExperiment);
+            subject = new BaselineProfilesHeatMap(proteomicsBaselineProfileStreamFactory);
+        }
     }
 
-    // http://localhost:8080/gxa/experiments/E-MTAB-1733?displayLevels=true&_specific=on&geneQuery=R-HSA-73887&geneSetMatch=true
     @Test
     public void weCanGetAnyExperimentAtAll()  {
         if(Math.random() < 0.5) {

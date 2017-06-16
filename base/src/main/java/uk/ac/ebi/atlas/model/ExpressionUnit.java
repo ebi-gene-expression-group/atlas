@@ -7,7 +7,6 @@ public interface ExpressionUnit {
             FPKM, TPM
         }
 
-
         enum Protein implements Absolute {
             ANY("");
 

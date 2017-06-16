@@ -20,9 +20,13 @@ public class BaselineProfilesHeatMap<StreamOptions extends BaselineProfileStream
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineProfilesHeatMap.class);
 
-    private final ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, StreamOptions,BaselineProfile> baselineProfileStreamFactory;
-    public BaselineProfilesHeatMap(ProfileStreamFactory<AssayGroup, BaselineExpression,
-            BaselineExperiment, StreamOptions,BaselineProfile> inputStreamFactory) {
+    private final
+    ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, StreamOptions, BaselineProfile>
+            baselineProfileStreamFactory;
+
+    public BaselineProfilesHeatMap(
+            ProfileStreamFactory<AssayGroup, BaselineExpression, BaselineExperiment, StreamOptions, BaselineProfile>
+                    inputStreamFactory) {
         this.baselineProfileStreamFactory = inputStreamFactory;
     }
 
