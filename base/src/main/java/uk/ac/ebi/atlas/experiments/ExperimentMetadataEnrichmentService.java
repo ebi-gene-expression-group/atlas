@@ -21,7 +21,7 @@ public class ExperimentMetadataEnrichmentService {
     }
 
 
-    String getComparisonTitle(Experiment e, String chosenContrast){
+    private String getComparisonTitle(Experiment e, String chosenContrast){
         if(e!= null && e instanceof DifferentialExperiment){
            Contrast c = ((DifferentialExperiment) e).getDataColumnDescriptor(chosenContrast);
             if(c != null){
@@ -31,21 +31,20 @@ public class ExperimentMetadataEnrichmentService {
         return chosenContrast;
     }
 
-    String experimentName(@Nullable Experiment e, String experimentAccession){
+    private String experimentName(@Nullable Experiment e, String experimentAccession){
         return  e!= null ? e.getDisplayName() : experimentAccession;
     }
 
-    JsonObject comparisonObject(Experiment e, String experimentAccession, String chosenContrast){
+    private JsonObject comparisonObject(Experiment e, String experimentAccession, String chosenContrast){
         JsonObject result = new JsonObject();
-        result.addProperty("name",getComparisonTitle(e, chosenContrast));
+        result.addProperty("name", getComparisonTitle(e, chosenContrast));
         result.addProperty("url",
                 MessageFormat.format("/gxa/experiments/{0}?selectedColumnIds={1}",
                         experimentAccession, chosenContrast));
         return result;
     }
 
-
-    Experiment getExperimentOrNull(String experimentAccession){
+    private Experiment getExperimentOrNull(String experimentAccession){
         try{
             return experimentTrader.getPublicExperiment(experimentAccession);
         } catch (ResourceNotFoundException e){
@@ -53,16 +52,16 @@ public class ExperimentMetadataEnrichmentService {
         }
     }
 
-
-    JsonObject enrich(JsonObject inObject){
+    private JsonObject enrich(JsonObject inObject){
         if(inObject.has("comparison_id") && inObject.has("experiment_accession")){
             Experiment e = getExperimentOrNull(inObject.get("experiment_accession").getAsString());
             inObject.add("comparison_title",
-                    comparisonObject(e,inObject.get("experiment_accession").getAsString(), inObject.get("comparison_id").getAsString())
-                   );
+                    comparisonObject(
+                            e,
+                            inObject.get("experiment_accession").getAsString(),
+                            inObject.get("comparison_id").getAsString()));
             inObject.addProperty("experiment",
-                    experimentName(e, inObject.get("experiment_accession").getAsString())
-                    );
+                    experimentName(e, inObject.get("experiment_accession").getAsString()));
         }
         return inObject;
     }
