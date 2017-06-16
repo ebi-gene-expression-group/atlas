@@ -22,21 +22,17 @@ public class GeneSetEnrichmentClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneSetEnrichmentClient.class);
 
-
     private final RestTemplate restTemplate;
     private static final String urlPattern = "https://www.ebi.ac.uk/fg/gsa/api/tsv/getOverlappingComparisons/{0}/{1}";
     private static final String [] expectedHeader =("EXPERIMENT\tCOMPARISON_ID\tP-VALUE\tOBSERVED\tEXPECTED\tADJUSTED " +
             "P-VALUE\tEFFECT SIZE\tCOMPARISON_TITLE\tEXPERIMENT_URL").split("\t");
 
-
-
     @Inject
-    public GeneSetEnrichmentClient(RestTemplate restTemplate){
+    public GeneSetEnrichmentClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    List<String[]> fetchResponse(Species species, Collection<String>
-            bioentityIdentifiers) {
+    List<String[]> fetchResponse(Species species, Collection<String> bioentityIdentifiers) {
         return new TsvReaderImpl(
                 new StringReader(
                         restTemplate.getForObject(
@@ -45,9 +41,9 @@ public class GeneSetEnrichmentClient {
                                         Joiner.on(" ").join(bioentityIdentifiers)), String.class))).readAll();
     }
 
-    private boolean linesHaveCorrectDimensions(List<String[]> lines){
-        for(String[] line: lines){
-            if(line.length != expectedHeader.length &&  line.length +1 != expectedHeader.length){
+    private boolean linesHaveCorrectDimensions(List<String[]> lines) {
+        for (String[] line : lines) {
+            if(line.length != expectedHeader.length && line.length +1 != expectedHeader.length) {
                 //missing COMPARISON_TITLE from data lines, we're working around it
                 return false;
             }
@@ -55,8 +51,8 @@ public class GeneSetEnrichmentClient {
         return true;
     }
     //either error message or result
-    Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines){
-        if(lines.isEmpty()){
+    Pair<Optional<String>, Optional<JsonArray>> formatResponse(List<String[]> lines) {
+        if(lines.isEmpty()) {
             return Pair.of(Optional.of("Result empty!"),
                     Optional.<JsonArray>absent());
         }
@@ -78,32 +74,25 @@ public class GeneSetEnrichmentClient {
         }
     }
 
-    JsonArray formatLines(List<String[]> lines){
+    JsonArray formatLines(List<String[]> lines) {
         JsonArray result = new JsonArray();
-        for(String [] line: lines){
+        for (String [] line : lines) {
             result.add(formatLine(line));
         }
         return result;
     }
 
     //This is the format required by the data tables UI
-    JsonObject formatLine(String[] line){
+    JsonObject formatLine(String[] line) {
         JsonObject result = new JsonObject();
 
-        result.addProperty("experiment_accession",
-                line[0]);
-        result.addProperty("comparison_id",
-                line[1]);
-        result.addProperty("p-value",
-                Double.parseDouble(line[2]));
-        result.addProperty("observed",
-                Double.parseDouble(line[3]));
-        result.addProperty("expected",
-                Double.parseDouble(line[4]));
-        result.addProperty("adjusted p-value",
-                Double.parseDouble(line[5]));
-        result.addProperty("effect size",
-                Double.parseDouble(line[6]));
+        result.addProperty("experiment_accession", line[0]);
+        result.addProperty("comparison_id", line[1]);
+        result.addProperty("p-value", Double.parseDouble(line[2]));
+        result.addProperty("observed", Double.parseDouble(line[3]));
+        result.addProperty("expected", Double.parseDouble(line[4]));
+        result.addProperty("adjusted p-value", Double.parseDouble(line[5]));
+        result.addProperty("effect size", Double.parseDouble(line[6]));
         result.add("comparison_title", new JsonObject()); // enriched later
         result.addProperty("experiment", ""); // enriched later
 
@@ -111,35 +100,33 @@ public class GeneSetEnrichmentClient {
         return result;
     }
 
-    Optional<String> validateInput(Species species, Collection<String>
-            bioentityIdentifiers){
+    Optional<String> validateInput(Species species, Collection<String> bioentityIdentifiers) {
         Set<String> errors = new HashSet<>();
-        if(species.isUnknown()){
-            errors.add("Unknown species: "+species.getName());
+        if (species.isUnknown()) {
+            errors.add("Unknown species: " + species.getName());
         }
-        if(bioentityIdentifiers.size() < 10){
-            errors.add("Please use at least 10 gene identifiers, was: "+bioentityIdentifiers.size());
+        if (bioentityIdentifiers.size() < 10) {
+            errors.add("Please use at least 10 gene identifiers, was: " + bioentityIdentifiers.size());
         }
 
         return errors.isEmpty() ? Optional.<String>absent() : Optional.of(Joiner.on("\n").join(errors));
     }
 
-    public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species, Collection<String>
-            bioentityIdentifiers){
-        try{
+    public Pair<Optional<String>, Optional<JsonArray>> fetchEnrichedGenes(Species species,
+                                                                          Collection<String> bioentityIdentifiers) {
+        try {
             Optional<String> maybeError = validateInput(species,bioentityIdentifiers);
             return maybeError.isPresent()?
                     Pair.of(maybeError, Optional.<JsonArray>absent()) :
-                    formatResponse(fetchResponse(species, bioentityIdentifiers)) ;
+                    formatResponse(fetchResponse(species, bioentityIdentifiers));
 
-        } catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            return Pair.of(Optional.of("Exception occurred: \n"+e.getMessage()),
-                    Optional.<JsonArray>absent());
+            return Pair.of(Optional.of("Exception occurred: \n" + e.getMessage()), Optional.<JsonArray>absent());
         }
     }
 
-    public static boolean isSuccess(Pair<Optional<String>, Optional<JsonArray>> result){
+    public static boolean isSuccess(Pair<Optional<String>, Optional<JsonArray>> result) {
         return !result.getLeft().isPresent();
     }
 
