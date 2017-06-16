@@ -53,7 +53,7 @@ var geneQueryTagEditorModule = (function($) {
                         category_des = item.category;
                     }
 
-                    return $('<li style="width: 300px;"></li>')
+                    return $('<li style="width: 500px;"></li>')
                         .attr('data-value', item.value )
                         .attr('data-category', item.category )
                         .append(
