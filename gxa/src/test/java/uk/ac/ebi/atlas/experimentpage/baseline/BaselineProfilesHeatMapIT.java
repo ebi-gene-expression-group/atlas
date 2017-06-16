@@ -54,7 +54,7 @@ public class BaselineProfilesHeatMapIT {
     @Before
     public void initRequestContext() throws ExecutionException {
 
-        String randomAccession = experimentTrader.getAllBaselineExperimentAccessions().iterator().next();
+        String randomAccession = experimentTrader.getRnaSeqDifferentialExperimentAccessions().iterator().next();
         baselineExperiment = rnaSeqBaselineExperimentsCache.getExperiment(randomAccession);
 
         baselineRequestContext = new BaselineRequestContext(requestPreferences, baselineExperiment);
