@@ -12,7 +12,7 @@ public class MicroarrayExperimentDataPoint extends DifferentialExperimentDataPoi
                                          String conditionSearch,
                                          int numReplicates) {
         super(experiment, microarrayDifferentialAnalytics, conditionSearch, numReplicates);
-        propertyMap.put("t_statistics", microarrayDifferentialAnalytics.getTStatistic());
+        propertyMap.put("t_statistic", microarrayDifferentialAnalytics.getTStatistic());
     }
 
     @Override
