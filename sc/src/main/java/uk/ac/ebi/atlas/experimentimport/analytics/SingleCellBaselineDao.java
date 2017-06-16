@@ -15,14 +15,8 @@ public class SingleCellBaselineDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineDao.class);
 
     private static final int BATCH_SIZE = 2000;
-
     private static final String SC_EXPRESSION_INSERT = "INSERT INTO SINGLE_CELL_EXPRESSION " +
-            "(GENE_ID, EXPERIMENT_ACCESSION, CELL_ID, EXPRESSION_LEVEL) VALUES (?, ?, ?, ?)";
-
-    private static final int GENE_ID = 1;
-    private static final int EXPERIMENT_ACCESSION = 2;
-    private static final int CELL_ID = 3;
-    private static final int EXPRESSION_LEVEL = 4;
+            "(EXPERIMENT_ACCESSION, GENE_ID, CELL_ID, EXPRESSION_LEVEL) VALUES (?, ?, ?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -35,29 +29,19 @@ public class SingleCellBaselineDao {
 
         LOGGER.info("loadSingleCellExpression for experiment {} begin", experimentAccession);
 
-        SingleCellBaseline scb = singleCellInputStream.readNext();
-        while (scb != null) {
-            final List<SingleCellBaseline> scbList = new ArrayList<>();
+        SingleCellBaseline scb;
+        final List<Object[]> batch = new ArrayList<>(BATCH_SIZE);
 
-            int bufferRead = 0;
-            while (scb != null && bufferRead < BATCH_SIZE) {
-                //populate list
-                scbList.add(scb);
-
-                if (bufferRead < BATCH_SIZE) {
-                    scb = singleCellInputStream.readNext();
-                }
-
-                bufferRead++;
+        while ((scb = singleCellInputStream.readNext()) != null) {
+            // Prepare the batch
+            batch.clear();
+            while (batch.size() < BATCH_SIZE && scb != null) {
+                batch.add(new Object[] {experimentAccession, scb.getGeneId(), scb.getCellId(), scb.getExpressionLevel()});
+                scb = singleCellInputStream.readNext();
             }
 
-            //Add the chunk of data to db
-            jdbcTemplate.batchUpdate(SC_EXPRESSION_INSERT, scbList, BATCH_SIZE, (ps, singleCellBaseline) -> {
-                ps.setString(GENE_ID, singleCellBaseline.getGeneId());
-                ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
-                ps.setString(CELL_ID, singleCellBaseline.getCellId());
-                ps.setDouble(EXPRESSION_LEVEL, singleCellBaseline.getExpressionLevel());
-            });
+            // Insert the batch
+            jdbcTemplate.batchUpdate(SC_EXPRESSION_INSERT, batch);
         }
 
         LOGGER.info("loadSingleCellExpression for experiment {} complete", experimentAccession);
