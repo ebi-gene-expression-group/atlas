@@ -3,13 +3,9 @@ package uk.ac.ebi.atlas.experimentimport.analytics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +14,10 @@ public class SingleCellBaselineDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineDao.class);
 
-    private static final String SCEXPRESSION_INSERT = "INSERT INTO SINGLE_CELL_EXPRESSION " +
-            "(geneId, experimentaccession, cellid, expressionlevel) VALUES (?, ?, ?, ?)";
+    private static final int BATCH_SIZE = 2000;
+
+    private static final String SC_EXPRESSION_INSERT = "INSERT INTO SINGLE_CELL_EXPRESSION " +
+            "(GENE_ID, EXPERIMENT_ACCESSION, CELL_ID, EXPRESSION_LEVEL) VALUES (?, ?, ?, ?)";
 
     private static final int GENE_ID = 1;
     private static final int EXPERIMENT_ACCESSION = 2;
@@ -37,38 +35,29 @@ public class SingleCellBaselineDao {
 
         LOGGER.info("loadSingleCellExpression for experiment {} begin", experimentAccession);
 
-        final int bufferSize = 2000;
-        try (SingleCellBaselineInputStream source = singleCellInputStream) {
+        SingleCellBaseline scb = singleCellInputStream.readNext();
+        while (scb != null) {
+            final List<SingleCellBaseline> scbList = new ArrayList<>();
 
-            SingleCellBaseline scb = source.readNext();
-            while (scb != null) {
-                final List<SingleCellBaseline> scbList = new ArrayList<>();
+            int bufferRead = 0;
+            while (scb != null && bufferRead < BATCH_SIZE) {
+                //populate list
+                scbList.add(scb);
 
-                int bufferRead = 0;
-                while (scb != null && bufferRead < bufferSize) {
-                    //populate list
-                    scbList.add(scb);
-
-                    if (bufferRead < bufferSize) {
-                        scb = source.readNext();
-                    }
-
-                    bufferRead++;
+                if (bufferRead < BATCH_SIZE) {
+                    scb = singleCellInputStream.readNext();
                 }
 
-                //Add the chunk of data to db
-                jdbcTemplate.batchUpdate(SCEXPRESSION_INSERT, scbList, bufferSize, (ps, singleCellBaseline) -> {
-                    ps.setString(GENE_ID, singleCellBaseline.getGeneId());
-                    ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
-                    ps.setString(CELL_ID, singleCellBaseline.getCellId());
-                    ps.setDouble(EXPRESSION_LEVEL, singleCellBaseline.getExpressionLevel());
-                });
+                bufferRead++;
             }
 
-            source.close();
-
-        } catch (IOException e) {
-            LOGGER.warn("Cannot close SingleCellBaselineInputStream: {}", e.getMessage());
+            //Add the chunk of data to db
+            jdbcTemplate.batchUpdate(SC_EXPRESSION_INSERT, scbList, BATCH_SIZE, (ps, singleCellBaseline) -> {
+                ps.setString(GENE_ID, singleCellBaseline.getGeneId());
+                ps.setString(EXPERIMENT_ACCESSION, experimentAccession);
+                ps.setString(CELL_ID, singleCellBaseline.getCellId());
+                ps.setDouble(EXPRESSION_LEVEL, singleCellBaseline.getExpressionLevel());
+            });
         }
 
         LOGGER.info("loadSingleCellExpression for experiment {} complete", experimentAccession);
@@ -76,7 +65,7 @@ public class SingleCellBaselineDao {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("delete SingleCellExpression for experiment {}");
-        jdbcTemplate.update("DELETE FROM single_cell_expression WHERE experimentaccession = ?", experimentAccession);
+        jdbcTemplate.update("DELETE FROM SINGLE_CELL_EXPRESSION WHERE EXPERIMENT_ACCESSION = ?", experimentAccession);
     }
 
 }

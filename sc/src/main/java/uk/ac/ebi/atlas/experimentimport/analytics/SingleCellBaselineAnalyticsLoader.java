@@ -18,9 +18,12 @@ public class SingleCellBaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     @Override
-    public void loadAnalytics(String accession) throws IOException {
-        SingleCellBaselineInputStream scInputStream = singleCellBaselineInputStreamFactory.create(accession);
-        singleCellBaselineDao.loadAnalytics(accession, scInputStream);
+    public void loadAnalytics(String accession) {
+        try (SingleCellBaselineInputStream scInputStream = singleCellBaselineInputStreamFactory.create(accession)) {
+            singleCellBaselineDao.loadAnalytics(accession, scInputStream);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
