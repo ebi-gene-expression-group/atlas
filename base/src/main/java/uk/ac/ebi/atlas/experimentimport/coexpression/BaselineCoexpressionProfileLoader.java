@@ -23,12 +23,12 @@ public class BaselineCoexpressionProfileLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineCoexpressionProfileInputStream.class);
 
-    private BaselineCoexpressionProfileDAO baselineCoexpressionProfileDAO;
+    private BaselineCoexpressionProfileDao baselineCoexpressionProfileDao;
     private DataFileHub dataFileHub;
 
     @Inject
-    public void setBaselineCoexpressionProfileDAO(BaselineCoexpressionProfileDAO baselineCoexpressionProfileDAO) {
-        this.baselineCoexpressionProfileDAO = baselineCoexpressionProfileDAO;
+    public void setBaselineCoexpressionProfileDao(BaselineCoexpressionProfileDao baselineCoexpressionProfileDao) {
+        this.baselineCoexpressionProfileDao = baselineCoexpressionProfileDao;
     }
 
     @Inject
@@ -44,7 +44,7 @@ public class BaselineCoexpressionProfileLoader {
         if (coexpressions.exists()) {
             try (BaselineCoexpressionProfileInputStream is =
                          new BaselineCoexpressionProfileInputStream(coexpressions.get())) {
-                return baselineCoexpressionProfileDAO.loadCoexpressionsProfile(experimentAccession, is);
+                return baselineCoexpressionProfileDao.loadCoexpressionsProfile(experimentAccession, is);
             } catch (IOException | IllegalStateException e) {
                 LOGGER.error("Error reading coexpression file for experiment {}", experimentAccession);
                 LOGGER.error(e.getMessage(), e);
@@ -57,7 +57,7 @@ public class BaselineCoexpressionProfileLoader {
 
     @Transactional
     public int deleteCoexpressionsProfile(String accession) {
-        return baselineCoexpressionProfileDAO.deleteCoexpressionsProfile(accession);
+        return baselineCoexpressionProfileDao.deleteCoexpressionsProfile(accession);
     }
 
 }
