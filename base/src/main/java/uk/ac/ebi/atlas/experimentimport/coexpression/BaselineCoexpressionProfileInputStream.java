@@ -26,7 +26,6 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
     private final Queue<BaselineCoexpressionProfile> queue = new LinkedList<>();
     private int lineNumber = 0;
 
-
     public BaselineCoexpressionProfileInputStream(CSVReader csvReader) {
         this(csvReader, 100);
     }
@@ -42,12 +41,10 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
                         "and a matrix shape. Instead found: "+geneIDsHeader[0]);
     }
 
-
     @Override
     public void close() throws IOException {
         csvReader.close();
     }
-
 
     private String[] readCsvLine() {
         lineNumber++;
@@ -76,18 +73,17 @@ public class BaselineCoexpressionProfileInputStream implements ObjectInputStream
     }
 
     private BaselineCoexpressionProfile readNextNonZeroLine() {
-
         String[] line = readCsvLine();
         if (line == null) {
             // EOF
             return null;
         }
 
-        return new BaselineCoexpressionProfile(line[GENE_ID_COLUMN_INDEX], readCoexpressionProfileValues(line, lineNumber-1));
+        return new BaselineCoexpressionProfile(
+                line[GENE_ID_COLUMN_INDEX], readCoexpressionProfileValues(line, lineNumber-1));
     }
 
-    private Iterable<BaselineCoexpression> readCoexpressionProfileValues(String[] line, int
-            diagonalElementPosition) {
+    private Iterable<BaselineCoexpression> readCoexpressionProfileValues(String[] line, int diagonalElementPosition) {
         checkArgument(line.length == geneIDsHeader.length,
                 "Line length differs from the header length, but the file is supposed to be a matrix!");
 
