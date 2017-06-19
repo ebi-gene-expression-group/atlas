@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.collect.ImmutableList;
@@ -6,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 
 import java.util.List;
@@ -28,9 +27,6 @@ public class GeneReverseSpecificityComparatorTest {
     @Mock
     private BaselineProfile geneWithSpecificity16;
 
-    @Mock
-    private BaselineProfile geneWithSpecificity16AndSmallerExpressionLevel;
-
     AssayGroup g1 = new AssayGroup("g1", "run_11", "run_12", "run_13");
     AssayGroup g2 = new AssayGroup("g2", "run_21", "run_22", "run_23", "run_24");
 
@@ -39,15 +35,9 @@ public class GeneReverseSpecificityComparatorTest {
     @Before
     public void initGeneExpressions() {
         when(geneWithSpecificity1.getId()).thenReturn("Gene with specificity 1");
-        when(geneWithSpecificity1.getSpecificity()).thenReturn(1);
 
         when(geneWithSpecificity16.getId()).thenReturn("Gene with specificity 16");
-        when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(assayGroups)).thenReturn(10D);
-
-        when(geneWithSpecificity16AndSmallerExpressionLevel.getId()).thenReturn("Gene with specificity 16 and smaller");
-        when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
-        when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(assayGroups)).thenReturn(0D);
     }
 
     @Before
@@ -59,16 +49,13 @@ public class GeneReverseSpecificityComparatorTest {
     public void lowSpecificityShouldFollowHighSpecificity() {
         //when
         int comparison = subject.compare(geneWithSpecificity16, geneWithSpecificity1);
-
         //then
         assertThat(comparison, is(lessThan(0)));
 
         //when
         comparison = subject.compare(geneWithSpecificity1, geneWithSpecificity16);
-
         //then
         assertThat(comparison, is(greaterThan(0)));
-
     }
 
 

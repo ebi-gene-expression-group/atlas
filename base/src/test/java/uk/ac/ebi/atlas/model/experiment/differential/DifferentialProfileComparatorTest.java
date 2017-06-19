@@ -1,20 +1,25 @@
 package uk.ac.ebi.atlas.model.experiment.differential;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactoryTest;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,8 +31,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DifferentialProfileComparatorTest {
 
-    
-    
     List<Contrast> mockContrasts = ContrastTest.get(3);
 
     Set<Contrast> allContrasts = ImmutableSet.copyOf(mockContrasts);
@@ -41,8 +44,6 @@ public class DifferentialProfileComparatorTest {
 
     @Mock
     DifferentialProfile<DifferentialExpression, ?> profileMock2;
-
-    Predicate<DifferentialExpression> anyExpression = Predicates.alwaysTrue();
 
     @Test
     public void lowSpecificityShouldFollowHigherSpecificity() {
@@ -106,15 +107,12 @@ public class DifferentialProfileComparatorTest {
         //given
         when(differentialProfileMock1.getName()).thenReturn("1");
         when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(3D);
-        when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
 
         when(differentialProfileMock1.getName()).thenReturn("2");
         when(differentialProfileMock2.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(5D);
-        when(differentialProfileMock2.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
 
         when(differentialProfileMock1.getName()).thenReturn("3");
         when(differentialProfileMock3.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(2D);
-        when(differentialProfileMock3.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
 
         subject = new DifferentialProfileComparator<>(false, Collections.<Contrast>emptySet(), Collections.<Contrast>emptySet(), Regulation.UP_DOWN);
 

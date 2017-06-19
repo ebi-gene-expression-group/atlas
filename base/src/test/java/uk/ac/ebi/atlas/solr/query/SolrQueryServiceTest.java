@@ -3,19 +3,16 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.controllers.BioentityNotFoundException;
-import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,20 +24,14 @@ public class SolrQueryServiceTest {
 
     private static final String BIOENTITY_IDENTIFIER = "ENSG00000132604";
     private static final String GENE_SYMBOL = "TERF2";
-    private static final String PROPERTY_VALUE_FIELD = "property_value";
 
     private BioEntityPropertyDao subject;
 
     @Mock
     private BioentitiesSolrClient gxaSolrClientMock;
 
-    @Mock
-    private SolrQuery solrQueryMock;
-
     @Before
     public void setUp() throws Exception {
-        given(gxaSolrClientMock.query(solrQueryMock, false, PROPERTY_VALUE_FIELD)).willReturn(Sets.newHashSet("symbol"));
-
         HashMap<BioentityPropertyName, Set<String>> propertiesMap = Maps.newHashMap();
         propertiesMap.put(BioentityPropertyName.SYMBOL, Sets.newHashSet(GENE_SYMBOL));
         given(gxaSolrClientMock.getMap(BIOENTITY_IDENTIFIER, ImmutableList.of(BioentityPropertyName.SYMBOL))).willReturn(propertiesMap);
@@ -50,9 +41,6 @@ public class SolrQueryServiceTest {
 
     @Test(expected = BioentityNotFoundException.class)
     public void shouldThrowException() throws Exception {
-        Map<BioentityPropertyName, Set<String>> emptyPropertyValues = new HashMap<>();
-        given(gxaSolrClientMock.getMap(BIOENTITY_IDENTIFIER, ExperimentDataPoint.bioentityPropertyNames)).willReturn(emptyPropertyValues);
-
         subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER);
     }
 

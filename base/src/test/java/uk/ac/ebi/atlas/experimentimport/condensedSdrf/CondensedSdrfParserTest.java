@@ -10,15 +10,17 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 
 import java.util.Arrays;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -187,7 +189,6 @@ public class CondensedSdrfParserTest {
         thrown.expect(CondensedSdrfParser.CondensedSdrfParserException.class);
 
         dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.of(E_MEXP_1810_CONDENSED_SDRF_ARRAY[0], E_MEXP_1810_CONDENSED_SDRF_ARRAY[2]));
-        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>(E_MEXP_1810_TITLE, E_MEXP_1810_PUBMED_IDS));
 
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }
@@ -197,7 +198,6 @@ public class CondensedSdrfParserTest {
         thrown.expect(CondensedSdrfParser.CondensedSdrfParserException.class);
 
         dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.copyOf(MULTIPLE_ARRAY_DESIGNS_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>("", ImmutableSet.of("")));
 
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }
@@ -207,7 +207,6 @@ public class CondensedSdrfParserTest {
         thrown.expect(CondensedSdrfParser.CondensedSdrfParserException.class);
 
         dataFileHub.addCondensedSdrfFile(E_MEXP_1810, ImmutableList.copyOf(NO_FACTOR_OR_CHARACTERISTIC_CONDENSED_SDRF_ARRAY));
-        given(idfParserMock.parse(E_MEXP_1810)).willReturn(new ImmutablePair<>("", ImmutableSet.of("")));
 
         subject.parse(E_MEXP_1810, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
     }

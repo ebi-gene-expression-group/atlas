@@ -7,12 +7,9 @@ import org.apache.solr.common.SolrInputDocument;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPoint;
 import uk.ac.ebi.atlas.model.analyticsindex.BaselineExperimentDataPointStream;
@@ -28,6 +25,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
@@ -51,7 +49,7 @@ public class AnalyticsIndexerServiceTest {
     public void setUp() throws Exception {
         UpdateResponse r = Mockito.mock(UpdateResponse.class);
         when(r.getQTime()).thenReturn(10);
-        when(solrClient.add(Matchers.anyCollectionOf(SolrInputDocument.class))).thenReturn(r);
+        when(solrClient.add(anyCollection())).thenReturn(r);
         when(analyticsIndexDocumentValidator.validate(any(SolrInputDocument.class))).thenReturn(true);
 
         subject = new AnalyticsIndexerService(solrClient, experimentDataPointStreamFactory, analyticsIndexDocumentValidator);
@@ -67,7 +65,7 @@ public class AnalyticsIndexerServiceTest {
 
         int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
 
-        Mockito.verify(solrClient, times(0)).add(Matchers.anyCollectionOf(SolrInputDocument.class));
+        Mockito.verify(solrClient, times(0)).add(anyCollection());
 
         assertThat(response, is(0));
     }
@@ -76,11 +74,9 @@ public class AnalyticsIndexerServiceTest {
     public void successfulRunForSomeData()throws Exception{
 
         final BaselineExperimentDataPoint experimentDataPoint1 = Mockito.mock(BaselineExperimentDataPoint.class);
-        when(experimentDataPoint1.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList
-                .<BioentityPropertyName>of());
+        when(experimentDataPoint1.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList.of());
         final BaselineExperimentDataPoint experimentDataPoint2 = Mockito.mock(BaselineExperimentDataPoint.class);
-        when(experimentDataPoint2.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList
-                .<BioentityPropertyName>of());
+        when(experimentDataPoint2.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList.of());
 
         mockExperimentDataPointStreamFactory(
                 experimentDataPointStreamFactory, experiment, experimentDataPoint1, experimentDataPoint2, null);
@@ -90,7 +86,7 @@ public class AnalyticsIndexerServiceTest {
 
         int response = subject.index(experiment, bioentityIdToIdentifierSearch, batchSize);
 
-        Mockito.verify(solrClient, times(2)).add(Matchers.anyCollectionOf(SolrInputDocument.class));
+        Mockito.verify(solrClient, times(2)).add(anyCollection());
 
         assertThat(response, is(2));
     }
@@ -98,9 +94,9 @@ public class AnalyticsIndexerServiceTest {
     @Test(expected=RuntimeException.class)
     public void exceptionsFromIteratorArePropagated()throws Exception{
         final ExperimentDataPoint experimentDataPoint = Mockito.mock(ExperimentDataPoint.class);
-        when(experimentDataPoint.getRelevantBioentityPropertyNames()).thenThrow(new RuntimeException("Woosh!"));
 
-        Mockito.doAnswer(invocationOnMock -> ImmutableList.of(experimentDataPoint)).when(experimentDataPointStreamFactory).stream(experiment);
+        Mockito.doAnswer(invocationOnMock -> ImmutableList.of(experimentDataPoint))
+                .when(experimentDataPointStreamFactory).stream(experiment);
 
         Map<String, Map<BioentityPropertyName, Set<String>>> bioentityIdToIdentifierSearch = new HashMap<>();
         int batchSize = 1;
@@ -110,12 +106,11 @@ public class AnalyticsIndexerServiceTest {
 
     @Test
     public void exceptionsFromSolrAreLoggedButTheCodeProceeds() throws Exception{
-        when(solrClient.add(Matchers.anyCollectionOf(SolrInputDocument.class))).thenThrow(new IOException(""));
+        when(solrClient.add(anyCollection())).thenThrow(new IOException(""));
 
         final BaselineExperimentDataPoint baselineExperimentDataPointMock =
                 Mockito.mock(BaselineExperimentDataPoint.class);
-        when(baselineExperimentDataPointMock.getRelevantBioentityPropertyNames()).thenReturn(
-                ImmutableList.<BioentityPropertyName>of());
+        when(baselineExperimentDataPointMock.getRelevantBioentityPropertyNames()).thenReturn(ImmutableList.of());
 
         mockExperimentDataPointStreamFactory(
                 experimentDataPointStreamFactory, experiment, baselineExperimentDataPointMock, null);
@@ -135,11 +130,12 @@ public class AnalyticsIndexerServiceTest {
         final ObjectInputStream<BaselineExperimentDataPoint> baselineExperimentDataPointStreamMock =
                 Mockito.mock(BaselineExperimentDataPointStream.class);
 
-        when(baselineExperimentDataPointStreamMock.readNext()).thenReturn(
-                experimentDataPoints[0],
-                Arrays.copyOfRange(experimentDataPoints, 1, experimentDataPoints.length));
+        when(baselineExperimentDataPointStreamMock.readNext())
+                .thenReturn(experimentDataPoints[0],
+                        Arrays.copyOfRange(experimentDataPoints, 1, experimentDataPoints.length));
 
-        Mockito.doAnswer(invocationOnMock -> baselineExperimentDataPointStreamMock).when(experimentDataPointStreamFactory).stream(experiment);
+        Mockito.doAnswer(invocationOnMock -> baselineExperimentDataPointStreamMock)
+                .when(experimentDataPointStreamFactory).stream(experiment);
 
     }
 }

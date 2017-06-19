@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.mockito.Matchers.anyListOf;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -61,17 +61,14 @@ public class BaselineProfileComparatorTest {
         when(geneWithSpecificity16.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(10D);
         when(geneWithSpecificity16.getAverageExpressionLevelOn(selectedOrganismParts)).thenReturn(2D);
-        when(geneWithSpecificity16.getAverageExpressionLevelOn(ImmutableList.of(g2))).thenReturn(1D);
 
         when(geneWithSpecificity16AndSmallerExpressionLevel.getId()).thenReturn("Gene with specificity 16 and smaller");
         when(geneWithSpecificity16AndSmallerExpressionLevel.getSpecificity()).thenReturn(16);
         when(geneWithSpecificity16AndSmallerExpressionLevel.getAverageExpressionLevelOn(allOrganismParts)).thenReturn(0D);
 
-        when(geneWithAverageExpression3.getId()).thenReturn("Gene with average 3");
-        when(geneWithAverageExpression3.getAverageExpressionLevelOn(anyListOf(AssayGroup.class))).thenReturn(3D);
+        when(geneWithAverageExpression3.getAverageExpressionLevelOn(anyList())).thenReturn(3D);
 
-        when(geneWithAverageExpression8.getId()).thenReturn("Gene with average 8");
-        when(geneWithAverageExpression8.getAverageExpressionLevelOn(anyListOf(AssayGroup.class))).thenReturn(8D);
+        when(geneWithAverageExpression8.getAverageExpressionLevelOn(anyList())).thenReturn(8D);
     }
 
 
@@ -173,7 +170,7 @@ public class BaselineProfileComparatorTest {
     public void averageExpressionLevelComparationIsBeingReversed(){
         subject = new BaselineProfileComparator(false, allOrganismParts, allOrganismParts, 0);
         int comparison = subject.compareOnAverageExpressionLevel(geneWithAverageExpression8,
-                geneWithAverageExpression3, ImmutableList.<AssayGroup>of());
+                geneWithAverageExpression3, ImmutableList.of());
         assertThat(comparison, is(-1));
     }
 }

@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import com.google.common.collect.Lists;
@@ -10,8 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.testutils.AnswerWithSelf;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
@@ -25,7 +23,10 @@ import java.util.ArrayList;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.inOrder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BioentityIndexTest {
@@ -69,7 +70,7 @@ public class BioentityIndexTest {
         reactomePath = Files.createDirectories(reactomePath);
         reactomeFilePath1 = Files.createFile(reactomePath.resolve("react-file1.tsv"));
 
-        streamBuilderMock = Mockito.mock(BioentityPropertiesStreamBuilder.class, new AnswerWithSelf(BioentityPropertiesStreamBuilder.class));
+        streamBuilderMock = mock(BioentityPropertiesStreamBuilder.class, new AnswerWithSelf(BioentityPropertiesStreamBuilder.class));
         given(streamBuilderMock.build()).willReturn(propertiesStreamMock);
         bioentityProperties = Lists.newArrayList(mock(BioentityProperty.class));
         given(propertiesStreamMock.next()).willReturn(bioentityProperties, bioentityProperties, null);
@@ -100,8 +101,6 @@ public class BioentityIndexTest {
 
     @Test
     public void shouldThrowIllegalStateExceptionInCaseOfFailure() throws IOException, SolrServerException {
-        given(solrClientMock.deleteByQuery(anyString())).willThrow(IOException.class);
-
         subject.indexAll(Files.newDirectoryStream(tempDirectoryPath));
     }
 
@@ -151,17 +150,12 @@ public class BioentityIndexTest {
 
     @Test
     public void findReactomeDirectory() throws Exception {
-
         subject.indexAll(Files.newDirectoryStream(reactomePath.getParent()));
 
         InOrder inOrder = inOrder(streamBuilderMock);
         inOrder.verify(streamBuilderMock).forPath(reactomeFilePath1);
         inOrder.verify(streamBuilderMock).isForReactome(true);
         inOrder.verify(streamBuilderMock).build();
-
-
-
-
     }
 
 }
