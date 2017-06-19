@@ -22,8 +22,8 @@ public class DifferentialExperiment extends Experiment<Contrast> {
 
     private final ImmutableSet<Contrast> contrastsWithCttvPrimaryAnnotation;
 
-    public DifferentialExperiment(String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts, String description,
-                                  Species species, Collection<String> pubMedIds,
+    public DifferentialExperiment(String accession, Date lastUpdate, List<Pair<Contrast, Boolean>> contrasts,
+                                  String description, Species species, Collection<String> pubMedIds,
                                   ExperimentDesign experimentDesign) {
         this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description,
                 species, pubMedIds, experimentDesign);
@@ -37,8 +37,8 @@ public class DifferentialExperiment extends Experiment<Contrast> {
                                      Collection<String> pubMedIds, ExperimentDesign experimentDesign) {
 
         super(experimentType, accession, lastUpdate,null, description, "", species, pubMedIds,
-                experimentDesign, Collections.<String>emptyList(), Collections.<String>emptyList(),
-                Collections.<String>emptyList(), Collections.<String>emptyList(), FluentIterable.from(contrasts).transform(unpack).toList(), ExperimentDisplayDefaults.simpleDefaults());
+                experimentDesign, Collections.emptyList(), Collections.<String>emptyList(),
+                Collections.emptyList(), Collections.emptyList(), FluentIterable.from(contrasts).transform(unpack).toList(), ExperimentDisplayDefaults.simpleDefaults());
         this.contrastsWithCttvPrimaryAnnotation = FluentIterable.from(contrasts).filter(Pair::getRight).transform(unpack).toSet();
     }
 

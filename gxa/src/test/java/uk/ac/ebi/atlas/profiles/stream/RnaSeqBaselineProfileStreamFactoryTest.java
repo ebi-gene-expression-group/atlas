@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -28,7 +28,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqBaselineProfileStreamFactoryTest {
 
-
     @Mock
     BaselineExperiment baselineExperiment;
 
@@ -39,10 +38,8 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
     RnaSeqBaselineProfileStreamFactory.Impl subject;
 
-
     @Mock
     BaselineExperiment twoAssayGroupBaselineExperiment;
-
 
     @Before
     public void setUp() throws Exception {
@@ -52,7 +49,6 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
         when(baselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
 
         when(twoAssayGroupBaselineExperiment.getAccession()).thenReturn("second_accession");
-        when(twoAssayGroupBaselineExperiment.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroup, secondAssayGroup));
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g1")).thenReturn(assayGroup);
         when(twoAssayGroupBaselineExperiment.getDataColumnDescriptor("g2")).thenReturn(secondAssayGroup);

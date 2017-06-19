@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.controllers.rest;
 
 import com.google.common.collect.Lists;
@@ -6,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.util.MultiValueMap;
 import uk.ac.ebi.atlas.commons.mail.EmailMessage;
 import uk.ac.ebi.atlas.commons.mail.MailService;
@@ -21,7 +20,6 @@ import static org.mockito.Mockito.when;
 public class FeedbackEmailControllerTest {
 
     public static final String FEEDBACK_MESSAGE = "feedbackMessage";
-    public static final String SENDER_EMAIL = "senderEmail";
     public static final String FEEDBACK_EMAIL_ADDRESS = "feedbackEmailAddress";
     public static final String SUBJECT = "Atlas Feedback";
     @Mock
@@ -33,22 +31,13 @@ public class FeedbackEmailControllerTest {
     @Mock
     private ApplicationProperties applicationPropertiesMock;
 
-    @Mock
-    private MultiValueMap<String, String> bodyMock;
-
     private FeedbackEmailController subject;
 
     @Before
     public void setUp() throws Exception {
         subject = new FeedbackEmailController(mailServiceMock, emailMessageMock, applicationPropertiesMock);
 
-        List<String> feedback = Lists.newArrayList(FEEDBACK_MESSAGE);
-        List<String> email = Lists.newArrayList(SENDER_EMAIL);
-        when(bodyMock.get("feedback")).thenReturn(feedback);
-        when(bodyMock.get("email")).thenReturn(email);
-        when(emailMessageMock.getSender()).thenReturn("");
         when(applicationPropertiesMock.getFeedbackEmailAddress()).thenReturn(FEEDBACK_EMAIL_ADDRESS);
-
     }
 
     @Test
@@ -62,4 +51,5 @@ public class FeedbackEmailControllerTest {
         verify(mailServiceMock).send(emailMessageMock);
 
     }
+
 }

@@ -1,17 +1,14 @@
 package uk.ac.ebi.atlas.trader.cache.loader;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSortedMap;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.ExperimentConfiguration;
@@ -19,7 +16,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
@@ -35,15 +31,21 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineExperimentCacheLoaderTest {
 
     private String experimentAccession = "E-MOCK-1";
 
-    private ExperimentDTO dto = new ExperimentDTO(experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE, "homo_sapiens", Collections
-            .<String>emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
+    private ExperimentDTO dto =
+            new ExperimentDTO(
+                    experimentAccession, ExperimentType.RNASEQ_MRNA_BASELINE, "homo_sapiens",
+                    Collections.emptySet(), "mock experiment",new Date(), false, "accessKeyUUID");
     @Mock
     private ConfigurationTrader configurationTrader ;
     @Mock
@@ -74,8 +76,6 @@ public class BaselineExperimentCacheLoaderTest {
         dataFileHub.addTemporaryFile(MessageFormat.format("/magetab/{0}/{0}.tsv", experimentAccession),
                 ImmutableSet.of("assay group id 1"));
 
-        when(experimentDesign.getFactors(Matchers.anyString())).thenReturn(mock(FactorSet.class));
-
         subject = new RnaSeqBaselineExperimentFactory(configurationTrader, speciesFactoryMock, dataFileHub);
         when(configurationTrader.getExperimentConfiguration(experimentAccession)).thenReturn(configuration);
         when(configurationTrader.getBaselineFactorsConfiguration(experimentAccession)).thenReturn(baselineConfiguration);
@@ -83,8 +83,7 @@ public class BaselineExperimentCacheLoaderTest {
         when(configuration.getAssayGroups()).thenReturn(assayGroups);
 
         when(speciesFactoryMock.create(dto.getSpecies())).thenReturn(new Species("Homo sapiens",
-                        SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals",
-                                ImmutableList.<ImmutableMap<String, String>>of())));
+                        SpeciesProperties.create("Homo_sapiens", "ORGANISM_PART", "animals", ImmutableList.of())));
 
     }
 
@@ -102,7 +101,7 @@ public class BaselineExperimentCacheLoaderTest {
 
     @Test(expected=IllegalStateException.class)
     public void assayGroupsShouldBeNonEmpty() throws Exception{
-        when(configuration.getAssayGroups()).thenReturn(ImmutableList.<AssayGroup>of());
+        when(configuration.getAssayGroups()).thenReturn(ImmutableList.of());
         subject.create(dto, "description from array express", experimentDesign);
     }
 

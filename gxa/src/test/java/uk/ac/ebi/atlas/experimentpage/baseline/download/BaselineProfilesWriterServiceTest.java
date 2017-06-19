@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -30,9 +30,16 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import java.io.Writer;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -74,14 +81,10 @@ public class BaselineProfilesWriterServiceTest {
     @Before
     public void setUp() {
         AssayGroup assayGroupMock = mock(AssayGroup.class);
-        when(assayGroupMock.getId()).thenReturn("g1");
 
         baselineRequestContext = new BaselineRequestContext(preferencesMock, baselineExperimentMock);
 
-        when(baselineProfilesWriterFactory.create(any(Writer.class), any(BaselineRequestContext.class), anyString()
-        )).thenReturn(profilesWriter);
-
-        when(profilesWriter.write(any(ObjectInputStream.class))).thenReturn(123L);
+        when(baselineProfilesWriterFactory.create(any(), any(), anyString())).thenReturn(profilesWriter);
 
         subject = new BaselineProfilesWriterService<ExpressionUnit.Absolute>(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
                 coexpressedGenesService){
@@ -94,7 +97,6 @@ public class BaselineProfilesWriterServiceTest {
         when(experimentDisplayDefaultsMock.preserveColumnOrder()).thenReturn(true);
 
         when(preferencesMock.getGeneQuery()).thenReturn(geneQuery);
-        when(baselineExperimentMock.getAccession()).thenReturn("ACCESSION");
         when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
         when(baselineExperimentMock.getDisplayDefaults()).thenReturn(experimentDisplayDefaultsMock);
         Species species = new Species("some species", SpeciesProperties.UNKNOWN);
@@ -166,8 +168,6 @@ public class BaselineProfilesWriterServiceTest {
             }
             extendedResponse.addGeneIds(geneName + ":coexpressions", range);
         }
-
-        when(solrQueryService.fetchResponse(eq(geneQuery), any(Species.class))).thenReturn(response);
 
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
                 baselineExperimentMock, response, coexpressions)).thenReturn(extendedResponse);

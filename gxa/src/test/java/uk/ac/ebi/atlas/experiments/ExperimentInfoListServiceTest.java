@@ -8,12 +8,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -21,7 +18,6 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentDesign;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentBuilder;
-import uk.ac.ebi.atlas.model.experiment.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -30,11 +26,17 @@ import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
-import java.util.*;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentInfoListServiceTest {
@@ -72,8 +74,6 @@ public class ExperimentInfoListServiceTest {
 
         List<AssayGroup> assayGroups = ImmutableList.of(new AssayGroup("RUN", ASSAY_1, ASSAY_2));
 
-        when(experimentDesignMock.getFactors(Matchers.anyString())).thenReturn(mock(FactorSet.class));
-
         baselineExperiment = Mockito.spy(new BaselineExperimentBuilder()
                 .forSpecies(new Species(SPECIES, SpeciesProperties.UNKNOWN))
                 .withAccession(BASELINE_ACCESSION)
@@ -82,26 +82,24 @@ public class ExperimentInfoListServiceTest {
                 .ofType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroups)
-                .withPubMedIds(ImmutableSet.<String>of())
+                .withPubMedIds(ImmutableSet.of())
                 .create());
 
         Contrast contrast = mock(Contrast.class);
         when(contrast.getId()).thenReturn(CONTRAST);
 
-        when(contrast.getReferenceAssayGroup()).thenReturn(new AssayGroup("id", ASSAY_1,ASSAY_2));
-        when(contrast.getTestAssayGroup()).thenReturn(new AssayGroup("test",ASSAY_1));
         List<Pair<Contrast, Boolean>> contrasts = ImmutableList.of(Pair.of(contrast, true));
         differentialExperiment = Mockito.spy(
                 new DifferentialExperiment(DIFFERENTIAL_ACCESSION,
                 lastUpdateStub, contrasts,
                 "description", new Species(SPECIES, SpeciesProperties.UNKNOWN),
-                new HashSet<String>(),experimentDesignMock));
+                new HashSet<>(),experimentDesignMock));
 
         microarrayExperiment = Mockito.spy(new MicroarrayExperiment(ExperimentType
                 .MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, MICROARRAY_ACCESSION,
                 lastUpdateStub ,contrasts,
                 "description", new Species(SPECIES, SpeciesProperties.UNKNOWN), Sets.newTreeSet(Sets.newHashSet(ARRAY)),
-                Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<String>()));
+                Sets.newTreeSet(Sets.newHashSet("ARRAY_NAME")), experimentDesignMock, new HashSet<>()));
 
         final ImmutableMap<ExperimentType, ImmutableSet<? extends Experiment<? extends DescribesDataColumns>>>
                 experimentAccessionsPerType =
@@ -116,7 +114,7 @@ public class ExperimentInfoListServiceTest {
             ExperimentType experimentType = (ExperimentType) invocationOnMock.getArguments()[0];
             return experimentAccessionsPerType.containsKey(experimentType) ? experimentAccessionsPerType.get
                     (experimentType) : ImmutableSet.of();
-        }).when(experimentTraderMock).getPublicExperiments(Mockito.<ExperimentType[]>anyVararg());
+        }).when(experimentTraderMock).getPublicExperiments(any());
 
         //call real method on big method, small one takes from this map
         when(experimentDesignMock.getFactorHeaders()).thenReturn(Sets.newTreeSet(Sets.newHashSet(FACTOR_NAME)));

@@ -5,9 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
@@ -52,12 +51,8 @@ public class ExpressionAtlasExperimentTraderTest {
     @Mock
     private PublicExperimentTypesCache publicExperimentTypesCacheMock;
 
-    @Mock
-    ExperimentDTO experimentDTOMock;
-
     @Before
     public void initSubject(){
-
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
@@ -67,8 +62,6 @@ public class ExpressionAtlasExperimentTraderTest {
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_43049));
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_TABM_713));
-
-        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets.newHashSet(E_PROT_1));
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE,ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets
                 .newHashSet(E_MTAB_513, E_MTAB_599, E_PROT_1));

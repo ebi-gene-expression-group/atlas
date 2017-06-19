@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
@@ -30,13 +29,9 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
     private BaselineProfilesList jsonProfiles;
 
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
-
     private final SolrQueryService solrQueryService;
-
     private final BaselineExperiment experiment;
-
     private final BaselineRequestContext<Unit> requestContext;
-
     private final CoexpressedGenesService coexpressedGenesService;
 
     private final Function<BaselineProfile, URI> linkToGenes = new Function<BaselineProfile, URI>() {
@@ -84,17 +79,14 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
     private void fetchProfilesIfMissing()   {
         if (jsonProfiles == null) {
             jsonProfiles =
-                    baselineProfilesHeatMap.fetch(experiment,requestContext, getGeneQueryResponseForProfiles());
+                    baselineProfilesHeatMap.fetch(experiment, requestContext, getGeneQueryResponseForProfiles());
         }
     }
-
-
 
     public JsonObject getJsonProfiles()  {
         fetchProfilesIfMissing();
         return new ExternallyViewableProfilesList<>(jsonProfiles,linkToGenes,
-                requestContext
-                .getDataColumnsToReturn(),provideUnits).asJson();
+                requestContext.getDataColumnsToReturn(), provideUnits).asJson();
     }
 
     public JsonArray getJsonCoexpressions()   {
@@ -128,6 +120,6 @@ public class BaselineProfilesHeatmapsWrangler<Unit extends ExpressionUnit.Absolu
         }
 
         return result;
-
     }
+
 }

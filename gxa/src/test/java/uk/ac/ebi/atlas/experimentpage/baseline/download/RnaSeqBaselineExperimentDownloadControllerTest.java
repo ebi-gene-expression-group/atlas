@@ -2,13 +2,11 @@ package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
@@ -25,10 +23,13 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqBaselineExperimentDownloadControllerTest {
@@ -66,15 +67,9 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
-        AssayGroup assayGroupMock = mock(AssayGroup.class);
-        when(assayGroupMock.getId()).thenReturn("g1");
-
-        when(experimentTraderMock.getExperiment(eq(EXPERIMENT_ACCESSION), Matchers.anyString())).thenReturn
+        when(experimentTraderMock.getExperiment(eq(EXPERIMENT_ACCESSION), anyString())).thenReturn
                 (baselineExperimentMock);
-        when(preferencesMock.getGeneQuery()).thenReturn(SemanticQuery.create());
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(baselineExperimentMock.getDataColumnDescriptors()).thenReturn(ImmutableList.of(assayGroupMock));
-        when(baselineExperimentMock.getSpecies()).thenReturn(new Species("some species", SpeciesProperties.UNKNOWN));
         TreeSet<Factor> t = new TreeSet<>();
         t.add(new Factor("h1", "p1"));
 
@@ -86,8 +81,8 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(baselineProfilesWriterService)
-                .write(eq(printWriterMock), any(BaselineRequestPreferences.class), any
-                (BaselineExperiment.class), anyMapOf(String.class, Integer.class));
+                .write(eq(printWriterMock), any(BaselineRequestPreferences.class),
+                        any(BaselineExperiment.class), anyMap());
     }
 
 

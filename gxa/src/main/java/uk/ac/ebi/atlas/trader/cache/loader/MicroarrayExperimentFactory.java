@@ -43,10 +43,11 @@ public class MicroarrayExperimentFactory implements ExperimentFactory<Microarray
         SortedSet<String> arrayDesignAccessions = experimentConfiguration.getArrayDesignAccessions();
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession,
-                experimentDTO.getLastUpdate(), experimentConfiguration.getContrastAndAnnotationPairs(), experimentDescription,
-                speciesFactory.create(experimentDTO.getSpecies()),arrayDesignAccessions,
+                experimentDTO.getLastUpdate(), experimentConfiguration.getContrastAndAnnotationPairs(),
+                experimentDescription, speciesFactory.create(experimentDTO.getSpecies()), arrayDesignAccessions,
                 arrayDesignTrader.getArrayDesignNames(arrayDesignAccessions), experimentDesign,
                 experimentDTO.getPubmedIds());
 
     }
+
 }
