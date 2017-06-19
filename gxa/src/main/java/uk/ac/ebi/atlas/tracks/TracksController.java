@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Controller
 public class TracksController extends HtmlExceptionHandlingController {
 
-    private static final MessageFormat ATLAS_URL_TEMPLATE = new MessageFormat("{0}://{1}/{2}");
+    private static final MessageFormat ATLAS_URL_TEMPLATE = new MessageFormat("{0}://{1}{2}");
 
     private static final MessageFormat BASELINE_PROTEOMICS_TRACK_URL_PART_TEMPLATE =
             new MessageFormat("/Location/View?g={0}");
