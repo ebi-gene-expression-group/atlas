@@ -21,3 +21,11 @@
         <tiles:insertAttribute name="publications-box"/>
     </div>
 </section>
+
+<section>
+    <div class="row expanded jumbo-news-container padding-top-large padding-bottom-large">
+         <div class="small-centered small-8 medium-4 columns">
+             <tiles:insertAttribute name="news"/>
+         </div>
+    </div>
+</section>

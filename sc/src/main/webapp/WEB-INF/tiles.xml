@@ -5,18 +5,17 @@
 
 <tiles-definitions>
     <definition name="base" template="/WEB-INF/jsp/layouts/base.jsp">
-        <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="top-menu" value="/WEB-INF/jsp/tiles/top-menu.jsp"/>
-        <put-attribute name="header"/>
+        <put-attribute name="title" value="Single Cell Expression Atlas"/>
+        <put-attribute name="masthead-black-bar" value="/WEB-INF/jsp/tiles/masthead-black-bar.jsp"/>
+        <put-attribute name="masthead"/>
         <put-attribute name="body"/>
-        <put-attribute name="news"/>
-        <put-attribute name="mega-footer" value="/WEB-INF/jsp/tiles/mega-footer.jsp"/>
+        <put-attribute name="local-footer" value="/WEB-INF/jsp/tiles/local-footer.jsp"/>
         <put-attribute name="credits" value="/WEB-INF/jsp/tiles/collaborators.jsp"/>
-        <put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/>
+        <put-attribute name="global-footer" value="/WEB-INF/jsp/tiles/global-footer.jsp"/>
     </definition>
 
     <definition name="home" extends="base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/header.jsp"/>
+        <put-attribute name="masthead"  value="/WEB-INF/jsp/tiles/home/masthead.jsp"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/jsp/layouts/home-body.jsp">
                 <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/home/hero.jsp"/>
@@ -26,9 +25,9 @@
                 <put-attribute name="type-tissue" value="/WEB-INF/jsp/tiles/home/type-tissue.jsp"/>
                 <put-attribute name="tools-box" value="/WEB-INF/jsp/tiles/home/tools.jsp"/>
                 <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
+                <put-attribute name="news" value="/WEB-INF/jsp/tiles/home/latest-tweet.jsp"/>
             </definition>
         </put-attribute>
-        <put-attribute name="news" value="/WEB-INF/jsp/tiles/twitter-timeline.jsp"/>
     </definition>
 
     <definition name="experiment-base" extends="base">
