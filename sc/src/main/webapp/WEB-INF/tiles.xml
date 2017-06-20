@@ -15,17 +15,29 @@
     </definition>
 
     <definition name="home" extends="base">
-        <put-attribute name="masthead"  value="/WEB-INF/jsp/tiles/home/masthead.jsp"/>
+        <put-attribute name="title" value="Home &lt; Single Cell Expression Atlas &lt; EMBL-EBI"/>
+        <put-attribute name="masthead" value="/WEB-INF/jsp/tiles/home/masthead.jsp"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/jsp/layouts/home-body.jsp">
                 <put-attribute name="home-hero" value="/WEB-INF/jsp/tiles/home/hero.jsp"/>
-                <put-attribute name="search" value="/WEB-INF/jsp/tiles/home/search.jsp"/>
+                <put-attribute name="search" value="/WEB-INF/jsp/tiles/search.jsp"/>
                 <put-attribute name="experiment-list-latest-box" value="/WEB-INF/jsp/tiles/home/experiment-list-latest.jsp"/>
                 <put-attribute name="type-cell" value="/WEB-INF/jsp/tiles/home/type-cell.jsp"/>
                 <put-attribute name="type-tissue" value="/WEB-INF/jsp/tiles/home/type-tissue.jsp"/>
                 <put-attribute name="tools-box" value="/WEB-INF/jsp/tiles/home/tools.jsp"/>
                 <put-attribute name="publications-box" value="/WEB-INF/jsp/tiles/home/publications.jsp"/>
                 <put-attribute name="news" value="/WEB-INF/jsp/tiles/home/latest-tweet.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+
+    <definition name="search-results" extends="base">
+        <put-attribute name="title" value="Search results &lt; Single Cell Expression Atlas &lt; EMBL-EBI"/>
+        <put-attribute name="masthead" value="/WEB-INF/jsp/tiles/home/masthead.jsp"/>
+        <put-attribute name="body" value="">
+            <definition template="/WEB-INF/jsp/layouts/search-body.jsp">
+                <put-attribute name="search" value="/WEB-INF/jsp/tiles/search.jsp"/>
+                <put-attribute name="marker-genes" value="/WEB-INF/jsp/tiles/search/marker-genes.jsp"/>
             </definition>
         </put-attribute>
     </definition>
