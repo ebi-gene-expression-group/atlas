@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experiments;
 
 import com.atlassian.util.concurrent.LazyReference;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
@@ -14,6 +12,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LatestExperimentsService {
 
@@ -28,13 +27,10 @@ public class LatestExperimentsService {
             long experimentCount = latestExperimentsDao.fetchPublicExperimentsCount(experimentTypes);
 
             List<ExperimentInfo> latestExperimentInfo =
-                    FluentIterable.from(latestExperimentsDao.fetchLatestExperimentAccessions(experimentTypes))
-                            .transform(new Function<String, Experiment>() {
-                                @Override
-                                public Experiment apply(String experimentAccession) {
-                                    return experimentTrader.getPublicExperiment(experimentAccession);
-                                }})
-                            .transform(Experiment::buildExperimentInfo).toList();
+                    latestExperimentsDao.fetchLatestExperimentAccessions(experimentTypes).stream()
+                            .map(experimentTrader::getPublicExperiment)
+                            .map(Experiment::buildExperimentInfo)
+                            .collect(Collectors.toList());
 
             return ImmutableMap.of(
                     "experimentCount", experimentCount,
