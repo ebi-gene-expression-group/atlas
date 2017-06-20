@@ -31,8 +31,7 @@
     </definition>
 
     <definition name="experiment-base" extends="base">
-        <put-attribute name="header"  value="/WEB-INF/jsp/tiles/experiment/header.jsp"/>
-        <put-attribute name="news" value=""/>
+        <put-attribute name="masthead"  value="/WEB-INF/jsp/tiles/experiment/header.jsp"/>
     </definition>
 
     <definition name="experiment-reference-plot" extends="experiment-base">

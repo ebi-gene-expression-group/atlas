@@ -9,7 +9,7 @@
     </div>
 </section>
 <section>
-    <div class="row">
+    <div class="row padding-bottom-large margin-bottom-large">
         <div class="small-12 columns">
             <tiles:insertAttribute name="react-container"/>
         </div>
