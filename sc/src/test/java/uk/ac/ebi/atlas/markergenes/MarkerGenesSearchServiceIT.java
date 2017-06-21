@@ -24,6 +24,7 @@ public class MarkerGenesSearchServiceIT {
     @Inject
     JdbcTemplate jdbcTemplate;
 
+    @Inject
     MarkerGenesSearchService subject;
 
     @Test
