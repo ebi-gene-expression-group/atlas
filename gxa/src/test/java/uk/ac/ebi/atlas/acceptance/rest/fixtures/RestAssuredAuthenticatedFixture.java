@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.acceptance.rest.fixtures;
 
 import com.jayway.restassured.RestAssured;
@@ -10,7 +9,6 @@ import org.junit.BeforeClass;
 public class RestAssuredAuthenticatedFixture {
 
     public static final String SELENIUM_TEST_HOST_PROPERTY_KEY = "selenium.test.host";
-
     public static final String SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY = "selenium.test.portnumber";
 
     private static final String USERNAME = "test";
@@ -35,13 +33,9 @@ public class RestAssuredAuthenticatedFixture {
         }
 
         RestAssured.port = new Integer(portNumber);
-
         RestAssured.requestSpecification = new RequestSpecBuilder().setAuth(authScheme).build();
 
         System.out.println(String.format("<initRestAssured> base = %s:%s%s", RestAssured.baseURI, RestAssured.port, RestAssured.basePath));
-
     }
-
-
 
 }

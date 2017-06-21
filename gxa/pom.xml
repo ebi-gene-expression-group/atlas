@@ -21,8 +21,6 @@
         <test.integration.pattern>**/*IT.java</test.integration.pattern>
         <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
 
-        <selenium.version>2.44.0</selenium.version>
-
         <!-- default values for configuration properties,
         they are set to local development machine defaults
         and are overridden in profiles for specific deployment environments-->
@@ -237,40 +235,6 @@
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>cglib</groupId>
-                    <artifactId>cglib-nodep</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>httpclient</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- not necessary, but it allows us to download the sources for the selenium server for debugging -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId> selenium-server</artifactId>
-            <version>${selenium.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Java Mail -->
