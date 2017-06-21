@@ -1,10 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -20,6 +16,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SingleCellOpsExecutionService implements ExperimentOpsExecutionService {
 
@@ -36,28 +35,27 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         this.analyticsLoaderFactory = analyticsLoaderFactory;
     }
 
-    private FluentIterable<ExperimentDTO> allDtos(){
-        return FluentIterable.from(experimentCrud.findAllExperiments()).filter(experimentDTO -> {
-            return experimentDTO.getExperimentType().isSingleCell();
-        });
+    private Stream<ExperimentDTO> allDtos(){
+        return experimentCrud.findAllExperiments().stream()
+                .filter(experimentDTO -> experimentDTO.getExperimentType().isSingleCell());
     }
 
     @Override
-    public ImmutableList<String> findAllExperiments(){
-        return allDtos().transform(new Function<ExperimentDTO, String>() {
+    public List<String> findAllExperiments(){
+        return allDtos().map(new Function<ExperimentDTO, String>() {
             @Nullable
             @Override
             public String apply(ExperimentDTO experimentDTO) {
                 return experimentDTO.getExperimentAccession();
             }
-        }).toList();
+        }).collect(Collectors.toList());
     }
 
     @Override
     public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
         switch (op) {
             case LIST:
-                return Optional.of((JsonElement) experimentCrud.findExperiment(accession).toJson());
+                return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
                 return Optional.of(gson.toJsonTree(experimentTrader.getExperiment(accession,
                         experimentCrud.findExperiment(accession).getAccessKey()).getAttributes()));
@@ -85,14 +83,14 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     }
 
     private List<Pair<String,? extends JsonElement>> list(){
-        return allDtos().transform(new Function<ExperimentDTO,
-                Pair<String,? extends JsonElement>>() {
+        return allDtos().map(new Function<ExperimentDTO,
+                Pair<String, ? extends JsonElement>>() {
             @Nullable
             @Override
-            public Pair<String,? extends JsonElement> apply(ExperimentDTO experimentDTO) {
+            public Pair<String, ? extends JsonElement> apply(ExperimentDTO experimentDTO) {
                 return Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson());
             }
-        }).toList();
+        }).collect(Collectors.toList());
     }
 
     @Override

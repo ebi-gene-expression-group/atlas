@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
@@ -10,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface ExperimentOpsExecutionService {
-    ImmutableList<String> findAllExperiments();
+    List<String> findAllExperiments();
 
     Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op);
 
