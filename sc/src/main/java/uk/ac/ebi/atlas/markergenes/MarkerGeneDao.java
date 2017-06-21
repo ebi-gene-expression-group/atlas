@@ -10,16 +10,22 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 public class MarkerGeneDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineDao.class);
 
+    private static final double DEFAULT_P_THRESHOLD = 0.95;
+
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;
-    private static final String MARKER_GENE_INSERT_STATEMENT = "INSERT INTO MARKER_GENES " +
+    private static final String MARKER_GENE_INSERT_STATEMENT =
+            "INSERT INTO MARKER_GENES " +
             "(GENE_ID, EXPERIMENT_ACCESSION, PERPLEXITY, CLUSTER_ID, MARKER_PROBABILITY) VALUES (?, ?, ?, ?, ?)";
+    private static final String MARKER_GENE_SELECT_STATEMENT =
+            "SELECT * FROM MARKER_GENES WHERE GENE_ID='?' AND MARKER_PROBABILITY > ?";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -49,6 +55,18 @@ public class MarkerGeneDao {
         }
 
         LOGGER.info("{} rows inserted", rowCount);
+    }
+
+    public List<MarkerGene> fetchMarkerGenes(String geneId) {
+        return jdbcTemplate.queryForList(
+                        "SELECT * FROM MARKER_GENES WHERE GENE_ID=? AND MARKER_PROBABILITY>?",
+                        geneId, DEFAULT_P_THRESHOLD).stream()
+                .map(rowMap ->
+                        MarkerGene.create(
+                                (String) rowMap.get("GENE_ID"), (String) rowMap.get("EXPERIMENT_ACCESSION"),
+                                (int) rowMap.get("PERPLEXITY"), (int) rowMap.get("CLUSTER_ID"),
+                                (double) rowMap.get("MARKER_PROBABILITY")))
+                .collect(Collectors.toList());
     }
 
     public void deleteAll() {

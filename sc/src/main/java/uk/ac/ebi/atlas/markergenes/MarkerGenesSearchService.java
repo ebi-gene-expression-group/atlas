@@ -1,12 +1,21 @@
 package uk.ac.ebi.atlas.markergenes;
 
-import java.util.ArrayList;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
+@Named
 public class MarkerGenesSearchService {
 
-    public ArrayList<MarkerGene> searchMarkerGenesByGeneId(String geneId) {
+    private final MarkerGeneDao markerGeneDao;
 
-        return null;
+    @Inject
+    public MarkerGenesSearchService(MarkerGeneDao markerGeneDao) {
+        this.markerGeneDao = markerGeneDao;
+    }
+
+    public List<MarkerGene> searchMarkerGenesByGeneId(String geneId) {
+        return markerGeneDao.fetchMarkerGenes(geneId);
     }
 
 }
