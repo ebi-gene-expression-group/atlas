@@ -1,4 +1,3 @@
-
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import uk.ac.ebi.atlas.solr.BioentityProperty;
@@ -16,7 +15,7 @@ public class BioentityPropertiesStream implements Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityPropertiesStream.class);
 
-    private static final double BATCH_SIZE = 50000;
+    private static final double BATCH_SIZE = 20000;
 
     private BioentityPropertiesBuilder bioentityPropertiesBuilder;
 

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class BioentitiesSolrClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentitiesSolrClient.class);
 
-    private static final int ROWS = 10000;
+    private static final int ROWS = 1000;
     private SolrClient solrClient;
 
     @Inject
