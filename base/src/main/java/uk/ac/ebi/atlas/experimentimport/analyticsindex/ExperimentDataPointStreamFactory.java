@@ -19,9 +19,9 @@ import uk.ac.ebi.atlas.model.analyticsindex.ExperimentDataPoint;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsLookupService;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.DifferentialCondition;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.Condition;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.ConditionsLookupService;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions.DifferentialCondition;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 
 import javax.inject.Inject;

@@ -1,18 +1,11 @@
-package uk.ac.ebi.atlas.solr.admin.index.conditions;
-
-import org.apache.solr.client.solrj.beans.Field;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import java.util.Collection;
 import java.util.Objects;
 
 public class DifferentialCondition extends Condition {
 
-    @Field("contrast_id")
     private String contrastId;
-
-    // No-arg constructor required by Solr to instantiate document beans
-    public DifferentialCondition() {
-    }
 
     public DifferentialCondition(String experimentAccession, String assayGroupId, String contrastId, Collection<String> values) {
         super(experimentAccession, assayGroupId, values);
@@ -21,10 +14,6 @@ public class DifferentialCondition extends Condition {
 
     public String getContrastId() {
         return contrastId;
-    }
-
-    public void setContrastId(String contrastId) {
-        this.contrastId = contrastId;
     }
 
     @Override

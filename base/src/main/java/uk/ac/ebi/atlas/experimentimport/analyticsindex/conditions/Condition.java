@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.index.conditions;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Iterables;
@@ -9,17 +9,11 @@ import java.util.Objects;
 
 public class Condition {
 
-    @Field("experiment_accession")
     private String experimentAccession;
 
-    @Field("assay_group_id")
     private String assayGroupId;
 
-    @Field("conditions")
     private Collection<String> values;
-
-    public Condition() {
-    }
 
     public Condition(String experimentAccession, String assayGroupId, Collection<String> values) {
         this.experimentAccession = experimentAccession;
@@ -31,24 +25,12 @@ public class Condition {
         return experimentAccession;
     }
 
-    public void setExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
-    }
-
     public String getAssayGroupId() {
         return assayGroupId;
     }
 
-    public void setAssayGroupId(String assayGroupId) {
-        this.assayGroupId = assayGroupId;
-    }
-
     public Collection<String> getValues() {
         return values;
-    }
-
-    public void setValues(Collection<String> values) {
-        this.values = values;
     }
 
     @Override

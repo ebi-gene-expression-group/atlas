@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.index.conditions;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
