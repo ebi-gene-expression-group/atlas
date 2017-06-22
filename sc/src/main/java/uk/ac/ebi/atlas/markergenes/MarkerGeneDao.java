@@ -25,7 +25,7 @@ public class MarkerGeneDao {
             "INSERT INTO MARKER_GENES " +
             "(GENE_ID, EXPERIMENT_ACCESSION, PERPLEXITY, CLUSTER_ID, MARKER_PROBABILITY) VALUES (?, ?, ?, ?, ?)";
     private static final String MARKER_GENE_SELECT_STATEMENT =
-            "SELECT * FROM MARKER_GENES WHERE GENE_ID='?' AND MARKER_PROBABILITY > ?";
+            "SELECT * FROM MARKER_GENES WHERE GENE_ID=? AND MARKER_PROBABILITY>?";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -35,10 +35,10 @@ public class MarkerGeneDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadMarkerGenes(ObjectInputStream<MarkerGene> inputStream) {
+    public void loadMarkerGenes(ObjectInputStream<MarkerGeneDto> inputStream) {
         int rowCount = 0;
         final List<Object[]> batch = new ArrayList<>(BATCH_SIZE);
-        MarkerGene markerGene;
+        MarkerGeneDto markerGene;
 
         while ((markerGene = inputStream.readNext()) != null) {
             // Prepare the batch
@@ -57,12 +57,12 @@ public class MarkerGeneDao {
         LOGGER.info("{} rows inserted", rowCount);
     }
 
-    public List<MarkerGene> fetchMarkerGenes(String geneId) {
-        return jdbcTemplate.queryForList(
-                        "SELECT * FROM MARKER_GENES WHERE GENE_ID=? AND MARKER_PROBABILITY>?",
-                        geneId, DEFAULT_P_THRESHOLD).stream()
+    public List<MarkerGeneDto> fetchMarkerGenes(String geneId) {
+        // TODO   We might want to do a JOIN with experiment names to get the experiment metadata in one go and
+        // TODO   return something like List<Pair<MarkerGene, ExperimentStuff>>
+        return jdbcTemplate.queryForList(MARKER_GENE_SELECT_STATEMENT, geneId, DEFAULT_P_THRESHOLD).stream()
                 .map(rowMap ->
-                        MarkerGene.create(
+                        MarkerGeneDto.create(
                                 (String) rowMap.get("GENE_ID"), (String) rowMap.get("EXPERIMENT_ACCESSION"),
                                 (int) rowMap.get("PERPLEXITY"), (int) rowMap.get("CLUSTER_ID"),
                                 (double) rowMap.get("MARKER_PROBABILITY")))
