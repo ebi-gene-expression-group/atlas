@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesFactory;
 import uk.ac.ebi.atlas.web.GenesNotFoundException;
 
 import javax.inject.Inject;
@@ -26,20 +25,15 @@ public class SolrQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SolrQueryService.class);
 
     static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
-    static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
-    static final String PROPERTY_NAME_FIELD = "property_name";
 
     private final BioentitiesSolrClient solrClient;
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
-    private final SpeciesFactory speciesFactory;
 
     @Inject
     public SolrQueryService(BioentitiesSolrClient solrClient,
-                            SolrQueryBuilderFactory solrQueryBuilderFactory,
-                            SpeciesFactory speciesFactory) {
+                            SolrQueryBuilderFactory solrQueryBuilderFactory) {
         this.solrClient = solrClient;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
-        this.speciesFactory = speciesFactory;
     }
 
     private GeneQueryResponse fetchGeneIdsGroupedByGeneQueryToken(SemanticQuery geneQuery,
