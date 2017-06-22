@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.markergenes;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.http.client.utils.URIBuilder;
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +47,7 @@ public class MarkerGenesSearchService {
                         MarkerGene.create(
                                 entry.getKey().getLeft(), entry.getKey().getMiddle(), entry.getKey().getRight(),
                                 entry.getValue().stream()
-                                        .map(mgd -> Pair.of(mgd.clusterId(), mgd.p()))
+                                        .map(mgd -> ImmutablePair.of(mgd.clusterId(), mgd.p()))
                                         .collect(Collectors.toList())))
                 .collect(Collectors.toList());
     }
@@ -59,7 +59,7 @@ public class MarkerGenesSearchService {
             return Optional.of(
                     new URIBuilder()
                             .setPath("/gxa_sc/experiments/" + markerGene.experimentAccession())
-                            .addParameter("k", Double.toString(markerGene.perplexity()))
+                            .addParameter("k", Integer.toString(markerGene.perplexity()))
                             .addParameter("geneId", markerGene.geneId())
                             .addParameter("clusterId", new Gson().toJson(clusterIds))
                             .build()

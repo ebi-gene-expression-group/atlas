@@ -10,7 +10,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
