@@ -103,4 +103,15 @@ public class BioentityProperty {
                 && Objects.equals(value, other.value)
                 && Objects.equals(name, other.name);
     }
+
+    @Override
+    public String toString() {
+        return "BioentityProperty{" +
+                "bioentityIdentifier='" + bioentityIdentifier + '\'' +
+                ", species='" + species + '\'' +
+                ", value='" + value + '\'' +
+                ", propertyWeight=" + propertyWeight +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
