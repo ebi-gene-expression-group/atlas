@@ -36,7 +36,6 @@ public class BioentityPropertiesBuilderTest {
     );
 
     private static final String SPECIES = "anopheles_gambiae";
-    private static final String BIOENTITY_TYPE = "gene";
 
     private BioentityPropertiesBuilder subject;
 
@@ -46,13 +45,12 @@ public class BioentityPropertiesBuilderTest {
         //when
         List<BioentityProperty> bioentityProperties = subject
                 .forPropertyNames(DESIGN_ELEMENT_NAMES)
-                .forBioentityType(BIOENTITY_TYPE)
                 .forSpecies(SPECIES)
                 .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
                 .withPropertyValues(DESIGN_ELEMENT_VALUES)
                 .build();
         //then
-        BioentityProperty bioentityProperty = new BioentityProperty(BIOENTITY_IDENTIFIER, BIOENTITY_TYPE, SPECIES, DESIGN_ELEMENT_NAMES.get(0), DESIGN_ELEMENT_VALUES.get(0));
+        BioentityProperty bioentityProperty = new BioentityProperty(BIOENTITY_IDENTIFIER, SPECIES, DESIGN_ELEMENT_NAMES.get(0), DESIGN_ELEMENT_VALUES.get(0));
         assertThat(bioentityProperties, hasSize(1));
         assertThat(bioentityProperties.get(0), is(bioentityProperty));
     }
@@ -67,7 +65,6 @@ public class BioentityPropertiesBuilderTest {
         //when
         List<BioentityProperty> bioentityProperties = subject
                 .forPropertyNames(poPropertyNames)
-                .forBioentityType(BIOENTITY_TYPE)
                 .forSpecies(SPECIES)
                 .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
                 .withPropertyValues(poPropertyValues)
@@ -82,7 +79,6 @@ public class BioentityPropertiesBuilderTest {
         //when
         List<BioentityProperty> bioentityProperties = subject
                 .forPropertyNames(DESIGN_ELEMENT_NAMES)
-                .forBioentityType(BIOENTITY_TYPE)
                 .forSpecies(SPECIES)
                 .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
                 .withPropertyValues(DESIGN_ELEMENT_EMPTY_VALUE)
@@ -97,7 +93,6 @@ public class BioentityPropertiesBuilderTest {
         //when
         List<BioentityProperty> bioentityProperties = subject
                 .forPropertyNames(GENE_PROPERTY_NAMES)
-                .forBioentityType(BIOENTITY_TYPE)
                 .forSpecies(SPECIES)
                 .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
                 .withPropertyValues(GENE_PROPERTY_VALUES)
@@ -112,11 +107,9 @@ public class BioentityPropertiesBuilderTest {
         //when
         List<BioentityProperty> bioentityProperties = subject
                 .forPropertyNames(GENE_PROPERTY_NAMES)
-                .forBioentityType(BIOENTITY_TYPE)
                 .forSpecies(SPECIES)
                 .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
                 .withPropertyValues(GENE_PROPERTY_VALUES)
-                .withIdentifierAsProperty(false)
                 .build();
         //then
         assertThat(bioentityProperties, hasSize(20));

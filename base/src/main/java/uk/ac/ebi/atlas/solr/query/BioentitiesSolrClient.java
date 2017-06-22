@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.model.experiment.baseline.BioentityPropertyName;
-import uk.ac.ebi.atlas.solr.BioentityType;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -69,14 +68,13 @@ public class BioentitiesSolrClient {
         return results;
     }
 
-    public Set<String> getBioentityIdentifiers(BioentityType bioentityType, BioentityPropertyName
-            bioentityPropertyName, String
-            bioentityPropertyValue){
+    public Set<String> getBioentityIdentifiers(BioentityPropertyName
+                                                       bioentityPropertyName, String
+                                                       bioentityPropertyValue){
         SolrQuery query = new SolrQuery();
         query.setRows(ROWS);
-        query.setQuery(MessageFormat.format("property_name:\"{0}\" AND property_value:\"{1}\" AND bioentity_type:({2})",
-                bioentityPropertyName.name, bioentityPropertyValue,  Joiner.on("\" OR \"").join(bioentityType
-                        .getSolrAliases())));
+        query.setQuery(MessageFormat.format("property_name:\"{0}\" AND property_value:\"{1}\"",
+                bioentityPropertyName.name, bioentityPropertyValue));
         query.setFields("bioentity_identifier");
 
         Set<String> result = query(query).getResults().stream().map(d -> d.getFieldValue("bioentity_identifier").toString()).collect(Collectors.toSet());

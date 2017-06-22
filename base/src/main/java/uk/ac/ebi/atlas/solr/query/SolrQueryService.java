@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.solr.query;
 
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.search.SemanticQueryTerm;
-import uk.ac.ebi.atlas.solr.BioentityType;
 import com.google.common.base.Stopwatch;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
@@ -53,7 +52,6 @@ public class SolrQueryService {
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forTerm(queryTerm)
                 .withSpecies(species)
-                .withBioentityTypes(BioentityType.GENE.getSolrAliases())
                 .build();
         Set<String> geneIds = solrClient.query(solrQuery, false, BIOENTITY_IDENTIFIER_FIELD);
 

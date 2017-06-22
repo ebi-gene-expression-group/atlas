@@ -51,7 +51,6 @@ public class BioentityPropertiesStreamTest {
                                        .willReturn(GENE_PROPERTY_VALUES)
                                        .willReturn(null);
 
-        given(bioentityPropertiesBuilderMock.forBioentityType(BIOENTITY_TYPE)).willReturn(bioentityPropertiesBuilderMock);
         given(bioentityPropertiesBuilderMock.forSpecies(SPECIES)).willReturn(bioentityPropertiesBuilderMock);
         given(bioentityPropertiesBuilderMock.forPropertyNames(anyList())).willReturn(bioentityPropertiesBuilderMock);
         given(bioentityPropertiesBuilderMock.withBioentityIdentifier(anyString())).willReturn(bioentityPropertiesBuilderMock);
@@ -63,7 +62,6 @@ public class BioentityPropertiesStreamTest {
     @Test
     public void nextShouldUseThePropertiesBuilder() throws IOException {
         subject.next();
-        verify(bioentityPropertiesBuilderMock).forBioentityType(BIOENTITY_TYPE);
         verify(bioentityPropertiesBuilderMock).forSpecies(SPECIES);
 
         List<String> propertyNames = Lists.newArrayList(GENE_PROPERTY_HEADERS);

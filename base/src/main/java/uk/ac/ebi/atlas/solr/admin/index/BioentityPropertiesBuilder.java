@@ -20,17 +20,9 @@ public class BioentityPropertiesBuilder {
     private static final Pattern SEPARATOR_PATTERN = Pattern.compile(SEPARATOR);
 
     private String bioentityIdentifier;
-    private String bioentityType;
     private List<String> propertyNames;
     private List<String> propertyValues;
     private String species;
-
-    private boolean addIdentifierAsProperty = true;
-
-    public BioentityPropertiesBuilder forBioentityType(String bioentityType){
-        this.bioentityType = bioentityType;
-        return this;
-    }
 
     public BioentityPropertiesBuilder forSpecies(String species){
         this.species = species;
@@ -52,14 +44,8 @@ public class BioentityPropertiesBuilder {
         return this;
     }
 
-    public BioentityPropertiesBuilder withIdentifierAsProperty(boolean withIdentifierAsProperty){
-        this.addIdentifierAsProperty = withIdentifierAsProperty;
-        return this;
-    }
-
     public List<BioentityProperty> build(){
         checkState(CollectionUtils.isNotEmpty(propertyNames)
-                && StringUtils.isNotBlank(bioentityType)
                 && StringUtils.isNotBlank(species)
                 && StringUtils.isNotBlank(bioentityIdentifier)
                 && CollectionUtils.isNotEmpty(propertyValues));
@@ -74,7 +60,7 @@ public class BioentityPropertiesBuilder {
         List<BioentityProperty> designMappingProperty = Lists.newArrayList();
         String designMapping = propertyValues.get(0);
         if (StringUtils.isNotBlank(designMapping)) {
-            designMappingProperty.add(new BioentityProperty(bioentityIdentifier, bioentityType,
+            designMappingProperty.add(new BioentityProperty(bioentityIdentifier,
                     species, DESIGN_ELEMENT_PROPERTY_NAME, propertyValues.get(0)));
         }
         return designMappingProperty;
@@ -95,15 +81,11 @@ public class BioentityPropertiesBuilder {
 //                    }
 
                     BioentityProperty bioentityProperty =
-                            new BioentityProperty(bioentityIdentifier, bioentityType,
+                            new BioentityProperty(bioentityIdentifier,
                                     species, propertyName, value);
                     bioentityProperties.add(bioentityProperty);
                 }
             }
-        }
-
-        if (addIdentifierAsProperty) {
-            bioentityProperties.add(new BioentityProperty(bioentityIdentifier, bioentityType, species, bioentityType, bioentityIdentifier));
         }
 
         return bioentityProperties;

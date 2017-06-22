@@ -38,16 +38,6 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
         return getThis();
     }
 
-    public T withBioentityTypes(Set<String> bioentityTypes){
-        checkArgument(CollectionUtils.isNotEmpty(bioentityTypes));
-
-        Collection<String> bioentityTypeConditions = transformToConditions(BIOENTITY_TYPE_FIELD, Lists.newArrayList(bioentityTypes));
-
-        queryStringBuilder.append(" AND (");
-        Joiner.on(" OR ").appendTo(queryStringBuilder, bioentityTypeConditions).append(")");
-        return getThis();
-    }
-
     public T withPropertyNames(BioentityPropertyName... propertyNames){
         return withPropertyNames(mapBioentityPropertyNames(propertyNames));
     }

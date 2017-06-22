@@ -27,7 +27,6 @@ public class BioentityPropertiesStream implements Closeable {
         List<String> csvHeaders = Lists.newArrayList(csvReader.readNext());
         String bioentityType = csvHeaders.remove(0);
         this.bioentityPropertiesBuilder = bioentityPropertiesBuilder
-                .forBioentityType(bioentityType)
                 .forSpecies(species)
                 .forPropertyNames(csvHeaders);
     }

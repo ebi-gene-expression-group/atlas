@@ -23,14 +23,12 @@ public class BioentityIdentifierQueryBuilderTest {
     private static final Species SPECIES =
             new Species("Species specii",
                         SpeciesProperties.create(SPECIES_ENSEMBL_NAME, "ORGANISM_PART", "animals", ImmutableList.of()));
-    private static final Set<String> BIOENTITY_TYPES = Sets.newTreeSet(Sets.newHashSet("BIOENTITY_TYPE_1", "BIOENTITY_TYPE_2"));
 
     private static final String EXPECTED_QUERY_STRING_WITH_OR_OPERATOR_APPLIED =
                     "{!lucene q.op=OR df=property_value_search}" +
                     "(property_value:\"A QUERY STRING\") " +
                     "AND (property_name:\"PROPERTY_NAME_1\" OR property_name:\"PROPERTY_NAME_2\") " +
-                    "AND species:\"" + SPECIES_ENSEMBL_NAME + "\" " +
-                    "AND (bioentity_type:\"BIOENTITY_TYPE_1\" OR bioentity_type:\"BIOENTITY_TYPE_2\")";
+                    "AND species:\"" + SPECIES_ENSEMBL_NAME +"\"";
 
 
     private BioentityIdentifierQueryBuilder subject;
@@ -45,7 +43,6 @@ public class BioentityIdentifierQueryBuilderTest {
         SolrQuery solrQuery = subject.forTerm(SemanticQueryTerm.create(QUERY_STRING))
                 .withPropertyNames(PROPERTY_NAME_1, PROPERTY_NAME_2)
                 .withSpecies(SPECIES)
-                .withBioentityTypes(BIOENTITY_TYPES)
                 .build();
 
         assertThat(solrQuery.getQuery(), is(EXPECTED_QUERY_STRING_WITH_OR_OPERATOR_APPLIED));

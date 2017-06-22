@@ -40,7 +40,6 @@ public class BioentityPropertiesStreamBuilder {
     public BioentityPropertiesStream build() throws IOException {
         Reader fileReader = Files.newBufferedReader(bioentityPropertiesFilePath, Charsets.UTF_8);
         CSVReader csvReader = new CSVReader(fileReader, '\t', CSVWriter.NO_QUOTE_CHARACTER);
-        bioentityPropertiesBuilder.withIdentifierAsProperty(!isForReactome);
         return new BioentityPropertiesStream(csvReader, bioentityPropertiesBuilder, getSpecies());
     }
 
