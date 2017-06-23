@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 public class BioentityPropertiesSource {
 
-    static final Pattern annotationFileNamePattern = Pattern.compile("\\w+\\.\\w+gene\\.tsv");
+    static final Pattern annotationFileNamePattern = Pattern.compile("\\w+\\.(\\w+gene|mature_mirna)\\.tsv");
 
     static final Pattern arrayDesignFileNamePattern = Pattern.compile("\\w+\\.A-\\w+-\\d+\\.tsv");
 

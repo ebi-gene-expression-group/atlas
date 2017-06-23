@@ -128,6 +128,21 @@ public class BioentityPropertiesSourceTest {
     }
 
     @Test
+    public void goodMirnaFile() throws Exception {
+        addTemporaryFile("annotations", "Homo_sapiens.mature_mirna.tsv", ImmutableList.of(
+                new String[]{"mirbase_accession", "symbol", "mirbase_name", "mirbase_sequence"},
+                new String[]{"MIMAT0001535", "cfa-miR-448", "miR-448", "UUGCAUAUGUAGGAUGUCCCAU"}
+        ));
+        assertHasOneGoodResource(subject.getAnnotationFiles());
+        assertThat(subject.getAnnotationFiles().findFirst().get().get().collect(Collectors.toList()), is(ImmutableList.of(
+                new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_accession", "MIMAT0001535"),
+                new BioentityProperty("MIMAT0001535", "Homo_sapiens", "symbol", "cfa-miR-448"),
+                new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_name", "miR-448"),
+                new BioentityProperty("MIMAT0001535", "Homo_sapiens", "mirbase_sequence", "UUGCAUAUGUAGGAUGUCCCAU")
+                )));
+    }
+
+    @Test
     public void goodMultipleFiles() throws Exception {
         addTemporaryFile("annotations", "Homo_sapiens.ensgene.tsv", ImmutableList.of(
                 new String[]{"ensgene", "synonym"},
