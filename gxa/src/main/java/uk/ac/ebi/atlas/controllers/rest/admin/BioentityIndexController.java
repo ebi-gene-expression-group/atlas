@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.controllers.rest.admin;
 
-import uk.ac.ebi.atlas.solr.admin.BioentityIndexAdmin;
+import uk.ac.ebi.atlas.solr.admin.BioentitiesIndexer;
 import uk.ac.ebi.atlas.solr.admin.monitor.BioentityIndexMonitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +19,12 @@ public class BioentityIndexController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BioentityIndexController.class);
 
-    private BioentityIndexAdmin bioentityIndexAdmin;
+    private BioentitiesIndexer bioentitiesIndexer;
     private BioentityIndexMonitor bioentityIndexMonitor;
 
     @Inject
-    BioentityIndexController(BioentityIndexAdmin bioentityIndexAdmin, BioentityIndexMonitor bioentityIndexMonitor){
-        this.bioentityIndexAdmin = bioentityIndexAdmin;
+    BioentityIndexController(BioentitiesIndexer bioentitiesIndexer, BioentityIndexMonitor bioentityIndexMonitor){
+        this.bioentitiesIndexer = bioentitiesIndexer;
         this.bioentityIndexMonitor = bioentityIndexMonitor;
     }
 
@@ -48,7 +48,7 @@ public class BioentityIndexController {
     @ResponseBody
     public String build() {
 
-        bioentityIndexAdmin.rebuildIndex();
+        bioentitiesIndexer.rebuildIndex();
 
         return bioentityIndexMonitor.reportProgress();
 

@@ -2,15 +2,12 @@
 package uk.ac.ebi.atlas.solr.admin.monitor;
 
 import com.google.common.collect.Iterators;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 
 import javax.inject.Named;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -18,7 +15,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Named
 @Scope("singleton")
 public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile>{
-    private static final Logger LOGGER = LoggerFactory.getLogger(IndexingProgress.class);
 
     // This list may be iterated from a different thread than the index build thread, generating a
     // ConcurrentModificationException if we didn't use a thread safe implementation like CopyOnWriteArrayList
@@ -30,8 +26,8 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
     public IndexingProgress(){
     }
 
-    public void completed(Path filePath, long timeTaken){
-        processedDiskSpace += FileUtils.sizeOf(filePath.toFile());
+    public void completed(BioentityPropertyFile filePath, long timeTaken){
+        processedDiskSpace += filePath.size();
         totalTimeTaken += timeTaken;
         processedFiles.add(new ProcessedFile(filePath, timeTaken));
     }
@@ -57,10 +53,10 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
     }
 
     static class ProcessedFile{
-        private final Path filePath;
+        private final BioentityPropertyFile filePath;
         private final long seconds;
 
-        ProcessedFile(Path filePath, long seconds){
+        ProcessedFile(BioentityPropertyFile filePath, long seconds){
 
             this.filePath = filePath;
             this.seconds = seconds;
@@ -68,12 +64,7 @@ public class IndexingProgress implements Iterable<IndexingProgress.ProcessedFile
         }
 
         public long getSize(){
-            try {
-                return Files.size(filePath);
-            } catch (IOException e) {
-                LOGGER.error(e.getMessage(), e);
-                throw new IllegalStateException(e);
-            }
+            return filePath.size();
         }
 
         @Override

@@ -40,6 +40,8 @@ public abstract class AtlasResource<T> {
         return path.toFile().length();
     }
 
+
+
     @Override
     public String toString() {
         return this.getClass().getName() + " with path " + path.toString();

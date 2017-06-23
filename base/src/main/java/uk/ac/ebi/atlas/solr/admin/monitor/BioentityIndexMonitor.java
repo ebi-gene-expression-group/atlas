@@ -4,13 +4,12 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
+import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -32,7 +31,7 @@ import static com.google.common.base.Preconditions.checkState;
  * -Similar responsibility (progress report and progress events) would be executed by separate classes
  */
 @Named
-public class BioentityIndexMonitor extends Observable {
+public class BioentityIndexMonitor {
 
     @Value("#{configuration['bioentity.properties']}")
     private String bioentityPropertiesDirectory;
@@ -43,7 +42,7 @@ public class BioentityIndexMonitor extends Observable {
 
     public Status status;
 
-    private Path currentFile;
+    private BioentityPropertyFile currentFile;
 
     private IndexingProgress indexingProgress;
 
@@ -73,22 +72,21 @@ public class BioentityIndexMonitor extends Observable {
     public synchronized void stop() {
         status = Status.COMPLETED;
         totalTimeStopwatch.stop();
-        notifyStatus();
     }
 
-    public synchronized void processing(Path filePath) {
+    public synchronized void processing(BioentityPropertyFile file) {
         checkState(Status.INITIALIZED == status || Status.STARTED == status || Status.IN_PROGRESS == status, "Illegal status: " + status);
         status = Status.PROCESSING;
-        currentFile = filePath;
+        currentFile = file;
         currentFileStopwatch = Stopwatch.createStarted();
     }
 
-    public synchronized void completed(Path filePath) {
+    public synchronized void completed() {
         checkState(Status.PROCESSING == status, "Illegal status: " + status);
 
         status = Status.IN_PROGRESS;
         currentFileStopwatch.stop();
-        indexingProgress.completed(filePath, currentFileStopwatch.elapsed(TimeUnit.SECONDS));
+        indexingProgress.completed(currentFile, currentFileStopwatch.elapsed(TimeUnit.SECONDS));
     }
 
     public synchronized void failed(Exception e) {
@@ -99,12 +97,6 @@ public class BioentityIndexMonitor extends Observable {
         if (totalTimeStopwatch.isRunning()){
             totalTimeStopwatch.stop();
         }
-        notifyStatus();
-    }
-
-    private void notifyStatus(){
-        setChanged();
-        notifyObservers(status);
     }
 
     public Status getStatus() {
