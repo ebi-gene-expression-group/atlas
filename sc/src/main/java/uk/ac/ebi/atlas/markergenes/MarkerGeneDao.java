@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.markergenes;
 
+import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,7 +12,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Named
 public class MarkerGeneDao {
@@ -22,10 +26,10 @@ public class MarkerGeneDao {
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;
     private static final String MARKER_GENE_INSERT_STATEMENT =
-            "INSERT INTO MARKER_GENES " +
-            "(GENE_ID, EXPERIMENT_ACCESSION, PERPLEXITY, CLUSTER_ID, MARKER_PROBABILITY) VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO marker_genes " +
+            "(gene_id, experiment_accession, perplexity, cluster_id, marker_probability) VALUES (?, ?, ?, ?, ?)";
     private static final String MARKER_GENE_SELECT_STATEMENT =
-            "SELECT * FROM MARKER_GENES WHERE GENE_ID=? AND MARKER_PROBABILITY>?";
+            "SELECT * FROM marker_genes WHERE gene_id=? AND marker_probability>?";
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -35,43 +39,72 @@ public class MarkerGeneDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadMarkerGenes(ObjectInputStream<MarkerGeneDto> inputStream) {
+    public void loadMarkerGenes(ObjectInputStream<Object[]> inputStream) {
         int rowCount = 0;
         final List<Object[]> batch = new ArrayList<>(BATCH_SIZE);
-        MarkerGeneDto markerGene;
+        Object[] line;
 
-        while ((markerGene = inputStream.readNext()) != null) {
-            // Prepare the batch
+        while ((line = inputStream.readNext()) != null) {
             batch.clear();
-            while (batch.size() < BATCH_SIZE && markerGene != null) {
-                batch.add(
-                        new Object[] {markerGene.geneId(), markerGene.experimentAccession(), markerGene.perplexity(),
-                                      markerGene.clusterId(), markerGene.p()});
-                markerGene = inputStream.readNext();
+            while (batch.size() < BATCH_SIZE && line != null) {
+                batch.add(line);
+                line = inputStream.readNext();
             }
 
-            // Insert the batch
             rowCount += jdbcTemplate.batchUpdate(MARKER_GENE_INSERT_STATEMENT, batch).length;
         }
 
         LOGGER.info("{} rows inserted", rowCount);
     }
 
-    public List<MarkerGeneDto> fetchMarkerGenes(String geneId) {
+    public ImmutableList<MarkerGeneProfile> fetchMarkerGenes(String geneId) {
         // TODO   We might want to do a JOIN with experiment names to get the experiment metadata in one go and
-        // TODO   return something like List<Pair<MarkerGene, ExperimentStuff>>
-        return jdbcTemplate.queryForList(MARKER_GENE_SELECT_STATEMENT, geneId, DEFAULT_P_THRESHOLD).stream()
-                .map(rowMap ->
-                        MarkerGeneDto.create(
-                                (String) rowMap.get("GENE_ID"), (String) rowMap.get("EXPERIMENT_ACCESSION"),
-                                (int) rowMap.get("PERPLEXITY"), (int) rowMap.get("CLUSTER_ID"),
-                                (double) rowMap.get("MARKER_PROBABILITY")))
-                .collect(Collectors.toList());
+        // TODO   return something like List<Pair<MarkerGeneProfile, ExperimentStuff>>
+        List<MarkerGeneDto> markerGeneDtos =
+               jdbcTemplate.queryForList(MARKER_GENE_SELECT_STATEMENT, geneId, DEFAULT_P_THRESHOLD)
+                        .stream()
+                        .map(rowMap ->
+                                MarkerGeneDto.create(
+                                        (String) rowMap.get("experiment_accession"),
+                                        (int) rowMap.get("perplexity"),
+                                        (int) rowMap.get("cluster_id"),
+                                        (double) rowMap.get("marker_probability")))
+                        .collect(toList());
+
+
+        ImmutableList.Builder<MarkerGeneProfile> builder = ImmutableList.builder();
+
+        // Trivial to extend to multiple genes if we add geneId to MarkerGeneProfile
+        markerGeneDtos.stream()
+                .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::experimentAccession))
+                .forEach((experimentAccession, mgdsByExperimentAccession) -> mgdsByExperimentAccession.stream()
+                        .collect(groupingBy(MarkerGeneDao.MarkerGeneDto::perplexity))
+                        .values()
+                        .forEach(mgdsByExperimentAccessionAndPerplexity ->
+                                builder.add(MarkerGeneProfile.create(mgdsByExperimentAccessionAndPerplexity))));
+
+        return builder.build();
     }
 
     public void deleteAll() {
-        int rowCount = jdbcTemplate.update("DELETE FROM MARKER_GENES");
+        int rowCount = jdbcTemplate.update("DELETE FROM marker_genes");
         LOGGER.info("{} rows deleted", rowCount);
     }
 
+    public void delete(String experimentAccession) {
+        int rowCount = jdbcTemplate.update("DELETE FROM marker_genes WHERE experiment_accession=?", experimentAccession);
+        LOGGER.info("{} rows deleted", rowCount);
+    }
+
+    @AutoValue
+    static abstract class MarkerGeneDto {
+        static MarkerGeneDto create(String experimentAccession, int perplexity, int clusterId, double p) {
+            return new AutoValue_MarkerGeneDao_MarkerGeneDto(experimentAccession, perplexity, clusterId, p);
+        }
+
+        abstract String experimentAccession();
+        abstract int perplexity();
+        abstract int clusterId();
+        abstract double p();
+    }
 }

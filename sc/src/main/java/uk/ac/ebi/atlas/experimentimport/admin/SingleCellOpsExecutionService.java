@@ -7,6 +7,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCrud;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.markergenes.MarkerGeneDao;
+import uk.ac.ebi.atlas.markergenes.MarkerGeneProfile;
+import uk.ac.ebi.atlas.markergenes.RandomMarkerGeneInputStream;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -25,14 +28,17 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
     private final ExperimentCrud experimentCrud;
     private final ExperimentTrader experimentTrader;
     private final AnalyticsLoaderFactory analyticsLoaderFactory;
+    private final MarkerGeneDao markerGeneDao;
     private final Gson gson = new Gson();
 
     public SingleCellOpsExecutionService(ExperimentCrud experimentCrud,
                                          ExperimentTrader experimentTrader,
-                                         AnalyticsLoaderFactory analyticsLoaderFactory) {
+                                         AnalyticsLoaderFactory analyticsLoaderFactory,
+                                         MarkerGeneDao markerGeneDao) {
         this.experimentCrud = experimentCrud;
         this.experimentTrader = experimentTrader;
         this.analyticsLoaderFactory = analyticsLoaderFactory;
+        this.markerGeneDao = markerGeneDao;
     }
 
     private Stream<ExperimentDTO> allDtos(){
@@ -123,6 +129,15 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 break;
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
+            case POPULATE_MARKER_GENES:
+                markerGeneDao.loadMarkerGenes(new RandomMarkerGeneInputStream(accession, 5000));
+                break;
+            case DELETE_MARKER_GENES:
+                markerGeneDao.delete(accession);
+                break;
+            case DELETE_ALL_MARKER_GENES:
+                markerGeneDao.deleteAll();
+                break;
 
             default:
                 throw new RuntimeException("Op not supported in Single Cell: "+op.name());

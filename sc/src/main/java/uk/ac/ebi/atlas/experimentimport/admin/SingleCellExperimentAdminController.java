@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.experimentimport.SingleCellExperimentChecker;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.condensedSdrf.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterService;
+import uk.ac.ebi.atlas.markergenes.MarkerGeneDao;
 import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -22,19 +23,17 @@ public class SingleCellExperimentAdminController extends ExperimentAdminControll
 
     @Inject
     public SingleCellExperimentAdminController(DataFileHub dataFileHub,
-                                                    CondensedSdrfParser condensedSdrfParser,
-                                                    ExperimentDesignFileWriterService experimentDesignFileWriterService,
-                                                    ExperimentDAO experimentDAO,
-                                                    SingleCellExperimentChecker experimentChecker,
-                                                    AnalyticsLoaderFactory analyticsLoaderFactory,
-                                                    ConfigurationTrader configurationTrader,
-                                                    ExperimentTrader experimentTrader
-    ) {
+                                               CondensedSdrfParser condensedSdrfParser,
+                                               ExperimentDesignFileWriterService experimentDesignFileWriterService,
+                                               ExperimentDAO experimentDAO,
+                                               SingleCellExperimentChecker experimentChecker,
+                                               AnalyticsLoaderFactory analyticsLoaderFactory,
+                                               ConfigurationTrader configurationTrader,
+                                               ExperimentTrader experimentTrader,
+                                               MarkerGeneDao markerGeneDao) {
         super(
                 new ExperimentOps(
-                        new ExperimentOpLogWriter(
-                                dataFileHub
-                        ),
+                        new ExperimentOpLogWriter(dataFileHub),
                         new SingleCellOpsExecutionService(
                                 new ExperimentCrud(
                                         condensedSdrfParser,
@@ -44,10 +43,9 @@ public class SingleCellExperimentAdminController extends ExperimentAdminControll
                                         analyticsLoaderFactory,
                                         configurationTrader),
                                 experimentTrader,
-                                analyticsLoaderFactory
-                        )
-                )
-        );
+                                analyticsLoaderFactory,
+                                markerGeneDao
+                        )));
     }
 }
 
