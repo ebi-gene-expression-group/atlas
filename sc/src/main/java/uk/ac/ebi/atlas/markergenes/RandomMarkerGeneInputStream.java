@@ -17,8 +17,8 @@ public class RandomMarkerGeneInputStream implements ObjectInputStream<Object[]> 
 
     // Change to higher or lower values to decrease or increase, respectively, the probability of a gene being in the
     // same experiment with different cluster IDs
-    private final int NUMBER_OF_GENES = 500;
-    private final int PERPLEXITY_VALUES = 5;
+    private final int NUMBER_OF_GENES = 10;
+    private final int PERPLEXITY_VALUES = 4;
 
     private final List<Object[]> markerGenes;
     private int position;

@@ -21,8 +21,6 @@ public class MarkerGeneDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SingleCellBaselineDao.class);
 
-    private static final double DEFAULT_P_THRESHOLD = 0.95;
-
     // Based on experimentation, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Single+Cell+Expression+data
     private static final int BATCH_SIZE = 2000;
     private static final String MARKER_GENE_INSERT_STATEMENT =
@@ -57,11 +55,11 @@ public class MarkerGeneDao {
         LOGGER.info("{} rows inserted", rowCount);
     }
 
-    public ImmutableList<MarkerGeneProfile> fetchMarkerGenes(String geneId) {
+    public ImmutableList<MarkerGeneProfile> fetchMarkerGenes(String geneId, double cutoff) {
         // TODO   We might want to do a JOIN with experiment names to get the experiment metadata in one go and
         // TODO   return something like List<Pair<MarkerGeneProfile, ExperimentStuff>>
         List<MarkerGeneDto> markerGeneDtos =
-               jdbcTemplate.queryForList(MARKER_GENE_SELECT_STATEMENT, geneId, DEFAULT_P_THRESHOLD)
+               jdbcTemplate.queryForList(MARKER_GENE_SELECT_STATEMENT, geneId, cutoff)
                         .stream()
                         .map(rowMap ->
                                 MarkerGeneDto.create(

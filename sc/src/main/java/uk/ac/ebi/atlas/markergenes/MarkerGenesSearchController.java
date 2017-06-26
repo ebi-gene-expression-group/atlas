@@ -1,6 +1,10 @@
 package uk.ac.ebi.atlas.markergenes;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +29,30 @@ public class MarkerGenesSearchController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String blah(@PathVariable String geneId) {
-        return gson.toJson(markerGenesSearchService.searchMarkerGenesByGeneId(geneId));
+    public String jsonMarkerGenes(@PathVariable String geneId) {
+        ImmutableList<ImmutablePair<MarkerGeneProfile, String>> results =
+                markerGenesSearchService.searchMarkerGenesByGeneId(geneId);
+
+        JsonArray markerProfiles = new JsonArray();
+        results.forEach(pair -> {
+            JsonObject markerProfile = new JsonObject();
+            markerProfile.addProperty("experimentAccession", pair.getLeft().experimentAccession());
+            markerProfile.addProperty("perplexity", pair.getLeft().perplexity());
+
+            JsonArray clusters = new JsonArray();
+            pair.getLeft().clusters().forEach(clusterPair -> {
+                JsonObject cluster = new JsonObject();
+                cluster.addProperty("clusterId", clusterPair.getLeft());
+                cluster.addProperty("p", clusterPair.getRight());
+                clusters.add(cluster);
+            });
+            markerProfile.add("clusters", clusters);
+            markerProfile.addProperty("url", pair.getRight());
+
+            markerProfiles.add(markerProfile);
+        });
+
+        return gson.toJson(markerProfiles);
     }
+
 }
