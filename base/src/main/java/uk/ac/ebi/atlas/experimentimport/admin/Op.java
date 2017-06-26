@@ -30,7 +30,12 @@ public enum Op {
             "the identifiers from the experiment, but searching on the experiment page will still work."),
     ANALYTICS_DELETE("Tell Solr to delete all data with this experiment accession"),
     CACHE_READ("Read the attributes of the experiment from cache, trying to load it if it is absent"),
-    CACHE_REMOVE("Delete from cache if present");
+    CACHE_REMOVE("Delete from cache if present"),
+    POPULATE_MARKER_GENES("Add random data for marker genes to the DB (the experiment doesn’t need to exist)"),
+    DELETE_MARKER_GENES("Delete marker genes data from DB"),
+    DELETE_ALL_MARKER_GENES("Delete all marker genes data from DB (will ignore any experiment accession)");
+
+
 
     static ImmutableMap<String, ImmutableList<Op>> synonyms = ImmutableMap.of(
             "UPDATE_DESIGN",ImmutableList.of(UPDATE_DESIGN_ONLY,SERIALIZE),
