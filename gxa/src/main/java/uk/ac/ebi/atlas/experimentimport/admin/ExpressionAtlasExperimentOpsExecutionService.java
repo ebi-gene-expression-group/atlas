@@ -1,9 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -20,7 +16,12 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentOpsExecutionService {
 
@@ -43,19 +44,19 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         this.experimentTrader = experimentTrader;
     }
 
-    private FluentIterable<ExperimentDTO> allDtos(){
-        return FluentIterable.from(experimentCrud.findAllExperiments()).filter(experimentDTO -> ! experimentDTO.getExperimentType().isSingleCell());
+    private Stream<ExperimentDTO> allDtos(){
+        return experimentCrud.findAllExperiments().stream().filter(experimentDTO -> !experimentDTO.getExperimentType().isSingleCell());
     }
 
     @Override
-    public ImmutableList<String> findAllExperiments(){
-        return allDtos().transform(new Function<ExperimentDTO, String>() {
+    public List<String> findAllExperiments(){
+        return allDtos().map(new Function<ExperimentDTO, String>() {
             @Nullable
             @Override
             public String apply(ExperimentDTO experimentDTO) {
                 return experimentDTO.getExperimentAccession();
             }
-        }).toList();
+        }).collect(toList());
     }
 
 
@@ -63,11 +64,11 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
     public Optional<JsonElement> attemptExecuteOneStatelessOp(String accession, Op op){
         switch (op) {
             case LIST:
-                return Optional.of((JsonElement) experimentCrud.findExperiment(accession).toJson());
+                return Optional.of(experimentCrud.findExperiment(accession).toJson());
             case CACHE_READ:
                 return Optional.of(gson.toJsonTree(getAnyExperimentWithAdminAccess(accession).getAttributes()));
             default:
-                return Optional.absent();
+                return Optional.empty();
         }
     }
 
@@ -81,7 +82,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
@@ -90,19 +91,14 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
         if (op.equals(Op.LIST)) {
             return Optional.of(list());
         } else {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
     private List<Pair<String,? extends JsonElement>> list(){
-        return allDtos().transform(new Function<ExperimentDTO,
-                Pair<String,? extends JsonElement>>() {
-            @Nullable
-            @Override
-            public Pair<String,? extends JsonElement> apply(ExperimentDTO experimentDTO) {
-                return Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson());
-            }
-        }).toList();
+        return allDtos().map(
+                (Function<ExperimentDTO, Pair<String, ? extends JsonElement>>) experimentDTO ->
+                        Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson())).collect(toList());
     }
 
     @Override

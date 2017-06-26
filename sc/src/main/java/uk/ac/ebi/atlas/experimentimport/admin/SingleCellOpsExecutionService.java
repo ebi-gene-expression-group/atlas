@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -11,14 +10,15 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class SingleCellOpsExecutionService implements ExperimentOpsExecutionService {
 
@@ -42,13 +42,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
 
     @Override
     public List<String> findAllExperiments(){
-        return allDtos().map(new Function<ExperimentDTO, String>() {
-            @Nullable
-            @Override
-            public String apply(ExperimentDTO experimentDTO) {
-                return experimentDTO.getExperimentAccession();
-            }
-        }).collect(Collectors.toList());
+        return allDtos().map(ExperimentDTO::getExperimentAccession).collect(toList());
     }
 
     @Override
@@ -60,7 +54,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
                 return Optional.of(gson.toJsonTree(experimentTrader.getExperiment(accession,
                         experimentCrud.findExperiment(accession).getAccessKey()).getAttributes()));
             default:
-                return Optional.absent();
+                return Optional.empty();
         }
     }
 
@@ -69,7 +63,7 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         if (ops.equals(Collections.singleton(Op.LIST))) {
             return Optional.of(list());
         } else {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
@@ -78,19 +72,14 @@ public class SingleCellOpsExecutionService implements ExperimentOpsExecutionServ
         if (op.equals(Op.LIST)) {
             return Optional.of(list());
         } else {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
     private List<Pair<String,? extends JsonElement>> list(){
-        return allDtos().map(new Function<ExperimentDTO,
-                Pair<String, ? extends JsonElement>>() {
-            @Nullable
-            @Override
-            public Pair<String, ? extends JsonElement> apply(ExperimentDTO experimentDTO) {
-                return Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson());
-            }
-        }).collect(Collectors.toList());
+        return allDtos()
+                .map((Function<ExperimentDTO, Pair<String, ? extends JsonElement>>) experimentDTO ->
+                        Pair.of(experimentDTO.getExperimentAccession(), experimentDTO.toJson())).collect(toList());
     }
 
     @Override

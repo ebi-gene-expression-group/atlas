@@ -1,29 +1,30 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterators;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /*
 consider support for async:
-make a cousin of
-Executors.newCachedThreadPool();
+make a cousin of Executors.newCachedThreadPool();
 with a very large queue (that would take all experiments if needed), and 0 to say 4 worker threads
-
  */
+
 public class ExperimentOps {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExperimentOps.class);
@@ -41,16 +42,16 @@ public class ExperimentOps {
     public static final JsonPrimitive DEFAULT_SUCCESS_RESULT = new JsonPrimitive("success");
 
 
-    public Iterable<JsonElement> perform(Optional<? extends Collection<String>> accessions, Collection<Op> ops){
-        if(ops.size()==1){
-            if(accessions.isPresent()){
-                return perform(accessions.get(), ops.iterator().next());
+    public Iterable<JsonElement> dispatchAndPerform(Collection<String> accessions, Collection<Op> ops){
+        if(ops.size() == 1) {
+            if(!accessions.isEmpty()){
+                return perform(accessions, ops.iterator().next());
             } else {
                 return perform(ops.iterator().next());
             }
         } else {
-            if(accessions.isPresent()){
-                return perform(accessions.get(), ops);
+            if(!accessions.isEmpty()) {
+                return perform(accessions, ops);
             } else {
                 return perform(ops);
             }
@@ -60,8 +61,6 @@ public class ExperimentOps {
     List<String> findAllExperiments(){
         return experimentOpsExecutionService.findAllExperiments();
     }
-
-
 
     private Iterable<JsonElement> perform(Collection<Op> ops){
         Optional<? extends List<Pair<String,? extends JsonElement>>> r =
@@ -91,18 +90,15 @@ public class ExperimentOps {
         }
     }
 
-
-
-
     private Iterable<JsonElement> perform(final Collection<String> accessions, final Op op) {
-        return () -> Iterators.transform(accessions.iterator(), new Function<String, JsonElement>() {
-            @Nullable
-            @Override
-            public JsonElement apply(@Nullable String accession) {
-                Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
-                return showResult(accession, r.getLeft(), r.getRight());
-            }
-        });
+
+        return accessions
+                .stream()
+                .map(accession -> {
+                    Pair<OpResult, ? extends JsonElement> r = performOneOp(accession, op);
+                    return showResult(accession, r.getLeft(), r.getRight());
+                })
+                .collect(toList());
     }
 
     private Iterable<JsonElement> perform(Collection<String> accessions, Collection<Op> ops) {
@@ -156,7 +152,7 @@ public class ExperimentOps {
                             (opsThatProducedTheSameResult,
                                     resultOfPreviousOperations));
                 }
-                opsThatProducedTheSameResult =new ArrayList<>();
+                opsThatProducedTheSameResult = new ArrayList<>();
                 opsThatProducedTheSameResult.add(op);
                 resultOfPreviousOperations = resultOfCurrentOperation;
             }
@@ -181,11 +177,15 @@ public class ExperimentOps {
         return Joiner.on(',').join(names);
     }
 
-    private Pair<OpResult, ? extends JsonElement> performOneOp(final String accession, final Op op){
-        return attemptPerformOneOpRelatedToTheOpLog(accession, op)
-                .or(
-                        experimentOpsExecutionService.attemptExecuteOneStatelessOp(accession, op)
-                ).transform((Function<JsonElement, Pair<OpResult, ? extends JsonElement>>) jsonElement -> Pair.of(OpResult.SUCCESS, jsonElement)).or((Supplier<Pair<OpResult, ? extends JsonElement>>) () -> performStatefulOp(accession, op));
+    private Pair<OpResult, ? extends JsonElement> performOneOp(final String accession, final Op op) {
+        Optional<JsonElement> opResult = attemptPerformOneOpRelatedToTheOpLog(accession, op);
+        if (!opResult.isPresent()) {
+            opResult = experimentOpsExecutionService.attemptExecuteOneStatelessOp(accession, op);
+        }
+
+        return opResult
+                .<Pair<OpResult, ? extends JsonElement>>map(jsonElement -> Pair.of(OpResult.SUCCESS, jsonElement))
+                .orElseGet(() -> performStatefulOp(accession, op));
     }
 
     private Optional<JsonElement> attemptPerformOneOpRelatedToTheOpLog(String accession, Op op){
@@ -197,15 +197,13 @@ public class ExperimentOps {
             case CLEAR_LOG:
                 return Optional.of(clearOpLog(accession));
             default:
-                return Optional.absent();
+                return Optional.empty();
         }
     }
 
     private JsonElement showSuccess(Pair<String,? extends JsonElement> accessionAndOpValue){
         return showResult(accessionAndOpValue.getLeft(), OpResult.SUCCESS, accessionAndOpValue.getRight());
     }
-
-
 
     private JsonElement showResult(String accession, OpResult opResult, JsonElement opValue){
         JsonObject resultObject = new JsonObject();
@@ -247,7 +245,7 @@ public class ExperimentOps {
     }
 
     private JsonElement clearOpLog(String accession) {
-        experimentOpLogWriter.persistOpLog(accession, ImmutableList.<OpLogEntry>of());
+        experimentOpLogWriter.persistOpLog(accession, ImmutableList.of());
         return DEFAULT_SUCCESS_RESULT;
     }
 

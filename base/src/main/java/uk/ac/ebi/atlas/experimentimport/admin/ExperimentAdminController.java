@@ -67,12 +67,12 @@ public class ExperimentAdminController extends JsonExceptionHandlingController {
             produces = "application/json;charset=UTF-8")
     public void doOp(@PathVariable("accessions") String accessionParameter, @PathVariable("op") String opParameter, HttpServletResponse response) {
         try {
-            final Optional<Collection<String>> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
-                    ? Optional.<Collection<String>>absent()
-                    : Optional.of(readAccessions(accessionParameter));
+            final Collection<String> accessions = accessionParameter.length() == 0 || accessionParameter.toLowerCase().equals("all")
+                    ? ImmutableList.of()
+                    : ImmutableList.copyOf(readAccessions(accessionParameter));
 
             Iterable<JsonElement> result = maybeOps(opParameter)
-                    .transform(ops -> experimentOps.perform(accessions, ops)).or(ImmutableList.of(usageMessage(opParameter)));
+                    .transform(ops -> experimentOps.dispatchAndPerform(accessions, ops)).or(ImmutableList.of(usageMessage(opParameter)));
 
             JsonWriter writer = new JsonWriter(response.getWriter());
             writer.setIndent("  ");

@@ -1,12 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.admin;
 
-import com.google.common.base.Optional;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface ExperimentOpsExecutionService {
     List<String> findAllExperiments();
