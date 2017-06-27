@@ -21,16 +21,15 @@ public class ProfileStreamFilter<DataColumnDescriptor extends DescribesDataColum
     private final Predicate<Prof> decorated;
 
     public ProfileStreamFilter(StreamOptions options, GeneQueryResponse geneQueryResponse){
-
-        Predicate<Prof> keepOnlyTheInterestingProfiles =
-                options.isSpecific() && !options.getDataColumnsToReturn().equals(options.getAllDataColumns())
-                ? keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns())
-                        : keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn());
-
-
+        
         decorated = geneQueryResponse.getAllGeneIds().isEmpty()
-                ? keepOnlyTheInterestingProfiles
-                : Predicates.and(keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()), keepOnlyTheInterestingProfiles);
+                ? options.isSpecific() && !options.getDataColumnsToReturn().equals(options.getAllDataColumns())
+                    ? keepOnlyProfilesOverExpressedOnColumns(options.getDataColumnsToReturn(), options.getAllDataColumns())
+                    : keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn())
+                : Predicates.and(
+                    keepOnlyProfilesWithGeneIds(geneQueryResponse.getAllGeneIds()),
+                    keepOnlyProfilesExpressedOnColumns(options.getDataColumnsToReturn())
+                );
     }
 
     @Override
