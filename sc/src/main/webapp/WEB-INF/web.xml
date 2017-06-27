@@ -47,9 +47,18 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
     <!-- Disable JSessionID -->
     <session-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+
+    <filter>
+        <filter-name>cors-headers</filter-name>
+        <filter-class>uk.ac.ebi.atlas.filters.CORSHeaders</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors-headers</filter-name>
+        <url-pattern>/json/*</url-pattern>
+    </filter-mapping>
 </web-app>
