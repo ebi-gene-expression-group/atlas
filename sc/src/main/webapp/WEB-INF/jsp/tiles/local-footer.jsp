@@ -2,19 +2,7 @@
 
 <footer id="local-footer" class="local-footer" role="local-footer">
     <div class="row padding-top-large padding-bottom-large">
-
-        <div class="small-3 columns small-offset-2">
-            <h5>Experiments</h5>
-            <a href="#">By name (A-z)</a><br/>
-            <a href="#">By tissues (A-Z)</a><br/>
-            <a href="#">By genes/species (A-Z)</a><br/>
-            <a href="#">By diseases (A-Z)</a><br/>
-            <a href="#">By experimental variables (A-Z)</a><br/>
-            <a href="#">By differential experiments</a><br/>
-            <a href="#">By baseline experiments</a>
-        </div>
-
-        <div class="small-3 columns">
+        <div class="small-3 columns large-offset-4">
             <h5>Atlas</h5>
             <a href="#">Search</a><br/>
             <a href="#">Release notes</a><br/>
