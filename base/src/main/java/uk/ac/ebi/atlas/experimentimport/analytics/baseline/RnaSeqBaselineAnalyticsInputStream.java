@@ -8,7 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.atlas.model.experiment.baseline.QuartilesArrayBuilder;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -115,25 +115,15 @@ public class RnaSeqBaselineAnalyticsInputStream implements ObjectInputStream<Bas
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
 
         for (int i = 0; i < expressionLevels.length; i++) {
-            String assayGroupId = assayGroupIds[i];
 
-            String expressionLevelString = expressionLevels[i];
-
-            if (!"NA".equalsIgnoreCase(expressionLevelString)) {
-                Double expressionLevel;
-                double[] quartiles;
-                if (expressionLevelString.contains(",")) {
-                    quartiles = QuartilesArrayBuilder.create(expressionLevelString);
-                    expressionLevel = quartiles[2];
-                }
-                else {
-                    quartiles = new double[]{};
-                    expressionLevel = Double.parseDouble(expressionLevels[i]);
-                }
-
-                if (expressionLevel != 0.0) {
-                    builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel, quartiles));
-                }
+            BaselineExpression baselineExpression = BaselineExpression.create(expressionLevels[i], assayGroupIds[i]);
+            if(baselineExpression.getLevel() > 0) {
+                builder.add(new BaselineAnalytics(
+                        geneId,
+                        baselineExpression.getDataColumnDescriptorId(),
+                        baselineExpression.getLevel(),
+                        baselineExpression.getQuartiles()
+                ));
             }
         }
 

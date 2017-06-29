@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.model.experiment.baseline;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
+import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.DecimalFormat;
@@ -20,38 +22,58 @@ public class BaselineExpression implements Expression {
     }
 
     public BaselineExpression(double level, String dataColumnDescriptorId) {
-        this(level, dataColumnDescriptorId, new double[]{});
+        this(level, dataColumnDescriptorId, new double[]{level});
     }
 
-    public BaselineExpression(double[] quartiles, String dataColumnDescriptorId) {
-        this(quartiles[2], dataColumnDescriptorId, quartiles);
+    public BaselineExpression(double min,
+                              double lowerQuartile,
+                              double median,
+                              double upperQuartile,
+                              double max,
+                              String dataColumnDescriptorId) {
+        this(median, dataColumnDescriptorId, new double[]{min,lowerQuartile, median, upperQuartile, max});
     }
 
-    // I got made public for the serializer, do not use otherwise! TODO improve
-    public BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
+
+    private BaselineExpression(double level, String dataColumnDescriptorId, double[] quartiles) {
         this(level);
         this.dataColumnDescriptorId = dataColumnDescriptorId;
         this.quartiles = quartiles;
     }
 
-    public BaselineExpression(String expressionLevelString, String dataColumnDescriptorId) {
-
-        switch (expressionLevelString) {
-            case "NT": // For factors not studied in the multiexperiment heatmap
-                level = 0.0;
-                known = false;
-                break;
-            case "NA": // Treat as if zero
-                level = 0;
-                known = true;
-                break;
-            default:
-                level = Double.parseDouble(expressionLevelString);
-                known = true;
-                break;
+    /*
+    NT is deprecated, shouldn't be present
+    "-" was documented as a "zero code"
+    */
+    private static final ImmutableList<String> zeros = ImmutableList.of("NA", "-", "NT");
+    public static BaselineExpression create(String expressionLevelString, String assayGroupId){
+        if (expressionLevelString == null) {
+            return null;
         }
-        this.dataColumnDescriptorId = dataColumnDescriptorId;
-        this.quartiles = new double[]{};
+
+        if (zeros.contains(expressionLevelString)) {
+            return new BaselineExpression(0.0, assayGroupId);
+        }
+
+        if (expressionLevelString.contains(",")) {
+            String[] vals = expressionLevelString.split(",", 5);
+
+
+            double min = Double.parseDouble(vals[0]);
+            double max = Double.parseDouble(vals[4]);
+
+            return min == max
+                    ? new BaselineExpression(min, assayGroupId)
+                    : new BaselineExpression(
+                    min,
+                    Double.parseDouble(vals[1]),
+                    Double.parseDouble(vals[2]),
+                    Double.parseDouble(vals[3]),
+                    max,
+                    assayGroupId);
+        }
+
+        return new BaselineExpression(Double.parseDouble(expressionLevelString), assayGroupId);
     }
 
     @Override
