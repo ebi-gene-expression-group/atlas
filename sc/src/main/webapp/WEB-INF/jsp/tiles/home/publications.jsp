@@ -39,9 +39,5 @@
                 </div>
             </div>
         </a>
-
-
-
-        <a href="#" class="button">All publications</a>
     </div>
 </div>

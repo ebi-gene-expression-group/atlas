@@ -167,22 +167,22 @@ body .has-tip.go-cc {background-color: #ed561b; color:white;}
 /*********** TISSUE type ************/
 
 /* flat black tissues*/
-.tissue_type_flate .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 2% 49%; background-size: 1200%;  height: 4em;filter: opacity(70%);}
-.tissue_type_flate .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 14% 47%; background-size: 1200%; height: 4em;filter:  opacity(70%); }
-.tissue_type_flate .tissue_eye {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4em;filter: opacity(70%); }
-.tissue_type_flate .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 27% 49%; background-size: 1200%;  height: 4em;filter: opacity(70%);}
-.tissue_type_flate .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 39% 48%; background-size: 1200%;  height: 4em;filter:  opacity(70%);}
-.tissue_type_flate .tissue_spleen {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4em;}
+.tissue_type_flate .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 2% 49%; background-size: 1200%;  height: 4.1em;filter: opacity(70%);}
+.tissue_type_flate .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 14% 47%; background-size: 1200%; height: 4.1em;filter:  opacity(70%); }
+.tissue_type_flate .tissue_eye {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4.1em;filter: opacity(70%); }
+.tissue_type_flate .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 27% 49%; background-size: 1200%;  height: 4.1em;filter: opacity(70%);}
+.tissue_type_flate .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 39% 48%; background-size: 1200%;  height: 4.1em;filter:  opacity(70%);}
+.tissue_type_flate .tissue_spleen {background: url(../images/tissue/tissue-type_01.svg) no-repeat 50% 50%; background-size: 1200%; height: 4.1em;}
 /* plain round tissues*/
-.tissue_type_rd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0% 102%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
-.tissue_type_rd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 102%; background-size: 1140%; height: 4em;filter:  opacity(70%); }
-.tissue_type_rd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 102%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
-.tissue_type_rd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 102%; background-size: 1140%;  height: 4em;filter:  opacity(70%);}
+.tissue_type_rd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0% 102%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
+.tissue_type_rd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 102%; background-size: 1140%; height: 4.1em;filter:  opacity(70%); }
+.tissue_type_rd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 102%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
+.tissue_type_rd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 102%; background-size: 1140%;  height: 4.1em;filter:  opacity(70%);}
 /* light round tissues*/
-.tissue_type_lrd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0 85%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
-.tissue_type_lrd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 85%; background-size: 1140%; height: 4em;filter:  opacity(70%); }
-.tissue_type_lrd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 85%; background-size: 1140%;  height: 4em;filter: opacity(70%);}
-.tissue_type_lrd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 85%; background-size: 1140%;  height: 4em;filter:  opacity(70%);}
+.tissue_type_lrd .tissue_bone_m {background: url(../images/tissue/tissue-type_01.svg) no-repeat 0 85%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
+.tissue_type_lrd .tissue_brain {background: url(../images/tissue/tissue-type_01.svg) no-repeat 12% 85%; background-size: 1140%; height: 4.1em;filter:  opacity(70%); }
+.tissue_type_lrd .tissue_kidneys {background: url(../images/tissue/tissue-type_01.svg) no-repeat 25% 85%; background-size: 1140%;  height: 4.1em;filter: opacity(70%);}
+.tissue_type_lrd .tissue_pancreas {background: url(../images/tissue/tissue-type_01.svg) no-repeat 37% 85%; background-size: 1140%;  height: 4.1em;filter:  opacity(70%);}
 
 
 /*********** CEll type ************/
