@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
-<div class="row margin-bottom-xlarge">
+<div class="row margin-top-large">
     <div class="small-12 columns">
         <tiles:insertAttribute name="home-hero"/>
     </div>
