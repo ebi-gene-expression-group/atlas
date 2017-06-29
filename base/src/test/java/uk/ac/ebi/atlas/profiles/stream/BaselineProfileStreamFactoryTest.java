@@ -1,13 +1,16 @@
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.RandomUtils;
+import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperimentTest;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.profiles.stream.BaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferencesTest;

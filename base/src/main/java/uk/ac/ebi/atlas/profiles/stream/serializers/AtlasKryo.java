@@ -65,20 +65,31 @@ public class AtlasKryo {
                 new Serializer<BaselineExpression>() {
             @Override
             public void write(Kryo kryo, Output output, BaselineExpression baselineExpression) {
-                output.writeDouble(baselineExpression.getLevel());
-                output.writeString(baselineExpression.getDataColumnDescriptorId());
                 double[] quartiles = baselineExpression.getQuartiles();
-                output.writeInt(quartiles.length);
-                output.writeDoubles(baselineExpression.getQuartiles());
+                output.writeBoolean(quartiles.length == 5);
+                for(double d : quartiles){
+                    output.writeDouble(d);
+                }
+                output.writeString(baselineExpression.getDataColumnDescriptorId());
             }
 
             @Override
             public BaselineExpression read(Kryo kryo, Input input, Class<BaselineExpression> aClass) {
-                double level = input.readDouble();
-                String id = input.readString();
-                int length = input.readInt();
-                double[] quartiles = input.readDoubles(length);
-                return new BaselineExpression(level, id, quartiles);
+                if(input.readBoolean()){
+                    return new BaselineExpression(
+                            input.readDouble(),
+                            input.readDouble(),
+                            input.readDouble(),
+                            input.readDouble(),
+                            input.readDouble(),
+                            input.readString()
+                            );
+                } else {
+                    return new BaselineExpression(
+                            input.readDouble(),
+                            input.readString()
+                    );
+                }
             }
         });
 
