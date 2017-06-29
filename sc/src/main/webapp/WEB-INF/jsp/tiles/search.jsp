@@ -3,21 +3,17 @@
 <form method="get" action="search" id="home-search-atlas-form">
     <h3>What gene?</h3>
 
-    <div class="row">
-        <div class="small-12 columns">
-            <label>Enter a gene or gene property to search for marker genes</label>
-            <input id="home-search-atlas-input" type="text" placeholder="Enter your search" name="geneQuery"/>
-        </div>
-    </div>
+    <!-- No need to enclose in row as the component already uses Foundation classes -->
+    <div id="target"></div>
 
     <div class="row">
         <div class="small-12 columns small">
-            Examples: <a href='${pageContext.request.contextPath}/query?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
-            <a href='${pageContext.request.contextPath}/query?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
-            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"lung"}]'>lung</a>,
-            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
-            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
-            <a href='${pageContext.request.contextPath}/query?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
+            Examples: <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"REG1B"}]'>REG1B</a>,
+            <a href='${pageContext.request.contextPath}/search?geneQuery=[{"value":"zinc finger"}]'>zinc finger</a>,
+            <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"lung"}]'>lung</a>,
+            <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"leaf"}]'>leaf</a>,
+            <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"valproic acid"}]'>valproic acid</a>,
+            <a href='${pageContext.request.contextPath}/search?conditionQuery=[{"value":"cancer"}]'>cancer</a></label>
         </div>
     </div>
 
@@ -28,3 +24,13 @@
         </div>
     </div>
 </form>
+
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/atlasAutocomplete.bundle.js"></script>
+
+<script>
+  atlasAutocomplete.render({
+    atlasUrl: '${pageContext.request.contextPath}/',
+    suggesterEndpoint: 'json/suggestions',
+  }, 'target')
+</script>
