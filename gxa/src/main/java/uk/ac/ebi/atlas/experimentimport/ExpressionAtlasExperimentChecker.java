@@ -108,7 +108,7 @@ public class ExpressionAtlasExperimentChecker implements ExperimentChecker {
             public String apply(@Nullable AssayGroup assayGroup) {
                 return assayGroup.getId();
             }
-        }).toSet()), "Ids in data file not matching in {0}-configuration.xml", experimentAccession);
+        }).toSet()), MessageFormat.format("Ids in data file not matching in {0}-configuration.xml", experimentAccession));
 
     }
 
