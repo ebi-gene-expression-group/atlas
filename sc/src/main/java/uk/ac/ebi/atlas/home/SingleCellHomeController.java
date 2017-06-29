@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.experiments.LatestExperimentsDao;
 import uk.ac.ebi.atlas.experiments.LatestExperimentsService;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -12,7 +13,7 @@ import uk.ac.ebi.atlas.trader.SingleCellExperimentTrader;
 import javax.inject.Inject;
 
 @Controller
-public class SingleCellHomeController {
+public class SingleCellHomeController extends HtmlExceptionHandlingController {
 
     private final LatestExperimentsService latestExperimentsService;
 
@@ -28,6 +29,7 @@ public class SingleCellHomeController {
     @RequestMapping(value = "/home")
     public String getHomePage(Model model) {
         model.addAllAttributes(latestExperimentsService.fetchLatestExperimentsAttributes());
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
         return "home";
     }
 }
