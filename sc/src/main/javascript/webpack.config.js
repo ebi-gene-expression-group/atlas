@@ -6,10 +6,11 @@ var WebpackShellPlugin = require('webpack-shell-plugin')
 module.exports = {
   // define the bundles we want
   entry: {
-    atlasAutocomplete: ['./bundles/autocomplete/index.jsx'],
+    atlasAutocomplete: ['./bundles/autocomplete/index.js'],
+    markerGenesSearchResults: ['./bundles/marker-genes/index.js'],
     // Put dependencies one line per package
     dependencies: [
-      'prop-types', 'react', 'react-autocomplete', 'react-dom', 'react-refetch', 'urijs'  // autocomplete
+      'prop-types', 'react', 'react-autocomplete', 'react-dom', 'react-refetch', 'urijs'  // autocomplete, marker-genes
     ],
     polyfills: ['babel-polyfill', 'whatwg-fetch']
   },
