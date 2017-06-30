@@ -12,6 +12,16 @@
 
     <!-- If there are marker genes results show this... -->
     <div class="small-12 columns">
-        <tiles:insertAttribute name="marker-genes"/>
+        <div id="marker-genes"></div>
     </div>
 </div>
+
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/vendorCommons.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/versioned-resources-${resourcesVersion}/js-bundles/markerGenesSearchResults.bundle.js"></script>
+
+<script>
+  markerGenesSearchResults.render({
+    atlasUrl: '${pageContext.request.contextPath}/',
+    geneId: '${geneId}',
+  }, 'marker-genes')
+</script>
