@@ -37,15 +37,30 @@ public abstract class ProfileStreamFactory<DataColumnDescriptor extends Describe
 
         for (Prof prof : new IterableObjectInputStream<>(getProfiles(experiment, streamOptions, Predicates.<Prof>alwaysTrue()))) {
 
-            double expressionValue = prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn());
-
-            for (int i = cutoffBins.length - 1 ; i >= 0 ; i--) {
-                if (expressionValue >= cutoffBins[i]) {
-                    result[i] += 1;
-                    break;
-                }
-            }
+            result[binarySearch0(cutoffBins, prof.getMaxExpressionLevelOn(streamOptions.getDataColumnsToReturn()))] +=1;
         }
         return result;
+    }
+
+    //java.util.Arrays.binarySearch0 modified to stop when key is between buckets, removed the NaN cases
+    private static int binarySearch0(double[] a , double key) {
+        int low = 0;
+        int high = a.length - 1;
+
+        while (low < high) {
+            int mid = (low + high) >>> 1;
+            double midVal = a[mid];
+
+            if (midVal < key){
+                low = mid + 1;
+            }
+            else if (midVal > key) {
+                high = mid;
+            } else {
+                return mid;
+            }
+
+        }
+        return low;
     }
 }

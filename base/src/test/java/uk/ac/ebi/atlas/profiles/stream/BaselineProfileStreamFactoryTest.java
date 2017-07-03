@@ -69,15 +69,21 @@ public class BaselineProfileStreamFactoryTest {
     @Test
     public void valuesAssignedCorrectlyToBins(){
         assertArrayEquals(
-                new int[]{},
-                testHistogram(new double[]{0.5,1.5,2.5}, new double[]{}));
+                new int[]{1,1,1},
+                testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0, 2.0, 1000}));
         assertArrayEquals(
-                new int[]{2},
+                new int[]{1,2,0},
+                testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0, 3.0, 1000}));
+        assertArrayEquals(
+                new int[]{0,0,3},
+                testHistogram(new double[]{0.5,1.5,2.5}, new double[]{0.1, 0.2, 1000}));
+        assertArrayEquals(
+                new int[]{1,2},
+                testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0, 1000}));
+        assertArrayEquals(
+                new int[]{3},
                 testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0}));
-
-        assertArrayEquals(
-                new int[]{1,1},
-                testHistogram(new double[]{0.5,1.5,2.5}, new double[]{1.0, 2.0}));
     }
+
 
 }
