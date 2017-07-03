@@ -24,7 +24,7 @@ public class SolrBioentitiesSuggesterService {
     }
 
     public List<SemanticQueryTerm> fetchBioentitySuggestions(String query, Species species, int numberOfSuggestions) {
-        return fetchSuggestions("bioentitySuggester", query, species,numberOfSuggestions);
+        return fetchSuggestions("bioentitySuggester", query, species, numberOfSuggestions);
     }
 
     private List<SemanticQueryTerm> fetchSuggestions(String suggesterDictionary, String query, Species species, int numberOfSuggestions) {
@@ -32,7 +32,7 @@ public class SolrBioentitiesSuggesterService {
         solrQuery.setRequestHandler("/suggest")
                 .setParam("suggest.dictionary", suggesterDictionary)
                 .setParam("suggest.q", query)
-                .setParam("suggest.cfq", species.getEnsemblName().toLowerCase());
+                .setParam("suggest.cfq", species.getEnsemblName());
 
         return solrClient.query(solrQuery).getSuggesterResponse().getSuggestions().values().stream()
                 .flatMap(List::stream)
