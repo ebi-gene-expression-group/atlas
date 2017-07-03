@@ -24,6 +24,6 @@ public class DifferentialExperimentDataPoint extends ExperimentDataPoint{
 
     @Override
     public ImmutableList<BioentityPropertyName> getRelevantBioentityPropertyNames(){
-        return bioentityPropertyNames.subList(0, bioentityPropertyNames.size()-2);
+        return bioentityPropertyNames.subList(0, bioentityPropertyNames.size()-1);
     }
 }
