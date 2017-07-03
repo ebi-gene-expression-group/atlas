@@ -56,7 +56,8 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
                 model.addAttribute("datasetVersion", "32203_points");
                 return "experiment-spatial";
             case "E-MTAB-4388":
-                return "experiment-reference-plot";
+                return "experiment-page";
+//                return "experiment-reference-plot";
             case "E-MTAB-5061":
                 return "experiment-tsne-plot";
             default:

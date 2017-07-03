@@ -5,7 +5,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     // define the bundles we want
     entry: {
-
+        referencePlot: './sc_modules/reference-plot'
     },
 
     output: {

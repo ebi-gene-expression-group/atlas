@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <title>React Router demo</title>
+
+    <meta charset="utf-8">
+    <title>Expression Atlas &lt; Demo pages</title>
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
+
+    <!-- CSS: implied media=all -->
+    <!-- CSS concatenated and minified via ant build script-->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all">
+
+    <!-- Use this CSS file for any custom styling -->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+
+    <script src="../dist/vendorCommons.bundle.js"></script>
+    <script src="../dist/experimentPage.bundle.js"></script>
+</head>
+
+<body>
+
+<div id="container"></div>
+
+</body>
+
+<script>
+
+    experimentPage.render({
+        atlasUrl: 'http://localhost:8080/gxa_sc/',
+        container: document.getElementById('container')
+    });
+
+//    var speciesList = [
+//        {species: "homo sapiens", totalExperiments: 9, baselineExperiments: 5, differentialExperiments: 2},
+//        {species: "mus musculus", totalExperiments: 4, baselineExperiments: 1, differentialExperiments: 3},
+//        {species: "arabidopsis thaliana", totalExperiments: 2, baselineExperiments: 1, differentialExperiments: 1},
+//        {species: "schizosaccharomyces pombe", totalExperiments: 2, baselineExperiments: 1, differentialExperiments: 1},
+//        {species: "xenopus tropicalis", totalExperiments: 1, baselineExperiments: 0, differentialExperiments: 1}];
+//
+//    browseBySpecies.render({
+//        atlasUrl: 'http://localhost:8080/gxa/',
+//        speciesInfoList: speciesList,
+//        container: document.getElementById('container')
+//    });
+
+</script>
+
+</html>

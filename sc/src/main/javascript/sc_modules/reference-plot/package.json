@@ -1,0 +1,13 @@
+{
+  "name": "reference-plot",
+  "version": "0.0.1",
+  "description": "SC3 perplexity plots",
+  "main": "index.js",
+  "author": "atlas devs",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "reference-plot": "latest"
+  }
+
+}
