@@ -20,7 +20,7 @@ public abstract class BioentityPropertyFile extends AtlasResource<Stream<Bioenti
 
         return IntStream
                 .range(0, propertyNames.length)
-                .mapToObj(Integer::new)
+                .boxed()
                 .flatMap(index ->
                         Stream.of(propertyValues[index].split("@@"))
                                 .filter(StringUtils::isNotEmpty)
