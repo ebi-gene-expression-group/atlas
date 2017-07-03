@@ -1,9 +1,6 @@
-
 package uk.ac.ebi.atlas.solr.admin.monitor;
 
 import com.google.common.collect.Iterators;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.resource.BioentityPropertyFile;
 

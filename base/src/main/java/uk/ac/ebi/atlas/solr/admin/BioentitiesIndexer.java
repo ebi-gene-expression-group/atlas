@@ -47,6 +47,13 @@ public class BioentitiesIndexer {
         this.executorService = executorService;
     }
 
+    public void rebuildIndex() {
+        if (bioentityIndexMonitor.start()){
+            executorService.execute(this::doRebuild);
+            executorService.shutdown();
+        }
+    }
+
     private void addFileToIndex(BioentityPropertyFile bioentityPropertyFile){
         Iterators.partition(bioentityPropertyFile.get().iterator(), BATCH_SIZE).forEachRemaining(this::addBeans);
     }
@@ -58,7 +65,7 @@ public class BioentitiesIndexer {
         bioentityIndexMonitor.completed();
     }
 
-    void addBeans(Collection<?> x){
+    private void addBeans(Collection<?> x){
         try {
             solrClient.addBeans(x);
         } catch (SolrServerException | IOException e) {
@@ -83,19 +90,8 @@ public class BioentitiesIndexer {
         }
     }
 
-    public void rebuildIndex() {
 
-        if (bioentityIndexMonitor.start()){
-
-            executorService.execute(() -> {
-                doRebuild();
-            });
-            executorService.shutdown();
-        }
-    }
-
-
-    public void deleteAll() {
+    void deleteAll() {
         try {
             solrClient.deleteByQuery("*:*");
             solrClient.commit();
