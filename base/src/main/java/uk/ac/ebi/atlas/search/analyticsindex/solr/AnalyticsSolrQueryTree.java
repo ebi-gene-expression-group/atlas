@@ -170,7 +170,7 @@ public class AnalyticsSolrQueryTree {
     private static String decideOnKeywordField(SemanticQueryTerm term){
         if(term.hasNoCategory()){
             if(ensemblIdRegexFromTheInternet.matcher(term.value()).matches()){
-                return "bioentity_identifier";
+                return BioentityPropertyName.BIOENTITY_IDENTIFIER.name;
             }
             //a multiword string cannot be a keyword
             if(term.value().trim().contains(" ")){
@@ -179,7 +179,9 @@ public class AnalyticsSolrQueryTree {
                 return UNRESOLVED_IDENTIFIER_SEARCH_FLAG_VALUE;
             }
         } else {
-            return "keyword_" + term.category();
+            return BioentityPropertyName.BIOENTITY_IDENTIFIER.name.equals(term.category())
+                    ? BioentityPropertyName.BIOENTITY_IDENTIFIER.name
+                    : "keyword_" + term.category();
         }
     }
 
