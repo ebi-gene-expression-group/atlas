@@ -22,25 +22,27 @@ public class ConditionsLookupService {
         this.efoLookupService = efoLookupService;
     }
 
-    public ImmutableSet<DifferentialCondition> buildPropertiesForDifferentialExperiment(String experimentAccession,
-                                                                                       ExperimentDesign
-                                                                                               experimentDesign,
-                                                                                        Collection<Contrast> contrasts){
+    public ImmutableSet<DifferentialCondition>
+    buildPropertiesForDifferentialExperiment(String experimentAccession,
+                                             ExperimentDesign experimentDesign,
+                                             Collection<Contrast> contrasts) {
         DifferentialConditionsBuilder b = new DifferentialConditionsBuilder(experimentAccession,experimentDesign);
         contrasts.forEach(b::addContrast);
         return b.build();
     }
 
     public ImmutableSet<Condition> buildPropertiesForBaselineExperiment(String experimentAccession,
-                                                                                   ExperimentDesign experimentDesign,
-                                                                                   Collection<AssayGroup> assayGroups){
+                                                                        ExperimentDesign experimentDesign,
+                                                                        Collection<AssayGroup> assayGroups) {
         BaselineConditionsBuilder b = new BaselineConditionsBuilder(experimentAccession,experimentDesign);
         assayGroups.forEach(b::addCondition);
         return b.build();
     }
 
 
-    protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, Set<String> ontologyIds) {
+    private Set<String> collectAssayProperties(ExperimentDesign experimentDesign,
+                                               String assayAccession,
+                                               Set<String> ontologyIds) {
         return ImmutableSet.<String>builder()
                 .addAll(experimentDesign.getFactorValues(assayAccession).values())
                 .addAll(experimentDesign.getSampleCharacteristicsValues(assayAccession).values())
@@ -93,8 +95,8 @@ public class ConditionsLookupService {
             super(experimentAccession, experimentDesign);
         }
 
-        private void addDifferentialCondition(String contrastId, AssayGroup assayGroup){
-            for(String assayAccession: assayGroup){
+        private void addDifferentialCondition(String contrastId, AssayGroup assayGroup) {
+            for(String assayAccession: assayGroup) {
                 builder.add(new DifferentialCondition(
                         experimentAccession,
                         assayGroup.getId(),

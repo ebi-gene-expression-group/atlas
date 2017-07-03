@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.conditions;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Iterables;
-import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -41,7 +40,9 @@ public class Condition {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final Condition other = (Condition) obj;
-        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupId, other.assayGroupId) && Iterables.elementsEqual(this.values, other.values);
+        return Objects.equals(this.experimentAccession, other.experimentAccession) &&
+                Objects.equals(this.assayGroupId, other.assayGroupId) &&
+                Iterables.elementsEqual(this.values, other.values);
     }
 
     @Override
