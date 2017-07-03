@@ -30,6 +30,7 @@
     "react-dom": "^15.6.1",
     "react-refetch": "^1.0.0",
     "urijs": "^1.18.10",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "reference-plot": "latest"
   }
 }
