@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesFactory;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,20 +17,16 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+@Named
 public class BioentityPropertiesSource {
 
-    static final Pattern annotationFileNamePattern = Pattern.compile("\\w+\\.(\\w+gene|mature_mirna)\\.tsv");
-
-    static final Pattern arrayDesignFileNamePattern = Pattern.compile("\\w+\\.A-\\w+-\\d+\\.tsv");
-
-    static final Pattern reactomeFileNamePattern = Pattern.compile("\\w+\\.reactome\\.tsv");
+    private static final Pattern annotationFileNamePattern = Pattern.compile("\\w+\\.(\\w+gene|mature_mirna)\\.tsv");
+    private static final Pattern arrayDesignFileNamePattern = Pattern.compile("\\w+\\.A-\\w+-\\d+\\.tsv");
+    private static final Pattern reactomeFileNamePattern = Pattern.compile("\\w+\\.reactome\\.tsv");
 
     private final Path annotationsDirectory;
-
     private final Path arrayDesignsDirectory;
-
     private final Path reactomeDirectory;
-
     private final SpeciesFactory speciesFactory;
 
     public BioentityPropertiesSource(@Value("#{configuration['bioentity.properties']}") String bioentityPropertiesDirectoryLocation, SpeciesFactory speciesFactory){
@@ -44,7 +41,6 @@ public class BioentityPropertiesSource {
     }
 
     class AnnotationFile extends BioentityPropertyFile {
-
 
         AnnotationFile(Path path) {
             super(path, speciesFromFileName(path));
@@ -112,15 +108,15 @@ public class BioentityPropertiesSource {
         }
     }
 
-    public Stream<AnnotationFile> getAnnotationFiles(){
+    Stream<AnnotationFile> getAnnotationFiles(){
         return getBioentityPropertyFiles(annotationsDirectory, annotationFileNamePattern, AnnotationFile::new);
     }
 
-    public Stream<ArrayDesignMappingFile> getArrayDesignMappingFiles(){
+    Stream<ArrayDesignMappingFile> getArrayDesignMappingFiles(){
         return getBioentityPropertyFiles(arrayDesignsDirectory, arrayDesignFileNamePattern, ArrayDesignMappingFile::new);
     }
 
-    public Stream<ReactomePropertyFile> getReactomePropertyFiles(){
+    Stream<ReactomePropertyFile> getReactomePropertyFiles(){
         return getBioentityPropertyFiles(reactomeDirectory, reactomeFileNamePattern, ReactomePropertyFile::new);
     }
 }
