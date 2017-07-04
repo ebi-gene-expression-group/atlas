@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.profiles.stream;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonArray;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -133,16 +132,16 @@ public class RnaSeqBaselineProfileStreamFactoryTest {
 
     @Test
     public void canProvideQuartiles(){
-        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(twoAssayGroupBaselineExperiment, Predicates.<BaselineExpression>alwaysTrue())
+        CreatesProfilesFromTsvFiles.ProfileFromTsvLine profileFromTsvLine = subject.howToReadLineStream(twoAssayGroupBaselineExperiment, Predicates.alwaysTrue())
                 .apply(new String[]{"Gene ID", "Gene name", assayGroup.getId(), secondAssayGroup.getId()});
 
         assertThat(
                 profileFromTsvLine.apply(new String[]{"id", "name", "1.0", "2.0"}).getExpression(assayGroup),
-                Matchers.<Expression>is(new BaselineExpression(1.0, assayGroup.getId()))
+                Matchers.is(new BaselineExpression(1.0, assayGroup.getId()))
         );
 
         assertThat(
-                profileFromTsvLine.apply(new String[]{"id", "name", "0.1,0.2,0.3,0.4,0.5", "2.0"}).getExpression(assayGroup).toJson().get("quartiles").getAsJsonArray().size(),
+                profileFromTsvLine.apply(new String[]{"id", "name", "0.1,0.2,0.3,0.4,0.5", "2.0"}).getExpression(assayGroup).toJson().get("quartiles").getAsJsonObject().size(),
                 is(5));
     }
 
