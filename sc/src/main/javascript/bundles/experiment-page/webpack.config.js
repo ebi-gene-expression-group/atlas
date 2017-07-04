@@ -128,33 +128,4 @@ module.exports = {
         contentBase: "html",
         port: 9000
     }
-
-    //     loaders: [
-    //         {test: /\.js$/, loader: 'babel', query: {presets: ['es2015']}},
-    //             // Place here all the packages that we own
-    //             // exclude: /node_modules\/(?!(expression-atlas|anatomogram|react-ebi-species))/},
-    //         {test: /\.jsx$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
-    //         {test: /\.css$/, loader: 'style-loader!css-loader'},
-    //         {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
-    //         {test: /\.json$/, loader: 'json'},
-    //         {test: /\.(jpe?g|png|gif)$/i,
-    //             loaders: [
-    //                 'file?hash=sha512&digest=hex&name=[hash].[ext]',
-    //                 'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-    //             ]
-    //         },
-    //         { test: /\.html$/, loader: 'file?name=[name].[ext]' },
-    //         {test: /\.(svg)$/i,
-    //             loaders: [
-    //                 'file?hash=sha512&digest=hex&name=[hash].[ext]'
-    //             ]
-    //         }
-    //     ]
-    // },
-    //
-    // devServer: {
-    //     historyApiFallback: true,
-    //     contentBase: "html",
-    //     port: 9000
-    // }
 };

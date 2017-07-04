@@ -12,8 +12,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = require('react-router-dom');
 
-var _reactRouter = require('react-router');
-
 var _queryString = require('query-string');
 
 var _queryString2 = _interopRequireDefault(_queryString);
@@ -82,11 +80,12 @@ var Experiment = function (_Component2) {
     _createClass(Experiment, [{
         key: 'handleChange',
         value: function handleChange(param, item) {
-            if (param === "p1") {
-                this.setState({ p1: item.target.value });
-            } else if (param === "p2") {
-                this.setState({ p2: item.target.value });
-            }
+            var _newparam = {};
+            _newparam[param] = item.target.value;
+            this.setState(_newparam);
+
+            this.props.history.push("/experiment?" + _queryString2.default.stringify({ p1: param === "p1" ? item.target.value : this.state.p1,
+                p2: param === "p2" ? item.target.value : this.state.p2 }));
         }
     }, {
         key: 'componentDidMount',
@@ -95,11 +94,6 @@ var Experiment = function (_Component2) {
                 p1: this.state.params.p1,
                 p2: this.state.params.p2
             });
-        }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            _reactRouter.browserHistory.push("/experiment?" + _queryString2.default.stringify({ p1: this.state.p1, p2: this.state.p2 }));
         }
     }, {
         key: 'render',

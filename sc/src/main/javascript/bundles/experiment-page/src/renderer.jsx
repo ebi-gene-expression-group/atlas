@@ -7,7 +7,7 @@ import ExperimentPage from './experimentPage.jsx';
 //     ReactDOM.render(<ExperimentPage {...options} />, document.getElementById(target))
 // };
 
-// export default {render}
+// export {render}
 export default function ({atlasUrl, container}) {
     ReactDOM.render(
         <ExperimentPage atlasUrl={atlasUrl} />,

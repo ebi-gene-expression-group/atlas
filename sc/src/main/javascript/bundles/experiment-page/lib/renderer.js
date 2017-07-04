@@ -31,4 +31,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //     ReactDOM.render(<ExperimentPage {...options} />, document.getElementById(target))
 // };
 
-// export default {render}
+// export {render}
