@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.junit.Assert;
+import com.google.gson.JsonPrimitive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,13 +23,24 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.resource.MockDataFileHub;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import java.util.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Matchers.anyString;
@@ -95,15 +106,20 @@ public class ExperimentOpsTest {
                 accessions.add("E-DUMMY-" + rand.nextInt(10000));
             }
 
-            Iterator<JsonElement> result = subject.dispatchAndPerform(accessions, Collections.singleton(op))
-                    .iterator();
+            Iterator<JsonElement> result =
+                    subject.dispatchAndPerform(accessions, Collections.singleton(op)).iterator();
 
             int i = 0;
             while (result.hasNext()) {
                 JsonObject o = result.next().getAsJsonObject();
                 assertThat(accessions.get(i), is(o.get("accession").getAsString()));
-                Assert.assertNotNull(o.get("result"));
-                Assert.assertNull(o.get("error"));
+                if (o.get("error") == null) {
+                    assertThat(o.get("result"), is(not(nullValue())));
+                    assertThat(o.get("error"), is(nullValue()));
+                } else {
+                    assertThat(o.get("result"), is(nullValue()));
+                    assertThat(o.get("error").getAsString(), startsWith("Op not supported in Expression Atlas"));
+                }
                 i++;
             }
         }
@@ -291,7 +307,7 @@ public class ExperimentOpsTest {
 
     @Test
     public void statusReadsLastOpLogEntry() throws Exception {
-        assertThat(readFromStatus(ImmutableList.<OpLogEntry>of()), is(""));
+        assertThat(readFromStatus(ImmutableList.of()), is(""));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), containsString("ANALYTICS_IMPORT"));
         assertThat(readFromStatus(ImmutableList.of(OpLogEntry.NULL("msg"), OpLogEntry.newlyStartedOp(Op.ANALYTICS_IMPORT))), not(containsString("msg")));

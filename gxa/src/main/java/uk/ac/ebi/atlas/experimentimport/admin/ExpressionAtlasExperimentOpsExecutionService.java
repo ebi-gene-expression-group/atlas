@@ -159,6 +159,7 @@ public class ExpressionAtlasExperimentOpsExecutionService implements ExperimentO
                 break;
             case CACHE_REMOVE:
                 experimentTrader.removeExperimentFromCache(accession);
+                break;
             default:
                 throw new RuntimeException("Op not supported in Expression Atlas: " + op.name());
         }
