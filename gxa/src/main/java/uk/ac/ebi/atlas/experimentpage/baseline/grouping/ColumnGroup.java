@@ -4,14 +4,14 @@ import com.google.auto.value.AutoValue;
 import com.google.gson.JsonObject;
 
 @AutoValue
-public abstract class AnatomicalSystem {
+public abstract class ColumnGroup {
 
     abstract String id();
     abstract String name();
 
 
-    public static AnatomicalSystem create(String id, String name){
-        return new AutoValue_AnatomicalSystem(id,name);
+    public static ColumnGroup create(String id, String name){
+        return new AutoValue_ColumnGroup(id,name);
     }
 
     public JsonObject toJson(){
