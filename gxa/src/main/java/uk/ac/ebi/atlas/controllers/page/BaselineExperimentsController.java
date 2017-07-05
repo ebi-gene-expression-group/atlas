@@ -1,33 +1,26 @@
 package uk.ac.ebi.atlas.controllers.page;
 
-import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@Scope("request")
 public class BaselineExperimentsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaselineExperimentsController.class);
 
     private ExpressionAtlasExperimentTrader experimentTrader;
-
-    private SortedSetMultimap<String, String> experimentAccessionsBySpecies;
-    private Map<String, String> experimentLinks = new HashMap<>();
-    private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
     public BaselineExperimentsController(ExpressionAtlasExperimentTrader experimentTrader) {
@@ -37,22 +30,10 @@ public class BaselineExperimentsController {
     @RequestMapping("/baseline/experiments")
     public String getBaselineExperimentsPage(Model model) {
 
-        loadExperimentAccessionsBySpecies();
-
-        model.addAttribute("experimentAccessionsBySpecies", experimentAccessionsBySpecies);
-        model.addAttribute("experimentLinks", experimentLinks);
-        model.addAttribute("experimentDisplayNames", experimentDisplayNames);
-
-        model.addAttribute("mainTitle", "Baseline expression experiments ");
-
-        return "foundation-baseline-experiments";
-    }
-
-    @PostConstruct
-    private void loadExperimentAccessionsBySpecies() {
+        Map<String, String> experimentDisplayNames = new HashMap<>();
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
-            String displayName = null;
+            String displayName;
             try {
                 displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
             } catch (RuntimeException e) {
@@ -86,7 +67,9 @@ public class BaselineExperimentsController {
             else
                 return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
         };
-        experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
+        SortedSetMultimap<String, String> experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
+
+        Map<String, String> experimentLinks = new HashMap<>();
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
 
@@ -101,6 +84,13 @@ public class BaselineExperimentsController {
 
         }
 
+        model.addAttribute("experimentAccessionsBySpecies", experimentAccessionsBySpecies);
+        model.addAttribute("experimentLinks", experimentLinks);
+        model.addAttribute("experimentDisplayNames", experimentDisplayNames);
+
+        model.addAttribute("mainTitle", "Baseline expression experiments ");
+
+        return "foundation-baseline-experiments";
     }
 
 }
