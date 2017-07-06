@@ -2,16 +2,20 @@ import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
+import URI from 'urijs';
+
+import ReferencePlot from 'single-cell-tsne-plot';
 
 class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter>
+            <BrowserRouter
+                basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}>
                 <div>
-                    <Route path='/experiment' render={props => (
-                               <Experiment {...props}/>
-                           )}/>
+                    <Route path='/' render={props => (
+                        <Experiment {...props}/>
+                    )}/>
                 </div>
             </BrowserRouter>
 
@@ -21,9 +25,8 @@ class ExperimentPage extends Component {
 
 ExperimentPage.propTypes = {
     atlasUrl: PropTypes.string.isRequired,
+    experimentAccession: PropTypes.string.isRequired
 };
-
-
 
 class Experiment extends Component {
 
@@ -41,9 +44,10 @@ class Experiment extends Component {
         _newparam[param] = item.target.value;
         this.setState(_newparam);
 
-        this.props.history.push("/experiment?" + queryString.stringify({p1:(param === "p1" ? item.target.value : this.state.p1),
-                                                                        p2:(param === "p2" ? item.target.value : this.state.p2)}));
-
+        this.props.history.push("?" + queryString.stringify({
+            p1: (param === "p1" ? item.target.value : this.state.p1),
+            p2: (param === "p2" ? item.target.value : this.state.p2)
+        }));
     };
 
     componentDidMount() {
@@ -57,12 +61,16 @@ class Experiment extends Component {
 
         return (
             <div>
-                <h3>Welcome to the Experiment Page</h3>
-                <div className="small-2">
-                    <label>Param p1 is:</label>
+                <h3>Experiment Page section</h3>
+                <div className="large-6 columns">
+                    <label>Perplexity:</label>
                     <input type="text" value={this.state.p1} onChange={this.handleChange.bind(this, "p1")}/>
+                    <h3>Plot</h3>
+                    <ReferencePlot />
 
-                    <label>Param p2 is:</label>
+                </div>
+                <div className="large-6 columns">
+                    <label>GeneId:</label>
                     <input type="text" value={this.state.p2} onChange={this.handleChange.bind(this, "p2")}/>
                 </div>
             </div>

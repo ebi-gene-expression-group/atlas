@@ -1,0 +1,14 @@
+{
+  "name": "single-cell-tsne-plot",
+  "version": "0.0.1",
+  "description": "Wrapper bundle for SC3 perplexity plots",
+  "main": "index.js",
+  "author": "atlas devs",
+  "license": "",
+  "dependencies": {
+    "single-cell-tsne-plot": "latest",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+
+}

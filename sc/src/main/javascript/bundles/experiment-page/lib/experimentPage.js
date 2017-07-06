@@ -20,6 +20,10 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _urijs = require('urijs');
+
+var _urijs2 = _interopRequireDefault(_urijs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42,11 +46,12 @@ var ExperimentPage = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                null,
+                {
+                    basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString() },
                 _react2.default.createElement(
                     'div',
                     null,
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/experiment', render: function render(props) {
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/', render: function render(props) {
                             return _react2.default.createElement(Experiment, props);
                         } })
                 )
@@ -58,7 +63,8 @@ var ExperimentPage = function (_Component) {
 }(_react.Component);
 
 ExperimentPage.propTypes = {
-    atlasUrl: _propTypes2.default.string.isRequired
+    atlasUrl: _propTypes2.default.string.isRequired,
+    experimentAccession: _propTypes2.default.string.isRequired
 };
 
 var Experiment = function (_Component2) {
@@ -84,8 +90,10 @@ var Experiment = function (_Component2) {
             _newparam[param] = item.target.value;
             this.setState(_newparam);
 
-            this.props.history.push("/experiment?" + _queryString2.default.stringify({ p1: param === "p1" ? item.target.value : this.state.p1,
-                p2: param === "p2" ? item.target.value : this.state.p2 }));
+            this.props.history.push("?" + _queryString2.default.stringify({
+                p1: param === "p1" ? item.target.value : this.state.p1,
+                p2: param === "p2" ? item.target.value : this.state.p2
+            }));
         }
     }, {
         key: 'componentDidMount',
@@ -105,21 +113,25 @@ var Experiment = function (_Component2) {
                 _react2.default.createElement(
                     'h3',
                     null,
-                    'Welcome to the Experiment Page'
+                    'Experiment Page section'
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'small-2' },
+                    { className: 'large-6 columns' },
                     _react2.default.createElement(
                         'label',
                         null,
-                        'Param p1 is:'
+                        'Perplexity:'
                     ),
-                    _react2.default.createElement('input', { type: 'text', value: this.state.p1, onChange: this.handleChange.bind(this, "p1") }),
+                    _react2.default.createElement('input', { type: 'text', value: this.state.p1, onChange: this.handleChange.bind(this, "p1") })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'large-6 columns' },
                     _react2.default.createElement(
                         'label',
                         null,
-                        'Param p2 is:'
+                        'GeneId:'
                     ),
                     _react2.default.createElement('input', { type: 'text', value: this.state.p2, onChange: this.handleChange.bind(this, "p2") })
                 )

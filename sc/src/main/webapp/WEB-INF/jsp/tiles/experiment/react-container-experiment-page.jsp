@@ -10,14 +10,17 @@
 
     <div id="container"></div>
 
-<%--<div class="columns medium-6"> Main Left column </div>--%>
-
-    <%--<div class="columns medium-6"> Main Right column </div>--%>
 </div>
 
 <script>
+    <%--experimentPage.render({--%>
+        <%--atlasUrl: '${pageContext.request.contextPath}/',--%>
+        <%--experimentAccession: '${experimentAccession}',--%>
+    <%--}, 'container');--%>
+
     experimentPage.render({
         atlasUrl: "${pageContext.request.contextPath}/",
+        experimentAccession: "${experimentAccession}",
         container: document.getElementById('container')
     });
 </script>

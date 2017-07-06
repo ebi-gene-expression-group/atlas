@@ -3,13 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-exports.default = function (_ref) {
-    var atlasUrl = _ref.atlasUrl,
-        container = _ref.container;
-
-    _reactDom2.default.render(_react2.default.createElement(_experimentPage2.default, { atlasUrl: atlasUrl }), typeof container === 'string' ? document.getElementById(container) : container);
-};
+exports.render = undefined;
 
 var _react = require('react');
 
@@ -25,10 +19,14 @@ var _experimentPage2 = _interopRequireDefault(_experimentPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-;
+var render = function render(options, target) {
+    _reactDom2.default.render(_react2.default.createElement(_experimentPage2.default, options), document.getElementById(target));
+};
 
-// const render = function (options, target) {
-//     ReactDOM.render(<ExperimentPage {...options} />, document.getElementById(target))
+exports.render = render;
+// export default function ({atlasUrl, experimentAccession, container}) {
+//     ReactDOM.render(
+//         <ExperimentPage atlasUrl={atlasUrl}
+//                         experimentAccession={experimentAccession}/>,
+//         typeof container === `string` ? document.getElementById(container) : container)
 // };
-
-// export {render}
