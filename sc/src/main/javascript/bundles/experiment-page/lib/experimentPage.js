@@ -24,6 +24,10 @@ var _urijs = require('urijs');
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
+var _singleCellTsnePlot = require('single-cell-tsne-plot');
+
+var _singleCellTsnePlot2 = _interopRequireDefault(_singleCellTsnePlot);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -123,7 +127,13 @@ var Experiment = function (_Component2) {
                         null,
                         'Perplexity:'
                     ),
-                    _react2.default.createElement('input', { type: 'text', value: this.state.p1, onChange: this.handleChange.bind(this, "p1") })
+                    _react2.default.createElement('input', { type: 'text', value: this.state.p1, onChange: this.handleChange.bind(this, "p1") }),
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Plot'
+                    ),
+                    _react2.default.createElement(_singleCellTsnePlot2.default, null)
                 ),
                 _react2.default.createElement(
                     'div',

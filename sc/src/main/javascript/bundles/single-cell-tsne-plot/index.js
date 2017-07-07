@@ -1,3 +1,11 @@
-import {render} from 'single-cell-tsne-plot';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-export {render};
+import TSNEPlotContainer from 'single-cell-tsne-plot'
+
+const render = function (options, target) {
+    ReactDOM.render(<TSNEPlotContainer {...options} />, document.getElementById(target))
+}
+
+export {render}
+
