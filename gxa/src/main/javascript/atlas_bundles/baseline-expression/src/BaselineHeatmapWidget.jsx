@@ -1,7 +1,7 @@
 import React from 'react';
 
 import EventEmitter from 'events';
-import {ExpressionAtlasHeatmap} from 'expression-atlas-heatmap-highcharts';
+import ExpressionAtlasHeatmap from 'expression-atlas-heatmap-highcharts';
 
 const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
