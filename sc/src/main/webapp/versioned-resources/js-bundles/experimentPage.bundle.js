@@ -143931,21 +143931,21 @@ module.exports = exports['default'];
 /* 1055 */,
 /* 1056 */,
 /* 1057 */
-/*!************************************************!*\
-  !*** multi ./bundles/experiment-page/index.js ***!
-  \************************************************/
+/*!****************************************************!*\
+  !*** multi ./bundles/experiment-page/src/index.js ***!
+  \****************************************************/
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./bundles/experiment-page/index.js */1058);
+module.exports = __webpack_require__(/*! ./bundles/experiment-page/src/index.js */1058);
 
 
 /***/ }),
 /* 1058 */
-/*!******************************************!*\
-  !*** ./bundles/experiment-page/index.js ***!
-  \******************************************/
+/*!**********************************************!*\
+  !*** ./bundles/experiment-page/src/index.js ***!
+  \**********************************************/
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -143958,13 +143958,24 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _renderer = __webpack_require__(/*! ./src/renderer.jsx */ 1059);
+var _renderer = __webpack_require__(/*! ../src/renderer.jsx */ 1059);
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.render = _renderer2.default;
+
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+//
+// import ExperimentPage from '../src/experimentPage.js';
+//
+// const render = function (options, container) {
+//     ReactDOM.render(<ExperimentPage {...options} />, document.getElementById(container))
+// };
+//
+// export {ExperimentPage as default, render}
 
 /***/ }),
 /* 1059 */
@@ -143999,7 +144010,7 @@ var _reactDom = __webpack_require__(/*! react-dom */ 23);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _experimentPage = __webpack_require__(/*! ./experimentPage.jsx */ 1060);
+var _experimentPage = __webpack_require__(/*! ../src/experimentPage.js */ 1060);
 
 var _experimentPage2 = _interopRequireDefault(_experimentPage);
 
@@ -144007,16 +144018,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 ;
 
-// const render = function (options, target) {
-//     ReactDOM.render(<ExperimentPage {...options} />, document.getElementById(target))
-// };
-//
-// export {render}
-
 /***/ }),
 /* 1060 */
 /*!********************************************************!*\
-  !*** ./bundles/experiment-page/src/experimentPage.jsx ***!
+  !*** ./bundles/experiment-page/src/experimentPage.js ***!
   \********************************************************/
 /*! no static exports found */
 /*! all exports used */
