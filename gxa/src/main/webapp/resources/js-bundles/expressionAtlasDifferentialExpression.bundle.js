@@ -2,18 +2,27 @@ var expressionAtlasDifferentialExpression =
 webpackJsonp_name_([5],{
 
 /***/ 0:
+/*!********************************************************!*\
+  !*** ./atlas_bundles/differential-expression/index.js ***!
+  \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	module.exports = __webpack_require__(2418);
+	
+	module.exports = __webpack_require__(/*! ./src/differentialRenderer.js */ 3049);
 
 /***/ },
 
-/***/ 2406:
-[2747, 2407, 2408],
+/***/ 3020:
+/*!****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/querystring-es3/index.js ***!
+  \****************************************************************/
+[4110, 3021, 3022],
 
-/***/ 2407:
+/***/ 3021:
+/*!*****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/querystring-es3/decode.js ***!
+  \*****************************************************************/
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -36,44 +45,44 @@ webpackJsonp_name_([5],{
 	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+	
 	'use strict';
-
+	
 	// If obj.hasOwnProperty has been overridden, then calling
 	// obj.hasOwnProperty(prop) will break.
 	// See: https://github.com/joyent/node/issues/1707
 	function hasOwnProperty(obj, prop) {
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
-
+	
 	module.exports = function(qs, sep, eq, options) {
 	  sep = sep || '&';
 	  eq = eq || '=';
 	  var obj = {};
-
+	
 	  if (typeof qs !== 'string' || qs.length === 0) {
 	    return obj;
 	  }
-
+	
 	  var regexp = /\+/g;
 	  qs = qs.split(sep);
-
+	
 	  var maxKeys = 1000;
 	  if (options && typeof options.maxKeys === 'number') {
 	    maxKeys = options.maxKeys;
 	  }
-
+	
 	  var len = qs.length;
 	  // maxKeys <= 0 means that we should not limit keys count
 	  if (maxKeys > 0 && len > maxKeys) {
 	    len = maxKeys;
 	  }
-
+	
 	  for (var i = 0; i < len; ++i) {
 	    var x = qs[i].replace(regexp, '%20'),
 	        idx = x.indexOf(eq),
 	        kstr, vstr, k, v;
-
+	
 	    if (idx >= 0) {
 	      kstr = x.substr(0, idx);
 	      vstr = x.substr(idx + 1);
@@ -81,10 +90,10 @@ webpackJsonp_name_([5],{
 	      kstr = x;
 	      vstr = '';
 	    }
-
+	
 	    k = decodeURIComponent(kstr);
 	    v = decodeURIComponent(vstr);
-
+	
 	    if (!hasOwnProperty(obj, k)) {
 	      obj[k] = v;
 	    } else if (isArray(obj[k])) {
@@ -93,10 +102,10 @@ webpackJsonp_name_([5],{
 	      obj[k] = [obj[k], v];
 	    }
 	  }
-
+	
 	  return obj;
 	};
-
+	
 	var isArray = Array.isArray || function (xs) {
 	  return Object.prototype.toString.call(xs) === '[object Array]';
 	};
@@ -104,7 +113,10 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2408:
+/***/ 3022:
+/*!*****************************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/querystring-es3/encode.js ***!
+  \*****************************************************************/
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -127,32 +139,32 @@ webpackJsonp_name_([5],{
 	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+	
 	'use strict';
-
+	
 	var stringifyPrimitive = function(v) {
 	  switch (typeof v) {
 	    case 'string':
 	      return v;
-
+	
 	    case 'boolean':
 	      return v ? 'true' : 'false';
-
+	
 	    case 'number':
 	      return isFinite(v) ? v : '';
-
+	
 	    default:
 	      return '';
 	  }
 	};
-
+	
 	module.exports = function(obj, sep, eq, name) {
 	  sep = sep || '&';
 	  eq = eq || '=';
 	  if (obj === null) {
 	    obj = undefined;
 	  }
-
+	
 	  if (typeof obj === 'object') {
 	    return map(objectKeys(obj), function(k) {
 	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
@@ -164,18 +176,18 @@ webpackJsonp_name_([5],{
 	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
 	      }
 	    }).join(sep);
-
+	
 	  }
-
+	
 	  if (!name) return '';
 	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
 	         encodeURIComponent(stringifyPrimitive(obj));
 	};
-
+	
 	var isArray = Array.isArray || function (xs) {
 	  return Object.prototype.toString.call(xs) === '[object Array]';
 	};
-
+	
 	function map (xs, f) {
 	  if (xs.map) return xs.map(f);
 	  var res = [];
@@ -184,7 +196,7 @@ webpackJsonp_name_([5],{
 	  }
 	  return res;
 	}
-
+	
 	var objectKeys = Object.keys || function (obj) {
 	  var res = [];
 	  for (var key in obj) {
@@ -196,20 +208,23 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2418:
+/***/ 3049:
+/*!***************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/differentialRenderer.js ***!
+  \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
+	
 	//*------------------------------------------------------------------*
-
-	var DifferentialRouter = __webpack_require__(2419);
-
+	
+	var DifferentialRouter = __webpack_require__(/*! ./DifferentialRouter.jsx */ 3050);
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = function (_ref) {
 	    var _ref$atlasHostUrl = _ref.atlasHostUrl,
 	        atlasUrl = _ref$atlasHostUrl === undefined ? "/gxa/" : _ref$atlasHostUrl,
@@ -218,57 +233,60 @@ webpackJsonp_name_([5],{
 	        species = _ref.species,
 	        _ref$target = _ref.target,
 	        target = _ref$target === undefined ? 'gxaDifferentialTab' : _ref$target;
-
+	
 	    ReactDOM.render(React.createElement(DifferentialRouter, { atlasUrl: atlasUrl, geneQuery: geneQuery, conditionQuery: conditionQuery, species: species }), document.getElementById(target));
 	};
 
 /***/ },
 
-/***/ 2419:
+/***/ 3050:
+/*!**************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DifferentialRouter.jsx ***!
+  \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _urijs = __webpack_require__(2420);
-
+	
+	var _urijs = __webpack_require__(/*! urijs */ 3051);
+	
 	var _urijs2 = _interopRequireDefault(_urijs);
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var React = __webpack_require__(2);
-
-	var $ = __webpack_require__(2424);
+	
+	var React = __webpack_require__(/*! react */ 2);
+	
+	var $ = __webpack_require__(/*! jquery */ 3055);
 	$.ajaxSetup({ traditional: true });
-
+	
 	//*------------------------------------------------------------------*
-
-	var Results = __webpack_require__(2425);
-	var Facets = __webpack_require__(2458);
-	var UrlManager = __webpack_require__(2459);
-
+	
+	var Results = __webpack_require__(/*! ./DifferentialResults.jsx */ 3056);
+	var Facets = __webpack_require__(/*! ./DifferentialFacetsTree.jsx */ 3219);
+	var UrlManager = __webpack_require__(/*! ./urlManager.js */ 3220);
+	
 	//*------------------------------------------------------------------*
-
+	
 	/*
 	 TODO if Solr queries get fast enough that we can:
 	 - split the two requests, so that the facets load first, initial results load second
 	 - a request to the server is done for every interaction with the facets tree
 	 - add counts to each facet and disable check boxes if count is 0
 	*/
-
+	
 	var RequiredString = React.PropTypes.string.isRequired;
-
+	
 	var DifferentialRouter = React.createClass({
 	    displayName: 'DifferentialRouter',
-
+	
 	    propTypes: {
 	        atlasUrl: RequiredString,
 	        geneQuery: RequiredString,
 	        conditionQuery: RequiredString,
 	        species: RequiredString
 	    },
-
+	
 	    getInitialState: function getInitialState() {
 	        return {
 	            facetsTreeData: [],
@@ -284,7 +302,7 @@ webpackJsonp_name_([5],{
 	    },
 	    componentDidMount: function componentDidMount() {
 	        var _this = this;
-
+	
 	        this._loadInitialData();
 	        // TODO Consider using https://github.com/reactjs/react-router
 	        window.addEventListener('popstate', function () {
@@ -311,7 +329,7 @@ webpackJsonp_name_([5],{
 	        } else {
 	            this._removeElementFromObjectOfArrays(newQuerySelect, facetName, facetItemName);
 	        }
-
+	
 	        // TODO Consider using https://github.com/reactjs/react-router
 	        UrlManager.differentialPush(newQuerySelect, false);
 	        this.setState({
@@ -320,16 +338,16 @@ webpackJsonp_name_([5],{
 	    },
 	    _filteredResults: function _filteredResults() {
 	        var _this2 = this;
-
+	
 	        var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.querySelect;
-
+	
 	        return this.state.results.filter(function (result) {
 	            return _this2._resultMatchesQuery(result, query);
 	        });
 	    },
 	    _resultMatchesQuery: function _resultMatchesQuery(result, query) {
 	        var _this3 = this;
-
+	
 	        if (Object.keys(query).length === 0) {
 	            return false;
 	        } else {
@@ -351,13 +369,13 @@ webpackJsonp_name_([5],{
 	            return false;
 	        }
 	    },
-
-
+	
+	
 	    // Syncs tree data with URL (querySelect) and does some other smart things such as check/uncheck or disable facets based on
 	    // the user results (e.g. check & disable a facet if it’s shared by all results as a side effect of other choice)
 	    _prepareFacetTreeData: function _prepareFacetTreeData(filteredResults) {
 	        var _this4 = this;
-
+	
 	        return this.state.facetsTreeData.map(function (facet) {
 	            return {
 	                facetName: facet.facetName,
@@ -374,7 +392,7 @@ webpackJsonp_name_([5],{
 	                    var currentResultIds = filteredResults.map(function (result) {
 	                        return result.id;
 	                    }).sort();
-
+	
 	                    var sameResultsAfterSwitchingThisItem = JSON.stringify(resultIdsAfterSwitchingThisFacetItem) === JSON.stringify(currentResultIds);
 	                    var noResultsAfterSwitchingThisItem = resultIdsAfterSwitchingThisFacetItem.length === 0;
 	                    return {
@@ -389,7 +407,7 @@ webpackJsonp_name_([5],{
 	    },
 	    render: function render() {
 	        var filteredResults = this._filteredResults();
-
+	
 	        return React.createElement(
 	            'div',
 	            { className: 'row expanded' },
@@ -417,15 +435,15 @@ webpackJsonp_name_([5],{
 	    },
 	    _loadInitialData: function _loadInitialData() {
 	        var _this5 = this;
-
+	
 	        var queryParams = { geneQuery: this.props.geneQuery, conditionQuery: this.props.conditionQuery, species: this.props.species };
-
+	
 	        var onAjaxFailure = function onAjaxFailure(jqXHR, textStatus, errorThrown) {
 	            console.log("ERROR");
 	            console.log("Status: " + textStatus);
 	            console.log("Error thrown: " + errorThrown);
 	        };
-
+	
 	        $.ajax({
 	            url: (0, _urijs2.default)('json/search/differential_facets', this.props.atlasUrl).addSearch(queryParams).toString(),
 	            dataType: "json",
@@ -434,7 +452,7 @@ webpackJsonp_name_([5],{
 	                    url: (0, _urijs2.default)('json/search/differential_results', _this5.props.atlasUrl).addSearch(queryParams).toString(),
 	                    dataType: "json",
 	                    success: function success(resultsResponse) {
-
+	
 	                        // TODO Consider using https://github.com/reactjs/react-router
 	                        var querySelect = UrlManager.parseDifferentialUrlParameter();
 	                        if (!querySelect.kingdom) {
@@ -443,9 +461,9 @@ webpackJsonp_name_([5],{
 	                            });
 	                        }
 	                        UrlManager.differentialPush(querySelect, true);
-
+	
 	                        var facetsTreeData = _this5._transformFacetsResponseToArray(facetsResponse);
-
+	
 	                        _this5.setState({
 	                            facetsTreeData: _this5._pruneFacetsTreeBasedOnResultsThatCameIn(facetsTreeData, resultsResponse.results),
 	                            querySelect: querySelect,
@@ -498,69 +516,87 @@ webpackJsonp_name_([5],{
 	        });
 	    }
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = DifferentialRouter;
 
 /***/ },
 
-/***/ 2420:
-[2581, 2421, 2422, 2423, 2421, 2422, 2423],
+/***/ 3051:
+/*!******************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/urijs/src/URI.js ***!
+  \******************************************************************/
+[3953, 3052, 3053, 3054, 3052, 3053, 3054],
 
-/***/ 2421:
+/***/ 3052:
+/*!***********************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/urijs/src/punycode.js ***!
+  \***********************************************************************/
 194,
 
-/***/ 2422:
+/***/ 3053:
+/*!*******************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/urijs/src/IPv6.js ***!
+  \*******************************************************************/
 196,
 
-/***/ 2423:
+/***/ 3054:
+/*!*********************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/urijs/src/SecondLevelDomains.js ***!
+  \*********************************************************************************/
 197,
 
-/***/ 2424:
-1094,
+/***/ 3055:
+/*!***********************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/jquery/dist/jquery.js ***!
+  \***********************************************************************/
+1095,
 
-/***/ 2425:
+/***/ 3056:
+/*!***************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DifferentialResults.jsx ***!
+  \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _urijs = __webpack_require__(2420);
-
+	
+	var _urijs = __webpack_require__(/*! urijs */ 3051);
+	
 	var _urijs2 = _interopRequireDefault(_urijs);
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var $ = __webpack_require__(2424);
-	__webpack_require__(2426);
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-
+	
+	var $ = __webpack_require__(/*! jquery */ 3055);
+	__webpack_require__(/*! jquery.browser */ 3057);
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
+	
 	//*------------------------------------------------------------------*
-
-	var AtlasFeedback = __webpack_require__(2427);
-	var EbiSpeciesIcon = __webpack_require__(2428).Icon;
-
+	
+	var AtlasFeedback = __webpack_require__(/*! expression-atlas-feedback */ 3058);
+	var EbiSpeciesIcon = __webpack_require__(/*! react-ebi-species */ 3184).Icon;
+	
 	//*------------------------------------------------------------------*
-
-	var DisplayLevelsButton = __webpack_require__(2435);
-	var DifferentialDownloadButton = __webpack_require__(2437);
-	var Legend = __webpack_require__(2440);
-	var CellDifferential = __webpack_require__(2446);
-
-	var ContrastTooltips = __webpack_require__(2452);
-
-	__webpack_require__(2456);
-
+	
+	var DisplayLevelsButton = __webpack_require__(/*! ./DisplayLevelsButton.jsx */ 3196);
+	var DifferentialDownloadButton = __webpack_require__(/*! ./DifferentialDownloadButton.jsx */ 3198);
+	var Legend = __webpack_require__(/*! ./legend/LegendDifferential.jsx */ 3201);
+	var CellDifferential = __webpack_require__(/*! ./cell-differential/CellDifferential.jsx */ 3207);
+	
+	var ContrastTooltips = __webpack_require__(/*! ./contrast-tooltip/contrastTooltipModule.js */ 3213);
+	
+	__webpack_require__(/*! ./DifferentialResults.css */ 3217);
+	
 	//*------------------------------------------------------------------*
-
+	
 	var RequiredString = React.PropTypes.string.isRequired;
 	var OptionalString = React.PropTypes.string;
 	var DoubleWithDefault = React.PropTypes.number;
-
+	
 	var ResultType = {
 	    species: RequiredString,
 	    kingdom: RequiredString,
@@ -579,10 +615,10 @@ webpackJsonp_name_([5],{
 	    id: RequiredString,
 	    uri: RequiredString
 	};
-
+	
 	var DifferentialResults = React.createClass({
 	    displayName: 'DifferentialResults',
-
+	
 	    /*
 	    results: [
 	     {
@@ -623,7 +659,7 @@ webpackJsonp_name_([5],{
 	        maxUpLevel: DoubleWithDefault,
 	        atlasUrl: RequiredString
 	    },
-
+	
 	    getDefaultProps: function getDefaultProps() {
 	        return {
 	            maxDownLevel: Number.NEGATIVE_INFINITY,
@@ -644,7 +680,7 @@ webpackJsonp_name_([5],{
 	    },
 	    render: function render() {
 	        var _this = this;
-
+	
 	        var differentialResultRows = this.props.results.map(function (diffResult) {
 	            return React.createElement(DifferentialResultRow, _extends({
 	                key: diffResult.id,
@@ -652,7 +688,7 @@ webpackJsonp_name_([5],{
 	                atlasUrl: _this.props.atlasUrl
 	            }, diffResult));
 	        });
-
+	
 	        var feedbackSmileys = $.browser.msie ? null : React.createElement(
 	            'div',
 	            { style: { marginTop: '50px' } },
@@ -661,7 +697,7 @@ webpackJsonp_name_([5],{
 	                    _this.state.googleAnalyticsCallback('send', 'event', 'DifferentialHeatmaps', 'feedback', comment, score);
 	                } })
 	        );
-
+	
 	        return React.createElement(
 	            'div',
 	            null,
@@ -741,14 +777,14 @@ webpackJsonp_name_([5],{
 	        );
 	    }
 	});
-
+	
 	var DifferentialResultRow = React.createClass({
 	    displayName: 'DifferentialResultRow',
-
+	
 	    propTypes: Object.assign({}, ResultType, {
 	        atlasUrl: RequiredString
 	    }),
-
+	
 	    _linkToComparisonPage: function _linkToComparisonPage() {
 	        return 'experiments/' + this.props.experimentAccession + '?geneQuery=' + this.props.bioentityIdentifier + '&queryFactorValues=' + this.props.contrastId + '&specific=false';
 	    },
@@ -806,21 +842,24 @@ webpackJsonp_name_([5],{
 	    },
 	    componentDidMount: function componentDidMount() {
 	        var _this2 = this;
-
+	
 	        ContrastTooltips(this.props.atlasUrl, '', ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
 	        $(document).ready(function () {
 	            _this2.setState({ googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : function () {} });
 	        });
 	    }
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = DifferentialResults;
 
 /***/ },
 
-/***/ 2426:
+/***/ 3057:
+/*!***************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/jquery.browser/dist/jquery.browser.js ***!
+  \***************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -838,11 +877,11 @@ webpackJsonp_name_([5],{
 	 * Date: 05-07-2015
 	 */
 	/*global window: false */
-
+	
 	(function (factory) {
 	  if (true) {
 	    // AMD. Register as an anonymous module.
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2424)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 3055)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
 	      return factory($);
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -854,14 +893,14 @@ webpackJsonp_name_([5],{
 	  }
 	}(function(jQuery) {
 	  "use strict";
-
+	
 	  function uaMatch( ua ) {
 	    // If an UA is not provided, default to the current browser UA.
 	    if ( ua === undefined ) {
 	      ua = window.navigator.userAgent;
 	    }
 	    ua = ua.toLowerCase();
-
+	
 	    var match = /(edge)\/([\w.]+)/.exec( ua ) ||
 	        /(opr)[\/]([\w.]+)/.exec( ua ) ||
 	        /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
@@ -874,7 +913,7 @@ webpackJsonp_name_([5],{
 	        ua.indexOf("trident") >= 0 && /(rv)(?::| )([\w.]+)/.exec( ua ) ||
 	        ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
 	        [];
-
+	
 	    var platform_match = /(ipad)/.exec( ua ) ||
 	        /(ipod)/.exec( ua ) ||
 	        /(windows phone)/.exec( ua ) ||
@@ -890,7 +929,7 @@ webpackJsonp_name_([5],{
 	        /(bb)/.exec( ua ) ||
 	        /(blackberry)/.exec( ua ) ||
 	        [];
-
+	
 	    var browser = {},
 	        matched = {
 	          browser: match[ 5 ] || match[ 3 ] || match[ 1 ] || "",
@@ -898,330 +937,974 @@ webpackJsonp_name_([5],{
 	          versionNumber: match[ 4 ] || match[ 2 ] || "0",
 	          platform: platform_match[ 0 ] || ""
 	        };
-
+	
 	    if ( matched.browser ) {
 	      browser[ matched.browser ] = true;
 	      browser.version = matched.version;
 	      browser.versionNumber = parseInt(matched.versionNumber, 10);
 	    }
-
+	
 	    if ( matched.platform ) {
 	      browser[ matched.platform ] = true;
 	    }
-
+	
 	    // These are all considered mobile platforms, meaning they run a mobile browser
 	    if ( browser.android || browser.bb || browser.blackberry || browser.ipad || browser.iphone ||
 	      browser.ipod || browser.kindle || browser.playbook || browser.silk || browser[ "windows phone" ]) {
 	      browser.mobile = true;
 	    }
-
+	
 	    // These are all considered desktop platforms, meaning they run a desktop browser
 	    if ( browser.cros || browser.mac || browser.linux || browser.win ) {
 	      browser.desktop = true;
 	    }
-
+	
 	    // Chrome, Opera 15+ and Safari are webkit based browsers
 	    if ( browser.chrome || browser.opr || browser.safari ) {
 	      browser.webkit = true;
 	    }
-
+	
 	    // IE11 has a new token so we will assign it msie to avoid breaking changes
 	    if ( browser.rv || browser.iemobile) {
 	      var ie = "msie";
-
+	
 	      matched.browser = ie;
 	      browser[ie] = true;
 	    }
-
+	
 	    // Edge is officially known as Microsoft Edge, so rewrite the key to match
 	    if ( browser.edge ) {
 	      delete browser.edge;
 	      var msedge = "msedge";
-
+	
 	      matched.browser = msedge;
 	      browser[msedge] = true;
 	    }
-
+	
 	    // Blackberry browsers are marked as Safari on BlackBerry
 	    if ( browser.safari && browser.blackberry ) {
 	      var blackberry = "blackberry";
-
+	
 	      matched.browser = blackberry;
 	      browser[blackberry] = true;
 	    }
-
+	
 	    // Playbook browsers are marked as Safari on Playbook
 	    if ( browser.safari && browser.playbook ) {
 	      var playbook = "playbook";
-
+	
 	      matched.browser = playbook;
 	      browser[playbook] = true;
 	    }
-
+	
 	    // BB10 is a newer OS version of BlackBerry
 	    if ( browser.bb ) {
 	      var bb = "blackberry";
-
+	
 	      matched.browser = bb;
 	      browser[bb] = true;
 	    }
-
+	
 	    // Opera 15+ are identified as opr
 	    if ( browser.opr ) {
 	      var opera = "opera";
-
+	
 	      matched.browser = opera;
 	      browser[opera] = true;
 	    }
-
+	
 	    // Stock Android browsers are marked as Safari on Android.
 	    if ( browser.safari && browser.android ) {
 	      var android = "android";
-
+	
 	      matched.browser = android;
 	      browser[android] = true;
 	    }
-
+	
 	    // Kindle browsers are marked as Safari on Kindle
 	    if ( browser.safari && browser.kindle ) {
 	      var kindle = "kindle";
-
+	
 	      matched.browser = kindle;
 	      browser[kindle] = true;
 	    }
-
+	
 	     // Kindle Silk browsers are marked as Safari on Kindle
 	    if ( browser.safari && browser.silk ) {
 	      var silk = "silk";
-
+	
 	      matched.browser = silk;
 	      browser[silk] = true;
 	    }
-
+	
 	    // Assign the name and platform variable
 	    browser.name = matched.browser;
 	    browser.platform = matched.platform;
 	    return browser;
 	  }
-
+	
 	  // Run the matching process, also assign the function to the returned object
 	  // for manual, jQuery-free use if desired
 	  window.jQBrowser = uaMatch( window.navigator.userAgent );
 	  window.jQBrowser.uaMatch = uaMatch;
-
+	
 	  // Only assign to jQuery.browser if jQuery is loaded
 	  if ( jQuery ) {
 	    jQuery.browser = window.jQBrowser;
 	  }
-
+	
 	  return window.jQBrowser;
 	}));
 
 
 /***/ },
 
-/***/ 2427:
-959,
+/***/ 3058:
+/*!************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/index.js ***!
+  \************************************************************************************/
+[4278, 3059],
 
-/***/ 2428:
-[2933, 2429],
+/***/ 3059:
+/*!********************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/src/Feedback.jsx ***!
+  \********************************************************************************************/
+[4279, 3060, 3062, 3063, 3064, 3163, 3165, 3170, 3171, 3180],
 
-/***/ 2429:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 3060:
+/*!**********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-localstorage/react-localstorage.js ***!
+  \**********************************************************************************************************************/
+[4280, 3061],
 
-	'use strict';
+/***/ 3061:
+/*!***************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-localstorage/lib/warning.js ***!
+  \***************************************************************************************************************/
+962,
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+/***/ 3062:
+/*!*************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-timer-mixin/TimerMixin.js ***!
+  \*************************************************************************************************************/
+963,
 
-	var _react = __webpack_require__(2);
+/***/ 3063:
+/*!************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-addons-css-transition-group/index.js ***!
+  \************************************************************************************************************************/
+964,
 
-	var _react2 = _interopRequireDefault(_react);
+/***/ 3064:
+/*!***********************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/Button.js ***!
+  \***********************************************************************************************************/
+[4281, 3065, 3100, 3101, 3108, 3109, 3145, 3153, 3154, 3156, 3161, 3162],
 
-	var _propTypes = __webpack_require__(189);
+/***/ 3065:
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/values.js ***!
+  \**************************************************************************************************************************************/
+[4184, 3066],
 
-	var _propTypes2 = _interopRequireDefault(_propTypes);
+/***/ 3066:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
+  \***************************************************************************************************************************************************/
+[4185, 3067, 3070],
 
-	__webpack_require__(2430);
+/***/ 3067:
+/*!************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
+  \************************************************************************************************************************************************************/
+[4186, 3068, 3083],
 
-	var _mapping = __webpack_require__(2434);
+/***/ 3068:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_export.js ***!
+  \**************************************************************************************************************************************************/
+[4119, 3069, 3070, 3071, 3073],
 
-	var _mapping2 = _interopRequireDefault(_mapping);
+/***/ 3069:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_global.js ***!
+  \**************************************************************************************************************************************************/
+511,
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/***/ 3070:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_core.js ***!
+  \************************************************************************************************************************************************/
+512,
 
-	var EbiSpeciesIcon = function EbiSpeciesIcon(props) {
-	  var groupAndIcon = (0, _mapping2.default)(props.species);
-	  return _react2.default.createElement('span', {
-	    className: 'react-ebi-species-icon',
-	    'data-icon': groupAndIcon[1],
-	    style: { color: props.colourOverride || props.colourPerGroup[groupAndIcon[0]] },
-	    title: props.species });
-	};
+/***/ 3071:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
+  \***********************************************************************************************************************************************/
+[4120, 3072],
 
-	EbiSpeciesIcon.propTypes = {
-	  species: _propTypes2.default.string.isRequired,
-	  colourOverride: _propTypes2.default.string,
-	  colourPerGroup: _propTypes2.default.objectOf(_propTypes2.default.string).isRequired
-	};
+/***/ 3072:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
+  \******************************************************************************************************************************************************/
+514,
 
-	EbiSpeciesIcon.defaultProps = {
-	  species: 'oryctolagus cuniculus', //rabbit is objectively the best species
-	  colourPerGroup: {
-	    mammals: 'red',
-	    plants: 'green',
-	    other: 'blue'
-	  }
-	};
+/***/ 3073:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
+  \************************************************************************************************************************************************/
+[4121, 3074, 3082, 3078],
 
-	exports.default = EbiSpeciesIcon;
+/***/ 3074:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
+  \*****************************************************************************************************************************************************/
+[4122, 3075, 3077, 3081, 3078],
 
-/***/ },
+/***/ 3075:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
+  \*****************************************************************************************************************************************************/
+[4123, 3076],
 
-/***/ 2430:
-[2934, 2431, 2433],
+/***/ 3076:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
+  \*****************************************************************************************************************************************************/
+518,
 
-/***/ 2431:
-[2935, 2432],
+/***/ 3077:
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
+  \**********************************************************************************************************************************************************/
+[4124, 3078, 3079, 3080],
 
-/***/ 2432:
+/***/ 3078:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
+  \*******************************************************************************************************************************************************/
+[4125, 3079],
+
+/***/ 3079:
+/*!*************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
+  \*************************************************************************************************************************************************/
+521,
+
+/***/ 3080:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
+  \******************************************************************************************************************************************************/
+[4126, 3076, 3069],
+
+/***/ 3081:
+/*!********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
+  \********************************************************************************************************************************************************/
+[4127, 3076],
+
+/***/ 3082:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
+  \*********************************************************************************************************************************************************/
+524,
+
+/***/ 3083:
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
+  \***********************************************************************************************************************************************************/
+[4187, 3084, 3087, 3099],
+
+/***/ 3084:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
+  \*******************************************************************************************************************************************************/
+[4129, 3085, 3098],
+
+/***/ 3085:
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
+  \****************************************************************************************************************************************************************/
+[4130, 3086, 3087, 3091, 3095],
+
+/***/ 3086:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_has.js ***!
+  \***********************************************************************************************************************************************/
+528,
+
+/***/ 3087:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
+  \******************************************************************************************************************************************************/
+[4131, 3088, 3090],
+
+/***/ 3088:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
+  \***************************************************************************************************************************************************/
+[4132, 3089],
+
+/***/ 3089:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
+  \***********************************************************************************************************************************************/
+531,
+
+/***/ 3090:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_defined.js ***!
+  \***************************************************************************************************************************************************/
+532,
+
+/***/ 3091:
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
+  \**********************************************************************************************************************************************************/
+[4133, 3087, 3092, 3094],
+
+/***/ 3092:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
+  \*****************************************************************************************************************************************************/
+[4134, 3093],
+
+/***/ 3093:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
+  \******************************************************************************************************************************************************/
+535,
+
+/***/ 3094:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
+  \****************************************************************************************************************************************************/
+[4135, 3093],
+
+/***/ 3095:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
+  \******************************************************************************************************************************************************/
+[4136, 3096, 3097],
+
+/***/ 3096:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
+  \**************************************************************************************************************************************************/
+[4137, 3069],
+
+/***/ 3097:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
+  \***********************************************************************************************************************************************/
+539,
+
+/***/ 3098:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_enum-bug-keys.js ***!
+  \*********************************************************************************************************************************************************/
+540,
+
+/***/ 3099:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-pie.js ***!
+  \******************************************************************************************************************************************************/
+542,
+
+/***/ 3100:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/objectWithoutProperties.js ***!
+  \************************************************************************************************************************************************/
+505,
+
+/***/ 3101:
+/*!********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/extends.js ***!
+  \********************************************************************************************************************************/
+[4115, 3102],
+
+/***/ 3102:
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/assign.js ***!
+  \**************************************************************************************************************************************/
+[4116, 3103],
+
+/***/ 3103:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
+  \***************************************************************************************************************************************************/
+[4117, 3104, 3070],
+
+/***/ 3104:
+/*!************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
+  \************************************************************************************************************************************************************/
+[4118, 3068, 3105],
+
+/***/ 3105:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
+  \*********************************************************************************************************************************************************/
+[4128, 3084, 3106, 3099, 3107, 3088, 3079],
+
+/***/ 3106:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gops.js ***!
+  \*******************************************************************************************************************************************************/
+541,
+
+/***/ 3107:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
+  \*****************************************************************************************************************************************************/
+[4138, 3090],
+
+/***/ 3108:
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/classCallCheck.js ***!
+  \***************************************************************************************************************************************/
+544,
+
+/***/ 3109:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
+  \**************************************************************************************************************************************************/
+[4139, 3110],
+
+/***/ 3110:
+/*!*******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/typeof.js ***!
+  \*******************************************************************************************************************************/
+[4140, 3111, 3131],
+
+/***/ 3111:
+/*!****************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/symbol/iterator.js ***!
+  \****************************************************************************************************************************************/
+[4141, 3112],
+
+/***/ 3112:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
+  \*****************************************************************************************************************************************************/
+[4142, 3113, 3126, 3130],
+
+/***/ 3113:
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
+  \**************************************************************************************************************************************************************/
+[4143, 3114, 3115],
+
+/***/ 3114:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
+  \*****************************************************************************************************************************************************/
+[4144, 3093, 3090],
+
+/***/ 3115:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
+  \*******************************************************************************************************************************************************/
+[4145, 3116, 3068, 3117, 3073, 3086, 3118, 3119, 3123, 3125, 3124],
+
+/***/ 3116:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_library.js ***!
+  \***************************************************************************************************************************************************/
+552,
+
+/***/ 3117:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
+  \****************************************************************************************************************************************************/
+[4146, 3073],
+
+/***/ 3118:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
+  \*****************************************************************************************************************************************************/
+554,
+
+/***/ 3119:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
+  \*******************************************************************************************************************************************************/
+[4147, 3120, 3082, 3123, 3073, 3124],
+
+/***/ 3120:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
+  \*********************************************************************************************************************************************************/
+[4148, 3075, 3121, 3098, 3095, 3080, 3122],
+
+/***/ 3121:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
+  \******************************************************************************************************************************************************/
+[4149, 3074, 3075, 3084, 3078],
+
+/***/ 3122:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_html.js ***!
+  \************************************************************************************************************************************************/
+[4150, 3069],
+
+/***/ 3123:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
+  \*************************************************************************************************************************************************************/
+[4151, 3074, 3086, 3124],
+
+/***/ 3124:
+/*!***********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
+  \***********************************************************************************************************************************************/
+[4152, 3096, 3097, 3069],
+
+/***/ 3125:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
+  \******************************************************************************************************************************************************/
+[4153, 3086, 3107, 3095],
+
+/***/ 3126:
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
+  \***********************************************************************************************************************************************************/
+[4154, 3127, 3069, 3073, 3118, 3124],
+
+/***/ 3127:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
+  \*************************************************************************************************************************************************************/
+[4155, 3128, 3129, 3118, 3087, 3115],
+
+/***/ 3128:
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
+  \**************************************************************************************************************************************************************/
+564,
+
+/***/ 3129:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
+  \*****************************************************************************************************************************************************/
+565,
+
+/***/ 3130:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
+  \***************************************************************************************************************************************************/
+[4156, 3124],
+
+/***/ 3131:
+/*!*******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/symbol.js ***!
+  \*******************************************************************************************************************************/
+[4157, 3132],
+
+/***/ 3132:
+/*!**************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
+  \**************************************************************************************************************************************************/
+[4158, 3133, 3142, 3143, 3144, 3070],
+
+/***/ 3133:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
+  \*****************************************************************************************************************************************************/
+[4159, 3069, 3086, 3078, 3068, 3117, 3134, 3079, 3096, 3123, 3097, 3124, 3130, 3135, 3136, 3137, 3138, 3075, 3087, 3081, 3082, 3120, 3139, 3141, 3074, 3084, 3140, 3099, 3106, 3116, 3073],
+
+/***/ 3134:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
+  \************************************************************************************************************************************************/
+[4160, 3097, 3076, 3086, 3074, 3079],
+
+/***/ 3135:
+/*!******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
+  \******************************************************************************************************************************************************/
+[4161, 3069, 3070, 3116, 3130, 3074],
+
+/***/ 3136:
+/*!*************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
+  \*************************************************************************************************************************************************/
+[4162, 3084, 3087],
+
+/***/ 3137:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
+  \*****************************************************************************************************************************************************/
+[4163, 3084, 3106, 3099],
+
+/***/ 3138:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
+  \****************************************************************************************************************************************************/
+[4164, 3089],
+
+/***/ 3139:
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
+  \***********************************************************************************************************************************************************/
+[4165, 3087, 3140],
+
+/***/ 3140:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
+  \*******************************************************************************************************************************************************/
+[4166, 3085, 3098],
+
+/***/ 3141:
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
+  \*******************************************************************************************************************************************************/
+[4167, 3099, 3082, 3087, 3081, 3086, 3077, 3078],
+
+/***/ 3142:
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
+  \***************************************************************************************************************************************************************/
+578,
+
+/***/ 3143:
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
+  \********************************************************************************************************************************************************************/
+[4168, 3135],
+
+/***/ 3144:
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
+  \****************************************************************************************************************************************************************/
+[4169, 3135],
+
+/***/ 3145:
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/helpers/inherits.js ***!
+  \*********************************************************************************************************************************/
+[4170, 3146, 3150, 3110],
+
+/***/ 3146:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/set-prototype-of.js ***!
+  \************************************************************************************************************************************************/
+[4171, 3147],
+
+/***/ 3147:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
+  \*************************************************************************************************************************************************************/
+[4172, 3148, 3070],
+
+/***/ 3148:
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
+  \**********************************************************************************************************************************************************************/
+[4173, 3068, 3149],
+
+/***/ 3149:
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
+  \*****************************************************************************************************************************************************/
+[4174, 3076, 3075, 3071, 3141],
+
+/***/ 3150:
+/*!**************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/create.js ***!
+  \**************************************************************************************************************************************/
+[4175, 3151],
+
+/***/ 3151:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
+  \***************************************************************************************************************************************************/
+[4176, 3152, 3070],
+
+/***/ 3152:
+/*!************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
+  \************************************************************************************************************************************************************/
+[4177, 3068, 3120],
+
+/***/ 3153:
+/*!*******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/classnames/index.js ***!
+  \*******************************************************************************************************************/
+589,
+
+/***/ 3154:
+/*!***********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/elementType.js ***!
+  \***********************************************************************************************************************************/
+[4181, 3155],
+
+/***/ 3155:
+/*!********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
+  \********************************************************************************************************************************************************/
+596,
+
+/***/ 3156:
+/*!*************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
+  \*************************************************************************************************************************/
+[4282, 3157, 3101, 3160, 3161],
+
+/***/ 3157:
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/core-js/object/entries.js ***!
+  \***************************************************************************************************************************************/
+[4189, 3158],
+
+/***/ 3158:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
+  \****************************************************************************************************************************************************/
+[4190, 3159, 3070],
+
+/***/ 3159:
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
+  \*************************************************************************************************************************************************************/
+[4191, 3068, 3083],
+
+/***/ 3160:
+/*!********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/invariant/browser.js ***!
+  \********************************************************************************************************************/
+207,
+
+/***/ 3161:
+/*!**********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/utils/StyleConfig.js ***!
+  \**********************************************************************************************************************/
+610,
+
+/***/ 3162:
+/*!***************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/SafeAnchor.js ***!
+  \***************************************************************************************************************/
+[4283, 3101, 3100, 3108, 3109, 3145, 3154],
+
+/***/ 3163:
+/*!**************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormGroup.js ***!
+  \**************************************************************************************************************/
+[4284, 3101, 3100, 3108, 3109, 3145, 3153, 3156, 3161, 3164],
+
+/***/ 3164:
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
+  \*********************************************************************************************************************************/
+628,
+
+/***/ 3165:
+/*!****************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormControl.js ***!
+  \****************************************************************************************************************/
+[4285, 3101, 3100, 3108, 3109, 3145, 3153, 3154, 3166, 3167, 3169, 3156],
+
+/***/ 3166:
+/*!******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/~/warning/browser.js ***!
+  \******************************************************************************************************************/
+210,
+
+/***/ 3167:
+/*!************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormControlFeedback.js ***!
+  \************************************************************************************************************************/
+[4286, 3100, 3101, 3108, 3109, 3145, 3153, 3168, 3156],
+
+/***/ 3168:
+/*!**************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/Glyphicon.js ***!
+  \**************************************************************************************************************/
+[4287, 3101, 3100, 3108, 3109, 3145, 3153, 3156],
+
+/***/ 3169:
+/*!**********************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-bootstrap/lib/FormControlStatic.js ***!
+  \**********************************************************************************************************************/
+[4288, 3101, 3100, 3108, 3109, 3145, 3153, 3154, 3156],
+
+/***/ 3170:
+/*!*******************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/assets/emojione.sprites.png ***!
+  \*******************************************************************************************************/
+1077,
+
+/***/ 3171:
+/*!******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/react-emojione.js ***!
+  \******************************************************************************************************************/
+[4289, 3172, 3173, 3177],
+
+/***/ 3172:
+/*!*************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/data/ascii-to-unicode.js ***!
+  \*************************************************************************************************************************/
+1079,
+
+/***/ 3173:
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/renderers/renderer-factory.js ***!
+  \******************************************************************************************************************************/
+[4290, 3174, 3179],
+
+/***/ 3174:
+/*!****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/renderers/emoji-renderer.js ***!
+  \****************************************************************************************************************************/
+[4291, 3175, 3177],
+
+/***/ 3175:
+/*!**************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/styles/emojione-sprite.js ***!
+  \**************************************************************************************************************************/
+[4292, 3176],
+
+/***/ 3176:
+/*!************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
+  \************************************************************************************************************************************/
+1083,
+
+/***/ 3177:
+/*!*********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
+  \*********************************************************************************************************************************/
+[4293, 3178],
+
+/***/ 3178:
+/*!*******************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/data/emoji-data.js ***!
+  \*******************************************************************************************************************/
+1085,
+
+/***/ 3179:
+/*!******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/~/react-emojione/lib/renderers/unicode-renderer.js ***!
+  \******************************************************************************************************************************/
+[4294, 3177],
+
+/***/ 3180:
+/*!***********************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
+  \***********************************************************************************************/
+[4295, 3181, 3183],
+
+/***/ 3181:
+/*!****************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
+  \****************************************************************************************************************************************************/
+[4296, 3182],
+
+/***/ 3182:
+/*!****************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader/lib/css-base.js ***!
+  \****************************************************************************/
 491,
 
-/***/ 2433:
+/***/ 3183:
+/*!***************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/style-loader/addStyles.js ***!
+  \***************************************************************************/
 492,
 
-/***/ 2434:
-/***/ function(module, exports) {
+/***/ 3184:
+/*!********************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/lib/index.js ***!
+  \********************************************************************************/
+[4297, 3185],
 
-	"use strict";
+/***/ 3185:
+/*!*****************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/src/EbiSpeciesIcon.js ***!
+  \*****************************************************************************************/
+[4298, 3186, 3193, 3195],
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var mapping = {
-	  mammals: {
-	    "A": ["cat", "felis catus"],
-	    "a": ["alpaca", "vicugna pacos"],
-	    "C": ["cow", "bos taurus"],
-	    "d": ["dog", "canis lupus", "canis lupus familiaris"],
-	    "D": ["dolphin"],
-	    "e": ["elephant", "loxodonta africana", "loxodonta cyclotis", "elephas maximus"],
-	    "g": ["guinea pig", "cavia porcellus"],
-	    "G": ["gorilla", "gorilla gorilla"],
-	    "h": ["horse", "equus caballus"],
-	    "H": ["human", "homo sapiens"],
-	    "i": ["chimpanzee", "pan paniscus", "pan troglodytes"],
-	    "I": ["squirrel"],
-	    "l": ["armadillo"],
-	    "m": ["goat"],
-	    "M": ["mouse", "mus musculus"],
-	    "N": ["mouse lemur"],
-	    "o": ["hedgehog", "erinaceus europaeus"],
-	    "p": ["pig", "sus scrofa"],
-	    "Q": ["shrew"],
-	    "r": ["monkey", "macaca mulatta"],
-	    "R": ["rat", "rattus norvegicus"],
-	    "t": ["rabbit", "oryctolagus cuniculus"],
-	    "U": ["platypus", "ornithorhynchus anatinus"],
-	    "w": ["wallaby"],
-	    "x": ["sheep", "ovis aries"],
-	    "3": ["kangaroo rat"],
-	    "8": ["papio anubis"],
-	    "9": ["monodelphis domestica"],
-	    "!": ["ferret", "mustela putorius furo"],
-	    "(": ["bat"],
-	    "*": ["orangutan", "pongo abelii", "pongo pygmaeus"]
-	  },
-	  plants: {
-	    "B": ["arabidopsis thaliana", "arabidopsis lyrata", "brassica oleracea", "brassica rapa"],
-	    "c": ["corn", "zea mays"],
-	    "O": ["grapes", "vitis vinifera"],
-	    "P": ["plant", "physcomitrella patens", "sorghum bicolor", "triticum aestivum"],
-	    "5": ["barley", "hordeum vulgare", "hordeum vulgare subsp. vulgare"],
-	    "6": ["oryza sativa", "oryza sativa japonica group"],
-	    "%": ["brachypodium distachyon"],
-	    ")": ["tomatoes", "solanum lycopersicum", "solanum tuberosum"],
-	    "^": ["glycine max"]
-	  },
-	  other: {
-	    "b": ["bug"],
-	    "E": ["pufferfish", "tetraodon nigroviridis"],
-	    "f": ["frog", "xenopus (silurana) tropicalis", "xenopus tropicalis"],
-	    "F": ["fly", "drosophila melanogaster"],
-	    "k": ["chicken", "gallus gallus"],
-	    "L": ["escherichia coli"],
-	    "n": ["finch", "pyrrhula pyrrhula"],
-	    "s": ["scorpion"],
-	    "S": ["spider"],
-	    "u": ["fungus"],
-	    "v": ["virus"],
-	    "W": ["caenorhabditis elegans", "schistosoma mansoni"],
-	    "Y": ["yeast", "saccharomyces cerevisiae", "schizosaccharomyces pombe"],
-	    "Z": ["zebrafish", "danio rerio"],
-	    "0": ["amoeba"],
-	    "1": ["mosquito"],
-	    "2": ["diatom"],
-	    "4": ["louse"],
-	    "7": ["anolis carolinensis"],
-	    "£": ["aspergillus fumigatus"],
-	    "+": ["ray"],
-	    "'": ["snail"],
-	    "$": ["bee"],
-	    "&": ["tick"]
-	  }
-	};
+/***/ 3186:
+/*!*****************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/index.js ***!
+  \*****************************************************************************************/
+[3950, 3187],
 
-	var lookupInGroup = function lookupInGroup(group, species) {
-	  return Object.keys(mapping[group]).find(function (iconChar) {
-	    return mapping[group][iconChar].includes(species.toLowerCase());
-	  });
-	};
+/***/ 3187:
+/*!***********************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/factoryWithTypeCheckers.js ***!
+  \***********************************************************************************************************/
+[3951, 3188, 3189, 3190, 3191, 3192],
 
-	var lookupIcon = function lookupIcon(species) {
-	  for (var group in mapping) {
-	    var iconChar = lookupInGroup(group, species);
-	    if (iconChar) {
-	      return [group, iconChar];
-	    }
-	  }
+/***/ 3188:
+/*!************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/~/fbjs/lib/emptyFunction.js ***!
+  \************************************************************************************************************/
+12,
 
-	  return ["", ""];
-	};
+/***/ 3189:
+/*!********************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/~/fbjs/lib/invariant.js ***!
+  \********************************************************************************************************/
+8,
 
-	var getAllSpecies = function getAllSpecies() {
-	  var allSpecies = [];
-	  Object.keys(mapping).forEach(function (group) {
-	    Object.keys(mapping[group]).forEach(function (iconChar) {
-	      mapping[group][iconChar].forEach(function (species) {
-	        return allSpecies.push(species);
-	      });
-	    });
-	  });
+/***/ 3190:
+/*!******************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/~/fbjs/lib/warning.js ***!
+  \******************************************************************************************************/
+[3943, 3188],
 
-	  return allSpecies;
-	};
+/***/ 3191:
+/*!************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/lib/ReactPropTypesSecret.js ***!
+  \************************************************************************************************************/
+191,
 
-	exports.default = lookupIcon;
-	exports.getAllSpecies = getAllSpecies;
+/***/ 3192:
+/*!**************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/~/prop-types/checkPropTypes.js ***!
+  \**************************************************************************************************/
+[3952, 3189, 3190, 3191],
 
-/***/ },
+/***/ 3193:
+/*!**********************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/src/ebi-visual-species.css ***!
+  \**********************************************************************************************/
+[4299, 3194, 3183],
 
-/***/ 2435:
+/***/ 3194:
+/*!***************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/~/react-ebi-species/src/ebi-visual-species.css ***!
+  \***************************************************************************************************************************************************/
+[4300, 3182],
+
+/***/ 3195:
+/*!**********************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/react-ebi-species/src/mapping.js ***!
+  \**********************************************************************************/
+1093,
+
+/***/ 3196:
+/*!***************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DisplayLevelsButton.jsx ***!
+  \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-
-	var $ = __webpack_require__(2424);
-	__webpack_require__(2436);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
+	
+	var $ = __webpack_require__(/*! jquery */ 3055);
+	__webpack_require__(/*! jquery-ui-bundle */ 3197);
+	
 	var DisplayLevelsButton = React.createClass({
 	    displayName: 'DisplayLevelsButton',
-
-
+	
+	
 	    propTypes: {
 	        hideText: React.PropTypes.string.isRequired,
 	        showText: React.PropTypes.string.isRequired,
@@ -1230,15 +1913,15 @@ webpackJsonp_name_([5],{
 	        width: React.PropTypes.string,
 	        fontSize: React.PropTypes.string
 	    },
-
+	
 	    _buttonText: function _buttonText() {
 	        return this.props.displayLevels ? this.props.hideText : this.props.showText;
 	    },
-
+	
 	    _updateButtonText: function _updateButtonText() {
 	        $(ReactDOM.findDOMNode(this)).button({ label: this._buttonText() });
 	    },
-
+	
 	    render: function render() {
 	        var style = {
 	            padding: '12px'
@@ -1249,41 +1932,44 @@ webpackJsonp_name_([5],{
 	        if (this.props.fontSize) {
 	            style.fontSize = this.props.fontSize;
 	        }
-
+	
 	        return React.createElement('button', { style: style, onClick: this.props.onClickCallback });
 	    },
-
+	
 	    componentDidMount: function componentDidMount() {
 	        this._updateButtonText();
 	    },
-
+	
 	    componentDidUpdate: function componentDidUpdate() {
 	        this._updateButtonText();
 	    }
-
+	
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = DisplayLevelsButton;
 
 /***/ },
 
-/***/ 2436:
+/***/ 3197:
+/*!*******************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/jquery-ui-bundle/jquery-ui.js ***!
+  \*******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.11.4 - 2015-03-11
 	* http://jqueryui.com
 	* Includes: core.js, widget.js, mouse.js, position.js, accordion.js, autocomplete.js, button.js, datepicker.js, dialog.js, draggable.js, droppable.js, effect.js, effect-blind.js, effect-bounce.js, effect-clip.js, effect-drop.js, effect-explode.js, effect-fade.js, effect-fold.js, effect-highlight.js, effect-puff.js, effect-pulsate.js, effect-scale.js, effect-shake.js, effect-size.js, effect-slide.js, effect-transfer.js, menu.js, progressbar.js, resizable.js, selectable.js, selectmenu.js, slider.js, sortable.js, spinner.js, tabs.js, tooltip.js
 	* Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
-
+	
 	(function( factory ) {
 		if ( true ) {
-
+	
 			// AMD. Register as an anonymous module.
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(2424) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(/*! jquery */ 3055) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else {
-
+	
 			// Browser globals
 			factory( jQuery );
 		}
@@ -1298,14 +1984,14 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/category/ui-core/
 	 */
-
-
+	
+	
 	// $.ui might exist from components with no dependencies, e.g., $.ui.position
 	$.ui = $.ui || {};
-
+	
 	$.extend( $.ui, {
 		version: "1.11.4",
-
+	
 		keyCode: {
 			BACKSPACE: 8,
 			COMMA: 188,
@@ -1325,7 +2011,7 @@ webpackJsonp_name_([5],{
 			UP: 38
 		}
 	});
-
+	
 	// plugins
 	$.fn.extend({
 		scrollParent: function( includeHidden ) {
@@ -1339,13 +2025,13 @@ webpackJsonp_name_([5],{
 					}
 					return overflowRegex.test( parent.css( "overflow" ) + parent.css( "overflow-y" ) + parent.css( "overflow-x" ) );
 				}).eq( 0 );
-
+	
 			return position === "fixed" || !scrollParent.length ? $( this[ 0 ].ownerDocument || document ) : scrollParent;
 		},
-
+	
 		uniqueId: (function() {
 			var uuid = 0;
-
+	
 			return function() {
 				return this.each(function() {
 					if ( !this.id ) {
@@ -1354,7 +2040,7 @@ webpackJsonp_name_([5],{
 				});
 			};
 		})(),
-
+	
 		removeUniqueId: function() {
 			return this.each(function() {
 				if ( /^ui-id-\d+$/.test( this.id ) ) {
@@ -1363,7 +2049,7 @@ webpackJsonp_name_([5],{
 			});
 		}
 	});
-
+	
 	// selectors
 	function focusable( element, isTabIndexNotNaN ) {
 		var map, mapName, img,
@@ -1385,14 +2071,14 @@ webpackJsonp_name_([5],{
 			// the element and all of its ancestors must be visible
 			visible( element );
 	}
-
+	
 	function visible( element ) {
 		return $.expr.filters.visible( element ) &&
 			!$( element ).parents().addBack().filter(function() {
 				return $.css( this, "visibility" ) === "hidden";
 			}).length;
 	}
-
+	
 	$.extend( $.expr[ ":" ], {
 		data: $.expr.createPseudo ?
 			$.expr.createPseudo(function( dataName ) {
@@ -1404,18 +2090,18 @@ webpackJsonp_name_([5],{
 			function( elem, i, match ) {
 				return !!$.data( elem, match[ 3 ] );
 			},
-
+	
 		focusable: function( element ) {
 			return focusable( element, !isNaN( $.attr( element, "tabindex" ) ) );
 		},
-
+	
 		tabbable: function( element ) {
 			var tabIndex = $.attr( element, "tabindex" ),
 				isTabIndexNaN = isNaN( tabIndex );
 			return ( isTabIndexNaN || tabIndex >= 0 ) && focusable( element, !isTabIndexNaN );
 		}
 	});
-
+	
 	// support: jQuery <1.8
 	if ( !$( "<a>" ).outerWidth( 1 ).jquery ) {
 		$.each( [ "Width", "Height" ], function( i, name ) {
@@ -1427,7 +2113,7 @@ webpackJsonp_name_([5],{
 					outerWidth: $.fn.outerWidth,
 					outerHeight: $.fn.outerHeight
 				};
-
+	
 			function reduce( elem, size, border, margin ) {
 				$.each( side, function() {
 					size -= parseFloat( $.css( elem, "padding" + this ) ) || 0;
@@ -1440,29 +2126,29 @@ webpackJsonp_name_([5],{
 				});
 				return size;
 			}
-
+	
 			$.fn[ "inner" + name ] = function( size ) {
 				if ( size === undefined ) {
 					return orig[ "inner" + name ].call( this );
 				}
-
+	
 				return this.each(function() {
 					$( this ).css( type, reduce( this, size ) + "px" );
 				});
 			};
-
+	
 			$.fn[ "outer" + name] = function( size, margin ) {
 				if ( typeof size !== "number" ) {
 					return orig[ "outer" + name ].call( this, size );
 				}
-
+	
 				return this.each(function() {
 					$( this).css( type, reduce( this, size, true, margin ) + "px" );
 				});
 			};
 		});
 	}
-
+	
 	// support: jQuery <1.8
 	if ( !$.fn.addBack ) {
 		$.fn.addBack = function( selector ) {
@@ -1471,7 +2157,7 @@ webpackJsonp_name_([5],{
 			);
 		};
 	}
-
+	
 	// support: jQuery 1.6.1, 1.6.2 (http://bugs.jquery.com/ticket/9413)
 	if ( $( "<a>" ).data( "a-b", "a" ).removeData( "a-b" ).data( "a-b" ) ) {
 		$.fn.removeData = (function( removeData ) {
@@ -1484,10 +2170,10 @@ webpackJsonp_name_([5],{
 			};
 		})( $.fn.removeData );
 	}
-
+	
 	// deprecated
 	$.ui.ie = !!/msie [\w.]+/.exec( navigator.userAgent.toLowerCase() );
-
+	
 	$.fn.extend({
 		focus: (function( orig ) {
 			return function( delay, fn ) {
@@ -1504,28 +2190,28 @@ webpackJsonp_name_([5],{
 					orig.apply( this, arguments );
 			};
 		})( $.fn.focus ),
-
+	
 		disableSelection: (function() {
 			var eventType = "onselectstart" in document.createElement( "div" ) ?
 				"selectstart" :
 				"mousedown";
-
+	
 			return function() {
 				return this.bind( eventType + ".ui-disableSelection", function( event ) {
 					event.preventDefault();
 				});
 			};
 		})(),
-
+	
 		enableSelection: function() {
 			return this.unbind( ".ui-disableSelection" );
 		},
-
+	
 		zIndex: function( zIndex ) {
 			if ( zIndex !== undefined ) {
 				return this.css( "zIndex", zIndex );
 			}
-
+	
 			if ( this.length ) {
 				var elem = $( this[ 0 ] ), position, value;
 				while ( elem.length && elem[ 0 ] !== document ) {
@@ -1546,11 +2232,11 @@ webpackJsonp_name_([5],{
 					elem = elem.parent();
 				}
 			}
-
+	
 			return 0;
 		}
 	});
-
+	
 	// $.ui.plugin is deprecated. Use $.widget() extensions instead.
 	$.ui.plugin = {
 		add: function( module, option, set ) {
@@ -1564,15 +2250,15 @@ webpackJsonp_name_([5],{
 		call: function( instance, name, args, allowDisconnected ) {
 			var i,
 				set = instance.plugins[ name ];
-
+	
 			if ( !set ) {
 				return;
 			}
-
+	
 			if ( !allowDisconnected && ( !instance.element[ 0 ].parentNode || instance.element[ 0 ].parentNode.nodeType === 11 ) ) {
 				return;
 			}
-
+	
 			for ( i = 0; i < set.length; i++ ) {
 				if ( instance.options[ set[ i ][ 0 ] ] ) {
 					set[ i ][ 1 ].apply( instance.element, args );
@@ -1580,8 +2266,8 @@ webpackJsonp_name_([5],{
 			}
 		}
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Widget 1.11.4
 	 * http://jqueryui.com
@@ -1592,50 +2278,50 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/jQuery.widget/
 	 */
-
-
+	
+	
 	var widget_uuid = 0,
 		widget_slice = Array.prototype.slice;
-
+	
 	$.cleanData = (function( orig ) {
 		return function( elems ) {
 			var events, elem, i;
 			for ( i = 0; (elem = elems[i]) != null; i++ ) {
 				try {
-
+	
 					// Only trigger remove when necessary to save time
 					events = $._data( elem, "events" );
 					if ( events && events.remove ) {
 						$( elem ).triggerHandler( "remove" );
 					}
-
+	
 				// http://bugs.jquery.com/ticket/8235
 				} catch ( e ) {}
 			}
 			orig( elems );
 		};
 	})( $.cleanData );
-
+	
 	$.widget = function( name, base, prototype ) {
 		var fullName, existingConstructor, constructor, basePrototype,
 			// proxiedPrototype allows the provided prototype to remain unmodified
 			// so that it can be used as a mixin for multiple widgets (#8876)
 			proxiedPrototype = {},
 			namespace = name.split( "." )[ 0 ];
-
+	
 		name = name.split( "." )[ 1 ];
 		fullName = namespace + "-" + name;
-
+	
 		if ( !prototype ) {
 			prototype = base;
 			base = $.Widget;
 		}
-
+	
 		// create selector for plugin
 		$.expr[ ":" ][ fullName.toLowerCase() ] = function( elem ) {
 			return !!$.data( elem, fullName );
 		};
-
+	
 		$[ namespace ] = $[ namespace ] || {};
 		existingConstructor = $[ namespace ][ name ];
 		constructor = $[ namespace ][ name ] = function( options, element ) {
@@ -1643,7 +2329,7 @@ webpackJsonp_name_([5],{
 			if ( !this._createWidget ) {
 				return new constructor( options, element );
 			}
-
+	
 			// allow instantiation without initializing for simple inheritance
 			// must use "new" keyword (the code above always passes args)
 			if ( arguments.length ) {
@@ -1660,7 +2346,7 @@ webpackJsonp_name_([5],{
 			// redefined after a widget inherits from it
 			_childConstructors: []
 		});
-
+	
 		basePrototype = new base();
 		// we need to make the options hash a property directly on the new instance
 		// otherwise we'll modify the options hash on the prototype that we're
@@ -1682,15 +2368,15 @@ webpackJsonp_name_([5],{
 					var __super = this._super,
 						__superApply = this._superApply,
 						returnValue;
-
+	
 					this._super = _super;
 					this._superApply = _superApply;
-
+	
 					returnValue = value.apply( this, arguments );
-
+	
 					this._super = __super;
 					this._superApply = __superApply;
-
+	
 					return returnValue;
 				};
 			})();
@@ -1706,7 +2392,7 @@ webpackJsonp_name_([5],{
 			widgetName: name,
 			widgetFullName: fullName
 		});
-
+	
 		// If this widget is being redefined then we need to find all widgets that
 		// are inheriting from it and redefine all of them so that they inherit from
 		// the new version of this widget. We're essentially trying to replace one
@@ -1714,7 +2400,7 @@ webpackJsonp_name_([5],{
 		if ( existingConstructor ) {
 			$.each( existingConstructor._childConstructors, function( i, child ) {
 				var childPrototype = child.prototype;
-
+	
 				// redefine the child widget using the same prototype that was
 				// originally used, but inherit from the new version of the base
 				$.widget( childPrototype.namespace + "." + childPrototype.widgetName, constructor, child._proto );
@@ -1725,12 +2411,12 @@ webpackJsonp_name_([5],{
 		} else {
 			base._childConstructors.push( constructor );
 		}
-
+	
 		$.widget.bridge( name, constructor );
-
+	
 		return constructor;
 	};
-
+	
 	$.widget.extend = function( target ) {
 		var input = widget_slice.call( arguments, 1 ),
 			inputIndex = 0,
@@ -1756,14 +2442,14 @@ webpackJsonp_name_([5],{
 		}
 		return target;
 	};
-
+	
 	$.widget.bridge = function( name, object ) {
 		var fullName = object.prototype.widgetFullName || name;
 		$.fn[ name ] = function( options ) {
 			var isMethodCall = typeof options === "string",
 				args = widget_slice.call( arguments, 1 ),
 				returnValue = this;
-
+	
 			if ( isMethodCall ) {
 				this.each(function() {
 					var methodValue,
@@ -1788,12 +2474,12 @@ webpackJsonp_name_([5],{
 					}
 				});
 			} else {
-
+	
 				// Allow multiple hashes to be passed on init
 				if ( args.length ) {
 					options = $.widget.extend.apply( null, [ options ].concat(args) );
 				}
-
+	
 				this.each(function() {
 					var instance = $.data( this, fullName );
 					if ( instance ) {
@@ -1806,21 +2492,21 @@ webpackJsonp_name_([5],{
 					}
 				});
 			}
-
+	
 			return returnValue;
 		};
 	};
-
+	
 	$.Widget = function( /* options, element */ ) {};
 	$.Widget._childConstructors = [];
-
+	
 	$.Widget.prototype = {
 		widgetName: "widget",
 		widgetEventPrefix: "",
 		defaultElement: "<div>",
 		options: {
 			disabled: false,
-
+	
 			// callbacks
 			create: null
 		},
@@ -1829,11 +2515,11 @@ webpackJsonp_name_([5],{
 			this.element = $( element );
 			this.uuid = widget_uuid++;
 			this.eventNamespace = "." + this.widgetName + this.uuid;
-
+	
 			this.bindings = $();
 			this.hoverable = $();
 			this.focusable = $();
-
+	
 			if ( element !== this ) {
 				$.data( element, this.widgetFullName, this );
 				this._on( true, this.element, {
@@ -1850,12 +2536,12 @@ webpackJsonp_name_([5],{
 					element.document || element );
 				this.window = $( this.document[0].defaultView || this.document[0].parentWindow );
 			}
-
+	
 			this.options = $.widget.extend( {},
 				this.options,
 				this._getCreateOptions(),
 				options );
-
+	
 			this._create();
 			this._trigger( "create", null, this._getCreateEventData() );
 			this._init();
@@ -1864,7 +2550,7 @@ webpackJsonp_name_([5],{
 		_getCreateEventData: $.noop,
 		_create: $.noop,
 		_init: $.noop,
-
+	
 		destroy: function() {
 			this._destroy();
 			// we can probably remove the unbind calls in 2.0
@@ -1881,29 +2567,29 @@ webpackJsonp_name_([5],{
 				.removeClass(
 					this.widgetFullName + "-disabled " +
 					"ui-state-disabled" );
-
+	
 			// clean up events and states
 			this.bindings.unbind( this.eventNamespace );
 			this.hoverable.removeClass( "ui-state-hover" );
 			this.focusable.removeClass( "ui-state-focus" );
 		},
 		_destroy: $.noop,
-
+	
 		widget: function() {
 			return this.element;
 		},
-
+	
 		option: function( key, value ) {
 			var options = key,
 				parts,
 				curOption,
 				i;
-
+	
 			if ( arguments.length === 0 ) {
 				// don't return a reference to the internal hash
 				return $.widget.extend( {}, this.options );
 			}
-
+	
 			if ( typeof key === "string" ) {
 				// handle nested keys, e.g., "foo.bar" => { foo: { bar: ___ } }
 				options = {};
@@ -1927,55 +2613,55 @@ webpackJsonp_name_([5],{
 					options[ key ] = value;
 				}
 			}
-
+	
 			this._setOptions( options );
-
+	
 			return this;
 		},
 		_setOptions: function( options ) {
 			var key;
-
+	
 			for ( key in options ) {
 				this._setOption( key, options[ key ] );
 			}
-
+	
 			return this;
 		},
 		_setOption: function( key, value ) {
 			this.options[ key ] = value;
-
+	
 			if ( key === "disabled" ) {
 				this.widget()
 					.toggleClass( this.widgetFullName + "-disabled", !!value );
-
+	
 				// If the widget is becoming disabled, then nothing is interactive
 				if ( value ) {
 					this.hoverable.removeClass( "ui-state-hover" );
 					this.focusable.removeClass( "ui-state-focus" );
 				}
 			}
-
+	
 			return this;
 		},
-
+	
 		enable: function() {
 			return this._setOptions({ disabled: false });
 		},
 		disable: function() {
 			return this._setOptions({ disabled: true });
 		},
-
+	
 		_on: function( suppressDisabledCheck, element, handlers ) {
 			var delegateElement,
 				instance = this;
-
+	
 			// no suppressDisabledCheck flag, shuffle arguments
 			if ( typeof suppressDisabledCheck !== "boolean" ) {
 				handlers = element;
 				element = suppressDisabledCheck;
 				suppressDisabledCheck = false;
 			}
-
+	
 			// no element argument, shuffle and use this.element
 			if ( !handlers ) {
 				handlers = element;
@@ -1985,7 +2671,7 @@ webpackJsonp_name_([5],{
 				element = delegateElement = $( element );
 				this.bindings = this.bindings.add( element );
 			}
-
+	
 			$.each( handlers, function( event, handler ) {
 				function handlerProxy() {
 					// allow widgets to customize the disabled handling
@@ -1999,13 +2685,13 @@ webpackJsonp_name_([5],{
 					return ( typeof handler === "string" ? instance[ handler ] : handler )
 						.apply( instance, arguments );
 				}
-
+	
 				// copy the guid so direct unbinding works
 				if ( typeof handler !== "string" ) {
 					handlerProxy.guid = handler.guid =
 						handler.guid || handlerProxy.guid || $.guid++;
 				}
-
+	
 				var match = event.match( /^([\w:-]*)\s*(.*)$/ ),
 					eventName = match[1] + instance.eventNamespace,
 					selector = match[2];
@@ -2016,18 +2702,18 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_off: function( element, eventName ) {
 			eventName = (eventName || "").split( " " ).join( this.eventNamespace + " " ) +
 				this.eventNamespace;
 			element.unbind( eventName ).undelegate( eventName );
-
+	
 			// Clear the stack to avoid memory leaks (#10056)
 			this.bindings = $( this.bindings.not( element ).get() );
 			this.focusable = $( this.focusable.not( element ).get() );
 			this.hoverable = $( this.hoverable.not( element ).get() );
 		},
-
+	
 		_delay: function( handler, delay ) {
 			function handlerProxy() {
 				return ( typeof handler === "string" ? instance[ handler ] : handler )
@@ -2036,7 +2722,7 @@ webpackJsonp_name_([5],{
 			var instance = this;
 			return setTimeout( handlerProxy, delay || 0 );
 		},
-
+	
 		_hoverable: function( element ) {
 			this.hoverable = this.hoverable.add( element );
 			this._on( element, {
@@ -2048,7 +2734,7 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_focusable: function( element ) {
 			this.focusable = this.focusable.add( element );
 			this._on( element, {
@@ -2060,11 +2746,11 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_trigger: function( type, event, data ) {
 			var prop, orig,
 				callback = this.options[ type ];
-
+	
 			data = data || {};
 			event = $.Event( event );
 			event.type = ( type === this.widgetEventPrefix ?
@@ -2073,7 +2759,7 @@ webpackJsonp_name_([5],{
 			// the original event may come from any element
 			// so we need to reset the target on the new event
 			event.target = this.element[ 0 ];
-
+	
 			// copy original event properties over to the new event
 			orig = event.originalEvent;
 			if ( orig ) {
@@ -2083,14 +2769,14 @@ webpackJsonp_name_([5],{
 					}
 				}
 			}
-
+	
 			this.element.trigger( event, data );
 			return !( $.isFunction( callback ) &&
 				callback.apply( this.element[0], [ event ].concat( data ) ) === false ||
 				event.isDefaultPrevented() );
 		}
 	};
-
+	
 	$.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 		$.Widget.prototype[ "_" + method ] = function( element, options, callback ) {
 			if ( typeof options === "string" ) {
@@ -2126,10 +2812,10 @@ webpackJsonp_name_([5],{
 			}
 		};
 	});
-
+	
 	var widget = $.widget;
-
-
+	
+	
 	/*!
 	 * jQuery UI Mouse 1.11.4
 	 * http://jqueryui.com
@@ -2140,13 +2826,13 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/mouse/
 	 */
-
-
+	
+	
 	var mouseHandled = false;
 	$( document ).mouseup( function() {
 		mouseHandled = false;
 	});
-
+	
 	var mouse = $.widget("ui.mouse", {
 		version: "1.11.4",
 		options: {
@@ -2156,7 +2842,7 @@ webpackJsonp_name_([5],{
 		},
 		_mouseInit: function() {
 			var that = this;
-
+	
 			this.element
 				.bind("mousedown." + this.widgetName, function(event) {
 					return that._mouseDown(event);
@@ -2168,10 +2854,10 @@ webpackJsonp_name_([5],{
 						return false;
 					}
 				});
-
+	
 			this.started = false;
 		},
-
+	
 		// TODO: make sure destroying one instance of mouse doesn't mess with
 		// other instances of mouse
 		_mouseDestroy: function() {
@@ -2182,20 +2868,20 @@ webpackJsonp_name_([5],{
 					.unbind("mouseup." + this.widgetName, this._mouseUpDelegate);
 			}
 		},
-
+	
 		_mouseDown: function(event) {
 			// don't let more than one widget handle mouseStart
 			if ( mouseHandled ) {
 				return;
 			}
-
+	
 			this._mouseMoved = false;
-
+	
 			// we may have missed mouseup (out of window)
 			(this._mouseStarted && this._mouseUp(event));
-
+	
 			this._mouseDownEvent = event;
-
+	
 			var that = this,
 				btnIsLeft = (event.which === 1),
 				// event.target.nodeName works around a bug in IE 8 with
@@ -2204,14 +2890,14 @@ webpackJsonp_name_([5],{
 			if (!btnIsLeft || elIsCancel || !this._mouseCapture(event)) {
 				return true;
 			}
-
+	
 			this.mouseDelayMet = !this.options.delay;
 			if (!this.mouseDelayMet) {
 				this._mouseDelayTimer = setTimeout(function() {
 					that.mouseDelayMet = true;
 				}, this.options.delay);
 			}
-
+	
 			if (this._mouseDistanceMet(event) && this._mouseDelayMet(event)) {
 				this._mouseStarted = (this._mouseStart(event) !== false);
 				if (!this._mouseStarted) {
@@ -2219,12 +2905,12 @@ webpackJsonp_name_([5],{
 					return true;
 				}
 			}
-
+	
 			// Click event may never have fired (Gecko & Opera)
 			if (true === $.data(event.target, this.widgetName + ".preventClickEvent")) {
 				$.removeData(event.target, this.widgetName + ".preventClickEvent");
 			}
-
+	
 			// these delegates are required to keep context
 			this._mouseMoveDelegate = function(event) {
 				return that._mouseMove(event);
@@ -2232,17 +2918,17 @@ webpackJsonp_name_([5],{
 			this._mouseUpDelegate = function(event) {
 				return that._mouseUp(event);
 			};
-
+	
 			this.document
 				.bind( "mousemove." + this.widgetName, this._mouseMoveDelegate )
 				.bind( "mouseup." + this.widgetName, this._mouseUpDelegate );
-
+	
 			event.preventDefault();
-
+	
 			mouseHandled = true;
 			return true;
 		},
-
+	
 		_mouseMove: function(event) {
 			// Only check for mouseups outside the document if you've moved inside the document
 			// at least once. This prevents the firing of mouseup in the case of IE<9, which will
@@ -2252,50 +2938,50 @@ webpackJsonp_name_([5],{
 				// IE mouseup check - mouseup happened when mouse was out of window
 				if ($.ui.ie && ( !document.documentMode || document.documentMode < 9 ) && !event.button) {
 					return this._mouseUp(event);
-
+	
 				// Iframe mouseup check - mouseup occurred in another document
 				} else if ( !event.which ) {
 					return this._mouseUp( event );
 				}
 			}
-
+	
 			if ( event.which || event.button ) {
 				this._mouseMoved = true;
 			}
-
+	
 			if (this._mouseStarted) {
 				this._mouseDrag(event);
 				return event.preventDefault();
 			}
-
+	
 			if (this._mouseDistanceMet(event) && this._mouseDelayMet(event)) {
 				this._mouseStarted =
 					(this._mouseStart(this._mouseDownEvent, event) !== false);
 				(this._mouseStarted ? this._mouseDrag(event) : this._mouseUp(event));
 			}
-
+	
 			return !this._mouseStarted;
 		},
-
+	
 		_mouseUp: function(event) {
 			this.document
 				.unbind( "mousemove." + this.widgetName, this._mouseMoveDelegate )
 				.unbind( "mouseup." + this.widgetName, this._mouseUpDelegate );
-
+	
 			if (this._mouseStarted) {
 				this._mouseStarted = false;
-
+	
 				if (event.target === this._mouseDownEvent.target) {
 					$.data(event.target, this.widgetName + ".preventClickEvent", true);
 				}
-
+	
 				this._mouseStop(event);
 			}
-
+	
 			mouseHandled = false;
 			return false;
 		},
-
+	
 		_mouseDistanceMet: function(event) {
 			return (Math.max(
 					Math.abs(this._mouseDownEvent.pageX - event.pageX),
@@ -2303,19 +2989,19 @@ webpackJsonp_name_([5],{
 				) >= this.options.distance
 			);
 		},
-
+	
 		_mouseDelayMet: function(/* event */) {
 			return this.mouseDelayMet;
 		},
-
+	
 		// These are placeholder methods, to be overriden by extending plugin
 		_mouseStart: function(/* event */) {},
 		_mouseDrag: function(/* event */) {},
 		_mouseStop: function(/* event */) {},
 		_mouseCapture: function(/* event */) { return true; }
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Position 1.11.4
 	 * http://jqueryui.com
@@ -2326,11 +3012,11 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/position/
 	 */
-
+	
 	(function() {
-
+	
 	$.ui = $.ui || {};
-
+	
 	var cachedScrollbarWidth, supportsOffsetFractions,
 		max = Math.max,
 		abs = Math.abs,
@@ -2341,18 +3027,18 @@ webpackJsonp_name_([5],{
 		rposition = /^\w+/,
 		rpercent = /%$/,
 		_position = $.fn.position;
-
+	
 	function getOffsets( offsets, width, height ) {
 		return [
 			parseFloat( offsets[ 0 ] ) * ( rpercent.test( offsets[ 0 ] ) ? width / 100 : 1 ),
 			parseFloat( offsets[ 1 ] ) * ( rpercent.test( offsets[ 1 ] ) ? height / 100 : 1 )
 		];
 	}
-
+	
 	function parseCss( element, property ) {
 		return parseInt( $.css( element, property ), 10 ) || 0;
 	}
-
+	
 	function getDimensions( elem ) {
 		var raw = elem[0];
 		if ( raw.nodeType === 9 ) {
@@ -2382,7 +3068,7 @@ webpackJsonp_name_([5],{
 			offset: elem.offset()
 		};
 	}
-
+	
 	$.position = {
 		scrollbarWidth: function() {
 			if ( cachedScrollbarWidth !== undefined ) {
@@ -2391,19 +3077,19 @@ webpackJsonp_name_([5],{
 			var w1, w2,
 				div = $( "<div style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'><div style='height:100px;width:auto;'></div></div>" ),
 				innerDiv = div.children()[0];
-
+	
 			$( "body" ).append( div );
 			w1 = innerDiv.offsetWidth;
 			div.css( "overflow", "scroll" );
-
+	
 			w2 = innerDiv.offsetWidth;
-
+	
 			if ( w1 === w2 ) {
 				w2 = div[0].clientWidth;
 			}
-
+	
 			div.remove();
-
+	
 			return (cachedScrollbarWidth = w1 - w2);
 		},
 		getScrollInfo: function( within ) {
@@ -2431,7 +3117,7 @@ webpackJsonp_name_([5],{
 				offset: withinElement.offset() || { left: 0, top: 0 },
 				scrollLeft: withinElement.scrollLeft(),
 				scrollTop: withinElement.scrollTop(),
-
+	
 				// support: jQuery 1.6.x
 				// jQuery 1.6 doesn't support .outerWidth/Height() on documents or windows
 				width: isWindow || isDocument ? withinElement.width() : withinElement.outerWidth(),
@@ -2439,22 +3125,22 @@ webpackJsonp_name_([5],{
 			};
 		}
 	};
-
+	
 	$.fn.position = function( options ) {
 		if ( !options || !options.of ) {
 			return _position.apply( this, arguments );
 		}
-
+	
 		// make a copy, we don't want to modify arguments
 		options = $.extend( {}, options );
-
+	
 		var atOffset, targetWidth, targetHeight, targetOffset, basePosition, dimensions,
 			target = $( options.of ),
 			within = $.position.getWithinInfo( options.within ),
 			scrollInfo = $.position.getScrollInfo( within ),
 			collision = ( options.collision || "flip" ).split( " " ),
 			offsets = {};
-
+	
 		dimensions = getDimensions( target );
 		if ( target[0].preventDefault ) {
 			// force left top to allow flipping
@@ -2465,14 +3151,14 @@ webpackJsonp_name_([5],{
 		targetOffset = dimensions.offset;
 		// clone to reuse original targetOffset later
 		basePosition = $.extend( {}, targetOffset );
-
+	
 		// force my and at to have valid horizontal and vertical positions
 		// if a value is missing or invalid, it will be converted to center
 		$.each( [ "my", "at" ], function() {
 			var pos = ( options[ this ] || "" ).split( " " ),
 				horizontalOffset,
 				verticalOffset;
-
+	
 			if ( pos.length === 1) {
 				pos = rhorizontal.test( pos[ 0 ] ) ?
 					pos.concat( [ "center" ] ) :
@@ -2482,7 +3168,7 @@ webpackJsonp_name_([5],{
 			}
 			pos[ 0 ] = rhorizontal.test( pos[ 0 ] ) ? pos[ 0 ] : "center";
 			pos[ 1 ] = rvertical.test( pos[ 1 ] ) ? pos[ 1 ] : "center";
-
+	
 			// calculate offsets
 			horizontalOffset = roffset.exec( pos[ 0 ] );
 			verticalOffset = roffset.exec( pos[ 1 ] );
@@ -2490,35 +3176,35 @@ webpackJsonp_name_([5],{
 				horizontalOffset ? horizontalOffset[ 0 ] : 0,
 				verticalOffset ? verticalOffset[ 0 ] : 0
 			];
-
+	
 			// reduce to just the positions without the offsets
 			options[ this ] = [
 				rposition.exec( pos[ 0 ] )[ 0 ],
 				rposition.exec( pos[ 1 ] )[ 0 ]
 			];
 		});
-
+	
 		// normalize collision option
 		if ( collision.length === 1 ) {
 			collision[ 1 ] = collision[ 0 ];
 		}
-
+	
 		if ( options.at[ 0 ] === "right" ) {
 			basePosition.left += targetWidth;
 		} else if ( options.at[ 0 ] === "center" ) {
 			basePosition.left += targetWidth / 2;
 		}
-
+	
 		if ( options.at[ 1 ] === "bottom" ) {
 			basePosition.top += targetHeight;
 		} else if ( options.at[ 1 ] === "center" ) {
 			basePosition.top += targetHeight / 2;
 		}
-
+	
 		atOffset = getOffsets( offsets.at, targetWidth, targetHeight );
 		basePosition.left += atOffset[ 0 ];
 		basePosition.top += atOffset[ 1 ];
-
+	
 		return this.each(function() {
 			var collisionPosition, using,
 				elem = $( this ),
@@ -2530,33 +3216,33 @@ webpackJsonp_name_([5],{
 				collisionHeight = elemHeight + marginTop + parseCss( this, "marginBottom" ) + scrollInfo.height,
 				position = $.extend( {}, basePosition ),
 				myOffset = getOffsets( offsets.my, elem.outerWidth(), elem.outerHeight() );
-
+	
 			if ( options.my[ 0 ] === "right" ) {
 				position.left -= elemWidth;
 			} else if ( options.my[ 0 ] === "center" ) {
 				position.left -= elemWidth / 2;
 			}
-
+	
 			if ( options.my[ 1 ] === "bottom" ) {
 				position.top -= elemHeight;
 			} else if ( options.my[ 1 ] === "center" ) {
 				position.top -= elemHeight / 2;
 			}
-
+	
 			position.left += myOffset[ 0 ];
 			position.top += myOffset[ 1 ];
-
+	
 			// if the browser doesn't support fractions, then round for consistent results
 			if ( !supportsOffsetFractions ) {
 				position.left = round( position.left );
 				position.top = round( position.top );
 			}
-
+	
 			collisionPosition = {
 				marginLeft: marginLeft,
 				marginTop: marginTop
 			};
-
+	
 			$.each( [ "left", "top" ], function( i, dir ) {
 				if ( $.ui.position[ collision[ i ] ] ) {
 					$.ui.position[ collision[ i ] ][ dir ]( position, {
@@ -2575,7 +3261,7 @@ webpackJsonp_name_([5],{
 					});
 				}
 			});
-
+	
 			if ( options.using ) {
 				// adds feedback as second argument to using callback, if present
 				using = function( props ) {
@@ -2615,11 +3301,11 @@ webpackJsonp_name_([5],{
 					options.using.call( this, props, feedback );
 				};
 			}
-
+	
 			elem.offset( $.extend( position, { using: using } ) );
 		});
 	};
-
+	
 	$.ui.position = {
 		fit: {
 			left: function( position, data ) {
@@ -2630,7 +3316,7 @@ webpackJsonp_name_([5],{
 					overLeft = withinOffset - collisionPosLeft,
 					overRight = collisionPosLeft + data.collisionWidth - outerWidth - withinOffset,
 					newOverRight;
-
+	
 				// element is wider than within
 				if ( data.collisionWidth > outerWidth ) {
 					// element is initially over the left side of within
@@ -2667,7 +3353,7 @@ webpackJsonp_name_([5],{
 					overTop = withinOffset - collisionPosTop,
 					overBottom = collisionPosTop + data.collisionHeight - outerHeight - withinOffset,
 					newOverBottom;
-
+	
 				// element is taller than within
 				if ( data.collisionHeight > outerHeight ) {
 					// element is initially over the top of within
@@ -2719,7 +3405,7 @@ webpackJsonp_name_([5],{
 					offset = -2 * data.offset[ 0 ],
 					newOverRight,
 					newOverLeft;
-
+	
 				if ( overLeft < 0 ) {
 					newOverRight = position.left + myOffset + atOffset + offset + data.collisionWidth - outerWidth - withinOffset;
 					if ( newOverRight < 0 || newOverRight < abs( overLeft ) ) {
@@ -2778,13 +3464,13 @@ webpackJsonp_name_([5],{
 			}
 		}
 	};
-
+	
 	// fraction support test
 	(function() {
 		var testElement, testElementParent, testElementStyle, offsetLeft, i,
 			body = document.getElementsByTagName( "body" )[ 0 ],
 			div = document.createElement( "div" );
-
+	
 		//Create a "fake body" for testing based on method used in jQuery.support
 		testElement = document.createElement( body ? "div" : "body" );
 		testElementStyle = {
@@ -2808,21 +3494,21 @@ webpackJsonp_name_([5],{
 		testElement.appendChild( div );
 		testElementParent = body || document.documentElement;
 		testElementParent.insertBefore( testElement, testElementParent.firstChild );
-
+	
 		div.style.cssText = "position: absolute; left: 10.7432222px;";
-
+	
 		offsetLeft = $( div ).offset().left;
 		supportsOffsetFractions = offsetLeft > 10 && offsetLeft < 11;
-
+	
 		testElement.innerHTML = "";
 		testElementParent.removeChild( testElement );
 	})();
-
+	
 	})();
-
+	
 	var position = $.ui.position;
-
-
+	
+	
 	/*!
 	 * jQuery UI Accordion 1.11.4
 	 * http://jqueryui.com
@@ -2833,8 +3519,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/accordion/
 	 */
-
-
+	
+	
 	var accordion = $.widget( "ui.accordion", {
 		version: "1.11.4",
 		options: {
@@ -2848,12 +3534,12 @@ webpackJsonp_name_([5],{
 				activeHeader: "ui-icon-triangle-1-s",
 				header: "ui-icon-triangle-1-e"
 			},
-
+	
 			// callbacks
 			activate: null,
 			beforeActivate: null
 		},
-
+	
 		hideProps: {
 			borderTopWidth: "hide",
 			borderBottomWidth: "hide",
@@ -2861,7 +3547,7 @@ webpackJsonp_name_([5],{
 			paddingBottom: "hide",
 			height: "hide"
 		},
-
+	
 		showProps: {
 			borderTopWidth: "show",
 			borderBottomWidth: "show",
@@ -2869,19 +3555,19 @@ webpackJsonp_name_([5],{
 			paddingBottom: "show",
 			height: "show"
 		},
-
+	
 		_create: function() {
 			var options = this.options;
 			this.prevShow = this.prevHide = $();
 			this.element.addClass( "ui-accordion ui-widget ui-helper-reset" )
 				// ARIA
 				.attr( "role", "tablist" );
-
+	
 			// don't allow collapsible: false and active: false / null
 			if ( !options.collapsible && (options.active === false || options.active == null) ) {
 				options.active = 0;
 			}
-
+	
 			this._processPanels();
 			// handle negative values
 			if ( options.active < 0 ) {
@@ -2889,14 +3575,14 @@ webpackJsonp_name_([5],{
 			}
 			this._refresh();
 		},
-
+	
 		_getCreateEventData: function() {
 			return {
 				header: this.active,
 				panel: !this.active.length ? $() : this.active.next()
 			};
 		},
-
+	
 		_createIcons: function() {
 			var icons = this.options.icons;
 			if ( icons ) {
@@ -2909,22 +3595,22 @@ webpackJsonp_name_([5],{
 				this.headers.addClass( "ui-accordion-icons" );
 			}
 		},
-
+	
 		_destroyIcons: function() {
 			this.headers
 				.removeClass( "ui-accordion-icons" )
 				.children( ".ui-accordion-header-icon" )
 					.remove();
 		},
-
+	
 		_destroy: function() {
 			var contents;
-
+	
 			// clean up main element
 			this.element
 				.removeClass( "ui-accordion ui-widget ui-helper-reset" )
 				.removeAttr( "role" );
-
+	
 			// clean up headers
 			this.headers
 				.removeClass( "ui-accordion-header ui-accordion-header-active ui-state-default " +
@@ -2935,9 +3621,9 @@ webpackJsonp_name_([5],{
 				.removeAttr( "aria-controls" )
 				.removeAttr( "tabIndex" )
 				.removeUniqueId();
-
+	
 			this._destroyIcons();
-
+	
 			// clean up content panels
 			contents = this.headers.next()
 				.removeClass( "ui-helper-reset ui-widget-content ui-corner-bottom " +
@@ -2947,40 +3633,40 @@ webpackJsonp_name_([5],{
 				.removeAttr( "aria-hidden" )
 				.removeAttr( "aria-labelledby" )
 				.removeUniqueId();
-
+	
 			if ( this.options.heightStyle !== "content" ) {
 				contents.css( "height", "" );
 			}
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "active" ) {
 				// _activate() will handle invalid values and update this.options
 				this._activate( value );
 				return;
 			}
-
+	
 			if ( key === "event" ) {
 				if ( this.options.event ) {
 					this._off( this.headers, this.options.event );
 				}
 				this._setupEvents( value );
 			}
-
+	
 			this._super( key, value );
-
+	
 			// setting collapsible: false while collapsed; open first panel
 			if ( key === "collapsible" && !value && this.options.active === false ) {
 				this._activate( 0 );
 			}
-
+	
 			if ( key === "icons" ) {
 				this._destroyIcons();
 				if ( value ) {
 					this._createIcons();
 				}
 			}
-
+	
 			// #5332 - opacity doesn't cascade to positioned elements in IE
 			// so we need to add the disabled class to the headers and panels
 			if ( key === "disabled" ) {
@@ -2991,17 +3677,17 @@ webpackJsonp_name_([5],{
 					.toggleClass( "ui-state-disabled", !!value );
 			}
 		},
-
+	
 		_keydown: function( event ) {
 			if ( event.altKey || event.ctrlKey ) {
 				return;
 			}
-
+	
 			var keyCode = $.ui.keyCode,
 				length = this.headers.length,
 				currentIndex = this.headers.index( event.target ),
 				toFocus = false;
-
+	
 			switch ( event.keyCode ) {
 				case keyCode.RIGHT:
 				case keyCode.DOWN:
@@ -3022,7 +3708,7 @@ webpackJsonp_name_([5],{
 					toFocus = this.headers[ length - 1 ];
 					break;
 			}
-
+	
 			if ( toFocus ) {
 				$( event.target ).attr( "tabIndex", -1 );
 				$( toFocus ).attr( "tabIndex", 0 );
@@ -3030,17 +3716,17 @@ webpackJsonp_name_([5],{
 				event.preventDefault();
 			}
 		},
-
+	
 		_panelKeyDown: function( event ) {
 			if ( event.keyCode === $.ui.keyCode.UP && event.ctrlKey ) {
 				$( event.currentTarget ).prev().focus();
 			}
 		},
-
+	
 		refresh: function() {
 			var options = this.options;
 			this._processPanels();
-
+	
 			// was collapsed or no panel
 			if ( ( options.active === false && options.collapsible === true ) || !this.headers.length ) {
 				options.active = false;
@@ -3063,44 +3749,44 @@ webpackJsonp_name_([5],{
 				// make sure active index is correct
 				options.active = this.headers.index( this.active );
 			}
-
+	
 			this._destroyIcons();
-
+	
 			this._refresh();
 		},
-
+	
 		_processPanels: function() {
 			var prevHeaders = this.headers,
 				prevPanels = this.panels;
-
+	
 			this.headers = this.element.find( this.options.header )
 				.addClass( "ui-accordion-header ui-state-default ui-corner-all" );
-
+	
 			this.panels = this.headers.next()
 				.addClass( "ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" )
 				.filter( ":not(.ui-accordion-content-active)" )
 				.hide();
-
+	
 			// Avoid memory leaks (#10056)
 			if ( prevPanels ) {
 				this._off( prevHeaders.not( this.headers ) );
 				this._off( prevPanels.not( this.panels ) );
 			}
 		},
-
+	
 		_refresh: function() {
 			var maxHeight,
 				options = this.options,
 				heightStyle = options.heightStyle,
 				parent = this.element.parent();
-
+	
 			this.active = this._findActive( options.active )
 				.addClass( "ui-accordion-header-active ui-state-active ui-corner-top" )
 				.removeClass( "ui-corner-all" );
 			this.active.next()
 				.addClass( "ui-accordion-content-active" )
 				.show();
-
+	
 			this.headers
 				.attr( "role", "tab" )
 				.each(function() {
@@ -3113,7 +3799,7 @@ webpackJsonp_name_([5],{
 				})
 				.next()
 					.attr( "role", "tabpanel" );
-
+	
 			this.headers
 				.not( this.active )
 				.attr({
@@ -3126,7 +3812,7 @@ webpackJsonp_name_([5],{
 						"aria-hidden": "true"
 					})
 					.hide();
-
+	
 			// make sure at least one header is in the tab order
 			if ( !this.active.length ) {
 				this.headers.eq( 0 ).attr( "tabIndex", 0 );
@@ -3141,27 +3827,27 @@ webpackJsonp_name_([5],{
 						"aria-hidden": "false"
 					});
 			}
-
+	
 			this._createIcons();
-
+	
 			this._setupEvents( options.event );
-
+	
 			if ( heightStyle === "fill" ) {
 				maxHeight = parent.height();
 				this.element.siblings( ":visible" ).each(function() {
 					var elem = $( this ),
 						position = elem.css( "position" );
-
+	
 					if ( position === "absolute" || position === "fixed" ) {
 						return;
 					}
 					maxHeight -= elem.outerHeight( true );
 				});
-
+	
 				this.headers.each(function() {
 					maxHeight -= $( this ).outerHeight( true );
 				});
-
+	
 				this.headers.next()
 					.each(function() {
 						$( this ).height( Math.max( 0, maxHeight -
@@ -3177,29 +3863,29 @@ webpackJsonp_name_([5],{
 					.height( maxHeight );
 			}
 		},
-
+	
 		_activate: function( index ) {
 			var active = this._findActive( index )[ 0 ];
-
+	
 			// trying to activate the already active panel
 			if ( active === this.active[ 0 ] ) {
 				return;
 			}
-
+	
 			// trying to collapse, simulate a click on the currently active header
 			active = active || this.active[ 0 ];
-
+	
 			this._eventHandler({
 				target: active,
 				currentTarget: active,
 				preventDefault: $.noop
 			});
 		},
-
+	
 		_findActive: function( selector ) {
 			return typeof selector === "number" ? this.headers.eq( selector ) : $();
 		},
-
+	
 		_setupEvents: function( event ) {
 			var events = {
 				keydown: "_keydown"
@@ -3209,14 +3895,14 @@ webpackJsonp_name_([5],{
 					events[ eventName ] = "_eventHandler";
 				});
 			}
-
+	
 			this._off( this.headers.add( this.headers.next() ) );
 			this._on( this.headers, events );
 			this._on( this.headers.next(), { keydown: "_panelKeyDown" });
 			this._hoverable( this.headers );
 			this._focusable( this.headers );
 		},
-
+	
 		_eventHandler: function( event ) {
 			var options = this.options,
 				active = this.active,
@@ -3231,9 +3917,9 @@ webpackJsonp_name_([5],{
 					newHeader: collapsing ? $() : clicked,
 					newPanel: toShow
 				};
-
+	
 			event.preventDefault();
-
+	
 			if (
 					// click on active header, but not collapsible
 					( clickedIsActive && !options.collapsible ) ||
@@ -3241,14 +3927,14 @@ webpackJsonp_name_([5],{
 					( this._trigger( "beforeActivate", event, eventData ) === false ) ) {
 				return;
 			}
-
+	
 			options.active = collapsing ? false : this.headers.index( clicked );
-
+	
 			// when the call to ._toggle() comes after the class changes
 			// it causes a very odd bug in IE 8 (see #6720)
 			this.active = clickedIsActive ? $() : clicked;
 			this._toggle( eventData );
-
+	
 			// switch classes
 			// corner classes on the previously active header stay after the animation
 			active.removeClass( "ui-accordion-header-active ui-state-active" );
@@ -3257,7 +3943,7 @@ webpackJsonp_name_([5],{
 					.removeClass( options.icons.activeHeader )
 					.addClass( options.icons.header );
 			}
-
+	
 			if ( !clickedIsActive ) {
 				clicked
 					.removeClass( "ui-corner-all" )
@@ -3267,22 +3953,22 @@ webpackJsonp_name_([5],{
 						.removeClass( options.icons.header )
 						.addClass( options.icons.activeHeader );
 				}
-
+	
 				clicked
 					.next()
 					.addClass( "ui-accordion-content-active" );
 			}
 		},
-
+	
 		_toggle: function( data ) {
 			var toShow = data.newPanel,
 				toHide = this.prevShow.length ? this.prevShow : data.oldPanel;
-
+	
 			// handle activating a panel during the animation for another activation
 			this.prevShow.add( this.prevHide ).stop( true, true );
 			this.prevShow = toShow;
 			this.prevHide = toHide;
-
+	
 			if ( this.options.animate ) {
 				this._animate( toShow, toHide, data );
 			} else {
@@ -3290,7 +3976,7 @@ webpackJsonp_name_([5],{
 				toShow.show();
 				this._toggleComplete( data );
 			}
-
+	
 			toHide.attr({
 				"aria-hidden": "true"
 			});
@@ -3312,7 +3998,7 @@ webpackJsonp_name_([5],{
 				})
 				.attr( "tabIndex", -1 );
 			}
-
+	
 			toShow
 				.attr( "aria-hidden", "false" )
 				.prev()
@@ -3322,7 +4008,7 @@ webpackJsonp_name_([5],{
 						tabIndex: 0
 					});
 		},
-
+	
 		_animate: function( toShow, toHide, data ) {
 			var total, easing, duration,
 				that = this,
@@ -3335,7 +4021,7 @@ webpackJsonp_name_([5],{
 				complete = function() {
 					that._toggleComplete( data );
 				};
-
+	
 			if ( typeof options === "number" ) {
 				duration = options;
 			}
@@ -3345,14 +4031,14 @@ webpackJsonp_name_([5],{
 			// fall back from options to animation in case of partial down settings
 			easing = easing || options.easing || animate.easing;
 			duration = duration || options.duration || animate.duration;
-
+	
 			if ( !toHide.length ) {
 				return toShow.animate( this.showProps, duration, easing, complete );
 			}
 			if ( !toShow.length ) {
 				return toHide.animate( this.hideProps, duration, easing, complete );
 			}
-
+	
 			total = toShow.show().outerHeight();
 			toHide.animate( this.hideProps, {
 				duration: duration,
@@ -3380,16 +4066,16 @@ webpackJsonp_name_([5],{
 					}
 				});
 		},
-
+	
 		_toggleComplete: function( data ) {
 			var toHide = data.oldPanel;
-
+	
 			toHide
 				.removeClass( "ui-accordion-content-active" )
 				.prev()
 					.removeClass( "ui-corner-top" )
 					.addClass( "ui-corner-all" );
-
+	
 			// Work around for rendering bug in IE (#5421)
 			if ( toHide.length ) {
 				toHide.parent()[ 0 ].className = toHide.parent()[ 0 ].className;
@@ -3397,8 +4083,8 @@ webpackJsonp_name_([5],{
 			this._trigger( "activate", null, data );
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Menu 1.11.4
 	 * http://jqueryui.com
@@ -3409,8 +4095,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/menu/
 	 */
-
-
+	
+	
 	var menu = $.widget( "ui.menu", {
 		version: "1.11.4",
 		defaultElement: "<ul>",
@@ -3426,16 +4112,16 @@ webpackJsonp_name_([5],{
 				at: "right top"
 			},
 			role: "menu",
-
+	
 			// callbacks
 			blur: null,
 			focus: null,
 			select: null
 		},
-
+	
 		_create: function() {
 			this.activeMenu = this.element;
-
+	
 			// Flag used to prevent firing of the click handler
 			// as the event bubbles up through nested menus
 			this.mouseHandled = false;
@@ -3447,13 +4133,13 @@ webpackJsonp_name_([5],{
 					role: this.options.role,
 					tabIndex: 0
 				});
-
+	
 			if ( this.options.disabled ) {
 				this.element
 					.addClass( "ui-state-disabled" )
 					.attr( "aria-disabled", "true" );
 			}
-
+	
 			this._on({
 				// Prevent focus from sticking to links inside menu after clicking
 				// them (focus should always stay on UL during navigation).
@@ -3464,20 +4150,20 @@ webpackJsonp_name_([5],{
 					var target = $( event.target );
 					if ( !this.mouseHandled && target.not( ".ui-state-disabled" ).length ) {
 						this.select( event );
-
+	
 						// Only set the mouseHandled flag if the event will bubble, see #9469.
 						if ( !event.isPropagationStopped() ) {
 							this.mouseHandled = true;
 						}
-
+	
 						// Open submenu on click
 						if ( target.has( ".ui-menu" ).length ) {
 							this.expand( event );
 						} else if ( !this.element.is( ":focus" ) && $( this.document[ 0 ].activeElement ).closest( ".ui-menu" ).length ) {
-
+	
 							// Redirect focus to the menu
 							this.element.trigger( "focus", [ true ] );
-
+	
 							// If the active item is on the top level, let it stay active.
 							// Otherwise, blur the active item since it is no longer visible.
 							if ( this.active && this.active.parents( ".ui-menu" ).length === 1 ) {
@@ -3505,7 +4191,7 @@ webpackJsonp_name_([5],{
 					// If there's already an active item, keep it active
 					// If not, activate the first item
 					var item = this.active || this.element.find( this.options.items ).eq( 0 );
-
+	
 					if ( !keepActiveItem ) {
 						this.focus( event, item );
 					}
@@ -3519,22 +4205,22 @@ webpackJsonp_name_([5],{
 				},
 				keydown: "_keydown"
 			});
-
+	
 			this.refresh();
-
+	
 			// Clicks outside of a menu collapse any open menus
 			this._on( this.document, {
 				click: function( event ) {
 					if ( this._closeOnDocumentClick( event ) ) {
 						this.collapseAll( event );
 					}
-
+	
 					// Reset the mouseHandled flag
 					this.mouseHandled = false;
 				}
 			});
 		},
-
+	
 		_destroy: function() {
 			// Destroy (sub)menus
 			this.element
@@ -3549,7 +4235,7 @@ webpackJsonp_name_([5],{
 					.removeAttr( "aria-disabled" )
 					.removeUniqueId()
 					.show();
-
+	
 			// Destroy menu items
 			this.element.find( ".ui-menu-item" )
 				.removeClass( "ui-menu-item" )
@@ -3566,15 +4252,15 @@ webpackJsonp_name_([5],{
 						elem.remove();
 					}
 				});
-
+	
 			// Destroy menu dividers
 			this.element.find( ".ui-menu-divider" ).removeClass( "ui-menu-divider ui-widget-content" );
 		},
-
+	
 		_keydown: function( event ) {
 			var match, prev, character, skip,
 				preventDefault = true;
-
+	
 			switch ( event.keyCode ) {
 			case $.ui.keyCode.PAGE_UP:
 				this.previousPage( event );
@@ -3614,27 +4300,27 @@ webpackJsonp_name_([5],{
 				prev = this.previousFilter || "";
 				character = String.fromCharCode( event.keyCode );
 				skip = false;
-
+	
 				clearTimeout( this.filterTimer );
-
+	
 				if ( character === prev ) {
 					skip = true;
 				} else {
 					character = prev + character;
 				}
-
+	
 				match = this._filterMenuItems( character );
 				match = skip && match.index( this.active.next() ) !== -1 ?
 					this.active.nextAll( ".ui-menu-item" ) :
 					match;
-
+	
 				// If no matches on the current filter, reset to the last character pressed
 				// to move down the menu to the first item that starts with that character
 				if ( !match.length ) {
 					character = String.fromCharCode( event.keyCode );
 					match = this._filterMenuItems( character );
 				}
-
+	
 				if ( match.length ) {
 					this.focus( event, match );
 					this.previousFilter = character;
@@ -3645,12 +4331,12 @@ webpackJsonp_name_([5],{
 					delete this.previousFilter;
 				}
 			}
-
+	
 			if ( preventDefault ) {
 				event.preventDefault();
 			}
 		},
-
+	
 		_activate: function( event ) {
 			if ( !this.active.is( ".ui-state-disabled" ) ) {
 				if ( this.active.is( "[aria-haspopup='true']" ) ) {
@@ -3660,15 +4346,15 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		refresh: function() {
 			var menus, items,
 				that = this,
 				icon = this.options.icons.submenu,
 				submenus = this.element.find( this.options.menus );
-
+	
 			this.element.toggleClass( "ui-menu-icons", !!this.element.find( ".ui-icon" ).length );
-
+	
 			// Initialize nested menus
 			submenus.filter( ":not(.ui-menu)" )
 				.addClass( "ui-menu ui-widget ui-widget-content ui-front" )
@@ -3684,16 +4370,16 @@ webpackJsonp_name_([5],{
 						submenuCarat = $( "<span>" )
 							.addClass( "ui-menu-icon ui-icon " + icon )
 							.data( "ui-menu-submenu-carat", true );
-
+	
 					item
 						.attr( "aria-haspopup", "true" )
 						.prepend( submenuCarat );
 					menu.attr( "aria-labelledby", item.attr( "id" ) );
 				});
-
+	
 			menus = submenus.add( this.element );
 			items = menus.find( this.options.items );
-
+	
 			// Initialize menu-items containing spaces and/or dashes only as dividers
 			items.not( ".ui-menu-item" ).each(function() {
 				var item = $( this );
@@ -3701,7 +4387,7 @@ webpackJsonp_name_([5],{
 					item.addClass( "ui-widget-content ui-menu-divider" );
 				}
 			});
-
+	
 			// Don't refresh list items that are already adapted
 			items.not( ".ui-menu-item, .ui-menu-divider" )
 				.addClass( "ui-menu-item" )
@@ -3710,23 +4396,23 @@ webpackJsonp_name_([5],{
 					tabIndex: -1,
 					role: this._itemRole()
 				});
-
+	
 			// Add aria-disabled attribute to any disabled menu item
 			items.filter( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
-
+	
 			// If the active item has been removed, blur the menu
 			if ( this.active && !$.contains( this.element[ 0 ], this.active[ 0 ] ) ) {
 				this.blur();
 			}
 		},
-
+	
 		_itemRole: function() {
 			return {
 				menu: "menuitem",
 				listbox: "option"
 			}[ this.options.role ];
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "icons" ) {
 				this.element.find( ".ui-menu-icon" )
@@ -3740,13 +4426,13 @@ webpackJsonp_name_([5],{
 			}
 			this._super( key, value );
 		},
-
+	
 		focus: function( event, item ) {
 			var nested, focused;
 			this.blur( event, event && event.type === "focus" );
-
+	
 			this._scrollIntoView( item );
-
+	
 			this.active = item.first();
 			focused = this.active.addClass( "ui-state-focus" ).removeClass( "ui-state-active" );
 			// Only update aria-activedescendant if there's a role
@@ -3754,13 +4440,13 @@ webpackJsonp_name_([5],{
 			if ( this.options.role ) {
 				this.element.attr( "aria-activedescendant", focused.attr( "id" ) );
 			}
-
+	
 			// Highlight active parent menu item, if any
 			this.active
 				.parent()
 				.closest( ".ui-menu-item" )
 				.addClass( "ui-state-active" );
-
+	
 			if ( event && event.type === "keydown" ) {
 				this._close();
 			} else {
@@ -3768,16 +4454,16 @@ webpackJsonp_name_([5],{
 					this._close();
 				}, this.delay );
 			}
-
+	
 			nested = item.children( ".ui-menu" );
 			if ( nested.length && event && ( /^mouse/.test( event.type ) ) ) {
 				this._startOpening(nested);
 			}
 			this.activeMenu = item.parent();
-
+	
 			this._trigger( "focus", event, { item: item } );
 		},
-
+	
 		_scrollIntoView: function( item ) {
 			var borderTop, paddingTop, offset, scroll, elementHeight, itemHeight;
 			if ( this._hasScroll() ) {
@@ -3787,7 +4473,7 @@ webpackJsonp_name_([5],{
 				scroll = this.activeMenu.scrollTop();
 				elementHeight = this.activeMenu.height();
 				itemHeight = item.outerHeight();
-
+	
 				if ( offset < 0 ) {
 					this.activeMenu.scrollTop( scroll + offset );
 				} else if ( offset + itemHeight > elementHeight ) {
@@ -3795,80 +4481,80 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		blur: function( event, fromFocus ) {
 			if ( !fromFocus ) {
 				clearTimeout( this.timer );
 			}
-
+	
 			if ( !this.active ) {
 				return;
 			}
-
+	
 			this.active.removeClass( "ui-state-focus" );
 			this.active = null;
-
+	
 			this._trigger( "blur", event, { item: this.active } );
 		},
-
+	
 		_startOpening: function( submenu ) {
 			clearTimeout( this.timer );
-
+	
 			// Don't open if already open fixes a Firefox bug that caused a .5 pixel
 			// shift in the submenu position when mousing over the carat icon
 			if ( submenu.attr( "aria-hidden" ) !== "true" ) {
 				return;
 			}
-
+	
 			this.timer = this._delay(function() {
 				this._close();
 				this._open( submenu );
 			}, this.delay );
 		},
-
+	
 		_open: function( submenu ) {
 			var position = $.extend({
 				of: this.active
 			}, this.options.position );
-
+	
 			clearTimeout( this.timer );
 			this.element.find( ".ui-menu" ).not( submenu.parents( ".ui-menu" ) )
 				.hide()
 				.attr( "aria-hidden", "true" );
-
+	
 			submenu
 				.show()
 				.removeAttr( "aria-hidden" )
 				.attr( "aria-expanded", "true" )
 				.position( position );
 		},
-
+	
 		collapseAll: function( event, all ) {
 			clearTimeout( this.timer );
 			this.timer = this._delay(function() {
 				// If we were passed an event, look for the submenu that contains the event
 				var currentMenu = all ? this.element :
 					$( event && event.target ).closest( this.element.find( ".ui-menu" ) );
-
+	
 				// If we found no valid submenu ancestor, use the main menu to close all sub menus anyway
 				if ( !currentMenu.length ) {
 					currentMenu = this.element;
 				}
-
+	
 				this._close( currentMenu );
-
+	
 				this.blur( event );
 				this.activeMenu = currentMenu;
 			}, this.delay );
 		},
-
+	
 		// With no arguments, closes the currently active menu - if nothing is active
 		// it closes all menus.  If passed an argument, it will search for menus BELOW
 		_close: function( startMenu ) {
 			if ( !startMenu ) {
 				startMenu = this.active ? this.active.parent() : this.element;
 			}
-
+	
 			startMenu
 				.find( ".ui-menu" )
 					.hide()
@@ -3878,17 +4564,17 @@ webpackJsonp_name_([5],{
 				.find( ".ui-state-active" ).not( ".ui-state-focus" )
 					.removeClass( "ui-state-active" );
 		},
-
+	
 		_closeOnDocumentClick: function( event ) {
 			return !$( event.target ).closest( ".ui-menu" ).length;
 		},
-
+	
 		_isDivider: function( item ) {
-
+	
 			// Match hyphen, em dash, en dash
 			return !/[^\-\u2014\u2013\s]/.test( item.text() );
 		},
-
+	
 		collapse: function( event ) {
 			var newItem = this.active &&
 				this.active.parent().closest( ".ui-menu-item", this.element );
@@ -3897,40 +4583,40 @@ webpackJsonp_name_([5],{
 				this.focus( event, newItem );
 			}
 		},
-
+	
 		expand: function( event ) {
 			var newItem = this.active &&
 				this.active
 					.children( ".ui-menu " )
 					.find( this.options.items )
 					.first();
-
+	
 			if ( newItem && newItem.length ) {
 				this._open( newItem.parent() );
-
+	
 				// Delay so Firefox will not hide activedescendant change in expanding submenu from AT
 				this._delay(function() {
 					this.focus( event, newItem );
 				});
 			}
 		},
-
+	
 		next: function( event ) {
 			this._move( "next", "first", event );
 		},
-
+	
 		previous: function( event ) {
 			this._move( "prev", "last", event );
 		},
-
+	
 		isFirstItem: function() {
 			return this.active && !this.active.prevAll( ".ui-menu-item" ).length;
 		},
-
+	
 		isLastItem: function() {
 			return this.active && !this.active.nextAll( ".ui-menu-item" ).length;
 		},
-
+	
 		_move: function( direction, filter, event ) {
 			var next;
 			if ( this.active ) {
@@ -3947,13 +4633,13 @@ webpackJsonp_name_([5],{
 			if ( !next || !next.length || !this.active ) {
 				next = this.activeMenu.find( this.options.items )[ filter ]();
 			}
-
+	
 			this.focus( event, next );
 		},
-
+	
 		nextPage: function( event ) {
 			var item, base, height;
-
+	
 			if ( !this.active ) {
 				this.next( event );
 				return;
@@ -3968,14 +4654,14 @@ webpackJsonp_name_([5],{
 					item = $( this );
 					return item.offset().top - base - height < 0;
 				});
-
+	
 				this.focus( event, item );
 			} else {
 				this.focus( event, this.activeMenu.find( this.options.items )
 					[ !this.active ? "first" : "last" ]() );
 			}
 		},
-
+	
 		previousPage: function( event ) {
 			var item, base, height;
 			if ( !this.active ) {
@@ -3992,17 +4678,17 @@ webpackJsonp_name_([5],{
 					item = $( this );
 					return item.offset().top - base + height > 0;
 				});
-
+	
 				this.focus( event, item );
 			} else {
 				this.focus( event, this.activeMenu.find( this.options.items ).first() );
 			}
 		},
-
+	
 		_hasScroll: function() {
 			return this.element.outerHeight() < this.element.prop( "scrollHeight" );
 		},
-
+	
 		select: function( event ) {
 			// TODO: It should never be possible to not have an active item at this
 			// point, but the tests don't trigger mouseenter before click.
@@ -4013,14 +4699,14 @@ webpackJsonp_name_([5],{
 			}
 			this._trigger( "select", event, ui );
 		},
-
+	
 		_filterMenuItems: function(character) {
 			var escapedCharacter = character.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" ),
 				regex = new RegExp( "^" + escapedCharacter, "i" );
-
+	
 			return this.activeMenu
 				.find( this.options.items )
-
+	
 				// Only match on items, not dividers or other content (#10571)
 				.filter( ".ui-menu-item" )
 				.filter(function() {
@@ -4028,8 +4714,8 @@ webpackJsonp_name_([5],{
 				});
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Autocomplete 1.11.4
 	 * http://jqueryui.com
@@ -4040,8 +4726,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/autocomplete/
 	 */
-
-
+	
+	
 	$.widget( "ui.autocomplete", {
 		version: "1.11.4",
 		defaultElement: "<input>",
@@ -4056,7 +4742,7 @@ webpackJsonp_name_([5],{
 				collision: "none"
 			},
 			source: null,
-
+	
 			// callbacks
 			change: null,
 			close: null,
@@ -4066,10 +4752,10 @@ webpackJsonp_name_([5],{
 			search: null,
 			select: null
 		},
-
+	
 		requestIndex: 0,
 		pending: 0,
-
+	
 		_create: function() {
 			// Some browsers only repeat keydown events, not keypress events,
 			// so we use the suppressKeyPress flag to determine if we've already
@@ -4082,7 +4768,7 @@ webpackJsonp_name_([5],{
 				nodeName = this.element[ 0 ].nodeName.toLowerCase(),
 				isTextarea = nodeName === "textarea",
 				isInput = nodeName === "input";
-
+	
 			this.isMultiLine =
 				// Textareas are always multi-line
 				isTextarea ? true :
@@ -4091,14 +4777,14 @@ webpackJsonp_name_([5],{
 				isInput ? false :
 				// All other element types are determined by whether or not they're contentEditable
 				this.element.prop( "isContentEditable" );
-
+	
 			this.valueMethod = this.element[ isTextarea || isInput ? "val" : "text" ];
 			this.isNewMenu = true;
-
+	
 			this.element
 				.addClass( "ui-autocomplete-input" )
 				.attr( "autocomplete", "off" );
-
+	
 			this._on( this.element, {
 				keydown: function( event ) {
 					if ( this.element.prop( "readOnly" ) ) {
@@ -4107,7 +4793,7 @@ webpackJsonp_name_([5],{
 						suppressKeyPressRepeat = true;
 						return;
 					}
-
+	
 					suppressKeyPress = false;
 					suppressInput = false;
 					suppressKeyPressRepeat = false;
@@ -4174,7 +4860,7 @@ webpackJsonp_name_([5],{
 					if ( suppressKeyPressRepeat ) {
 						return;
 					}
-
+	
 					// replicate some key handlers to allow them to repeat in Firefox and Opera
 					var keyCode = $.ui.keyCode;
 					switch ( event.keyCode ) {
@@ -4209,13 +4895,13 @@ webpackJsonp_name_([5],{
 						delete this.cancelBlur;
 						return;
 					}
-
+	
 					clearTimeout( this.searching );
 					this.close( event );
 					this._change( event );
 				}
 			});
-
+	
 			this._initSource();
 			this.menu = $( "<ul>" )
 				.addClass( "ui-autocomplete ui-front" )
@@ -4226,19 +4912,19 @@ webpackJsonp_name_([5],{
 				})
 				.hide()
 				.menu( "instance" );
-
+	
 			this._on( this.menu.element, {
 				mousedown: function( event ) {
 					// prevent moving focus out of the text field
 					event.preventDefault();
-
+	
 					// IE doesn't prevent moving focus even with event.preventDefault()
 					// so we set a flag to know when we should ignore the blur event
 					this.cancelBlur = true;
 					this._delay(function() {
 						delete this.cancelBlur;
 					});
-
+	
 					// clicking on the scrollbar causes focus to shift to the body
 					// but we can't detect a mouseup or a click immediately afterward
 					// so we have to track the next mousedown and close the menu if
@@ -4265,15 +4951,15 @@ webpackJsonp_name_([5],{
 						this.isNewMenu = false;
 						if ( event.originalEvent && /^mouse/.test( event.originalEvent.type ) ) {
 							this.menu.blur();
-
+	
 							this.document.one( "mousemove", function() {
 								$( event.target ).trigger( event.originalEvent );
 							});
-
+	
 							return;
 						}
 					}
-
+	
 					item = ui.item.data( "ui-autocomplete-item" );
 					if ( false !== this._trigger( "focus", event, { item: item } ) ) {
 						// use value to match what will end up in the input, if it was a key event
@@ -4281,7 +4967,7 @@ webpackJsonp_name_([5],{
 							this._value( item.value );
 						}
 					}
-
+	
 					// Announce the value in the liveRegion
 					label = ui.item.attr( "aria-label" ) || item.value;
 					if ( label && $.trim( label ).length ) {
@@ -4292,7 +4978,7 @@ webpackJsonp_name_([5],{
 				menuselect: function( event, ui ) {
 					var item = ui.item.data( "ui-autocomplete-item" ),
 						previous = this.previous;
-
+	
 					// only trigger when focus was lost (click on menu)
 					if ( this.element[ 0 ] !== this.document[ 0 ].activeElement ) {
 						this.element.focus();
@@ -4305,19 +4991,19 @@ webpackJsonp_name_([5],{
 							this.selectedItem = item;
 						});
 					}
-
+	
 					if ( false !== this._trigger( "select", event, { item: item } ) ) {
 						this._value( item.value );
 					}
 					// reset the term after the select event
 					// this allows custom select handling to work properly
 					this.term = this._value();
-
+	
 					this.close( event );
 					this.selectedItem = item;
 				}
 			});
-
+	
 			this.liveRegion = $( "<span>", {
 					role: "status",
 					"aria-live": "assertive",
@@ -4325,7 +5011,7 @@ webpackJsonp_name_([5],{
 				})
 				.addClass( "ui-helper-hidden-accessible" )
 				.appendTo( this.document[ 0 ].body );
-
+	
 			// turning off autocomplete prevents the browser from remembering the
 			// value when navigating through history, so we re-enable autocomplete
 			// if the page is unloaded before the widget is destroyed. #7790
@@ -4335,7 +5021,7 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_destroy: function() {
 			clearTimeout( this.searching );
 			this.element
@@ -4344,7 +5030,7 @@ webpackJsonp_name_([5],{
 			this.menu.element.remove();
 			this.liveRegion.remove();
 		},
-
+	
 		_setOption: function( key, value ) {
 			this._super( key, value );
 			if ( key === "source" ) {
@@ -4357,27 +5043,27 @@ webpackJsonp_name_([5],{
 				this.xhr.abort();
 			}
 		},
-
+	
 		_appendTo: function() {
 			var element = this.options.appendTo;
-
+	
 			if ( element ) {
 				element = element.jquery || element.nodeType ?
 					$( element ) :
 					this.document.find( element ).eq( 0 );
 			}
-
+	
 			if ( !element || !element[ 0 ] ) {
 				element = this.element.closest( ".ui-front" );
 			}
-
+	
 			if ( !element.length ) {
 				element = this.document[ 0 ].body;
 			}
-
+	
 			return element;
 		},
-
+	
 		_initSource: function() {
 			var array, url,
 				that = this;
@@ -4408,63 +5094,63 @@ webpackJsonp_name_([5],{
 				this.source = this.options.source;
 			}
 		},
-
+	
 		_searchTimeout: function( event ) {
 			clearTimeout( this.searching );
 			this.searching = this._delay(function() {
-
+	
 				// Search if the value has changed, or if the user retypes the same value (see #7434)
 				var equalValues = this.term === this._value(),
 					menuVisible = this.menu.element.is( ":visible" ),
 					modifierKey = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
-
+	
 				if ( !equalValues || ( equalValues && !menuVisible && !modifierKey ) ) {
 					this.selectedItem = null;
 					this.search( null, event );
 				}
 			}, this.options.delay );
 		},
-
+	
 		search: function( value, event ) {
 			value = value != null ? value : this._value();
-
+	
 			// always save the actual value, not the one passed as an argument
 			this.term = this._value();
-
+	
 			if ( value.length < this.options.minLength ) {
 				return this.close( event );
 			}
-
+	
 			if ( this._trigger( "search", event ) === false ) {
 				return;
 			}
-
+	
 			return this._search( value );
 		},
-
+	
 		_search: function( value ) {
 			this.pending++;
 			this.element.addClass( "ui-autocomplete-loading" );
 			this.cancelSearch = false;
-
+	
 			this.source( { term: value }, this._response() );
 		},
-
+	
 		_response: function() {
 			var index = ++this.requestIndex;
-
+	
 			return $.proxy(function( content ) {
 				if ( index === this.requestIndex ) {
 					this.__response( content );
 				}
-
+	
 				this.pending--;
 				if ( !this.pending ) {
 					this.element.removeClass( "ui-autocomplete-loading" );
 				}
 			}, this );
 		},
-
+	
 		__response: function( content ) {
 			if ( content ) {
 				content = this._normalize( content );
@@ -4478,12 +5164,12 @@ webpackJsonp_name_([5],{
 				this._close();
 			}
 		},
-
+	
 		close: function( event ) {
 			this.cancelSearch = true;
 			this._close( event );
 		},
-
+	
 		_close: function( event ) {
 			if ( this.menu.element.is( ":visible" ) ) {
 				this.menu.element.hide();
@@ -4492,13 +5178,13 @@ webpackJsonp_name_([5],{
 				this._trigger( "close", event );
 			}
 		},
-
+	
 		_change: function( event ) {
 			if ( this.previous !== this._value() ) {
 				this._trigger( "change", event, { item: this.selectedItem } );
 			}
 		},
-
+	
 		_normalize: function( items ) {
 			// assume all items have the right format when the first item is complete
 			if ( items.length && items[ 0 ].label && items[ 0 ].value ) {
@@ -4517,25 +5203,25 @@ webpackJsonp_name_([5],{
 				});
 			});
 		},
-
+	
 		_suggest: function( items ) {
 			var ul = this.menu.element.empty();
 			this._renderMenu( ul, items );
 			this.isNewMenu = true;
 			this.menu.refresh();
-
+	
 			// size and position menu
 			ul.show();
 			this._resizeMenu();
 			ul.position( $.extend({
 				of: this.element
 			}, this.options.position ) );
-
+	
 			if ( this.options.autoFocus ) {
 				this.menu.next();
 			}
 		},
-
+	
 		_resizeMenu: function() {
 			var ul = this.menu.element;
 			ul.outerWidth( Math.max(
@@ -4545,22 +5231,22 @@ webpackJsonp_name_([5],{
 				this.element.outerWidth()
 			) );
 		},
-
+	
 		_renderMenu: function( ul, items ) {
 			var that = this;
 			$.each( items, function( index, item ) {
 				that._renderItemData( ul, item );
 			});
 		},
-
+	
 		_renderItemData: function( ul, item ) {
 			return this._renderItem( ul, item ).data( "ui-autocomplete-item", item );
 		},
-
+	
 		_renderItem: function( ul, item ) {
 			return $( "<li>" ).text( item.label ).appendTo( ul );
 		},
-
+	
 		_move: function( direction, event ) {
 			if ( !this.menu.element.is( ":visible" ) ) {
 				this.search( null, event );
@@ -4568,35 +5254,35 @@ webpackJsonp_name_([5],{
 			}
 			if ( this.menu.isFirstItem() && /^previous/.test( direction ) ||
 					this.menu.isLastItem() && /^next/.test( direction ) ) {
-
+	
 				if ( !this.isMultiLine ) {
 					this._value( this.term );
 				}
-
+	
 				this.menu.blur();
 				return;
 			}
 			this.menu[ direction ]( event );
 		},
-
+	
 		widget: function() {
 			return this.menu.element;
 		},
-
+	
 		_value: function() {
 			return this.valueMethod.apply( this.element, arguments );
 		},
-
+	
 		_keyEvent: function( keyEvent, event ) {
 			if ( !this.isMultiLine || this.menu.element.is( ":visible" ) ) {
 				this._move( keyEvent, event );
-
+	
 				// prevents moving cursor to beginning/end of the text field in some browsers
 				event.preventDefault();
 			}
 		}
 	});
-
+	
 	$.extend( $.ui.autocomplete, {
 		escapeRegex: function( value ) {
 			return value.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
@@ -4608,7 +5294,7 @@ webpackJsonp_name_([5],{
 			});
 		}
 	});
-
+	
 	// live region extension, adding a `messages` option
 	// NOTE: This is an experimental API. We are still investigating
 	// a full solution for string manipulation and internationalization.
@@ -4622,7 +5308,7 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		__response: function( content ) {
 			var message;
 			this._superApply( arguments );
@@ -4638,10 +5324,10 @@ webpackJsonp_name_([5],{
 			$( "<div>" ).text( message ).appendTo( this.liveRegion );
 		}
 	});
-
+	
 	var autocomplete = $.ui.autocomplete;
-
-
+	
+	
 	/*!
 	 * jQuery UI Button 1.11.4
 	 * http://jqueryui.com
@@ -4652,8 +5338,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/button/
 	 */
-
-
+	
+	
 	var lastActive,
 		baseClasses = "ui-button ui-widget ui-state-default ui-corner-all",
 		typeClasses = "ui-button-icons-only ui-button-icon-only ui-button-text-icons ui-button-text-icon-primary ui-button-text-icon-secondary ui-button-text-only",
@@ -4680,7 +5366,7 @@ webpackJsonp_name_([5],{
 			}
 			return radios;
 		};
-
+	
 	$.widget( "ui.button", {
 		version: "1.11.4",
 		defaultElement: "<button>",
@@ -4697,27 +5383,27 @@ webpackJsonp_name_([5],{
 			this.element.closest( "form" )
 				.unbind( "reset" + this.eventNamespace )
 				.bind( "reset" + this.eventNamespace, formResetHandler );
-
+	
 			if ( typeof this.options.disabled !== "boolean" ) {
 				this.options.disabled = !!this.element.prop( "disabled" );
 			} else {
 				this.element.prop( "disabled", this.options.disabled );
 			}
-
+	
 			this._determineButtonType();
 			this.hasTitle = !!this.buttonElement.attr( "title" );
-
+	
 			var that = this,
 				options = this.options,
 				toggleButton = this.type === "checkbox" || this.type === "radio",
 				activeClass = !toggleButton ? "ui-state-active" : "";
-
+	
 			if ( options.label === null ) {
 				options.label = (this.type === "input" ? this.buttonElement.val() : this.buttonElement.html());
 			}
-
+	
 			this._hoverable( this.buttonElement );
-
+	
 			this.buttonElement
 				.addClass( baseClasses )
 				.attr( "role", "button" )
@@ -4741,7 +5427,7 @@ webpackJsonp_name_([5],{
 						event.stopImmediatePropagation();
 					}
 				});
-
+	
 			// Can't use _focusable() because the element that receives focus
 			// and the element that gets the ui-state-focus class are different
 			this._on({
@@ -4752,13 +5438,13 @@ webpackJsonp_name_([5],{
 					this.buttonElement.removeClass( "ui-state-focus" );
 				}
 			});
-
+	
 			if ( toggleButton ) {
 				this.element.bind( "change" + this.eventNamespace, function() {
 					that.refresh();
 				});
 			}
-
+	
 			if ( this.type === "checkbox" ) {
 				this.buttonElement.bind( "click" + this.eventNamespace, function() {
 					if ( options.disabled ) {
@@ -4772,7 +5458,7 @@ webpackJsonp_name_([5],{
 					}
 					$( this ).addClass( "ui-state-active" );
 					that.buttonElement.attr( "aria-pressed", "true" );
-
+	
 					var radio = that.element[ 0 ];
 					radioGroup( radio )
 						.not( radio )
@@ -4813,7 +5499,7 @@ webpackJsonp_name_([5],{
 					.bind( "keyup" + this.eventNamespace + " blur" + this.eventNamespace, function() {
 						$( this ).removeClass( "ui-state-active" );
 					});
-
+	
 				if ( this.buttonElement.is("a") ) {
 					this.buttonElement.keyup(function(event) {
 						if ( event.keyCode === $.ui.keyCode.SPACE ) {
@@ -4823,14 +5509,14 @@ webpackJsonp_name_([5],{
 					});
 				}
 			}
-
+	
 			this._setOption( "disabled", options.disabled );
 			this._resetButton();
 		},
-
+	
 		_determineButtonType: function() {
 			var ancestor, labelSelector, checked;
-
+	
 			if ( this.element.is("[type=checkbox]") ) {
 				this.type = "checkbox";
 			} else if ( this.element.is("[type=radio]") ) {
@@ -4840,7 +5526,7 @@ webpackJsonp_name_([5],{
 			} else {
 				this.type = "button";
 			}
-
+	
 			if ( this.type === "checkbox" || this.type === "radio" ) {
 				// we don't search against the document in case the element
 				// is disconnected from the DOM
@@ -4855,7 +5541,7 @@ webpackJsonp_name_([5],{
 					}
 				}
 				this.element.addClass( "ui-helper-hidden-accessible" );
-
+	
 				checked = this.element.is( ":checked" );
 				if ( checked ) {
 					this.buttonElement.addClass( "ui-state-active" );
@@ -4865,11 +5551,11 @@ webpackJsonp_name_([5],{
 				this.buttonElement = this.element;
 			}
 		},
-
+	
 		widget: function() {
 			return this.buttonElement;
 		},
-
+	
 		_destroy: function() {
 			this.element
 				.removeClass( "ui-helper-hidden-accessible" );
@@ -4878,12 +5564,12 @@ webpackJsonp_name_([5],{
 				.removeAttr( "role" )
 				.removeAttr( "aria-pressed" )
 				.html( this.buttonElement.find(".ui-button-text").html() );
-
+	
 			if ( !this.hasTitle ) {
 				this.buttonElement.removeAttr( "title" );
 			}
 		},
-
+	
 		_setOption: function( key, value ) {
 			this._super( key, value );
 			if ( key === "disabled" ) {
@@ -4900,11 +5586,11 @@ webpackJsonp_name_([5],{
 			}
 			this._resetButton();
 		},
-
+	
 		refresh: function() {
 			//See #8237 & #8828
 			var isDisabled = this.element.is( "input, button" ) ? this.element.is( ":disabled" ) : this.element.hasClass( "ui-button-disabled" );
-
+	
 			if ( isDisabled !== this.options.disabled ) {
 				this._setOption( "disabled", isDisabled );
 			}
@@ -4932,7 +5618,7 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		_resetButton: function() {
 			if ( this.type === "input" ) {
 				if ( this.options.label ) {
@@ -4949,23 +5635,23 @@ webpackJsonp_name_([5],{
 				icons = this.options.icons,
 				multipleIcons = icons.primary && icons.secondary,
 				buttonClasses = [];
-
+	
 			if ( icons.primary || icons.secondary ) {
 				if ( this.options.text ) {
 					buttonClasses.push( "ui-button-text-icon" + ( multipleIcons ? "s" : ( icons.primary ? "-primary" : "-secondary" ) ) );
 				}
-
+	
 				if ( icons.primary ) {
 					buttonElement.prepend( "<span class='ui-button-icon-primary ui-icon " + icons.primary + "'></span>" );
 				}
-
+	
 				if ( icons.secondary ) {
 					buttonElement.append( "<span class='ui-button-icon-secondary ui-icon " + icons.secondary + "'></span>" );
 				}
-
+	
 				if ( !this.options.text ) {
 					buttonClasses.push( multipleIcons ? "ui-button-icons-only" : "ui-button-icon-only" );
-
+	
 					if ( !this.hasTitle ) {
 						buttonElement.attr( "title", $.trim( buttonText ) );
 					}
@@ -4976,40 +5662,40 @@ webpackJsonp_name_([5],{
 			buttonElement.addClass( buttonClasses.join( " " ) );
 		}
 	});
-
+	
 	$.widget( "ui.buttonset", {
 		version: "1.11.4",
 		options: {
 			items: "button, input[type=button], input[type=submit], input[type=reset], input[type=checkbox], input[type=radio], a, :data(ui-button)"
 		},
-
+	
 		_create: function() {
 			this.element.addClass( "ui-buttonset" );
 		},
-
+	
 		_init: function() {
 			this.refresh();
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "disabled" ) {
 				this.buttons.button( "option", key, value );
 			}
-
+	
 			this._super( key, value );
 		},
-
+	
 		refresh: function() {
 			var rtl = this.element.css( "direction" ) === "rtl",
 				allButtons = this.element.find( this.options.items ),
 				existingButtons = allButtons.filter( ":ui-button" );
-
+	
 			// Initialize new buttons
 			allButtons.not( ":ui-button" ).button();
-
+	
 			// Refresh existing buttons
 			existingButtons.button( "refresh" );
-
+	
 			this.buttons = allButtons
 				.map(function() {
 					return $( this ).button( "widget" )[ 0 ];
@@ -5023,7 +5709,7 @@ webpackJsonp_name_([5],{
 					.end()
 				.end();
 		},
-
+	
 		_destroy: function() {
 			this.element.removeClass( "ui-buttonset" );
 			this.buttons
@@ -5035,10 +5721,10 @@ webpackJsonp_name_([5],{
 				.button( "destroy" );
 		}
 	});
-
+	
 	var button = $.ui.button;
-
-
+	
+	
 	/*!
 	 * jQuery UI Datepicker 1.11.4
 	 * http://jqueryui.com
@@ -5049,12 +5735,12 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/datepicker/
 	 */
-
-
+	
+	
 	$.extend($.ui, { datepicker: { version: "1.11.4" } });
-
+	
 	var datepicker_instActive;
-
+	
 	function datepicker_getZindex( elem ) {
 		var position, value;
 		while ( elem.length && elem[ 0 ] !== document ) {
@@ -5074,14 +5760,14 @@ webpackJsonp_name_([5],{
 			}
 			elem = elem.parent();
 		}
-
+	
 		return 0;
 	}
 	/* Date picker manager.
 	   Use the singleton instance of this class, $.datepicker, to interact with the date picker.
 	   Settings for (groups of) date pickers are maintained in an instance object,
 	   allowing multiple different settings on the same page. */
-
+	
 	function Datepicker() {
 		this._curInst = null; // The current instance in use
 		this._keyEvent = false; // If the last event was a key event
@@ -5171,19 +5857,19 @@ webpackJsonp_name_([5],{
 		this.regional[ "en-US" ] = $.extend( true, {}, this.regional.en );
 		this.dpDiv = datepicker_bindHover($("<div id='" + this._mainDivId + "' class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all'></div>"));
 	}
-
+	
 	$.extend(Datepicker.prototype, {
 		/* Class name added to elements to indicate already configured with a date picker. */
 		markerClassName: "hasDatepicker",
-
+	
 		//Keep track of the maximum number of rows displayed (see #7043)
 		maxRows: 4,
-
+	
 		// TODO rename to "widget" when switching to widget factory
 		_widgetDatepicker: function() {
 			return this.dpDiv;
 		},
-
+	
 		/* Override the default settings for all instances of the date picker.
 		 * @param  settings  object - the new settings to use as defaults (anonymous object)
 		 * @return the manager object
@@ -5192,7 +5878,7 @@ webpackJsonp_name_([5],{
 			datepicker_extendRemove(this._defaults, settings || {});
 			return this;
 		},
-
+	
 		/* Attach the date picker to a jQuery selection.
 		 * @param  target	element - the target input field or division or span
 		 * @param  settings  object - the new settings to use for this date picker instance (anonymous)
@@ -5213,7 +5899,7 @@ webpackJsonp_name_([5],{
 				this._inlineDatepicker(target, inst);
 			}
 		},
-
+	
 		/* Create a new instance object. */
 		_newInst: function(target, inline) {
 			var id = target[0].id.replace(/([^A-Za-z0-9_\-])/g, "\\\\$1"); // escape jQuery meta chars
@@ -5224,7 +5910,7 @@ webpackJsonp_name_([5],{
 				dpDiv: (!inline ? this.dpDiv : // presentation div
 				datepicker_bindHover($("<div class='" + this._inlineClass + " ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all'></div>")))};
 		},
-
+	
 		/* Attach the date picker to an input field. */
 		_connectDatepicker: function(target, inst) {
 			var input = $(target);
@@ -5243,13 +5929,13 @@ webpackJsonp_name_([5],{
 				this._disableDatepicker( target );
 			}
 		},
-
+	
 		/* Make attachments based on settings. */
 		_attachments: function(input, inst) {
 			var showOn, buttonText, buttonImage,
 				appendText = this._get(inst, "appendText"),
 				isRTL = this._get(inst, "isRTL");
-
+	
 			if (inst.append) {
 				inst.append.remove();
 			}
@@ -5257,13 +5943,13 @@ webpackJsonp_name_([5],{
 				inst.append = $("<span class='" + this._appendClass + "'>" + appendText + "</span>");
 				input[isRTL ? "before" : "after"](inst.append);
 			}
-
+	
 			input.unbind("focus", this._showDatepicker);
-
+	
 			if (inst.trigger) {
 				inst.trigger.remove();
 			}
-
+	
 			showOn = this._get(inst, "showOn");
 			if (showOn === "focus" || showOn === "both") { // pop-up date picker when in the marked field
 				input.focus(this._showDatepicker);
@@ -5291,14 +5977,14 @@ webpackJsonp_name_([5],{
 				});
 			}
 		},
-
+	
 		/* Apply the maximum length for the date format. */
 		_autoSize: function(inst) {
 			if (this._get(inst, "autoSize") && !inst.inline) {
 				var findMax, max, maxI, i,
 					date = new Date(2009, 12 - 1, 20), // Ensure double digits
 					dateFormat = this._get(inst, "dateFormat");
-
+	
 				if (dateFormat.match(/[DM]/)) {
 					findMax = function(names) {
 						max = 0;
@@ -5319,7 +6005,7 @@ webpackJsonp_name_([5],{
 				inst.input.attr("size", this._formatDate(inst, date).length);
 			}
 		},
-
+	
 		/* Attach an inline date picker to a div. */
 		_inlineDatepicker: function(target, inst) {
 			var divSpan = $(target);
@@ -5339,7 +6025,7 @@ webpackJsonp_name_([5],{
 			// http://bugs.jqueryui.com/ticket/7552 - A Datepicker created on a detached div has zero height
 			inst.dpDiv.css( "display", "block" );
 		},
-
+	
 		/* Pop-up the date picker in a "dialog" box.
 		 * @param  input element - ignored
 		 * @param  date	string or Date - the initial date to display
@@ -5353,7 +6039,7 @@ webpackJsonp_name_([5],{
 		_dialogDatepicker: function(input, date, onSelect, settings, pos) {
 			var id, browserWidth, browserHeight, scrollX, scrollY,
 				inst = this._dialogInst; // internal instance
-
+	
 			if (!inst) {
 				this.uuid += 1;
 				id = "dp" + this.uuid;
@@ -5368,7 +6054,7 @@ webpackJsonp_name_([5],{
 			datepicker_extendRemove(inst.settings, settings || {});
 			date = (date && date.constructor === Date ? this._formatDate(inst, date) : date);
 			this._dialogInput.val(date);
-
+	
 			this._pos = (pos ? (pos.length ? pos : [pos.pageX, pos.pageY]) : null);
 			if (!this._pos) {
 				browserWidth = document.documentElement.clientWidth;
@@ -5378,7 +6064,7 @@ webpackJsonp_name_([5],{
 				this._pos = // should use actual width/height below
 					[(browserWidth / 2) - 100 + scrollX, (browserHeight / 2) - 150 + scrollY];
 			}
-
+	
 			// move input on screen for focus, but hidden behind dialog
 			this._dialogInput.css("left", (this._pos[0] + 20) + "px").css("top", this._pos[1] + "px");
 			inst.settings.onSelect = onSelect;
@@ -5391,7 +6077,7 @@ webpackJsonp_name_([5],{
 			$.data(this._dialogInput[0], "datepicker", inst);
 			return this;
 		},
-
+	
 		/* Detach a datepicker from its control.
 		 * @param  target	element - the target input field or division or span
 		 */
@@ -5399,11 +6085,11 @@ webpackJsonp_name_([5],{
 			var nodeName,
 				$target = $(target),
 				inst = $.data(target, "datepicker");
-
+	
 			if (!$target.hasClass(this.markerClassName)) {
 				return;
 			}
-
+	
 			nodeName = target.nodeName.toLowerCase();
 			$.removeData(target, "datepicker");
 			if (nodeName === "input") {
@@ -5417,12 +6103,12 @@ webpackJsonp_name_([5],{
 			} else if (nodeName === "div" || nodeName === "span") {
 				$target.removeClass(this.markerClassName).empty();
 			}
-
+	
 			if ( datepicker_instActive === inst ) {
 				datepicker_instActive = null;
 			}
 		},
-
+	
 		/* Enable the date picker to a jQuery selection.
 		 * @param  target	element - the target input field or division or span
 		 */
@@ -5430,11 +6116,11 @@ webpackJsonp_name_([5],{
 			var nodeName, inline,
 				$target = $(target),
 				inst = $.data(target, "datepicker");
-
+	
 			if (!$target.hasClass(this.markerClassName)) {
 				return;
 			}
-
+	
 			nodeName = target.nodeName.toLowerCase();
 			if (nodeName === "input") {
 				target.disabled = false;
@@ -5450,7 +6136,7 @@ webpackJsonp_name_([5],{
 			this._disabledInputs = $.map(this._disabledInputs,
 				function(value) { return (value === target ? null : value); }); // delete entry
 		},
-
+	
 		/* Disable the date picker to a jQuery selection.
 		 * @param  target	element - the target input field or division or span
 		 */
@@ -5458,11 +6144,11 @@ webpackJsonp_name_([5],{
 			var nodeName, inline,
 				$target = $(target),
 				inst = $.data(target, "datepicker");
-
+	
 			if (!$target.hasClass(this.markerClassName)) {
 				return;
 			}
-
+	
 			nodeName = target.nodeName.toLowerCase();
 			if (nodeName === "input") {
 				target.disabled = true;
@@ -5479,7 +6165,7 @@ webpackJsonp_name_([5],{
 				function(value) { return (value === target ? null : value); }); // delete entry
 			this._disabledInputs[this._disabledInputs.length] = target;
 		},
-
+	
 		/* Is the first field in a jQuery collection disabled as a datepicker?
 		 * @param  target	element - the target input field or division or span
 		 * @return boolean - true if disabled, false if enabled
@@ -5495,7 +6181,7 @@ webpackJsonp_name_([5],{
 			}
 			return false;
 		},
-
+	
 		/* Retrieve the instance data for the target control.
 		 * @param  target  element - the target input field or division or span
 		 * @return  object - the associated instance data
@@ -5509,7 +6195,7 @@ webpackJsonp_name_([5],{
 				throw "Missing instance data for this datepicker";
 			}
 		},
-
+	
 		/* Update or retrieve the settings for a date picker attached to an input field or division.
 		 * @param  target  element - the target input field or division or span
 		 * @param  name	object - the new settings to update or
@@ -5522,24 +6208,24 @@ webpackJsonp_name_([5],{
 		_optionDatepicker: function(target, name, value) {
 			var settings, date, minDate, maxDate,
 				inst = this._getInst(target);
-
+	
 			if (arguments.length === 2 && typeof name === "string") {
 				return (name === "defaults" ? $.extend({}, $.datepicker._defaults) :
 					(inst ? (name === "all" ? $.extend({}, inst.settings) :
 					this._get(inst, name)) : null));
 			}
-
+	
 			settings = name || {};
 			if (typeof name === "string") {
 				settings = {};
 				settings[name] = value;
 			}
-
+	
 			if (inst) {
 				if (this._curInst === inst) {
 					this._hideDatepicker();
 				}
-
+	
 				date = this._getDateDatepicker(target, true);
 				minDate = this._getMinMaxDate(inst, "min");
 				maxDate = this._getMinMaxDate(inst, "max");
@@ -5565,12 +6251,12 @@ webpackJsonp_name_([5],{
 				this._updateDatepicker(inst);
 			}
 		},
-
+	
 		// change method deprecated
 		_changeDatepicker: function(target, name, value) {
 			this._optionDatepicker(target, name, value);
 		},
-
+	
 		/* Redraw the date picker attached to an input field or division.
 		 * @param  target  element - the target input field or division or span
 		 */
@@ -5580,7 +6266,7 @@ webpackJsonp_name_([5],{
 				this._updateDatepicker(inst);
 			}
 		},
-
+	
 		/* Set the dates for a jQuery selection.
 		 * @param  target element - the target input field or division or span
 		 * @param  date	Date - the new date
@@ -5593,7 +6279,7 @@ webpackJsonp_name_([5],{
 				this._updateAlternate(inst);
 			}
 		},
-
+	
 		/* Get the date(s) for the first entry in a jQuery selection.
 		 * @param  target element - the target input field or division or span
 		 * @param  noDefault boolean - true if no default date is to be used
@@ -5606,14 +6292,14 @@ webpackJsonp_name_([5],{
 			}
 			return (inst ? this._getDate(inst) : null);
 		},
-
+	
 		/* Handle keystrokes. */
 		_doKeyDown: function(event) {
 			var onSelect, dateStr, sel,
 				inst = $.datepicker._getInst(event.target),
 				handled = true,
 				isRTL = inst.dpDiv.is(".ui-datepicker-rtl");
-
+	
 			inst._keyEvent = true;
 			if ($.datepicker._datepickerShowing) {
 				switch (event.keyCode) {
@@ -5625,17 +6311,17 @@ webpackJsonp_name_([5],{
 							if (sel[0]) {
 								$.datepicker._selectDay(event.target, inst.selectedMonth, inst.selectedYear, sel[0]);
 							}
-
+	
 							onSelect = $.datepicker._get(inst, "onSelect");
 							if (onSelect) {
 								dateStr = $.datepicker._formatDate(inst);
-
+	
 								// trigger custom callback
 								onSelect.apply((inst.input ? inst.input[0] : null), [dateStr, inst]);
 							} else {
 								$.datepicker._hideDatepicker();
 							}
-
+	
 							return false; // don't submit the form
 					case 27: $.datepicker._hideDatepicker();
 							break; // hide on escape
@@ -5698,36 +6384,36 @@ webpackJsonp_name_([5],{
 			} else {
 				handled = false;
 			}
-
+	
 			if (handled) {
 				event.preventDefault();
 				event.stopPropagation();
 			}
 		},
-
+	
 		/* Filter entered characters - based on date format. */
 		_doKeyPress: function(event) {
 			var chars, chr,
 				inst = $.datepicker._getInst(event.target);
-
+	
 			if ($.datepicker._get(inst, "constrainInput")) {
 				chars = $.datepicker._possibleChars($.datepicker._get(inst, "dateFormat"));
 				chr = String.fromCharCode(event.charCode == null ? event.keyCode : event.charCode);
 				return event.ctrlKey || event.metaKey || (chr < " " || !chars || chars.indexOf(chr) > -1);
 			}
 		},
-
+	
 		/* Synchronise manual entry and field/alternate field. */
 		_doKeyUp: function(event) {
 			var date,
 				inst = $.datepicker._getInst(event.target);
-
+	
 			if (inst.input.val() !== inst.lastVal) {
 				try {
 					date = $.datepicker.parseDate($.datepicker._get(inst, "dateFormat"),
 						(inst.input ? inst.input.val() : null),
 						$.datepicker._getFormatConfig(inst));
-
+	
 					if (date) { // only if valid
 						$.datepicker._setDateFromField(inst);
 						$.datepicker._updateAlternate(inst);
@@ -5739,7 +6425,7 @@ webpackJsonp_name_([5],{
 			}
 			return true;
 		},
-
+	
 		/* Pop-up the date picker for a given input field.
 		 * If false returned from beforeShow event handler do not show.
 		 * @param  input  element - the input field attached to the date picker or
@@ -5750,14 +6436,14 @@ webpackJsonp_name_([5],{
 			if (input.nodeName.toLowerCase() !== "input") { // find from button/image trigger
 				input = $("input", input.parentNode)[0];
 			}
-
+	
 			if ($.datepicker._isDisabledDatepicker(input) || $.datepicker._lastInput === input) { // already here
 				return;
 			}
-
+	
 			var inst, beforeShow, beforeShowSettings, isFixed,
 				offset, showAnim, duration;
-
+	
 			inst = $.datepicker._getInst(input);
 			if ($.datepicker._curInst && $.datepicker._curInst !== inst) {
 				$.datepicker._curInst.dpDiv.stop(true, true);
@@ -5765,18 +6451,18 @@ webpackJsonp_name_([5],{
 					$.datepicker._hideDatepicker( $.datepicker._curInst.input[0] );
 				}
 			}
-
+	
 			beforeShow = $.datepicker._get(inst, "beforeShow");
 			beforeShowSettings = beforeShow ? beforeShow.apply(input, [input, inst]) : {};
 			if(beforeShowSettings === false){
 				return;
 			}
 			datepicker_extendRemove(inst.settings, beforeShowSettings);
-
+	
 			inst.lastVal = null;
 			$.datepicker._lastInput = input;
 			$.datepicker._setDateFromField(inst);
-
+	
 			if ($.datepicker._inDialog) { // hide cursor
 				input.value = "";
 			}
@@ -5784,13 +6470,13 @@ webpackJsonp_name_([5],{
 				$.datepicker._pos = $.datepicker._findPos(input);
 				$.datepicker._pos[1] += input.offsetHeight; // add the height
 			}
-
+	
 			isFixed = false;
 			$(input).parents().each(function() {
 				isFixed |= $(this).css("position") === "fixed";
 				return !isFixed;
 			});
-
+	
 			offset = {left: $.datepicker._pos[0], top: $.datepicker._pos[1]};
 			$.datepicker._pos = null;
 			//to avoid flashes on Firefox
@@ -5804,44 +6490,44 @@ webpackJsonp_name_([5],{
 			inst.dpDiv.css({position: ($.datepicker._inDialog && $.blockUI ?
 				"static" : (isFixed ? "fixed" : "absolute")), display: "none",
 				left: offset.left + "px", top: offset.top + "px"});
-
+	
 			if (!inst.inline) {
 				showAnim = $.datepicker._get(inst, "showAnim");
 				duration = $.datepicker._get(inst, "duration");
 				inst.dpDiv.css( "z-index", datepicker_getZindex( $( input ) ) + 1 );
 				$.datepicker._datepickerShowing = true;
-
+	
 				if ( $.effects && $.effects.effect[ showAnim ] ) {
 					inst.dpDiv.show(showAnim, $.datepicker._get(inst, "showOptions"), duration);
 				} else {
 					inst.dpDiv[showAnim || "show"](showAnim ? duration : null);
 				}
-
+	
 				if ( $.datepicker._shouldFocusInput( inst ) ) {
 					inst.input.focus();
 				}
-
+	
 				$.datepicker._curInst = inst;
 			}
 		},
-
+	
 		/* Generate the date picker content. */
 		_updateDatepicker: function(inst) {
 			this.maxRows = 4; //Reset the max number of rows being displayed (see #7043)
 			datepicker_instActive = inst; // for delegate hover events
 			inst.dpDiv.empty().append(this._generateHTML(inst));
 			this._attachHandlers(inst);
-
+	
 			var origyearshtml,
 				numMonths = this._getNumberOfMonths(inst),
 				cols = numMonths[1],
 				width = 17,
 				activeCell = inst.dpDiv.find( "." + this._dayOverClass + " a" );
-
+	
 			if ( activeCell.length > 0 ) {
 				datepicker_handleMouseover.apply( activeCell.get( 0 ) );
 			}
-
+	
 			inst.dpDiv.removeClass("ui-datepicker-multi-2 ui-datepicker-multi-3 ui-datepicker-multi-4").width("");
 			if (cols > 1) {
 				inst.dpDiv.addClass("ui-datepicker-multi-" + cols).css("width", (width * cols) + "em");
@@ -5850,11 +6536,11 @@ webpackJsonp_name_([5],{
 				"Class"]("ui-datepicker-multi");
 			inst.dpDiv[(this._get(inst, "isRTL") ? "add" : "remove") +
 				"Class"]("ui-datepicker-rtl");
-
+	
 			if (inst === $.datepicker._curInst && $.datepicker._datepickerShowing && $.datepicker._shouldFocusInput( inst ) ) {
 				inst.input.focus();
 			}
-
+	
 			// deffered render of the years select (to avoid flashes on Firefox)
 			if( inst.yearshtml ){
 				origyearshtml = inst.yearshtml;
@@ -5867,14 +6553,14 @@ webpackJsonp_name_([5],{
 				}, 0);
 			}
 		},
-
+	
 		// #6694 - don't focus the input if it's already focused
 		// this breaks the change event in IE
 		// Support: IE and jQuery <1.9
 		_shouldFocusInput: function( inst ) {
 			return inst.input && inst.input.is( ":visible" ) && !inst.input.is( ":disabled" ) && !inst.input.is( ":focus" );
 		},
-
+	
 		/* Check positioning to remain on screen. */
 		_checkOffset: function(inst, offset, isFixed) {
 			var dpWidth = inst.dpDiv.outerWidth(),
@@ -5883,52 +6569,52 @@ webpackJsonp_name_([5],{
 				inputHeight = inst.input ? inst.input.outerHeight() : 0,
 				viewWidth = document.documentElement.clientWidth + (isFixed ? 0 : $(document).scrollLeft()),
 				viewHeight = document.documentElement.clientHeight + (isFixed ? 0 : $(document).scrollTop());
-
+	
 			offset.left -= (this._get(inst, "isRTL") ? (dpWidth - inputWidth) : 0);
 			offset.left -= (isFixed && offset.left === inst.input.offset().left) ? $(document).scrollLeft() : 0;
 			offset.top -= (isFixed && offset.top === (inst.input.offset().top + inputHeight)) ? $(document).scrollTop() : 0;
-
+	
 			// now check if datepicker is showing outside window viewport - move to a better place if so.
 			offset.left -= Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
 				Math.abs(offset.left + dpWidth - viewWidth) : 0);
 			offset.top -= Math.min(offset.top, (offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
 				Math.abs(dpHeight + inputHeight) : 0);
-
+	
 			return offset;
 		},
-
+	
 		/* Find an object's position on the screen. */
 		_findPos: function(obj) {
 			var position,
 				inst = this._getInst(obj),
 				isRTL = this._get(inst, "isRTL");
-
+	
 			while (obj && (obj.type === "hidden" || obj.nodeType !== 1 || $.expr.filters.hidden(obj))) {
 				obj = obj[isRTL ? "previousSibling" : "nextSibling"];
 			}
-
+	
 			position = $(obj).offset();
 			return [position.left, position.top];
 		},
-
+	
 		/* Hide the date picker from view.
 		 * @param  input  element - the input field attached to the date picker
 		 */
 		_hideDatepicker: function(input) {
 			var showAnim, duration, postProcess, onClose,
 				inst = this._curInst;
-
+	
 			if (!inst || (input && inst !== $.data(input, "datepicker"))) {
 				return;
 			}
-
+	
 			if (this._datepickerShowing) {
 				showAnim = this._get(inst, "showAnim");
 				duration = this._get(inst, "duration");
 				postProcess = function() {
 					$.datepicker._tidyDialog(inst);
 				};
-
+	
 				// DEPRECATED: after BC for 1.8.x $.effects[ showAnim ] is not needed
 				if ( $.effects && ( $.effects.effect[ showAnim ] || $.effects[ showAnim ] ) ) {
 					inst.dpDiv.hide(showAnim, $.datepicker._get(inst, "showOptions"), duration, postProcess);
@@ -5936,17 +6622,17 @@ webpackJsonp_name_([5],{
 					inst.dpDiv[(showAnim === "slideDown" ? "slideUp" :
 						(showAnim === "fadeIn" ? "fadeOut" : "hide"))]((showAnim ? duration : null), postProcess);
 				}
-
+	
 				if (!showAnim) {
 					postProcess();
 				}
 				this._datepickerShowing = false;
-
+	
 				onClose = this._get(inst, "onClose");
 				if (onClose) {
 					onClose.apply((inst.input ? inst.input[0] : null), [(inst.input ? inst.input.val() : ""), inst]);
 				}
-
+	
 				this._lastInput = null;
 				if (this._inDialog) {
 					this._dialogInput.css({ position: "absolute", left: "0", top: "-100px" });
@@ -5958,21 +6644,21 @@ webpackJsonp_name_([5],{
 				this._inDialog = false;
 			}
 		},
-
+	
 		/* Tidy up after a dialog display. */
 		_tidyDialog: function(inst) {
 			inst.dpDiv.removeClass(this._dialogClass).unbind(".ui-datepicker-calendar");
 		},
-
+	
 		/* Close date picker if clicked elsewhere. */
 		_checkExternalClick: function(event) {
 			if (!$.datepicker._curInst) {
 				return;
 			}
-
+	
 			var $target = $(event.target),
 				inst = $.datepicker._getInst($target[0]);
-
+	
 			if ( ( ( $target[0].id !== $.datepicker._mainDivId &&
 					$target.parents("#" + $.datepicker._mainDivId).length === 0 &&
 					!$target.hasClass($.datepicker.markerClassName) &&
@@ -5982,12 +6668,12 @@ webpackJsonp_name_([5],{
 					$.datepicker._hideDatepicker();
 			}
 		},
-
+	
 		/* Adjust one of the date sub-fields. */
 		_adjustDate: function(id, offset, period) {
 			var target = $(id),
 				inst = this._getInst(target[0]);
-
+	
 			if (this._isDisabledDatepicker(target[0])) {
 				return;
 			}
@@ -5996,13 +6682,13 @@ webpackJsonp_name_([5],{
 				period);
 			this._updateDatepicker(inst);
 		},
-
+	
 		/* Action for current link. */
 		_gotoToday: function(id) {
 			var date,
 				target = $(id),
 				inst = this._getInst(target[0]);
-
+	
 			if (this._get(inst, "gotoCurrent") && inst.currentDay) {
 				inst.selectedDay = inst.currentDay;
 				inst.drawMonth = inst.selectedMonth = inst.currentMonth;
@@ -6016,29 +6702,29 @@ webpackJsonp_name_([5],{
 			this._notifyChange(inst);
 			this._adjustDate(target);
 		},
-
+	
 		/* Action for selecting a new month/year. */
 		_selectMonthYear: function(id, select, period) {
 			var target = $(id),
 				inst = this._getInst(target[0]);
-
+	
 			inst["selected" + (period === "M" ? "Month" : "Year")] =
 			inst["draw" + (period === "M" ? "Month" : "Year")] =
 				parseInt(select.options[select.selectedIndex].value,10);
-
+	
 			this._notifyChange(inst);
 			this._adjustDate(target);
 		},
-
+	
 		/* Action for selecting a day. */
 		_selectDay: function(id, month, year, td) {
 			var inst,
 				target = $(id);
-
+	
 			if ($(td).hasClass(this._unselectableClass) || this._isDisabledDatepicker(target[0])) {
 				return;
 			}
-
+	
 			inst = this._getInst(target[0]);
 			inst.selectedDay = inst.currentDay = $("a", td).html();
 			inst.selectedMonth = inst.currentMonth = month;
@@ -6046,32 +6732,32 @@ webpackJsonp_name_([5],{
 			this._selectDate(id, this._formatDate(inst,
 				inst.currentDay, inst.currentMonth, inst.currentYear));
 		},
-
+	
 		/* Erase the input field and hide the date picker. */
 		_clearDate: function(id) {
 			var target = $(id);
 			this._selectDate(target, "");
 		},
-
+	
 		/* Update the input field with the selected date. */
 		_selectDate: function(id, dateStr) {
 			var onSelect,
 				target = $(id),
 				inst = this._getInst(target[0]);
-
+	
 			dateStr = (dateStr != null ? dateStr : this._formatDate(inst));
 			if (inst.input) {
 				inst.input.val(dateStr);
 			}
 			this._updateAlternate(inst);
-
+	
 			onSelect = this._get(inst, "onSelect");
 			if (onSelect) {
 				onSelect.apply((inst.input ? inst.input[0] : null), [dateStr, inst]);  // trigger custom callback
 			} else if (inst.input) {
 				inst.input.trigger("change"); // fire the change event
 			}
-
+	
 			if (inst.inline){
 				this._updateDatepicker(inst);
 			} else {
@@ -6083,12 +6769,12 @@ webpackJsonp_name_([5],{
 				this._lastInput = null;
 			}
 		},
-
+	
 		/* Update any alternate field to synchronise with the main field. */
 		_updateAlternate: function(inst) {
 			var altFormat, date, dateStr,
 				altField = this._get(inst, "altField");
-
+	
 			if (altField) { // update alternate field too
 				altFormat = this._get(inst, "altFormat") || this._get(inst, "dateFormat");
 				date = this._getDate(inst);
@@ -6096,7 +6782,7 @@ webpackJsonp_name_([5],{
 				$(altField).each(function() { $(this).val(dateStr); });
 			}
 		},
-
+	
 		/* Set as beforeShowDay function to prevent selection of weekends.
 		 * @param  date  Date - the date to customise
 		 * @return [boolean, string] - is this date selectable?, what is its CSS class?
@@ -6105,7 +6791,7 @@ webpackJsonp_name_([5],{
 			var day = date.getDay();
 			return [(day > 0 && day < 6), ""];
 		},
-
+	
 		/* Set as calculateWeek to determine the week of the year based on the ISO 8601 definition.
 		 * @param  date  Date - the date to get the week for
 		 * @return  number - the number of the week within the year that contains this date
@@ -6113,16 +6799,16 @@ webpackJsonp_name_([5],{
 		iso8601Week: function(date) {
 			var time,
 				checkDate = new Date(date.getTime());
-
+	
 			// Find Thursday of this week starting on Monday
 			checkDate.setDate(checkDate.getDate() + 4 - (checkDate.getDay() || 7));
-
+	
 			time = checkDate.getTime();
 			checkDate.setMonth(0); // Compare with Jan 1
 			checkDate.setDate(1);
 			return Math.floor(Math.round((time - checkDate) / 86400000) / 7) + 1;
 		},
-
+	
 		/* Parse a string value into a date object.
 		 * See formatDate below for the possible formats.
 		 *
@@ -6140,12 +6826,12 @@ webpackJsonp_name_([5],{
 			if (format == null || value == null) {
 				throw "Invalid arguments";
 			}
-
+	
 			value = (typeof value === "object" ? value.toString() : value + "");
 			if (value === "") {
 				return null;
 			}
-
+	
 			var iFormat, dim, extra,
 				iValue = 0,
 				shortYearCutoffTemp = (settings ? settings.shortYearCutoff : null) || this._defaults.shortYearCutoff,
@@ -6191,7 +6877,7 @@ webpackJsonp_name_([5],{
 						}).sort(function (a, b) {
 							return -(a[1].length - b[1].length);
 						});
-
+	
 					$.each(names, function (i, pair) {
 						var name = pair[1];
 						if (value.substr(iValue, name.length).toLowerCase() === name.toLowerCase()) {
@@ -6213,7 +6899,7 @@ webpackJsonp_name_([5],{
 					}
 					iValue++;
 				};
-
+	
 			for (iFormat = 0; iFormat < format.length; iFormat++) {
 				if (literal) {
 					if (format.charAt(iFormat) === "'" && !lookAhead("'")) {
@@ -6265,21 +6951,21 @@ webpackJsonp_name_([5],{
 					}
 				}
 			}
-
+	
 			if (iValue < value.length){
 				extra = value.substr(iValue);
 				if (!/^\s+/.test(extra)) {
 					throw "Extra/unparsed characters found in date: " + extra;
 				}
 			}
-
+	
 			if (year === -1) {
 				year = new Date().getFullYear();
 			} else if (year < 100) {
 				year += new Date().getFullYear() - new Date().getFullYear() % 100 +
 					(year <= shortYearCutoff ? 0 : -100);
 			}
-
+	
 			if (doy > -1) {
 				month = 1;
 				day = doy;
@@ -6292,14 +6978,14 @@ webpackJsonp_name_([5],{
 					day -= dim;
 				} while (true);
 			}
-
+	
 			date = this._daylightSavingAdjust(new Date(year, month - 1, day));
 			if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
 				throw "Invalid date"; // E.g. 31/02/00
 			}
 			return date;
 		},
-
+	
 		/* Standard date formats. */
 		ATOM: "yy-mm-dd", // RFC 3339 (ISO 8601)
 		COOKIE: "D, dd M yy",
@@ -6313,10 +6999,10 @@ webpackJsonp_name_([5],{
 		TICKS: "!",
 		TIMESTAMP: "@",
 		W3C: "yy-mm-dd", // ISO 8601
-
+	
 		_ticksTo1970: (((1970 - 1) * 365 + Math.floor(1970 / 4) - Math.floor(1970 / 100) +
 			Math.floor(1970 / 400)) * 24 * 60 * 60 * 10000000),
-
+	
 		/* Format a date object into a string value.
 		 * The format can be combinations of the following:
 		 * d  - day of month (no leading zero)
@@ -6349,7 +7035,7 @@ webpackJsonp_name_([5],{
 			if (!date) {
 				return "";
 			}
-
+	
 			var iFormat,
 				dayNamesShort = (settings ? settings.dayNamesShort : null) || this._defaults.dayNamesShort,
 				dayNames = (settings ? settings.dayNames : null) || this._defaults.dayNames,
@@ -6379,7 +7065,7 @@ webpackJsonp_name_([5],{
 				},
 				output = "",
 				literal = false;
-
+	
 			if (date) {
 				for (iFormat = 0; iFormat < format.length; iFormat++) {
 					if (literal) {
@@ -6431,7 +7117,7 @@ webpackJsonp_name_([5],{
 			}
 			return output;
 		},
-
+	
 		/* Extract all possible characters from the date format. */
 		_possibleChars: function (format) {
 			var iFormat,
@@ -6445,7 +7131,7 @@ webpackJsonp_name_([5],{
 					}
 					return matches;
 				};
-
+	
 			for (iFormat = 0; iFormat < format.length; iFormat++) {
 				if (literal) {
 					if (format.charAt(iFormat) === "'" && !lookAhead("'")) {
@@ -6474,25 +7160,25 @@ webpackJsonp_name_([5],{
 			}
 			return chars;
 		},
-
+	
 		/* Get a setting value, defaulting if necessary. */
 		_get: function(inst, name) {
 			return inst.settings[name] !== undefined ?
 				inst.settings[name] : this._defaults[name];
 		},
-
+	
 		/* Parse existing date and initialise date picker. */
 		_setDateFromField: function(inst, noDefault) {
 			if (inst.input.val() === inst.lastVal) {
 				return;
 			}
-
+	
 			var dateFormat = this._get(inst, "dateFormat"),
 				dates = inst.lastVal = inst.input ? inst.input.val() : null,
 				defaultDate = this._getDefaultDate(inst),
 				date = defaultDate,
 				settings = this._getFormatConfig(inst);
-
+	
 			try {
 				date = this.parseDate(dateFormat, dates, settings) || defaultDate;
 			} catch (event) {
@@ -6506,13 +7192,13 @@ webpackJsonp_name_([5],{
 			inst.currentYear = (dates ? date.getFullYear() : 0);
 			this._adjustInstDate(inst);
 		},
-
+	
 		/* Retrieve the default date shown on opening. */
 		_getDefaultDate: function(inst) {
 			return this._restrictMinMax(inst,
 				this._determineDate(inst, this._get(inst, "defaultDate"), new Date()));
 		},
-
+	
 		/* A date may be specified as an exact value or a relative one. */
 		_determineDate: function(inst, date, defaultDate) {
 			var offsetNumeric = function(offset) {
@@ -6528,7 +7214,7 @@ webpackJsonp_name_([5],{
 					catch (e) {
 						// Ignore
 					}
-
+	
 					var date = (offset.toLowerCase().match(/^c/) ?
 						$.datepicker._getDate(inst) : null) || new Date(),
 						year = date.getFullYear(),
@@ -6536,7 +7222,7 @@ webpackJsonp_name_([5],{
 						day = date.getDate(),
 						pattern = /([+\-]?[0-9]+)\s*(d|D|w|W|m|M|y|Y)?/g,
 						matches = pattern.exec(offset);
-
+	
 					while (matches) {
 						switch (matches[2] || "d") {
 							case "d" : case "D" :
@@ -6558,7 +7244,7 @@ webpackJsonp_name_([5],{
 				},
 				newDate = (date == null || date === "" ? defaultDate : (typeof date === "string" ? offsetString(date) :
 					(typeof date === "number" ? (isNaN(date) ? defaultDate : offsetNumeric(date)) : new Date(date.getTime()))));
-
+	
 			newDate = (newDate && newDate.toString() === "Invalid Date" ? defaultDate : newDate);
 			if (newDate) {
 				newDate.setHours(0);
@@ -6568,7 +7254,7 @@ webpackJsonp_name_([5],{
 			}
 			return this._daylightSavingAdjust(newDate);
 		},
-
+	
 		/* Handle switch to/from daylight saving.
 		 * Hours may be non-zero on daylight saving cut-over:
 		 * > 12 when midnight changeover, but then cannot generate
@@ -6583,14 +7269,14 @@ webpackJsonp_name_([5],{
 			date.setHours(date.getHours() > 12 ? date.getHours() + 2 : 0);
 			return date;
 		},
-
+	
 		/* Set the date(s) directly. */
 		_setDate: function(inst, date, noChange) {
 			var clear = !date,
 				origMonth = inst.selectedMonth,
 				origYear = inst.selectedYear,
 				newDate = this._restrictMinMax(inst, this._determineDate(inst, date, new Date()));
-
+	
 			inst.selectedDay = inst.currentDay = newDate.getDate();
 			inst.drawMonth = inst.selectedMonth = inst.currentMonth = newDate.getMonth();
 			inst.drawYear = inst.selectedYear = inst.currentYear = newDate.getFullYear();
@@ -6602,7 +7288,7 @@ webpackJsonp_name_([5],{
 				inst.input.val(clear ? "" : this._formatDate(inst));
 			}
 		},
-
+	
 		/* Retrieve the date(s) directly. */
 		_getDate: function(inst) {
 			var startDate = (!inst.currentYear || (inst.input && inst.input.val() === "") ? null :
@@ -6610,7 +7296,7 @@ webpackJsonp_name_([5],{
 				inst.currentYear, inst.currentMonth, inst.currentDay)));
 				return startDate;
 		},
-
+	
 		/* Attach the onxxx handlers.  These are declared statically so
 		 * they work with static code transformers like Caja.
 		 */
@@ -6647,7 +7333,7 @@ webpackJsonp_name_([5],{
 				$(this).bind(this.getAttribute("data-event"), handler[this.getAttribute("data-handler")]);
 			});
 		},
-
+	
 		/* Generate the HTML for the current state of the date picker. */
 		_generateHTML: function(inst) {
 			var maxDraw, prevText, prev, nextText, next, currentText, gotoDate,
@@ -6673,7 +7359,7 @@ webpackJsonp_name_([5],{
 				maxDate = this._getMinMaxDate(inst, "max"),
 				drawMonth = inst.drawMonth - showCurrentAtPos,
 				drawYear = inst.drawYear;
-
+	
 			if (drawMonth < 0) {
 				drawMonth += 12;
 				drawYear--;
@@ -6692,42 +7378,42 @@ webpackJsonp_name_([5],{
 			}
 			inst.drawMonth = drawMonth;
 			inst.drawYear = drawYear;
-
+	
 			prevText = this._get(inst, "prevText");
 			prevText = (!navigationAsDateFormat ? prevText : this.formatDate(prevText,
 				this._daylightSavingAdjust(new Date(drawYear, drawMonth - stepMonths, 1)),
 				this._getFormatConfig(inst)));
-
+	
 			prev = (this._canAdjustMonth(inst, -1, drawYear, drawMonth) ?
 				"<a class='ui-datepicker-prev ui-corner-all' data-handler='prev' data-event='click'" +
 				" title='" + prevText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "e" : "w") + "'>" + prevText + "</span></a>" :
 				(hideIfNoPrevNext ? "" : "<a class='ui-datepicker-prev ui-corner-all ui-state-disabled' title='"+ prevText +"'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "e" : "w") + "'>" + prevText + "</span></a>"));
-
+	
 			nextText = this._get(inst, "nextText");
 			nextText = (!navigationAsDateFormat ? nextText : this.formatDate(nextText,
 				this._daylightSavingAdjust(new Date(drawYear, drawMonth + stepMonths, 1)),
 				this._getFormatConfig(inst)));
-
+	
 			next = (this._canAdjustMonth(inst, +1, drawYear, drawMonth) ?
 				"<a class='ui-datepicker-next ui-corner-all' data-handler='next' data-event='click'" +
 				" title='" + nextText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "w" : "e") + "'>" + nextText + "</span></a>" :
 				(hideIfNoPrevNext ? "" : "<a class='ui-datepicker-next ui-corner-all ui-state-disabled' title='"+ nextText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "w" : "e") + "'>" + nextText + "</span></a>"));
-
+	
 			currentText = this._get(inst, "currentText");
 			gotoDate = (this._get(inst, "gotoCurrent") && inst.currentDay ? currentDate : today);
 			currentText = (!navigationAsDateFormat ? currentText :
 				this.formatDate(currentText, gotoDate, this._getFormatConfig(inst)));
-
+	
 			controls = (!inst.inline ? "<button type='button' class='ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all' data-handler='hide' data-event='click'>" +
 				this._get(inst, "closeText") + "</button>" : "");
-
+	
 			buttonPanel = (showButtonPanel) ? "<div class='ui-datepicker-buttonpane ui-widget-content'>" + (isRTL ? controls : "") +
 				(this._isInRange(inst, gotoDate) ? "<button type='button' class='ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all' data-handler='today' data-event='click'" +
 				">" + currentText + "</button>" : "") + (isRTL ? "" : controls) + "</div>" : "";
-
+	
 			firstDay = parseInt(this._get(inst, "firstDay"),10);
 			firstDay = (isNaN(firstDay) ? 0 : firstDay);
-
+	
 			showWeek = this._get(inst, "showWeek");
 			dayNames = this._get(inst, "dayNames");
 			dayNamesMin = this._get(inst, "dayNamesMin");
@@ -6831,18 +7517,18 @@ webpackJsonp_name_([5],{
 			inst._keyEvent = false;
 			return html;
 		},
-
+	
 		/* Generate the month and year header. */
 		_generateMonthYearHeader: function(inst, drawMonth, drawYear, minDate, maxDate,
 				secondary, monthNames, monthNamesShort) {
-
+	
 			var inMinYear, inMaxYear, month, years, thisYear, determineYear, year, endYear,
 				changeMonth = this._get(inst, "changeMonth"),
 				changeYear = this._get(inst, "changeYear"),
 				showMonthAfterYear = this._get(inst, "showMonthAfterYear"),
 				html = "<div class='ui-datepicker-title'>",
 				monthHtml = "";
-
+	
 			// month selection
 			if (secondary || !changeMonth) {
 				monthHtml += "<span class='ui-datepicker-month'>" + monthNames[drawMonth] + "</span>";
@@ -6859,11 +7545,11 @@ webpackJsonp_name_([5],{
 				}
 				monthHtml += "</select>";
 			}
-
+	
 			if (!showMonthAfterYear) {
 				html += monthHtml + (secondary || !(changeMonth && changeYear) ? "&#xa0;" : "");
 			}
-
+	
 			// year selection
 			if ( !inst.yearshtml ) {
 				inst.yearshtml = "";
@@ -6890,12 +7576,12 @@ webpackJsonp_name_([5],{
 							">" + year + "</option>";
 					}
 					inst.yearshtml += "</select>";
-
+	
 					html += inst.yearshtml;
 					inst.yearshtml = null;
 				}
 			}
-
+	
 			html += this._get(inst, "yearSuffix");
 			if (showMonthAfterYear) {
 				html += (secondary || !(changeMonth && changeYear) ? "&#xa0;" : "") + monthHtml;
@@ -6903,14 +7589,14 @@ webpackJsonp_name_([5],{
 			html += "</div>"; // Close datepicker_header
 			return html;
 		},
-
+	
 		/* Adjust one of the date sub-fields. */
 		_adjustInstDate: function(inst, offset, period) {
 			var year = inst.drawYear + (period === "Y" ? offset : 0),
 				month = inst.drawMonth + (period === "M" ? offset : 0),
 				day = Math.min(inst.selectedDay, this._getDaysInMonth(year, month)) + (period === "D" ? offset : 0),
 				date = this._restrictMinMax(inst, this._daylightSavingAdjust(new Date(year, month, day)));
-
+	
 			inst.selectedDay = date.getDate();
 			inst.drawMonth = inst.selectedMonth = date.getMonth();
 			inst.drawYear = inst.selectedYear = date.getFullYear();
@@ -6918,7 +7604,7 @@ webpackJsonp_name_([5],{
 				this._notifyChange(inst);
 			}
 		},
-
+	
 		/* Ensure a date is within any min/max bounds. */
 		_restrictMinMax: function(inst, date) {
 			var minDate = this._getMinMaxDate(inst, "min"),
@@ -6926,7 +7612,7 @@ webpackJsonp_name_([5],{
 				newDate = (minDate && date < minDate ? minDate : date);
 			return (maxDate && newDate > maxDate ? maxDate : newDate);
 		},
-
+	
 		/* Notify change of month/year. */
 		_notifyChange: function(inst) {
 			var onChange = this._get(inst, "onChangeMonthYear");
@@ -6935,40 +7621,40 @@ webpackJsonp_name_([5],{
 					[inst.selectedYear, inst.selectedMonth + 1, inst]);
 			}
 		},
-
+	
 		/* Determine the number of months to show. */
 		_getNumberOfMonths: function(inst) {
 			var numMonths = this._get(inst, "numberOfMonths");
 			return (numMonths == null ? [1, 1] : (typeof numMonths === "number" ? [1, numMonths] : numMonths));
 		},
-
+	
 		/* Determine the current maximum date - ensure no time components are set. */
 		_getMinMaxDate: function(inst, minMax) {
 			return this._determineDate(inst, this._get(inst, minMax + "Date"), null);
 		},
-
+	
 		/* Find the number of days in a given month. */
 		_getDaysInMonth: function(year, month) {
 			return 32 - this._daylightSavingAdjust(new Date(year, month, 32)).getDate();
 		},
-
+	
 		/* Find the day of the week of the first of a month. */
 		_getFirstDayOfMonth: function(year, month) {
 			return new Date(year, month, 1).getDay();
 		},
-
+	
 		/* Determines if we should allow a "next/prev" month display change. */
 		_canAdjustMonth: function(inst, offset, curYear, curMonth) {
 			var numMonths = this._getNumberOfMonths(inst),
 				date = this._daylightSavingAdjust(new Date(curYear,
 				curMonth + (offset < 0 ? offset : numMonths[0] * numMonths[1]), 1));
-
+	
 			if (offset < 0) {
 				date.setDate(this._getDaysInMonth(date.getFullYear(), date.getMonth()));
 			}
 			return this._isInRange(inst, date);
 		},
-
+	
 		/* Is the given date in the accepted range? */
 		_isInRange: function(inst, date) {
 			var yearSplit, currentYear,
@@ -6989,13 +7675,13 @@ webpackJsonp_name_([5],{
 						maxYear += currentYear;
 					}
 				}
-
+	
 			return ((!minDate || date.getTime() >= minDate.getTime()) &&
 				(!maxDate || date.getTime() <= maxDate.getTime()) &&
 				(!minYear || date.getFullYear() >= minYear) &&
 				(!maxYear || date.getFullYear() <= maxYear));
 		},
-
+	
 		/* Provide the configuration settings for formatting/parsing. */
 		_getFormatConfig: function(inst) {
 			var shortYearCutoff = this._get(inst, "shortYearCutoff");
@@ -7005,7 +7691,7 @@ webpackJsonp_name_([5],{
 				dayNamesShort: this._get(inst, "dayNamesShort"), dayNames: this._get(inst, "dayNames"),
 				monthNamesShort: this._get(inst, "monthNamesShort"), monthNames: this._get(inst, "monthNames")};
 		},
-
+	
 		/* Format the given date for display. */
 		_formatDate: function(inst, day, month, year) {
 			if (!day) {
@@ -7019,7 +7705,7 @@ webpackJsonp_name_([5],{
 			return this.formatDate(this._get(inst, "dateFormat"), date, this._getFormatConfig(inst));
 		}
 	});
-
+	
 	/*
 	 * Bind hover events for datepicker elements.
 	 * Done via delegate so the binding only occurs once in the lifetime of the parent div.
@@ -7038,7 +7724,7 @@ webpackJsonp_name_([5],{
 			})
 			.delegate( selector, "mouseover", datepicker_handleMouseover );
 	}
-
+	
 	function datepicker_handleMouseover() {
 		if (!$.datepicker._isDisabledDatepicker( datepicker_instActive.inline? datepicker_instActive.dpDiv.parent()[0] : datepicker_instActive.input[0])) {
 			$(this).parents(".ui-datepicker-calendar").find("a").removeClass("ui-state-hover");
@@ -7051,7 +7737,7 @@ webpackJsonp_name_([5],{
 			}
 		}
 	}
-
+	
 	/* jQuery extend now ignores nulls! */
 	function datepicker_extendRemove(target, props) {
 		$.extend(target, props);
@@ -7062,29 +7748,29 @@ webpackJsonp_name_([5],{
 		}
 		return target;
 	}
-
+	
 	/* Invoke the datepicker functionality.
 	   @param  options  string - a command, optionally followed by additional parameters or
 						Object - settings for attaching new datepicker functionality
 	   @return  jQuery object */
 	$.fn.datepicker = function(options){
-
+	
 		/* Verify an empty collection wasn't passed - Fixes #6976 */
 		if ( !this.length ) {
 			return this;
 		}
-
+	
 		/* Initialise the date picker. */
 		if (!$.datepicker.initialized) {
 			$(document).mousedown($.datepicker._checkExternalClick);
 			$.datepicker.initialized = true;
 		}
-
+	
 		/* Append datepicker main container to body if not exist. */
 		if ($("#"+$.datepicker._mainDivId).length === 0) {
 			$("body").append($.datepicker.dpDiv);
 		}
-
+	
 		var otherArgs = Array.prototype.slice.call(arguments, 1);
 		if (typeof options === "string" && (options === "isDisabled" || options === "getDate" || options === "widget")) {
 			return $.datepicker["_" + options + "Datepicker"].
@@ -7101,15 +7787,15 @@ webpackJsonp_name_([5],{
 				$.datepicker._attachDatepicker(this, options);
 		});
 	};
-
+	
 	$.datepicker = new Datepicker(); // singleton instance
 	$.datepicker.initialized = false;
 	$.datepicker.uuid = new Date().getTime();
 	$.datepicker.version = "1.11.4";
-
+	
 	var datepicker = $.datepicker;
-
-
+	
+	
 	/*!
 	 * jQuery UI Draggable 1.11.4
 	 * http://jqueryui.com
@@ -7120,8 +7806,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/draggable/
 	 */
-
-
+	
+	
 	$.widget("ui.draggable", $.ui.mouse, {
 		version: "1.11.4",
 		widgetEventPrefix: "drag",
@@ -7150,14 +7836,14 @@ webpackJsonp_name_([5],{
 			snapTolerance: 20,
 			stack: false,
 			zIndex: false,
-
+	
 			// callbacks
 			drag: null,
 			start: null,
 			stop: null
 		},
 		_create: function() {
-
+	
 			if ( this.options.helper === "original" ) {
 				this._setPositionRelative();
 			}
@@ -7168,10 +7854,10 @@ webpackJsonp_name_([5],{
 				this.element.addClass("ui-draggable-disabled");
 			}
 			this._setHandleClassName();
-
+	
 			this._mouseInit();
 		},
-
+	
 		_setOption: function( key, value ) {
 			this._super( key, value );
 			if ( key === "handle" ) {
@@ -7179,7 +7865,7 @@ webpackJsonp_name_([5],{
 				this._setHandleClassName();
 			}
 		},
-
+	
 		_destroy: function() {
 			if ( ( this.helper || this.element ).is( ".ui-draggable-dragging" ) ) {
 				this.destroyOnClear = true;
@@ -7189,33 +7875,33 @@ webpackJsonp_name_([5],{
 			this._removeHandleClassName();
 			this._mouseDestroy();
 		},
-
+	
 		_mouseCapture: function(event) {
 			var o = this.options;
-
+	
 			this._blurActiveElement( event );
-
+	
 			// among others, prevent a drag on a resizable-handle
 			if (this.helper || o.disabled || $(event.target).closest(".ui-resizable-handle").length > 0) {
 				return false;
 			}
-
+	
 			//Quit if we're not on a valid handle
 			this.handle = this._getHandle(event);
 			if (!this.handle) {
 				return false;
 			}
-
+	
 			this._blockFrames( o.iframeFix === true ? "iframe" : o.iframeFix );
-
+	
 			return true;
-
+	
 		},
-
+	
 		_blockFrames: function( selector ) {
 			this.iframeBlocks = this.document.find( selector ).map(function() {
 				var iframe = $( this );
-
+	
 				return $( "<div>" )
 					.css( "position", "absolute" )
 					.appendTo( iframe.parent() )
@@ -7224,61 +7910,61 @@ webpackJsonp_name_([5],{
 					.offset( iframe.offset() )[ 0 ];
 			});
 		},
-
+	
 		_unblockFrames: function() {
 			if ( this.iframeBlocks ) {
 				this.iframeBlocks.remove();
 				delete this.iframeBlocks;
 			}
 		},
-
+	
 		_blurActiveElement: function( event ) {
 			var document = this.document[ 0 ];
-
+	
 			// Only need to blur if the event occurred on the draggable itself, see #10527
 			if ( !this.handleElement.is( event.target ) ) {
 				return;
 			}
-
+	
 			// support: IE9
 			// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
 			try {
-
+	
 				// Support: IE9, IE10
 				// If the <body> is blurred, IE will switch windows, see #9520
 				if ( document.activeElement && document.activeElement.nodeName.toLowerCase() !== "body" ) {
-
+	
 					// Blur any element that currently has focus, see #4261
 					$( document.activeElement ).blur();
 				}
 			} catch ( error ) {}
 		},
-
+	
 		_mouseStart: function(event) {
-
+	
 			var o = this.options;
-
+	
 			//Create and append the visible helper
 			this.helper = this._createHelper(event);
-
+	
 			this.helper.addClass("ui-draggable-dragging");
-
+	
 			//Cache the helper size
 			this._cacheHelperProportions();
-
+	
 			//If ddmanager is used for droppables, set the global draggable
 			if ($.ui.ddmanager) {
 				$.ui.ddmanager.current = this;
 			}
-
+	
 			/*
 			 * - Position generation -
 			 * This block generates everything position related - it's the core of draggables.
 			 */
-
+	
 			//Cache the margins of the original element
 			this._cacheMargins();
-
+	
 			//Store the helper's css position
 			this.cssPosition = this.helper.css( "position" );
 			this.scrollParent = this.helper.scrollParent( true );
@@ -7286,50 +7972,50 @@ webpackJsonp_name_([5],{
 			this.hasFixedAncestor = this.helper.parents().filter(function() {
 					return $( this ).css( "position" ) === "fixed";
 				}).length > 0;
-
+	
 			//The element's absolute position on the page minus margins
 			this.positionAbs = this.element.offset();
 			this._refreshOffsets( event );
-
+	
 			//Generate the original position
 			this.originalPosition = this.position = this._generatePosition( event, false );
 			this.originalPageX = event.pageX;
 			this.originalPageY = event.pageY;
-
+	
 			//Adjust the mouse offset relative to the helper if "cursorAt" is supplied
 			(o.cursorAt && this._adjustOffsetFromHelper(o.cursorAt));
-
+	
 			//Set a containment if given in the options
 			this._setContainment();
-
+	
 			//Trigger event + callbacks
 			if (this._trigger("start", event) === false) {
 				this._clear();
 				return false;
 			}
-
+	
 			//Recache the helper size
 			this._cacheHelperProportions();
-
+	
 			//Prepare the droppable offsets
 			if ($.ui.ddmanager && !o.dropBehaviour) {
 				$.ui.ddmanager.prepareOffsets(this, event);
 			}
-
+	
 			// Reset helper's right/bottom css if they're set and set explicit width/height instead
 			// as this prevents resizing of elements with right/bottom set (see #7772)
 			this._normalizeRightBottom();
-
+	
 			this._mouseDrag(event, true); //Execute the drag once - this causes the helper not to be visible before getting its correct position
-
+	
 			//If the ddmanager is used for droppables, inform the manager that dragging has started (see #5003)
 			if ( $.ui.ddmanager ) {
 				$.ui.ddmanager.dragStart(this, event);
 			}
-
+	
 			return true;
 		},
-
+	
 		_refreshOffsets: function( event ) {
 			this.offset = {
 				top: this.positionAbs.top - this.margins.top,
@@ -7338,23 +8024,23 @@ webpackJsonp_name_([5],{
 				parent: this._getParentOffset(),
 				relative: this._getRelativeOffset()
 			};
-
+	
 			this.offset.click = {
 				left: event.pageX - this.offset.left,
 				top: event.pageY - this.offset.top
 			};
 		},
-
+	
 		_mouseDrag: function(event, noPropagation) {
 			// reset any necessary cached properties (see #5009)
 			if ( this.hasFixedAncestor ) {
 				this.offset.parent = this._getParentOffset();
 			}
-
+	
 			//Compute the helpers position
 			this.position = this._generatePosition( event, true );
 			this.positionAbs = this._convertPositionTo("absolute");
-
+	
 			//Call plugins and callbacks and use the resulting position if something is returned
 			if (!noPropagation) {
 				var ui = this._uiHash();
@@ -7364,32 +8050,32 @@ webpackJsonp_name_([5],{
 				}
 				this.position = ui.position;
 			}
-
+	
 			this.helper[ 0 ].style.left = this.position.left + "px";
 			this.helper[ 0 ].style.top = this.position.top + "px";
-
+	
 			if ($.ui.ddmanager) {
 				$.ui.ddmanager.drag(this, event);
 			}
-
+	
 			return false;
 		},
-
+	
 		_mouseStop: function(event) {
-
+	
 			//If we are using droppables, inform the manager about the drop
 			var that = this,
 				dropped = false;
 			if ($.ui.ddmanager && !this.options.dropBehaviour) {
 				dropped = $.ui.ddmanager.drop(this, event);
 			}
-
+	
 			//if a drop comes from outside (a sortable)
 			if (this.dropped) {
 				dropped = this.dropped;
 				this.dropped = false;
 			}
-
+	
 			if ((this.options.revert === "invalid" && !dropped) || (this.options.revert === "valid" && dropped) || this.options.revert === true || ($.isFunction(this.options.revert) && this.options.revert.call(this.element, dropped))) {
 				$(this.helper).animate(this.originalPosition, parseInt(this.options.revertDuration, 10), function() {
 					if (that._trigger("stop", event) !== false) {
@@ -7401,57 +8087,57 @@ webpackJsonp_name_([5],{
 					this._clear();
 				}
 			}
-
+	
 			return false;
 		},
-
+	
 		_mouseUp: function( event ) {
 			this._unblockFrames();
-
+	
 			//If the ddmanager is used for droppables, inform the manager that dragging has stopped (see #5003)
 			if ( $.ui.ddmanager ) {
 				$.ui.ddmanager.dragStop(this, event);
 			}
-
+	
 			// Only need to focus if the event occurred on the draggable itself, see #10527
 			if ( this.handleElement.is( event.target ) ) {
 				// The interaction is over; whether or not the click resulted in a drag, focus the element
 				this.element.focus();
 			}
-
+	
 			return $.ui.mouse.prototype._mouseUp.call(this, event);
 		},
-
+	
 		cancel: function() {
-
+	
 			if (this.helper.is(".ui-draggable-dragging")) {
 				this._mouseUp({});
 			} else {
 				this._clear();
 			}
-
+	
 			return this;
-
+	
 		},
-
+	
 		_getHandle: function(event) {
 			return this.options.handle ?
 				!!$( event.target ).closest( this.element.find( this.options.handle ) ).length :
 				true;
 		},
-
+	
 		_setHandleClassName: function() {
 			this.handleElement = this.options.handle ?
 				this.element.find( this.options.handle ) : this.element;
 			this.handleElement.addClass( "ui-draggable-handle" );
 		},
-
+	
 		_removeHandleClassName: function() {
 			this.handleElement.removeClass( "ui-draggable-handle" );
 		},
-
+	
 		_createHelper: function(event) {
-
+	
 			var o = this.options,
 				helperIsFunction = $.isFunction( o.helper ),
 				helper = helperIsFunction ?
@@ -7459,32 +8145,32 @@ webpackJsonp_name_([5],{
 					( o.helper === "clone" ?
 						this.element.clone().removeAttr( "id" ) :
 						this.element );
-
+	
 			if (!helper.parents("body").length) {
 				helper.appendTo((o.appendTo === "parent" ? this.element[0].parentNode : o.appendTo));
 			}
-
+	
 			// http://bugs.jqueryui.com/ticket/9446
 			// a helper function can return the original element
 			// which wouldn't have been set to relative in _create
 			if ( helperIsFunction && helper[ 0 ] === this.element[ 0 ] ) {
 				this._setPositionRelative();
 			}
-
+	
 			if (helper[0] !== this.element[0] && !(/(fixed|absolute)/).test(helper.css("position"))) {
 				helper.css("position", "absolute");
 			}
-
+	
 			return helper;
-
+	
 		},
-
+	
 		_setPositionRelative: function() {
 			if ( !( /^(?:r|a|f)/ ).test( this.element.css( "position" ) ) ) {
 				this.element[ 0 ].style.position = "relative";
 			}
 		},
-
+	
 		_adjustOffsetFromHelper: function(obj) {
 			if (typeof obj === "string") {
 				obj = obj.split(" ");
@@ -7505,17 +8191,17 @@ webpackJsonp_name_([5],{
 				this.offset.click.top = this.helperProportions.height - obj.bottom + this.margins.top;
 			}
 		},
-
+	
 		_isRootNode: function( element ) {
 			return ( /(html|body)/i ).test( element.tagName ) || element === this.document[ 0 ];
 		},
-
+	
 		_getParentOffset: function() {
-
+	
 			//Get the offsetParent and cache its position
 			var po = this.offsetParent.offset(),
 				document = this.document[ 0 ];
-
+	
 			// This is a special case where we need to modify a offset calculated on start, since the following happened:
 			// 1. The position of the helper is absolute, so it's position is calculated based on the next positioned parent
 			// 2. The actual offset parent is a child of the scroll parent, and the scroll parent isn't the document, which means that
@@ -7524,33 +8210,33 @@ webpackJsonp_name_([5],{
 				po.left += this.scrollParent.scrollLeft();
 				po.top += this.scrollParent.scrollTop();
 			}
-
+	
 			if ( this._isRootNode( this.offsetParent[ 0 ] ) ) {
 				po = { top: 0, left: 0 };
 			}
-
+	
 			return {
 				top: po.top + (parseInt(this.offsetParent.css("borderTopWidth"), 10) || 0),
 				left: po.left + (parseInt(this.offsetParent.css("borderLeftWidth"), 10) || 0)
 			};
-
+	
 		},
-
+	
 		_getRelativeOffset: function() {
 			if ( this.cssPosition !== "relative" ) {
 				return { top: 0, left: 0 };
 			}
-
+	
 			var p = this.element.position(),
 				scrollIsRootNode = this._isRootNode( this.scrollParent[ 0 ] );
-
+	
 			return {
 				top: p.top - ( parseInt(this.helper.css( "top" ), 10) || 0 ) + ( !scrollIsRootNode ? this.scrollParent.scrollTop() : 0 ),
 				left: p.left - ( parseInt(this.helper.css( "left" ), 10) || 0 ) + ( !scrollIsRootNode ? this.scrollParent.scrollLeft() : 0 )
 			};
-
+	
 		},
-
+	
 		_cacheMargins: function() {
 			this.margins = {
 				left: (parseInt(this.element.css("marginLeft"), 10) || 0),
@@ -7559,27 +8245,27 @@ webpackJsonp_name_([5],{
 				bottom: (parseInt(this.element.css("marginBottom"), 10) || 0)
 			};
 		},
-
+	
 		_cacheHelperProportions: function() {
 			this.helperProportions = {
 				width: this.helper.outerWidth(),
 				height: this.helper.outerHeight()
 			};
 		},
-
+	
 		_setContainment: function() {
-
+	
 			var isUserScrollable, c, ce,
 				o = this.options,
 				document = this.document[ 0 ];
-
+	
 			this.relativeContainer = null;
-
+	
 			if ( !o.containment ) {
 				this.containment = null;
 				return;
 			}
-
+	
 			if ( o.containment === "window" ) {
 				this.containment = [
 					$( window ).scrollLeft() - this.offset.relative.left - this.offset.parent.left,
@@ -7589,7 +8275,7 @@ webpackJsonp_name_([5],{
 				];
 				return;
 			}
-
+	
 			if ( o.containment === "document") {
 				this.containment = [
 					0,
@@ -7599,25 +8285,25 @@ webpackJsonp_name_([5],{
 				];
 				return;
 			}
-
+	
 			if ( o.containment.constructor === Array ) {
 				this.containment = o.containment;
 				return;
 			}
-
+	
 			if ( o.containment === "parent" ) {
 				o.containment = this.helper[ 0 ].parentNode;
 			}
-
+	
 			c = $( o.containment );
 			ce = c[ 0 ];
-
+	
 			if ( !ce ) {
 				return;
 			}
-
+	
 			isUserScrollable = /(scroll|auto)/.test( c.css( "overflow" ) );
-
+	
 			this.containment = [
 				( parseInt( c.css( "borderLeftWidth" ), 10 ) || 0 ) + ( parseInt( c.css( "paddingLeft" ), 10 ) || 0 ),
 				( parseInt( c.css( "borderTopWidth" ), 10 ) || 0 ) + ( parseInt( c.css( "paddingTop" ), 10 ) || 0 ),
@@ -7636,16 +8322,16 @@ webpackJsonp_name_([5],{
 			];
 			this.relativeContainer = c;
 		},
-
+	
 		_convertPositionTo: function(d, pos) {
-
+	
 			if (!pos) {
 				pos = this.position;
 			}
-
+	
 			var mod = d === "absolute" ? 1 : -1,
 				scrollIsRootNode = this._isRootNode( this.scrollParent[ 0 ] );
-
+	
 			return {
 				top: (
 					pos.top	+																// The absolute mouse position
@@ -7660,17 +8346,17 @@ webpackJsonp_name_([5],{
 					( ( this.cssPosition === "fixed" ? -this.offset.scroll.left : ( scrollIsRootNode ? 0 : this.offset.scroll.left ) ) * mod)
 				)
 			};
-
+	
 		},
-
+	
 		_generatePosition: function( event, constrainPosition ) {
-
+	
 			var containment, co, top, left,
 				o = this.options,
 				scrollIsRootNode = this._isRootNode( this.scrollParent[ 0 ] ),
 				pageX = event.pageX,
 				pageY = event.pageY;
-
+	
 			// Cache the scroll
 			if ( !scrollIsRootNode || !this.offset.scroll ) {
 				this.offset.scroll = {
@@ -7678,12 +8364,12 @@ webpackJsonp_name_([5],{
 					left: this.scrollParent.scrollLeft()
 				};
 			}
-
+	
 			/*
 			 * - Position constraining -
 			 * Constrain the position to a mix of grid, containment.
 			 */
-
+	
 			// If we are not dragging yet, we won't check for options
 			if ( constrainPosition ) {
 				if ( this.containment ) {
@@ -7698,7 +8384,7 @@ webpackJsonp_name_([5],{
 					} else {
 						containment = this.containment;
 					}
-
+	
 					if (event.pageX - this.offset.click.left < containment[0]) {
 						pageX = containment[0] + this.offset.click.left;
 					}
@@ -7712,25 +8398,25 @@ webpackJsonp_name_([5],{
 						pageY = containment[3] + this.offset.click.top;
 					}
 				}
-
+	
 				if (o.grid) {
 					//Check for grid elements set to 0 to prevent divide by 0 error causing invalid argument errors in IE (see ticket #6950)
 					top = o.grid[1] ? this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1] : this.originalPageY;
 					pageY = containment ? ((top - this.offset.click.top >= containment[1] || top - this.offset.click.top > containment[3]) ? top : ((top - this.offset.click.top >= containment[1]) ? top - o.grid[1] : top + o.grid[1])) : top;
-
+	
 					left = o.grid[0] ? this.originalPageX + Math.round((pageX - this.originalPageX) / o.grid[0]) * o.grid[0] : this.originalPageX;
 					pageX = containment ? ((left - this.offset.click.left >= containment[0] || left - this.offset.click.left > containment[2]) ? left : ((left - this.offset.click.left >= containment[0]) ? left - o.grid[0] : left + o.grid[0])) : left;
 				}
-
+	
 				if ( o.axis === "y" ) {
 					pageX = this.originalPageX;
 				}
-
+	
 				if ( o.axis === "x" ) {
 					pageY = this.originalPageY;
 				}
 			}
-
+	
 			return {
 				top: (
 					pageY -																	// The absolute mouse position
@@ -7747,9 +8433,9 @@ webpackJsonp_name_([5],{
 					( this.cssPosition === "fixed" ? -this.offset.scroll.left : ( scrollIsRootNode ? 0 : this.offset.scroll.left ) )
 				)
 			};
-
+	
 		},
-
+	
 		_clear: function() {
 			this.helper.removeClass("ui-draggable-dragging");
 			if (this.helper[0] !== this.element[0] && !this.cancelHelperRemoval) {
@@ -7761,7 +8447,7 @@ webpackJsonp_name_([5],{
 				this.destroy();
 			}
 		},
-
+	
 		_normalizeRightBottom: function() {
 			if ( this.options.axis !== "y" && this.helper.css( "right" ) !== "auto" ) {
 				this.helper.width( this.helper.width() );
@@ -7772,13 +8458,13 @@ webpackJsonp_name_([5],{
 				this.helper.css( "bottom", "auto" );
 			}
 		},
-
+	
 		// From now on bulk stuff - mainly helpers
-
+	
 		_trigger: function( type, event, ui ) {
 			ui = ui || this._uiHash();
 			$.ui.plugin.call( this, type, [ event, ui, this ], true );
-
+	
 			// Absolute position and offset (see #6884 ) have to be recalculated after plugins
 			if ( /^(drag|start|stop)/.test( type ) ) {
 				this.positionAbs = this._convertPositionTo( "absolute" );
@@ -7786,9 +8472,9 @@ webpackJsonp_name_([5],{
 			}
 			return $.Widget.prototype._trigger.call( this, type, event, ui );
 		},
-
+	
 		plugins: {},
-
+	
 		_uiHash: function() {
 			return {
 				helper: this.helper,
@@ -7797,22 +8483,22 @@ webpackJsonp_name_([5],{
 				offset: this.positionAbs
 			};
 		}
-
+	
 	});
-
+	
 	$.ui.plugin.add( "draggable", "connectToSortable", {
 		start: function( event, ui, draggable ) {
 			var uiSortable = $.extend( {}, ui, {
 				item: draggable.element
 			});
-
+	
 			draggable.sortables = [];
 			$( draggable.options.connectToSortable ).each(function() {
 				var sortable = $( this ).sortable( "instance" );
-
+	
 				if ( sortable && !sortable.options.disabled ) {
 					draggable.sortables.push( sortable );
-
+	
 					// refreshPositions is called at drag start to refresh the containerCache
 					// which is used in drag. This ensures it's initialized and synchronized
 					// with any changes that might have happened on the page since initialization.
@@ -7825,19 +8511,19 @@ webpackJsonp_name_([5],{
 			var uiSortable = $.extend( {}, ui, {
 				item: draggable.element
 			});
-
+	
 			draggable.cancelHelperRemoval = false;
-
+	
 			$.each( draggable.sortables, function() {
 				var sortable = this;
-
+	
 				if ( sortable.isOver ) {
 					sortable.isOver = 0;
-
+	
 					// Allow this sortable to handle removing the helper
 					draggable.cancelHelperRemoval = true;
 					sortable.cancelHelperRemoval = false;
-
+	
 					// Use _storedCSS To restore properties in the sortable,
 					// as this also handles revert (#9675) since the draggable
 					// may have modified them in unexpected ways (#8809)
@@ -7846,9 +8532,9 @@ webpackJsonp_name_([5],{
 						top: sortable.placeholder.css( "top" ),
 						left: sortable.placeholder.css( "left" )
 					};
-
+	
 					sortable._mouseStop(event);
-
+	
 					// Once drag has ended, the sortable should return to using
 					// its original helper, not the shared helper from draggable
 					sortable.options.helper = sortable.options._helper;
@@ -7857,7 +8543,7 @@ webpackJsonp_name_([5],{
 					// However, don't set the draggable to remove the helper
 					// either as another connected Sortable may yet handle the removal.
 					sortable.cancelHelperRemoval = true;
-
+	
 					sortable._trigger( "deactivate", event, uiSortable );
 				}
 			});
@@ -7866,57 +8552,57 @@ webpackJsonp_name_([5],{
 			$.each( draggable.sortables, function() {
 				var innermostIntersecting = false,
 					sortable = this;
-
+	
 				// Copy over variables that sortable's _intersectsWith uses
 				sortable.positionAbs = draggable.positionAbs;
 				sortable.helperProportions = draggable.helperProportions;
 				sortable.offset.click = draggable.offset.click;
-
+	
 				if ( sortable._intersectsWith( sortable.containerCache ) ) {
 					innermostIntersecting = true;
-
+	
 					$.each( draggable.sortables, function() {
 						// Copy over variables that sortable's _intersectsWith uses
 						this.positionAbs = draggable.positionAbs;
 						this.helperProportions = draggable.helperProportions;
 						this.offset.click = draggable.offset.click;
-
+	
 						if ( this !== sortable &&
 								this._intersectsWith( this.containerCache ) &&
 								$.contains( sortable.element[ 0 ], this.element[ 0 ] ) ) {
 							innermostIntersecting = false;
 						}
-
+	
 						return innermostIntersecting;
 					});
 				}
-
+	
 				if ( innermostIntersecting ) {
 					// If it intersects, we use a little isOver variable and set it once,
 					// so that the move-in stuff gets fired only once.
 					if ( !sortable.isOver ) {
 						sortable.isOver = 1;
-
+	
 						// Store draggable's parent in case we need to reappend to it later.
 						draggable._parent = ui.helper.parent();
-
+	
 						sortable.currentItem = ui.helper
 							.appendTo( sortable.element )
 							.data( "ui-sortable-item", true );
-
+	
 						// Store helper option to later restore it
 						sortable.options._helper = sortable.options.helper;
-
+	
 						sortable.options.helper = function() {
 							return ui.helper[ 0 ];
 						};
-
+	
 						// Fire the start events of the sortable with our passed browser event,
 						// and our own helper (so it doesn't create a new one)
 						event.target = sortable.currentItem[ 0 ];
 						sortable._mouseCapture( event, true );
 						sortable._mouseStart( event, true, true );
-
+	
 						// Because the browser event is way off the new appended portlet,
 						// modify necessary variables to reflect the changes
 						sortable.offset.click.top = draggable.offset.click.top;
@@ -7925,24 +8611,24 @@ webpackJsonp_name_([5],{
 							sortable.offset.parent.left;
 						sortable.offset.parent.top -= draggable.offset.parent.top -
 							sortable.offset.parent.top;
-
+	
 						draggable._trigger( "toSortable", event );
-
+	
 						// Inform draggable that the helper is in a valid drop zone,
 						// used solely in the revert option to handle "valid/invalid".
 						draggable.dropped = sortable.element;
-
+	
 						// Need to refreshPositions of all sortables in the case that
 						// adding to one sortable changes the location of the other sortables (#9675)
 						$.each( draggable.sortables, function() {
 							this.refreshPositions();
 						});
-
+	
 						// hack so receive/update callbacks work (mostly)
 						draggable.currentItem = draggable.element;
 						sortable.fromOutside = draggable;
 					}
-
+	
 					if ( sortable.currentItem ) {
 						sortable._mouseDrag( event );
 						// Copy the sortable's position because the draggable's can potentially reflect
@@ -7955,38 +8641,38 @@ webpackJsonp_name_([5],{
 					// we fake the drag stop of the sortable, but make sure it doesn't remove
 					// the helper by using cancelHelperRemoval.
 					if ( sortable.isOver ) {
-
+	
 						sortable.isOver = 0;
 						sortable.cancelHelperRemoval = true;
-
+	
 						// Calling sortable's mouseStop would trigger a revert,
 						// so revert must be temporarily false until after mouseStop is called.
 						sortable.options._revert = sortable.options.revert;
 						sortable.options.revert = false;
-
+	
 						sortable._trigger( "out", event, sortable._uiHash( sortable ) );
 						sortable._mouseStop( event, true );
-
+	
 						// restore sortable behaviors that were modfied
 						// when the draggable entered the sortable area (#9481)
 						sortable.options.revert = sortable.options._revert;
 						sortable.options.helper = sortable.options._helper;
-
+	
 						if ( sortable.placeholder ) {
 							sortable.placeholder.remove();
 						}
-
+	
 						// Restore and recalculate the draggable's offset considering the sortable
 						// may have modified them in unexpected ways. (#8809, #10669)
 						ui.helper.appendTo( draggable._parent );
 						draggable._refreshOffsets( event );
 						ui.position = draggable._generatePosition( event, true );
-
+	
 						draggable._trigger( "fromSortable", event );
-
+	
 						// Inform draggable that the helper is no longer in a valid drop zone
 						draggable.dropped = false;
-
+	
 						// Need to refreshPositions of all sortables just in case removing
 						// from one sortable changes the location of other sortables (#9675)
 						$.each( draggable.sortables, function() {
@@ -7997,12 +8683,12 @@ webpackJsonp_name_([5],{
 			});
 		}
 	});
-
+	
 	$.ui.plugin.add("draggable", "cursor", {
 		start: function( event, ui, instance ) {
 			var t = $( "body" ),
 				o = instance.options;
-
+	
 			if (t.css("cursor")) {
 				o._cursor = t.css("cursor");
 			}
@@ -8015,7 +8701,7 @@ webpackJsonp_name_([5],{
 			}
 		}
 	});
-
+	
 	$.ui.plugin.add("draggable", "opacity", {
 		start: function( event, ui, instance ) {
 			var t = $( ui.helper ),
@@ -8032,24 +8718,24 @@ webpackJsonp_name_([5],{
 			}
 		}
 	});
-
+	
 	$.ui.plugin.add("draggable", "scroll", {
 		start: function( event, ui, i ) {
 			if ( !i.scrollParentNotHidden ) {
 				i.scrollParentNotHidden = i.helper.scrollParent( false );
 			}
-
+	
 			if ( i.scrollParentNotHidden[ 0 ] !== i.document[ 0 ] && i.scrollParentNotHidden[ 0 ].tagName !== "HTML" ) {
 				i.overflowOffset = i.scrollParentNotHidden.offset();
 			}
 		},
 		drag: function( event, ui, i  ) {
-
+	
 			var o = i.options,
 				scrolled = false,
 				scrollParent = i.scrollParentNotHidden[ 0 ],
 				document = i.document[ 0 ];
-
+	
 			if ( scrollParent !== document && scrollParent.tagName !== "HTML" ) {
 				if ( !o.axis || o.axis !== "x" ) {
 					if ( ( i.overflowOffset.top + scrollParent.offsetHeight ) - event.pageY < o.scrollSensitivity ) {
@@ -8058,7 +8744,7 @@ webpackJsonp_name_([5],{
 						scrollParent.scrollTop = scrolled = scrollParent.scrollTop - o.scrollSpeed;
 					}
 				}
-
+	
 				if ( !o.axis || o.axis !== "y" ) {
 					if ( ( i.overflowOffset.left + scrollParent.offsetWidth ) - event.pageX < o.scrollSensitivity ) {
 						scrollParent.scrollLeft = scrolled = scrollParent.scrollLeft + o.scrollSpeed;
@@ -8066,9 +8752,9 @@ webpackJsonp_name_([5],{
 						scrollParent.scrollLeft = scrolled = scrollParent.scrollLeft - o.scrollSpeed;
 					}
 				}
-
+	
 			} else {
-
+	
 				if (!o.axis || o.axis !== "x") {
 					if (event.pageY - $(document).scrollTop() < o.scrollSensitivity) {
 						scrolled = $(document).scrollTop($(document).scrollTop() - o.scrollSpeed);
@@ -8076,7 +8762,7 @@ webpackJsonp_name_([5],{
 						scrolled = $(document).scrollTop($(document).scrollTop() + o.scrollSpeed);
 					}
 				}
-
+	
 				if (!o.axis || o.axis !== "y") {
 					if (event.pageX - $(document).scrollLeft() < o.scrollSensitivity) {
 						scrolled = $(document).scrollLeft($(document).scrollLeft() - o.scrollSpeed);
@@ -8084,23 +8770,23 @@ webpackJsonp_name_([5],{
 						scrolled = $(document).scrollLeft($(document).scrollLeft() + o.scrollSpeed);
 					}
 				}
-
+	
 			}
-
+	
 			if (scrolled !== false && $.ui.ddmanager && !o.dropBehaviour) {
 				$.ui.ddmanager.prepareOffsets(i, event);
 			}
-
+	
 		}
 	});
-
+	
 	$.ui.plugin.add("draggable", "snap", {
 		start: function( event, ui, i ) {
-
+	
 			var o = i.options;
-
+	
 			i.snapElements = [];
-
+	
 			$(o.snap.constructor !== String ? ( o.snap.items || ":data(ui-draggable)" ) : o.snap).each(function() {
 				var $t = $(this),
 					$o = $t.offset();
@@ -8112,23 +8798,23 @@ webpackJsonp_name_([5],{
 					});
 				}
 			});
-
+	
 		},
 		drag: function( event, ui, inst ) {
-
+	
 			var ts, bs, ls, rs, l, r, t, b, i, first,
 				o = inst.options,
 				d = o.snapTolerance,
 				x1 = ui.offset.left, x2 = x1 + inst.helperProportions.width,
 				y1 = ui.offset.top, y2 = y1 + inst.helperProportions.height;
-
+	
 			for (i = inst.snapElements.length - 1; i >= 0; i--){
-
+	
 				l = inst.snapElements[i].left - inst.margins.left;
 				r = l + inst.snapElements[i].width;
 				t = inst.snapElements[i].top - inst.margins.top;
 				b = t + inst.snapElements[i].height;
-
+	
 				if ( x2 < l - d || x1 > r + d || y2 < t - d || y1 > b + d || !$.contains( inst.snapElements[ i ].item.ownerDocument, inst.snapElements[ i ].item ) ) {
 					if (inst.snapElements[i].snapping) {
 						(inst.options.snap.release && inst.options.snap.release.call(inst.element, event, $.extend(inst._uiHash(), { snapItem: inst.snapElements[i].item })));
@@ -8136,7 +8822,7 @@ webpackJsonp_name_([5],{
 					inst.snapElements[i].snapping = false;
 					continue;
 				}
-
+	
 				if (o.snapMode !== "inner") {
 					ts = Math.abs(t - y2) <= d;
 					bs = Math.abs(b - y1) <= d;
@@ -8155,9 +8841,9 @@ webpackJsonp_name_([5],{
 						ui.position.left = inst._convertPositionTo("relative", { top: 0, left: r }).left;
 					}
 				}
-
+	
 				first = (ts || bs || ls || rs);
-
+	
 				if (o.snapMode !== "outer") {
 					ts = Math.abs(t - y1) <= d;
 					bs = Math.abs(b - y2) <= d;
@@ -8176,17 +8862,17 @@ webpackJsonp_name_([5],{
 						ui.position.left = inst._convertPositionTo("relative", { top: 0, left: r - inst.helperProportions.width }).left;
 					}
 				}
-
+	
 				if (!inst.snapElements[i].snapping && (ts || bs || ls || rs || first)) {
 					(inst.options.snap.snap && inst.options.snap.snap.call(inst.element, event, $.extend(inst._uiHash(), { snapItem: inst.snapElements[i].item })));
 				}
 				inst.snapElements[i].snapping = (ts || bs || ls || rs || first);
-
+	
 			}
-
+	
 		}
 	});
-
+	
 	$.ui.plugin.add("draggable", "stack", {
 		start: function( event, ui, instance ) {
 			var min,
@@ -8194,9 +8880,9 @@ webpackJsonp_name_([5],{
 				group = $.makeArray($(o.stack)).sort(function(a, b) {
 					return (parseInt($(a).css("zIndex"), 10) || 0) - (parseInt($(b).css("zIndex"), 10) || 0);
 				});
-
+	
 			if (!group.length) { return; }
-
+	
 			min = parseInt($(group[0]).css("zIndex"), 10) || 0;
 			$(group).each(function(i) {
 				$(this).css("zIndex", min + i);
@@ -8204,12 +8890,12 @@ webpackJsonp_name_([5],{
 			this.css("zIndex", (min + group.length));
 		}
 	});
-
+	
 	$.ui.plugin.add("draggable", "zIndex", {
 		start: function( event, ui, instance ) {
 			var t = $( ui.helper ),
 				o = instance.options;
-
+	
 			if (t.css("zIndex")) {
 				o._zIndex = t.css("zIndex");
 			}
@@ -8217,16 +8903,16 @@ webpackJsonp_name_([5],{
 		},
 		stop: function( event, ui, instance ) {
 			var o = instance.options;
-
+	
 			if (o._zIndex) {
 				$(ui.helper).css("zIndex", o._zIndex);
 			}
 		}
 	});
-
+	
 	var draggable = $.ui.draggable;
-
-
+	
+	
 	/*!
 	 * jQuery UI Resizable 1.11.4
 	 * http://jqueryui.com
@@ -8237,8 +8923,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/resizable/
 	 */
-
-
+	
+	
 	$.widget("ui.resizable", $.ui.mouse, {
 		version: "1.11.4",
 		widgetEventPrefix: "resize",
@@ -8260,34 +8946,34 @@ webpackJsonp_name_([5],{
 			minWidth: 10,
 			// See #7960
 			zIndex: 90,
-
+	
 			// callbacks
 			resize: null,
 			start: null,
 			stop: null
 		},
-
+	
 		_num: function( value ) {
 			return parseInt( value, 10 ) || 0;
 		},
-
+	
 		_isNumber: function( value ) {
 			return !isNaN( parseInt( value, 10 ) );
 		},
-
+	
 		_hasScroll: function( el, a ) {
-
+	
 			if ( $( el ).css( "overflow" ) === "hidden") {
 				return false;
 			}
-
+	
 			var scroll = ( a && a === "left" ) ? "scrollLeft" : "scrollTop",
 				has = false;
-
+	
 			if ( el[ scroll ] > 0 ) {
 				return true;
 			}
-
+	
 			// TODO: determine which cases actually cause this to happen
 			// if the element doesn't have the scroll set, see if it's possible to
 			// set the scroll
@@ -8296,14 +8982,14 @@ webpackJsonp_name_([5],{
 			el[ scroll ] = 0;
 			return has;
 		},
-
+	
 		_create: function() {
-
+	
 			var n, i, handle, axis, hname,
 				that = this,
 				o = this.options;
 			this.element.addClass("ui-resizable");
-
+	
 			$.extend(this, {
 				_aspectRatio: !!(o.aspectRatio),
 				aspectRatio: o.aspectRatio,
@@ -8311,10 +8997,10 @@ webpackJsonp_name_([5],{
 				_proportionallyResizeElements: [],
 				_helper: o.helper || o.ghost || o.animate ? o.helper || "ui-resizable-helper" : null
 			});
-
+	
 			// Wrap the element if it cannot hold child nodes
 			if (this.element[0].nodeName.match(/^(canvas|textarea|input|select|button|img)$/i)) {
-
+	
 				this.element.wrap(
 					$("<div class='ui-wrapper' style='overflow: hidden;'></div>").css({
 						position: this.element.css("position"),
@@ -8324,13 +9010,13 @@ webpackJsonp_name_([5],{
 						left: this.element.css("left")
 					})
 				);
-
+	
 				this.element = this.element.parent().data(
 					"ui-resizable", this.element.resizable( "instance" )
 				);
-
+	
 				this.elementIsWrapper = true;
-
+	
 				this.element.css({
 					marginLeft: this.originalElement.css("marginLeft"),
 					marginTop: this.originalElement.css("marginTop"),
@@ -8347,20 +9033,20 @@ webpackJsonp_name_([5],{
 				// Prevent Safari textarea resize
 				this.originalResizeStyle = this.originalElement.css("resize");
 				this.originalElement.css("resize", "none");
-
+	
 				this._proportionallyResizeElements.push( this.originalElement.css({
 					position: "static",
 					zoom: 1,
 					display: "block"
 				}) );
-
+	
 				// support: IE9
 				// avoid IE jump (hard set the margin)
 				this.originalElement.css({ margin: this.originalElement.css("margin") });
-
+	
 				this._proportionallyResize();
 			}
-
+	
 			this.handles = o.handles ||
 				( !$(".ui-resizable-handle", this.element).length ?
 					"e,s,se" : {
@@ -8373,77 +9059,77 @@ webpackJsonp_name_([5],{
 						ne: ".ui-resizable-ne",
 						nw: ".ui-resizable-nw"
 					} );
-
+	
 			this._handles = $();
 			if ( this.handles.constructor === String ) {
-
+	
 				if ( this.handles === "all") {
 					this.handles = "n,e,s,w,se,sw,ne,nw";
 				}
-
+	
 				n = this.handles.split(",");
 				this.handles = {};
-
+	
 				for (i = 0; i < n.length; i++) {
-
+	
 					handle = $.trim(n[i]);
 					hname = "ui-resizable-" + handle;
 					axis = $("<div class='ui-resizable-handle " + hname + "'></div>");
-
+	
 					axis.css({ zIndex: o.zIndex });
-
+	
 					// TODO : What's going on here?
 					if ("se" === handle) {
 						axis.addClass("ui-icon ui-icon-gripsmall-diagonal-se");
 					}
-
+	
 					this.handles[handle] = ".ui-resizable-" + handle;
 					this.element.append(axis);
 				}
-
+	
 			}
-
+	
 			this._renderAxis = function(target) {
-
+	
 				var i, axis, padPos, padWrapper;
-
+	
 				target = target || this.element;
-
+	
 				for (i in this.handles) {
-
+	
 					if (this.handles[i].constructor === String) {
 						this.handles[i] = this.element.children( this.handles[ i ] ).first().show();
 					} else if ( this.handles[ i ].jquery || this.handles[ i ].nodeType ) {
 						this.handles[ i ] = $( this.handles[ i ] );
 						this._on( this.handles[ i ], { "mousedown": that._mouseDown });
 					}
-
+	
 					if (this.elementIsWrapper && this.originalElement[0].nodeName.match(/^(textarea|input|select|button)$/i)) {
-
+	
 						axis = $(this.handles[i], this.element);
-
+	
 						padWrapper = /sw|ne|nw|se|n|s/.test(i) ? axis.outerHeight() : axis.outerWidth();
-
+	
 						padPos = [ "padding",
 							/ne|nw|n/.test(i) ? "Top" :
 							/se|sw|s/.test(i) ? "Bottom" :
 							/^e$/.test(i) ? "Right" : "Left" ].join("");
-
+	
 						target.css(padPos, padWrapper);
-
+	
 						this._proportionallyResize();
 					}
-
+	
 					this._handles = this._handles.add( this.handles[ i ] );
 				}
 			};
-
+	
 			// TODO: make renderAxis a prototype function
 			this._renderAxis(this.element);
-
+	
 			this._handles = this._handles.add( this.element.find( ".ui-resizable-handle" ) );
 			this._handles.disableSelection();
-
+	
 			this._handles.mouseover(function() {
 				if (!that.resizing) {
 					if (this.className) {
@@ -8452,7 +9138,7 @@ webpackJsonp_name_([5],{
 					that.axis = axis && axis[1] ? axis[1] : "se";
 				}
 			});
-
+	
 			if (o.autoHide) {
 				this._handles.hide();
 				$(this.element)
@@ -8474,14 +9160,14 @@ webpackJsonp_name_([5],{
 						}
 					});
 			}
-
+	
 			this._mouseInit();
 		},
-
+	
 		_destroy: function() {
-
+	
 			this._mouseDestroy();
-
+	
 			var wrapper,
 				_destroy = function(exp) {
 					$(exp)
@@ -8492,7 +9178,7 @@ webpackJsonp_name_([5],{
 						.find(".ui-resizable-handle")
 							.remove();
 				};
-
+	
 			// TODO: Unwrap at same DOM position
 			if (this.elementIsWrapper) {
 				_destroy(this.element);
@@ -8506,48 +9192,48 @@ webpackJsonp_name_([5],{
 				}).insertAfter( wrapper );
 				wrapper.remove();
 			}
-
+	
 			this.originalElement.css("resize", this.originalResizeStyle);
 			_destroy(this.originalElement);
-
+	
 			return this;
 		},
-
+	
 		_mouseCapture: function(event) {
 			var i, handle,
 				capture = false;
-
+	
 			for (i in this.handles) {
 				handle = $(this.handles[i])[0];
 				if (handle === event.target || $.contains(handle, event.target)) {
 					capture = true;
 				}
 			}
-
+	
 			return !this.options.disabled && capture;
 		},
-
+	
 		_mouseStart: function(event) {
-
+	
 			var curleft, curtop, cursor,
 				o = this.options,
 				el = this.element;
-
+	
 			this.resizing = true;
-
+	
 			this._renderProxy();
-
+	
 			curleft = this._num(this.helper.css("left"));
 			curtop = this._num(this.helper.css("top"));
-
+	
 			if (o.containment) {
 				curleft += $(o.containment).scrollLeft() || 0;
 				curtop += $(o.containment).scrollTop() || 0;
 			}
-
+	
 			this.offset = this.helper.offset();
 			this.position = { left: curleft, top: curtop };
-
+	
 			this.size = this._helper ? {
 					width: this.helper.width(),
 					height: this.helper.height()
@@ -8555,7 +9241,7 @@ webpackJsonp_name_([5],{
 					width: el.width(),
 					height: el.height()
 				};
-
+	
 			this.originalSize = this._helper ? {
 					width: el.outerWidth(),
 					height: el.outerHeight()
@@ -8563,83 +9249,83 @@ webpackJsonp_name_([5],{
 					width: el.width(),
 					height: el.height()
 				};
-
+	
 			this.sizeDiff = {
 				width: el.outerWidth() - el.width(),
 				height: el.outerHeight() - el.height()
 			};
-
+	
 			this.originalPosition = { left: curleft, top: curtop };
 			this.originalMousePosition = { left: event.pageX, top: event.pageY };
-
+	
 			this.aspectRatio = (typeof o.aspectRatio === "number") ?
 				o.aspectRatio :
 				((this.originalSize.width / this.originalSize.height) || 1);
-
+	
 			cursor = $(".ui-resizable-" + this.axis).css("cursor");
 			$("body").css("cursor", cursor === "auto" ? this.axis + "-resize" : cursor);
-
+	
 			el.addClass("ui-resizable-resizing");
 			this._propagate("start", event);
 			return true;
 		},
-
+	
 		_mouseDrag: function(event) {
-
+	
 			var data, props,
 				smp = this.originalMousePosition,
 				a = this.axis,
 				dx = (event.pageX - smp.left) || 0,
 				dy = (event.pageY - smp.top) || 0,
 				trigger = this._change[a];
-
+	
 			this._updatePrevProperties();
-
+	
 			if (!trigger) {
 				return false;
 			}
-
+	
 			data = trigger.apply(this, [ event, dx, dy ]);
-
+	
 			this._updateVirtualBoundaries(event.shiftKey);
 			if (this._aspectRatio || event.shiftKey) {
 				data = this._updateRatio(data, event);
 			}
-
+	
 			data = this._respectSize(data, event);
-
+	
 			this._updateCache(data);
-
+	
 			this._propagate("resize", event);
-
+	
 			props = this._applyChanges();
-
+	
 			if ( !this._helper && this._proportionallyResizeElements.length ) {
 				this._proportionallyResize();
 			}
-
+	
 			if ( !$.isEmptyObject( props ) ) {
 				this._updatePrevProperties();
 				this._trigger( "resize", event, this.ui() );
 				this._applyChanges();
 			}
-
+	
 			return false;
 		},
-
+	
 		_mouseStop: function(event) {
-
+	
 			this.resizing = false;
 			var pr, ista, soffseth, soffsetw, s, left, top,
 				o = this.options, that = this;
-
+	
 			if (this._helper) {
-
+	
 				pr = this._proportionallyResizeElements;
 				ista = pr.length && (/textarea/i).test(pr[0].nodeName);
 				soffseth = ista && this._hasScroll(pr[0], "left") ? 0 : that.sizeDiff.height;
 				soffsetw = ista ? 0 : that.sizeDiff.width;
-
+	
 				s = {
 					width: (that.helper.width()  - soffsetw),
 					height: (that.helper.height() - soffseth)
@@ -8648,33 +9334,33 @@ webpackJsonp_name_([5],{
 					(that.position.left - that.originalPosition.left)) || null;
 				top = (parseInt(that.element.css("top"), 10) +
 					(that.position.top - that.originalPosition.top)) || null;
-
+	
 				if (!o.animate) {
 					this.element.css($.extend(s, { top: top, left: left }));
 				}
-
+	
 				that.helper.height(that.size.height);
 				that.helper.width(that.size.width);
-
+	
 				if (this._helper && !o.animate) {
 					this._proportionallyResize();
 				}
 			}
-
+	
 			$("body").css("cursor", "auto");
-
+	
 			this.element.removeClass("ui-resizable-resizing");
-
+	
 			this._propagate("stop", event);
-
+	
 			if (this._helper) {
 				this.helper.remove();
 			}
-
+	
 			return false;
-
+	
 		},
-
+	
 		_updatePrevProperties: function() {
 			this.prevPosition = {
 				top: this.position.top,
@@ -8685,10 +9371,10 @@ webpackJsonp_name_([5],{
 				height: this.size.height
 			};
 		},
-
+	
 		_applyChanges: function() {
 			var props = {};
-
+	
 			if ( this.position.top !== this.prevPosition.top ) {
 				props.top = this.position.top + "px";
 			}
@@ -8701,29 +9387,29 @@ webpackJsonp_name_([5],{
 			if ( this.size.height !== this.prevSize.height ) {
 				props.height = this.size.height + "px";
 			}
-
+	
 			this.helper.css( props );
-
+	
 			return props;
 		},
-
+	
 		_updateVirtualBoundaries: function(forceAspectRatio) {
 			var pMinWidth, pMaxWidth, pMinHeight, pMaxHeight, b,
 				o = this.options;
-
+	
 			b = {
 				minWidth: this._isNumber(o.minWidth) ? o.minWidth : 0,
 				maxWidth: this._isNumber(o.maxWidth) ? o.maxWidth : Infinity,
 				minHeight: this._isNumber(o.minHeight) ? o.minHeight : 0,
 				maxHeight: this._isNumber(o.maxHeight) ? o.maxHeight : Infinity
 			};
-
+	
 			if (this._aspectRatio || forceAspectRatio) {
 				pMinWidth = b.minHeight * this.aspectRatio;
 				pMinHeight = b.minWidth / this.aspectRatio;
 				pMaxWidth = b.maxHeight * this.aspectRatio;
 				pMaxHeight = b.maxWidth / this.aspectRatio;
-
+	
 				if (pMinWidth > b.minWidth) {
 					b.minWidth = pMinWidth;
 				}
@@ -8739,7 +9425,7 @@ webpackJsonp_name_([5],{
 			}
 			this._vBoundaries = b;
 		},
-
+	
 		_updateCache: function(data) {
 			this.offset = this.helper.offset();
 			if (this._isNumber(data.left)) {
@@ -8755,19 +9441,19 @@ webpackJsonp_name_([5],{
 				this.size.width = data.width;
 			}
 		},
-
+	
 		_updateRatio: function( data ) {
-
+	
 			var cpos = this.position,
 				csize = this.size,
 				a = this.axis;
-
+	
 			if (this._isNumber(data.height)) {
 				data.width = (data.height * this.aspectRatio);
 			} else if (this._isNumber(data.width)) {
 				data.height = (data.width / this.aspectRatio);
 			}
-
+	
 			if (a === "sw") {
 				data.left = cpos.left + (csize.width - data.width);
 				data.top = null;
@@ -8776,12 +9462,12 @@ webpackJsonp_name_([5],{
 				data.top = cpos.top + (csize.height - data.height);
 				data.left = cpos.left + (csize.width - data.width);
 			}
-
+	
 			return data;
 		},
-
+	
 		_respectSize: function( data ) {
-
+	
 			var o = this._vBoundaries,
 				a = this.axis,
 				ismaxw = this._isNumber(data.width) && o.maxWidth && (o.maxWidth < data.width),
@@ -8803,7 +9489,7 @@ webpackJsonp_name_([5],{
 			if (ismaxh) {
 				data.height = o.maxHeight;
 			}
-
+	
 			if (isminw && cw) {
 				data.left = dw - o.minWidth;
 			}
@@ -8816,17 +9502,17 @@ webpackJsonp_name_([5],{
 			if (ismaxh && ch) {
 				data.top = dh - o.maxHeight;
 			}
-
+	
 			// Fixing jump error on top/left - bug #2330
 			if (!data.width && !data.height && !data.left && data.top) {
 				data.top = null;
 			} else if (!data.width && !data.height && !data.top && data.left) {
 				data.left = null;
 			}
-
+	
 			return data;
 		},
-
+	
 		_getPaddingPlusBorderDimensions: function( element ) {
 			var i = 0,
 				widths = [],
@@ -8842,56 +9528,56 @@ webpackJsonp_name_([5],{
 					element.css( "paddingBottom" ),
 					element.css( "paddingLeft" )
 				];
-
+	
 			for ( ; i < 4; i++ ) {
 				widths[ i ] = ( parseInt( borders[ i ], 10 ) || 0 );
 				widths[ i ] += ( parseInt( paddings[ i ], 10 ) || 0 );
 			}
-
+	
 			return {
 				height: widths[ 0 ] + widths[ 2 ],
 				width: widths[ 1 ] + widths[ 3 ]
 			};
 		},
-
+	
 		_proportionallyResize: function() {
-
+	
 			if (!this._proportionallyResizeElements.length) {
 				return;
 			}
-
+	
 			var prel,
 				i = 0,
 				element = this.helper || this.element;
-
+	
 			for ( ; i < this._proportionallyResizeElements.length; i++) {
-
+	
 				prel = this._proportionallyResizeElements[i];
-
+	
 				// TODO: Seems like a bug to cache this.outerDimensions
 				// considering that we are in a loop.
 				if (!this.outerDimensions) {
 					this.outerDimensions = this._getPaddingPlusBorderDimensions( prel );
 				}
-
+	
 				prel.css({
 					height: (element.height() - this.outerDimensions.height) || 0,
 					width: (element.width() - this.outerDimensions.width) || 0
 				});
-
+	
 			}
-
+	
 		},
-
+	
 		_renderProxy: function() {
-
+	
 			var el = this.element, o = this.options;
 			this.elementOffset = el.offset();
-
+	
 			if (this._helper) {
-
+	
 				this.helper = this.helper || $("<div style='overflow:hidden;'></div>");
-
+	
 				this.helper.addClass(this._helper).css({
 					width: this.element.outerWidth() - 1,
 					height: this.element.outerHeight() - 1,
@@ -8900,17 +9586,17 @@ webpackJsonp_name_([5],{
 					top: this.elementOffset.top + "px",
 					zIndex: ++o.zIndex //TODO: Don't modify option
 				});
-
+	
 				this.helper
 					.appendTo("body")
 					.disableSelection();
-
+	
 			} else {
 				this.helper = this.element;
 			}
-
+	
 		},
-
+	
 		_change: {
 			e: function(event, dx) {
 				return { width: this.originalSize.width + dx };
@@ -8943,14 +9629,14 @@ webpackJsonp_name_([5],{
 					this._change.w.apply(this, [ event, dx, dy ]));
 			}
 		},
-
+	
 		_propagate: function(n, event) {
 			$.ui.plugin.call(this, n, [ event, this.ui() ]);
 			(n !== "resize" && this._trigger(n, event, this.ui()));
 		},
-
+	
 		plugins: {},
-
+	
 		ui: function() {
 			return {
 				originalElement: this.originalElement,
@@ -8962,15 +9648,15 @@ webpackJsonp_name_([5],{
 				originalPosition: this.originalPosition
 			};
 		}
-
+	
 	});
-
+	
 	/*
 	 * Resizable Extensions
 	 */
-
+	
 	$.ui.plugin.add("resizable", "animate", {
-
+	
 		stop: function( event ) {
 			var that = $(this).resizable( "instance" ),
 				o = that.options,
@@ -8983,37 +9669,37 @@ webpackJsonp_name_([5],{
 					(that.position.left - that.originalPosition.left)) || null,
 				top = (parseInt(that.element.css("top"), 10) +
 					(that.position.top - that.originalPosition.top)) || null;
-
+	
 			that.element.animate(
 				$.extend(style, top && left ? { top: top, left: left } : {}), {
 					duration: o.animateDuration,
 					easing: o.animateEasing,
 					step: function() {
-
+	
 						var data = {
 							width: parseInt(that.element.css("width"), 10),
 							height: parseInt(that.element.css("height"), 10),
 							top: parseInt(that.element.css("top"), 10),
 							left: parseInt(that.element.css("left"), 10)
 						};
-
+	
 						if (pr && pr.length) {
 							$(pr[0]).css({ width: data.width, height: data.height });
 						}
-
+	
 						// propagating resize, and updating values for each animation step
 						that._updateCache(data);
 						that._propagate("resize", event);
-
+	
 					}
 				}
 			);
 		}
-
+	
 	});
-
+	
 	$.ui.plugin.add( "resizable", "containment", {
-
+	
 		start: function() {
 			var element, p, co, ch, cw, width, height,
 				that = $( this ).resizable( "instance" ),
@@ -9021,13 +9707,13 @@ webpackJsonp_name_([5],{
 				el = that.element,
 				oc = o.containment,
 				ce = ( oc instanceof $ ) ? oc.get( 0 ) : ( /parent/.test( oc ) ) ? el.parent().get( 0 ) : oc;
-
+	
 			if ( !ce ) {
 				return;
 			}
-
+	
 			that.containerElement = $( ce );
-
+	
 			if ( /document/.test( oc ) || oc === document ) {
 				that.containerOffset = {
 					left: 0,
@@ -9037,7 +9723,7 @@ webpackJsonp_name_([5],{
 					left: 0,
 					top: 0
 				};
-
+	
 				that.parentData = {
 					element: $( document ),
 					left: 0,
@@ -9051,20 +9737,20 @@ webpackJsonp_name_([5],{
 				$([ "Top", "Right", "Left", "Bottom" ]).each(function( i, name ) {
 					p[ i ] = that._num( element.css( "padding" + name ) );
 				});
-
+	
 				that.containerOffset = element.offset();
 				that.containerPosition = element.position();
 				that.containerSize = {
 					height: ( element.innerHeight() - p[ 3 ] ),
 					width: ( element.innerWidth() - p[ 1 ] )
 				};
-
+	
 				co = that.containerOffset;
 				ch = that.containerSize.height;
 				cw = that.containerSize.width;
 				width = ( that._hasScroll ( ce, "left" ) ? ce.scrollWidth : cw );
 				height = ( that._hasScroll ( ce ) ? ce.scrollHeight : ch ) ;
-
+	
 				that.parentData = {
 					element: ce,
 					left: co.left,
@@ -9074,7 +9760,7 @@ webpackJsonp_name_([5],{
 				};
 			}
 		},
-
+	
 		resize: function( event ) {
 			var woset, hoset, isParent, isOffsetRelative,
 				that = $( this ).resizable( "instance" ),
@@ -9088,40 +9774,40 @@ webpackJsonp_name_([5],{
 				},
 				ce = that.containerElement,
 				continueResize = true;
-
+	
 			if ( ce[ 0 ] !== document && ( /static/ ).test( ce.css( "position" ) ) ) {
 				cop = co;
 			}
-
+	
 			if ( cp.left < ( that._helper ? co.left : 0 ) ) {
 				that.size.width = that.size.width +
 					( that._helper ?
 						( that.position.left - co.left ) :
 						( that.position.left - cop.left ) );
-
+	
 				if ( pRatio ) {
 					that.size.height = that.size.width / that.aspectRatio;
 					continueResize = false;
 				}
 				that.position.left = o.helper ? co.left : 0;
 			}
-
+	
 			if ( cp.top < ( that._helper ? co.top : 0 ) ) {
 				that.size.height = that.size.height +
 					( that._helper ?
 						( that.position.top - co.top ) :
 						that.position.top );
-
+	
 				if ( pRatio ) {
 					that.size.width = that.size.height * that.aspectRatio;
 					continueResize = false;
 				}
 				that.position.top = that._helper ? co.top : 0;
 			}
-
+	
 			isParent = that.containerElement.get( 0 ) === that.element.parent().get( 0 );
 			isOffsetRelative = /relative|absolute/.test( that.containerElement.css( "position" ) );
-
+	
 			if ( isParent && isOffsetRelative ) {
 				that.offset.left = that.parentData.left + that.position.left;
 				that.offset.top = that.parentData.top + that.position.top;
@@ -9129,17 +9815,17 @@ webpackJsonp_name_([5],{
 				that.offset.left = that.element.offset().left;
 				that.offset.top = that.element.offset().top;
 			}
-
+	
 			woset = Math.abs( that.sizeDiff.width +
 				(that._helper ?
 					that.offset.left - cop.left :
 					(that.offset.left - co.left)) );
-
+	
 			hoset = Math.abs( that.sizeDiff.height +
 				(that._helper ?
 					that.offset.top - cop.top :
 					(that.offset.top - co.top)) );
-
+	
 			if ( woset + that.size.width >= that.parentData.width ) {
 				that.size.width = that.parentData.width - woset;
 				if ( pRatio ) {
@@ -9147,7 +9833,7 @@ webpackJsonp_name_([5],{
 					continueResize = false;
 				}
 			}
-
+	
 			if ( hoset + that.size.height >= that.parentData.height ) {
 				that.size.height = that.parentData.height - hoset;
 				if ( pRatio ) {
@@ -9155,7 +9841,7 @@ webpackJsonp_name_([5],{
 					continueResize = false;
 				}
 			}
-
+	
 			if ( !continueResize ) {
 				that.position.left = that.prevPosition.left;
 				that.position.top = that.prevPosition.top;
@@ -9163,7 +9849,7 @@ webpackJsonp_name_([5],{
 				that.size.height = that.prevSize.height;
 			}
 		},
-
+	
 		stop: function() {
 			var that = $( this ).resizable( "instance" ),
 				o = that.options,
@@ -9174,7 +9860,7 @@ webpackJsonp_name_([5],{
 				ho = helper.offset(),
 				w = helper.outerWidth() - that.sizeDiff.width,
 				h = helper.outerHeight() - that.sizeDiff.height;
-
+	
 			if ( that._helper && !o.animate && ( /relative/ ).test( ce.css( "position" ) ) ) {
 				$( this ).css({
 					left: ho.left - cop.left - co.left,
@@ -9182,7 +9868,7 @@ webpackJsonp_name_([5],{
 					height: h
 				});
 			}
-
+	
 			if ( that._helper && !o.animate && ( /static/ ).test( ce.css( "position" ) ) ) {
 				$( this ).css({
 					left: ho.left - cop.left - co.left,
@@ -9192,13 +9878,13 @@ webpackJsonp_name_([5],{
 			}
 		}
 	});
-
+	
 	$.ui.plugin.add("resizable", "alsoResize", {
-
+	
 		start: function() {
 			var that = $(this).resizable( "instance" ),
 				o = that.options;
-
+	
 			$(o.alsoResize).each(function() {
 				var el = $(this);
 				el.data("ui-resizable-alsoresize", {
@@ -9207,7 +9893,7 @@ webpackJsonp_name_([5],{
 				});
 			});
 		},
-
+	
 		resize: function(event, ui) {
 			var that = $(this).resizable( "instance" ),
 				o = that.options,
@@ -9219,35 +9905,35 @@ webpackJsonp_name_([5],{
 					top: (that.position.top - op.top) || 0,
 					left: (that.position.left - op.left) || 0
 				};
-
+	
 				$(o.alsoResize).each(function() {
 					var el = $(this), start = $(this).data("ui-resizable-alsoresize"), style = {},
 						css = el.parents(ui.originalElement[0]).length ?
 								[ "width", "height" ] :
 								[ "width", "height", "top", "left" ];
-
+	
 					$.each(css, function(i, prop) {
 						var sum = (start[prop] || 0) + (delta[prop] || 0);
 						if (sum && sum >= 0) {
 							style[prop] = sum || null;
 						}
 					});
-
+	
 					el.css(style);
 				});
 		},
-
+	
 		stop: function() {
 			$(this).removeData("resizable-alsoresize");
 		}
 	});
-
+	
 	$.ui.plugin.add("resizable", "ghost", {
-
+	
 		start: function() {
-
+	
 			var that = $(this).resizable( "instance" ), o = that.options, cs = that.size;
-
+	
 			that.ghost = that.originalElement.clone();
 			that.ghost
 				.css({
@@ -9262,11 +9948,11 @@ webpackJsonp_name_([5],{
 				})
 				.addClass("ui-resizable-ghost")
 				.addClass(typeof o.ghost === "string" ? o.ghost : "");
-
+	
 			that.ghost.appendTo(that.helper);
-
+	
 		},
-
+	
 		resize: function() {
 			var that = $(this).resizable( "instance" );
 			if (that.ghost) {
@@ -9277,18 +9963,18 @@ webpackJsonp_name_([5],{
 				});
 			}
 		},
-
+	
 		stop: function() {
 			var that = $(this).resizable( "instance" );
 			if (that.ghost && that.helper) {
 				that.helper.get(0).removeChild(that.ghost.get(0));
 			}
 		}
-
+	
 	});
-
+	
 	$.ui.plugin.add("resizable", "grid", {
-
+	
 		resize: function() {
 			var outerDimensions,
 				that = $(this).resizable( "instance" ),
@@ -9308,9 +9994,9 @@ webpackJsonp_name_([5],{
 				isMaxHeight = o.maxHeight && (o.maxHeight < newHeight),
 				isMinWidth = o.minWidth && (o.minWidth > newWidth),
 				isMinHeight = o.minHeight && (o.minHeight > newHeight);
-
+	
 			o.grid = grid;
-
+	
 			if (isMinWidth) {
 				newWidth += gridX;
 			}
@@ -9323,7 +10009,7 @@ webpackJsonp_name_([5],{
 			if (isMaxHeight) {
 				newHeight -= gridY;
 			}
-
+	
 			if (/^(se|s|e)$/.test(a)) {
 				that.size.width = newWidth;
 				that.size.height = newHeight;
@@ -9339,7 +10025,7 @@ webpackJsonp_name_([5],{
 				if ( newHeight - gridY <= 0 || newWidth - gridX <= 0) {
 					outerDimensions = that._getPaddingPlusBorderDimensions( this );
 				}
-
+	
 				if ( newHeight - gridY > 0 ) {
 					that.size.height = newHeight;
 					that.position.top = op.top - oy;
@@ -9358,12 +10044,12 @@ webpackJsonp_name_([5],{
 				}
 			}
 		}
-
+	
 	});
-
+	
 	var resizable = $.ui.resizable;
-
-
+	
+	
 	/*!
 	 * jQuery UI Dialog 1.11.4
 	 * http://jqueryui.com
@@ -9374,8 +10060,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/dialog/
 	 */
-
-
+	
+	
 	var dialog = $.widget( "ui.dialog", {
 		version: "1.11.4",
 		options: {
@@ -9410,7 +10096,7 @@ webpackJsonp_name_([5],{
 			show: null,
 			title: null,
 			width: 300,
-
+	
 			// callbacks
 			beforeClose: null,
 			close: null,
@@ -9423,7 +10109,7 @@ webpackJsonp_name_([5],{
 			resizeStart: null,
 			resizeStop: null
 		},
-
+	
 		sizeRelatedOptions: {
 			buttons: true,
 			height: true,
@@ -9433,14 +10119,14 @@ webpackJsonp_name_([5],{
 			minWidth: true,
 			width: true
 		},
-
+	
 		resizableRelatedOptions: {
 			maxHeight: true,
 			maxWidth: true,
 			minHeight: true,
 			minWidth: true
 		},
-
+	
 		_create: function() {
 			this.originalCss = {
 				display: this.element[ 0 ].style.display,
@@ -9455,36 +10141,36 @@ webpackJsonp_name_([5],{
 			};
 			this.originalTitle = this.element.attr( "title" );
 			this.options.title = this.options.title || this.originalTitle;
-
+	
 			this._createWrapper();
-
+	
 			this.element
 				.show()
 				.removeAttr( "title" )
 				.addClass( "ui-dialog-content ui-widget-content" )
 				.appendTo( this.uiDialog );
-
+	
 			this._createTitlebar();
 			this._createButtonPane();
-
+	
 			if ( this.options.draggable && $.fn.draggable ) {
 				this._makeDraggable();
 			}
 			if ( this.options.resizable && $.fn.resizable ) {
 				this._makeResizable();
 			}
-
+	
 			this._isOpen = false;
-
+	
 			this._trackFocus();
 		},
-
+	
 		_init: function() {
 			if ( this.options.autoOpen ) {
 				this.open();
 			}
 		},
-
+	
 		_appendTo: function() {
 			var element = this.options.appendTo;
 			if ( element && (element.jquery || element.nodeType) ) {
@@ -9492,27 +10178,27 @@ webpackJsonp_name_([5],{
 			}
 			return this.document.find( element || "body" ).eq( 0 );
 		},
-
+	
 		_destroy: function() {
 			var next,
 				originalPosition = this.originalPosition;
-
+	
 			this._untrackInstance();
 			this._destroyOverlay();
-
+	
 			this.element
 				.removeUniqueId()
 				.removeClass( "ui-dialog-content ui-widget-content" )
 				.css( this.originalCss )
 				// Without detaching first, the following becomes really slow
 				.detach();
-
+	
 			this.uiDialog.stop( true, true ).remove();
-
+	
 			if ( this.originalTitle ) {
 				this.element.attr( "title", this.originalTitle );
 			}
-
+	
 			next = originalPosition.parent.children().eq( originalPosition.index );
 			// Don't try to place the dialog next to itself (#8613)
 			if ( next.length && next[ 0 ] !== this.element[ 0 ] ) {
@@ -9521,38 +10207,38 @@ webpackJsonp_name_([5],{
 				originalPosition.parent.append( this.element );
 			}
 		},
-
+	
 		widget: function() {
 			return this.uiDialog;
 		},
-
+	
 		disable: $.noop,
 		enable: $.noop,
-
+	
 		close: function( event ) {
 			var activeElement,
 				that = this;
-
+	
 			if ( !this._isOpen || this._trigger( "beforeClose", event ) === false ) {
 				return;
 			}
-
+	
 			this._isOpen = false;
 			this._focusedElement = null;
 			this._destroyOverlay();
 			this._untrackInstance();
-
+	
 			if ( !this.opener.filter( ":focusable" ).focus().length ) {
-
+	
 				// support: IE9
 				// IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
 				try {
 					activeElement = this.document[ 0 ].activeElement;
-
+	
 					// Support: IE9, IE10
 					// If the <body> is blurred, IE will switch windows, see #4520
 					if ( activeElement && activeElement.nodeName.toLowerCase() !== "body" ) {
-
+	
 						// Hiding a focused element doesn't trigger blur in WebKit
 						// so in case we have nothing to focus on, explicitly blur the active element
 						// https://bugs.webkit.org/show_bug.cgi?id=47182
@@ -9560,38 +10246,38 @@ webpackJsonp_name_([5],{
 					}
 				} catch ( error ) {}
 			}
-
+	
 			this._hide( this.uiDialog, this.options.hide, function() {
 				that._trigger( "close", event );
 			});
 		},
-
+	
 		isOpen: function() {
 			return this._isOpen;
 		},
-
+	
 		moveToTop: function() {
 			this._moveToTop();
 		},
-
+	
 		_moveToTop: function( event, silent ) {
 			var moved = false,
 				zIndices = this.uiDialog.siblings( ".ui-front:visible" ).map(function() {
 					return +$( this ).css( "z-index" );
 				}).get(),
 				zIndexMax = Math.max.apply( null, zIndices );
-
+	
 			if ( zIndexMax >= +this.uiDialog.css( "z-index" ) ) {
 				this.uiDialog.css( "z-index", zIndexMax + 1 );
 				moved = true;
 			}
-
+	
 			if ( moved && !silent ) {
 				this._trigger( "focus", event );
 			}
 			return moved;
 		},
-
+	
 		open: function() {
 			var that = this;
 			if ( this._isOpen ) {
@@ -9600,35 +10286,35 @@ webpackJsonp_name_([5],{
 				}
 				return;
 			}
-
+	
 			this._isOpen = true;
 			this.opener = $( this.document[ 0 ].activeElement );
-
+	
 			this._size();
 			this._position();
 			this._createOverlay();
 			this._moveToTop( null, true );
-
+	
 			// Ensure the overlay is moved to the top with the dialog, but only when
 			// opening. The overlay shouldn't move after the dialog is open so that
 			// modeless dialogs opened after the modal dialog stack properly.
 			if ( this.overlay ) {
 				this.overlay.css( "z-index", this.uiDialog.css( "z-index" ) - 1 );
 			}
-
+	
 			this._show( this.uiDialog, this.options.show, function() {
 				that._focusTabbable();
 				that._trigger( "focus" );
 			});
-
+	
 			// Track the dialog immediately upon openening in case a focus event
 			// somehow occurs outside of the dialog before an element inside the
 			// dialog is focused (#10152)
 			this._makeFocusTarget();
-
+	
 			this._trigger( "open" );
 		},
-
+	
 		_focusTabbable: function() {
 			// Set focus to the first match:
 			// 1. An element that was focused previously
@@ -9655,7 +10341,7 @@ webpackJsonp_name_([5],{
 			}
 			hasFocus.eq( 0 ).focus();
 		},
-
+	
 		_keepFocus: function( event ) {
 			function checkFocus() {
 				var activeElement = this.document[0].activeElement,
@@ -9672,7 +10358,7 @@ webpackJsonp_name_([5],{
 			// so we check again later
 			this._delay( checkFocus );
 		},
-
+	
 		_createWrapper: function() {
 			this.uiDialog = $("<div>")
 				.addClass( "ui-dialog ui-widget ui-widget-content ui-corner-all ui-front " +
@@ -9684,7 +10370,7 @@ webpackJsonp_name_([5],{
 					role: "dialog"
 				})
 				.appendTo( this._appendTo() );
-
+	
 			this._on( this.uiDialog, {
 				keydown: function( event ) {
 					if ( this.options.closeOnEscape && !event.isDefaultPrevented() && event.keyCode &&
@@ -9693,7 +10379,7 @@ webpackJsonp_name_([5],{
 						this.close( event );
 						return;
 					}
-
+	
 					// prevent tabbing out of dialogs
 					if ( event.keyCode !== $.ui.keyCode.TAB || event.isDefaultPrevented() ) {
 						return;
@@ -9701,7 +10387,7 @@ webpackJsonp_name_([5],{
 					var tabbables = this.uiDialog.find( ":tabbable" ),
 						first = tabbables.filter( ":first" ),
 						last = tabbables.filter( ":last" );
-
+	
 					if ( ( event.target === last[0] || event.target === this.uiDialog[0] ) && !event.shiftKey ) {
 						this._delay(function() {
 							first.focus();
@@ -9720,7 +10406,7 @@ webpackJsonp_name_([5],{
 					}
 				}
 			});
-
+	
 			// We assume that any existing aria-describedby attribute means
 			// that the dialog content is marked up properly
 			// otherwise we brute force the content as the description
@@ -9730,10 +10416,10 @@ webpackJsonp_name_([5],{
 				});
 			}
 		},
-
+	
 		_createTitlebar: function() {
 			var uiDialogTitle;
-
+	
 			this.uiDialogTitlebar = $( "<div>" )
 				.addClass( "ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" )
 				.prependTo( this.uiDialog );
@@ -9748,7 +10434,7 @@ webpackJsonp_name_([5],{
 					}
 				}
 			});
-
+	
 			// support: IE
 			// Use type="button" to prevent enter keypresses in textboxes from closing the
 			// dialog in IE (#9312)
@@ -9768,49 +10454,49 @@ webpackJsonp_name_([5],{
 					this.close( event );
 				}
 			});
-
+	
 			uiDialogTitle = $( "<span>" )
 				.uniqueId()
 				.addClass( "ui-dialog-title" )
 				.prependTo( this.uiDialogTitlebar );
 			this._title( uiDialogTitle );
-
+	
 			this.uiDialog.attr({
 				"aria-labelledby": uiDialogTitle.attr( "id" )
 			});
 		},
-
+	
 		_title: function( title ) {
 			if ( !this.options.title ) {
 				title.html( "&#160;" );
 			}
 			title.text( this.options.title );
 		},
-
+	
 		_createButtonPane: function() {
 			this.uiDialogButtonPane = $( "<div>" )
 				.addClass( "ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" );
-
+	
 			this.uiButtonSet = $( "<div>" )
 				.addClass( "ui-dialog-buttonset" )
 				.appendTo( this.uiDialogButtonPane );
-
+	
 			this._createButtons();
 		},
-
+	
 		_createButtons: function() {
 			var that = this,
 				buttons = this.options.buttons;
-
+	
 			// if we already have a button pane, remove it
 			this.uiDialogButtonPane.remove();
 			this.uiButtonSet.empty();
-
+	
 			if ( $.isEmptyObject( buttons ) || ($.isArray( buttons ) && !buttons.length) ) {
 				this.uiDialog.removeClass( "ui-dialog-buttons" );
 				return;
 			}
-
+	
 			$.each( buttons, function( name, props ) {
 				var click, buttonOptions;
 				props = $.isFunction( props ) ?
@@ -9836,18 +10522,18 @@ webpackJsonp_name_([5],{
 			this.uiDialog.addClass( "ui-dialog-buttons" );
 			this.uiDialogButtonPane.appendTo( this.uiDialog );
 		},
-
+	
 		_makeDraggable: function() {
 			var that = this,
 				options = this.options;
-
+	
 			function filteredUi( ui ) {
 				return {
 					position: ui.position,
 					offset: ui.offset
 				};
 			}
-
+	
 			this.uiDialog.draggable({
 				cancel: ".ui-dialog-content, .ui-dialog-titlebar-close",
 				handle: ".ui-dialog-titlebar",
@@ -9863,7 +10549,7 @@ webpackJsonp_name_([5],{
 				stop: function( event, ui ) {
 					var left = ui.offset.left - that.document.scrollLeft(),
 						top = ui.offset.top - that.document.scrollTop();
-
+	
 					options.position = {
 						my: "left top",
 						at: "left" + (left >= 0 ? "+" : "") + left + " " +
@@ -9876,7 +10562,7 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_makeResizable: function() {
 			var that = this,
 				options = this.options,
@@ -9887,7 +10573,7 @@ webpackJsonp_name_([5],{
 				resizeHandles = typeof handles === "string" ?
 					handles	:
 					"n,e,s,w,se,sw,ne,nw";
-
+	
 			function filteredUi( ui ) {
 				return {
 					originalPosition: ui.originalPosition,
@@ -9896,7 +10582,7 @@ webpackJsonp_name_([5],{
 					size: ui.size
 				};
 			}
-
+	
 			this.uiDialog.resizable({
 				cancel: ".ui-dialog-content",
 				containment: "document",
@@ -9918,7 +10604,7 @@ webpackJsonp_name_([5],{
 					var offset = that.uiDialog.offset(),
 						left = offset.left - that.document.scrollLeft(),
 						top = offset.top - that.document.scrollTop();
-
+	
 					options.height = that.uiDialog.height();
 					options.width = that.uiDialog.width();
 					options.position = {
@@ -9934,7 +10620,7 @@ webpackJsonp_name_([5],{
 			})
 			.css( "position", position );
 		},
-
+	
 		_trackFocus: function() {
 			this._on( this.widget(), {
 				focusin: function( event ) {
@@ -9943,12 +10629,12 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_makeFocusTarget: function() {
 			this._untrackInstance();
 			this._trackingInstances().unshift( this );
 		},
-
+	
 		_untrackInstance: function() {
 			var instances = this._trackingInstances(),
 				exists = $.inArray( this, instances );
@@ -9956,7 +10642,7 @@ webpackJsonp_name_([5],{
 				instances.splice( exists, 1 );
 			}
 		},
-
+	
 		_trackingInstances: function() {
 			var instances = this.document.data( "ui-dialog-instances" );
 			if ( !instances ) {
@@ -9965,15 +10651,15 @@ webpackJsonp_name_([5],{
 			}
 			return instances;
 		},
-
+	
 		_minHeight: function() {
 			var options = this.options;
-
+	
 			return options.height === "auto" ?
 				options.minHeight :
 				Math.min( options.minHeight, options.height );
 		},
-
+	
 		_position: function() {
 			// Need to show the dialog to get the actual offset in the position plugin
 			var isVisible = this.uiDialog.is( ":visible" );
@@ -9985,15 +10671,15 @@ webpackJsonp_name_([5],{
 				this.uiDialog.hide();
 			}
 		},
-
+	
 		_setOptions: function( options ) {
 			var that = this,
 				resize = false,
 				resizableOptions = {};
-
+	
 			$.each( options, function( key, value ) {
 				that._setOption( key, value );
-
+	
 				if ( key in that.sizeRelatedOptions ) {
 					resize = true;
 				}
@@ -10001,7 +10687,7 @@ webpackJsonp_name_([5],{
 					resizableOptions[ key ] = value;
 				}
 			});
-
+	
 			if ( resize ) {
 				this._size();
 				this._position();
@@ -10010,82 +10696,82 @@ webpackJsonp_name_([5],{
 				this.uiDialog.resizable( "option", resizableOptions );
 			}
 		},
-
+	
 		_setOption: function( key, value ) {
 			var isDraggable, isResizable,
 				uiDialog = this.uiDialog;
-
+	
 			if ( key === "dialogClass" ) {
 				uiDialog
 					.removeClass( this.options.dialogClass )
 					.addClass( value );
 			}
-
+	
 			if ( key === "disabled" ) {
 				return;
 			}
-
+	
 			this._super( key, value );
-
+	
 			if ( key === "appendTo" ) {
 				this.uiDialog.appendTo( this._appendTo() );
 			}
-
+	
 			if ( key === "buttons" ) {
 				this._createButtons();
 			}
-
+	
 			if ( key === "closeText" ) {
 				this.uiDialogTitlebarClose.button({
 					// Ensure that we always pass a string
 					label: "" + value
 				});
 			}
-
+	
 			if ( key === "draggable" ) {
 				isDraggable = uiDialog.is( ":data(ui-draggable)" );
 				if ( isDraggable && !value ) {
 					uiDialog.draggable( "destroy" );
 				}
-
+	
 				if ( !isDraggable && value ) {
 					this._makeDraggable();
 				}
 			}
-
+	
 			if ( key === "position" ) {
 				this._position();
 			}
-
+	
 			if ( key === "resizable" ) {
 				// currently resizable, becoming non-resizable
 				isResizable = uiDialog.is( ":data(ui-resizable)" );
 				if ( isResizable && !value ) {
 					uiDialog.resizable( "destroy" );
 				}
-
+	
 				// currently resizable, changing handles
 				if ( isResizable && typeof value === "string" ) {
 					uiDialog.resizable( "option", "handles", value );
 				}
-
+	
 				// currently non-resizable, becoming resizable
 				if ( !isResizable && value !== false ) {
 					this._makeResizable();
 				}
 			}
-
+	
 			if ( key === "title" ) {
 				this._title( this.uiDialogTitlebar.find( ".ui-dialog-title" ) );
 			}
 		},
-
+	
 		_size: function() {
 			// If the user has resized the dialog, the .ui-dialog and .ui-dialog-content
 			// divs will both have width and height set, so we need to reset them
 			var nonContentHeight, minContentHeight, maxContentHeight,
 				options = this.options;
-
+	
 			// Reset content sizing
 			this.element.show().css({
 				width: "auto",
@@ -10093,11 +10779,11 @@ webpackJsonp_name_([5],{
 				maxHeight: "none",
 				height: 0
 			});
-
+	
 			if ( options.minWidth > options.width ) {
 				options.width = options.minWidth;
 			}
-
+	
 			// reset wrapper sizing
 			// determine the height of all the non-content elements
 			nonContentHeight = this.uiDialog.css({
@@ -10109,7 +10795,7 @@ webpackJsonp_name_([5],{
 			maxContentHeight = typeof options.maxHeight === "number" ?
 				Math.max( 0, options.maxHeight - nonContentHeight ) :
 				"none";
-
+	
 			if ( options.height === "auto" ) {
 				this.element.css({
 					minHeight: minContentHeight,
@@ -10119,16 +10805,16 @@ webpackJsonp_name_([5],{
 			} else {
 				this.element.height( Math.max( 0, options.height - nonContentHeight ) );
 			}
-
+	
 			if ( this.uiDialog.is( ":data(ui-resizable)" ) ) {
 				this.uiDialog.resizable( "option", "minHeight", this._minHeight() );
 			}
 		},
-
+	
 		_blockFrames: function() {
 			this.iframeBlocks = this.document.find( "iframe" ).map(function() {
 				var iframe = $( this );
-
+	
 				return $( "<div>" )
 					.css({
 						position: "absolute",
@@ -10139,38 +10825,38 @@ webpackJsonp_name_([5],{
 					.offset( iframe.offset() )[0];
 			});
 		},
-
+	
 		_unblockFrames: function() {
 			if ( this.iframeBlocks ) {
 				this.iframeBlocks.remove();
 				delete this.iframeBlocks;
 			}
 		},
-
+	
 		_allowInteraction: function( event ) {
 			if ( $( event.target ).closest( ".ui-dialog" ).length ) {
 				return true;
 			}
-
+	
 			// TODO: Remove hack when datepicker implements
 			// the .ui-front logic (#8989)
 			return !!$( event.target ).closest( ".ui-datepicker" ).length;
 		},
-
+	
 		_createOverlay: function() {
 			if ( !this.options.modal ) {
 				return;
 			}
-
+	
 			// We use a delay in case the overlay is created from an
 			// event that we're going to be cancelling (#2804)
 			var isOpening = true;
 			this._delay(function() {
 				isOpening = false;
 			});
-
+	
 			if ( !this.document.data( "ui-dialog-overlays" ) ) {
-
+	
 				// Prevent use of anchors and inputs
 				// Using _on() for an event handler shared across many instances is
 				// safe because the dialogs stack and must be closed in reverse order
@@ -10179,7 +10865,7 @@ webpackJsonp_name_([5],{
 						if ( isOpening ) {
 							return;
 						}
-
+	
 						if ( !this._allowInteraction( event ) ) {
 							event.preventDefault();
 							this._trackingInstances()[ 0 ]._focusTabbable();
@@ -10187,7 +10873,7 @@ webpackJsonp_name_([5],{
 					}
 				});
 			}
-
+	
 			this.overlay = $( "<div>" )
 				.addClass( "ui-widget-overlay ui-front" )
 				.appendTo( this._appendTo() );
@@ -10197,15 +10883,15 @@ webpackJsonp_name_([5],{
 			this.document.data( "ui-dialog-overlays",
 				(this.document.data( "ui-dialog-overlays" ) || 0) + 1 );
 		},
-
+	
 		_destroyOverlay: function() {
 			if ( !this.options.modal ) {
 				return;
 			}
-
+	
 			if ( this.overlay ) {
 				var overlays = this.document.data( "ui-dialog-overlays" ) - 1;
-
+	
 				if ( !overlays ) {
 					this.document
 						.unbind( "focusin" )
@@ -10213,14 +10899,14 @@ webpackJsonp_name_([5],{
 				} else {
 					this.document.data( "ui-dialog-overlays", overlays );
 				}
-
+	
 				this.overlay.remove();
 				this.overlay = null;
 			}
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Droppable 1.11.4
 	 * http://jqueryui.com
@@ -10231,8 +10917,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/droppable/
 	 */
-
-
+	
+	
 	$.widget( "ui.droppable", {
 		version: "1.11.4",
 		widgetEventPrefix: "drop",
@@ -10244,7 +10930,7 @@ webpackJsonp_name_([5],{
 			hoverClass: false,
 			scope: "default",
 			tolerance: "intersect",
-
+	
 			// callbacks
 			activate: null,
 			deactivate: null,
@@ -10253,18 +10939,18 @@ webpackJsonp_name_([5],{
 			over: null
 		},
 		_create: function() {
-
+	
 			var proportions,
 				o = this.options,
 				accept = o.accept;
-
+	
 			this.isover = false;
 			this.isout = true;
-
+	
 			this.accept = $.isFunction( accept ) ? accept : function( d ) {
 				return d.is( accept );
 			};
-
+	
 			this.proportions = function( /* valueToWrite */ ) {
 				if ( arguments.length ) {
 					// Store the droppable's proportions
@@ -10279,19 +10965,19 @@ webpackJsonp_name_([5],{
 						};
 				}
 			};
-
+	
 			this._addToManager( o.scope );
-
+	
 			o.addClasses && this.element.addClass( "ui-droppable" );
-
+	
 		},
-
+	
 		_addToManager: function( scope ) {
 			// Add the reference and positions to the manager
 			$.ui.ddmanager.droppables[ scope ] = $.ui.ddmanager.droppables[ scope ] || [];
 			$.ui.ddmanager.droppables[ scope ].push( this );
 		},
-
+	
 		_splice: function( drop ) {
 			var i = 0;
 			for ( ; i < drop.length; i++ ) {
@@ -10300,31 +10986,31 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		_destroy: function() {
 			var drop = $.ui.ddmanager.droppables[ this.options.scope ];
-
+	
 			this._splice( drop );
-
+	
 			this.element.removeClass( "ui-droppable ui-droppable-disabled" );
 		},
-
+	
 		_setOption: function( key, value ) {
-
+	
 			if ( key === "accept" ) {
 				this.accept = $.isFunction( value ) ? value : function( d ) {
 					return d.is( value );
 				};
 			} else if ( key === "scope" ) {
 				var drop = $.ui.ddmanager.droppables[ this.options.scope ];
-
+	
 				this._splice( drop );
 				this._addToManager( value );
 			}
-
+	
 			this._super( key, value );
 		},
-
+	
 		_activate: function( event ) {
 			var draggable = $.ui.ddmanager.current;
 			if ( this.options.activeClass ) {
@@ -10334,7 +11020,7 @@ webpackJsonp_name_([5],{
 				this._trigger( "activate", event, this.ui( draggable ) );
 			}
 		},
-
+	
 		_deactivate: function( event ) {
 			var draggable = $.ui.ddmanager.current;
 			if ( this.options.activeClass ) {
@@ -10344,53 +11030,53 @@ webpackJsonp_name_([5],{
 				this._trigger( "deactivate", event, this.ui( draggable ) );
 			}
 		},
-
+	
 		_over: function( event ) {
-
+	
 			var draggable = $.ui.ddmanager.current;
-
+	
 			// Bail if draggable and droppable are same element
 			if ( !draggable || ( draggable.currentItem || draggable.element )[ 0 ] === this.element[ 0 ] ) {
 				return;
 			}
-
+	
 			if ( this.accept.call( this.element[ 0 ], ( draggable.currentItem || draggable.element ) ) ) {
 				if ( this.options.hoverClass ) {
 					this.element.addClass( this.options.hoverClass );
 				}
 				this._trigger( "over", event, this.ui( draggable ) );
 			}
-
+	
 		},
-
+	
 		_out: function( event ) {
-
+	
 			var draggable = $.ui.ddmanager.current;
-
+	
 			// Bail if draggable and droppable are same element
 			if ( !draggable || ( draggable.currentItem || draggable.element )[ 0 ] === this.element[ 0 ] ) {
 				return;
 			}
-
+	
 			if ( this.accept.call( this.element[ 0 ], ( draggable.currentItem || draggable.element ) ) ) {
 				if ( this.options.hoverClass ) {
 					this.element.removeClass( this.options.hoverClass );
 				}
 				this._trigger( "out", event, this.ui( draggable ) );
 			}
-
+	
 		},
-
+	
 		_drop: function( event, custom ) {
-
+	
 			var draggable = custom || $.ui.ddmanager.current,
 				childrenIntersection = false;
-
+	
 			// Bail if draggable and droppable are same element
 			if ( !draggable || ( draggable.currentItem || draggable.element )[ 0 ] === this.element[ 0 ] ) {
 				return false;
 			}
-
+	
 			this.element.find( ":data(ui-droppable)" ).not( ".ui-draggable-dragging" ).each(function() {
 				var inst = $( this ).droppable( "instance" );
 				if (
@@ -10404,7 +11090,7 @@ webpackJsonp_name_([5],{
 			if ( childrenIntersection ) {
 				return false;
 			}
-
+	
 			if ( this.accept.call( this.element[ 0 ], ( draggable.currentItem || draggable.element ) ) ) {
 				if ( this.options.activeClass ) {
 					this.element.removeClass( this.options.activeClass );
@@ -10415,11 +11101,11 @@ webpackJsonp_name_([5],{
 				this._trigger( "drop", event, this.ui( draggable ) );
 				return this.element;
 			}
-
+	
 			return false;
-
+	
 		},
-
+	
 		ui: function( c ) {
 			return {
 				draggable: ( c.currentItem || c.element ),
@@ -10428,20 +11114,20 @@ webpackJsonp_name_([5],{
 				offset: c.positionAbs
 			};
 		}
-
+	
 	});
-
+	
 	$.ui.intersect = (function() {
 		function isOverAxis( x, reference, size ) {
 			return ( x >= reference ) && ( x < ( reference + size ) );
 		}
-
+	
 		return function( draggable, droppable, toleranceMode, event ) {
-
+	
 			if ( !droppable.offset ) {
 				return false;
 			}
-
+	
 			var x1 = ( draggable.positionAbs || draggable.position.absolute ).left + draggable.margins.left,
 				y1 = ( draggable.positionAbs || draggable.position.absolute ).top + draggable.margins.top,
 				x2 = x1 + draggable.helperProportions.width,
@@ -10450,7 +11136,7 @@ webpackJsonp_name_([5],{
 				t = droppable.offset.top,
 				r = l + droppable.proportions().width,
 				b = t + droppable.proportions().height;
-
+	
 			switch ( toleranceMode ) {
 			case "fit":
 				return ( l <= x1 && x2 <= r && t <= y1 && y2 <= b );
@@ -10476,7 +11162,7 @@ webpackJsonp_name_([5],{
 			}
 		};
 	})();
-
+	
 	/*
 		This manager tracks offsets of draggables and droppables
 	*/
@@ -10484,19 +11170,19 @@ webpackJsonp_name_([5],{
 		current: null,
 		droppables: { "default": [] },
 		prepareOffsets: function( t, event ) {
-
+	
 			var i, j,
 				m = $.ui.ddmanager.droppables[ t.options.scope ] || [],
 				type = event ? event.type : null, // workaround for #2317
 				list = ( t.currentItem || t.element ).find( ":data(ui-droppable)" ).addBack();
-
+	
 			droppablesLoop: for ( i = 0; i < m.length; i++ ) {
-
+	
 				// No disabled and non-accepted
 				if ( m[ i ].options.disabled || ( t && !m[ i ].accept.call( m[ i ].element[ 0 ], ( t.currentItem || t.element ) ) ) ) {
 					continue;
 				}
-
+	
 				// Filter out elements in the current dragged item
 				for ( j = 0; j < list.length; j++ ) {
 					if ( list[ j ] === m[ i ].element[ 0 ] ) {
@@ -10504,45 +11190,45 @@ webpackJsonp_name_([5],{
 						continue droppablesLoop;
 					}
 				}
-
+	
 				m[ i ].visible = m[ i ].element.css( "display" ) !== "none";
 				if ( !m[ i ].visible ) {
 					continue;
 				}
-
+	
 				// Activate the droppable if used directly from draggables
 				if ( type === "mousedown" ) {
 					m[ i ]._activate.call( m[ i ], event );
 				}
-
+	
 				m[ i ].offset = m[ i ].element.offset();
 				m[ i ].proportions({ width: m[ i ].element[ 0 ].offsetWidth, height: m[ i ].element[ 0 ].offsetHeight });
-
+	
 			}
-
+	
 		},
 		drop: function( draggable, event ) {
-
+	
 			var dropped = false;
 			// Create a copy of the droppables in case the list changes during the drop (#9116)
 			$.each( ( $.ui.ddmanager.droppables[ draggable.options.scope ] || [] ).slice(), function() {
-
+	
 				if ( !this.options ) {
 					return;
 				}
 				if ( !this.options.disabled && this.visible && $.ui.intersect( draggable, this, this.options.tolerance, event ) ) {
 					dropped = this._drop.call( this, event ) || dropped;
 				}
-
+	
 				if ( !this.options.disabled && this.visible && this.accept.call( this.element[ 0 ], ( draggable.currentItem || draggable.element ) ) ) {
 					this.isout = true;
 					this.isover = false;
 					this._deactivate.call( this, event );
 				}
-
+	
 			});
 			return dropped;
-
+	
 		},
 		dragStart: function( draggable, event ) {
 			// Listen for scrolling so that if the dragging causes scrolling the position of the droppables can be recalculated (see #5003)
@@ -10553,50 +11239,50 @@ webpackJsonp_name_([5],{
 			});
 		},
 		drag: function( draggable, event ) {
-
+	
 			// If you have a highly dynamic page, you might try this option. It renders positions every time you move the mouse.
 			if ( draggable.options.refreshPositions ) {
 				$.ui.ddmanager.prepareOffsets( draggable, event );
 			}
-
+	
 			// Run through all droppables and check their positions based on specific tolerance options
 			$.each( $.ui.ddmanager.droppables[ draggable.options.scope ] || [], function() {
-
+	
 				if ( this.options.disabled || this.greedyChild || !this.visible ) {
 					return;
 				}
-
+	
 				var parentInstance, scope, parent,
 					intersects = $.ui.intersect( draggable, this, this.options.tolerance, event ),
 					c = !intersects && this.isover ? "isout" : ( intersects && !this.isover ? "isover" : null );
 				if ( !c ) {
 					return;
 				}
-
+	
 				if ( this.options.greedy ) {
 					// find droppable parents with same scope
 					scope = this.options.scope;
 					parent = this.element.parents( ":data(ui-droppable)" ).filter(function() {
 						return $( this ).droppable( "instance" ).options.scope === scope;
 					});
-
+	
 					if ( parent.length ) {
 						parentInstance = $( parent[ 0 ] ).droppable( "instance" );
 						parentInstance.greedyChild = ( c === "isover" );
 					}
 				}
-
+	
 				// we just moved into a greedy child
 				if ( parentInstance && c === "isover" ) {
 					parentInstance.isover = false;
 					parentInstance.isout = true;
 					parentInstance._out.call( parentInstance, event );
 				}
-
+	
 				this[ c ] = true;
 				this[c === "isout" ? "isover" : "isout"] = false;
 				this[c === "isover" ? "_over" : "_out"].call( this, event );
-
+	
 				// we just moved out of a greedy child
 				if ( parentInstance && c === "isout" ) {
 					parentInstance.isout = false;
@@ -10604,7 +11290,7 @@ webpackJsonp_name_([5],{
 					parentInstance._over.call( parentInstance, event );
 				}
 			});
-
+	
 		},
 		dragStop: function( draggable, event ) {
 			draggable.element.parentsUntil( "body" ).unbind( "scroll.droppable" );
@@ -10614,10 +11300,10 @@ webpackJsonp_name_([5],{
 			}
 		}
 	};
-
+	
 	var droppable = $.ui.droppable;
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects 1.11.4
 	 * http://jqueryui.com
@@ -10628,18 +11314,18 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/category/effects-core/
 	 */
-
-
+	
+	
 	var dataSpace = "ui-effects-",
-
+	
 		// Create a local jQuery because jQuery Color relies on it and the
 		// global may not exist with AMD and a custom build (#10199)
 		jQuery = $;
-
+	
 	$.effects = {
 		effect: {}
 	};
-
+	
 	/*!
 	 * jQuery Color Animations v2.1.2
 	 * https://github.com/jquery/jquery-color
@@ -10651,9 +11337,9 @@ webpackJsonp_name_([5],{
 	 * Date: Wed Jan 16 08:47:09 2013 -0600
 	 */
 	(function( jQuery, undefined ) {
-
+	
 		var stepHooks = "backgroundColor borderBottomColor borderLeftColor borderRightColor borderTopColor color columnRuleColor outlineColor textDecorationColor textEmphasisColor",
-
+	
 		// plusequals test for += 100 -= 100
 		rplusequals = /^([\-+])=\s*(\d+\.?\d*)/,
 		// a set of RE's that can match strings and generate color tuples.
@@ -10709,7 +11395,7 @@ webpackJsonp_name_([5],{
 					];
 				}
 			} ],
-
+	
 		// jQuery.Color( )
 		color = jQuery.Color = function( color, green, blue, alpha ) {
 			return new jQuery.Color.fn.parse( color, green, blue, alpha );
@@ -10731,7 +11417,7 @@ webpackJsonp_name_([5],{
 					}
 				}
 			},
-
+	
 			hsla: {
 				props: {
 					hue: {
@@ -10763,20 +11449,20 @@ webpackJsonp_name_([5],{
 			}
 		},
 		support = color.support = {},
-
+	
 		// element for support tests
 		supportElem = jQuery( "<p>" )[ 0 ],
-
+	
 		// colors = jQuery.Color.names
 		colors,
-
+	
 		// local aliases of functions called often
 		each = jQuery.each;
-
+	
 	// determine rgba support immediately
 	supportElem.style.cssText = "background-color:rgba(1,1,1,.5)";
 	support.rgba = supportElem.style.backgroundColor.indexOf( "rgba" ) > -1;
-
+	
 	// define cache name and alpha properties
 	// for rgba and hsla spaces
 	each( spaces, function( spaceName, space ) {
@@ -10787,61 +11473,61 @@ webpackJsonp_name_([5],{
 			def: 1
 		};
 	});
-
+	
 	function clamp( value, prop, allowEmpty ) {
 		var type = propTypes[ prop.type ] || {};
-
+	
 		if ( value == null ) {
 			return (allowEmpty || !prop.def) ? null : prop.def;
 		}
-
+	
 		// ~~ is an short way of doing floor for positive numbers
 		value = type.floor ? ~~value : parseFloat( value );
-
+	
 		// IE will pass in empty strings as value for alpha,
 		// which will hit this case
 		if ( isNaN( value ) ) {
 			return prop.def;
 		}
-
+	
 		if ( type.mod ) {
 			// we add mod before modding to make sure that negatives values
 			// get converted properly: -10 -> 350
 			return (value + type.mod) % type.mod;
 		}
-
+	
 		// for now all property types without mod have min and max
 		return 0 > value ? 0 : type.max < value ? type.max : value;
 	}
-
+	
 	function stringParse( string ) {
 		var inst = color(),
 			rgba = inst._rgba = [];
-
+	
 		string = string.toLowerCase();
-
+	
 		each( stringParsers, function( i, parser ) {
 			var parsed,
 				match = parser.re.exec( string ),
 				values = match && parser.parse( match ),
 				spaceName = parser.space || "rgba";
-
+	
 			if ( values ) {
 				parsed = inst[ spaceName ]( values );
-
+	
 				// if this was an rgba parse the assignment might happen twice
 				// oh well....
 				inst[ spaces[ spaceName ].cache ] = parsed[ spaces[ spaceName ].cache ];
 				rgba = inst._rgba = parsed._rgba;
-
+	
 				// exit each( stringParsers ) here because we matched
 				return false;
 			}
 		});
-
+	
 		// Found a stringParser that handled it
 		if ( rgba.length ) {
-
+	
 			// if this came from a parsed string, force "transparent" when alpha is 0
 			// chrome, (and maybe others) return "transparent" as rgba(0,0,0,0)
 			if ( rgba.join() === "0,0,0,0" ) {
@@ -10849,11 +11535,11 @@ webpackJsonp_name_([5],{
 			}
 			return inst;
 		}
-
+	
 		// named colors
 		return colors[ string ];
 	}
-
+	
 	color.fn = jQuery.extend( color.prototype, {
 		parse: function( red, green, blue, alpha ) {
 			if ( red === undefined ) {
@@ -10864,28 +11550,28 @@ webpackJsonp_name_([5],{
 				red = jQuery( red ).css( green );
 				green = undefined;
 			}
-
+	
 			var inst = this,
 				type = jQuery.type( red ),
 				rgba = this._rgba = [];
-
+	
 			// more than 1 argument specified - assume ( red, green, blue, alpha )
 			if ( green !== undefined ) {
 				red = [ red, green, blue, alpha ];
 				type = "array";
 			}
-
+	
 			if ( type === "string" ) {
 				return this.parse( stringParse( red ) || colors._default );
 			}
-
+	
 			if ( type === "array" ) {
 				each( spaces.rgba.props, function( key, prop ) {
 					rgba[ prop.idx ] = clamp( red[ prop.idx ], prop );
 				});
 				return this;
 			}
-
+	
 			if ( type === "object" ) {
 				if ( red instanceof color ) {
 					each( spaces, function( spaceName, space ) {
@@ -10897,10 +11583,10 @@ webpackJsonp_name_([5],{
 					each( spaces, function( spaceName, space ) {
 						var cache = space.cache;
 						each( space.props, function( key, prop ) {
-
+	
 							// if the cache doesn't exist, and we know how to convert
 							if ( !inst[ cache ] && space.to ) {
-
+	
 								// if the value was null, we don't need to copy it
 								// if the key was alpha, we don't need to copy it either
 								if ( key === "alpha" || red[ key ] == null ) {
@@ -10908,12 +11594,12 @@ webpackJsonp_name_([5],{
 								}
 								inst[ cache ] = space.to( inst._rgba );
 							}
-
+	
 							// this is the only case where we allow nulls for ALL properties.
 							// call clamp with alwaysAllowEmpty
 							inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
 						});
-
+	
 						// everything defined but alpha?
 						if ( inst[ cache ] && jQuery.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
 							// use the default of 1
@@ -10931,7 +11617,7 @@ webpackJsonp_name_([5],{
 			var is = color( compare ),
 				same = true,
 				inst = this;
-
+	
 			each( spaces, function( _, space ) {
 				var localCache,
 					isCache = is[ space.cache ];
@@ -10965,14 +11651,14 @@ webpackJsonp_name_([5],{
 				startColor = this.alpha() === 0 ? color( "transparent" ) : this,
 				start = startColor[ space.cache ] || space.to( startColor._rgba ),
 				result = start.slice();
-
+	
 			end = end[ space.cache ];
 			each( space.props, function( key, prop ) {
 				var index = prop.idx,
 					startValue = start[ index ],
 					endValue = end[ index ],
 					type = propTypes[ prop.type ] || {};
-
+	
 				// if null, don't override start value
 				if ( endValue === null ) {
 					return;
@@ -10998,11 +11684,11 @@ webpackJsonp_name_([5],{
 			if ( this._rgba[ 3 ] === 1 ) {
 				return this;
 			}
-
+	
 			var rgb = this._rgba.slice(),
 				a = rgb.pop(),
 				blend = color( opaque )._rgba;
-
+	
 			return color( jQuery.map( rgb, function( v, i ) {
 				return ( 1 - a ) * blend[ i ] + a * v;
 			}));
@@ -11012,12 +11698,12 @@ webpackJsonp_name_([5],{
 				rgba = jQuery.map( this._rgba, function( v, i ) {
 					return v == null ? ( i > 2 ? 1 : 0 ) : v;
 				});
-
+	
 			if ( rgba[ 3 ] === 1 ) {
 				rgba.pop();
 				prefix = "rgb(";
 			}
-
+	
 			return prefix + rgba.join() + ")";
 		},
 		toHslaString: function() {
@@ -11026,14 +11712,14 @@ webpackJsonp_name_([5],{
 					if ( v == null ) {
 						v = i > 2 ? 1 : 0;
 					}
-
+	
 					// catch 1 and 2
 					if ( i && i < 3 ) {
 						v = Math.round( v * 100 ) + "%";
 					}
 					return v;
 				});
-
+	
 			if ( hsla[ 3 ] === 1 ) {
 				hsla.pop();
 				prefix = "hsl(";
@@ -11043,13 +11729,13 @@ webpackJsonp_name_([5],{
 		toHexString: function( includeAlpha ) {
 			var rgba = this._rgba.slice(),
 				alpha = rgba.pop();
-
+	
 			if ( includeAlpha ) {
 				rgba.push( ~~( alpha * 255 ) );
 			}
-
+	
 			return "#" + jQuery.map( rgba, function( v ) {
-
+	
 				// default to 0 when nulls exist
 				v = ( v || 0 ).toString( 16 );
 				return v.length === 1 ? "0" + v : v;
@@ -11060,10 +11746,10 @@ webpackJsonp_name_([5],{
 		}
 	});
 	color.fn.parse.prototype = color.fn;
-
+	
 	// hsla conversions adapted from:
 	// https://code.google.com/p/maashaack/source/browse/packages/graphics/trunk/src/graphics/colors/HUE2RGB.as?r=5021
-
+	
 	function hue2rgb( p, q, h ) {
 		h = ( h + 1 ) % 1;
 		if ( h * 6 < 1 ) {
@@ -11077,7 +11763,7 @@ webpackJsonp_name_([5],{
 		}
 		return p;
 	}
-
+	
 	spaces.hsla.to = function( rgba ) {
 		if ( rgba[ 0 ] == null || rgba[ 1 ] == null || rgba[ 2 ] == null ) {
 			return [ null, null, null, rgba[ 3 ] ];
@@ -11092,7 +11778,7 @@ webpackJsonp_name_([5],{
 			add = max + min,
 			l = add * 0.5,
 			h, s;
-
+	
 		if ( min === max ) {
 			h = 0;
 		} else if ( r === max ) {
@@ -11102,7 +11788,7 @@ webpackJsonp_name_([5],{
 		} else {
 			h = ( 60 * ( r - g ) / diff ) + 240;
 		}
-
+	
 		// chroma (diff) == 0 means greyscale which, by definition, saturation = 0%
 		// otherwise, saturation is based on the ratio of chroma (diff) to lightness (add)
 		if ( diff === 0 ) {
@@ -11114,7 +11800,7 @@ webpackJsonp_name_([5],{
 		}
 		return [ Math.round(h) % 360, s, l, a == null ? 1 : a ];
 	};
-
+	
 	spaces.hsla.from = function( hsla ) {
 		if ( hsla[ 0 ] == null || hsla[ 1 ] == null || hsla[ 2 ] == null ) {
 			return [ null, null, null, hsla[ 3 ] ];
@@ -11125,7 +11811,7 @@ webpackJsonp_name_([5],{
 			a = hsla[ 3 ],
 			q = l <= 0.5 ? l * ( 1 + s ) : l + s - l * s,
 			p = 2 * l - q;
-
+	
 		return [
 			Math.round( hue2rgb( p, q, h + ( 1 / 3 ) ) * 255 ),
 			Math.round( hue2rgb( p, q, h ) * 255 ),
@@ -11133,16 +11819,16 @@ webpackJsonp_name_([5],{
 			a
 		];
 	};
-
+	
 	each( spaces, function( spaceName, space ) {
 		var props = space.props,
 			cache = space.cache,
 			to = space.to,
 			from = space.from;
-
+	
 		// makes rgba() and hsla()
 		color.fn[ spaceName ] = function( value ) {
-
+	
 			// generate a cache for this space if it doesn't exist
 			if ( to && !this[ cache ] ) {
 				this[ cache ] = to( this._rgba );
@@ -11150,12 +11836,12 @@ webpackJsonp_name_([5],{
 			if ( value === undefined ) {
 				return this[ cache ].slice();
 			}
-
+	
 			var ret,
 				type = jQuery.type( value ),
 				arr = ( type === "array" || type === "object" ) ? value : arguments,
 				local = this[ cache ].slice();
-
+	
 			each( props, function( key, prop ) {
 				var val = arr[ type === "object" ? key : prop.idx ];
 				if ( val == null ) {
@@ -11163,7 +11849,7 @@ webpackJsonp_name_([5],{
 				}
 				local[ prop.idx ] = clamp( val, prop );
 			});
-
+	
 			if ( from ) {
 				ret = color( from( local ) );
 				ret[ cache ] = local;
@@ -11172,7 +11858,7 @@ webpackJsonp_name_([5],{
 				return color( local );
 			}
 		};
-
+	
 		// makes red() green() blue() alpha() hue() saturation() lightness()
 		each( props, function( key, prop ) {
 			// alpha is included in more than one space
@@ -11185,11 +11871,11 @@ webpackJsonp_name_([5],{
 					local = this[ fn ](),
 					cur = local[ prop.idx ],
 					match;
-
+	
 				if ( vtype === "undefined" ) {
 					return cur;
 				}
-
+	
 				if ( vtype === "function" ) {
 					value = value.call( this, cur );
 					vtype = jQuery.type( value );
@@ -11208,7 +11894,7 @@ webpackJsonp_name_([5],{
 			};
 		});
 	});
-
+	
 	// add cssHook and .fx.step function for each named hook.
 	// accept a space separated string of properties
 	color.hook = function( hook ) {
@@ -11218,7 +11904,7 @@ webpackJsonp_name_([5],{
 				set: function( elem, value ) {
 					var parsed, curElem,
 						backgroundColor = "";
-
+	
 					if ( value !== "transparent" && ( jQuery.type( value ) !== "string" || ( parsed = stringParse( value ) ) ) ) {
 						value = color( parsed || value );
 						if ( !support.rgba && value._rgba[ 3 ] !== 1 ) {
@@ -11233,12 +11919,12 @@ webpackJsonp_name_([5],{
 								} catch ( e ) {
 								}
 							}
-
+	
 							value = value.blend( backgroundColor && backgroundColor !== "transparent" ?
 								backgroundColor :
 								"_default" );
 						}
-
+	
 						value = value.toRgbaString();
 					}
 					try {
@@ -11257,22 +11943,22 @@ webpackJsonp_name_([5],{
 				jQuery.cssHooks[ hook ].set( fx.elem, fx.start.transition( fx.end, fx.pos ) );
 			};
 		});
-
+	
 	};
-
+	
 	color.hook( stepHooks );
-
+	
 	jQuery.cssHooks.borderColor = {
 		expand: function( value ) {
 			var expanded = {};
-
+	
 			each( [ "Top", "Right", "Bottom", "Left" ], function( i, part ) {
 				expanded[ "border" + part + "Color" ] = value;
 			});
 			return expanded;
 		}
 	};
-
+	
 	// Basic color names only.
 	// Usage of any of the other color names requires adding yourself or including
 	// jquery.color.svg-names.js.
@@ -11294,20 +11980,20 @@ webpackJsonp_name_([5],{
 		teal: "#008080",
 		white: "#ffffff",
 		yellow: "#ffff00",
-
+	
 		// 4.2.3. "transparent" color keyword
 		transparent: [ null, null, null, 0 ],
-
+	
 		_default: "#ffffff"
 	};
-
+	
 	})( jQuery );
-
+	
 	/******************************************************************************/
 	/****************************** CLASS ANIMATIONS ******************************/
 	/******************************************************************************/
 	(function() {
-
+	
 	var classAnimationActions = [ "add", "remove", "toggle" ],
 		shorthandStyles = {
 			border: 1,
@@ -11320,7 +12006,7 @@ webpackJsonp_name_([5],{
 			margin: 1,
 			padding: 1
 		};
-
+	
 	$.each([ "borderLeftStyle", "borderRightStyle", "borderBottomStyle", "borderTopStyle" ], function( _, prop ) {
 		$.fx.step[ prop ] = function( fx ) {
 			if ( fx.end !== "none" && !fx.setAttr || fx.pos === 1 && !fx.setAttr ) {
@@ -11329,14 +12015,14 @@ webpackJsonp_name_([5],{
 			}
 		};
 	});
-
+	
 	function getElementStyles( elem ) {
 		var key, len,
 			style = elem.ownerDocument.defaultView ?
 				elem.ownerDocument.defaultView.getComputedStyle( elem, null ) :
 				elem.currentStyle,
 			styles = {};
-
+	
 		if ( style && style.length && style[ 0 ] && style[ style[ 0 ] ] ) {
 			len = style.length;
 			while ( len-- ) {
@@ -11353,14 +12039,14 @@ webpackJsonp_name_([5],{
 				}
 			}
 		}
-
+	
 		return styles;
 	}
-
+	
 	function styleDifference( oldStyle, newStyle ) {
 		var diff = {},
 			name, value;
-
+	
 		for ( name in newStyle ) {
 			value = newStyle[ name ];
 			if ( oldStyle[ name ] !== value ) {
@@ -11371,10 +12057,10 @@ webpackJsonp_name_([5],{
 				}
 			}
 		}
-
+	
 		return diff;
 	}
-
+	
 	// support: jQuery <1.8
 	if ( !$.fn.addBack ) {
 		$.fn.addBack = function( selector ) {
@@ -11383,16 +12069,16 @@ webpackJsonp_name_([5],{
 			);
 		};
 	}
-
+	
 	$.effects.animateClass = function( value, duration, easing, callback ) {
 		var o = $.speed( duration, easing, callback );
-
+	
 		return this.queue( function() {
 			var animated = $( this ),
 				baseClass = animated.attr( "class" ) || "",
 				applyClassChange,
 				allAnimations = o.children ? animated.find( "*" ).addBack() : animated;
-
+	
 			// map the animated objects to store the original styles.
 			allAnimations = allAnimations.map(function() {
 				var el = $( this );
@@ -11401,7 +12087,7 @@ webpackJsonp_name_([5],{
 					start: getElementStyles( this )
 				};
 			});
-
+	
 			// apply class change
 			applyClassChange = function() {
 				$.each( classAnimationActions, function(i, action) {
@@ -11411,17 +12097,17 @@ webpackJsonp_name_([5],{
 				});
 			};
 			applyClassChange();
-
+	
 			// map all animated objects again - calculate new styles and diff
 			allAnimations = allAnimations.map(function() {
 				this.end = getElementStyles( this.el[ 0 ] );
 				this.diff = styleDifference( this.start, this.end );
 				return this;
 			});
-
+	
 			// apply original class
 			animated.attr( "class", baseClass );
-
+	
 			// map all animated objects again - this time collecting a promise
 			allAnimations = allAnimations.map(function() {
 				var styleInfo = this,
@@ -11432,17 +12118,17 @@ webpackJsonp_name_([5],{
 							dfd.resolve( styleInfo );
 						}
 					});
-
+	
 				this.el.animate( this.diff, opts );
 				return dfd.promise();
 			});
-
+	
 			// once all animations have completed:
 			$.when.apply( $, allAnimations.get() ).done(function() {
-
+	
 				// set the final class
 				applyClassChange();
-
+	
 				// for each animated element,
 				// clear all css properties that were animated
 				$.each( arguments, function() {
@@ -11451,14 +12137,14 @@ webpackJsonp_name_([5],{
 						el.css( key, "" );
 					});
 				});
-
+	
 				// this is guarnteed to be there if you use jQuery.speed()
 				// it also handles dequeuing the next anim...
 				o.complete.call( animated[ 0 ] );
 			});
 		});
 	};
-
+	
 	$.fn.extend({
 		addClass: (function( orig ) {
 			return function( classNames, speed, easing, callback ) {
@@ -11468,7 +12154,7 @@ webpackJsonp_name_([5],{
 					orig.apply( this, arguments );
 			};
 		})( $.fn.addClass ),
-
+	
 		removeClass: (function( orig ) {
 			return function( classNames, speed, easing, callback ) {
 				return arguments.length > 1 ?
@@ -11477,7 +12163,7 @@ webpackJsonp_name_([5],{
 					orig.apply( this, arguments );
 			};
 		})( $.fn.removeClass ),
-
+	
 		toggleClass: (function( orig ) {
 			return function( classNames, force, speed, easing, callback ) {
 				if ( typeof force === "boolean" || force === undefined ) {
@@ -11496,7 +12182,7 @@ webpackJsonp_name_([5],{
 				}
 			};
 		})( $.fn.toggleClass ),
-
+	
 		switchClass: function( remove, add, speed, easing, callback) {
 			return $.effects.animateClass.call( this, {
 				add: add,
@@ -11504,18 +12190,18 @@ webpackJsonp_name_([5],{
 			}, speed, easing, callback );
 		}
 	});
-
+	
 	})();
-
+	
 	/******************************************************************************/
 	/*********************************** EFFECTS **********************************/
 	/******************************************************************************/
-
+	
 	(function() {
-
+	
 	$.extend( $.effects, {
 		version: "1.11.4",
-
+	
 		// Saves a set of properties in a data storage
 		save: function( element, set ) {
 			for ( var i = 0; i < set.length; i++ ) {
@@ -11524,7 +12210,7 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		// Restores a set of previously saved properties from a data storage
 		restore: function( element, set ) {
 			var val, i;
@@ -11543,14 +12229,14 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		setMode: function( el, mode ) {
 			if (mode === "toggle") {
 				mode = el.is( ":hidden" ) ? "show" : "hide";
 			}
 			return mode;
 		},
-
+	
 		// Translates a [top,left] array into a baseline value
 		// this should be a little more flexible in the future to handle a string & hash
 		getBaseline: function( origin, original ) {
@@ -11572,15 +12258,15 @@ webpackJsonp_name_([5],{
 				y: y
 			};
 		},
-
+	
 		// Wraps the element around a wrapper that copies position properties
 		createWrapper: function( element ) {
-
+	
 			// if the element is already wrapped, return it
 			if ( element.parent().is( ".ui-effects-wrapper" )) {
 				return element.parent();
 			}
-
+	
 			// wrap the element
 			var props = {
 					width: element.outerWidth(true),
@@ -11602,7 +12288,7 @@ webpackJsonp_name_([5],{
 					height: element.height()
 				},
 				active = document.activeElement;
-
+	
 			// support: Firefox
 			// Firefox incorrectly exposes anonymous content
 			// https://bugzilla.mozilla.org/show_bug.cgi?id=561664
@@ -11611,16 +12297,16 @@ webpackJsonp_name_([5],{
 			} catch ( e ) {
 				active = document.body;
 			}
-
+	
 			element.wrap( wrapper );
-
+	
 			// Fixes #7595 - Elements lose focus when wrapped.
 			if ( element[ 0 ] === active || $.contains( element[ 0 ], active ) ) {
 				$( active ).focus();
 			}
-
+	
 			wrapper = element.parent(); //Hotfix for jQuery 1.4 since some change in wrap() seems to actually lose the reference to the wrapped element
-
+	
 			// transfer positioning properties to the wrapper
 			if ( element.css( "position" ) === "static" ) {
 				wrapper.css({ position: "relative" });
@@ -11645,25 +12331,25 @@ webpackJsonp_name_([5],{
 				});
 			}
 			element.css(size);
-
+	
 			return wrapper.css( props ).show();
 		},
-
+	
 		removeWrapper: function( element ) {
 			var active = document.activeElement;
-
+	
 			if ( element.parent().is( ".ui-effects-wrapper" ) ) {
 				element.parent().replaceWith( element );
-
+	
 				// Fixes #7595 - Elements lose focus when wrapped.
 				if ( element[ 0 ] === active || $.contains( element[ 0 ], active ) ) {
 					$( active ).focus();
 				}
 			}
-
+	
 			return element;
 		},
-
+	
 		setTransition: function( element, list, factor, value ) {
 			value = value || {};
 			$.each( list, function( i, x ) {
@@ -11675,92 +12361,92 @@ webpackJsonp_name_([5],{
 			return value;
 		}
 	});
-
+	
 	// return an effect options object for the given parameters:
 	function _normalizeArguments( effect, options, speed, callback ) {
-
+	
 		// allow passing all options as the first parameter
 		if ( $.isPlainObject( effect ) ) {
 			options = effect;
 			effect = effect.effect;
 		}
-
+	
 		// convert to an object
 		effect = { effect: effect };
-
+	
 		// catch (effect, null, ...)
 		if ( options == null ) {
 			options = {};
 		}
-
+	
 		// catch (effect, callback)
 		if ( $.isFunction( options ) ) {
 			callback = options;
 			speed = null;
 			options = {};
 		}
-
+	
 		// catch (effect, speed, ?)
 		if ( typeof options === "number" || $.fx.speeds[ options ] ) {
 			callback = speed;
 			speed = options;
 			options = {};
 		}
-
+	
 		// catch (effect, options, callback)
 		if ( $.isFunction( speed ) ) {
 			callback = speed;
 			speed = null;
 		}
-
+	
 		// add options to effect
 		if ( options ) {
 			$.extend( effect, options );
 		}
-
+	
 		speed = speed || options.duration;
 		effect.duration = $.fx.off ? 0 :
 			typeof speed === "number" ? speed :
 			speed in $.fx.speeds ? $.fx.speeds[ speed ] :
 			$.fx.speeds._default;
-
+	
 		effect.complete = callback || options.complete;
-
+	
 		return effect;
 	}
-
+	
 	function standardAnimationOption( option ) {
 		// Valid standard speeds (nothing, number, named speed)
 		if ( !option || typeof option === "number" || $.fx.speeds[ option ] ) {
 			return true;
 		}
-
+	
 		// Invalid strings - treat as "normal" speed
 		if ( typeof option === "string" && !$.effects.effect[ option ] ) {
 			return true;
 		}
-
+	
 		// Complete callback
 		if ( $.isFunction( option ) ) {
 			return true;
 		}
-
+	
 		// Options hash (but not naming an effect)
 		if ( typeof option === "object" && !option.effect ) {
 			return true;
 		}
-
+	
 		// Didn't match any standard API
 		return false;
 	}
-
+	
 	$.fn.extend({
 		effect: function( /* effect, options, speed, callback */ ) {
 			var args = _normalizeArguments.apply( this, arguments ),
 				mode = args.mode,
 				queue = args.queue,
 				effectMethod = $.effects.effect[ args.effect ];
-
+	
 			if ( $.fx.off || !effectMethod ) {
 				// delegate to the original method (e.g., .show()) if possible
 				if ( mode ) {
@@ -11773,12 +12459,12 @@ webpackJsonp_name_([5],{
 					});
 				}
 			}
-
+	
 			function run( next ) {
 				var elem = $( this ),
 					complete = args.complete,
 					mode = args.mode;
-
+	
 				function done() {
 					if ( $.isFunction( complete ) ) {
 						complete.call( elem[0] );
@@ -11787,7 +12473,7 @@ webpackJsonp_name_([5],{
 						next();
 					}
 				}
-
+	
 				// If the element already has the correct final state, delegate to
 				// the core methods so the internal tracking of "olddisplay" works.
 				if ( elem.is( ":hidden" ) ? mode === "hide" : mode === "show" ) {
@@ -11797,10 +12483,10 @@ webpackJsonp_name_([5],{
 					effectMethod.call( elem[0], args, done );
 				}
 			}
-
+	
 			return queue === false ? this.each( run ) : this.queue( queue || "fx", run );
 		},
-
+	
 		show: (function( orig ) {
 			return function( option ) {
 				if ( standardAnimationOption( option ) ) {
@@ -11812,7 +12498,7 @@ webpackJsonp_name_([5],{
 				}
 			};
 		})( $.fn.show ),
-
+	
 		hide: (function( orig ) {
 			return function( option ) {
 				if ( standardAnimationOption( option ) ) {
@@ -11824,7 +12510,7 @@ webpackJsonp_name_([5],{
 				}
 			};
 		})( $.fn.hide ),
-
+	
 		toggle: (function( orig ) {
 			return function( option ) {
 				if ( standardAnimationOption( option ) || typeof option === "boolean" ) {
@@ -11836,12 +12522,12 @@ webpackJsonp_name_([5],{
 				}
 			};
 		})( $.fn.toggle ),
-
+	
 		// helper functions
 		cssUnit: function(key) {
 			var style = this.css( key ),
 				val = [];
-
+	
 			$.each( [ "em", "px", "%", "pt" ], function( i, unit ) {
 				if ( style.indexOf( unit ) > 0 ) {
 					val = [ parseFloat( style ), unit ];
@@ -11850,25 +12536,25 @@ webpackJsonp_name_([5],{
 			return val;
 		}
 	});
-
+	
 	})();
-
+	
 	/******************************************************************************/
 	/*********************************** EASING ***********************************/
 	/******************************************************************************/
-
+	
 	(function() {
-
+	
 	// based on easing equations from Robert Penner (http://www.robertpenner.com/easing)
-
+	
 	var baseEasings = {};
-
+	
 	$.each( [ "Quad", "Cubic", "Quart", "Quint", "Expo" ], function( i, name ) {
 		baseEasings[ name ] = function( p ) {
 			return Math.pow( p, i + 2 );
 		};
 	});
-
+	
 	$.extend( baseEasings, {
 		Sine: function( p ) {
 			return 1 - Math.cos( p * Math.PI / 2 );
@@ -11886,12 +12572,12 @@ webpackJsonp_name_([5],{
 		Bounce: function( p ) {
 			var pow2,
 				bounce = 4;
-
+	
 			while ( p < ( ( pow2 = Math.pow( 2, --bounce ) ) - 1 ) / 11 ) {}
 			return 1 / Math.pow( 4, 3 - bounce ) - 7.5625 * Math.pow( ( pow2 * 3 - 2 ) / 22 - p, 2 );
 		}
 	});
-
+	
 	$.each( baseEasings, function( name, easeIn ) {
 		$.easing[ "easeIn" + name ] = easeIn;
 		$.easing[ "easeOut" + name ] = function( p ) {
@@ -11903,12 +12589,12 @@ webpackJsonp_name_([5],{
 				1 - easeIn( p * -2 + 2 ) / 2;
 		};
 	});
-
+	
 	})();
-
+	
 	var effect = $.effects;
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Blind 1.11.4
 	 * http://jqueryui.com
@@ -11919,8 +12605,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/blind-effect/
 	 */
-
-
+	
+	
 	var effectBlind = $.effects.effect.blind = function( o, done ) {
 		// Create element
 		var el = $( this ),
@@ -11936,7 +12622,7 @@ webpackJsonp_name_([5],{
 			animation = {},
 			show = mode === "show",
 			wrapper, distance, margin;
-
+	
 		// if already wrapped, the wrapper's properties are my property. #6245
 		if ( el.parent().is( ".ui-effects-wrapper" ) ) {
 			$.effects.save( el.parent(), props );
@@ -11947,20 +12633,20 @@ webpackJsonp_name_([5],{
 		wrapper = $.effects.createWrapper( el ).css({
 			overflow: "hidden"
 		});
-
+	
 		distance = wrapper[ ref ]();
 		margin = parseFloat( wrapper.css( ref2 ) ) || 0;
-
+	
 		animation[ ref ] = show ? distance : 0;
 		if ( !motion ) {
 			el
 				.css( vertical ? "bottom" : "right", 0 )
 				.css( vertical ? "top" : "left", "auto" )
 				.css({ position: "absolute" });
-
+	
 			animation[ ref2 ] = show ? margin : distance + margin;
 		}
-
+	
 		// start at 0 if we are showing
 		if ( show ) {
 			wrapper.css( ref, 0 );
@@ -11968,7 +12654,7 @@ webpackJsonp_name_([5],{
 				wrapper.css( ref2, margin + distance );
 			}
 		}
-
+	
 		// Animate
 		wrapper.animate( animation, {
 			duration: o.duration,
@@ -11984,8 +12670,8 @@ webpackJsonp_name_([5],{
 			}
 		});
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Bounce 1.11.4
 	 * http://jqueryui.com
@@ -11996,12 +12682,12 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/bounce-effect/
 	 */
-
-
+	
+	
 	var effectBounce = $.effects.effect.bounce = function( o, done ) {
 		var el = $( this ),
 			props = [ "position", "top", "bottom", "left", "right", "height", "width" ],
-
+	
 			// defaults:
 			mode = $.effects.setMode( el, o.mode || "effect" ),
 			hide = mode === "hide",
@@ -12009,74 +12695,74 @@ webpackJsonp_name_([5],{
 			direction = o.direction || "up",
 			distance = o.distance,
 			times = o.times || 5,
-
+	
 			// number of internal animations
 			anims = times * 2 + ( show || hide ? 1 : 0 ),
 			speed = o.duration / anims,
 			easing = o.easing,
-
+	
 			// utility:
 			ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
 			motion = ( direction === "up" || direction === "left" ),
 			i,
 			upAnim,
 			downAnim,
-
+	
 			// we will need to re-assemble the queue to stack our animations in place
 			queue = el.queue(),
 			queuelen = queue.length;
-
+	
 		// Avoid touching opacity to prevent clearType and PNG issues in IE
 		if ( show || hide ) {
 			props.push( "opacity" );
 		}
-
+	
 		$.effects.save( el, props );
 		el.show();
 		$.effects.createWrapper( el ); // Create Wrapper
-
+	
 		// default distance for the BIGGEST bounce is the outer Distance / 3
 		if ( !distance ) {
 			distance = el[ ref === "top" ? "outerHeight" : "outerWidth" ]() / 3;
 		}
-
+	
 		if ( show ) {
 			downAnim = { opacity: 1 };
 			downAnim[ ref ] = 0;
-
+	
 			// if we are showing, force opacity 0 and set the initial position
 			// then do the "first" animation
 			el.css( "opacity", 0 )
 				.css( ref, motion ? -distance * 2 : distance * 2 )
 				.animate( downAnim, speed, easing );
 		}
-
+	
 		// start at the smallest distance if we are hiding
 		if ( hide ) {
 			distance = distance / Math.pow( 2, times - 1 );
 		}
-
+	
 		downAnim = {};
 		downAnim[ ref ] = 0;
 		// Bounces up/down/left/right then back to 0 -- times * 2 animations happen here
 		for ( i = 0; i < times; i++ ) {
 			upAnim = {};
 			upAnim[ ref ] = ( motion ? "-=" : "+=" ) + distance;
-
+	
 			el.animate( upAnim, speed, easing )
 				.animate( downAnim, speed, easing );
-
+	
 			distance = hide ? distance * 2 : distance / 2;
 		}
-
+	
 		// Last Bounce when Hiding
 		if ( hide ) {
 			upAnim = { opacity: 0 };
 			upAnim[ ref ] = ( motion ? "-=" : "+=" ) + distance;
-
+	
 			el.animate( upAnim, speed, easing );
 		}
-
+	
 		el.queue(function() {
 			if ( hide ) {
 				el.hide();
@@ -12085,17 +12771,17 @@ webpackJsonp_name_([5],{
 			$.effects.removeWrapper( el );
 			done();
 		});
-
+	
 		// inject all the animations we just queued to be first in line (after "inprogress")
 		if ( queuelen > 1) {
 			queue.splice.apply( queue,
 				[ 1, 0 ].concat( queue.splice( queuelen, anims + 1 ) ) );
 		}
 		el.dequeue();
-
+	
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Clip 1.11.4
 	 * http://jqueryui.com
@@ -12106,8 +12792,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/clip-effect/
 	 */
-
-
+	
+	
 	var effectClip = $.effects.effect.clip = function( o, done ) {
 		// Create element
 		var el = $( this ),
@@ -12120,28 +12806,28 @@ webpackJsonp_name_([5],{
 			position = vert ? "top" : "left",
 			animation = {},
 			wrapper, animate, distance;
-
+	
 		// Save & Show
 		$.effects.save( el, props );
 		el.show();
-
+	
 		// Create Wrapper
 		wrapper = $.effects.createWrapper( el ).css({
 			overflow: "hidden"
 		});
 		animate = ( el[0].tagName === "IMG" ) ? wrapper : el;
 		distance = animate[ size ]();
-
+	
 		// Shift
 		if ( show ) {
 			animate.css( size, 0 );
 			animate.css( position, distance / 2 );
 		}
-
+	
 		// Create Animation Object:
 		animation[ size ] = show ? distance : 0;
 		animation[ position ] = show ? 0 : distance / 2;
-
+	
 		// Animate
 		animate.animate( animation, {
 			queue: false,
@@ -12156,10 +12842,10 @@ webpackJsonp_name_([5],{
 				done();
 			}
 		});
-
+	
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Drop 1.11.4
 	 * http://jqueryui.com
@@ -12170,10 +12856,10 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/drop-effect/
 	 */
-
-
+	
+	
 	var effectDrop = $.effects.effect.drop = function( o, done ) {
-
+	
 		var el = $( this ),
 			props = [ "position", "top", "bottom", "left", "right", "opacity", "height", "width" ],
 			mode = $.effects.setMode( el, o.mode || "hide" ),
@@ -12185,26 +12871,26 @@ webpackJsonp_name_([5],{
 				opacity: show ? 1 : 0
 			},
 			distance;
-
+	
 		// Adjust
 		$.effects.save( el, props );
 		el.show();
 		$.effects.createWrapper( el );
-
+	
 		distance = o.distance || el[ ref === "top" ? "outerHeight" : "outerWidth" ]( true ) / 2;
-
+	
 		if ( show ) {
 			el
 				.css( "opacity", 0 )
 				.css( ref, motion === "pos" ? -distance : distance );
 		}
-
+	
 		// Animation
 		animation[ ref ] = ( show ?
 			( motion === "pos" ? "+=" : "-=" ) :
 			( motion === "pos" ? "-=" : "+=" ) ) +
 			distance;
-
+	
 		// Animate
 		el.animate( animation, {
 			queue: false,
@@ -12220,8 +12906,8 @@ webpackJsonp_name_([5],{
 			}
 		});
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Explode 1.11.4
 	 * http://jqueryui.com
@@ -12232,27 +12918,27 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/explode-effect/
 	 */
-
-
+	
+	
 	var effectExplode = $.effects.effect.explode = function( o, done ) {
-
+	
 		var rows = o.pieces ? Math.round( Math.sqrt( o.pieces ) ) : 3,
 			cells = rows,
 			el = $( this ),
 			mode = $.effects.setMode( el, o.mode || "hide" ),
 			show = mode === "show",
-
+	
 			// show and then visibility:hidden the element before calculating offset
 			offset = el.show().css( "visibility", "hidden" ).offset(),
-
+	
 			// width and height of a piece
 			width = Math.ceil( el.outerWidth() / cells ),
 			height = Math.ceil( el.outerHeight() / rows ),
 			pieces = [],
-
+	
 			// loop
 			i, j, left, top, mx, my;
-
+	
 		// children animate complete:
 		function childComplete() {
 			pieces.push( this );
@@ -12260,16 +12946,16 @@ webpackJsonp_name_([5],{
 				animComplete();
 			}
 		}
-
+	
 		// clone the element for each row and cell.
 		for ( i = 0; i < rows ; i++ ) { // ===>
 			top = offset.top + i * height;
 			my = i - ( rows - 1 ) / 2 ;
-
+	
 			for ( j = 0; j < cells ; j++ ) { // |||
 				left = offset.left + j * width;
 				mx = j - ( cells - 1 ) / 2 ;
-
+	
 				// Create a clone of the now hidden main element that will be absolute positioned
 				// within a wrapper div off the -left and -top equal to size of our pieces
 				el
@@ -12282,7 +12968,7 @@ webpackJsonp_name_([5],{
 						left: -j * width,
 						top: -i * height
 					})
-
+	
 				// select the wrapper - make it overflow: hidden and absolute positioned based on
 				// where the original was located +left and +top equal to the size of pieces
 					.parent()
@@ -12302,7 +12988,7 @@ webpackJsonp_name_([5],{
 					}, o.duration || 500, o.easing, childComplete );
 			}
 		}
-
+	
 		function animComplete() {
 			el.css({
 				visibility: "visible"
@@ -12314,8 +13000,8 @@ webpackJsonp_name_([5],{
 			done();
 		}
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Fade 1.11.4
 	 * http://jqueryui.com
@@ -12326,12 +13012,12 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/fade-effect/
 	 */
-
-
+	
+	
 	var effectFade = $.effects.effect.fade = function( o, done ) {
 		var el = $( this ),
 			mode = $.effects.setMode( el, o.mode || "toggle" );
-
+	
 		el.animate({
 			opacity: mode
 		}, {
@@ -12341,8 +13027,8 @@ webpackJsonp_name_([5],{
 			complete: done
 		});
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Fold 1.11.4
 	 * http://jqueryui.com
@@ -12353,10 +13039,10 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/fold-effect/
 	 */
-
-
+	
+	
 	var effectFold = $.effects.effect.fold = function( o, done ) {
-
+	
 		// Create element
 		var el = $( this ),
 			props = [ "position", "top", "bottom", "left", "right", "height", "width" ],
@@ -12372,10 +13058,10 @@ webpackJsonp_name_([5],{
 			wrapper, distance,
 			animation1 = {},
 			animation2 = {};
-
+	
 		$.effects.save( el, props );
 		el.show();
-
+	
 		// Create Wrapper
 		wrapper = $.effects.createWrapper( el ).css({
 			overflow: "hidden"
@@ -12383,7 +13069,7 @@ webpackJsonp_name_([5],{
 		distance = widthFirst ?
 			[ wrapper.width(), wrapper.height() ] :
 			[ wrapper.height(), wrapper.width() ];
-
+	
 		if ( percent ) {
 			size = parseInt( percent[ 1 ], 10 ) / 100 * distance[ hide ? 0 : 1 ];
 		}
@@ -12396,11 +13082,11 @@ webpackJsonp_name_([5],{
 				width: 0
 			});
 		}
-
+	
 		// Animation
 		animation1[ ref[ 0 ] ] = show ? distance[ 0 ] : size;
 		animation2[ ref[ 1 ] ] = show ? distance[ 1 ] : 0;
-
+	
 		// Animate
 		wrapper
 			.animate( animation1, duration, o.easing )
@@ -12412,10 +13098,10 @@ webpackJsonp_name_([5],{
 				$.effects.removeWrapper( el );
 				done();
 			});
-
+	
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Highlight 1.11.4
 	 * http://jqueryui.com
@@ -12426,8 +13112,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/highlight-effect/
 	 */
-
-
+	
+	
 	var effectHighlight = $.effects.effect.highlight = function( o, done ) {
 		var elem = $( this ),
 			props = [ "backgroundImage", "backgroundColor", "opacity" ],
@@ -12435,13 +13121,13 @@ webpackJsonp_name_([5],{
 			animation = {
 				backgroundColor: elem.css( "backgroundColor" )
 			};
-
+	
 		if (mode === "hide") {
 			animation.opacity = 0;
 		}
-
+	
 		$.effects.save( elem, props );
-
+	
 		elem
 			.show()
 			.css({
@@ -12461,8 +13147,8 @@ webpackJsonp_name_([5],{
 				}
 			});
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Size 1.11.4
 	 * http://jqueryui.com
@@ -12473,24 +13159,24 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/size-effect/
 	 */
-
-
+	
+	
 	var effectSize = $.effects.effect.size = function( o, done ) {
-
+	
 		// Create element
 		var original, baseline, factor,
 			el = $( this ),
 			props0 = [ "position", "top", "bottom", "left", "right", "width", "height", "overflow", "opacity" ],
-
+	
 			// Always restore
 			props1 = [ "position", "top", "bottom", "left", "right", "overflow", "opacity" ],
-
+	
 			// Copy for children
 			props2 = [ "width", "height", "overflow" ],
 			cProps = [ "fontSize" ],
 			vProps = [ "borderTopWidth", "borderBottomWidth", "paddingTop", "paddingBottom" ],
 			hProps = [ "borderLeftWidth", "borderRightWidth", "paddingLeft", "paddingRight" ],
-
+	
 			// Set options
 			mode = $.effects.setMode( el, o.mode || "effect" ),
 			restore = o.restore || mode !== "effect",
@@ -12504,7 +13190,7 @@ webpackJsonp_name_([5],{
 				outerHeight: 0,
 				outerWidth: 0
 			};
-
+	
 		if ( mode === "show" ) {
 			el.show();
 		}
@@ -12514,7 +13200,7 @@ webpackJsonp_name_([5],{
 			outerHeight: el.outerHeight(),
 			outerWidth: el.outerWidth()
 		};
-
+	
 		if ( o.mode === "toggle" && mode === "show" ) {
 			el.from = o.to || zero;
 			el.to = o.from || original;
@@ -12522,7 +13208,7 @@ webpackJsonp_name_([5],{
 			el.from = o.from || ( mode === "show" ? zero : original );
 			el.to = o.to || ( mode === "hide" ? zero : original );
 		}
-
+	
 		// Set scaling factor
 		factor = {
 			from: {
@@ -12534,17 +13220,17 @@ webpackJsonp_name_([5],{
 				x: el.to.width / original.width
 			}
 		};
-
+	
 		// Scale the css box
 		if ( scale === "box" || scale === "both" ) {
-
+	
 			// Vertical props scaling
 			if ( factor.from.y !== factor.to.y ) {
 				props = props.concat( vProps );
 				el.from = $.effects.setTransition( el, vProps, factor.from.y, el.from );
 				el.to = $.effects.setTransition( el, vProps, factor.to.y, el.to );
 			}
-
+	
 			// Horizontal props scaling
 			if ( factor.from.x !== factor.to.x ) {
 				props = props.concat( hProps );
@@ -12552,10 +13238,10 @@ webpackJsonp_name_([5],{
 				el.to = $.effects.setTransition( el, hProps, factor.to.x, el.to );
 			}
 		}
-
+	
 		// Scale the content
 		if ( scale === "content" || scale === "both" ) {
-
+	
 			// Vertical props scaling
 			if ( factor.from.y !== factor.to.y ) {
 				props = props.concat( cProps ).concat( props2 );
@@ -12563,12 +13249,12 @@ webpackJsonp_name_([5],{
 				el.to = $.effects.setTransition( el, cProps, factor.to.y, el.to );
 			}
 		}
-
+	
 		$.effects.save( el, props );
 		el.show();
 		$.effects.createWrapper( el );
 		el.css( "overflow", "hidden" ).css( el.from );
-
+	
 		// Adjust
 		if (origin) { // Calculate baseline shifts
 			baseline = $.effects.getBaseline( origin, original );
@@ -12578,15 +13264,15 @@ webpackJsonp_name_([5],{
 			el.to.left = ( original.outerWidth - el.to.outerWidth ) * baseline.x;
 		}
 		el.css( el.from ); // set top & left
-
+	
 		// Animate
 		if ( scale === "content" || scale === "both" ) { // Scale the children
-
+	
 			// Add margins/font-size
 			vProps = vProps.concat([ "marginTop", "marginBottom" ]).concat(cProps);
 			hProps = hProps.concat([ "marginLeft", "marginRight" ]);
 			props2 = props0.concat(vProps).concat(hProps);
-
+	
 			el.find( "*[width]" ).each( function() {
 				var child = $( this ),
 					c_original = {
@@ -12598,7 +13284,7 @@ webpackJsonp_name_([5],{
 				if (restore) {
 					$.effects.save(child, props2);
 				}
-
+	
 				child.from = {
 					height: c_original.height * factor.from.y,
 					width: c_original.width * factor.from.x,
@@ -12611,23 +13297,23 @@ webpackJsonp_name_([5],{
 					outerHeight: c_original.height * factor.to.y,
 					outerWidth: c_original.width * factor.to.x
 				};
-
+	
 				// Vertical props scaling
 				if ( factor.from.y !== factor.to.y ) {
 					child.from = $.effects.setTransition( child, vProps, factor.from.y, child.from );
 					child.to = $.effects.setTransition( child, vProps, factor.to.y, child.to );
 				}
-
+	
 				// Horizontal props scaling
 				if ( factor.from.x !== factor.to.x ) {
 					child.from = $.effects.setTransition( child, hProps, factor.from.x, child.from );
 					child.to = $.effects.setTransition( child, hProps, factor.to.x, child.to );
 				}
-
+	
 				// Animate children
 				child.css( child.from );
 				child.animate( child.to, o.duration, o.easing, function() {
-
+	
 					// Restore children
 					if ( restore ) {
 						$.effects.restore( child, props2 );
@@ -12635,7 +13321,7 @@ webpackJsonp_name_([5],{
 				});
 			});
 		}
-
+	
 		// Animate
 		el.animate( el.to, {
 			queue: false,
@@ -12650,7 +13336,7 @@ webpackJsonp_name_([5],{
 				}
 				$.effects.restore( el, props );
 				if ( !restore ) {
-
+	
 					// we need to calculate our new positioning based on the scaling
 					if ( position === "static" ) {
 						el.css({
@@ -12663,26 +13349,26 @@ webpackJsonp_name_([5],{
 							el.css( pos, function( _, str ) {
 								var val = parseInt( str, 10 ),
 									toRef = idx ? el.to.left : el.to.top;
-
+	
 								// if original was "auto", recalculate the new value from wrapper
 								if ( str === "auto" ) {
 									return toRef + "px";
 								}
-
+	
 								return val + toRef + "px";
 							});
 						});
 					}
 				}
-
+	
 				$.effects.removeWrapper( el );
 				done();
 			}
 		});
-
+	
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Scale 1.11.4
 	 * http://jqueryui.com
@@ -12693,10 +13379,10 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/scale-effect/
 	 */
-
-
+	
+	
 	var effectScale = $.effects.effect.scale = function( o, done ) {
-
+	
 		// Create element
 		var el = $( this ),
 			options = $.extend( true, {}, o ),
@@ -12715,18 +13401,18 @@ webpackJsonp_name_([5],{
 				y: direction !== "horizontal" ? (percent / 100) : 1,
 				x: direction !== "vertical" ? (percent / 100) : 1
 			};
-
+	
 		// We are going to pass this effect to the size effect:
 		options.effect = "size";
 		options.queue = false;
 		options.complete = done;
-
+	
 		// Set default origin and restore for show/hide
 		if ( mode !== "effect" ) {
 			options.origin = origin || [ "middle", "center" ];
 			options.restore = true;
 		}
-
+	
 		options.from = o.from || ( mode === "show" ? {
 			height: 0,
 			width: 0,
@@ -12739,7 +13425,7 @@ webpackJsonp_name_([5],{
 			outerHeight: original.outerHeight * factor.y,
 			outerWidth: original.outerWidth * factor.x
 		};
-
+	
 		// Fade option to support puff
 		if ( options.fade ) {
 			if ( mode === "show" ) {
@@ -12751,13 +13437,13 @@ webpackJsonp_name_([5],{
 				options.to.opacity = 0;
 			}
 		}
-
+	
 		// Animate
 		el.effect( options );
-
+	
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Puff 1.11.4
 	 * http://jqueryui.com
@@ -12768,8 +13454,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/puff-effect/
 	 */
-
-
+	
+	
 	var effectPuff = $.effects.effect.puff = function( o, done ) {
 		var elem = $( this ),
 			mode = $.effects.setMode( elem, o.mode || "hide" ),
@@ -12782,7 +13468,7 @@ webpackJsonp_name_([5],{
 				outerHeight: elem.outerHeight(),
 				outerWidth: elem.outerWidth()
 			};
-
+	
 		$.extend( o, {
 			effect: "scale",
 			queue: false,
@@ -12799,11 +13485,11 @@ webpackJsonp_name_([5],{
 					outerWidth: original.outerWidth * factor
 				}
 		});
-
+	
 		elem.effect( o );
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Pulsate 1.11.4
 	 * http://jqueryui.com
@@ -12814,15 +13500,15 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/pulsate-effect/
 	 */
-
-
+	
+	
 	var effectPulsate = $.effects.effect.pulsate = function( o, done ) {
 		var elem = $( this ),
 			mode = $.effects.setMode( elem, o.mode || "show" ),
 			show = mode === "show",
 			hide = mode === "hide",
 			showhide = ( show || mode === "hide" ),
-
+	
 			// showing or hiding leaves of the "last" animation
 			anims = ( ( o.times || 5 ) * 2 ) + ( showhide ? 1 : 0 ),
 			duration = o.duration / anims,
@@ -12830,12 +13516,12 @@ webpackJsonp_name_([5],{
 			queue = elem.queue(),
 			queuelen = queue.length,
 			i;
-
+	
 		if ( show || !elem.is(":visible")) {
 			elem.css( "opacity", 0 ).show();
 			animateTo = 1;
 		}
-
+	
 		// anims - 1 opacity "toggles"
 		for ( i = 1; i < anims; i++ ) {
 			elem.animate({
@@ -12843,18 +13529,18 @@ webpackJsonp_name_([5],{
 			}, duration, o.easing );
 			animateTo = 1 - animateTo;
 		}
-
+	
 		elem.animate({
 			opacity: animateTo
 		}, duration, o.easing);
-
+	
 		elem.queue(function() {
 			if ( hide ) {
 				elem.hide();
 			}
 			done();
 		});
-
+	
 		// We just queued up "anims" animations, we need to put them next in the queue
 		if ( queuelen > 1 ) {
 			queue.splice.apply( queue,
@@ -12862,8 +13548,8 @@ webpackJsonp_name_([5],{
 		}
 		elem.dequeue();
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Shake 1.11.4
 	 * http://jqueryui.com
@@ -12874,10 +13560,10 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/shake-effect/
 	 */
-
-
+	
+	
 	var effectShake = $.effects.effect.shake = function( o, done ) {
-
+	
 		var el = $( this ),
 			props = [ "position", "top", "bottom", "left", "right", "height", "width" ],
 			mode = $.effects.setMode( el, o.mode || "effect" ),
@@ -12892,23 +13578,23 @@ webpackJsonp_name_([5],{
 			animation1 = {},
 			animation2 = {},
 			i,
-
+	
 			// we will need to re-assemble the queue to stack our animations in place
 			queue = el.queue(),
 			queuelen = queue.length;
-
+	
 		$.effects.save( el, props );
 		el.show();
 		$.effects.createWrapper( el );
-
+	
 		// Animation
 		animation[ ref ] = ( positiveMotion ? "-=" : "+=" ) + distance;
 		animation1[ ref ] = ( positiveMotion ? "+=" : "-=" ) + distance * 2;
 		animation2[ ref ] = ( positiveMotion ? "-=" : "+=" ) + distance * 2;
-
+	
 		// Animate
 		el.animate( animation, speed, o.easing );
-
+	
 		// Shakes
 		for ( i = 1; i < times; i++ ) {
 			el.animate( animation1, speed, o.easing ).animate( animation2, speed, o.easing );
@@ -12924,17 +13610,17 @@ webpackJsonp_name_([5],{
 				$.effects.removeWrapper( el );
 				done();
 			});
-
+	
 		// inject all the animations we just queued to be first in line (after "inprogress")
 		if ( queuelen > 1) {
 			queue.splice.apply( queue,
 				[ 1, 0 ].concat( queue.splice( queuelen, anims + 1 ) ) );
 		}
 		el.dequeue();
-
+	
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Slide 1.11.4
 	 * http://jqueryui.com
@@ -12945,10 +13631,10 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/slide-effect/
 	 */
-
-
+	
+	
 	var effectSlide = $.effects.effect.slide = function( o, done ) {
-
+	
 		// Create element
 		var el = $( this ),
 			props = [ "position", "top", "bottom", "left", "right", "width", "height" ],
@@ -12959,26 +13645,26 @@ webpackJsonp_name_([5],{
 			positiveMotion = (direction === "up" || direction === "left"),
 			distance,
 			animation = {};
-
+	
 		// Adjust
 		$.effects.save( el, props );
 		el.show();
 		distance = o.distance || el[ ref === "top" ? "outerHeight" : "outerWidth" ]( true );
-
+	
 		$.effects.createWrapper( el ).css({
 			overflow: "hidden"
 		});
-
+	
 		if ( show ) {
 			el.css( ref, positiveMotion ? (isNaN(distance) ? "-" + distance : -distance) : distance );
 		}
-
+	
 		// Animation
 		animation[ ref ] = ( show ?
 			( positiveMotion ? "+=" : "-=") :
 			( positiveMotion ? "-=" : "+=")) +
 			distance;
-
+	
 		// Animate
 		el.animate( animation, {
 			queue: false,
@@ -12994,8 +13680,8 @@ webpackJsonp_name_([5],{
 			}
 		});
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Effects Transfer 1.11.4
 	 * http://jqueryui.com
@@ -13006,8 +13692,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/transfer-effect/
 	 */
-
-
+	
+	
 	var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		var elem = $( this ),
 			target = $( o.to ),
@@ -13038,8 +13724,8 @@ webpackJsonp_name_([5],{
 					done();
 				});
 	};
-
-
+	
+	
 	/*!
 	 * jQuery UI Progressbar 1.11.4
 	 * http://jqueryui.com
@@ -13050,24 +13736,24 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/progressbar/
 	 */
-
-
+	
+	
 	var progressbar = $.widget( "ui.progressbar", {
 		version: "1.11.4",
 		options: {
 			max: 100,
 			value: 0,
-
+	
 			change: null,
 			complete: null
 		},
-
+	
 		min: 0,
-
+	
 		_create: function() {
 			// Constrain initial value
 			this.oldValue = this.options.value = this._constrainedValue();
-
+	
 			this.element
 				.addClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
 				.attr({
@@ -13076,13 +13762,13 @@ webpackJsonp_name_([5],{
 					role: "progressbar",
 					"aria-valuemin": this.min
 				});
-
+	
 			this.valueDiv = $( "<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>" )
 				.appendTo( this.element );
-
+	
 			this._refreshValue();
 		},
-
+	
 		_destroy: function() {
 			this.element
 				.removeClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
@@ -13090,46 +13776,46 @@ webpackJsonp_name_([5],{
 				.removeAttr( "aria-valuemin" )
 				.removeAttr( "aria-valuemax" )
 				.removeAttr( "aria-valuenow" );
-
+	
 			this.valueDiv.remove();
 		},
-
+	
 		value: function( newValue ) {
 			if ( newValue === undefined ) {
 				return this.options.value;
 			}
-
+	
 			this.options.value = this._constrainedValue( newValue );
 			this._refreshValue();
 		},
-
+	
 		_constrainedValue: function( newValue ) {
 			if ( newValue === undefined ) {
 				newValue = this.options.value;
 			}
-
+	
 			this.indeterminate = newValue === false;
-
+	
 			// sanitize value
 			if ( typeof newValue !== "number" ) {
 				newValue = 0;
 			}
-
+	
 			return this.indeterminate ? false :
 				Math.min( this.options.max, Math.max( this.min, newValue ) );
 		},
-
+	
 		_setOptions: function( options ) {
 			// Ensure "value" option is set after other values (like max)
 			var value = options.value;
 			delete options.value;
-
+	
 			this._super( options );
-
+	
 			this.options.value = this._constrainedValue( value );
 			this._refreshValue();
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "max" ) {
 				// Don't allow a max less than min
@@ -13142,22 +13828,22 @@ webpackJsonp_name_([5],{
 			}
 			this._super( key, value );
 		},
-
+	
 		_percentage: function() {
 			return this.indeterminate ? 100 : 100 * ( this.options.value - this.min ) / ( this.options.max - this.min );
 		},
-
+	
 		_refreshValue: function() {
 			var value = this.options.value,
 				percentage = this._percentage();
-
+	
 			this.valueDiv
 				.toggle( this.indeterminate || value > this.min )
 				.toggleClass( "ui-corner-right", value === this.options.max )
 				.width( percentage.toFixed(0) + "%" );
-
+	
 			this.element.toggleClass( "ui-progressbar-indeterminate", this.indeterminate );
-
+	
 			if ( this.indeterminate ) {
 				this.element.removeAttr( "aria-valuenow" );
 				if ( !this.overlayDiv ) {
@@ -13173,7 +13859,7 @@ webpackJsonp_name_([5],{
 					this.overlayDiv = null;
 				}
 			}
-
+	
 			if ( this.oldValue !== value ) {
 				this.oldValue = value;
 				this._trigger( "change" );
@@ -13183,8 +13869,8 @@ webpackJsonp_name_([5],{
 			}
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Selectable 1.11.4
 	 * http://jqueryui.com
@@ -13195,8 +13881,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/selectable/
 	 */
-
-
+	
+	
 	var selectable = $.widget("ui.selectable", $.ui.mouse, {
 		version: "1.11.4",
 		options: {
@@ -13205,7 +13891,7 @@ webpackJsonp_name_([5],{
 			distance: 0,
 			filter: "*",
 			tolerance: "touch",
-
+	
 			// callbacks
 			selected: null,
 			selecting: null,
@@ -13217,11 +13903,11 @@ webpackJsonp_name_([5],{
 		_create: function() {
 			var selectees,
 				that = this;
-
+	
 			this.element.addClass("ui-selectable");
-
+	
 			this.dragged = false;
-
+	
 			// cache selectee children based on filter
 			this.refresh = function() {
 				selectees = $(that.options.filter, that.element[0]);
@@ -13244,14 +13930,14 @@ webpackJsonp_name_([5],{
 				});
 			};
 			this.refresh();
-
+	
 			this.selectees = selectees.addClass("ui-selectee");
-
+	
 			this._mouseInit();
-
+	
 			this.helper = $("<div class='ui-selectable-helper'></div>");
 		},
-
+	
 		_destroy: function() {
 			this.selectees
 				.removeClass("ui-selectee")
@@ -13260,21 +13946,21 @@ webpackJsonp_name_([5],{
 				.removeClass("ui-selectable ui-selectable-disabled");
 			this._mouseDestroy();
 		},
-
+	
 		_mouseStart: function(event) {
 			var that = this,
 				options = this.options;
-
+	
 			this.opos = [ event.pageX, event.pageY ];
-
+	
 			if (this.options.disabled) {
 				return;
 			}
-
+	
 			this.selectees = $(options.filter, this.element[0]);
-
+	
 			this._trigger("start", event);
-
+	
 			$(options.appendTo).append(this.helper);
 			// position helper (lasso)
 			this.helper.css({
@@ -13283,11 +13969,11 @@ webpackJsonp_name_([5],{
 				"width": 0,
 				"height": 0
 			});
-
+	
 			if (options.autoRefresh) {
 				this.refresh();
 			}
-
+	
 			this.selectees.filter(".ui-selected").each(function() {
 				var selectee = $.data(this, "selectable-item");
 				selectee.startselected = true;
@@ -13302,7 +13988,7 @@ webpackJsonp_name_([5],{
 					});
 				}
 			});
-
+	
 			$(event.target).parents().addBack().each(function() {
 				var doSelect,
 					selectee = $.data(this, "selectable-item");
@@ -13327,17 +14013,17 @@ webpackJsonp_name_([5],{
 					return false;
 				}
 			});
-
+	
 		},
-
+	
 		_mouseDrag: function(event) {
-
+	
 			this.dragged = true;
-
+	
 			if (this.options.disabled) {
 				return;
 			}
-
+	
 			var tmp,
 				that = this,
 				options = this.options,
@@ -13345,26 +14031,26 @@ webpackJsonp_name_([5],{
 				y1 = this.opos[1],
 				x2 = event.pageX,
 				y2 = event.pageY;
-
+	
 			if (x1 > x2) { tmp = x2; x2 = x1; x1 = tmp; }
 			if (y1 > y2) { tmp = y2; y2 = y1; y1 = tmp; }
 			this.helper.css({ left: x1, top: y1, width: x2 - x1, height: y2 - y1 });
-
+	
 			this.selectees.each(function() {
 				var selectee = $.data(this, "selectable-item"),
 					hit = false;
-
+	
 				//prevent helper from being selected if appendTo: selectable
 				if (!selectee || selectee.element === that.element[0]) {
 					return;
 				}
-
+	
 				if (options.tolerance === "touch") {
 					hit = ( !(selectee.left > x2 || selectee.right < x1 || selectee.top > y2 || selectee.bottom < y1) );
 				} else if (options.tolerance === "fit") {
 					hit = (selectee.left > x1 && selectee.right < x2 && selectee.top > y1 && selectee.bottom < y2);
 				}
-
+	
 				if (hit) {
 					// SELECT
 					if (selectee.selected) {
@@ -13408,7 +14094,7 @@ webpackJsonp_name_([5],{
 						if (!event.metaKey && !event.ctrlKey && !selectee.startselected) {
 							selectee.$element.removeClass("ui-selected");
 							selectee.selected = false;
-
+	
 							selectee.$element.addClass("ui-unselecting");
 							selectee.unselecting = true;
 							// selectable UNSELECTING callback
@@ -13419,15 +14105,15 @@ webpackJsonp_name_([5],{
 					}
 				}
 			});
-
+	
 			return false;
 		},
-
+	
 		_mouseStop: function(event) {
 			var that = this;
-
+	
 			this.dragged = false;
-
+	
 			$(".ui-unselecting", this.element[0]).each(function() {
 				var selectee = $.data(this, "selectable-item");
 				selectee.$element.removeClass("ui-unselecting");
@@ -13448,15 +14134,15 @@ webpackJsonp_name_([5],{
 				});
 			});
 			this._trigger("stop", event);
-
+	
 			this.helper.remove();
-
+	
 			return false;
 		}
-
+	
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Selectmenu 1.11.4
 	 * http://jqueryui.com
@@ -13467,8 +14153,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/selectmenu
 	 */
-
-
+	
+	
 	var selectmenu = $.widget( "ui.selectmenu", {
 		version: "1.11.4",
 		defaultElement: "<select>",
@@ -13484,7 +14170,7 @@ webpackJsonp_name_([5],{
 				collision: "none"
 			},
 			width: null,
-
+	
 			// callbacks
 			change: null,
 			close: null,
@@ -13492,7 +14178,7 @@ webpackJsonp_name_([5],{
 			open: null,
 			select: null
 		},
-
+	
 		_create: function() {
 			var selectmenuId = this.element.uniqueId().attr( "id" );
 			this.ids = {
@@ -13500,18 +14186,18 @@ webpackJsonp_name_([5],{
 				button: selectmenuId + "-button",
 				menu: selectmenuId + "-menu"
 			};
-
+	
 			this._drawButton();
 			this._drawMenu();
-
+	
 			if ( this.options.disabled ) {
 				this.disable();
 			}
 		},
-
+	
 		_drawButton: function() {
 			var that = this;
-
+	
 			// Associate existing label with the new button
 			this.label = $( "label[for='" + this.ids.element + "']" ).attr( "for", this.ids.button );
 			this._on( this.label, {
@@ -13520,10 +14206,10 @@ webpackJsonp_name_([5],{
 					event.preventDefault();
 				}
 			});
-
+	
 			// Hide original select element
 			this.element.hide();
-
+	
 			// Create button
 			this.button = $( "<span>", {
 				"class": "ui-selectmenu-button ui-widget ui-state-default ui-corner-all",
@@ -13536,23 +14222,23 @@ webpackJsonp_name_([5],{
 				"aria-haspopup": "true"
 			})
 				.insertAfter( this.element );
-
+	
 			$( "<span>", {
 				"class": "ui-icon " + this.options.icons.button
 			})
 				.prependTo( this.button );
-
+	
 			this.buttonText = $( "<span>", {
 				"class": "ui-selectmenu-text"
 			})
 				.appendTo( this.button );
-
+	
 			this._setText( this.buttonText, this.element.find( "option:selected" ).text() );
 			this._resizeButton();
-
+	
 			this._on( this.button, this._buttonEvents );
 			this.button.one( "focusin", function() {
-
+	
 				// Delay rendering the menu items until the button receives focus.
 				// The menu may have already been rendered via a programmatic open.
 				if ( !that.menuItems ) {
@@ -13562,41 +14248,41 @@ webpackJsonp_name_([5],{
 			this._hoverable( this.button );
 			this._focusable( this.button );
 		},
-
+	
 		_drawMenu: function() {
 			var that = this;
-
+	
 			// Create menu
 			this.menu = $( "<ul>", {
 				"aria-hidden": "true",
 				"aria-labelledby": this.ids.button,
 				id: this.ids.menu
 			});
-
+	
 			// Wrap menu
 			this.menuWrap = $( "<div>", {
 				"class": "ui-selectmenu-menu ui-front"
 			})
 				.append( this.menu )
 				.appendTo( this._appendTo() );
-
+	
 			// Initialize menu widget
 			this.menuInstance = this.menu
 				.menu({
 					role: "listbox",
 					select: function( event, ui ) {
 						event.preventDefault();
-
+	
 						// support: IE8
 						// If the item was selected via a click, the text selection
 						// will be destroyed in IE
 						that._setSelection();
-
+	
 						that._select( ui.item.data( "ui-selectmenu-item" ), event );
 					},
 					focus: function( event, ui ) {
 						var item = ui.item.data( "ui-selectmenu-item" );
-
+	
 						// Prevent inital focus from firing and check if its a newly focused item
 						if ( that.focusIndex != null && item.index !== that.focusIndex ) {
 							that._trigger( "focus", event, { item: item } );
@@ -13605,32 +14291,32 @@ webpackJsonp_name_([5],{
 							}
 						}
 						that.focusIndex = item.index;
-
+	
 						that.button.attr( "aria-activedescendant",
 							that.menuItems.eq( item.index ).attr( "id" ) );
 					}
 				})
 				.menu( "instance" );
-
+	
 			// Adjust menu styles to dropdown
 			this.menu
 				.addClass( "ui-corner-bottom" )
 				.removeClass( "ui-corner-all" );
-
+	
 			// Don't close the menu on mouseleave
 			this.menuInstance._off( this.menu, "mouseleave" );
-
+	
 			// Cancel the menu's collapseAll on document click
 			this.menuInstance._closeOnDocumentClick = function() {
 				return false;
 			};
-
+	
 			// Selects often contain empty items, but never contain dividers
 			this.menuInstance._isDivider = function() {
 				return false;
 			};
 		},
-
+	
 		refresh: function() {
 			this._refreshMenu();
 			this._setText( this.buttonText, this._getSelectedItem().text() );
@@ -13638,88 +14324,88 @@ webpackJsonp_name_([5],{
 				this._resizeButton();
 			}
 		},
-
+	
 		_refreshMenu: function() {
 			this.menu.empty();
-
+	
 			var item,
 				options = this.element.find( "option" );
-
+	
 			if ( !options.length ) {
 				return;
 			}
-
+	
 			this._parseOptions( options );
 			this._renderMenu( this.menu, this.items );
-
+	
 			this.menuInstance.refresh();
 			this.menuItems = this.menu.find( "li" ).not( ".ui-selectmenu-optgroup" );
-
+	
 			item = this._getSelectedItem();
-
+	
 			// Update the menu to have the correct item focused
 			this.menuInstance.focus( null, item );
 			this._setAria( item.data( "ui-selectmenu-item" ) );
-
+	
 			// Set disabled state
 			this._setOption( "disabled", this.element.prop( "disabled" ) );
 		},
-
+	
 		open: function( event ) {
 			if ( this.options.disabled ) {
 				return;
 			}
-
+	
 			// If this is the first time the menu is being opened, render the items
 			if ( !this.menuItems ) {
 				this._refreshMenu();
 			} else {
-
+	
 				// Menu clears focus on close, reset focus to selected item
 				this.menu.find( ".ui-state-focus" ).removeClass( "ui-state-focus" );
 				this.menuInstance.focus( null, this._getSelectedItem() );
 			}
-
+	
 			this.isOpen = true;
 			this._toggleAttr();
 			this._resizeMenu();
 			this._position();
-
+	
 			this._on( this.document, this._documentClick );
-
+	
 			this._trigger( "open", event );
 		},
-
+	
 		_position: function() {
 			this.menuWrap.position( $.extend( { of: this.button }, this.options.position ) );
 		},
-
+	
 		close: function( event ) {
 			if ( !this.isOpen ) {
 				return;
 			}
-
+	
 			this.isOpen = false;
 			this._toggleAttr();
-
+	
 			this.range = null;
 			this._off( this.document );
-
+	
 			this._trigger( "close", event );
 		},
-
+	
 		widget: function() {
 			return this.button;
 		},
-
+	
 		menuWidget: function() {
 			return this.menu;
 		},
-
+	
 		_renderMenu: function( ul, items ) {
 			var that = this,
 				currentOptgroup = "";
-
+	
 			$.each( items, function( index, item ) {
 				if ( item.optgroup !== currentOptgroup ) {
 					$( "<li>", {
@@ -13730,29 +14416,29 @@ webpackJsonp_name_([5],{
 						text: item.optgroup
 					})
 						.appendTo( ul );
-
+	
 					currentOptgroup = item.optgroup;
 				}
-
+	
 				that._renderItemData( ul, item );
 			});
 		},
-
+	
 		_renderItemData: function( ul, item ) {
 			return this._renderItem( ul, item ).data( "ui-selectmenu-item", item );
 		},
-
+	
 		_renderItem: function( ul, item ) {
 			var li = $( "<li>" );
-
+	
 			if ( item.disabled ) {
 				li.addClass( "ui-state-disabled" );
 			}
 			this._setText( li, item.label );
-
+	
 			return li.appendTo( ul );
 		},
-
+	
 		_setText: function( element, value ) {
 			if ( value ) {
 				element.text( value );
@@ -13760,95 +14446,95 @@ webpackJsonp_name_([5],{
 				element.html( "&#160;" );
 			}
 		},
-
+	
 		_move: function( direction, event ) {
 			var item, next,
 				filter = ".ui-menu-item";
-
+	
 			if ( this.isOpen ) {
 				item = this.menuItems.eq( this.focusIndex );
 			} else {
 				item = this.menuItems.eq( this.element[ 0 ].selectedIndex );
 				filter += ":not(.ui-state-disabled)";
 			}
-
+	
 			if ( direction === "first" || direction === "last" ) {
 				next = item[ direction === "first" ? "prevAll" : "nextAll" ]( filter ).eq( -1 );
 			} else {
 				next = item[ direction + "All" ]( filter ).eq( 0 );
 			}
-
+	
 			if ( next.length ) {
 				this.menuInstance.focus( event, next );
 			}
 		},
-
+	
 		_getSelectedItem: function() {
 			return this.menuItems.eq( this.element[ 0 ].selectedIndex );
 		},
-
+	
 		_toggle: function( event ) {
 			this[ this.isOpen ? "close" : "open" ]( event );
 		},
-
+	
 		_setSelection: function() {
 			var selection;
-
+	
 			if ( !this.range ) {
 				return;
 			}
-
+	
 			if ( window.getSelection ) {
 				selection = window.getSelection();
 				selection.removeAllRanges();
 				selection.addRange( this.range );
-
+	
 			// support: IE8
 			} else {
 				this.range.select();
 			}
-
+	
 			// support: IE
 			// Setting the text selection kills the button focus in IE, but
 			// restoring the focus doesn't kill the selection.
 			this.button.focus();
 		},
-
+	
 		_documentClick: {
 			mousedown: function( event ) {
 				if ( !this.isOpen ) {
 					return;
 				}
-
+	
 				if ( !$( event.target ).closest( ".ui-selectmenu-menu, #" + this.ids.button ).length ) {
 					this.close( event );
 				}
 			}
 		},
-
+	
 		_buttonEvents: {
-
+	
 			// Prevent text selection from being reset when interacting with the selectmenu (#10144)
 			mousedown: function() {
 				var selection;
-
+	
 				if ( window.getSelection ) {
 					selection = window.getSelection();
 					if ( selection.rangeCount ) {
 						this.range = selection.getRangeAt( 0 );
 					}
-
+	
 				// support: IE8
 				} else {
 					this.range = document.selection.createRange();
 				}
 			},
-
+	
 			click: function( event ) {
 				this._setSelection();
 				this._toggle( event );
 			},
-
+	
 			keydown: function( event ) {
 				var preventDefault = true;
 				switch ( event.keyCode ) {
@@ -13901,65 +14587,65 @@ webpackJsonp_name_([5],{
 						this.menu.trigger( event );
 						preventDefault = false;
 				}
-
+	
 				if ( preventDefault ) {
 					event.preventDefault();
 				}
 			}
 		},
-
+	
 		_selectFocusedItem: function( event ) {
 			var item = this.menuItems.eq( this.focusIndex );
 			if ( !item.hasClass( "ui-state-disabled" ) ) {
 				this._select( item.data( "ui-selectmenu-item" ), event );
 			}
 		},
-
+	
 		_select: function( item, event ) {
 			var oldIndex = this.element[ 0 ].selectedIndex;
-
+	
 			// Change native select element
 			this.element[ 0 ].selectedIndex = item.index;
 			this._setText( this.buttonText, item.label );
 			this._setAria( item );
 			this._trigger( "select", event, { item: item } );
-
+	
 			if ( item.index !== oldIndex ) {
 				this._trigger( "change", event, { item: item } );
 			}
-
+	
 			this.close( event );
 		},
-
+	
 		_setAria: function( item ) {
 			var id = this.menuItems.eq( item.index ).attr( "id" );
-
+	
 			this.button.attr({
 				"aria-labelledby": id,
 				"aria-activedescendant": id
 			});
 			this.menu.attr( "aria-activedescendant", id );
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "icons" ) {
 				this.button.find( "span.ui-icon" )
 					.removeClass( this.options.icons.button )
 					.addClass( value.button );
 			}
-
+	
 			this._super( key, value );
-
+	
 			if ( key === "appendTo" ) {
 				this.menuWrap.appendTo( this._appendTo() );
 			}
-
+	
 			if ( key === "disabled" ) {
 				this.menuInstance.option( "disabled", value );
 				this.button
 					.toggleClass( "ui-state-disabled", value )
 					.attr( "aria-disabled", value );
-
+	
 				this.element.prop( "disabled", value );
 				if ( value ) {
 					this.button.attr( "tabindex", -1 );
@@ -13968,32 +14654,32 @@ webpackJsonp_name_([5],{
 					this.button.attr( "tabindex", 0 );
 				}
 			}
-
+	
 			if ( key === "width" ) {
 				this._resizeButton();
 			}
 		},
-
+	
 		_appendTo: function() {
 			var element = this.options.appendTo;
-
+	
 			if ( element ) {
 				element = element.jquery || element.nodeType ?
 					$( element ) :
 					this.document.find( element ).eq( 0 );
 			}
-
+	
 			if ( !element || !element[ 0 ] ) {
 				element = this.element.closest( ".ui-front" );
 			}
-
+	
 			if ( !element.length ) {
 				element = this.document[ 0 ].body;
 			}
-
+	
 			return element;
 		},
-
+	
 		_toggleAttr: function() {
 			this.button
 				.toggleClass( "ui-corner-top", this.isOpen )
@@ -14002,33 +14688,33 @@ webpackJsonp_name_([5],{
 			this.menuWrap.toggleClass( "ui-selectmenu-open", this.isOpen );
 			this.menu.attr( "aria-hidden", !this.isOpen );
 		},
-
+	
 		_resizeButton: function() {
 			var width = this.options.width;
-
+	
 			if ( !width ) {
 				width = this.element.show().outerWidth();
 				this.element.hide();
 			}
-
+	
 			this.button.outerWidth( width );
 		},
-
+	
 		_resizeMenu: function() {
 			this.menu.outerWidth( Math.max(
 				this.button.outerWidth(),
-
+	
 				// support: IE10
 				// IE10 wraps long text (possibly a rounding bug)
 				// so we add 1px to avoid the wrapping
 				this.menu.width( "" ).outerWidth() + 1
 			) );
 		},
-
+	
 		_getCreateOptions: function() {
 			return { disabled: this.element.prop( "disabled" ) };
 		},
-
+	
 		_parseOptions: function( options ) {
 			var data = [];
 			options.each(function( index, item ) {
@@ -14045,7 +14731,7 @@ webpackJsonp_name_([5],{
 			});
 			this.items = data;
 		},
-
+	
 		_destroy: function() {
 			this.menuWrap.remove();
 			this.button.remove();
@@ -14054,8 +14740,8 @@ webpackJsonp_name_([5],{
 			this.label.attr( "for", this.ids.element );
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Slider 1.11.4
 	 * http://jqueryui.com
@@ -14066,12 +14752,12 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/slider/
 	 */
-
-
+	
+	
 	var slider = $.widget( "ui.slider", $.ui.mouse, {
 		version: "1.11.4",
 		widgetEventPrefix: "slide",
-
+	
 		options: {
 			animate: false,
 			distance: 0,
@@ -14082,18 +14768,18 @@ webpackJsonp_name_([5],{
 			step: 1,
 			value: 0,
 			values: null,
-
+	
 			// callbacks
 			change: null,
 			slide: null,
 			start: null,
 			stop: null
 		},
-
+	
 		// number of pages in a slider
 		// (how many times can you page up/down to go through the whole range)
 		numPages: 5,
-
+	
 		_create: function() {
 			this._keySliding = false;
 			this._mouseSliding = false;
@@ -14102,58 +14788,58 @@ webpackJsonp_name_([5],{
 			this._detectOrientation();
 			this._mouseInit();
 			this._calculateNewMax();
-
+	
 			this.element
 				.addClass( "ui-slider" +
 					" ui-slider-" + this.orientation +
 					" ui-widget" +
 					" ui-widget-content" +
 					" ui-corner-all");
-
+	
 			this._refresh();
 			this._setOption( "disabled", this.options.disabled );
-
+	
 			this._animateOff = false;
 		},
-
+	
 		_refresh: function() {
 			this._createRange();
 			this._createHandles();
 			this._setupEvents();
 			this._refreshValue();
 		},
-
+	
 		_createHandles: function() {
 			var i, handleCount,
 				options = this.options,
 				existingHandles = this.element.find( ".ui-slider-handle" ).addClass( "ui-state-default ui-corner-all" ),
 				handle = "<span class='ui-slider-handle ui-state-default ui-corner-all' tabindex='0'></span>",
 				handles = [];
-
+	
 			handleCount = ( options.values && options.values.length ) || 1;
-
+	
 			if ( existingHandles.length > handleCount ) {
 				existingHandles.slice( handleCount ).remove();
 				existingHandles = existingHandles.slice( 0, handleCount );
 			}
-
+	
 			for ( i = existingHandles.length; i < handleCount; i++ ) {
 				handles.push( handle );
 			}
-
+	
 			this.handles = existingHandles.add( $( handles.join( "" ) ).appendTo( this.element ) );
-
+	
 			this.handle = this.handles.eq( 0 );
-
+	
 			this.handles.each(function( i ) {
 				$( this ).data( "ui-slider-handle-index", i );
 			});
 		},
-
+	
 		_createRange: function() {
 			var options = this.options,
 				classes = "";
-
+	
 			if ( options.range ) {
 				if ( options.range === true ) {
 					if ( !options.values ) {
@@ -14164,11 +14850,11 @@ webpackJsonp_name_([5],{
 						options.values = options.values.slice(0);
 					}
 				}
-
+	
 				if ( !this.range || !this.range.length ) {
 					this.range = $( "<div></div>" )
 						.appendTo( this.element );
-
+	
 					classes = "ui-slider-range" +
 					// note: this isn't the most fittingly semantic framework class for this element,
 					// but worked best visually with a variety of themes
@@ -14181,7 +14867,7 @@ webpackJsonp_name_([5],{
 							"bottom": ""
 						});
 				}
-
+	
 				this.range.addClass( classes +
 					( ( options.range === "min" || options.range === "max" ) ? " ui-slider-range-" + options.range : "" ) );
 			} else {
@@ -14191,20 +14877,20 @@ webpackJsonp_name_([5],{
 				this.range = null;
 			}
 		},
-
+	
 		_setupEvents: function() {
 			this._off( this.handles );
 			this._on( this.handles, this._handleEvents );
 			this._hoverable( this.handles );
 			this._focusable( this.handles );
 		},
-
+	
 		_destroy: function() {
 			this.handles.remove();
 			if ( this.range ) {
 				this.range.remove();
 			}
-
+	
 			this.element
 				.removeClass( "ui-slider" +
 					" ui-slider-horizontal" +
@@ -14212,25 +14898,25 @@ webpackJsonp_name_([5],{
 					" ui-widget" +
 					" ui-widget-content" +
 					" ui-corner-all" );
-
+	
 			this._mouseDestroy();
 		},
-
+	
 		_mouseCapture: function( event ) {
 			var position, normValue, distance, closestHandle, index, allowed, offset, mouseOverHandle,
 				that = this,
 				o = this.options;
-
+	
 			if ( o.disabled ) {
 				return false;
 			}
-
+	
 			this.elementSize = {
 				width: this.element.outerWidth(),
 				height: this.element.outerHeight()
 			};
 			this.elementOffset = this.element.offset();
-
+	
 			position = { x: event.pageX, y: event.pageY };
 			normValue = this._normValueFromMouse( position );
 			distance = this._valueMax() - this._valueMin() + 1;
@@ -14244,19 +14930,19 @@ webpackJsonp_name_([5],{
 					index = i;
 				}
 			});
-
+	
 			allowed = this._start( event, index );
 			if ( allowed === false ) {
 				return false;
 			}
 			this._mouseSliding = true;
-
+	
 			this._handleIndex = index;
-
+	
 			closestHandle
 				.addClass( "ui-state-active" )
 				.focus();
-
+	
 			offset = closestHandle.offset();
 			mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-slider-handle" );
 			this._clickOffset = mouseOverHandle ? { left: 0, top: 0 } : {
@@ -14267,52 +14953,52 @@ webpackJsonp_name_([5],{
 					( parseInt( closestHandle.css("borderBottomWidth"), 10 ) || 0) +
 					( parseInt( closestHandle.css("marginTop"), 10 ) || 0)
 			};
-
+	
 			if ( !this.handles.hasClass( "ui-state-hover" ) ) {
 				this._slide( event, index, normValue );
 			}
 			this._animateOff = true;
 			return true;
 		},
-
+	
 		_mouseStart: function() {
 			return true;
 		},
-
+	
 		_mouseDrag: function( event ) {
 			var position = { x: event.pageX, y: event.pageY },
 				normValue = this._normValueFromMouse( position );
-
+	
 			this._slide( event, this._handleIndex, normValue );
-
+	
 			return false;
 		},
-
+	
 		_mouseStop: function( event ) {
 			this.handles.removeClass( "ui-state-active" );
 			this._mouseSliding = false;
-
+	
 			this._stop( event, this._handleIndex );
 			this._change( event, this._handleIndex );
-
+	
 			this._handleIndex = null;
 			this._clickOffset = null;
 			this._animateOff = false;
-
+	
 			return false;
 		},
-
+	
 		_detectOrientation: function() {
 			this.orientation = ( this.options.orientation === "vertical" ) ? "vertical" : "horizontal";
 		},
-
+	
 		_normValueFromMouse: function( position ) {
 			var pixelTotal,
 				pixelMouse,
 				percentMouse,
 				valueTotal,
 				valueMouse;
-
+	
 			if ( this.orientation === "horizontal" ) {
 				pixelTotal = this.elementSize.width;
 				pixelMouse = position.x - this.elementOffset.left - ( this._clickOffset ? this._clickOffset.left : 0 );
@@ -14320,7 +15006,7 @@ webpackJsonp_name_([5],{
 				pixelTotal = this.elementSize.height;
 				pixelMouse = position.y - this.elementOffset.top - ( this._clickOffset ? this._clickOffset.top : 0 );
 			}
-
+	
 			percentMouse = ( pixelMouse / pixelTotal );
 			if ( percentMouse > 1 ) {
 				percentMouse = 1;
@@ -14331,13 +15017,13 @@ webpackJsonp_name_([5],{
 			if ( this.orientation === "vertical" ) {
 				percentMouse = 1 - percentMouse;
 			}
-
+	
 			valueTotal = this._valueMax() - this._valueMin();
 			valueMouse = this._valueMin() + percentMouse * valueTotal;
-
+	
 			return this._trimAlignValue( valueMouse );
 		},
-
+	
 		_start: function( event, index ) {
 			var uiHash = {
 				handle: this.handles[ index ],
@@ -14349,21 +15035,21 @@ webpackJsonp_name_([5],{
 			}
 			return this._trigger( "start", event, uiHash );
 		},
-
+	
 		_slide: function( event, index, newVal ) {
 			var otherVal,
 				newValues,
 				allowed;
-
+	
 			if ( this.options.values && this.options.values.length ) {
 				otherVal = this.values( index ? 0 : 1 );
-
+	
 				if ( ( this.options.values.length === 2 && this.options.range === true ) &&
 						( ( index === 0 && newVal > otherVal) || ( index === 1 && newVal < otherVal ) )
 					) {
 					newVal = otherVal;
 				}
-
+	
 				if ( newVal !== this.values( index ) ) {
 					newValues = this.values();
 					newValues[ index ] = newVal;
@@ -14391,7 +15077,7 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		_stop: function( event, index ) {
 			var uiHash = {
 				handle: this.handles[ index ],
@@ -14401,10 +15087,10 @@ webpackJsonp_name_([5],{
 				uiHash.value = this.values( index );
 				uiHash.values = this.values();
 			}
-
+	
 			this._trigger( "stop", event, uiHash );
 		},
-
+	
 		_change: function( event, index ) {
 			if ( !this._keySliding && !this._mouseSliding ) {
 				var uiHash = {
@@ -14415,14 +15101,14 @@ webpackJsonp_name_([5],{
 					uiHash.value = this.values( index );
 					uiHash.values = this.values();
 				}
-
+	
 				//store the last changed value index for reference when handles overlap
 				this._lastChangedValue = index;
-
+	
 				this._trigger( "change", event, uiHash );
 			}
 		},
-
+	
 		value: function( newValue ) {
 			if ( arguments.length ) {
 				this.options.value = this._trimAlignValue( newValue );
@@ -14430,22 +15116,22 @@ webpackJsonp_name_([5],{
 				this._change( null, 0 );
 				return;
 			}
-
+	
 			return this._value();
 		},
-
+	
 		values: function( index, newValue ) {
 			var vals,
 				newValues,
 				i;
-
+	
 			if ( arguments.length > 1 ) {
 				this.options.values[ index ] = this._trimAlignValue( newValue );
 				this._refreshValue();
 				this._change( null, index );
 				return;
 			}
-
+	
 			if ( arguments.length ) {
 				if ( $.isArray( arguments[ 0 ] ) ) {
 					vals = this.options.values;
@@ -14466,11 +15152,11 @@ webpackJsonp_name_([5],{
 				return this._values();
 			}
 		},
-
+	
 		_setOption: function( key, value ) {
 			var i,
 				valsLength = 0;
-
+	
 			if ( key === "range" && this.options.range === true ) {
 				if ( value === "min" ) {
 					this.options.value = this._values( 0 );
@@ -14480,17 +15166,17 @@ webpackJsonp_name_([5],{
 					this.options.values = null;
 				}
 			}
-
+	
 			if ( $.isArray( this.options.values ) ) {
 				valsLength = this.options.values.length;
 			}
-
+	
 			if ( key === "disabled" ) {
 				this.element.toggleClass( "ui-state-disabled", !!value );
 			}
-
+	
 			this._super( key, value );
-
+	
 			switch ( key ) {
 				case "orientation":
 					this._detectOrientation();
@@ -14498,7 +15184,7 @@ webpackJsonp_name_([5],{
 						.removeClass( "ui-slider-horizontal ui-slider-vertical" )
 						.addClass( "ui-slider-" + this.orientation );
 					this._refreshValue();
-
+	
 					// Reset positioning from previous orientation
 					this.handles.css( value === "horizontal" ? "bottom" : "left", "" );
 					break;
@@ -14531,16 +15217,16 @@ webpackJsonp_name_([5],{
 					break;
 			}
 		},
-
+	
 		//internal value getter
 		// _value() returns value trimmed by min and max, aligned by step
 		_value: function() {
 			var val = this.options.value;
 			val = this._trimAlignValue( val );
-
+	
 			return val;
 		},
-
+	
 		//internal values getter
 		// _values() returns array of values trimmed by min and max, aligned by step
 		// _values( index ) returns single value trimmed by min and max, aligned by step
@@ -14548,11 +15234,11 @@ webpackJsonp_name_([5],{
 			var val,
 				vals,
 				i;
-
+	
 			if ( arguments.length ) {
 				val = this.options.values[ index ];
 				val = this._trimAlignValue( val );
-
+	
 				return val;
 			} else if ( this.options.values && this.options.values.length ) {
 				// .slice() creates a copy of the array
@@ -14561,13 +15247,13 @@ webpackJsonp_name_([5],{
 				for ( i = 0; i < vals.length; i += 1) {
 					vals[ i ] = this._trimAlignValue( vals[ i ] );
 				}
-
+	
 				return vals;
 			} else {
 				return [];
 			}
 		},
-
+	
 		// returns the step-aligned value that val is closest to, between (inclusive) min and max
 		_trimAlignValue: function( val ) {
 			if ( val <= this._valueMin() ) {
@@ -14579,16 +15265,16 @@ webpackJsonp_name_([5],{
 			var step = ( this.options.step > 0 ) ? this.options.step : 1,
 				valModStep = (val - this._valueMin()) % step,
 				alignValue = val - valModStep;
-
+	
 			if ( Math.abs(valModStep) * 2 >= step ) {
 				alignValue += ( valModStep > 0 ) ? step : ( -step );
 			}
-
+	
 			// Since JavaScript has problems with large floats, round
 			// the final value to 5 digits after the decimal point (see #4124)
 			return parseFloat( alignValue.toFixed(5) );
 		},
-
+	
 		_calculateNewMax: function() {
 			var max = this.options.max,
 				min = this._valueMin(),
@@ -14597,7 +15283,7 @@ webpackJsonp_name_([5],{
 			max = aboveMin + min;
 			this.max = parseFloat( max.toFixed( this._precision() ) );
 		},
-
+	
 		_precision: function() {
 			var precision = this._precisionOf( this.options.step );
 			if ( this.options.min !== null ) {
@@ -14605,21 +15291,21 @@ webpackJsonp_name_([5],{
 			}
 			return precision;
 		},
-
+	
 		_precisionOf: function( num ) {
 			var str = num.toString(),
 				decimal = str.indexOf( "." );
 			return decimal === -1 ? 0 : str.length - decimal - 1;
 		},
-
+	
 		_valueMin: function() {
 			return this.options.min;
 		},
-
+	
 		_valueMax: function() {
 			return this.max;
 		},
-
+	
 		_refreshValue: function() {
 			var lastValPercent, valPercent, value, valueMin, valueMax,
 				oRange = this.options.range,
@@ -14627,7 +15313,7 @@ webpackJsonp_name_([5],{
 				that = this,
 				animate = ( !this._animateOff ) ? o.animate : false,
 				_set = {};
-
+	
 			if ( this.options.values && this.options.values.length ) {
 				this.handles.each(function( i ) {
 					valPercent = ( that.values(i) - that._valueMin() ) / ( that._valueMax() - that._valueMin() ) * 100;
@@ -14661,7 +15347,7 @@ webpackJsonp_name_([5],{
 						0;
 				_set[ this.orientation === "horizontal" ? "left" : "bottom" ] = valPercent + "%";
 				this.handle.stop( 1, 1 )[ animate ? "animate" : "css" ]( _set, o.animate );
-
+	
 				if ( oRange === "min" && this.orientation === "horizontal" ) {
 					this.range.stop( 1, 1 )[ animate ? "animate" : "css" ]( { width: valPercent + "%" }, o.animate );
 				}
@@ -14676,12 +15362,12 @@ webpackJsonp_name_([5],{
 				}
 			}
 		},
-
+	
 		_handleEvents: {
 			keydown: function( event ) {
 				var allowed, curVal, newVal, step,
 					index = $( event.target ).data( "ui-slider-handle-index" );
-
+	
 				switch ( event.keyCode ) {
 					case $.ui.keyCode.HOME:
 					case $.ui.keyCode.END:
@@ -14702,14 +15388,14 @@ webpackJsonp_name_([5],{
 						}
 						break;
 				}
-
+	
 				step = this.options.step;
 				if ( this.options.values && this.options.values.length ) {
 					curVal = newVal = this.values( index );
 				} else {
 					curVal = newVal = this.value();
 				}
-
+	
 				switch ( event.keyCode ) {
 					case $.ui.keyCode.HOME:
 						newVal = this._valueMin();
@@ -14741,12 +15427,12 @@ webpackJsonp_name_([5],{
 						newVal = this._trimAlignValue( curVal - step );
 						break;
 				}
-
+	
 				this._slide( event, index, newVal );
 			},
 			keyup: function( event ) {
 				var index = $( event.target ).data( "ui-slider-handle-index" );
-
+	
 				if ( this._keySliding ) {
 					this._keySliding = false;
 					this._stop( event, index );
@@ -14756,8 +15442,8 @@ webpackJsonp_name_([5],{
 			}
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Sortable 1.11.4
 	 * http://jqueryui.com
@@ -14768,8 +15454,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/sortable/
 	 */
-
-
+	
+	
 	var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		version: "1.11.4",
 		widgetEventPrefix: "sort",
@@ -14797,7 +15483,7 @@ webpackJsonp_name_([5],{
 			scope: "default",
 			tolerance: "intersect",
 			zIndex: 1000,
-
+	
 			// callbacks
 			activate: null,
 			beforeStop: null,
@@ -14812,43 +15498,43 @@ webpackJsonp_name_([5],{
 			stop: null,
 			update: null
 		},
-
+	
 		_isOverAxis: function( x, reference, size ) {
 			return ( x >= reference ) && ( x < ( reference + size ) );
 		},
-
+	
 		_isFloating: function( item ) {
 			return (/left|right/).test(item.css("float")) || (/inline|table-cell/).test(item.css("display"));
 		},
-
+	
 		_create: function() {
 			this.containerCache = {};
 			this.element.addClass("ui-sortable");
-
+	
 			//Get the items
 			this.refresh();
-
+	
 			//Let's determine the parent's offset
 			this.offset = this.element.offset();
-
+	
 			//Initialize mouse events for interaction
 			this._mouseInit();
-
+	
 			this._setHandleClassName();
-
+	
 			//We're ready to go
 			this.ready = true;
-
+	
 		},
-
+	
 		_setOption: function( key, value ) {
 			this._super( key, value );
-
+	
 			if ( key === "handle" ) {
 				this._setHandleClassName();
 			}
 		},
-
+	
 		_setHandleClassName: function() {
 			this.element.find( ".ui-sortable-handle" ).removeClass( "ui-sortable-handle" );
 			$.each( this.items, function() {
@@ -14857,37 +15543,37 @@ webpackJsonp_name_([5],{
 					.addClass( "ui-sortable-handle" );
 			});
 		},
-
+	
 		_destroy: function() {
 			this.element
 				.removeClass( "ui-sortable ui-sortable-disabled" )
 				.find( ".ui-sortable-handle" )
 					.removeClass( "ui-sortable-handle" );
 			this._mouseDestroy();
-
+	
 			for ( var i = this.items.length - 1; i >= 0; i-- ) {
 				this.items[i].item.removeData(this.widgetName + "-item");
 			}
-
+	
 			return this;
 		},
-
+	
 		_mouseCapture: function(event, overrideHandle) {
 			var currentItem = null,
 				validHandle = false,
 				that = this;
-
+	
 			if (this.reverting) {
 				return false;
 			}
-
+	
 			if(this.options.disabled || this.options.type === "static") {
 				return false;
 			}
-
+	
 			//We have to refresh the items data once first
 			this._refreshItems(event);
-
+	
 			//Find out if the clicked node (or one of its parents) is a actual item in this.items
 			$(event.target).parents().each(function() {
 				if($.data(this, that.widgetName + "-item") === that) {
@@ -14898,7 +15584,7 @@ webpackJsonp_name_([5],{
 			if($.data(event.target, that.widgetName + "-item") === that) {
 				currentItem = $(event.target);
 			}
-
+	
 			if(!currentItem) {
 				return false;
 			}
@@ -14912,47 +15598,47 @@ webpackJsonp_name_([5],{
 					return false;
 				}
 			}
-
+	
 			this.currentItem = currentItem;
 			this._removeCurrentsFromItems();
 			return true;
-
+	
 		},
-
+	
 		_mouseStart: function(event, overrideHandle, noActivation) {
-
+	
 			var i, body,
 				o = this.options;
-
+	
 			this.currentContainer = this;
-
+	
 			//We only need to call refreshPositions, because the refreshItems call has been moved to mouseCapture
 			this.refreshPositions();
-
+	
 			//Create and append the visible helper
 			this.helper = this._createHelper(event);
-
+	
 			//Cache the helper size
 			this._cacheHelperProportions();
-
+	
 			/*
 			 * - Position generation -
 			 * This block generates everything position related - it's the core of draggables.
 			 */
-
+	
 			//Cache the margins of the original element
 			this._cacheMargins();
-
+	
 			//Get the next scrolling parent
 			this.scrollParent = this.helper.scrollParent();
-
+	
 			//The element's absolute position on the page minus margins
 			this.offset = this.currentItem.offset();
 			this.offset = {
 				top: this.offset.top - this.margins.top,
 				left: this.offset.left - this.margins.left
 			};
-
+	
 			$.extend(this.offset, {
 				click: { //Where the click happened, relative to the element
 					left: event.pageX - this.offset.left,
@@ -14961,151 +15647,151 @@ webpackJsonp_name_([5],{
 				parent: this._getParentOffset(),
 				relative: this._getRelativeOffset() //This is a relative to absolute position minus the actual position calculation - only used for relative positioned helper
 			});
-
+	
 			// Only after we got the offset, we can change the helper's position to absolute
 			// TODO: Still need to figure out a way to make relative sorting possible
 			this.helper.css("position", "absolute");
 			this.cssPosition = this.helper.css("position");
-
+	
 			//Generate the original position
 			this.originalPosition = this._generatePosition(event);
 			this.originalPageX = event.pageX;
 			this.originalPageY = event.pageY;
-
+	
 			//Adjust the mouse offset relative to the helper if "cursorAt" is supplied
 			(o.cursorAt && this._adjustOffsetFromHelper(o.cursorAt));
-
+	
 			//Cache the former DOM position
 			this.domPosition = { prev: this.currentItem.prev()[0], parent: this.currentItem.parent()[0] };
-
+	
 			//If the helper is not the original, hide the original so it's not playing any role during the drag, won't cause anything bad this way
 			if(this.helper[0] !== this.currentItem[0]) {
 				this.currentItem.hide();
 			}
-
+	
 			//Create the placeholder
 			this._createPlaceholder();
-
+	
 			//Set a containment if given in the options
 			if(o.containment) {
 				this._setContainment();
 			}
-
+	
 			if( o.cursor && o.cursor !== "auto" ) { // cursor option
 				body = this.document.find( "body" );
-
+	
 				// support: IE
 				this.storedCursor = body.css( "cursor" );
 				body.css( "cursor", o.cursor );
-
+	
 				this.storedStylesheet = $( "<style>*{ cursor: "+o.cursor+" !important; }</style>" ).appendTo( body );
 			}
-
+	
 			if(o.opacity) { // opacity option
 				if (this.helper.css("opacity")) {
 					this._storedOpacity = this.helper.css("opacity");
 				}
 				this.helper.css("opacity", o.opacity);
 			}
-
+	
 			if(o.zIndex) { // zIndex option
 				if (this.helper.css("zIndex")) {
 					this._storedZIndex = this.helper.css("zIndex");
 				}
 				this.helper.css("zIndex", o.zIndex);
 			}
-
+	
 			//Prepare scrolling
 			if(this.scrollParent[0] !== this.document[0] && this.scrollParent[0].tagName !== "HTML") {
 				this.overflowOffset = this.scrollParent.offset();
 			}
-
+	
 			//Call callbacks
 			this._trigger("start", event, this._uiHash());
-
+	
 			//Recache the helper size
 			if(!this._preserveHelperProportions) {
 				this._cacheHelperProportions();
 			}
-
-
+	
+	
 			//Post "activate" events to possible containers
 			if( !noActivation ) {
 				for ( i = this.containers.length - 1; i >= 0; i-- ) {
 					this.containers[ i ]._trigger( "activate", event, this._uiHash( this ) );
 				}
 			}
-
+	
 			//Prepare possible droppables
 			if($.ui.ddmanager) {
 				$.ui.ddmanager.current = this;
 			}
-
+	
 			if ($.ui.ddmanager && !o.dropBehaviour) {
 				$.ui.ddmanager.prepareOffsets(this, event);
 			}
-
+	
 			this.dragging = true;
-
+	
 			this.helper.addClass("ui-sortable-helper");
 			this._mouseDrag(event); //Execute the drag once - this causes the helper not to be visible before getting its correct position
 			return true;
-
+	
 		},
-
+	
 		_mouseDrag: function(event) {
 			var i, item, itemElement, intersection,
 				o = this.options,
 				scrolled = false;
-
+	
 			//Compute the helpers position
 			this.position = this._generatePosition(event);
 			this.positionAbs = this._convertPositionTo("absolute");
-
+	
 			if (!this.lastPositionAbs) {
 				this.lastPositionAbs = this.positionAbs;
 			}
-
+	
 			//Do scrolling
 			if(this.options.scroll) {
 				if(this.scrollParent[0] !== this.document[0] && this.scrollParent[0].tagName !== "HTML") {
-
+	
 					if((this.overflowOffset.top + this.scrollParent[0].offsetHeight) - event.pageY < o.scrollSensitivity) {
 						this.scrollParent[0].scrollTop = scrolled = this.scrollParent[0].scrollTop + o.scrollSpeed;
 					} else if(event.pageY - this.overflowOffset.top < o.scrollSensitivity) {
 						this.scrollParent[0].scrollTop = scrolled = this.scrollParent[0].scrollTop - o.scrollSpeed;
 					}
-
+	
 					if((this.overflowOffset.left + this.scrollParent[0].offsetWidth) - event.pageX < o.scrollSensitivity) {
 						this.scrollParent[0].scrollLeft = scrolled = this.scrollParent[0].scrollLeft + o.scrollSpeed;
 					} else if(event.pageX - this.overflowOffset.left < o.scrollSensitivity) {
 						this.scrollParent[0].scrollLeft = scrolled = this.scrollParent[0].scrollLeft - o.scrollSpeed;
 					}
-
+	
 				} else {
-
+	
 					if(event.pageY - this.document.scrollTop() < o.scrollSensitivity) {
 						scrolled = this.document.scrollTop(this.document.scrollTop() - o.scrollSpeed);
 					} else if(this.window.height() - (event.pageY - this.document.scrollTop()) < o.scrollSensitivity) {
 						scrolled = this.document.scrollTop(this.document.scrollTop() + o.scrollSpeed);
 					}
-
+	
 					if(event.pageX - this.document.scrollLeft() < o.scrollSensitivity) {
 						scrolled = this.document.scrollLeft(this.document.scrollLeft() - o.scrollSpeed);
 					} else if(this.window.width() - (event.pageX - this.document.scrollLeft()) < o.scrollSensitivity) {
 						scrolled = this.document.scrollLeft(this.document.scrollLeft() + o.scrollSpeed);
 					}
-
+	
 				}
-
+	
 				if(scrolled !== false && $.ui.ddmanager && !o.dropBehaviour) {
 					$.ui.ddmanager.prepareOffsets(this, event);
 				}
 			}
-
+	
 			//Regenerate the absolute position used for position checks
 			this.positionAbs = this._convertPositionTo("absolute");
-
+	
 			//Set the helper position
 			if(!this.options.axis || this.options.axis !== "y") {
 				this.helper[0].style.left = this.position.left+"px";
@@ -15113,10 +15799,10 @@ webpackJsonp_name_([5],{
 			if(!this.options.axis || this.options.axis !== "x") {
 				this.helper[0].style.top = this.position.top+"px";
 			}
-
+	
 			//Rearrange
 			for (i = this.items.length - 1; i >= 0; i--) {
-
+	
 				//Cache variables and intersection, continue if no intersection
 				item = this.items[i];
 				itemElement = item.item[0];
@@ -15124,7 +15810,7 @@ webpackJsonp_name_([5],{
 				if (!intersection) {
 					continue;
 				}
-
+	
 				// Only put the placeholder inside the current Container, skip all
 				// items from other containers. This works because when moving
 				// an item from one container to another the
@@ -15135,7 +15821,7 @@ webpackJsonp_name_([5],{
 				if (item.instance !== this.currentContainer) {
 					continue;
 				}
-
+	
 				// cannot intersect with itself
 				// no useless actions that have been done before
 				// no action if the item moved is the parent of the item checked
@@ -15144,53 +15830,53 @@ webpackJsonp_name_([5],{
 					!$.contains(this.placeholder[0], itemElement) &&
 					(this.options.type === "semi-dynamic" ? !$.contains(this.element[0], itemElement) : true)
 				) {
-
+	
 					this.direction = intersection === 1 ? "down" : "up";
-
+	
 					if (this.options.tolerance === "pointer" || this._intersectsWithSides(item)) {
 						this._rearrange(event, item);
 					} else {
 						break;
 					}
-
+	
 					this._trigger("change", event, this._uiHash());
 					break;
 				}
 			}
-
+	
 			//Post events to containers
 			this._contactContainers(event);
-
+	
 			//Interconnect with droppables
 			if($.ui.ddmanager) {
 				$.ui.ddmanager.drag(this, event);
 			}
-
+	
 			//Call callbacks
 			this._trigger("sort", event, this._uiHash());
-
+	
 			this.lastPositionAbs = this.positionAbs;
 			return false;
-
+	
 		},
-
+	
 		_mouseStop: function(event, noPropagation) {
-
+	
 			if(!event) {
 				return;
 			}
-
+	
 			//If we are using droppables, inform the manager about the drop
 			if ($.ui.ddmanager && !this.options.dropBehaviour) {
 				$.ui.ddmanager.drop(this, event);
 			}
-
+	
 			if(this.options.revert) {
 				var that = this,
 					cur = this.placeholder.offset(),
 					axis = this.options.axis,
 					animation = {};
-
+	
 				if ( !axis || axis === "x" ) {
 					animation.left = cur.left - this.offset.parent.left - this.margins.left + (this.offsetParent[0] === this.document[0].body ? 0 : this.offsetParent[0].scrollLeft);
 				}
@@ -15204,23 +15890,23 @@ webpackJsonp_name_([5],{
 			} else {
 				this._clear(event, noPropagation);
 			}
-
+	
 			return false;
-
+	
 		},
-
+	
 		cancel: function() {
-
+	
 			if(this.dragging) {
-
+	
 				this._mouseUp({ target: null });
-
+	
 				if(this.options.helper === "original") {
 					this.currentItem.css(this._storedCSS).removeClass("ui-sortable-helper");
 				} else {
 					this.currentItem.show();
 				}
-
+	
 				//Post deactivating events to containers
 				for (var i = this.containers.length - 1; i >= 0; i--){
 					this.containers[i]._trigger("deactivate", null, this._uiHash(this));
@@ -15229,9 +15915,9 @@ webpackJsonp_name_([5],{
 						this.containers[i].containerCache.over = 0;
 					}
 				}
-
+	
 			}
-
+	
 			if (this.placeholder) {
 				//$(this.placeholder[0]).remove(); would have been the jQuery way - unfortunately, it unbinds ALL events from the original node!
 				if(this.placeholder[0].parentNode) {
@@ -15240,61 +15926,61 @@ webpackJsonp_name_([5],{
 				if(this.options.helper !== "original" && this.helper && this.helper[0].parentNode) {
 					this.helper.remove();
 				}
-
+	
 				$.extend(this, {
 					helper: null,
 					dragging: false,
 					reverting: false,
 					_noFinalSort: null
 				});
-
+	
 				if(this.domPosition.prev) {
 					$(this.domPosition.prev).after(this.currentItem);
 				} else {
 					$(this.domPosition.parent).prepend(this.currentItem);
 				}
 			}
-
+	
 			return this;
-
+	
 		},
-
+	
 		serialize: function(o) {
-
+	
 			var items = this._getItemsAsjQuery(o && o.connected),
 				str = [];
 			o = o || {};
-
+	
 			$(items).each(function() {
 				var res = ($(o.item || this).attr(o.attribute || "id") || "").match(o.expression || (/(.+)[\-=_](.+)/));
 				if (res) {
 					str.push((o.key || res[1]+"[]")+"="+(o.key && o.expression ? res[1] : res[2]));
 				}
 			});
-
+	
 			if(!str.length && o.key) {
 				str.push(o.key + "=");
 			}
-
+	
 			return str.join("&");
-
+	
 		},
-
+	
 		toArray: function(o) {
-
+	
 			var items = this._getItemsAsjQuery(o && o.connected),
 				ret = [];
-
+	
 			o = o || {};
-
+	
 			items.each(function() { ret.push($(o.item || this).attr(o.attribute || "id") || ""); });
 			return ret;
-
+	
 		},
-
+	
 		/* Be careful with the following core functions */
 		_intersectsWith: function(item) {
-
+	
 			var x1 = this.positionAbs.left,
 				x2 = x1 + this.helperProportions.width,
 				y1 = this.positionAbs.top,
@@ -15308,84 +15994,84 @@ webpackJsonp_name_([5],{
 				isOverElementHeight = ( this.options.axis === "x" ) || ( ( y1 + dyClick ) > t && ( y1 + dyClick ) < b ),
 				isOverElementWidth = ( this.options.axis === "y" ) || ( ( x1 + dxClick ) > l && ( x1 + dxClick ) < r ),
 				isOverElement = isOverElementHeight && isOverElementWidth;
-
+	
 			if ( this.options.tolerance === "pointer" ||
 				this.options.forcePointerForContainers ||
 				(this.options.tolerance !== "pointer" && this.helperProportions[this.floating ? "width" : "height"] > item[this.floating ? "width" : "height"])
 			) {
 				return isOverElement;
 			} else {
-
+	
 				return (l < x1 + (this.helperProportions.width / 2) && // Right Half
 					x2 - (this.helperProportions.width / 2) < r && // Left Half
 					t < y1 + (this.helperProportions.height / 2) && // Bottom Half
 					y2 - (this.helperProportions.height / 2) < b ); // Top Half
-
+	
 			}
 		},
-
+	
 		_intersectsWithPointer: function(item) {
-
+	
 			var isOverElementHeight = (this.options.axis === "x") || this._isOverAxis(this.positionAbs.top + this.offset.click.top, item.top, item.height),
 				isOverElementWidth = (this.options.axis === "y") || this._isOverAxis(this.positionAbs.left + this.offset.click.left, item.left, item.width),
 				isOverElement = isOverElementHeight && isOverElementWidth,
 				verticalDirection = this._getDragVerticalDirection(),
 				horizontalDirection = this._getDragHorizontalDirection();
-
+	
 			if (!isOverElement) {
 				return false;
 			}
-
+	
 			return this.floating ?
 				( ((horizontalDirection && horizontalDirection === "right") || verticalDirection === "down") ? 2 : 1 )
 				: ( verticalDirection && (verticalDirection === "down" ? 2 : 1) );
-
+	
 		},
-
+	
 		_intersectsWithSides: function(item) {
-
+	
 			var isOverBottomHalf = this._isOverAxis(this.positionAbs.top + this.offset.click.top, item.top + (item.height/2), item.height),
 				isOverRightHalf = this._isOverAxis(this.positionAbs.left + this.offset.click.left, item.left + (item.width/2), item.width),
 				verticalDirection = this._getDragVerticalDirection(),
 				horizontalDirection = this._getDragHorizontalDirection();
-
+	
 			if (this.floating && horizontalDirection) {
 				return ((horizontalDirection === "right" && isOverRightHalf) || (horizontalDirection === "left" && !isOverRightHalf));
 			} else {
 				return verticalDirection && ((verticalDirection === "down" && isOverBottomHalf) || (verticalDirection === "up" && !isOverBottomHalf));
 			}
-
+	
 		},
-
+	
 		_getDragVerticalDirection: function() {
 			var delta = this.positionAbs.top - this.lastPositionAbs.top;
 			return delta !== 0 && (delta > 0 ? "down" : "up");
 		},
-
+	
 		_getDragHorizontalDirection: function() {
 			var delta = this.positionAbs.left - this.lastPositionAbs.left;
 			return delta !== 0 && (delta > 0 ? "right" : "left");
 		},
-
+	
 		refresh: function(event) {
 			this._refreshItems(event);
 			this._setHandleClassName();
 			this.refreshPositions();
 			return this;
 		},
-
+	
 		_connectWith: function() {
 			var options = this.options;
 			return options.connectWith.constructor === String ? [options.connectWith] : options.connectWith;
 		},
-
+	
 		_getItemsAsjQuery: function(connected) {
-
+	
 			var i, j, cur, inst,
 				items = [],
 				queries = [],
 				connectWith = this._connectWith();
-
+	
 			if(connectWith && connected) {
 				for (i = connectWith.length - 1; i >= 0; i--){
 					cur = $(connectWith[i], this.document[0]);
@@ -15397,24 +16083,24 @@ webpackJsonp_name_([5],{
 					}
 				}
 			}
-
+	
 			queries.push([$.isFunction(this.options.items) ? this.options.items.call(this.element, null, { options: this.options, item: this.currentItem }) : $(this.options.items, this.element).not(".ui-sortable-helper").not(".ui-sortable-placeholder"), this]);
-
+	
 			function addItems() {
 				items.push( this );
 			}
 			for (i = queries.length - 1; i >= 0; i--){
 				queries[i][0].each( addItems );
 			}
-
+	
 			return $(items);
-
+	
 		},
-
+	
 		_removeCurrentsFromItems: function() {
-
+	
 			var list = this.currentItem.find(":data(" + this.widgetName + "-item)");
-
+	
 			this.items = $.grep(this.items, function (item) {
 				for (var j=0; j < list.length; j++) {
 					if(list[j] === item.item[0]) {
@@ -15423,19 +16109,19 @@ webpackJsonp_name_([5],{
 				}
 				return true;
 			});
-
+	
 		},
-
+	
 		_refreshItems: function(event) {
-
+	
 			this.items = [];
 			this.containers = [this];
-
+	
 			var i, j, cur, inst, targetData, _queries, item, queriesLength,
 				items = this.items,
 				queries = [[$.isFunction(this.options.items) ? this.options.items.call(this.element[0], event, { item: this.currentItem }) : $(this.options.items, this.element), this]],
 				connectWith = this._connectWith();
-
+	
 			if(connectWith && this.ready) { //Shouldn't be run the first time through due to massive slow-down
 				for (i = connectWith.length - 1; i >= 0; i--){
 					cur = $(connectWith[i], this.document[0]);
@@ -15448,16 +16134,16 @@ webpackJsonp_name_([5],{
 					}
 				}
 			}
-
+	
 			for (i = queries.length - 1; i >= 0; i--) {
 				targetData = queries[i][1];
 				_queries = queries[i][0];
-
+	
 				for (j=0, queriesLength = _queries.length; j < queriesLength; j++) {
 					item = $(_queries[j]);
-
+	
 					item.data(this.widgetName + "-item", targetData); // Data for target checking (mouse manager)
-
+	
 					items.push({
 						item: item,
 						instance: targetData,
@@ -15466,43 +16152,43 @@ webpackJsonp_name_([5],{
 					});
 				}
 			}
-
+	
 		},
-
+	
 		refreshPositions: function(fast) {
-
+	
 			// Determine whether items are being displayed horizontally
 			this.floating = this.items.length ?
 				this.options.axis === "x" || this._isFloating( this.items[ 0 ].item ) :
 				false;
-
+	
 			//This has to be redone because due to the item being moved out/into the offsetParent, the offsetParent's position will change
 			if(this.offsetParent && this.helper) {
 				this.offset.parent = this._getParentOffset();
 			}
-
+	
 			var i, item, t, p;
-
+	
 			for (i = this.items.length - 1; i >= 0; i--){
 				item = this.items[i];
-
+	
 				//We ignore calculating positions of all connected containers when we're not over them
 				if(item.instance !== this.currentContainer && this.currentContainer && item.item[0] !== this.currentItem[0]) {
 					continue;
 				}
-
+	
 				t = this.options.toleranceElement ? $(this.options.toleranceElement, item.item) : item.item;
-
+	
 				if (!fast) {
 					item.width = t.outerWidth();
 					item.height = t.outerHeight();
 				}
-
+	
 				p = t.offset();
 				item.left = p.left;
 				item.top = p.top;
 			}
-
+	
 			if(this.options.custom && this.options.custom.refreshContainers) {
 				this.options.custom.refreshContainers.call(this);
 			} else {
@@ -15514,25 +16200,25 @@ webpackJsonp_name_([5],{
 					this.containers[i].containerCache.height = this.containers[i].element.outerHeight();
 				}
 			}
-
+	
 			return this;
 		},
-
+	
 		_createPlaceholder: function(that) {
 			that = that || this;
 			var className,
 				o = that.options;
-
+	
 			if(!o.placeholder || o.placeholder.constructor === String) {
 				className = o.placeholder;
 				o.placeholder = {
 					element: function() {
-
+	
 						var nodeName = that.currentItem[0].nodeName.toLowerCase(),
 							element = $( "<" + nodeName + ">", that.document[0] )
 								.addClass(className || that.currentItem[0].className+" ui-sortable-placeholder")
 								.removeClass("ui-sortable-helper");
-
+	
 						if ( nodeName === "tbody" ) {
 							that._createTrPlaceholder(
 								that.currentItem.find( "tr" ).eq( 0 ),
@@ -15543,72 +16229,72 @@ webpackJsonp_name_([5],{
 						} else if ( nodeName === "img" ) {
 							element.attr( "src", that.currentItem.attr( "src" ) );
 						}
-
+	
 						if ( !className ) {
 							element.css( "visibility", "hidden" );
 						}
-
+	
 						return element;
 					},
 					update: function(container, p) {
-
+	
 						// 1. If a className is set as 'placeholder option, we don't force sizes - the class is responsible for that
 						// 2. The option 'forcePlaceholderSize can be enabled to force it even if a class name is specified
 						if(className && !o.forcePlaceholderSize) {
 							return;
 						}
-
+	
 						//If the element doesn't have a actual height by itself (without styles coming from a stylesheet), it receives the inline height from the dragged item
 						if(!p.height()) { p.height(that.currentItem.innerHeight() - parseInt(that.currentItem.css("paddingTop")||0, 10) - parseInt(that.currentItem.css("paddingBottom")||0, 10)); }
 						if(!p.width()) { p.width(that.currentItem.innerWidth() - parseInt(that.currentItem.css("paddingLeft")||0, 10) - parseInt(that.currentItem.css("paddingRight")||0, 10)); }
 					}
 				};
 			}
-
+	
 			//Create the placeholder
 			that.placeholder = $(o.placeholder.element.call(that.element, that.currentItem));
-
+	
 			//Append it after the actual current item
 			that.currentItem.after(that.placeholder);
-
+	
 			//Update the size of the placeholder (TODO: Logic to fuzzy, see line 316/317)
 			o.placeholder.update(that, that.placeholder);
-
+	
 		},
-
+	
 		_createTrPlaceholder: function( sourceTr, targetTr ) {
 			var that = this;
-
+	
 			sourceTr.children().each(function() {
 				$( "<td>&#160;</td>", that.document[ 0 ] )
 					.attr( "colspan", $( this ).attr( "colspan" ) || 1 )
 					.appendTo( targetTr );
 			});
 		},
-
+	
 		_contactContainers: function(event) {
 			var i, j, dist, itemWithLeastDistance, posProperty, sizeProperty, cur, nearBottom, floating, axis,
 				innermostContainer = null,
 				innermostIndex = null;
-
+	
 			// get innermost container that intersects with item
 			for (i = this.containers.length - 1; i >= 0; i--) {
-
+	
 				// never consider a container that's located within the item itself
 				if($.contains(this.currentItem[0], this.containers[i].element[0])) {
 					continue;
 				}
-
+	
 				if(this._intersectsWith(this.containers[i].containerCache)) {
-
+	
 					// if we've already found a container and it's more "inner" than this, then continue
 					if(innermostContainer && $.contains(this.containers[i].element[0], innermostContainer.element[0])) {
 						continue;
 					}
-
+	
 					innermostContainer = this.containers[i];
 					innermostIndex = i;
-
+	
 				} else {
 					// container doesn't intersect. trigger "out" event if necessary
 					if(this.containers[i].containerCache.over) {
@@ -15616,14 +16302,14 @@ webpackJsonp_name_([5],{
 						this.containers[i].containerCache.over = 0;
 					}
 				}
-
+	
 			}
-
+	
 			// if no intersecting containers found, return
 			if(!innermostContainer) {
 				return;
 			}
-
+	
 			// move the item into the container if it's not there already
 			if(this.containers.length === 1) {
 				if (!this.containers[innermostIndex].containerCache.over) {
@@ -15631,7 +16317,7 @@ webpackJsonp_name_([5],{
 					this.containers[innermostIndex].containerCache.over = 1;
 				}
 			} else {
-
+	
 				//When entering a new container, we will find the item with the least distance and append our item near it
 				dist = 10000;
 				itemWithLeastDistance = null;
@@ -15639,7 +16325,7 @@ webpackJsonp_name_([5],{
 				posProperty = floating ? "left" : "top";
 				sizeProperty = floating ? "width" : "height";
 				axis = floating ? "clientX" : "clientY";
-
+	
 				for (j = this.items.length - 1; j >= 0; j--) {
 					if(!$.contains(this.containers[innermostIndex].element[0], this.items[j].item[0])) {
 						continue;
@@ -15647,25 +16333,25 @@ webpackJsonp_name_([5],{
 					if(this.items[j].item[0] === this.currentItem[0]) {
 						continue;
 					}
-
+	
 					cur = this.items[j].item.offset()[posProperty];
 					nearBottom = false;
 					if ( event[ axis ] - cur > this.items[ j ][ sizeProperty ] / 2 ) {
 						nearBottom = true;
 					}
-
+	
 					if ( Math.abs( event[ axis ] - cur ) < dist ) {
 						dist = Math.abs( event[ axis ] - cur );
 						itemWithLeastDistance = this.items[ j ];
 						this.direction = nearBottom ? "up": "down";
 					}
 				}
-
+	
 				//Check if dropOnEmpty is enabled
 				if(!itemWithLeastDistance && !this.options.dropOnEmpty) {
 					return;
 				}
-
+	
 				if(this.currentContainer === this.containers[innermostIndex]) {
 					if ( !this.currentContainer.containerCache.over ) {
 						this.containers[ innermostIndex ]._trigger( "over", event, this._uiHash() );
@@ -15673,47 +16359,47 @@ webpackJsonp_name_([5],{
 					}
 					return;
 				}
-
+	
 				itemWithLeastDistance ? this._rearrange(event, itemWithLeastDistance, null, true) : this._rearrange(event, null, this.containers[innermostIndex].element, true);
 				this._trigger("change", event, this._uiHash());
 				this.containers[innermostIndex]._trigger("change", event, this._uiHash(this));
 				this.currentContainer = this.containers[innermostIndex];
-
+	
 				//Update the placeholder
 				this.options.placeholder.update(this.currentContainer, this.placeholder);
-
+	
 				this.containers[innermostIndex]._trigger("over", event, this._uiHash(this));
 				this.containers[innermostIndex].containerCache.over = 1;
 			}
-
-
+	
+	
 		},
-
+	
 		_createHelper: function(event) {
-
+	
 			var o = this.options,
 				helper = $.isFunction(o.helper) ? $(o.helper.apply(this.element[0], [event, this.currentItem])) : (o.helper === "clone" ? this.currentItem.clone() : this.currentItem);
-
+	
 			//Add the helper to the DOM if that didn't happen already
 			if(!helper.parents("body").length) {
 				$(o.appendTo !== "parent" ? o.appendTo : this.currentItem[0].parentNode)[0].appendChild(helper[0]);
 			}
-
+	
 			if(helper[0] === this.currentItem[0]) {
 				this._storedCSS = { width: this.currentItem[0].style.width, height: this.currentItem[0].style.height, position: this.currentItem.css("position"), top: this.currentItem.css("top"), left: this.currentItem.css("left") };
 			}
-
+	
 			if(!helper[0].style.width || o.forceHelperSize) {
 				helper.width(this.currentItem.width());
 			}
 			if(!helper[0].style.height || o.forceHelperSize) {
 				helper.height(this.currentItem.height());
 			}
-
+	
 			return helper;
-
+	
 		},
-
+	
 		_adjustOffsetFromHelper: function(obj) {
 			if (typeof obj === "string") {
 				obj = obj.split(" ");
@@ -15734,14 +16420,14 @@ webpackJsonp_name_([5],{
 				this.offset.click.top = this.helperProportions.height - obj.bottom + this.margins.top;
 			}
 		},
-
+	
 		_getParentOffset: function() {
-
-
+	
+	
 			//Get the offsetParent and cache its position
 			this.offsetParent = this.helper.offsetParent();
 			var po = this.offsetParent.offset();
-
+	
 			// This is a special case where we need to modify a offset calculated on start, since the following happened:
 			// 1. The position of the helper is absolute, so it's position is calculated based on the next positioned parent
 			// 2. The actual offset parent is a child of the scroll parent, and the scroll parent isn't the document, which means that
@@ -15750,22 +16436,22 @@ webpackJsonp_name_([5],{
 				po.left += this.scrollParent.scrollLeft();
 				po.top += this.scrollParent.scrollTop();
 			}
-
+	
 			// This needs to be actually done for all browsers, since pageX/pageY includes this information
 			// with an ugly IE fix
 			if( this.offsetParent[0] === this.document[0].body || (this.offsetParent[0].tagName && this.offsetParent[0].tagName.toLowerCase() === "html" && $.ui.ie)) {
 				po = { top: 0, left: 0 };
 			}
-
+	
 			return {
 				top: po.top + (parseInt(this.offsetParent.css("borderTopWidth"),10) || 0),
 				left: po.left + (parseInt(this.offsetParent.css("borderLeftWidth"),10) || 0)
 			};
-
+	
 		},
-
+	
 		_getRelativeOffset: function() {
-
+	
 			if(this.cssPosition === "relative") {
 				var p = this.currentItem.position();
 				return {
@@ -15775,25 +16461,25 @@ webpackJsonp_name_([5],{
 			} else {
 				return { top: 0, left: 0 };
 			}
-
+	
 		},
-
+	
 		_cacheMargins: function() {
 			this.margins = {
 				left: (parseInt(this.currentItem.css("marginLeft"),10) || 0),
 				top: (parseInt(this.currentItem.css("marginTop"),10) || 0)
 			};
 		},
-
+	
 		_cacheHelperProportions: function() {
 			this.helperProportions = {
 				width: this.helper.outerWidth(),
 				height: this.helper.outerHeight()
 			};
 		},
-
+	
 		_setContainment: function() {
-
+	
 			var ce, co, over,
 				o = this.options;
 			if(o.containment === "parent") {
@@ -15807,12 +16493,12 @@ webpackJsonp_name_([5],{
 					(o.containment === "document" ? this.document.width() : this.window.height() || this.document[0].body.parentNode.scrollHeight) - this.helperProportions.height - this.margins.top
 				];
 			}
-
+	
 			if(!(/^(document|window|parent)$/).test(o.containment)) {
 				ce = $(o.containment)[0];
 				co = $(o.containment).offset();
 				over = ($(ce).css("overflow") !== "hidden");
-
+	
 				this.containment = [
 					co.left + (parseInt($(ce).css("borderLeftWidth"),10) || 0) + (parseInt($(ce).css("paddingLeft"),10) || 0) - this.margins.left,
 					co.top + (parseInt($(ce).css("borderTopWidth"),10) || 0) + (parseInt($(ce).css("paddingTop"),10) || 0) - this.margins.top,
@@ -15820,18 +16506,18 @@ webpackJsonp_name_([5],{
 					co.top+(over ? Math.max(ce.scrollHeight,ce.offsetHeight) : ce.offsetHeight) - (parseInt($(ce).css("borderTopWidth"),10) || 0) - (parseInt($(ce).css("paddingBottom"),10) || 0) - this.helperProportions.height - this.margins.top
 				];
 			}
-
+	
 		},
-
+	
 		_convertPositionTo: function(d, pos) {
-
+	
 			if(!pos) {
 				pos = this.position;
 			}
 			var mod = d === "absolute" ? 1 : -1,
 				scroll = this.cssPosition === "absolute" && !(this.scrollParent[0] !== this.document[0] && $.contains(this.scrollParent[0], this.offsetParent[0])) ? this.offsetParent : this.scrollParent,
 				scrollIsRootNode = (/(html|body)/i).test(scroll[0].tagName);
-
+	
 			return {
 				top: (
 					pos.top	+																// The absolute mouse position
@@ -15846,17 +16532,17 @@ webpackJsonp_name_([5],{
 					( ( this.cssPosition === "fixed" ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() ) * mod)
 				)
 			};
-
+	
 		},
-
+	
 		_generatePosition: function(event) {
-
+	
 			var top, left,
 				o = this.options,
 				pageX = event.pageX,
 				pageY = event.pageY,
 				scroll = this.cssPosition === "absolute" && !(this.scrollParent[0] !== this.document[0] && $.contains(this.scrollParent[0], this.offsetParent[0])) ? this.offsetParent : this.scrollParent, scrollIsRootNode = (/(html|body)/i).test(scroll[0].tagName);
-
+	
 			// This is another very weird special case that only happens for relative elements:
 			// 1. If the css position is relative
 			// 2. and the scroll parent is the document or similar to the offset parent
@@ -15864,14 +16550,14 @@ webpackJsonp_name_([5],{
 			if(this.cssPosition === "relative" && !(this.scrollParent[0] !== this.document[0] && this.scrollParent[0] !== this.offsetParent[0])) {
 				this.offset.relative = this._getRelativeOffset();
 			}
-
+	
 			/*
 			 * - Position constraining -
 			 * Constrain the position to a mix of grid, containment.
 			 */
-
+	
 			if(this.originalPosition) { //If we are not dragging yet, we won't check for options
-
+	
 				if(this.containment) {
 					if(event.pageX - this.offset.click.left < this.containment[0]) {
 						pageX = this.containment[0] + this.offset.click.left;
@@ -15886,17 +16572,17 @@ webpackJsonp_name_([5],{
 						pageY = this.containment[3] + this.offset.click.top;
 					}
 				}
-
+	
 				if(o.grid) {
 					top = this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1];
 					pageY = this.containment ? ( (top - this.offset.click.top >= this.containment[1] && top - this.offset.click.top <= this.containment[3]) ? top : ((top - this.offset.click.top >= this.containment[1]) ? top - o.grid[1] : top + o.grid[1])) : top;
-
+	
 					left = this.originalPageX + Math.round((pageX - this.originalPageX) / o.grid[0]) * o.grid[0];
 					pageX = this.containment ? ( (left - this.offset.click.left >= this.containment[0] && left - this.offset.click.left <= this.containment[2]) ? left : ((left - this.offset.click.left >= this.containment[0]) ? left - o.grid[0] : left + o.grid[0])) : left;
 				}
-
+	
 			}
-
+	
 			return {
 				top: (
 					pageY -																// The absolute mouse position
@@ -15913,13 +16599,13 @@ webpackJsonp_name_([5],{
 					( ( this.cssPosition === "fixed" ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() ))
 				)
 			};
-
+	
 		},
-
+	
 		_rearrange: function(event, i, a, hardRefresh) {
-
+	
 			a ? a[0].appendChild(this.placeholder[0]) : i.item[0].parentNode.insertBefore(this.placeholder[0], (this.direction === "down" ? i.item[0] : i.item[0].nextSibling));
-
+	
 			//Various things done here to improve the performance:
 			// 1. we create a setTimeout, that calls refreshPositions
 			// 2. on the instance, we have a counter variable, that get's higher after every append
@@ -15927,30 +16613,30 @@ webpackJsonp_name_([5],{
 			// 4. this lets only the last addition to the timeout stack through
 			this.counter = this.counter ? ++this.counter : 1;
 			var counter = this.counter;
-
+	
 			this._delay(function() {
 				if(counter === this.counter) {
 					this.refreshPositions(!hardRefresh); //Precompute after each DOM insertion, NOT on mousemove
 				}
 			});
-
+	
 		},
-
+	
 		_clear: function(event, noPropagation) {
-
+	
 			this.reverting = false;
 			// We delay all events that have to be triggered to after the point where the placeholder has been removed and
 			// everything else normalized again
 			var i,
 				delayedTriggers = [];
-
+	
 			// We first have to update the dom position of the actual currentItem
 			// Note: don't do it if the current item is already removed (by a user), or it gets reappended (see #4088)
 			if(!this._noFinalSort && this.currentItem.parent().length) {
 				this.placeholder.before(this.currentItem);
 			}
 			this._noFinalSort = null;
-
+	
 			if(this.helper[0] === this.currentItem[0]) {
 				for(i in this._storedCSS) {
 					if(this._storedCSS[i] === "auto" || this._storedCSS[i] === "static") {
@@ -15961,14 +16647,14 @@ webpackJsonp_name_([5],{
 			} else {
 				this.currentItem.show();
 			}
-
+	
 			if(this.fromOutside && !noPropagation) {
 				delayedTriggers.push(function(event) { this._trigger("receive", event, this._uiHash(this.fromOutside)); });
 			}
 			if((this.fromOutside || this.domPosition.prev !== this.currentItem.prev().not(".ui-sortable-helper")[0] || this.domPosition.parent !== this.currentItem.parent()[0]) && !noPropagation) {
 				delayedTriggers.push(function(event) { this._trigger("update", event, this._uiHash()); }); //Trigger update callback if the DOM position has changed
 			}
-
+	
 			// Check if the items Container has Changed and trigger appropriate
 			// events.
 			if (this !== this.currentContainer) {
@@ -15978,8 +16664,8 @@ webpackJsonp_name_([5],{
 					delayedTriggers.push((function(c) { return function(event) { c._trigger("update", event, this._uiHash(this));  }; }).call(this, this.currentContainer));
 				}
 			}
-
-
+	
+	
 			//Post events to containers
 			function delayEvent( type, instance, container ) {
 				return function( event ) {
@@ -15995,7 +16681,7 @@ webpackJsonp_name_([5],{
 					this.containers[i].containerCache.over = 0;
 				}
 			}
-
+	
 			//Do what was originally in plugins
 			if ( this.storedCursor ) {
 				this.document.find( "body" ).css( "cursor", this.storedCursor );
@@ -16007,41 +16693,41 @@ webpackJsonp_name_([5],{
 			if(this._storedZIndex) {
 				this.helper.css("zIndex", this._storedZIndex === "auto" ? "" : this._storedZIndex);
 			}
-
+	
 			this.dragging = false;
-
+	
 			if(!noPropagation) {
 				this._trigger("beforeStop", event, this._uiHash());
 			}
-
+	
 			//$(this.placeholder[0]).remove(); would have been the jQuery way - unfortunately, it unbinds ALL events from the original node!
 			this.placeholder[0].parentNode.removeChild(this.placeholder[0]);
-
+	
 			if ( !this.cancelHelperRemoval ) {
 				if ( this.helper[ 0 ] !== this.currentItem[ 0 ] ) {
 					this.helper.remove();
 				}
 				this.helper = null;
 			}
-
+	
 			if(!noPropagation) {
 				for (i=0; i < delayedTriggers.length; i++) {
 					delayedTriggers[i].call(this, event);
 				} //Trigger all delayed events
 				this._trigger("stop", event, this._uiHash());
 			}
-
+	
 			this.fromOutside = false;
 			return !this.cancelHelperRemoval;
-
+	
 		},
-
+	
 		_trigger: function() {
 			if ($.Widget.prototype._trigger.apply(this, arguments) === false) {
 				this.cancel();
 			}
 		},
-
+	
 		_uiHash: function(_inst) {
 			var inst = _inst || this;
 			return {
@@ -16054,10 +16740,10 @@ webpackJsonp_name_([5],{
 				sender: _inst ? _inst.element : null
 			};
 		}
-
+	
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Spinner 1.11.4
 	 * http://jqueryui.com
@@ -16068,8 +16754,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/spinner/
 	 */
-
-
+	
+	
 	function spinner_modifier( fn ) {
 		return function() {
 			var previous = this.element.val();
@@ -16080,7 +16766,7 @@ webpackJsonp_name_([5],{
 			}
 		};
 	}
-
+	
 	var spinner = $.widget( "ui.spinner", {
 		version: "1.11.4",
 		defaultElement: "<input>",
@@ -16097,30 +16783,30 @@ webpackJsonp_name_([5],{
 			numberFormat: null,
 			page: 10,
 			step: 1,
-
+	
 			change: null,
 			spin: null,
 			start: null,
 			stop: null
 		},
-
+	
 		_create: function() {
 			// handle string values that need to be parsed
 			this._setOption( "max", this.options.max );
 			this._setOption( "min", this.options.min );
 			this._setOption( "step", this.options.step );
-
+	
 			// Only format if there is a value, prevents the field from being marked
 			// as invalid in Firefox, see #9573.
 			if ( this.value() !== "" ) {
 				// Format the value, but don't constrain.
 				this._value( this.element.val(), true );
 			}
-
+	
 			this._draw();
 			this._on( this._events );
 			this._refresh();
-
+	
 			// turning off autocomplete prevents the browser from remembering the
 			// value when navigating through history, so we re-enable autocomplete
 			// if the page is unloaded before the widget is destroyed. #7790
@@ -16130,21 +16816,21 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_getCreateOptions: function() {
 			var options = {},
 				element = this.element;
-
+	
 			$.each( [ "min", "max", "step" ], function( i, option ) {
 				var value = element.attr( option );
 				if ( value !== undefined && value.length ) {
 					options[ option ] = value;
 				}
 			});
-
+	
 			return options;
 		},
-
+	
 		_events: {
 			keydown: function( event ) {
 				if ( this._start( event ) && this._keydown( event ) ) {
@@ -16160,7 +16846,7 @@ webpackJsonp_name_([5],{
 					delete this.cancelBlur;
 					return;
 				}
-
+	
 				this._stop();
 				this._refresh();
 				if ( this.previous !== this.element.val() ) {
@@ -16174,7 +16860,7 @@ webpackJsonp_name_([5],{
 				if ( !this.spinning && !this._start( event ) ) {
 					return false;
 				}
-
+	
 				this._spin( (delta > 0 ? 1 : -1) * this.options.step, event );
 				clearTimeout( this.mousewheelTimer );
 				this.mousewheelTimer = this._delay(function() {
@@ -16186,7 +16872,7 @@ webpackJsonp_name_([5],{
 			},
 			"mousedown .ui-spinner-button": function( event ) {
 				var previous;
-
+	
 				// We never want the buttons to have focus; whenever the user is
 				// interacting with the spinner, the focus should be on the input.
 				// If the input is focused then this.previous is properly set from
@@ -16207,11 +16893,11 @@ webpackJsonp_name_([5],{
 						});
 					}
 				}
-
+	
 				// ensure focus is on (or stays on) the text field
 				event.preventDefault();
 				checkFocus.call( this );
-
+	
 				// support: IE
 				// IE doesn't prevent moving focus even with event.preventDefault()
 				// so we set a flag to know when we should ignore the blur event
@@ -16221,11 +16907,11 @@ webpackJsonp_name_([5],{
 					delete this.cancelBlur;
 					checkFocus.call( this );
 				});
-
+	
 				if ( this._start( event ) === false ) {
 					return;
 				}
-
+	
 				this._repeat( null, $( event.currentTarget ).hasClass( "ui-spinner-up" ) ? 1 : -1, event );
 			},
 			"mouseup .ui-spinner-button": "_stop",
@@ -16234,7 +16920,7 @@ webpackJsonp_name_([5],{
 				if ( !$( event.currentTarget ).hasClass( "ui-state-active" ) ) {
 					return;
 				}
-
+	
 				if ( this._start( event ) === false ) {
 					return false;
 				}
@@ -16245,7 +16931,7 @@ webpackJsonp_name_([5],{
 			// we trigger the stop event?
 			"mouseleave .ui-spinner-button": "_stop"
 		},
-
+	
 		_draw: function() {
 			var uiSpinner = this.uiSpinner = this.element
 				.addClass( "ui-spinner-input" )
@@ -16254,32 +16940,32 @@ webpackJsonp_name_([5],{
 				.parent()
 					// add buttons
 					.append( this._buttonHtml() );
-
+	
 			this.element.attr( "role", "spinbutton" );
-
+	
 			// button bindings
 			this.buttons = uiSpinner.find( ".ui-spinner-button" )
 				.attr( "tabIndex", -1 )
 				.button()
 				.removeClass( "ui-corner-all" );
-
+	
 			// IE 6 doesn't understand height: 50% for the buttons
 			// unless the wrapper has an explicit height
 			if ( this.buttons.height() > Math.ceil( uiSpinner.height() * 0.5 ) &&
 					uiSpinner.height() > 0 ) {
 				uiSpinner.height( uiSpinner.height() );
 			}
-
+	
 			// disable spinner if element was already disabled
 			if ( this.options.disabled ) {
 				this.disable();
 			}
 		},
-
+	
 		_keydown: function( event ) {
 			var options = this.options,
 				keyCode = $.ui.keyCode;
-
+	
 			switch ( event.keyCode ) {
 			case keyCode.UP:
 				this._repeat( null, 1, event );
@@ -16294,14 +16980,14 @@ webpackJsonp_name_([5],{
 				this._repeat( null, -options.page, event );
 				return true;
 			}
-
+	
 			return false;
 		},
-
+	
 		_uiSpinnerHtml: function() {
 			return "<span class='ui-spinner ui-widget ui-widget-content ui-corner-all'></span>";
 		},
-
+	
 		_buttonHtml: function() {
 			return "" +
 				"<a class='ui-spinner-button ui-spinner-up ui-corner-tr'>" +
@@ -16311,57 +16997,57 @@ webpackJsonp_name_([5],{
 					"<span class='ui-icon " + this.options.icons.down + "'>&#9660;</span>" +
 				"</a>";
 		},
-
+	
 		_start: function( event ) {
 			if ( !this.spinning && this._trigger( "start", event ) === false ) {
 				return false;
 			}
-
+	
 			if ( !this.counter ) {
 				this.counter = 1;
 			}
 			this.spinning = true;
 			return true;
 		},
-
+	
 		_repeat: function( i, steps, event ) {
 			i = i || 500;
-
+	
 			clearTimeout( this.timer );
 			this.timer = this._delay(function() {
 				this._repeat( 40, steps, event );
 			}, i );
-
+	
 			this._spin( steps * this.options.step, event );
 		},
-
+	
 		_spin: function( step, event ) {
 			var value = this.value() || 0;
-
+	
 			if ( !this.counter ) {
 				this.counter = 1;
 			}
-
+	
 			value = this._adjustValue( value + step * this._increment( this.counter ) );
-
+	
 			if ( !this.spinning || this._trigger( "spin", event, { value: value } ) !== false) {
 				this._value( value );
 				this.counter++;
 			}
 		},
-
+	
 		_increment: function( i ) {
 			var incremental = this.options.incremental;
-
+	
 			if ( incremental ) {
 				return $.isFunction( incremental ) ?
 					incremental( i ) :
 					Math.floor( i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1 );
 			}
-
+	
 			return 1;
 		},
-
+	
 		_precision: function() {
 			var precision = this._precisionOf( this.options.step );
 			if ( this.options.min !== null ) {
@@ -16369,17 +17055,17 @@ webpackJsonp_name_([5],{
 			}
 			return precision;
 		},
-
+	
 		_precisionOf: function( num ) {
 			var str = num.toString(),
 				decimal = str.indexOf( "." );
 			return decimal === -1 ? 0 : str.length - decimal - 1;
 		},
-
+	
 		_adjustValue: function( value ) {
 			var base, aboveMin,
 				options = this.options;
-
+	
 			// make sure we're at a valid step
 			// - find out where we are relative to the base (min or 0)
 			base = options.min !== null ? options.min : 0;
@@ -16388,10 +17074,10 @@ webpackJsonp_name_([5],{
 			aboveMin = Math.round(aboveMin / options.step) * options.step;
 			// - rounding is based on 0, so adjust back to our base
 			value = base + aboveMin;
-
+	
 			// fix precision from bad JS floating point math
 			value = parseFloat( value.toFixed( this._precision() ) );
-
+	
 			// clamp the value
 			if ( options.max !== null && value > options.max) {
 				return options.max;
@@ -16399,22 +17085,22 @@ webpackJsonp_name_([5],{
 			if ( options.min !== null && value < options.min ) {
 				return options.min;
 			}
-
+	
 			return value;
 		},
-
+	
 		_stop: function( event ) {
 			if ( !this.spinning ) {
 				return;
 			}
-
+	
 			clearTimeout( this.timer );
 			clearTimeout( this.mousewheelTimer );
 			this.counter = 0;
 			this.spinning = false;
 			this._trigger( "stop", event );
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "culture" || key === "numberFormat" ) {
 				var prevValue = this._parse( this.element.val() );
@@ -16422,7 +17108,7 @@ webpackJsonp_name_([5],{
 				this.element.val( this._format( prevValue ) );
 				return;
 			}
-
+	
 			if ( key === "max" || key === "min" || key === "step" ) {
 				if ( typeof value === "string" ) {
 					value = this._parse( value );
@@ -16436,20 +17122,20 @@ webpackJsonp_name_([5],{
 					.removeClass( this.options.icons.down )
 					.addClass( value.down );
 			}
-
+	
 			this._super( key, value );
-
+	
 			if ( key === "disabled" ) {
 				this.widget().toggleClass( "ui-state-disabled", !!value );
 				this.element.prop( "disabled", !!value );
 				this.buttons.button( value ? "disable" : "enable" );
 			}
 		},
-
+	
 		_setOptions: spinner_modifier(function( options ) {
 			this._super( options );
 		}),
-
+	
 		_parse: function( val ) {
 			if ( typeof val === "string" && val !== "" ) {
 				val = window.Globalize && this.options.numberFormat ?
@@ -16457,7 +17143,7 @@ webpackJsonp_name_([5],{
 			}
 			return val === "" || isNaN( val ) ? null : val;
 		},
-
+	
 		_format: function( value ) {
 			if ( value === "" ) {
 				return "";
@@ -16466,7 +17152,7 @@ webpackJsonp_name_([5],{
 				Globalize.format( value, this.options.numberFormat, this.options.culture ) :
 				value;
 		},
-
+	
 		_refresh: function() {
 			this.element.attr({
 				"aria-valuemin": this.options.min,
@@ -16475,19 +17161,19 @@ webpackJsonp_name_([5],{
 				"aria-valuenow": this._parse( this.element.val() )
 			});
 		},
-
+	
 		isValid: function() {
 			var value = this.value();
-
+	
 			// null is invalid
 			if ( value === null ) {
 				return false;
 			}
-
+	
 			// if value gets adjusted, it's invalid
 			return value === this._adjustValue( value );
 		},
-
+	
 		// update the value without triggering change
 		_value: function( value, allowAny ) {
 			var parsed;
@@ -16503,7 +17189,7 @@ webpackJsonp_name_([5],{
 			this.element.val( value );
 			this._refresh();
 		},
-
+	
 		_destroy: function() {
 			this.element
 				.removeClass( "ui-spinner-input" )
@@ -16515,7 +17201,7 @@ webpackJsonp_name_([5],{
 				.removeAttr( "aria-valuenow" );
 			this.uiSpinner.replaceWith( this.element );
 		},
-
+	
 		stepUp: spinner_modifier(function( steps ) {
 			this._stepUp( steps );
 		}),
@@ -16525,7 +17211,7 @@ webpackJsonp_name_([5],{
 				this._stop();
 			}
 		},
-
+	
 		stepDown: spinner_modifier(function( steps ) {
 			this._stepDown( steps );
 		}),
@@ -16535,28 +17221,28 @@ webpackJsonp_name_([5],{
 				this._stop();
 			}
 		},
-
+	
 		pageUp: spinner_modifier(function( pages ) {
 			this._stepUp( (pages || 1) * this.options.page );
 		}),
-
+	
 		pageDown: spinner_modifier(function( pages ) {
 			this._stepDown( (pages || 1) * this.options.page );
 		}),
-
+	
 		value: function( newVal ) {
 			if ( !arguments.length ) {
 				return this._parse( this.element.val() );
 			}
 			spinner_modifier( this._value ).call( this, newVal );
 		},
-
+	
 		widget: function() {
 			return this.uiSpinner;
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Tabs 1.11.4
 	 * http://jqueryui.com
@@ -16567,8 +17253,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/tabs/
 	 */
-
-
+	
+	
 	var tabs = $.widget( "ui.tabs", {
 		version: "1.11.4",
 		delay: 300,
@@ -16579,27 +17265,27 @@ webpackJsonp_name_([5],{
 			heightStyle: "content",
 			hide: null,
 			show: null,
-
+	
 			// callbacks
 			activate: null,
 			beforeActivate: null,
 			beforeLoad: null,
 			load: null
 		},
-
+	
 		_isLocal: (function() {
 			var rhash = /#.*$/;
-
+	
 			return function( anchor ) {
 				var anchorUrl, locationUrl;
-
+	
 				// support: IE7
 				// IE7 doesn't normalize the href property when set via script (#9317)
 				anchor = anchor.cloneNode( false );
-
+	
 				anchorUrl = anchor.href.replace( rhash, "" );
 				locationUrl = location.href.replace( rhash, "" );
-
+	
 				// decoding may throw an error if the URL isn't UTF-8 (#9518)
 				try {
 					anchorUrl = decodeURIComponent( anchorUrl );
@@ -16607,24 +17293,24 @@ webpackJsonp_name_([5],{
 				try {
 					locationUrl = decodeURIComponent( locationUrl );
 				} catch ( error ) {}
-
+	
 				return anchor.hash.length > 1 && anchorUrl === locationUrl;
 			};
 		})(),
-
+	
 		_create: function() {
 			var that = this,
 				options = this.options;
-
+	
 			this.running = false;
-
+	
 			this.element
 				.addClass( "ui-tabs ui-widget ui-widget-content ui-corner-all" )
 				.toggleClass( "ui-tabs-collapsible", options.collapsible );
-
+	
 			this._processTabs();
 			options.active = this._initialActive();
-
+	
 			// Take disabling tabs via class attribute from HTML
 			// into account and update option properly.
 			if ( $.isArray( options.disabled ) ) {
@@ -16634,26 +17320,26 @@ webpackJsonp_name_([5],{
 					})
 				) ).sort();
 			}
-
+	
 			// check for length avoids error when initializing empty list
 			if ( this.options.active !== false && this.anchors.length ) {
 				this.active = this._findActive( options.active );
 			} else {
 				this.active = $();
 			}
-
+	
 			this._refresh();
-
+	
 			if ( this.active.length ) {
 				this.load( options.active );
 			}
 		},
-
+	
 		_initialActive: function() {
 			var active = this.options.active,
 				collapsible = this.options.collapsible,
 				locationHash = location.hash.substring( 1 );
-
+	
 			if ( active === null ) {
 				// check the fragment identifier in the URL
 				if ( locationHash ) {
@@ -16664,18 +17350,18 @@ webpackJsonp_name_([5],{
 						}
 					});
 				}
-
+	
 				// check for a tab marked active via a class
 				if ( active === null ) {
 					active = this.tabs.index( this.tabs.filter( ".ui-tabs-active" ) );
 				}
-
+	
 				// no active tab, set to false
 				if ( active === null || active === -1 ) {
 					active = this.tabs.length ? 0 : false;
 				}
 			}
-
+	
 			// handle numbers: negative, out of range
 			if ( active !== false ) {
 				active = this.tabs.index( this.tabs.eq( active ) );
@@ -16683,31 +17369,31 @@ webpackJsonp_name_([5],{
 					active = collapsible ? false : 0;
 				}
 			}
-
+	
 			// don't allow collapsible: false and active: false
 			if ( !collapsible && active === false && this.anchors.length ) {
 				active = 0;
 			}
-
+	
 			return active;
 		},
-
+	
 		_getCreateEventData: function() {
 			return {
 				tab: this.active,
 				panel: !this.active.length ? $() : this._getPanelForTab( this.active )
 			};
 		},
-
+	
 		_tabKeydown: function( event ) {
 			var focusedTab = $( this.document[0].activeElement ).closest( "li" ),
 				selectedIndex = this.tabs.index( focusedTab ),
 				goingForward = true;
-
+	
 			if ( this._handlePageNav( event ) ) {
 				return;
 			}
-
+	
 			switch ( event.keyCode ) {
 				case $.ui.keyCode.RIGHT:
 				case $.ui.keyCode.DOWN:
@@ -16740,39 +17426,39 @@ webpackJsonp_name_([5],{
 				default:
 					return;
 			}
-
+	
 			// Focus the appropriate tab, based on which key was pressed
 			event.preventDefault();
 			clearTimeout( this.activating );
 			selectedIndex = this._focusNextTab( selectedIndex, goingForward );
-
+	
 			// Navigating with control/command key will prevent automatic activation
 			if ( !event.ctrlKey && !event.metaKey ) {
-
+	
 				// Update aria-selected immediately so that AT think the tab is already selected.
 				// Otherwise AT may confuse the user by stating that they need to activate the tab,
 				// but the tab will already be activated by the time the announcement finishes.
 				focusedTab.attr( "aria-selected", "false" );
 				this.tabs.eq( selectedIndex ).attr( "aria-selected", "true" );
-
+	
 				this.activating = this._delay(function() {
 					this.option( "active", selectedIndex );
 				}, this.delay );
 			}
 		},
-
+	
 		_panelKeydown: function( event ) {
 			if ( this._handlePageNav( event ) ) {
 				return;
 			}
-
+	
 			// Ctrl+up moves focus to the current tab
 			if ( event.ctrlKey && event.keyCode === $.ui.keyCode.UP ) {
 				event.preventDefault();
 				this.active.focus();
 			}
 		},
-
+	
 		// Alt+page up/down moves focus to the previous/next tab (and activates)
 		_handlePageNav: function( event ) {
 			if ( event.altKey && event.keyCode === $.ui.keyCode.PAGE_UP ) {
@@ -16784,10 +17470,10 @@ webpackJsonp_name_([5],{
 				return true;
 			}
 		},
-
+	
 		_findNextTab: function( index, goingForward ) {
 			var lastTabIndex = this.tabs.length - 1;
-
+	
 			function constrain() {
 				if ( index > lastTabIndex ) {
 					index = 0;
@@ -16797,35 +17483,35 @@ webpackJsonp_name_([5],{
 				}
 				return index;
 			}
-
+	
 			while ( $.inArray( constrain(), this.options.disabled ) !== -1 ) {
 				index = goingForward ? index + 1 : index - 1;
 			}
-
+	
 			return index;
 		},
-
+	
 		_focusNextTab: function( index, goingForward ) {
 			index = this._findNextTab( index, goingForward );
 			this.tabs.eq( index ).focus();
 			return index;
 		},
-
+	
 		_setOption: function( key, value ) {
 			if ( key === "active" ) {
 				// _activate() will handle invalid values and update this.options
 				this._activate( value );
 				return;
 			}
-
+	
 			if ( key === "disabled" ) {
 				// don't use the widget factory's disabled handling
 				this._setupDisabled( value );
 				return;
 			}
-
+	
 			this._super( key, value);
-
+	
 			if ( key === "collapsible" ) {
 				this.element.toggleClass( "ui-tabs-collapsible", value );
 				// Setting collapsible: false while collapsed; open first panel
@@ -16833,32 +17519,32 @@ webpackJsonp_name_([5],{
 					this._activate( 0 );
 				}
 			}
-
+	
 			if ( key === "event" ) {
 				this._setupEvents( value );
 			}
-
+	
 			if ( key === "heightStyle" ) {
 				this._setupHeightStyle( value );
 			}
 		},
-
+	
 		_sanitizeSelector: function( hash ) {
 			return hash ? hash.replace( /[!"$%&'()*+,.\/:;<=>?@\[\]\^`{|}~]/g, "\\$&" ) : "";
 		},
-
+	
 		refresh: function() {
 			var options = this.options,
 				lis = this.tablist.children( ":has(a[href])" );
-
+	
 			// get disabled tabs from class attribute from HTML
 			// this will get converted to a boolean if needed in _refresh()
 			options.disabled = $.map( lis.filter( ".ui-state-disabled" ), function( tab ) {
 				return lis.index( tab );
 			});
-
+	
 			this._processTabs();
-
+	
 			// was collapsed or no tabs
 			if ( options.active === false || !this.anchors.length ) {
 				options.active = false;
@@ -16878,15 +17564,15 @@ webpackJsonp_name_([5],{
 				// make sure active index is correct
 				options.active = this.tabs.index( this.active );
 			}
-
+	
 			this._refresh();
 		},
-
+	
 		_refresh: function() {
 			this._setupDisabled( this.options.disabled );
 			this._setupEvents( this.options.event );
 			this._setupHeightStyle( this.options.heightStyle );
-
+	
 			this.tabs.not( this.active ).attr({
 				"aria-selected": "false",
 				"aria-expanded": "false",
@@ -16897,7 +17583,7 @@ webpackJsonp_name_([5],{
 				.attr({
 					"aria-hidden": "true"
 				});
-
+	
 			// Make sure one tab is in the tab order
 			if ( !this.active.length ) {
 				this.tabs.eq( 0 ).attr( "tabIndex", 0 );
@@ -16916,24 +17602,24 @@ webpackJsonp_name_([5],{
 					});
 			}
 		},
-
+	
 		_processTabs: function() {
 			var that = this,
 				prevTabs = this.tabs,
 				prevAnchors = this.anchors,
 				prevPanels = this.panels;
-
+	
 			this.tablist = this._getList()
 				.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
 				.attr( "role", "tablist" )
-
+	
 				// Prevent users from focusing disabled tabs via click
 				.delegate( "> li", "mousedown" + this.eventNamespace, function( event ) {
 					if ( $( this ).is( ".ui-state-disabled" ) ) {
 						event.preventDefault();
 					}
 				})
-
+	
 				// support: IE <9
 				// Preventing the default action in mousedown doesn't prevent IE
 				// from focusing the element, so if the anchor gets focused, blur.
@@ -16945,14 +17631,14 @@ webpackJsonp_name_([5],{
 						this.blur();
 					}
 				});
-
+	
 			this.tabs = this.tablist.find( "> li:has(a[href])" )
 				.addClass( "ui-state-default ui-corner-top" )
 				.attr({
 					role: "tab",
 					tabIndex: -1
 				});
-
+	
 			this.anchors = this.tabs.map(function() {
 					return $( "a", this )[ 0 ];
 				})
@@ -16961,15 +17647,15 @@ webpackJsonp_name_([5],{
 					role: "presentation",
 					tabIndex: -1
 				});
-
+	
 			this.panels = $();
-
+	
 			this.anchors.each(function( i, anchor ) {
 				var selector, panel, panelId,
 					anchorId = $( anchor ).uniqueId().attr( "id" ),
 					tab = $( anchor ).closest( "li" ),
 					originalAriaControls = tab.attr( "aria-controls" );
-
+	
 				// inline tab
 				if ( that._isLocal( anchor ) ) {
 					selector = anchor.hash;
@@ -16988,7 +17674,7 @@ webpackJsonp_name_([5],{
 					}
 					panel.attr( "aria-live", "polite" );
 				}
-
+	
 				if ( panel.length) {
 					that.panels = that.panels.add( panel );
 				}
@@ -17001,11 +17687,11 @@ webpackJsonp_name_([5],{
 				});
 				panel.attr( "aria-labelledby", anchorId );
 			});
-
+	
 			this.panels
 				.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
 				.attr( "role", "tabpanel" );
-
+	
 			// Avoid memory leaks (#10056)
 			if ( prevTabs ) {
 				this._off( prevTabs.not( this.tabs ) );
@@ -17013,19 +17699,19 @@ webpackJsonp_name_([5],{
 				this._off( prevPanels.not( this.panels ) );
 			}
 		},
-
+	
 		// allow overriding how to find the list for rare usage scenarios (#7715)
 		_getList: function() {
 			return this.tablist || this.element.find( "ol,ul" ).eq( 0 );
 		},
-
+	
 		_createPanel: function( id ) {
 			return $( "<div>" )
 				.attr( "id", id )
 				.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
 				.data( "ui-tabs-destroy", true );
 		},
-
+	
 		_setupDisabled: function( disabled ) {
 			if ( $.isArray( disabled ) ) {
 				if ( !disabled.length ) {
@@ -17034,7 +17720,7 @@ webpackJsonp_name_([5],{
 					disabled = true;
 				}
 			}
-
+	
 			// disable tabs
 			for ( var i = 0, li; ( li = this.tabs[ i ] ); i++ ) {
 				if ( disabled === true || $.inArray( i, disabled ) !== -1 ) {
@@ -17047,10 +17733,10 @@ webpackJsonp_name_([5],{
 						.removeAttr( "aria-disabled" );
 				}
 			}
-
+	
 			this.options.disabled = disabled;
 		},
-
+	
 		_setupEvents: function( event ) {
 			var events = {};
 			if ( event ) {
@@ -17058,7 +17744,7 @@ webpackJsonp_name_([5],{
 					events[ eventName ] = "_eventHandler";
 				});
 			}
-
+	
 			this._off( this.anchors.add( this.tabs ).add( this.panels ) );
 			// Always prevent the default action, even when disabled
 			this._on( true, this.anchors, {
@@ -17069,33 +17755,33 @@ webpackJsonp_name_([5],{
 			this._on( this.anchors, events );
 			this._on( this.tabs, { keydown: "_tabKeydown" } );
 			this._on( this.panels, { keydown: "_panelKeydown" } );
-
+	
 			this._focusable( this.tabs );
 			this._hoverable( this.tabs );
 		},
-
+	
 		_setupHeightStyle: function( heightStyle ) {
 			var maxHeight,
 				parent = this.element.parent();
-
+	
 			if ( heightStyle === "fill" ) {
 				maxHeight = parent.height();
 				maxHeight -= this.element.outerHeight() - this.element.height();
-
+	
 				this.element.siblings( ":visible" ).each(function() {
 					var elem = $( this ),
 						position = elem.css( "position" );
-
+	
 					if ( position === "absolute" || position === "fixed" ) {
 						return;
 					}
 					maxHeight -= elem.outerHeight( true );
 				});
-
+	
 				this.element.children().not( this.panels ).each(function() {
 					maxHeight -= $( this ).outerHeight( true );
 				});
-
+	
 				this.panels.each(function() {
 					$( this ).height( Math.max( 0, maxHeight -
 						$( this ).innerHeight() + $( this ).height() ) );
@@ -17108,7 +17794,7 @@ webpackJsonp_name_([5],{
 				}).height( maxHeight );
 			}
 		},
-
+	
 		_eventHandler: function( event ) {
 			var options = this.options,
 				active = this.active,
@@ -17124,9 +17810,9 @@ webpackJsonp_name_([5],{
 					newTab: collapsing ? $() : tab,
 					newPanel: toShow
 				};
-
+	
 			event.preventDefault();
-
+	
 			if ( tab.hasClass( "ui-state-disabled" ) ||
 					// tab is already loading
 					tab.hasClass( "ui-tabs-loading" ) ||
@@ -17138,40 +17824,40 @@ webpackJsonp_name_([5],{
 					( this._trigger( "beforeActivate", event, eventData ) === false ) ) {
 				return;
 			}
-
+	
 			options.active = collapsing ? false : this.tabs.index( tab );
-
+	
 			this.active = clickedIsActive ? $() : tab;
 			if ( this.xhr ) {
 				this.xhr.abort();
 			}
-
+	
 			if ( !toHide.length && !toShow.length ) {
 				$.error( "jQuery UI Tabs: Mismatching fragment identifier." );
 			}
-
+	
 			if ( toShow.length ) {
 				this.load( this.tabs.index( tab ), event );
 			}
 			this._toggle( event, eventData );
 		},
-
+	
 		// handles show/hide for selecting tabs
 		_toggle: function( event, eventData ) {
 			var that = this,
 				toShow = eventData.newPanel,
 				toHide = eventData.oldPanel;
-
+	
 			this.running = true;
-
+	
 			function complete() {
 				that.running = false;
 				that._trigger( "activate", event, eventData );
 			}
-
+	
 			function show() {
 				eventData.newTab.closest( "li" ).addClass( "ui-tabs-active ui-state-active" );
-
+	
 				if ( toShow.length && that.options.show ) {
 					that._show( toShow, that.options.show, complete );
 				} else {
@@ -17179,7 +17865,7 @@ webpackJsonp_name_([5],{
 					complete();
 				}
 			}
-
+	
 			// start out by hiding, then showing, then completing
 			if ( toHide.length && this.options.hide ) {
 				this._hide( toHide, this.options.hide, function() {
@@ -17191,7 +17877,7 @@ webpackJsonp_name_([5],{
 				toHide.hide();
 				show();
 			}
-
+	
 			toHide.attr( "aria-hidden", "true" );
 			eventData.oldTab.attr({
 				"aria-selected": "false",
@@ -17208,7 +17894,7 @@ webpackJsonp_name_([5],{
 				})
 				.attr( "tabIndex", -1 );
 			}
-
+	
 			toShow.attr( "aria-hidden", "false" );
 			eventData.newTab.attr({
 				"aria-selected": "true",
@@ -17216,21 +17902,21 @@ webpackJsonp_name_([5],{
 				tabIndex: 0
 			});
 		},
-
+	
 		_activate: function( index ) {
 			var anchor,
 				active = this._findActive( index );
-
+	
 			// trying to activate the already active panel
 			if ( active[ 0 ] === this.active[ 0 ] ) {
 				return;
 			}
-
+	
 			// trying to collapse, simulate a click on the current active header
 			if ( !active.length ) {
 				active = this.active;
 			}
-
+	
 			anchor = active.find( ".ui-tabs-anchor" )[ 0 ];
 			this._eventHandler({
 				target: anchor,
@@ -17238,39 +17924,39 @@ webpackJsonp_name_([5],{
 				preventDefault: $.noop
 			});
 		},
-
+	
 		_findActive: function( index ) {
 			return index === false ? $() : this.tabs.eq( index );
 		},
-
+	
 		_getIndex: function( index ) {
 			// meta-function to give users option to provide a href string instead of a numerical index.
 			if ( typeof index === "string" ) {
 				index = this.anchors.index( this.anchors.filter( "[href$='" + index + "']" ) );
 			}
-
+	
 			return index;
 		},
-
+	
 		_destroy: function() {
 			if ( this.xhr ) {
 				this.xhr.abort();
 			}
-
+	
 			this.element.removeClass( "ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-collapsible" );
-
+	
 			this.tablist
 				.removeClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
 				.removeAttr( "role" );
-
+	
 			this.anchors
 				.removeClass( "ui-tabs-anchor" )
 				.removeAttr( "role" )
 				.removeAttr( "tabIndex" )
 				.removeUniqueId();
-
+	
 			this.tablist.unbind( this.eventNamespace );
-
+	
 			this.tabs.add( this.panels ).each(function() {
 				if ( $.data( this, "ui-tabs-destroy" ) ) {
 					$( this ).remove();
@@ -17288,7 +17974,7 @@ webpackJsonp_name_([5],{
 						.removeAttr( "role" );
 				}
 			});
-
+	
 			this.tabs.each(function() {
 				var li = $( this ),
 					prev = li.data( "ui-tabs-aria-controls" );
@@ -17300,20 +17986,20 @@ webpackJsonp_name_([5],{
 					li.removeAttr( "aria-controls" );
 				}
 			});
-
+	
 			this.panels.show();
-
+	
 			if ( this.options.heightStyle !== "content" ) {
 				this.panels.css( "height", "" );
 			}
 		},
-
+	
 		enable: function( index ) {
 			var disabled = this.options.disabled;
 			if ( disabled === false ) {
 				return;
 			}
-
+	
 			if ( index === undefined ) {
 				disabled = false;
 			} else {
@@ -17330,13 +18016,13 @@ webpackJsonp_name_([5],{
 			}
 			this._setupDisabled( disabled );
 		},
-
+	
 		disable: function( index ) {
 			var disabled = this.options.disabled;
 			if ( disabled === true ) {
 				return;
 			}
-
+	
 			if ( index === undefined ) {
 				disabled = true;
 			} else {
@@ -17352,7 +18038,7 @@ webpackJsonp_name_([5],{
 			}
 			this._setupDisabled( disabled );
 		},
-
+	
 		load: function( index, event ) {
 			index = this._getIndex( index );
 			var that = this,
@@ -17367,29 +18053,29 @@ webpackJsonp_name_([5],{
 					if ( status === "abort" ) {
 						that.panels.stop( false, true );
 					}
-
+	
 					tab.removeClass( "ui-tabs-loading" );
 					panel.removeAttr( "aria-busy" );
-
+	
 					if ( jqXHR === that.xhr ) {
 						delete that.xhr;
 					}
 				};
-
+	
 			// not remote
 			if ( this._isLocal( anchor[ 0 ] ) ) {
 				return;
 			}
-
+	
 			this.xhr = $.ajax( this._ajaxSettings( anchor, event, eventData ) );
-
+	
 			// support: jQuery <1.8
 			// jQuery <1.8 returns false if the request is canceled in beforeSend,
 			// but as of 1.8, $.ajax() always returns a jqXHR object.
 			if ( this.xhr && this.xhr.statusText !== "canceled" ) {
 				tab.addClass( "ui-tabs-loading" );
 				panel.attr( "aria-busy", "true" );
-
+	
 				this.xhr
 					.done(function( response, status, jqXHR ) {
 						// support: jQuery <1.8
@@ -17397,7 +18083,7 @@ webpackJsonp_name_([5],{
 						setTimeout(function() {
 							panel.html( response );
 							that._trigger( "load", event, eventData );
-
+	
 							complete( jqXHR, status );
 						}, 1 );
 					})
@@ -17410,7 +18096,7 @@ webpackJsonp_name_([5],{
 					});
 			}
 		},
-
+	
 		_ajaxSettings: function( anchor, event, eventData ) {
 			var that = this;
 			return {
@@ -17421,14 +18107,14 @@ webpackJsonp_name_([5],{
 				}
 			};
 		},
-
+	
 		_getPanelForTab: function( tab ) {
 			var id = $( tab ).attr( "aria-controls" );
 			return this.element.find( this._sanitizeSelector( "#" + id ) );
 		}
 	});
-
-
+	
+	
 	/*!
 	 * jQuery UI Tooltip 1.11.4
 	 * http://jqueryui.com
@@ -17439,8 +18125,8 @@ webpackJsonp_name_([5],{
 	 *
 	 * http://api.jqueryui.com/tooltip/
 	 */
-
-
+	
+	
 	var tooltip = $.widget( "ui.tooltip", {
 		version: "1.11.4",
 		options: {
@@ -17462,12 +18148,12 @@ webpackJsonp_name_([5],{
 			show: true,
 			tooltipClass: null,
 			track: false,
-
+	
 			// callbacks
 			close: null,
 			open: null
 		},
-
+	
 		_addDescribedBy: function( elem, id ) {
 			var describedby = (elem.attr( "aria-describedby" ) || "").split( /\s+/ );
 			describedby.push( id );
@@ -17475,16 +18161,16 @@ webpackJsonp_name_([5],{
 				.data( "ui-tooltip-id", id )
 				.attr( "aria-describedby", $.trim( describedby.join( " " ) ) );
 		},
-
+	
 		_removeDescribedBy: function( elem ) {
 			var id = elem.data( "ui-tooltip-id" ),
 				describedby = (elem.attr( "aria-describedby" ) || "").split( /\s+/ ),
 				index = $.inArray( id, describedby );
-
+	
 			if ( index !== -1 ) {
 				describedby.splice( index, 1 );
 			}
-
+	
 			elem.removeData( "ui-tooltip-id" );
 			describedby = $.trim( describedby.join( " " ) );
 			if ( describedby ) {
@@ -17493,23 +18179,23 @@ webpackJsonp_name_([5],{
 				elem.removeAttr( "aria-describedby" );
 			}
 		},
-
+	
 		_create: function() {
 			this._on({
 				mouseover: "open",
 				focusin: "open"
 			});
-
+	
 			// IDs of generated tooltips, needed for destroy
 			this.tooltips = {};
-
+	
 			// IDs of parent tooltips where we removed the title attribute
 			this.parents = {};
-
+	
 			if ( this.options.disabled ) {
 				this._disable();
 			}
-
+	
 			// Append the aria-live region so tooltips announce correctly
 			this.liveRegion = $( "<div>" )
 				.attr({
@@ -17520,36 +18206,36 @@ webpackJsonp_name_([5],{
 				.addClass( "ui-helper-hidden-accessible" )
 				.appendTo( this.document[ 0 ].body );
 		},
-
+	
 		_setOption: function( key, value ) {
 			var that = this;
-
+	
 			if ( key === "disabled" ) {
 				this[ value ? "_disable" : "_enable" ]();
 				this.options[ key ] = value;
 				// disable element style changes
 				return;
 			}
-
+	
 			this._super( key, value );
-
+	
 			if ( key === "content" ) {
 				$.each( this.tooltips, function( id, tooltipData ) {
 					that._updateContent( tooltipData.element );
 				});
 			}
 		},
-
+	
 		_disable: function() {
 			var that = this;
-
+	
 			// close open tooltips
 			$.each( this.tooltips, function( id, tooltipData ) {
 				var event = $.Event( "blur" );
 				event.target = event.currentTarget = tooltipData.element[ 0 ];
 				that.close( event, true );
 			});
-
+	
 			// remove title attributes to prevent native tooltips
 			this.element.find( this.options.items ).addBack().each(function() {
 				var element = $( this );
@@ -17560,7 +18246,7 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		_enable: function() {
 			// restore title attributes
 			this.element.find( this.options.items ).addBack().each(function() {
@@ -17570,25 +18256,25 @@ webpackJsonp_name_([5],{
 				}
 			});
 		},
-
+	
 		open: function( event ) {
 			var that = this,
 				target = $( event ? event.target : this.element )
 					// we need closest here due to mouseover bubbling,
 					// but always pointing at the same event target
 					.closest( this.options.items );
-
+	
 			// No element to show a tooltip for or the tooltip is already open
 			if ( !target.length || target.data( "ui-tooltip-id" ) ) {
 				return;
 			}
-
+	
 			if ( target.attr( "title" ) ) {
 				target.data( "ui-tooltip-title", target.attr( "title" ) );
 			}
-
+	
 			target.data( "ui-tooltip-open", true );
-
+	
 			// kill parent tooltips, custom or native, for hover
 			if ( event && event.type === "mouseover" ) {
 				target.parents().each(function() {
@@ -17609,32 +18295,32 @@ webpackJsonp_name_([5],{
 					}
 				});
 			}
-
+	
 			this._registerCloseHandlers( event, target );
 			this._updateContent( target, event );
 		},
-
+	
 		_updateContent: function( target, event ) {
 			var content,
 				contentOption = this.options.content,
 				that = this,
 				eventType = event ? event.type : null;
-
+	
 			if ( typeof contentOption === "string" ) {
 				return this._open( event, target, contentOption );
 			}
-
+	
 			content = contentOption.call( target[0], function( response ) {
-
+	
 				// IE may instantly serve a cached response for ajax requests
 				// delay this call to _open so the other call to _open runs first
 				that._delay(function() {
-
+	
 					// Ignore async response if tooltip was closed already
 					if ( !target.data( "ui-tooltip-open" ) ) {
 						return;
 					}
-
+	
 					// jQuery creates a special event for focusin when it doesn't
 					// exist natively. To improve performance, the native event
 					// object is reused and the type is changed. Therefore, we can't
@@ -17650,15 +18336,15 @@ webpackJsonp_name_([5],{
 				this._open( event, target, content );
 			}
 		},
-
+	
 		_open: function( event, target, content ) {
 			var tooltipData, tooltip, delayedShow, a11yContent,
 				positionOption = $.extend( {}, this.options.position );
-
+	
 			if ( !content ) {
 				return;
 			}
-
+	
 			// Content can be updated multiple times. If the tooltip already
 			// exists, then just update the content and bail.
 			tooltipData = this._find( target );
@@ -17666,7 +18352,7 @@ webpackJsonp_name_([5],{
 				tooltipData.tooltip.find( ".ui-tooltip-content" ).html( content );
 				return;
 			}
-
+	
 			// if we have a title, clear it to prevent the native tooltip
 			// we have to check first to avoid defining a title if none exists
 			// (we don't want to cause an element to start matching [title])
@@ -17681,12 +18367,12 @@ webpackJsonp_name_([5],{
 					target.removeAttr( "title" );
 				}
 			}
-
+	
 			tooltipData = this._tooltip( target );
 			tooltip = tooltipData.tooltip;
 			this._addDescribedBy( target, tooltip.attr( "id" ) );
 			tooltip.find( ".ui-tooltip-content" ).html( content );
-
+	
 			// Support: Voiceover on OS X, JAWS on IE <= 9
 			// JAWS announces deletions even when aria-relevant="additions"
 			// Voiceover will sometimes re-read the entire log region's contents from the beginning
@@ -17698,7 +18384,7 @@ webpackJsonp_name_([5],{
 				a11yContent = content;
 			}
 			$( "<div>" ).html( a11yContent ).appendTo( this.liveRegion );
-
+	
 			function position( event ) {
 				positionOption.of = event;
 				if ( tooltip.is( ":hidden" ) ) {
@@ -17717,9 +18403,9 @@ webpackJsonp_name_([5],{
 					of: target
 				}, this.options.position ) );
 			}
-
+	
 			tooltip.hide();
-
+	
 			this._show( tooltip, this.options.show );
 			// Handle tracking tooltips that are shown with a delay (#8644). As soon
 			// as the tooltip is visible, position the tooltip using the most recent
@@ -17732,10 +18418,10 @@ webpackJsonp_name_([5],{
 					}
 				}, $.fx.interval );
 			}
-
+	
 			this._trigger( "open", event, { tooltip: tooltip } );
 		},
-
+	
 		_registerCloseHandlers: function( event, target ) {
 			var events = {
 				keyup: function( event ) {
@@ -17746,7 +18432,7 @@ webpackJsonp_name_([5],{
 					}
 				}
 			};
-
+	
 			// Only bind remove handler for delegated targets. Non-delegated
 			// tooltips will handle this in destroy.
 			if ( target[ 0 ] !== this.element[ 0 ] ) {
@@ -17754,7 +18440,7 @@ webpackJsonp_name_([5],{
 					this._removeTooltip( this._find( target ).tooltip );
 				};
 			}
-
+	
 			if ( !event || event.type === "mouseover" ) {
 				events.mouseleave = "close";
 			}
@@ -17763,16 +18449,16 @@ webpackJsonp_name_([5],{
 			}
 			this._on( true, target, events );
 		},
-
+	
 		close: function( event ) {
 			var tooltip,
 				that = this,
 				target = $( event ? event.currentTarget : this.element ),
 				tooltipData = this._find( target );
-
+	
 			// The tooltip may already be closed
 			if ( !tooltipData ) {
-
+	
 				// We set ui-tooltip-open immediately upon open (in open()), but only set the
 				// additional data once there's actually content to show (in _open()). So even if the
 				// tooltip doesn't have full data, we always remove ui-tooltip-open in case we're in
@@ -17780,87 +18466,87 @@ webpackJsonp_name_([5],{
 				target.removeData( "ui-tooltip-open" );
 				return;
 			}
-
+	
 			tooltip = tooltipData.tooltip;
-
+	
 			// disabling closes the tooltip, so we need to track when we're closing
 			// to avoid an infinite loop in case the tooltip becomes disabled on close
 			if ( tooltipData.closing ) {
 				return;
 			}
-
+	
 			// Clear the interval for delayed tracking tooltips
 			clearInterval( this.delayedShow );
-
+	
 			// only set title if we had one before (see comment in _open())
 			// If the title attribute has changed since open(), don't restore
 			if ( target.data( "ui-tooltip-title" ) && !target.attr( "title" ) ) {
 				target.attr( "title", target.data( "ui-tooltip-title" ) );
 			}
-
+	
 			this._removeDescribedBy( target );
-
+	
 			tooltipData.hiding = true;
 			tooltip.stop( true );
 			this._hide( tooltip, this.options.hide, function() {
 				that._removeTooltip( $( this ) );
 			});
-
+	
 			target.removeData( "ui-tooltip-open" );
 			this._off( target, "mouseleave focusout keyup" );
-
+	
 			// Remove 'remove' binding only on delegated targets
 			if ( target[ 0 ] !== this.element[ 0 ] ) {
 				this._off( target, "remove" );
 			}
 			this._off( this.document, "mousemove" );
-
+	
 			if ( event && event.type === "mouseleave" ) {
 				$.each( this.parents, function( id, parent ) {
 					$( parent.element ).attr( "title", parent.title );
 					delete that.parents[ id ];
 				});
 			}
-
+	
 			tooltipData.closing = true;
 			this._trigger( "close", event, { tooltip: tooltip } );
 			if ( !tooltipData.hiding ) {
 				tooltipData.closing = false;
 			}
 		},
-
+	
 		_tooltip: function( element ) {
 			var tooltip = $( "<div>" )
 					.attr( "role", "tooltip" )
 					.addClass( "ui-tooltip ui-widget ui-corner-all ui-widget-content " +
 						( this.options.tooltipClass || "" ) ),
 				id = tooltip.uniqueId().attr( "id" );
-
+	
 			$( "<div>" )
 				.addClass( "ui-tooltip-content" )
 				.appendTo( tooltip );
-
+	
 			tooltip.appendTo( this.document[0].body );
-
+	
 			return this.tooltips[ id ] = {
 				element: element,
 				tooltip: tooltip
 			};
 		},
-
+	
 		_find: function( target ) {
 			var id = target.data( "ui-tooltip-id" );
 			return id ? this.tooltips[ id ] : null;
 		},
-
+	
 		_removeTooltip: function( tooltip ) {
 			tooltip.remove();
 			delete this.tooltips[ tooltip.attr( "id" ) ];
 		},
-
+	
 		_destroy: function() {
 			var that = this;
-
+	
 			// close open tooltips
 			$.each( this.tooltips, function( id, tooltipData ) {
 				// Delegate to close method to handle common cleanup
@@ -17868,11 +18554,11 @@ webpackJsonp_name_([5],{
 					element = tooltipData.element;
 				event.target = event.currentTarget = element[ 0 ];
 				that.close( event, true );
-
+	
 				// Remove immediately; destroying an open tooltip doesn't use the
 				// hide animation
 				$( "#" + id ).remove();
-
+	
 				// Restore the title
 				if ( element.data( "ui-tooltip-title" ) ) {
 					// If the title attribute has changed since open(), don't restore
@@ -17885,44 +18571,47 @@ webpackJsonp_name_([5],{
 			this.liveRegion.remove();
 		}
 	});
-
-
-
+	
+	
+	
 	}));
 
 /***/ },
 
-/***/ 2437:
+/***/ 3198:
+/*!**********************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DifferentialDownloadButton.jsx ***!
+  \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var $ = __webpack_require__(2424);
-	__webpack_require__(2436);
+	
+	var $ = __webpack_require__(/*! jquery */ 3055);
+	__webpack_require__(/*! jquery-ui-bundle */ 3197);
 	//TODO: make this button consistently styled, using Bootstrap or Foundation
 	//remove this dependency on jquery
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
+	
 	//*------------------------------------------------------------------*
-
-	__webpack_require__(2438);
-
+	
+	__webpack_require__(/*! ./DifferentialDownloadButton.css */ 3199);
+	
 	//*------------------------------------------------------------------*
-
-
+	
+	
 	var RequiredString = React.PropTypes.string.isRequired;
 	var OptionalString = React.PropTypes.string;
 	var RequiredNumber = React.PropTypes.number.isRequired;
 	var OptionalNumber = React.PropTypes.number;
-
+	
 	var DownloadDifferentialButton = React.createClass({
 	    displayName: 'DownloadDifferentialButton',
-
-
+	
+	
 	    propTypes: {
 	        results: React.PropTypes.arrayOf(React.PropTypes.shape({
 	            species: RequiredString,
@@ -17943,7 +18632,7 @@ webpackJsonp_name_([5],{
 	            id: RequiredString
 	        })).isRequired
 	    },
-
+	
 	    _convertJsonToTsv: function _convertJsonToTsv(results) {
 	        var arrayResults = (typeof results === 'undefined' ? 'undefined' : _typeof(results)) !== 'object' ? JSON.parse(results) : results;
 	        return [['Gene', 'Organism', 'Experiment Accession', 'Comparison', 'log2foldchange', 'pValue'].concat(arrayResults.some(function (diffResults) {
@@ -17962,7 +18651,7 @@ webpackJsonp_name_([5],{
 	        var tsvString = this._convertJsonToTsv(this.props.results);
 	        var uri = 'data:text/tsv;charset=utf-8,' + encodeURI(tsvString);
 	        var fileName = 'differentialResults.tsv';
-
+	
 	        return React.createElement(
 	            'a',
 	            { style: { padding: '10px', fontSize: '14px', verticalAlign: 'middle' },
@@ -17977,23 +18666,26 @@ webpackJsonp_name_([5],{
 	        );
 	    }
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = DownloadDifferentialButton;
 
 /***/ },
 
-/***/ 2438:
+/***/ 3199:
+/*!**********************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DifferentialDownloadButton.css ***!
+  \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2439);
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialDownloadButton.css */ 3200);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18011,46 +18703,52 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2439:
+/***/ 3200:
+/*!***************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/DifferentialDownloadButton.css ***!
+  \***************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaNoTextButton {\n    border: 1px solid #ccc !important; /* overrides ebi-visual.css */\n}\n\n.gxaNoTextButton .ui-button-text {\n    padding: 2px;\n}\n\n.gxaDownloadButton {\n    background-color: white;\n}\n\n.button:hover, .button:focus, .button:active {\n    background-color: transparent;\n}\n\n.button {\n    padding-left: 1em;\n    padding-top:0;\n    padding-bottom:0;\n    margin:0;\n}\n\nhtml.fontface a.gxaDownloadButton.button .icon-functional:before {\n    color: #454545;\n}\n\na.gxaDownloadButton.button:hover, a.gxaDownloadButton.button:active, a.gxaDownloadButton.button:focus{\n    border-bottom: transparent 1px solid;\n}", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2440:
+/***/ 3201:
+/*!*********************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/legend/LegendDifferential.jsx ***!
+  \*********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var $ = __webpack_require__(2424);
-	__webpack_require__(2436);
-
-	var React = __webpack_require__(2);
-
+	
+	var $ = __webpack_require__(/*! jquery */ 3055);
+	__webpack_require__(/*! jquery-ui-bundle */ 3197);
+	
+	var React = __webpack_require__(/*! react */ 2);
+	
 	//*------------------------------------------------------------------*
-
-	var LegendRow = __webpack_require__(2441);
-
+	
+	var LegendRow = __webpack_require__(/*! ./LegendRow.jsx */ 3202);
+	
 	//*------------------------------------------------------------------*
-
-	__webpack_require__(2442);
-	__webpack_require__(2444);
-
+	
+	__webpack_require__(/*! ./gxaGradient.css */ 3203);
+	__webpack_require__(/*! ./gxaHelpTooltip.css */ 3205);
+	
 	//*------------------------------------------------------------------*
-
+	
 	var LegendDifferential = React.createClass({
 	    displayName: 'LegendDifferential',
-
-
+	
+	
 	    propTypes: {
 	        atlasBaseURL: React.PropTypes.string.isRequired,
 	        minDownLevel: React.PropTypes.number.isRequired,
@@ -18058,7 +18756,7 @@ webpackJsonp_name_([5],{
 	        minUpLevel: React.PropTypes.number.isRequired,
 	        maxUpLevel: React.PropTypes.number.isRequired
 	    },
-
+	
 	    render: function render() {
 	        return React.createElement(
 	            'div',
@@ -18098,45 +18796,48 @@ webpackJsonp_name_([5],{
 	            )
 	        );
 	    },
-
+	
 	    componentDidMount: function componentDidMount() {
 	        $('#legendHelp').click(function (e) {
 	            e.preventDefault();
 	        }).tooltip({ tooltipClass: 'gxaHelpTooltip' });
 	    }
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = LegendDifferential;
 
 /***/ },
 
-/***/ 2441:
+/***/ 3202:
+/*!************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/legend/LegendRow.jsx ***!
+  \************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-
-	__webpack_require__(2442);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	
+	__webpack_require__(/*! ./gxaGradient.css */ 3203);
+	
 	var LegendRow = React.createClass({
 	    displayName: 'LegendRow',
-
-
+	
+	
 	    propTypes: {
 	        lowValueColour: React.PropTypes.string.isRequired,
 	        highValueColour: React.PropTypes.string.isRequired,
 	        lowExpressionLevel: React.PropTypes.element.isRequired,
 	        highExpressionLevel: React.PropTypes.element.isRequired
 	    },
-
+	
 	    render: function render() {
 	        var spanStyle = {
 	            backgroundImage: 'linear-gradient(to right, ' + this.props.lowValueColour + ', ' + this.props.highValueColour + ')'
 	        };
-
+	
 	        return this.props.lowExpressionLevel || this.props.highExpressionLevel ? React.createElement(
 	            'div',
 	            { style: { display: "table-row" } },
@@ -18158,21 +18859,24 @@ webpackJsonp_name_([5],{
 	        ) : null;
 	    }
 	});
-
+	
 	module.exports = LegendRow;
 
 /***/ },
 
-/***/ 2442:
+/***/ 3203:
+/*!**************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/legend/gxaGradient.css ***!
+  \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2443);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaGradient.css */ 3204);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18190,31 +18894,37 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2443:
+/***/ 3204:
+/*!*******************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/legend/gxaGradient.css ***!
+  \*******************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaGradientColour {\n    overflow: auto;\n    vertical-align: middle;\n    width: 200px;\n    height: 15px;\n    margin: 2px 6px 2px 6px;\n    display: inline-block;\n}\n\n.gxaGradientLevel {\n    white-space: nowrap;\n    font-size: 10px;\n    vertical-align: middle;\n    display: table-cell;\n}\n\n.gxaGradientLevelMin {\n    text-align: right;\n}\n\n.gxaGradientLevelMax {\n    text-align: left;\n}", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2444:
+/***/ 3205:
+/*!*****************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/legend/gxaHelpTooltip.css ***!
+  \*****************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2445);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaHelpTooltip.css */ 3206);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18232,41 +18942,47 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2445:
+/***/ 3206:
+/*!**********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/legend/gxaHelpTooltip.css ***!
+  \**********************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaHelpTooltip {\n    width: 33% !important;\n    left: 700px;\n    font-size: 14px !important;\n    background: white;\n    border-width: 1px !important;\n    border: solid cornflowerblue;\n    padding: 4px;\n    color: cornflowerblue;\n}\n\na.help-icon {\n    color: cornflowerblue;\n    vertical-align: top;\n    font-weight: bold;\n    font-size: smaller;\n    padding-left: 0.25rem;\n}\n", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2446:
+/***/ 3207:
+/*!******************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/cell-differential/CellDifferential.jsx ***!
+  \******************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-	var ReactDOMServer = __webpack_require__(762);
-	var $ = __webpack_require__(2424);
-	__webpack_require__(2436);
-
-	var NumberFormat = __webpack_require__(2447).default;
-
-	__webpack_require__(2448);
-	__webpack_require__(2450);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 762);
+	var $ = __webpack_require__(/*! jquery */ 3055);
+	__webpack_require__(/*! jquery-ui-bundle */ 3197);
+	
+	var NumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 3208).default;
+	
+	__webpack_require__(/*! ./gxaShowHideCell.css */ 3209);
+	__webpack_require__(/*! ./gxaDifferentialCellTooltip.css */ 3211);
+	
 	var CellDifferential = React.createClass({
 	    displayName: 'CellDifferential',
-
-
+	
+	
 	    propTypes: {
 	        fontSize: React.PropTypes.number,
 	        colour: React.PropTypes.string,
@@ -18275,7 +18991,7 @@ webpackJsonp_name_([5],{
 	        tStat: React.PropTypes.number,
 	        displayLevels: React.PropTypes.bool.isRequired
 	    },
-
+	
 	    _hasValue: function _hasValue() {
 	        return !!this.props.foldChange;
 	    },
@@ -18286,7 +19002,7 @@ webpackJsonp_name_([5],{
 	        if (!this._hasValue()) {
 	            return React.createElement('td', null);
 	        }
-
+	
 	        return React.createElement(
 	            'td',
 	            { style: { backgroundColor: this.props.colour, verticalAlign: 'middle' } },
@@ -18304,7 +19020,7 @@ webpackJsonp_name_([5],{
 	    },
 	    _initTooltip: function _initTooltip(element) {
 	        var _this = this;
-
+	
 	        function buildHeatmapCellTooltip(pValue, tStatistic, foldChange) {
 	            return React.createElement(
 	                'table',
@@ -18374,38 +19090,44 @@ webpackJsonp_name_([5],{
 	                )
 	            );
 	        }
-
+	
 	        $(element).attr('title', '').tooltip({
 	            open: function open(event, ui) {
 	                ui.tooltip.css('background', _this.props.colour);
 	            },
-
+	
 	            tooltipClass: 'gxaDifferentialCellTooltip',
-
+	
 	            content: function content() {
 	                return ReactDOMServer.renderToStaticMarkup(buildHeatmapCellTooltip(_this.props.pValue, _this.props.tStat, _this.props.foldChange));
 	            }
 	        });
 	    }
 	});
-
+	
 	module.exports = CellDifferential;
 
 /***/ },
 
-/***/ 2447:
-[2891, 768],
+/***/ 3208:
+/*!***************************************************!*\
+  !*** ./~/expression-atlas-number-format/index.js ***!
+  \***************************************************/
+767,
 
-/***/ 2448:
+/***/ 3209:
+/*!*****************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/cell-differential/gxaShowHideCell.css ***!
+  \*****************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2449);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaShowHideCell.css */ 3210);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18423,31 +19145,37 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2449:
+/***/ 3210:
+/*!**********************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/cell-differential/gxaShowHideCell.css ***!
+  \**********************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaShowCell {\n    background-color: white;\n    white-space: nowrap;\n    text-align: center;\n    margin: 4px;\n    padding: 2px;\n}\n\n.gxaHideCell {\n    display: none;\n    visibility: hidden;\n}\n", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2450:
+/***/ 3211:
+/*!****************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/cell-differential/gxaDifferentialCellTooltip.css ***!
+  \****************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2451);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaDifferentialCellTooltip.css */ 3212);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18465,58 +19193,64 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2451:
+/***/ 3212:
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/cell-differential/gxaDifferentialCellTooltip.css ***!
+  \*********************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaDifferentialCellTooltip {\n    width: 26%;\n    left: 300px;\n    border: solid transparent;\n    color: darkslategray;\n    padding: 2px;\n    font: 10px Verdana, Helvetica, Arial, sans-serif;\n}\n\n.gxaDifferentialCellTooltip table {\n    margin: 0; /* overrides ebi-visual.css:134 */\n    background-color: white;\n    border: 1px solid lightgrey;\n    border-collapse: collapse;\n}\n\n.gxaDifferentialCellTooltip th {\n    border-bottom: 1px solid lightgrey;\n    background-color: floralwhite;\n}\n\n.gxaDifferentialCellTooltip td, .gxaDifferentialCellTooltip th {\n    text-align: center;\n    white-space: nowrap;\n    vertical-align: middle;\n    padding: 8px;\n    width: 25px;\n}\n.gxaDifferentialCellTooltip thead {\n    font-size: 0.9em;\n}\n\n.gxaDifferentialCellTooltip tbody {\n    font-size: smaller;\n}\n", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2452:
+/***/ 3213:
+/*!*********************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/contrast-tooltip/contrastTooltipModule.js ***!
+  \*********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-	var ReactDOMServer = __webpack_require__(762);
-
-	var $ = __webpack_require__(2424);
-	__webpack_require__(2436);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOMServer = __webpack_require__(/*! react-dom/server */ 762);
+	
+	var $ = __webpack_require__(/*! jquery */ 3055);
+	__webpack_require__(/*! jquery-ui-bundle */ 3197);
+	
 	//*------------------------------------------------------------------*
-
-	var ContrastTooltip = __webpack_require__(2453);
-
+	
+	var ContrastTooltip = __webpack_require__(/*! ./ContrastTooltip.jsx */ 3214);
+	
 	//*------------------------------------------------------------------*
-
-	__webpack_require__(2454);
-
+	
+	__webpack_require__(/*! ./gxaContrastTooltip.css */ 3215);
+	
 	//*------------------------------------------------------------------*
-
+	
 	function initTooltip(contextRoot, accessKey, element, experimentAccession, contrastId) {
-
+	
 	    $(element).attr("title", "").tooltip({
-
+	
 	        hide: false,
-
+	
 	        show: false,
-
+	
 	        tooltipClass: "gxaContrastTooltip",
-
+	
 	        position: { collision: "none" },
-
+	
 	        close: function close() {
 	            $(".gxaContrastTooltip").remove();
 	        },
-
+	
 	        content: function content(callback) {
 	            $.ajax({
 	                url: contextRoot + "/rest/contrast-summary",
@@ -18541,28 +19275,31 @@ webpackJsonp_name_([5],{
 	                callback("ERROR: " + data);
 	            });
 	        }
-
+	
 	    });
 	}
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = function (contextRoot, accessKey, element, experimentAccession, contrastId) {
 	    initTooltip(contextRoot, accessKey, element, experimentAccession, contrastId);
 	};
 
 /***/ },
 
-/***/ 2453:
+/***/ 3214:
+/*!****************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/contrast-tooltip/ContrastTooltip.jsx ***!
+  \****************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-
-	var React = __webpack_require__(2);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	
 	var ContrastTooltip = React.createClass({
 	    displayName: "ContrastTooltip",
-
+	
 	    propTypes: {
 	        experimentDescription: React.PropTypes.string.isRequired,
 	        contrastDescription: React.PropTypes.string.isRequired,
@@ -18575,24 +19312,24 @@ webpackJsonp_name_([5],{
 	            testValue: React.PropTypes.string.isRequired
 	        }))
 	    },
-
+	
 	    propertyRow: function propertyRow(property) {
 	        if (!property.testValue && !property.referenceValue) {
 	            return null;
 	        }
-
+	
 	        function isFactor(property) {
 	            return property.contrastPropertyType === "FACTOR";
 	        }
-
+	
 	        var style = { whiteSpace: "normal" };
-
+	
 	        if (isFactor(property)) {
 	            style.fontWeight = "bold";
 	        } else {
 	            style.color = "gray";
 	        }
-
+	
 	        return React.createElement(
 	            "tr",
 	            { key: property.contrastPropertyType + "-" + property.propertyName },
@@ -18613,7 +19350,7 @@ webpackJsonp_name_([5],{
 	            )
 	        );
 	    },
-
+	
 	    render: function render() {
 	        return React.createElement(
 	            "div",
@@ -18666,25 +19403,28 @@ webpackJsonp_name_([5],{
 	            )
 	        );
 	    }
-
+	
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = ContrastTooltip;
 
 /***/ },
 
-/***/ 2454:
+/***/ 3215:
+/*!*******************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/contrast-tooltip/gxaContrastTooltip.css ***!
+  \*******************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2455);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./gxaContrastTooltip.css */ 3216);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18702,31 +19442,37 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2455:
+/***/ 3216:
+/*!************************************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/contrast-tooltip/gxaContrastTooltip.css ***!
+  \************************************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaContrastTooltip {\n    border: solid transparent;\n    color: darkslategray;\n    padding: 2px;\n    box-shadow: 0 0 1em lightgrey;\n    max-width: 500px;\n}\n\n.gxaContrastTooltip table {\n    margin: 0; /* overrides ebi-visual.css:134 */\n    background-color: white;\n    border: 1px solid lightgrey;\n    border-collapse: collapse;\n    font-size: 0.8em;\n}\n\n.gxaContrastTooltip th {\n    border-bottom: 1px solid lightgrey;\n    background-color: floralwhite;\n}\n\n.gxaContrastTooltip td {\n    border: 1px solid lightgrey;\n}\n\n.gxaContrastTooltip td, .gxaContrastTooltip th {\n    vertical-align: middle;\n    padding: 8px;\n}\n\n#contrastExperimentDescription {\n    font-size: small;\n}\n", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2456:
+/***/ 3217:
+/*!***************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DifferentialResults.css ***!
+  \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2457);
+	var content = __webpack_require__(/*! !./../~/css-loader!./DifferentialResults.css */ 3218);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2433)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 3183)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18744,36 +19490,42 @@ webpackJsonp_name_([5],{
 
 /***/ },
 
-/***/ 2457:
+/***/ 3218:
+/*!********************************************************************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/~/css-loader!./atlas_bundles/differential-expression/src/DifferentialResults.css ***!
+  \********************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2432)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 3182)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, "table.table-striped tr:nth-child(even) {\n    background-color: #f9f9f9;\n}\n\ntable.table-striped tr:nth-child(odd) {\n    background: #FFF;\n}\n\ntable.gxaDifferentialFacetedSearchResults, table.gxaDifferentialFacetedSearchResults td {\n    border: none;\n    width: inherit;\n}\n\ntable.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {\n    font-weight: bold;\n}\n\ntable.gxaDifferentialFacetedSearchResults th {\n    background: transparent;\n    text-align: center;\n    font-size: 90%;\n    border: 0 solid #ddd;\n    border-bottom-width: 2px;\n    vertical-align: bottom;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td {\n    padding: 8px;\n    line-height: 1.42857143;\n    vertical-align: middle;\n    border-top: 1px solid #ddd;\n    text-align: center;\n    font-size: 90%;\n}\n\ntable.gxaDifferentialFacetedSearchResults tr td.col_species .react-ebi-species-icon {\n    font-size: 300%;\n    margin-left: 4px;\n}\n\ntd.gxaExperimentalVariable {\n    text-align: center;\n}\n", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2458:
+/***/ 3219:
+/*!******************************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/DifferentialFacetsTree.jsx ***!
+  \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	
 	//*------------------------------------------------------------------*
-
+	
 	var RequiredString = React.PropTypes.string.isRequired;
 	var RequiredBool = React.PropTypes.bool.isRequired;
-
+	
 	var DifferentialFacetsTree = React.createClass({
 	    displayName: 'DifferentialFacetsTree',
-
+	
 	    propTypes: {
 	        /*
 	        [
@@ -18808,13 +19560,13 @@ webpackJsonp_name_([5],{
 	        }).isRequired).isRequired,
 	        setChecked: React.PropTypes.func.isRequired
 	    },
-
+	
 	    _setChecked: function _setChecked(facetName, facetItemName, checked) {
 	        this.props.setChecked(facetName, facetItemName, checked);
 	    },
 	    render: function render() {
 	        var _this = this;
-
+	
 	        var facets = this.props.facets.map(function (facet) {
 	            return React.createElement(Facet, {
 	                key: facet.facetName,
@@ -18823,7 +19575,7 @@ webpackJsonp_name_([5],{
 	                setChecked: _this._setChecked
 	            });
 	        });
-
+	
 	        return React.createElement(
 	            'div',
 	            null,
@@ -18836,10 +19588,10 @@ webpackJsonp_name_([5],{
 	        );
 	    }
 	});
-
+	
 	var Facet = React.createClass({
 	    displayName: 'Facet',
-
+	
 	    propTypes: {
 	        facetName: React.PropTypes.string.isRequired,
 	        facetItems: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -18850,7 +19602,7 @@ webpackJsonp_name_([5],{
 	        }).isRequired).isRequired,
 	        setChecked: React.PropTypes.func.isRequired
 	    },
-
+	
 	    _setChecked: function _setChecked(facetItemName, checked) {
 	        this.props.setChecked(this.props.facetName, facetItemName, checked);
 	    },
@@ -18874,7 +19626,7 @@ webpackJsonp_name_([5],{
 	    },
 	    render: function render() {
 	        var _this2 = this;
-
+	
 	        var facetItems = this.props.facetItems.map(function (facetItem) {
 	            return React.createElement(FacetItem, {
 	                key: facetItem.name,
@@ -18885,7 +19637,7 @@ webpackJsonp_name_([5],{
 	                setChecked: _this2._setChecked
 	            });
 	        });
-
+	
 	        return React.createElement(
 	            'div',
 	            { className: 'margin-top-large' },
@@ -18898,10 +19650,10 @@ webpackJsonp_name_([5],{
 	        );
 	    }
 	});
-
+	
 	var FacetItem = React.createClass({
 	    displayName: 'FacetItem',
-
+	
 	    propTypes: {
 	        name: RequiredString,
 	        value: RequiredString,
@@ -18909,7 +19661,7 @@ webpackJsonp_name_([5],{
 	        disabled: RequiredBool,
 	        setChecked: React.PropTypes.func.isRequired
 	    },
-
+	
 	    _setChecked: function _setChecked() {
 	        this.props.setChecked(this.props.name, !this.props.checked);
 	    },
@@ -18926,21 +19678,24 @@ webpackJsonp_name_([5],{
 	        );
 	    }
 	});
-
+	
 	//*------------------------------------------------------------------*
-
+	
 	module.exports = DifferentialFacetsTree;
 
 /***/ },
 
-/***/ 2459:
+/***/ 3220:
+/*!*****************************************************************!*\
+  !*** ./atlas_bundles/differential-expression/src/urlManager.js ***!
+  \*****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var Url = __webpack_require__(437);
-	var QueryString = __webpack_require__(2406);
-
+	
+	var Url = __webpack_require__(/*! url */ 437);
+	var QueryString = __webpack_require__(/*! querystring */ 3020);
+	
 	/**
 	 * Stringify the `query` object, assign it to the `ds` search field in the URL and store it in the History
 	 * @param {object} querySelect
@@ -18948,10 +19703,10 @@ webpackJsonp_name_([5],{
 	 */
 	exports.differentialPush = function pushQueryIntoBrowserHistory(querySelect, replace) {
 	    var currentUrlObject = Url.parse(window.location.toString());
-
+	
 	    var newUrlQueryParams = QueryString.parse(currentUrlObject.query);
 	    newUrlQueryParams.ds = JSON.stringify(querySelect);
-
+	
 	    var newUrlObject = {
 	        protocol: currentUrlObject.protocol,
 	        host: currentUrlObject.host,
@@ -18959,17 +19714,17 @@ webpackJsonp_name_([5],{
 	        pathname: currentUrlObject.pathname,
 	        query: newUrlQueryParams
 	    };
-
+	
 	    if (replace) {
 	        history.replaceState(null, '', Url.format(newUrlObject));
 	    } else {
 	        history.pushState(null, '', Url.format(newUrlObject));
 	    }
 	};
-
+	
 	exports.parseDifferentialUrlParameter = function getQuerySelectFromLocation() {
 	    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location;
-
+	
 	    var currentURL = Url.parse(location.toString());
 	    var differentialSelectParam = QueryString.parse(currentURL.query).ds;
 	    return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
@@ -18978,3 +19733,4 @@ webpackJsonp_name_([5],{
 /***/ }
 
 });
+//# sourceMappingURL=expressionAtlasDifferentialExpression.bundle.js.map

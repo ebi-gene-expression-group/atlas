@@ -2,68 +2,77 @@ var expressionAtlasBioentityInformation =
 webpackJsonp_name_([3],{
 
 /***/ 0:
+/*!******************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/index.js ***!
+  \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	module.exports = __webpack_require__(2409);
+	
+	module.exports = __webpack_require__(/*! ./src/renderer.js */ 3023);
 
 /***/ },
 
-/***/ 2409:
+/***/ 3023:
+/*!*************************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/src/renderer.js ***!
+  \*************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var React = __webpack_require__(2);
-	var ReactDOM = __webpack_require__(35);
-
-	var BioentityInformation = __webpack_require__(2410);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 35);
+	
+	var BioentityInformation = __webpack_require__(/*! ./BioentityInformation.jsx */ 3024);
+	
 	exports.render = function (options) {
 	    ReactDOM.render(React.createElement(BioentityInformation, { bioentityProperties: options.payload }), typeof options.target === "string" ? document.getElementById(options.target) : options.target);
 	};
 
 /***/ },
 
-/***/ 2410:
+/***/ 3024:
+/*!**************************************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/src/BioentityInformation.jsx ***!
+  \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var React = __webpack_require__(2);
-	__webpack_require__(2411);
-
+	
+	var React = __webpack_require__(/*! react */ 2);
+	__webpack_require__(/*! ./BioentityInformation.css */ 3025);
+	
 	var PropertyLinkShape = {
 	  text: React.PropTypes.string.isRequired,
 	  url: React.PropTypes.string.isRequired,
 	  relevance: React.PropTypes.number.isRequired
 	};
-
+	
 	var BioentityPropertyShape = {
 	  type: React.PropTypes.string.isRequired,
 	  name: React.PropTypes.string.isRequired,
 	  values: React.PropTypes.arrayOf(React.PropTypes.shape(PropertyLinkShape)).isRequired
 	};
-
+	
 	var BioentityPropertiesShape = {
 	  bioentityProperties: React.PropTypes.arrayOf(React.PropTypes.shape(BioentityPropertyShape))
 	};
-
+	
 	var BioentityProperty = React.createClass({
 	  displayName: "BioentityProperty",
-
+	
 	  propTypes: BioentityPropertyShape,
-
+	
 	  getInitialState: function getInitialState() {
 	    return {
 	      showAll: false
 	    };
 	  },
-
-
+	
+	
 	  // take three most relevant links and then all of the same relevance
 	  _pickMostRelevant: function _pickMostRelevant(properties) {
 	    var relevanceThreshold = properties.map(function (p) {
@@ -98,7 +107,7 @@ webpackJsonp_name_([3],{
 	  render: function render() {
 	    var numUnshownLinks = this.props.values.length - this._pickMostRelevant(this.props.values).length;
 	    var hasOptionalLinks = ["go", "po"].indexOf(this.props.type) > -1 && numUnshownLinks > 0;
-
+	
 	    return React.createElement(
 	      "tr",
 	      null,
@@ -135,12 +144,12 @@ webpackJsonp_name_([3],{
 	    );
 	  }
 	});
-
+	
 	var BioentityInformation = React.createClass({
 	  displayName: "BioentityInformation",
-
+	
 	  propTypes: BioentityPropertiesShape,
-
+	
 	  render: function render() {
 	    return React.createElement(
 	      "div",
@@ -161,21 +170,24 @@ webpackJsonp_name_([3],{
 	    );
 	  }
 	});
-
+	
 	module.exports = BioentityInformation;
 
 /***/ },
 
-/***/ 2411:
+/***/ 3025:
+/*!**************************************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/src/BioentityInformation.css ***!
+  \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
-	var content = __webpack_require__(2412);
+	var content = __webpack_require__(/*! !./../~/css-loader!./BioentityInformation.css */ 3026);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2414)(content, {});
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 3028)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -193,25 +205,35 @@ webpackJsonp_name_([3],{
 
 /***/ },
 
-/***/ 2412:
+/***/ 3026:
+/*!*****************************************************************************************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/~/css-loader!./atlas_bundles/bioentity-information/src/BioentityInformation.css ***!
+  \*****************************************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(2413)();
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 3027)();
 	// imports
-
-
+	
+	
 	// module
 	exports.push([module.id, ".gxaBioentityInformationCard {\n    margin-top: 20px;\n}\n\n.gxaBioentityInformationCard table {\n    margin: 0;\n    width: auto;\n    border: none;\n}\n\n.gxaBioentityInformationCard td {\n    border: none;\n}\n\n\ntd.gxaBioentityInformationCardPropertyType {\n    font-size: 14px;\n    font-weight: bold;\n    white-space: nowrap;\n    padding-right: 2em;\n    border:none;\n}\n\n.gxaBioentityInformationCardPropertyValue {\n    border: none;\n}\n", ""]);
-
+	
 	// exports
 
 
 /***/ },
 
-/***/ 2413:
+/***/ 3027:
+/*!**************************************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/~/css-loader/lib/css-base.js ***!
+  \**************************************************************************/
 491,
 
-/***/ 2414:
+/***/ 3028:
+/*!*************************************************************************!*\
+  !*** ./atlas_bundles/bioentity-information/~/style-loader/addStyles.js ***!
+  \*************************************************************************/
 492
 
 });
+//# sourceMappingURL=expressionAtlasBioentityInformation.bundle.js.map
