@@ -1,1872 +1,35 @@
 var expressionAtlasBaselineExpression =
-webpackJsonp_name_([2],[
-/* 0 */
-/*!****************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/index.js ***!
-  \****************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+webpackJsonp_name_([2],{
+
+/***/ 0:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.render = undefined;
-	
-	var _baselineRenderer = __webpack_require__(/*! ./src/baselineRenderer.jsx */ 1834);
-	
+
+	var _baselineRenderer = __webpack_require__(2279);
+
 	var _baselineRenderer2 = _interopRequireDefault(_baselineRenderer);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	exports.render = _baselineRenderer2.default;
 
-/***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
-/* 339 */,
-/* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */,
-/* 358 */,
-/* 359 */,
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */,
-/* 364 */,
-/* 365 */,
-/* 366 */,
-/* 367 */,
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */,
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */,
-/* 378 */,
-/* 379 */,
-/* 380 */,
-/* 381 */,
-/* 382 */,
-/* 383 */,
-/* 384 */,
-/* 385 */,
-/* 386 */,
-/* 387 */,
-/* 388 */,
-/* 389 */,
-/* 390 */,
-/* 391 */,
-/* 392 */,
-/* 393 */,
-/* 394 */,
-/* 395 */,
-/* 396 */,
-/* 397 */,
-/* 398 */,
-/* 399 */,
-/* 400 */,
-/* 401 */,
-/* 402 */,
-/* 403 */,
-/* 404 */,
-/* 405 */,
-/* 406 */,
-/* 407 */,
-/* 408 */,
-/* 409 */,
-/* 410 */,
-/* 411 */,
-/* 412 */,
-/* 413 */,
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */,
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */,
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
-/* 479 */,
-/* 480 */,
-/* 481 */,
-/* 482 */,
-/* 483 */,
-/* 484 */,
-/* 485 */,
-/* 486 */,
-/* 487 */,
-/* 488 */,
-/* 489 */,
-/* 490 */,
-/* 491 */,
-/* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */,
-/* 532 */,
-/* 533 */,
-/* 534 */,
-/* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */,
-/* 539 */,
-/* 540 */,
-/* 541 */,
-/* 542 */,
-/* 543 */,
-/* 544 */,
-/* 545 */,
-/* 546 */,
-/* 547 */,
-/* 548 */,
-/* 549 */,
-/* 550 */,
-/* 551 */,
-/* 552 */,
-/* 553 */,
-/* 554 */,
-/* 555 */,
-/* 556 */,
-/* 557 */,
-/* 558 */,
-/* 559 */,
-/* 560 */,
-/* 561 */,
-/* 562 */,
-/* 563 */,
-/* 564 */,
-/* 565 */,
-/* 566 */,
-/* 567 */,
-/* 568 */,
-/* 569 */,
-/* 570 */,
-/* 571 */,
-/* 572 */,
-/* 573 */,
-/* 574 */,
-/* 575 */,
-/* 576 */,
-/* 577 */,
-/* 578 */,
-/* 579 */,
-/* 580 */,
-/* 581 */,
-/* 582 */,
-/* 583 */,
-/* 584 */,
-/* 585 */,
-/* 586 */,
-/* 587 */,
-/* 588 */,
-/* 589 */,
-/* 590 */,
-/* 591 */,
-/* 592 */,
-/* 593 */,
-/* 594 */,
-/* 595 */,
-/* 596 */,
-/* 597 */,
-/* 598 */,
-/* 599 */,
-/* 600 */,
-/* 601 */,
-/* 602 */,
-/* 603 */,
-/* 604 */,
-/* 605 */,
-/* 606 */,
-/* 607 */,
-/* 608 */,
-/* 609 */,
-/* 610 */,
-/* 611 */,
-/* 612 */,
-/* 613 */,
-/* 614 */,
-/* 615 */,
-/* 616 */,
-/* 617 */,
-/* 618 */,
-/* 619 */,
-/* 620 */,
-/* 621 */,
-/* 622 */,
-/* 623 */,
-/* 624 */,
-/* 625 */,
-/* 626 */,
-/* 627 */,
-/* 628 */,
-/* 629 */,
-/* 630 */,
-/* 631 */,
-/* 632 */,
-/* 633 */,
-/* 634 */,
-/* 635 */,
-/* 636 */,
-/* 637 */,
-/* 638 */,
-/* 639 */,
-/* 640 */,
-/* 641 */,
-/* 642 */,
-/* 643 */,
-/* 644 */,
-/* 645 */,
-/* 646 */,
-/* 647 */,
-/* 648 */,
-/* 649 */,
-/* 650 */,
-/* 651 */,
-/* 652 */,
-/* 653 */,
-/* 654 */,
-/* 655 */,
-/* 656 */,
-/* 657 */,
-/* 658 */,
-/* 659 */,
-/* 660 */,
-/* 661 */,
-/* 662 */,
-/* 663 */,
-/* 664 */,
-/* 665 */,
-/* 666 */,
-/* 667 */,
-/* 668 */,
-/* 669 */,
-/* 670 */,
-/* 671 */,
-/* 672 */,
-/* 673 */,
-/* 674 */,
-/* 675 */,
-/* 676 */,
-/* 677 */,
-/* 678 */,
-/* 679 */,
-/* 680 */,
-/* 681 */,
-/* 682 */,
-/* 683 */,
-/* 684 */,
-/* 685 */,
-/* 686 */,
-/* 687 */,
-/* 688 */,
-/* 689 */,
-/* 690 */,
-/* 691 */,
-/* 692 */,
-/* 693 */,
-/* 694 */,
-/* 695 */,
-/* 696 */,
-/* 697 */,
-/* 698 */,
-/* 699 */,
-/* 700 */,
-/* 701 */,
-/* 702 */,
-/* 703 */,
-/* 704 */,
-/* 705 */,
-/* 706 */,
-/* 707 */,
-/* 708 */,
-/* 709 */,
-/* 710 */,
-/* 711 */,
-/* 712 */,
-/* 713 */,
-/* 714 */,
-/* 715 */,
-/* 716 */,
-/* 717 */,
-/* 718 */,
-/* 719 */,
-/* 720 */,
-/* 721 */,
-/* 722 */,
-/* 723 */,
-/* 724 */,
-/* 725 */,
-/* 726 */,
-/* 727 */,
-/* 728 */,
-/* 729 */,
-/* 730 */,
-/* 731 */,
-/* 732 */,
-/* 733 */,
-/* 734 */,
-/* 735 */,
-/* 736 */,
-/* 737 */,
-/* 738 */,
-/* 739 */,
-/* 740 */,
-/* 741 */,
-/* 742 */,
-/* 743 */,
-/* 744 */,
-/* 745 */,
-/* 746 */,
-/* 747 */,
-/* 748 */,
-/* 749 */,
-/* 750 */,
-/* 751 */,
-/* 752 */,
-/* 753 */,
-/* 754 */,
-/* 755 */,
-/* 756 */,
-/* 757 */,
-/* 758 */,
-/* 759 */,
-/* 760 */,
-/* 761 */,
-/* 762 */,
-/* 763 */,
-/* 764 */,
-/* 765 */,
-/* 766 */,
-/* 767 */,
-/* 768 */,
-/* 769 */,
-/* 770 */,
-/* 771 */,
-/* 772 */,
-/* 773 */,
-/* 774 */,
-/* 775 */,
-/* 776 */,
-/* 777 */,
-/* 778 */,
-/* 779 */,
-/* 780 */,
-/* 781 */,
-/* 782 */,
-/* 783 */,
-/* 784 */,
-/* 785 */,
-/* 786 */,
-/* 787 */,
-/* 788 */,
-/* 789 */,
-/* 790 */,
-/* 791 */,
-/* 792 */,
-/* 793 */,
-/* 794 */,
-/* 795 */,
-/* 796 */,
-/* 797 */,
-/* 798 */,
-/* 799 */,
-/* 800 */,
-/* 801 */,
-/* 802 */,
-/* 803 */,
-/* 804 */,
-/* 805 */,
-/* 806 */,
-/* 807 */,
-/* 808 */,
-/* 809 */,
-/* 810 */,
-/* 811 */,
-/* 812 */,
-/* 813 */,
-/* 814 */,
-/* 815 */,
-/* 816 */,
-/* 817 */,
-/* 818 */,
-/* 819 */,
-/* 820 */,
-/* 821 */,
-/* 822 */,
-/* 823 */,
-/* 824 */,
-/* 825 */,
-/* 826 */,
-/* 827 */,
-/* 828 */,
-/* 829 */,
-/* 830 */,
-/* 831 */,
-/* 832 */,
-/* 833 */,
-/* 834 */,
-/* 835 */,
-/* 836 */,
-/* 837 */,
-/* 838 */,
-/* 839 */,
-/* 840 */,
-/* 841 */,
-/* 842 */,
-/* 843 */,
-/* 844 */,
-/* 845 */,
-/* 846 */,
-/* 847 */,
-/* 848 */,
-/* 849 */,
-/* 850 */,
-/* 851 */,
-/* 852 */,
-/* 853 */,
-/* 854 */,
-/* 855 */,
-/* 856 */,
-/* 857 */,
-/* 858 */,
-/* 859 */,
-/* 860 */,
-/* 861 */,
-/* 862 */,
-/* 863 */,
-/* 864 */,
-/* 865 */,
-/* 866 */,
-/* 867 */,
-/* 868 */,
-/* 869 */,
-/* 870 */,
-/* 871 */,
-/* 872 */,
-/* 873 */,
-/* 874 */,
-/* 875 */,
-/* 876 */,
-/* 877 */,
-/* 878 */,
-/* 879 */,
-/* 880 */,
-/* 881 */,
-/* 882 */,
-/* 883 */,
-/* 884 */,
-/* 885 */,
-/* 886 */,
-/* 887 */,
-/* 888 */,
-/* 889 */,
-/* 890 */,
-/* 891 */,
-/* 892 */,
-/* 893 */,
-/* 894 */,
-/* 895 */,
-/* 896 */,
-/* 897 */,
-/* 898 */,
-/* 899 */,
-/* 900 */,
-/* 901 */,
-/* 902 */,
-/* 903 */,
-/* 904 */,
-/* 905 */,
-/* 906 */,
-/* 907 */,
-/* 908 */,
-/* 909 */,
-/* 910 */,
-/* 911 */,
-/* 912 */,
-/* 913 */,
-/* 914 */,
-/* 915 */,
-/* 916 */,
-/* 917 */,
-/* 918 */,
-/* 919 */,
-/* 920 */,
-/* 921 */,
-/* 922 */,
-/* 923 */,
-/* 924 */,
-/* 925 */,
-/* 926 */,
-/* 927 */,
-/* 928 */,
-/* 929 */,
-/* 930 */,
-/* 931 */,
-/* 932 */,
-/* 933 */,
-/* 934 */,
-/* 935 */,
-/* 936 */,
-/* 937 */,
-/* 938 */,
-/* 939 */,
-/* 940 */,
-/* 941 */,
-/* 942 */,
-/* 943 */,
-/* 944 */,
-/* 945 */,
-/* 946 */,
-/* 947 */,
-/* 948 */,
-/* 949 */,
-/* 950 */,
-/* 951 */,
-/* 952 */,
-/* 953 */,
-/* 954 */,
-/* 955 */,
-/* 956 */,
-/* 957 */,
-/* 958 */,
-/* 959 */,
-/* 960 */,
-/* 961 */,
-/* 962 */,
-/* 963 */,
-/* 964 */,
-/* 965 */,
-/* 966 */,
-/* 967 */,
-/* 968 */,
-/* 969 */,
-/* 970 */,
-/* 971 */,
-/* 972 */,
-/* 973 */,
-/* 974 */,
-/* 975 */,
-/* 976 */,
-/* 977 */,
-/* 978 */,
-/* 979 */,
-/* 980 */,
-/* 981 */,
-/* 982 */,
-/* 983 */,
-/* 984 */,
-/* 985 */,
-/* 986 */,
-/* 987 */,
-/* 988 */,
-/* 989 */,
-/* 990 */,
-/* 991 */,
-/* 992 */,
-/* 993 */,
-/* 994 */,
-/* 995 */,
-/* 996 */,
-/* 997 */,
-/* 998 */,
-/* 999 */,
-/* 1000 */,
-/* 1001 */,
-/* 1002 */,
-/* 1003 */,
-/* 1004 */,
-/* 1005 */,
-/* 1006 */,
-/* 1007 */,
-/* 1008 */,
-/* 1009 */,
-/* 1010 */,
-/* 1011 */,
-/* 1012 */,
-/* 1013 */,
-/* 1014 */,
-/* 1015 */,
-/* 1016 */,
-/* 1017 */,
-/* 1018 */,
-/* 1019 */,
-/* 1020 */,
-/* 1021 */,
-/* 1022 */,
-/* 1023 */,
-/* 1024 */,
-/* 1025 */,
-/* 1026 */,
-/* 1027 */,
-/* 1028 */,
-/* 1029 */,
-/* 1030 */,
-/* 1031 */,
-/* 1032 */,
-/* 1033 */,
-/* 1034 */,
-/* 1035 */,
-/* 1036 */,
-/* 1037 */,
-/* 1038 */,
-/* 1039 */,
-/* 1040 */,
-/* 1041 */,
-/* 1042 */,
-/* 1043 */,
-/* 1044 */,
-/* 1045 */,
-/* 1046 */,
-/* 1047 */,
-/* 1048 */,
-/* 1049 */,
-/* 1050 */,
-/* 1051 */,
-/* 1052 */,
-/* 1053 */,
-/* 1054 */,
-/* 1055 */,
-/* 1056 */,
-/* 1057 */,
-/* 1058 */,
-/* 1059 */,
-/* 1060 */,
-/* 1061 */,
-/* 1062 */,
-/* 1063 */,
-/* 1064 */,
-/* 1065 */,
-/* 1066 */,
-/* 1067 */,
-/* 1068 */,
-/* 1069 */,
-/* 1070 */,
-/* 1071 */,
-/* 1072 */,
-/* 1073 */,
-/* 1074 */,
-/* 1075 */,
-/* 1076 */,
-/* 1077 */,
-/* 1078 */,
-/* 1079 */,
-/* 1080 */,
-/* 1081 */,
-/* 1082 */,
-/* 1083 */,
-/* 1084 */,
-/* 1085 */,
-/* 1086 */,
-/* 1087 */,
-/* 1088 */,
-/* 1089 */,
-/* 1090 */,
-/* 1091 */,
-/* 1092 */,
-/* 1093 */,
-/* 1094 */,
-/* 1095 */,
-/* 1096 */,
-/* 1097 */,
-/* 1098 */,
-/* 1099 */,
-/* 1100 */,
-/* 1101 */,
-/* 1102 */,
-/* 1103 */,
-/* 1104 */,
-/* 1105 */,
-/* 1106 */,
-/* 1107 */,
-/* 1108 */,
-/* 1109 */,
-/* 1110 */,
-/* 1111 */,
-/* 1112 */,
-/* 1113 */,
-/* 1114 */,
-/* 1115 */,
-/* 1116 */,
-/* 1117 */,
-/* 1118 */,
-/* 1119 */,
-/* 1120 */,
-/* 1121 */,
-/* 1122 */,
-/* 1123 */,
-/* 1124 */,
-/* 1125 */,
-/* 1126 */,
-/* 1127 */,
-/* 1128 */,
-/* 1129 */,
-/* 1130 */,
-/* 1131 */,
-/* 1132 */,
-/* 1133 */,
-/* 1134 */,
-/* 1135 */,
-/* 1136 */,
-/* 1137 */,
-/* 1138 */,
-/* 1139 */,
-/* 1140 */,
-/* 1141 */,
-/* 1142 */,
-/* 1143 */,
-/* 1144 */,
-/* 1145 */,
-/* 1146 */,
-/* 1147 */,
-/* 1148 */,
-/* 1149 */,
-/* 1150 */,
-/* 1151 */,
-/* 1152 */,
-/* 1153 */,
-/* 1154 */,
-/* 1155 */,
-/* 1156 */,
-/* 1157 */,
-/* 1158 */,
-/* 1159 */,
-/* 1160 */,
-/* 1161 */,
-/* 1162 */,
-/* 1163 */,
-/* 1164 */,
-/* 1165 */,
-/* 1166 */,
-/* 1167 */,
-/* 1168 */,
-/* 1169 */,
-/* 1170 */,
-/* 1171 */,
-/* 1172 */,
-/* 1173 */,
-/* 1174 */,
-/* 1175 */,
-/* 1176 */,
-/* 1177 */,
-/* 1178 */,
-/* 1179 */,
-/* 1180 */,
-/* 1181 */,
-/* 1182 */,
-/* 1183 */,
-/* 1184 */,
-/* 1185 */,
-/* 1186 */,
-/* 1187 */,
-/* 1188 */,
-/* 1189 */,
-/* 1190 */,
-/* 1191 */,
-/* 1192 */,
-/* 1193 */,
-/* 1194 */,
-/* 1195 */,
-/* 1196 */,
-/* 1197 */,
-/* 1198 */,
-/* 1199 */,
-/* 1200 */,
-/* 1201 */,
-/* 1202 */,
-/* 1203 */,
-/* 1204 */,
-/* 1205 */,
-/* 1206 */,
-/* 1207 */,
-/* 1208 */,
-/* 1209 */,
-/* 1210 */,
-/* 1211 */,
-/* 1212 */,
-/* 1213 */,
-/* 1214 */,
-/* 1215 */,
-/* 1216 */,
-/* 1217 */,
-/* 1218 */,
-/* 1219 */,
-/* 1220 */,
-/* 1221 */,
-/* 1222 */,
-/* 1223 */,
-/* 1224 */,
-/* 1225 */,
-/* 1226 */,
-/* 1227 */,
-/* 1228 */,
-/* 1229 */,
-/* 1230 */,
-/* 1231 */,
-/* 1232 */,
-/* 1233 */,
-/* 1234 */,
-/* 1235 */,
-/* 1236 */,
-/* 1237 */,
-/* 1238 */,
-/* 1239 */,
-/* 1240 */,
-/* 1241 */,
-/* 1242 */,
-/* 1243 */,
-/* 1244 */,
-/* 1245 */,
-/* 1246 */,
-/* 1247 */,
-/* 1248 */,
-/* 1249 */,
-/* 1250 */,
-/* 1251 */,
-/* 1252 */,
-/* 1253 */,
-/* 1254 */,
-/* 1255 */,
-/* 1256 */,
-/* 1257 */,
-/* 1258 */,
-/* 1259 */,
-/* 1260 */,
-/* 1261 */,
-/* 1262 */,
-/* 1263 */,
-/* 1264 */,
-/* 1265 */,
-/* 1266 */,
-/* 1267 */,
-/* 1268 */,
-/* 1269 */,
-/* 1270 */,
-/* 1271 */,
-/* 1272 */,
-/* 1273 */,
-/* 1274 */,
-/* 1275 */,
-/* 1276 */,
-/* 1277 */,
-/* 1278 */,
-/* 1279 */,
-/* 1280 */,
-/* 1281 */,
-/* 1282 */,
-/* 1283 */,
-/* 1284 */,
-/* 1285 */,
-/* 1286 */,
-/* 1287 */,
-/* 1288 */,
-/* 1289 */,
-/* 1290 */,
-/* 1291 */,
-/* 1292 */,
-/* 1293 */,
-/* 1294 */,
-/* 1295 */,
-/* 1296 */,
-/* 1297 */,
-/* 1298 */,
-/* 1299 */,
-/* 1300 */,
-/* 1301 */,
-/* 1302 */,
-/* 1303 */,
-/* 1304 */,
-/* 1305 */,
-/* 1306 */,
-/* 1307 */,
-/* 1308 */,
-/* 1309 */,
-/* 1310 */,
-/* 1311 */,
-/* 1312 */,
-/* 1313 */,
-/* 1314 */,
-/* 1315 */,
-/* 1316 */,
-/* 1317 */,
-/* 1318 */,
-/* 1319 */,
-/* 1320 */,
-/* 1321 */,
-/* 1322 */,
-/* 1323 */,
-/* 1324 */,
-/* 1325 */,
-/* 1326 */,
-/* 1327 */,
-/* 1328 */,
-/* 1329 */,
-/* 1330 */,
-/* 1331 */,
-/* 1332 */,
-/* 1333 */,
-/* 1334 */,
-/* 1335 */,
-/* 1336 */,
-/* 1337 */,
-/* 1338 */,
-/* 1339 */,
-/* 1340 */,
-/* 1341 */,
-/* 1342 */,
-/* 1343 */,
-/* 1344 */,
-/* 1345 */,
-/* 1346 */,
-/* 1347 */,
-/* 1348 */,
-/* 1349 */,
-/* 1350 */,
-/* 1351 */,
-/* 1352 */,
-/* 1353 */,
-/* 1354 */,
-/* 1355 */,
-/* 1356 */,
-/* 1357 */,
-/* 1358 */,
-/* 1359 */,
-/* 1360 */,
-/* 1361 */,
-/* 1362 */,
-/* 1363 */,
-/* 1364 */,
-/* 1365 */,
-/* 1366 */,
-/* 1367 */,
-/* 1368 */,
-/* 1369 */,
-/* 1370 */,
-/* 1371 */,
-/* 1372 */,
-/* 1373 */,
-/* 1374 */,
-/* 1375 */,
-/* 1376 */,
-/* 1377 */,
-/* 1378 */,
-/* 1379 */,
-/* 1380 */,
-/* 1381 */,
-/* 1382 */,
-/* 1383 */,
-/* 1384 */,
-/* 1385 */,
-/* 1386 */,
-/* 1387 */,
-/* 1388 */,
-/* 1389 */,
-/* 1390 */,
-/* 1391 */,
-/* 1392 */,
-/* 1393 */,
-/* 1394 */,
-/* 1395 */,
-/* 1396 */,
-/* 1397 */,
-/* 1398 */,
-/* 1399 */,
-/* 1400 */,
-/* 1401 */,
-/* 1402 */,
-/* 1403 */,
-/* 1404 */,
-/* 1405 */,
-/* 1406 */,
-/* 1407 */,
-/* 1408 */,
-/* 1409 */,
-/* 1410 */,
-/* 1411 */,
-/* 1412 */,
-/* 1413 */,
-/* 1414 */,
-/* 1415 */,
-/* 1416 */,
-/* 1417 */,
-/* 1418 */,
-/* 1419 */,
-/* 1420 */,
-/* 1421 */,
-/* 1422 */,
-/* 1423 */,
-/* 1424 */,
-/* 1425 */,
-/* 1426 */,
-/* 1427 */,
-/* 1428 */,
-/* 1429 */,
-/* 1430 */,
-/* 1431 */,
-/* 1432 */,
-/* 1433 */,
-/* 1434 */,
-/* 1435 */,
-/* 1436 */,
-/* 1437 */,
-/* 1438 */,
-/* 1439 */,
-/* 1440 */,
-/* 1441 */,
-/* 1442 */,
-/* 1443 */,
-/* 1444 */,
-/* 1445 */,
-/* 1446 */,
-/* 1447 */,
-/* 1448 */,
-/* 1449 */,
-/* 1450 */,
-/* 1451 */,
-/* 1452 */,
-/* 1453 */,
-/* 1454 */,
-/* 1455 */,
-/* 1456 */,
-/* 1457 */,
-/* 1458 */,
-/* 1459 */,
-/* 1460 */,
-/* 1461 */,
-/* 1462 */,
-/* 1463 */,
-/* 1464 */,
-/* 1465 */,
-/* 1466 */,
-/* 1467 */,
-/* 1468 */,
-/* 1469 */,
-/* 1470 */,
-/* 1471 */,
-/* 1472 */,
-/* 1473 */,
-/* 1474 */,
-/* 1475 */,
-/* 1476 */,
-/* 1477 */,
-/* 1478 */,
-/* 1479 */,
-/* 1480 */,
-/* 1481 */,
-/* 1482 */,
-/* 1483 */,
-/* 1484 */,
-/* 1485 */,
-/* 1486 */,
-/* 1487 */,
-/* 1488 */,
-/* 1489 */,
-/* 1490 */,
-/* 1491 */,
-/* 1492 */,
-/* 1493 */,
-/* 1494 */,
-/* 1495 */,
-/* 1496 */,
-/* 1497 */,
-/* 1498 */,
-/* 1499 */,
-/* 1500 */,
-/* 1501 */,
-/* 1502 */,
-/* 1503 */,
-/* 1504 */,
-/* 1505 */,
-/* 1506 */,
-/* 1507 */,
-/* 1508 */,
-/* 1509 */,
-/* 1510 */,
-/* 1511 */,
-/* 1512 */,
-/* 1513 */,
-/* 1514 */,
-/* 1515 */,
-/* 1516 */,
-/* 1517 */,
-/* 1518 */,
-/* 1519 */,
-/* 1520 */,
-/* 1521 */,
-/* 1522 */,
-/* 1523 */,
-/* 1524 */,
-/* 1525 */,
-/* 1526 */,
-/* 1527 */,
-/* 1528 */,
-/* 1529 */,
-/* 1530 */,
-/* 1531 */,
-/* 1532 */,
-/* 1533 */,
-/* 1534 */,
-/* 1535 */,
-/* 1536 */,
-/* 1537 */,
-/* 1538 */,
-/* 1539 */,
-/* 1540 */,
-/* 1541 */,
-/* 1542 */,
-/* 1543 */,
-/* 1544 */,
-/* 1545 */,
-/* 1546 */,
-/* 1547 */,
-/* 1548 */,
-/* 1549 */,
-/* 1550 */,
-/* 1551 */,
-/* 1552 */,
-/* 1553 */,
-/* 1554 */,
-/* 1555 */,
-/* 1556 */,
-/* 1557 */,
-/* 1558 */,
-/* 1559 */,
-/* 1560 */,
-/* 1561 */,
-/* 1562 */,
-/* 1563 */,
-/* 1564 */,
-/* 1565 */,
-/* 1566 */,
-/* 1567 */,
-/* 1568 */,
-/* 1569 */,
-/* 1570 */,
-/* 1571 */,
-/* 1572 */,
-/* 1573 */,
-/* 1574 */,
-/* 1575 */,
-/* 1576 */,
-/* 1577 */,
-/* 1578 */,
-/* 1579 */,
-/* 1580 */,
-/* 1581 */,
-/* 1582 */,
-/* 1583 */,
-/* 1584 */,
-/* 1585 */,
-/* 1586 */,
-/* 1587 */,
-/* 1588 */,
-/* 1589 */,
-/* 1590 */,
-/* 1591 */,
-/* 1592 */,
-/* 1593 */,
-/* 1594 */,
-/* 1595 */,
-/* 1596 */,
-/* 1597 */,
-/* 1598 */,
-/* 1599 */,
-/* 1600 */,
-/* 1601 */,
-/* 1602 */,
-/* 1603 */,
-/* 1604 */,
-/* 1605 */,
-/* 1606 */,
-/* 1607 */,
-/* 1608 */,
-/* 1609 */,
-/* 1610 */,
-/* 1611 */,
-/* 1612 */,
-/* 1613 */,
-/* 1614 */,
-/* 1615 */,
-/* 1616 */,
-/* 1617 */,
-/* 1618 */,
-/* 1619 */,
-/* 1620 */,
-/* 1621 */,
-/* 1622 */,
-/* 1623 */,
-/* 1624 */,
-/* 1625 */,
-/* 1626 */,
-/* 1627 */,
-/* 1628 */,
-/* 1629 */,
-/* 1630 */,
-/* 1631 */,
-/* 1632 */,
-/* 1633 */,
-/* 1634 */,
-/* 1635 */,
-/* 1636 */,
-/* 1637 */,
-/* 1638 */,
-/* 1639 */,
-/* 1640 */,
-/* 1641 */,
-/* 1642 */,
-/* 1643 */,
-/* 1644 */,
-/* 1645 */,
-/* 1646 */,
-/* 1647 */,
-/* 1648 */,
-/* 1649 */,
-/* 1650 */,
-/* 1651 */,
-/* 1652 */,
-/* 1653 */,
-/* 1654 */,
-/* 1655 */,
-/* 1656 */,
-/* 1657 */,
-/* 1658 */,
-/* 1659 */,
-/* 1660 */,
-/* 1661 */,
-/* 1662 */,
-/* 1663 */,
-/* 1664 */,
-/* 1665 */,
-/* 1666 */,
-/* 1667 */,
-/* 1668 */,
-/* 1669 */,
-/* 1670 */,
-/* 1671 */,
-/* 1672 */,
-/* 1673 */,
-/* 1674 */,
-/* 1675 */,
-/* 1676 */,
-/* 1677 */,
-/* 1678 */,
-/* 1679 */,
-/* 1680 */,
-/* 1681 */,
-/* 1682 */,
-/* 1683 */,
-/* 1684 */,
-/* 1685 */,
-/* 1686 */,
-/* 1687 */,
-/* 1688 */,
-/* 1689 */,
-/* 1690 */,
-/* 1691 */,
-/* 1692 */,
-/* 1693 */,
-/* 1694 */,
-/* 1695 */,
-/* 1696 */,
-/* 1697 */,
-/* 1698 */,
-/* 1699 */,
-/* 1700 */,
-/* 1701 */,
-/* 1702 */,
-/* 1703 */,
-/* 1704 */,
-/* 1705 */,
-/* 1706 */,
-/* 1707 */,
-/* 1708 */,
-/* 1709 */,
-/* 1710 */,
-/* 1711 */,
-/* 1712 */,
-/* 1713 */,
-/* 1714 */,
-/* 1715 */,
-/* 1716 */,
-/* 1717 */,
-/* 1718 */,
-/* 1719 */,
-/* 1720 */,
-/* 1721 */,
-/* 1722 */,
-/* 1723 */,
-/* 1724 */,
-/* 1725 */,
-/* 1726 */,
-/* 1727 */,
-/* 1728 */,
-/* 1729 */,
-/* 1730 */,
-/* 1731 */,
-/* 1732 */,
-/* 1733 */,
-/* 1734 */,
-/* 1735 */,
-/* 1736 */,
-/* 1737 */,
-/* 1738 */,
-/* 1739 */,
-/* 1740 */,
-/* 1741 */,
-/* 1742 */,
-/* 1743 */,
-/* 1744 */,
-/* 1745 */,
-/* 1746 */,
-/* 1747 */,
-/* 1748 */,
-/* 1749 */,
-/* 1750 */,
-/* 1751 */,
-/* 1752 */,
-/* 1753 */,
-/* 1754 */,
-/* 1755 */,
-/* 1756 */,
-/* 1757 */,
-/* 1758 */,
-/* 1759 */,
-/* 1760 */,
-/* 1761 */,
-/* 1762 */,
-/* 1763 */,
-/* 1764 */,
-/* 1765 */,
-/* 1766 */,
-/* 1767 */,
-/* 1768 */,
-/* 1769 */,
-/* 1770 */,
-/* 1771 */,
-/* 1772 */,
-/* 1773 */,
-/* 1774 */,
-/* 1775 */,
-/* 1776 */,
-/* 1777 */,
-/* 1778 */,
-/* 1779 */,
-/* 1780 */,
-/* 1781 */,
-/* 1782 */,
-/* 1783 */,
-/* 1784 */,
-/* 1785 */,
-/* 1786 */,
-/* 1787 */,
-/* 1788 */,
-/* 1789 */,
-/* 1790 */,
-/* 1791 */,
-/* 1792 */,
-/* 1793 */,
-/* 1794 */,
-/* 1795 */,
-/* 1796 */,
-/* 1797 */,
-/* 1798 */,
-/* 1799 */,
-/* 1800 */,
-/* 1801 */,
-/* 1802 */,
-/* 1803 */,
-/* 1804 */,
-/* 1805 */,
-/* 1806 */,
-/* 1807 */,
-/* 1808 */,
-/* 1809 */,
-/* 1810 */,
-/* 1811 */,
-/* 1812 */,
-/* 1813 */,
-/* 1814 */,
-/* 1815 */,
-/* 1816 */,
-/* 1817 */,
-/* 1818 */,
-/* 1819 */,
-/* 1820 */,
-/* 1821 */,
-/* 1822 */,
-/* 1823 */,
-/* 1824 */,
-/* 1825 */,
-/* 1826 */,
-/* 1827 */,
-/* 1828 */,
-/* 1829 */,
-/* 1830 */,
-/* 1831 */,
-/* 1832 */,
-/* 1833 */,
-/* 1834 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/baselineRenderer.jsx ***!
-  \********************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2279:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	exports.default = function (_ref) {
 	    var _ref$atlasUrl = _ref.atlasUrl,
 	        atlasUrl = _ref$atlasUrl === undefined ? 'https://www.ebi.ac.uk/gxa' : _ref$atlasUrl,
@@ -1876,8 +39,8 @@ webpackJsonp_name_([2],[
 	        geneQuery = _ref.geneQuery,
 	        conditionQuery = _ref.conditionQuery,
 	        species = _ref.species;
-	
-	
+
+
 	    _reactDom2.default.render(_react2.default.createElement(_BaselineRouter2.default, { atlasUrl: atlasUrl,
 	        facetsTreeData: facetsTreeData,
 	        geneQuery: geneQuery,
@@ -1885,78 +48,76 @@ webpackJsonp_name_([2],[
 	        species: species
 	    }), document.getElementById(target));
 	};
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 35);
-	
+
+	var _reactDom = __webpack_require__(35);
+
 	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _BaselineRouter = __webpack_require__(/*! ./BaselineRouter.jsx */ 1835);
-	
+
+	var _BaselineRouter = __webpack_require__(2280);
+
 	var _BaselineRouter2 = _interopRequireDefault(_BaselineRouter);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	;
 
-/***/ }),
-/* 1835 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/BaselineRouter.jsx ***!
-  \******************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2280:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _events = __webpack_require__(/*! events */ 1836);
-	
+
+	var _events = __webpack_require__(727);
+
 	var _events2 = _interopRequireDefault(_events);
-	
-	var _BaselineFacetsTree = __webpack_require__(/*! ./facets-tree/BaselineFacetsTree.jsx */ 1837);
-	
+
+	var _BaselineFacetsTree = __webpack_require__(2281);
+
 	var _BaselineFacetsTree2 = _interopRequireDefault(_BaselineFacetsTree);
-	
-	var _BaselineHeatmaps = __webpack_require__(/*! ./BaselineHeatmaps.jsx */ 1840);
-	
+
+	var _BaselineHeatmaps = __webpack_require__(2284);
+
 	var _BaselineHeatmaps2 = _interopRequireDefault(_BaselineHeatmaps);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var UrlManager = __webpack_require__(/*! ./urlManager.js */ 2488);
-	
+
+	var UrlManager = __webpack_require__(2405);
+
 	var BaselineRouter = function (_React$Component) {
 	    _inherits(BaselineRouter, _React$Component);
-	
+
 	    function BaselineRouter(props) {
 	        _classCallCheck(this, BaselineRouter);
-	
+
 	        var _this = _possibleConstructorReturn(this, (BaselineRouter.__proto__ || Object.getPrototypeOf(BaselineRouter)).call(this, props));
-	
+
 	        var anatomogramDataEventEmitter = new _events2.default();
 	        anatomogramDataEventEmitter.setMaxListeners(0);
-	
+
 	        var newQuerySelect = UrlManager.parseBaselineUrlParameter();
 	        var newShowAnatomograms = false;
-	
+
 	        if (Object.keys(newQuerySelect).length === 0) {
 	            Object.keys(_this.props.facetsTreeData).forEach(function (species) {
 	                var factorToPreselect = _this.props.facetsTreeData[species].find(function (factor) {
@@ -1970,26 +131,26 @@ webpackJsonp_name_([2],[
 	                }
 	            });
 	        }
-	
+
 	        UrlManager.baselinePush(newQuerySelect, true);
-	
+
 	        _this.state = {
 	            facetsTreeData: _this._transformPropsFacetsObjectToArray(newQuerySelect),
 	            querySelect: newQuerySelect,
 	            anatomogramDataEventEmitter: anatomogramDataEventEmitter,
 	            showAnatomograms: newShowAnatomograms
 	        };
-	
+
 	        _this.setChecked = _this._setChecked.bind(_this);
 	        _this.toggleAnatomograms = _this._toggleAnatomograms.bind(_this);
 	        return _this;
 	    }
-	
+
 	    _createClass(BaselineRouter, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this2 = this;
-	
+
 	            // TODO Consider using https://github.com/reactjs/react-router
 	            window.addEventListener('popstate', function () {
 	                var newQuerySelect = UrlManager.parseBaselineUrlParameter();
@@ -2004,7 +165,7 @@ webpackJsonp_name_([2],[
 	        value: function render() {
 	            var organismPartInQuerySelect = this._organismPartInQuerySelect();
 	            var heatmaps = this._querySelectToHeatmaps();
-	
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'row expanded' },
@@ -2038,7 +199,7 @@ webpackJsonp_name_([2],[
 	        value: function _setChecked(species, factorName, checked) {
 	            var newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));
 	            var newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData));
-	
+
 	            if (checked) {
 	                this._addElementToObjectOfArrays(newQuerySelect, species, factorName);
 	                newFacetsTreeData.find(function (facet) {
@@ -2054,7 +215,7 @@ webpackJsonp_name_([2],[
 	                    return factor.name === factorName;
 	                }).checked = false;
 	            }
-	
+
 	            UrlManager.baselinePush(newQuerySelect, false);
 	            this.setState({
 	                facetsTreeData: newFacetsTreeData,
@@ -2081,7 +242,7 @@ webpackJsonp_name_([2],[
 	        key: '_toggleAnatomograms',
 	        value: function _toggleAnatomograms() {
 	            var newShowAnatomograms = !this.state.showAnatomograms;
-	
+
 	            this.setState({
 	                showAnatomograms: newShowAnatomograms
 	            });
@@ -2090,21 +251,21 @@ webpackJsonp_name_([2],[
 	        key: '_organismPartInQuerySelect',
 	        value: function _organismPartInQuerySelect() {
 	            var querySelect = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.querySelect;
-	
+
 	            return Object.keys(querySelect).some(function (species) {
 	                return querySelect[species].some(function (facetItem) {
 	                    return facetItem.toLowerCase() === 'organism_part';
 	                });
 	            });
 	        }
-	
+
 	        // Also syncs this.state.facetsTreeData with querySelect
-	
+
 	    }, {
 	        key: '_transformPropsFacetsObjectToArray',
 	        value: function _transformPropsFacetsObjectToArray(querySelect) {
 	            var _this3 = this;
-	
+
 	            return Object.keys(this.props.facetsTreeData).map(function (facetName) {
 	                return {
 	                    facetName: facetName,
@@ -2122,7 +283,7 @@ webpackJsonp_name_([2],[
 	        key: '_querySelectToHeatmaps',
 	        value: function _querySelectToHeatmaps() {
 	            var _this4 = this;
-	
+
 	            /*
 	             querySelect={ "Homo sapiens": [ "CELL_LINE", "ORGANISM_PART" ] }
 	             ->
@@ -2134,7 +295,7 @@ webpackJsonp_name_([2],[
 	             ]
 	             */
 	            var heatmaps = [];
-	
+
 	            // We iterate over facetsTreeData instead of over querySelect to get heatmaps in the same order as the facets
 	            // tree
 	            this.state.facetsTreeData.forEach(function (facet) {
@@ -2147,14 +308,14 @@ webpackJsonp_name_([2],[
 	                    }
 	                });
 	            });
-	
+
 	            return heatmaps;
 	        }
 	    }]);
-	
+
 	    return BaselineRouter;
 	}(_react2.default.Component);
-	
+
 	BaselineRouter.propTypes = {
 	    atlasUrl: _react2.default.PropTypes.string.isRequired,
 	    /*
@@ -2169,37 +330,30 @@ webpackJsonp_name_([2],[
 	    conditionQuery: _react2.default.PropTypes.string.isRequired,
 	    species: _react2.default.PropTypes.string.isRequired
 	};
-	
+
 	exports.default = BaselineRouter;
 
-/***/ }),
-/* 1836 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/events/events.js ***!
-  \**************************************************************/
-723,
-/* 1837 */
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/facets-tree/BaselineFacetsTree.jsx ***!
-  \**********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2281:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _Facet = __webpack_require__(/*! ./Facet.jsx */ 1838);
-	
+
+	var _Facet = __webpack_require__(2282);
+
 	var _Facet2 = _interopRequireDefault(_Facet);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var BaselineFacetsTree = function BaselineFacetsTree(props) {
 	    var facets = props.facets.map(function (facet) {
 	        return _react2.default.createElement(_Facet2.default, {
@@ -2209,7 +363,7 @@ webpackJsonp_name_([2],[
 	            setChecked: props.setChecked
 	        });
 	    });
-	
+
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -2227,7 +381,7 @@ webpackJsonp_name_([2],[
 	        facets
 	    );
 	};
-	
+
 	BaselineFacetsTree.propTypes = {
 	    /*
 	     [
@@ -2260,36 +414,34 @@ webpackJsonp_name_([2],[
 	    toggleAnatomograms: _react2.default.PropTypes.func.isRequired,
 	    disableAnatomogramsCheckbox: _react2.default.PropTypes.bool.isRequired
 	};
-	
+
 	exports.default = BaselineFacetsTree;
 
-/***/ }),
-/* 1838 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/facets-tree/Facet.jsx ***!
-  \*********************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2282:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _FacetItem = __webpack_require__(/*! ./FacetItem.jsx */ 1839);
-	
+
+	var _FacetItem = __webpack_require__(2283);
+
 	var _FacetItem2 = _interopRequireDefault(_FacetItem);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var capitalizeFirstLetter = function capitalizeFirstLetter(str) {
 	    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 	};
-	
+
 	var Facet = function Facet(props) {
 	    var facetItems = props.facetItems.map(function (facetItem) {
 	        return _react2.default.createElement(_FacetItem2.default, {
@@ -2302,7 +454,7 @@ webpackJsonp_name_([2],[
 	            }
 	        });
 	    });
-	
+
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'margin-top-large' },
@@ -2314,7 +466,7 @@ webpackJsonp_name_([2],[
 	        facetItems
 	    );
 	};
-	
+
 	Facet.propTypes = {
 	    facetName: _react2.default.PropTypes.string.isRequired,
 	    facetItems: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
@@ -2324,28 +476,26 @@ webpackJsonp_name_([2],[
 	    })).isRequired,
 	    setChecked: _react2.default.PropTypes.func.isRequired
 	};
-	
+
 	exports.default = Facet;
 
-/***/ }),
-/* 1839 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/facets-tree/FacetItem.jsx ***!
-  \*************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2283:
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var FacetItem = function FacetItem(props) {
 	    return _react2.default.createElement(
 	        "div",
@@ -2360,79 +510,77 @@ webpackJsonp_name_([2],[
 	        )
 	    );
 	};
-	
+
 	FacetItem.propTypes = {
 	    name: _react2.default.PropTypes.string.isRequired,
 	    value: _react2.default.PropTypes.string.isRequired,
 	    checked: _react2.default.PropTypes.bool.isRequired,
 	    setChecked: _react2.default.PropTypes.func.isRequired
 	};
-	
+
 	exports.default = FacetItem;
 
-/***/ }),
-/* 1840 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmaps.jsx ***!
-  \********************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2284:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _jquery = __webpack_require__(/*! jquery */ 1841);
-	
+
+	var _jquery = __webpack_require__(2285);
+
 	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	__webpack_require__(/*! jquery.browser */ 1842);
-	
-	var _events = __webpack_require__(/*! events */ 1836);
-	
+
+	__webpack_require__(2286);
+
+	var _events = __webpack_require__(727);
+
 	var _events2 = _interopRequireDefault(_events);
-	
-	var _BaselineHeatmapWidget = __webpack_require__(/*! ./BaselineHeatmapWidget.jsx */ 1843);
-	
+
+	var _BaselineHeatmapWidget = __webpack_require__(2287);
+
 	var _BaselineHeatmapWidget2 = _interopRequireDefault(_BaselineHeatmapWidget);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var AtlasFeedback = __webpack_require__(/*! expression-atlas-feedback */ 2466);
-	
+
+	var AtlasFeedback = __webpack_require__(2404);
+
 	var BaselineHeatmaps = function (_React$Component) {
 	    _inherits(BaselineHeatmaps, _React$Component);
-	
+
 	    function BaselineHeatmaps() {
 	        _classCallCheck(this, BaselineHeatmaps);
-	
+
 	        return _possibleConstructorReturn(this, (BaselineHeatmaps.__proto__ || Object.getPrototypeOf(BaselineHeatmaps)).apply(this, arguments));
 	    }
-	
+
 	    _createClass(BaselineHeatmaps, [{
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
-	
+
 	            var atlasFeedback = _jquery2.default.browser.msie ? null : _react2.default.createElement(AtlasFeedback, {
 	                collectionCallback: typeof window.ga === 'function' ? function (score, comment) {
 	                    window.ga('send', 'event', 'BaselineHeatmaps', 'feedback', comment, score);
 	                } : function () {}
 	            });
-	
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -2462,10 +610,10 @@ webpackJsonp_name_([2],[
 	            return uniqueSpecies.size > 1;
 	        }
 	    }]);
-	
+
 	    return BaselineHeatmaps;
 	}(_react2.default.Component);
-	
+
 	BaselineHeatmaps.propTypes = {
 	    atlasUrl: _react2.default.PropTypes.string.isRequired,
 	    geneQuery: _react2.default.PropTypes.string.isRequired,
@@ -2483,20 +631,16 @@ webpackJsonp_name_([2],[
 	    })).isRequired,
 	    anatomogramDataEventEmitter: _react2.default.PropTypes.instanceOf(_events2.default).isRequired
 	};
-	
+
 	exports.default = BaselineHeatmaps;
 
-/***/ }),
-/* 1841 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/jquery/dist/jquery.js ***!
-  \*******************************************************************/
-888,
-/* 1842 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/jquery.browser/dist/jquery.browser.js ***!
-  \***********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2285:
+1094,
+
+/***/ 2286:
+/***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	 * jQuery Browser Plugin 0.1.0
@@ -2513,11 +657,11 @@ webpackJsonp_name_([2],[
 	 * Date: 05-07-2015
 	 */
 	/*global window: false */
-	
+
 	(function (factory) {
 	  if (true) {
 	    // AMD. Register as an anonymous module.
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 1841)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2285)], __WEBPACK_AMD_DEFINE_RESULT__ = function ($) {
 	      return factory($);
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof module === 'object' && typeof module.exports === 'object') {
@@ -2529,14 +673,14 @@ webpackJsonp_name_([2],[
 	  }
 	}(function(jQuery) {
 	  "use strict";
-	
+
 	  function uaMatch( ua ) {
 	    // If an UA is not provided, default to the current browser UA.
 	    if ( ua === undefined ) {
 	      ua = window.navigator.userAgent;
 	    }
 	    ua = ua.toLowerCase();
-	
+
 	    var match = /(edge)\/([\w.]+)/.exec( ua ) ||
 	        /(opr)[\/]([\w.]+)/.exec( ua ) ||
 	        /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
@@ -2549,7 +693,7 @@ webpackJsonp_name_([2],[
 	        ua.indexOf("trident") >= 0 && /(rv)(?::| )([\w.]+)/.exec( ua ) ||
 	        ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
 	        [];
-	
+
 	    var platform_match = /(ipad)/.exec( ua ) ||
 	        /(ipod)/.exec( ua ) ||
 	        /(windows phone)/.exec( ua ) ||
@@ -2565,7 +709,7 @@ webpackJsonp_name_([2],[
 	        /(bb)/.exec( ua ) ||
 	        /(blackberry)/.exec( ua ) ||
 	        [];
-	
+
 	    var browser = {},
 	        matched = {
 	          browser: match[ 5 ] || match[ 3 ] || match[ 1 ] || "",
@@ -2573,155 +717,155 @@ webpackJsonp_name_([2],[
 	          versionNumber: match[ 4 ] || match[ 2 ] || "0",
 	          platform: platform_match[ 0 ] || ""
 	        };
-	
+
 	    if ( matched.browser ) {
 	      browser[ matched.browser ] = true;
 	      browser.version = matched.version;
 	      browser.versionNumber = parseInt(matched.versionNumber, 10);
 	    }
-	
+
 	    if ( matched.platform ) {
 	      browser[ matched.platform ] = true;
 	    }
-	
+
 	    // These are all considered mobile platforms, meaning they run a mobile browser
 	    if ( browser.android || browser.bb || browser.blackberry || browser.ipad || browser.iphone ||
 	      browser.ipod || browser.kindle || browser.playbook || browser.silk || browser[ "windows phone" ]) {
 	      browser.mobile = true;
 	    }
-	
+
 	    // These are all considered desktop platforms, meaning they run a desktop browser
 	    if ( browser.cros || browser.mac || browser.linux || browser.win ) {
 	      browser.desktop = true;
 	    }
-	
+
 	    // Chrome, Opera 15+ and Safari are webkit based browsers
 	    if ( browser.chrome || browser.opr || browser.safari ) {
 	      browser.webkit = true;
 	    }
-	
+
 	    // IE11 has a new token so we will assign it msie to avoid breaking changes
 	    if ( browser.rv || browser.iemobile) {
 	      var ie = "msie";
-	
+
 	      matched.browser = ie;
 	      browser[ie] = true;
 	    }
-	
+
 	    // Edge is officially known as Microsoft Edge, so rewrite the key to match
 	    if ( browser.edge ) {
 	      delete browser.edge;
 	      var msedge = "msedge";
-	
+
 	      matched.browser = msedge;
 	      browser[msedge] = true;
 	    }
-	
+
 	    // Blackberry browsers are marked as Safari on BlackBerry
 	    if ( browser.safari && browser.blackberry ) {
 	      var blackberry = "blackberry";
-	
+
 	      matched.browser = blackberry;
 	      browser[blackberry] = true;
 	    }
-	
+
 	    // Playbook browsers are marked as Safari on Playbook
 	    if ( browser.safari && browser.playbook ) {
 	      var playbook = "playbook";
-	
+
 	      matched.browser = playbook;
 	      browser[playbook] = true;
 	    }
-	
+
 	    // BB10 is a newer OS version of BlackBerry
 	    if ( browser.bb ) {
 	      var bb = "blackberry";
-	
+
 	      matched.browser = bb;
 	      browser[bb] = true;
 	    }
-	
+
 	    // Opera 15+ are identified as opr
 	    if ( browser.opr ) {
 	      var opera = "opera";
-	
+
 	      matched.browser = opera;
 	      browser[opera] = true;
 	    }
-	
+
 	    // Stock Android browsers are marked as Safari on Android.
 	    if ( browser.safari && browser.android ) {
 	      var android = "android";
-	
+
 	      matched.browser = android;
 	      browser[android] = true;
 	    }
-	
+
 	    // Kindle browsers are marked as Safari on Kindle
 	    if ( browser.safari && browser.kindle ) {
 	      var kindle = "kindle";
-	
+
 	      matched.browser = kindle;
 	      browser[kindle] = true;
 	    }
-	
+
 	     // Kindle Silk browsers are marked as Safari on Kindle
 	    if ( browser.safari && browser.silk ) {
 	      var silk = "silk";
-	
+
 	      matched.browser = silk;
 	      browser[silk] = true;
 	    }
-	
+
 	    // Assign the name and platform variable
 	    browser.name = matched.browser;
 	    browser.platform = matched.platform;
 	    return browser;
 	  }
-	
+
 	  // Run the matching process, also assign the function to the returned object
 	  // for manual, jQuery-free use if desired
 	  window.jQBrowser = uaMatch( window.navigator.userAgent );
 	  window.jQBrowser.uaMatch = uaMatch;
-	
+
 	  // Only assign to jQuery.browser if jQuery is loaded
 	  if ( jQuery ) {
 	    jQuery.browser = window.jQBrowser;
 	  }
-	
+
 	  return window.jQBrowser;
 	}));
 
 
-/***/ }),
-/* 1843 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/BaselineHeatmapWidget.jsx ***!
-  \*************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
+
+/***/ 2287:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
+
+	var _react = __webpack_require__(2);
+
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _events = __webpack_require__(/*! events */ 1836);
-	
+
+	var _events = __webpack_require__(727);
+
 	var _events2 = _interopRequireDefault(_events);
-	
-	var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 1844);
-	
+
+	var _expressionAtlasHeatmapHighcharts = __webpack_require__(2288);
+
+	var _expressionAtlasHeatmapHighcharts2 = _interopRequireDefault(_expressionAtlasHeatmapHighcharts);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var capitalizeFirstLetter = function capitalizeFirstLetter(str) {
 	    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 	};
-	
+
 	var BaselineHeatmapWidget = function BaselineHeatmapWidget(props) {
 	    return _react2.default.createElement(
 	        'div',
@@ -2731,7 +875,7 @@ webpackJsonp_name_([2],[
 	            null,
 	            (props.showHeatmapLabel ? capitalizeFirstLetter(props.species) + ' \u2014 ' : '') + props.factor.value
 	        ),
-	        _react2.default.createElement(_expressionAtlasHeatmapHighcharts.ExpressionAtlasHeatmap, { atlasUrl: props.atlasUrl,
+	        _react2.default.createElement(_expressionAtlasHeatmapHighcharts2.default, { atlasUrl: props.atlasUrl,
 	            query: {
 	                gene: props.geneQuery,
 	                condition: props.conditionQuery,
@@ -2744,7 +888,7 @@ webpackJsonp_name_([2],[
 	        })
 	    );
 	};
-	
+
 	BaselineHeatmapWidget.propTypes = {
 	    atlasUrl: _react2.default.PropTypes.string.isRequired,
 	    geneQuery: _react2.default.PropTypes.string.isRequired,
@@ -2758,3484 +902,7473 @@ webpackJsonp_name_([2],[
 	    showHeatmapLabel: _react2.default.PropTypes.bool.isRequired,
 	    anatomogramDataEventEmitter: _react2.default.PropTypes.instanceOf(_events2.default).isRequired
 	};
-	
+
 	exports.default = BaselineHeatmapWidget;
 
-/***/ }),
-/* 1844 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/Main.jsx ***!
-  \**********************************************************************************************/
-[3296, 1845, 1865, 1869],
-/* 1845 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/index.js ***!
-  \*******************************************************************/
-[3298, 1846, 1851, 1849, 1850, 1852, 1853],
-/* 1846 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/format.js ***!
-  \**************************************************************************/
-[3299, 1847, 1848, 1850],
-/* 1847 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/mightBeEmail.js ***!
-  \********************************************************************************/
-175,
-/* 1848 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/toTitleCase.js ***!
-  \*******************************************************************************/
-[3300, 1849],
-/* 1849 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/trim.js ***!
-  \************************************************************************/
-177,
-/* 1850 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/console/warn.js ***!
-  \********************************************************************************/
-178,
-/* 1851 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/removeLeadingSlash.js ***!
-  \**************************************************************************************/
-179,
-/* 1852 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/utils/console/log.js ***!
-  \*******************************************************************************/
-180,
-/* 1853 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-ga/src/components/OutboundLink.js ***!
-  \*************************************************************************************/
-[3301, 1854, 1861, 1856],
-/* 1854 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/create-react-class/index.js ***!
-  \*************************************************************************/
-[3302, 1855],
-/* 1855 */
-/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/create-react-class/factory.js ***!
-  \***************************************************************************/
-[3303, 1856, 1857, 1858, 1859],
-/* 1856 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/object-assign/index.js ***!
-  \********************************************************************/
-4,
-/* 1857 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/emptyObject.js ***!
-  \*********************************************************************/
-19,
-/* 1858 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/invariant.js ***!
-  \*******************************************************************/
-8,
-/* 1859 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/warning.js ***!
-  \*****************************************************************/
-[3297, 1860],
-/* 1860 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/fbjs/lib/emptyFunction.js ***!
-  \***********************************************************************/
-12,
-/* 1861 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/prop-types/index.js ***!
-  \*****************************************************************/
-[3304, 1862],
-/* 1862 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/prop-types/factoryWithTypeCheckers.js ***!
-  \***********************************************************************************/
-[3305, 1860, 1858, 1859, 1863, 1864],
-/* 1863 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/prop-types/lib/ReactPropTypesSecret.js ***!
-  \************************************************************************************/
-186,
-/* 1864 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/prop-types/checkPropTypes.js ***!
-  \**************************************************************************/
-[3306, 1858, 1859, 1863],
-/* 1865 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/urijs/src/URI.js ***!
-  \**************************************************************/
-[3307, 1866, 1867, 1868, 1866, 1867, 1868],
-/* 1866 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/urijs/src/punycode.js ***!
-  \*******************************************************************/
-189,
-/* 1867 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/urijs/src/IPv6.js ***!
-  \***************************************************************/
-191,
-/* 1868 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/urijs/src/SecondLevelDomains.js ***!
-  \*****************************************************************************/
-192,
-/* 1869 */
-/*!****************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/ContainerLoader.jsx ***!
-  \****************************************************************************************************************/
-[3308, 1870, 1865, 2096],
-/* 1870 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/index.js ***!
-  \************************************************************************/
-[3309, 1871, 1879],
-/* 1871 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/components/connect.js ***!
-  \*************************************************************************************/
-[3310, 1872, 1873, 1874, 1876, 1877, 1879, 1880, 1878, 1881, 1882],
-/* 1872 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/isPlainObject.js ***!
-  \**************************************************************************************/
-196,
-/* 1873 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/shallowEqual.js ***!
-  \*************************************************************************************/
-197,
-/* 1874 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/handleResponse.js ***!
-  \***************************************************************************************/
-[3311, 1875],
-/* 1875 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/errors.js ***!
-  \*******************************************************************************/
-199,
-/* 1876 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/buildRequest.js ***!
-  \*************************************************************************************/
-200,
-/* 1877 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/utils/checkTypes.js ***!
-  \***********************************************************************************/
-[3312, 1878, 1872],
-/* 1878 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/invariant/browser.js ***!
-  \******************************************************************/
-202,
-/* 1879 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/lib/PromiseState.js ***!
-  \*******************************************************************************/
-203,
-/* 1880 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/hoist-non-react-statics/index.js ***!
-  \******************************************************************************/
-204,
-/* 1881 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-refetch/~/warning/browser.js ***!
-  \********************************************************************************/
-205,
-/* 1882 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/fp/omit.js ***!
-  \***************************************************************/
-[3313, 1883, 2089, 1886],
-/* 1883 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/fp/convert.js ***!
-  \******************************************************************/
-[3314, 1884, 1887],
-/* 1884 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/fp/_baseConvert.js ***!
-  \***********************************************************************/
-[3315, 1885, 1886],
-/* 1885 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/fp/_mapping.js ***!
-  \*******************************************************************/
-209,
-/* 1886 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/fp/placeholder.js ***!
-  \**********************************************************************/
-210,
-/* 1887 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/fp/_util.js ***!
-  \****************************************************************/
-[3316, 1888, 1957, 1979, 2046, 1941, 1927, 1896, 2047, 1974, 2082, 1953, 2088],
-/* 1888 */
-/*!***********************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/ary.js ***!
-  \***********************************************************/
-[3317, 1889],
-/* 1889 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createWrap.js ***!
-  \*******************************************************************/
-[3318, 1890, 1908, 1911, 1913, 1951, 1921, 1952, 1931, 1933, 1953],
-/* 1890 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseSetData.js ***!
-  \********************************************************************/
-[3319, 1891, 1892],
-/* 1891 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/identity.js ***!
-  \****************************************************************/
-215,
-/* 1892 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_metaMap.js ***!
-  \****************************************************************/
-[3320, 1893],
-/* 1893 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_WeakMap.js ***!
-  \****************************************************************/
-[3321, 1894, 1899],
-/* 1894 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getNative.js ***!
-  \******************************************************************/
-[3322, 1895, 1907],
-/* 1895 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsNative.js ***!
-  \*********************************************************************/
-[3323, 1896, 1904, 1903, 1906],
-/* 1896 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isFunction.js ***!
-  \******************************************************************/
-[3324, 1897, 1903],
-/* 1897 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseGetTag.js ***!
-  \*******************************************************************/
-[3325, 1898, 1901, 1902],
-/* 1898 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Symbol.js ***!
-  \***************************************************************/
-[3326, 1899],
-/* 1899 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_root.js ***!
-  \*************************************************************/
-[3327, 1900],
-/* 1900 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_freeGlobal.js ***!
-  \*******************************************************************/
-224,
-/* 1901 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getRawTag.js ***!
-  \******************************************************************/
-[3328, 1898],
-/* 1902 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_objectToString.js ***!
-  \***********************************************************************/
-226,
-/* 1903 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isObject.js ***!
-  \****************************************************************/
-227,
-/* 1904 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isMasked.js ***!
-  \*****************************************************************/
-[3329, 1905],
-/* 1905 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_coreJsData.js ***!
-  \*******************************************************************/
-[3330, 1899],
-/* 1906 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_toSource.js ***!
-  \*****************************************************************/
-230,
-/* 1907 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getValue.js ***!
-  \*****************************************************************/
-231,
-/* 1908 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createBind.js ***!
-  \*******************************************************************/
-[3331, 1909, 1899],
-/* 1909 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createCtor.js ***!
-  \*******************************************************************/
-[3332, 1910, 1903],
-/* 1910 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseCreate.js ***!
-  \*******************************************************************/
-[3333, 1903],
-/* 1911 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createCurry.js ***!
-  \********************************************************************/
-[3334, 1912, 1909, 1913, 1917, 1947, 1950, 1899],
-/* 1912 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_apply.js ***!
-  \**************************************************************/
-236,
-/* 1913 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createHybrid.js ***!
-  \*********************************************************************/
-[3335, 1914, 1915, 1916, 1909, 1917, 1947, 1948, 1950, 1899],
-/* 1914 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_composeArgs.js ***!
-  \********************************************************************/
-238,
-/* 1915 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_composeArgsRight.js ***!
-  \*************************************************************************/
-239,
-/* 1916 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_countHolders.js ***!
-  \*********************************************************************/
-240,
-/* 1917 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createRecurry.js ***!
-  \**********************************************************************/
-[3336, 1918, 1931, 1933],
-/* 1918 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isLaziable.js ***!
-  \*******************************************************************/
-[3337, 1919, 1921, 1923, 1925],
-/* 1919 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_LazyWrapper.js ***!
-  \********************************************************************/
-[3338, 1910, 1920],
-/* 1920 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseLodash.js ***!
-  \*******************************************************************/
-244,
-/* 1921 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getData.js ***!
-  \****************************************************************/
-[3339, 1892, 1922],
-/* 1922 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/noop.js ***!
-  \************************************************************/
-246,
-/* 1923 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getFuncName.js ***!
-  \********************************************************************/
-[3340, 1924],
-/* 1924 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_realNames.js ***!
-  \******************************************************************/
-248,
-/* 1925 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/wrapperLodash.js ***!
-  \*********************************************************************/
-[3341, 1919, 1926, 1920, 1927, 1928, 1929],
-/* 1926 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_LodashWrapper.js ***!
-  \**********************************************************************/
-[3342, 1910, 1920],
-/* 1927 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isArray.js ***!
-  \***************************************************************/
-251,
-/* 1928 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isObjectLike.js ***!
-  \********************************************************************/
-252,
-/* 1929 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_wrapperClone.js ***!
-  \*********************************************************************/
-[3343, 1919, 1926, 1930],
-/* 1930 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_copyArray.js ***!
-  \******************************************************************/
-254,
-/* 1931 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_setData.js ***!
-  \****************************************************************/
-[3344, 1890, 1932],
-/* 1932 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_shortOut.js ***!
-  \*****************************************************************/
-256,
-/* 1933 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_setWrapToString.js ***!
-  \************************************************************************/
-[3345, 1934, 1935, 1936, 1940],
-/* 1934 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getWrapDetails.js ***!
-  \***********************************************************************/
-258,
-/* 1935 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_insertWrapDetails.js ***!
-  \**************************************************************************/
-259,
-/* 1936 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_setToString.js ***!
-  \********************************************************************/
-[3346, 1937, 1932],
-/* 1937 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseSetToString.js ***!
-  \************************************************************************/
-[3347, 1938, 1939, 1891],
-/* 1938 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/constant.js ***!
-  \****************************************************************/
-262,
-/* 1939 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_defineProperty.js ***!
-  \***********************************************************************/
-[3348, 1894],
-/* 1940 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_updateWrapDetails.js ***!
-  \**************************************************************************/
-[3349, 1941, 1942],
-/* 1941 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayEach.js ***!
-  \******************************************************************/
-265,
-/* 1942 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayIncludes.js ***!
-  \**********************************************************************/
-[3350, 1943],
-/* 1943 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIndexOf.js ***!
-  \********************************************************************/
-[3351, 1944, 1945, 1946],
-/* 1944 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseFindIndex.js ***!
-  \**********************************************************************/
-268,
-/* 1945 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsNaN.js ***!
-  \******************************************************************/
-269,
-/* 1946 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_strictIndexOf.js ***!
-  \**********************************************************************/
-270,
-/* 1947 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getHolder.js ***!
-  \******************************************************************/
-271,
-/* 1948 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_reorder.js ***!
-  \****************************************************************/
-[3352, 1930, 1949],
-/* 1949 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isIndex.js ***!
-  \****************************************************************/
-273,
-/* 1950 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_replaceHolders.js ***!
-  \***********************************************************************/
-274,
-/* 1951 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createPartial.js ***!
-  \**********************************************************************/
-[3353, 1912, 1909, 1899],
-/* 1952 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mergeData.js ***!
-  \******************************************************************/
-[3354, 1914, 1915, 1950],
-/* 1953 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/toInteger.js ***!
-  \*****************************************************************/
-[3355, 1954],
-/* 1954 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/toFinite.js ***!
-  \****************************************************************/
-[3356, 1955],
-/* 1955 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/toNumber.js ***!
-  \****************************************************************/
-[3357, 1903, 1956],
-/* 1956 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isSymbol.js ***!
-  \****************************************************************/
-[3358, 1897, 1928],
-/* 1957 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseAssign.js ***!
-  \*******************************************************************/
-[3359, 1958, 1962],
-/* 1958 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_copyObject.js ***!
-  \*******************************************************************/
-[3360, 1959, 1960],
-/* 1959 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_assignValue.js ***!
-  \********************************************************************/
-[3361, 1960, 1961],
-/* 1960 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseAssignValue.js ***!
-  \************************************************************************/
-[3362, 1939],
-/* 1961 */
-/*!**********************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/eq.js ***!
-  \**********************************************************/
-285,
-/* 1962 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/keys.js ***!
-  \************************************************************/
-[3363, 1963, 1974, 1978],
-/* 1963 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayLikeKeys.js ***!
-  \**********************************************************************/
-[3364, 1964, 1965, 1927, 1967, 1949, 1969],
-/* 1964 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseTimes.js ***!
-  \******************************************************************/
-288,
-/* 1965 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isArguments.js ***!
-  \*******************************************************************/
-[3365, 1966, 1928],
-/* 1966 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsArguments.js ***!
-  \************************************************************************/
-[3366, 1897, 1928],
-/* 1967 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isBuffer.js ***!
-  \****************************************************************/
-[3367, 1899, 1968],
-/* 1968 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/stubFalse.js ***!
-  \*****************************************************************/
-292,
-/* 1969 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isTypedArray.js ***!
-  \********************************************************************/
-[3368, 1970, 1972, 1973],
-/* 1970 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsTypedArray.js ***!
-  \*************************************************************************/
-[3369, 1897, 1971, 1928],
-/* 1971 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isLength.js ***!
-  \****************************************************************/
-295,
-/* 1972 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseUnary.js ***!
-  \******************************************************************/
-296,
-/* 1973 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_nodeUtil.js ***!
-  \*****************************************************************/
-[3370, 1900],
-/* 1974 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseKeys.js ***!
-  \*****************************************************************/
-[3371, 1975, 1976],
-/* 1975 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isPrototype.js ***!
-  \********************************************************************/
-299,
-/* 1976 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_nativeKeys.js ***!
-  \*******************************************************************/
-[3372, 1977],
-/* 1977 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_overArg.js ***!
-  \****************************************************************/
-301,
-/* 1978 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isArrayLike.js ***!
-  \*******************************************************************/
-[3373, 1896, 1971],
-/* 1979 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/clone.js ***!
-  \*************************************************************/
-[3374, 1980],
-/* 1980 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseClone.js ***!
-  \******************************************************************/
-[3375, 1981, 1941, 1959, 1957, 2010, 2014, 1930, 2015, 2019, 2023, 2025, 2026, 2030, 2031, 2045, 1927, 1967, 1903, 1962],
-/* 1981 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Stack.js ***!
-  \**************************************************************/
-[3376, 1982, 1989, 1990, 1991, 1992, 1993],
-/* 1982 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_ListCache.js ***!
-  \******************************************************************/
-[3377, 1983, 1984, 1986, 1987, 1988],
-/* 1983 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheClear.js ***!
-  \***********************************************************************/
-307,
-/* 1984 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheDelete.js ***!
-  \************************************************************************/
-[3378, 1985],
-/* 1985 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_assocIndexOf.js ***!
-  \*********************************************************************/
-[3379, 1961],
-/* 1986 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheGet.js ***!
-  \*********************************************************************/
-[3380, 1985],
-/* 1987 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheHas.js ***!
-  \*********************************************************************/
-[3381, 1985],
-/* 1988 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_listCacheSet.js ***!
-  \*********************************************************************/
-[3382, 1985],
-/* 1989 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_stackClear.js ***!
-  \*******************************************************************/
-[3383, 1982],
-/* 1990 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_stackDelete.js ***!
-  \********************************************************************/
-314,
-/* 1991 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_stackGet.js ***!
-  \*****************************************************************/
-315,
-/* 1992 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_stackHas.js ***!
-  \*****************************************************************/
-316,
-/* 1993 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_stackSet.js ***!
-  \*****************************************************************/
-[3384, 1982, 1994, 1995],
-/* 1994 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Map.js ***!
-  \************************************************************/
-[3385, 1894, 1899],
-/* 1995 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_MapCache.js ***!
-  \*****************************************************************/
-[3386, 1996, 2004, 2007, 2008, 2009],
-/* 1996 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheClear.js ***!
-  \**********************************************************************/
-[3387, 1997, 1982, 1994],
-/* 1997 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Hash.js ***!
-  \*************************************************************/
-[3388, 1998, 2000, 2001, 2002, 2003],
-/* 1998 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_hashClear.js ***!
-  \******************************************************************/
-[3389, 1999],
-/* 1999 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_nativeCreate.js ***!
-  \*********************************************************************/
-[3390, 1894],
-/* 2000 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_hashDelete.js ***!
-  \*******************************************************************/
-324,
-/* 2001 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_hashGet.js ***!
-  \****************************************************************/
-[3391, 1999],
-/* 2002 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_hashHas.js ***!
-  \****************************************************************/
-[3392, 1999],
-/* 2003 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_hashSet.js ***!
-  \****************************************************************/
-[3393, 1999],
-/* 2004 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheDelete.js ***!
-  \***********************************************************************/
-[3394, 2005],
-/* 2005 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getMapData.js ***!
-  \*******************************************************************/
-[3395, 2006],
-/* 2006 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isKeyable.js ***!
-  \******************************************************************/
-330,
-/* 2007 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheGet.js ***!
-  \********************************************************************/
-[3396, 2005],
-/* 2008 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheHas.js ***!
-  \********************************************************************/
-[3397, 2005],
-/* 2009 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mapCacheSet.js ***!
-  \********************************************************************/
-[3398, 2005],
-/* 2010 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseAssignIn.js ***!
-  \*********************************************************************/
-[3399, 1958, 2011],
-/* 2011 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/keysIn.js ***!
-  \**************************************************************/
-[3400, 1963, 2012, 1978],
-/* 2012 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseKeysIn.js ***!
-  \*******************************************************************/
-[3401, 1903, 1975, 2013],
-/* 2013 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_nativeKeysIn.js ***!
-  \*********************************************************************/
-337,
-/* 2014 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneBuffer.js ***!
-  \********************************************************************/
-[3402, 1899],
-/* 2015 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_copySymbols.js ***!
-  \********************************************************************/
-[3403, 1958, 2016],
-/* 2016 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getSymbols.js ***!
-  \*******************************************************************/
-[3404, 2017, 2018],
-/* 2017 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayFilter.js ***!
-  \********************************************************************/
-341,
-/* 2018 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/stubArray.js ***!
-  \*****************************************************************/
-342,
-/* 2019 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_copySymbolsIn.js ***!
-  \**********************************************************************/
-[3405, 1958, 2020],
-/* 2020 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getSymbolsIn.js ***!
-  \*********************************************************************/
-[3406, 2021, 2022, 2016, 2018],
-/* 2021 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayPush.js ***!
-  \******************************************************************/
-345,
-/* 2022 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getPrototype.js ***!
-  \*********************************************************************/
-[3407, 1977],
-/* 2023 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getAllKeys.js ***!
-  \*******************************************************************/
-[3408, 2024, 2016, 1962],
-/* 2024 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseGetAllKeys.js ***!
-  \***********************************************************************/
-[3409, 2021, 1927],
-/* 2025 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getAllKeysIn.js ***!
-  \*********************************************************************/
-[3410, 2024, 2020, 2011],
-/* 2026 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getTag.js ***!
-  \***************************************************************/
-[3411, 2027, 1994, 2028, 2029, 1893, 1897, 1906],
-/* 2027 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_DataView.js ***!
-  \*****************************************************************/
-[3412, 1894, 1899],
-/* 2028 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Promise.js ***!
-  \****************************************************************/
-[3413, 1894, 1899],
-/* 2029 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Set.js ***!
-  \************************************************************/
-[3414, 1894, 1899],
-/* 2030 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_initCloneArray.js ***!
-  \***********************************************************************/
-354,
-/* 2031 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_initCloneByTag.js ***!
-  \***********************************************************************/
-[3415, 2032, 2034, 2035, 2039, 2040, 2043, 2044],
-/* 2032 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneArrayBuffer.js ***!
-  \*************************************************************************/
-[3416, 2033],
-/* 2033 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_Uint8Array.js ***!
-  \*******************************************************************/
-[3417, 1899],
-/* 2034 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneDataView.js ***!
-  \**********************************************************************/
-[3418, 2032],
-/* 2035 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneMap.js ***!
-  \*****************************************************************/
-[3419, 2036, 2037, 2038],
-/* 2036 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_addMapEntry.js ***!
-  \********************************************************************/
-360,
-/* 2037 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayReduce.js ***!
-  \********************************************************************/
-361,
-/* 2038 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_mapToArray.js ***!
-  \*******************************************************************/
-362,
-/* 2039 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneRegExp.js ***!
-  \********************************************************************/
-363,
-/* 2040 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneSet.js ***!
-  \*****************************************************************/
-[3420, 2041, 2037, 2042],
-/* 2041 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_addSetEntry.js ***!
-  \********************************************************************/
-365,
-/* 2042 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_setToArray.js ***!
-  \*******************************************************************/
-366,
-/* 2043 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneSymbol.js ***!
-  \********************************************************************/
-[3421, 1898],
-/* 2044 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cloneTypedArray.js ***!
-  \************************************************************************/
-[3422, 2032],
-/* 2045 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_initCloneObject.js ***!
-  \************************************************************************/
-[3423, 1910, 2022, 1975],
-/* 2046 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/curry.js ***!
-  \*************************************************************/
-[3424, 1889],
-/* 2047 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/iteratee.js ***!
-  \****************************************************************/
-[3425, 1980, 2048],
-/* 2048 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIteratee.js ***!
-  \*********************************************************************/
-[3426, 2049, 2064, 1891, 1927, 2079],
-/* 2049 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseMatches.js ***!
-  \********************************************************************/
-[3427, 2050, 2061, 2063],
-/* 2050 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsMatch.js ***!
-  \********************************************************************/
-[3428, 1981, 2051],
-/* 2051 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsEqual.js ***!
-  \********************************************************************/
-[3429, 2052, 1928],
-/* 2052 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseIsEqualDeep.js ***!
-  \************************************************************************/
-[3430, 1981, 2053, 2059, 2060, 2026, 1927, 1967, 1969],
-/* 2053 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_equalArrays.js ***!
-  \********************************************************************/
-[3431, 2054, 2057, 2058],
-/* 2054 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_SetCache.js ***!
-  \*****************************************************************/
-[3432, 1995, 2055, 2056],
-/* 2055 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_setCacheAdd.js ***!
-  \********************************************************************/
-379,
-/* 2056 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_setCacheHas.js ***!
-  \********************************************************************/
-380,
-/* 2057 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arraySome.js ***!
-  \******************************************************************/
-381,
-/* 2058 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_cacheHas.js ***!
-  \*****************************************************************/
-382,
-/* 2059 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_equalByTag.js ***!
-  \*******************************************************************/
-[3433, 1898, 2033, 1961, 2053, 2038, 2042],
-/* 2060 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_equalObjects.js ***!
-  \*********************************************************************/
-[3434, 2023],
-/* 2061 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_getMatchData.js ***!
-  \*********************************************************************/
-[3435, 2062, 1962],
-/* 2062 */
-/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isStrictComparable.js ***!
-  \***************************************************************************/
-[3436, 1903],
-/* 2063 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_matchesStrictComparable.js ***!
-  \********************************************************************************/
-387,
-/* 2064 */
-/*!****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseMatchesProperty.js ***!
-  \****************************************************************************/
-[3437, 2051, 2065, 2076, 2068, 2062, 2063, 2075],
-/* 2065 */
-/*!***********************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/get.js ***!
-  \***********************************************************/
-[3438, 2066],
-/* 2066 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseGet.js ***!
-  \****************************************************************/
-[3439, 2067, 2075],
-/* 2067 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_castPath.js ***!
-  \*****************************************************************/
-[3440, 1927, 2068, 2069, 2072],
-/* 2068 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isKey.js ***!
-  \**************************************************************/
-[3441, 1927, 1956],
-/* 2069 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_stringToPath.js ***!
-  \*********************************************************************/
-[3442, 2070],
-/* 2070 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_memoizeCapped.js ***!
-  \**********************************************************************/
-[3443, 2071],
-/* 2071 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/memoize.js ***!
-  \***************************************************************/
-[3444, 1995],
-/* 2072 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/toString.js ***!
-  \****************************************************************/
-[3445, 2073],
-/* 2073 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseToString.js ***!
-  \*********************************************************************/
-[3446, 1898, 2074, 1927, 1956],
-/* 2074 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayMap.js ***!
-  \*****************************************************************/
-398,
-/* 2075 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_toKey.js ***!
-  \**************************************************************/
-[3447, 1956],
-/* 2076 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/hasIn.js ***!
-  \*************************************************************/
-[3448, 2077, 2078],
-/* 2077 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseHasIn.js ***!
-  \******************************************************************/
-401,
-/* 2078 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_hasPath.js ***!
-  \****************************************************************/
-[3449, 2067, 1965, 1927, 1949, 1971, 2075],
-/* 2079 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/property.js ***!
-  \****************************************************************/
-[3450, 2080, 2081, 2068, 2075],
-/* 2080 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseProperty.js ***!
-  \*********************************************************************/
-404,
-/* 2081 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_basePropertyDeep.js ***!
-  \*************************************************************************/
-[3451, 2066],
-/* 2082 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/rearg.js ***!
-  \*************************************************************/
-[3452, 1889, 2083],
-/* 2083 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_flatRest.js ***!
-  \*****************************************************************/
-[3453, 2084, 2087, 1936],
-/* 2084 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/flatten.js ***!
-  \***************************************************************/
-[3454, 2085],
-/* 2085 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseFlatten.js ***!
-  \********************************************************************/
-[3455, 2021, 2086],
-/* 2086 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isFlattenable.js ***!
-  \**********************************************************************/
-[3456, 1898, 1965, 1927],
-/* 2087 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_overRest.js ***!
-  \*****************************************************************/
-[3457, 1912],
-/* 2088 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/toPath.js ***!
-  \**************************************************************/
-[3458, 2074, 1930, 1927, 1956, 2069, 2075, 2072],
-/* 2089 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/omit.js ***!
-  \************************************************************/
-[3459, 2074, 1980, 2090, 2067, 1958, 2094, 2083, 2025],
-/* 2090 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseUnset.js ***!
-  \******************************************************************/
-[3460, 2067, 2091, 2092, 2075],
-/* 2091 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/last.js ***!
-  \************************************************************/
-415,
-/* 2092 */
-/*!***************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_parent.js ***!
-  \***************************************************************/
-[3461, 2066, 2093],
-/* 2093 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseSlice.js ***!
-  \******************************************************************/
-417,
-/* 2094 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_customOmitClone.js ***!
-  \************************************************************************/
-[3462, 2095],
-/* 2095 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isPlainObject.js ***!
-  \*********************************************************************/
-[3463, 1897, 2022, 1928],
-/* 2096 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/Container.jsx ***!
-  \**********************************************************************************************************/
-[3464, 1865, 2097, 2161, 2162, 2163, 2443, 2444],
-/* 2097 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/index.js ***!
-  \******************************************************************/
-[3465, 2098],
-/* 2098 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/AnatomogramFactory.jsx ***!
-  \************************************************************************************/
-[3466, 2099, 2103, 2159],
-/* 2099 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/Anatomogram.jsx ***!
-  \*****************************************************************************/
-[3467, 2100, 2102],
-/* 2100 */
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/AnatomogramImage.jsx ***!
-  \**********************************************************************************/
-[3468, 2101],
-/* 2101 */
-/*!**************************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/imports-loader?this=>window,fix=>module.exports=0!./atlas_bundles/baseline-expression/~/snapsvg/dist/snap.svg.js ***!
-  \**************************************************************************************************************************************************************/
-425,
-/* 2102 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/SelectionIcon.jsx ***!
-  \*******************************************************************************/
-[3469, 2103, 2155],
-/* 2103 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/imagesAvailable.js ***!
-  \********************************************************************************/
-[3470, 2104, 434, 2110, 2111, 2112, 2123],
-/* 2104 */
-/*!********************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/url/url.js ***!
-  \********************************************************/
-[3471, 2105, 2106, 2107],
-/* 2105 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/url/~/punycode/punycode.js ***!
-  \************************************************************************/
-429,
-/* 2106 */
-/*!*********************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/url/util.js ***!
-  \*********************************************************/
-430,
-/* 2107 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/querystring/index.js ***!
-  \******************************************************************/
-[3472, 2108, 2109],
-/* 2108 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/querystring/decode.js ***!
-  \*******************************************************************/
-432,
-/* 2109 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/querystring/encode.js ***!
-  \*******************************************************************/
-433,
-/* 2110 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/json/svgsForSpecies.json ***!
-  \********************************************************************************************/
-435,
-/* 2111 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/json/idsForSvgs.json ***!
-  \****************************************************************************************/
-436,
-/* 2112 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons ^\.\/.*selected\.png$ ***!
-  \***********************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ },
 
-	var map = {
-		"./brain_selected.png": 2113,
-		"./brain_unselected.png": 2114,
-		"./female_selected.png": 2115,
-		"./female_unselected.png": 2116,
-		"./flower_parts_selected.png": 2117,
-		"./flower_parts_unselected.png": 2118,
-		"./male_selected.png": 2119,
-		"./male_unselected.png": 2120,
-		"./whole_plant_selected.png": 2121,
-		"./whole_plant_unselected.png": 2122
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 2112;
-
-
-/***/ }),
-/* 2113 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/brain_selected.png ***!
-  \********************************************************************************************/
-438,
-/* 2114 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/brain_unselected.png ***!
-  \**********************************************************************************************/
-439,
-/* 2115 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/female_selected.png ***!
-  \*********************************************************************************************/
-440,
-/* 2116 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/female_unselected.png ***!
-  \***********************************************************************************************/
-441,
-/* 2117 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/flower_parts_selected.png ***!
-  \***************************************************************************************************/
-442,
-/* 2118 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/flower_parts_unselected.png ***!
-  \*****************************************************************************************************/
-443,
-/* 2119 */
-/*!*******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/male_selected.png ***!
-  \*******************************************************************************************/
-444,
-/* 2120 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/male_unselected.png ***!
-  \*********************************************************************************************/
-445,
-/* 2121 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/whole_plant_selected.png ***!
-  \**************************************************************************************************/
-446,
-/* 2122 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/icons/whole_plant_unselected.png ***!
-  \****************************************************************************************************/
-447,
-/* 2123 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg ^\.\/.*$ ***!
-  \********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./anolis_carolinensis.svg": 2124,
-		"./arabidopsis_thaliana_whole_plant.svg": 2125,
-		"./brachypodium_distachyon_flower_parts.svg": 2126,
-		"./brachypodium_distachyon_whole_plant.svg": 2127,
-		"./chicken.svg": 2128,
-		"./cow.svg": 2129,
-		"./hordeum_vulgare_flower_parts.svg": 2130,
-		"./hordeum_vulgare_whole_plant.svg": 2131,
-		"./human_brain.svg": 2132,
-		"./human_female.svg": 2133,
-		"./human_male.svg": 2134,
-		"./macaca_mulatta.svg": 2135,
-		"./monodelphis_domestica.svg": 2136,
-		"./mouse_brain.svg": 2137,
-		"./mouse_female.svg": 2138,
-		"./mouse_male.svg": 2139,
-		"./oryza_sativa_flower_parts.svg": 2140,
-		"./oryza_sativa_whole_plant.svg": 2141,
-		"./papio_anubis.svg": 2142,
-		"./rat.svg": 2143,
-		"./solanum_lycopersicum_flower_parts.svg": 2144,
-		"./solanum_lycopersicum_whole_plant.svg": 2145,
-		"./solanum_tuberosum_whole_plant.svg": 2146,
-		"./sorghum_bicolor_flower_parts.svg": 2147,
-		"./sorghum_bicolor_whole_plant.svg": 2148,
-		"./tetraodon_nigroviridis.svg": 2149,
-		"./triticum_aestivum_flower_parts.svg": 2150,
-		"./triticum_aestivum_whole_plant.svg": 2151,
-		"./xenopus_tropicalis.svg": 2152,
-		"./zea_mays_flower_parts.svg": 2153,
-		"./zea_mays_whole_plant.svg": 2154
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 2123;
-
-
-/***/ }),
-/* 2124 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/anolis_carolinensis.svg ***!
-  \***********************************************************************************************/
-449,
-/* 2125 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/arabidopsis_thaliana_whole_plant.svg ***!
-  \************************************************************************************************************/
-450,
-/* 2126 */
-/*!****************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/brachypodium_distachyon_flower_parts.svg ***!
-  \****************************************************************************************************************/
-451,
-/* 2127 */
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/brachypodium_distachyon_whole_plant.svg ***!
-  \***************************************************************************************************************/
-452,
-/* 2128 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/chicken.svg ***!
-  \***********************************************************************************/
-453,
-/* 2129 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/cow.svg ***!
-  \*******************************************************************************/
-454,
-/* 2130 */
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/hordeum_vulgare_flower_parts.svg ***!
-  \********************************************************************************************************/
-455,
-/* 2131 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/hordeum_vulgare_whole_plant.svg ***!
-  \*******************************************************************************************************/
-456,
-/* 2132 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/human_brain.svg ***!
-  \***************************************************************************************/
-457,
-/* 2133 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/human_female.svg ***!
-  \****************************************************************************************/
-458,
-/* 2134 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/human_male.svg ***!
-  \**************************************************************************************/
-459,
-/* 2135 */
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/macaca_mulatta.svg ***!
-  \******************************************************************************************/
-460,
-/* 2136 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/monodelphis_domestica.svg ***!
-  \*************************************************************************************************/
-461,
-/* 2137 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/mouse_brain.svg ***!
-  \***************************************************************************************/
-462,
-/* 2138 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/mouse_female.svg ***!
-  \****************************************************************************************/
-463,
-/* 2139 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/mouse_male.svg ***!
-  \**************************************************************************************/
-464,
-/* 2140 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/oryza_sativa_flower_parts.svg ***!
-  \*****************************************************************************************************/
-465,
-/* 2141 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/oryza_sativa_whole_plant.svg ***!
-  \****************************************************************************************************/
-466,
-/* 2142 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/papio_anubis.svg ***!
-  \****************************************************************************************/
-467,
-/* 2143 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/rat.svg ***!
-  \*******************************************************************************/
-468,
-/* 2144 */
-/*!*************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/solanum_lycopersicum_flower_parts.svg ***!
-  \*************************************************************************************************************/
-469,
-/* 2145 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/solanum_lycopersicum_whole_plant.svg ***!
-  \************************************************************************************************************/
-470,
-/* 2146 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/solanum_tuberosum_whole_plant.svg ***!
-  \*********************************************************************************************************/
-471,
-/* 2147 */
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/sorghum_bicolor_flower_parts.svg ***!
-  \********************************************************************************************************/
-472,
-/* 2148 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/sorghum_bicolor_whole_plant.svg ***!
-  \*******************************************************************************************************/
-473,
-/* 2149 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/tetraodon_nigroviridis.svg ***!
-  \**************************************************************************************************/
-474,
-/* 2150 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/triticum_aestivum_flower_parts.svg ***!
-  \**********************************************************************************************************/
-475,
-/* 2151 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/triticum_aestivum_whole_plant.svg ***!
-  \*********************************************************************************************************/
-476,
-/* 2152 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/xenopus_tropicalis.svg ***!
-  \**********************************************************************************************/
-477,
-/* 2153 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/zea_mays_flower_parts.svg ***!
-  \*************************************************************************************************/
-478,
-/* 2154 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/resources/svg/zea_mays_whole_plant.svg ***!
-  \************************************************************************************************/
-479,
-/* 2155 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/SelectionIcon.less ***!
-  \********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !../../css-loader!../../../../../~/less-loader!./SelectionIcon.less */ 2156);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 2158)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../css-loader/index.js!../../../../../node_modules/less-loader/index.js!./SelectionIcon.less", function() {
-				var newContent = require("!!../../css-loader/index.js!../../../../../node_modules/less-loader/index.js!./SelectionIcon.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 2156 */
-/*!*************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/anatomogram/src/SelectionIcon.less ***!
-  \*************************************************************************************************************************************************/
-[3473, 2157],
-/* 2157 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader/lib/css-base.js ***!
-  \************************************************************************/
-482,
-/* 2158 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/style-loader/addStyles.js ***!
-  \***********************************************************************/
-483,
-/* 2159 */
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/anatomogram/src/ContainerLayout.less ***!
-  \**********************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !../../css-loader!../../../../../~/less-loader!./ContainerLayout.less */ 2160);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 2158)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../css-loader/index.js!../../../../../node_modules/less-loader/index.js!./ContainerLayout.less", function() {
-				var newContent = require("!!../../css-loader/index.js!../../../../../node_modules/less-loader/index.js!./ContainerLayout.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 2160 */
-/*!***************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/anatomogram/src/ContainerLayout.less ***!
-  \***************************************************************************************************************************************************/
-[3474, 2157],
-/* 2161 */
-/*!**********************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/ExperimentDescription.jsx ***!
-  \**********************************************************************************************************************/
-486,
-/* 2162 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/Footer.jsx ***!
-  \*******************************************************************************************************/
-487,
-/* 2163 */
-/*!*******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/ChartContainer.jsx ***!
-  \*******************************************************************************************************************/
-[3475, 2164, 2167, 2441, 2355],
-/* 2164 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/uncontrollable/index.js ***!
-  \*********************************************************************/
-[3476, 2165],
-/* 2165 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/uncontrollable/createUncontrollable.js ***!
-  \************************************************************************************/
-[3477, 1878, 2166],
-/* 2166 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/uncontrollable/utils.js ***!
-  \*********************************************************************/
-[3478, 1878],
-/* 2167 */
-/*!************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/HeatmapWithControls.jsx ***!
-  \************************************************************************************************************************/
-[3479, 2168, 2302, 2303, 2357, 2365, 2371, 2376, 2377, 2385, 2439, 2440, 2355],
-/* 2168 */
-/*!************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/GenomeBrowsersDropdown.jsx ***!
-  \************************************************************************************************************************************/
-[3480, 2169, 2300, 2301],
-/* 2169 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Dropdown.js ***!
-  \*****************************************************************************/
-[3481, 2170, 2171, 2209, 2210, 2246, 2254, 2255, 2258, 2260, 2261, 2263, 2264, 2164, 2265, 2266, 2278, 2298, 2272, 2296, 2299, 2297],
-/* 2170 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/objectWithoutProperties.js ***!
-  \**********************************************************************************************/
-495,
-/* 2171 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/extends.js ***!
-  \******************************************************************************/
-[3482, 2172],
-/* 2172 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/assign.js ***!
-  \************************************************************************************/
-[3483, 2173],
-/* 2173 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/assign.js ***!
-  \*************************************************************************************************/
-[3484, 2174, 2177],
-/* 2174 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.assign.js ***!
-  \**********************************************************************************************************/
-[3485, 2175, 2190],
-/* 2175 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_export.js ***!
-  \************************************************************************************************/
-[3486, 2176, 2177, 2178, 2180],
-/* 2176 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_global.js ***!
-  \************************************************************************************************/
-501,
-/* 2177 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_core.js ***!
-  \**********************************************************************************************/
-502,
-/* 2178 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_ctx.js ***!
-  \*********************************************************************************************/
-[3487, 2179],
-/* 2179 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_a-function.js ***!
-  \****************************************************************************************************/
-504,
-/* 2180 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_hide.js ***!
-  \**********************************************************************************************/
-[3488, 2181, 2189, 2185],
-/* 2181 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-dp.js ***!
-  \***************************************************************************************************/
-[3489, 2182, 2184, 2188, 2185],
-/* 2182 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_an-object.js ***!
-  \***************************************************************************************************/
-[3490, 2183],
-/* 2183 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_is-object.js ***!
-  \***************************************************************************************************/
-508,
-/* 2184 */
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_ie8-dom-define.js ***!
-  \********************************************************************************************************/
-[3491, 2185, 2186, 2187],
-/* 2185 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_descriptors.js ***!
-  \*****************************************************************************************************/
-[3492, 2186],
-/* 2186 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_fails.js ***!
-  \***********************************************************************************************/
-511,
-/* 2187 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_dom-create.js ***!
-  \****************************************************************************************************/
-[3493, 2183, 2176],
-/* 2188 */
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-primitive.js ***!
-  \******************************************************************************************************/
-[3494, 2183],
-/* 2189 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_property-desc.js ***!
-  \*******************************************************************************************************/
-514,
-/* 2190 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-assign.js ***!
-  \*******************************************************************************************************/
-[3495, 2191, 2206, 2207, 2208, 2195, 2186],
-/* 2191 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-keys.js ***!
-  \*****************************************************************************************************/
-[3496, 2192, 2205],
-/* 2192 */
-/*!**************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-keys-internal.js ***!
-  \**************************************************************************************************************/
-[3497, 2193, 2194, 2198, 2202],
-/* 2193 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_has.js ***!
-  \*********************************************************************************************/
-518,
-/* 2194 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-iobject.js ***!
-  \****************************************************************************************************/
-[3498, 2195, 2197],
-/* 2195 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iobject.js ***!
-  \*************************************************************************************************/
-[3499, 2196],
-/* 2196 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_cof.js ***!
-  \*********************************************************************************************/
-521,
-/* 2197 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_defined.js ***!
-  \*************************************************************************************************/
-522,
-/* 2198 */
-/*!********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_array-includes.js ***!
-  \********************************************************************************************************/
-[3500, 2194, 2199, 2201],
-/* 2199 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-length.js ***!
-  \***************************************************************************************************/
-[3501, 2200],
-/* 2200 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-integer.js ***!
-  \****************************************************************************************************/
-525,
-/* 2201 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-index.js ***!
-  \**************************************************************************************************/
-[3502, 2200],
-/* 2202 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_shared-key.js ***!
-  \****************************************************************************************************/
-[3503, 2203, 2204],
-/* 2203 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_shared.js ***!
-  \************************************************************************************************/
-[3504, 2176],
-/* 2204 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_uid.js ***!
-  \*********************************************************************************************/
-529,
-/* 2205 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_enum-bug-keys.js ***!
-  \*******************************************************************************************************/
-530,
-/* 2206 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gops.js ***!
-  \*****************************************************************************************************/
-531,
-/* 2207 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-pie.js ***!
-  \****************************************************************************************************/
-532,
-/* 2208 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_to-object.js ***!
-  \***************************************************************************************************/
-[3505, 2197],
-/* 2209 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/classCallCheck.js ***!
-  \*************************************************************************************/
-534,
-/* 2210 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/possibleConstructorReturn.js ***!
-  \************************************************************************************************/
-[3506, 2211],
-/* 2211 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/typeof.js ***!
-  \*****************************************************************************/
-[3507, 2212, 2232],
-/* 2212 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/symbol/iterator.js ***!
-  \**************************************************************************************/
-[3508, 2213],
-/* 2213 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/symbol/iterator.js ***!
-  \***************************************************************************************************/
-[3509, 2214, 2227, 2231],
-/* 2214 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.string.iterator.js ***!
-  \************************************************************************************************************/
-[3510, 2215, 2216],
-/* 2215 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_string-at.js ***!
-  \***************************************************************************************************/
-[3511, 2200, 2197],
-/* 2216 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-define.js ***!
-  \*****************************************************************************************************/
-[3512, 2217, 2175, 2218, 2180, 2193, 2219, 2220, 2224, 2226, 2225],
-/* 2217 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_library.js ***!
-  \*************************************************************************************************/
-542,
-/* 2218 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_redefine.js ***!
-  \**************************************************************************************************/
-[3513, 2180],
-/* 2219 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iterators.js ***!
-  \***************************************************************************************************/
-544,
-/* 2220 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-create.js ***!
-  \*****************************************************************************************************/
-[3514, 2221, 2189, 2224, 2180, 2225],
-/* 2221 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-create.js ***!
-  \*******************************************************************************************************/
-[3515, 2182, 2222, 2205, 2202, 2187, 2223],
-/* 2222 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-dps.js ***!
-  \****************************************************************************************************/
-[3516, 2181, 2182, 2191, 2185],
-/* 2223 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_html.js ***!
-  \**********************************************************************************************/
-[3517, 2176],
-/* 2224 */
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_set-to-string-tag.js ***!
-  \***********************************************************************************************************/
-[3518, 2181, 2193, 2225],
-/* 2225 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_wks.js ***!
-  \*********************************************************************************************/
-[3519, 2203, 2204, 2176],
-/* 2226 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gpo.js ***!
-  \****************************************************************************************************/
-[3520, 2193, 2208, 2202],
-/* 2227 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/web.dom.iterable.js ***!
-  \*********************************************************************************************************/
-[3521, 2228, 2176, 2180, 2219, 2225],
-/* 2228 */
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.array.iterator.js ***!
-  \***********************************************************************************************************/
-[3522, 2229, 2230, 2219, 2194, 2216],
-/* 2229 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_add-to-unscopables.js ***!
-  \************************************************************************************************************/
-554,
-/* 2230 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-step.js ***!
-  \***************************************************************************************************/
-555,
-/* 2231 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_wks-ext.js ***!
-  \*************************************************************************************************/
-[3523, 2225],
-/* 2232 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/symbol.js ***!
-  \*****************************************************************************/
-[3524, 2233],
-/* 2233 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/symbol/index.js ***!
-  \************************************************************************************************/
-[3525, 2234, 2243, 2244, 2245, 2177],
-/* 2234 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.symbol.js ***!
-  \***************************************************************************************************/
-[3526, 2176, 2193, 2185, 2175, 2218, 2235, 2186, 2203, 2224, 2204, 2225, 2231, 2236, 2237, 2238, 2239, 2182, 2194, 2188, 2189, 2221, 2240, 2242, 2181, 2191, 2241, 2207, 2206, 2217, 2180],
-/* 2235 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_meta.js ***!
-  \**********************************************************************************************/
-[3527, 2204, 2183, 2193, 2181, 2186],
-/* 2236 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_wks-define.js ***!
-  \****************************************************************************************************/
-[3528, 2176, 2177, 2217, 2231, 2181],
-/* 2237 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_keyof.js ***!
-  \***********************************************************************************************/
-[3529, 2191, 2194],
-/* 2238 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_enum-keys.js ***!
-  \***************************************************************************************************/
-[3530, 2191, 2206, 2207],
-/* 2239 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_is-array.js ***!
-  \**************************************************************************************************/
-[3531, 2196],
-/* 2240 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gopn-ext.js ***!
-  \*********************************************************************************************************/
-[3532, 2194, 2241],
-/* 2241 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gopn.js ***!
-  \*****************************************************************************************************/
-[3533, 2192, 2205],
-/* 2242 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-gopd.js ***!
-  \*****************************************************************************************************/
-[3534, 2207, 2189, 2194, 2188, 2193, 2184, 2185],
-/* 2243 */
-/*!*************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.to-string.js ***!
-  \*************************************************************************************************************/
-568,
-/* 2244 */
-/*!******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.symbol.async-iterator.js ***!
-  \******************************************************************************************************************/
-[3535, 2236],
-/* 2245 */
-/*!**************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.symbol.observable.js ***!
-  \**************************************************************************************************************/
-[3536, 2236],
-/* 2246 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/inherits.js ***!
-  \*******************************************************************************/
-[3537, 2247, 2251, 2211],
-/* 2247 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/set-prototype-of.js ***!
-  \**********************************************************************************************/
-[3538, 2248],
-/* 2248 */
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/set-prototype-of.js ***!
-  \***********************************************************************************************************/
-[3539, 2249, 2177],
-/* 2249 */
-/*!********************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.set-prototype-of.js ***!
-  \********************************************************************************************************************/
-[3540, 2175, 2250],
-/* 2250 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_set-proto.js ***!
-  \***************************************************************************************************/
-[3541, 2183, 2182, 2178, 2242],
-/* 2251 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/create.js ***!
-  \************************************************************************************/
-[3542, 2252],
-/* 2252 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/create.js ***!
-  \*************************************************************************************************/
-[3543, 2253, 2177],
-/* 2253 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.create.js ***!
-  \**********************************************************************************************************/
-[3544, 2175, 2221],
-/* 2254 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/classnames/index.js ***!
-  \*****************************************************************/
-579,
-/* 2255 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/activeElement.js ***!
-  \**************************************************************************/
-[3545, 2256, 2257],
-/* 2256 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/util/babelHelpers.js ***!
-  \******************************************************************************/
-581,
-/* 2257 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/ownerDocument.js ***!
-  \**************************************************************************/
-582,
-/* 2258 */
-/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/query/contains.js ***!
-  \***************************************************************************/
-[3546, 2259],
-/* 2259 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/util/inDOM.js ***!
-  \***********************************************************************/
-584,
-/* 2260 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/keycode/index.js ***!
-  \**************************************************************/
-585,
-/* 2261 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/all.js ***!
-  \*************************************************************************/
-[3547, 2262],
-/* 2262 */
-/*!******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
-  \******************************************************************************************************/
-587,
-/* 2263 */
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/elementType.js ***!
-  \*********************************************************************************/
-[3548, 2262],
-/* 2264 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/isRequiredForA11y.js ***!
-  \***************************************************************************************/
-589,
-/* 2265 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/warning/browser.js ***!
-  \****************************************************************/
-205,
-/* 2266 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ButtonGroup.js ***!
-  \********************************************************************************/
-[3549, 2171, 2170, 2209, 2210, 2246, 2254, 2261, 2267, 2272],
-/* 2267 */
-/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Button.js ***!
-  \***************************************************************************/
-[3550, 2268, 2170, 2171, 2209, 2210, 2246, 2254, 2263, 2272, 2276, 2277],
-/* 2268 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/values.js ***!
-  \************************************************************************************/
-[3551, 2269],
-/* 2269 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/values.js ***!
-  \*************************************************************************************************/
-[3552, 2270, 2177],
-/* 2270 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.object.values.js ***!
-  \**********************************************************************************************************/
-[3553, 2175, 2271],
-/* 2271 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_object-to-array.js ***!
-  \*********************************************************************************************************/
-[3554, 2191, 2194, 2207],
-/* 2272 */
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/bootstrapUtils.js ***!
-  \*****************************************************************************************/
-[3555, 2273, 2171, 1878, 2276],
-/* 2273 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/entries.js ***!
-  \*************************************************************************************/
-[3556, 2274],
-/* 2274 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/entries.js ***!
-  \**************************************************************************************************/
-[3557, 2275, 2177],
-/* 2275 */
-/*!***********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es7.object.entries.js ***!
-  \***********************************************************************************************************/
-[3558, 2175, 2271],
-/* 2276 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/StyleConfig.js ***!
-  \**************************************************************************************/
-601,
-/* 2277 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/SafeAnchor.js ***!
-  \*******************************************************************************/
-[3559, 2171, 2170, 2209, 2210, 2246, 2263],
-/* 2278 */
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/DropdownMenu.js ***!
-  \*********************************************************************************/
-[3560, 2171, 2170, 2279, 2209, 2210, 2246, 2254, 2260, 2288, 2272, 2296, 2297],
-/* 2279 */
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/array/from.js ***!
-  \*********************************************************************************/
-[3561, 2280],
-/* 2280 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/array/from.js ***!
-  \**********************************************************************************************/
-[3562, 2214, 2281, 2177],
-/* 2281 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.array.from.js ***!
-  \*******************************************************************************************************/
-[3563, 2178, 2175, 2208, 2282, 2283, 2199, 2284, 2285, 2287],
-/* 2282 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-call.js ***!
-  \***************************************************************************************************/
-[3564, 2182],
-/* 2283 */
-/*!*******************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_is-array-iter.js ***!
-  \*******************************************************************************************************/
-[3565, 2219, 2225],
-/* 2284 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_create-property.js ***!
-  \*********************************************************************************************************/
-[3566, 2181, 2189],
-/* 2285 */
-/*!*****************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/core.get-iterator-method.js ***!
-  \*****************************************************************************************************************/
-[3567, 2286, 2225, 2219, 2177],
-/* 2286 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_classof.js ***!
-  \*************************************************************************************************/
-[3568, 2196, 2225],
-/* 2287 */
-/*!*****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/_iter-detect.js ***!
-  \*****************************************************************************************************/
-[3569, 2225],
-/* 2288 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/RootCloseWrapper.js ***!
-  \************************************************************************************/
-[3570, 2289, 2291, 2294],
-/* 2289 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/query/contains.js ***!
-  \********************************************************************************************/
-[3571, 2290],
-/* 2290 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/inDOM.js ***!
-  \****************************************************************************************/
-615,
-/* 2291 */
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/addEventListener.js ***!
-  \******************************************************************************************/
-[3572, 2292, 2293],
-/* 2292 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/events/on.js ***!
-  \***************************************************************************************/
-[3573, 2290],
-/* 2293 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/events/off.js ***!
-  \****************************************************************************************/
-[3574, 2290],
-/* 2294 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/ownerDocument.js ***!
-  \***************************************************************************************/
-[3575, 2295],
-/* 2295 */
-/*!*******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/ownerDocument.js ***!
-  \*******************************************************************************************/
-620,
-/* 2296 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/createChainedFunction.js ***!
-  \************************************************************************************************/
-621,
-/* 2297 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
-  \*************************************************************************************************/
-622,
-/* 2298 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/DropdownToggle.js ***!
-  \***********************************************************************************/
-[3576, 2171, 2170, 2209, 2210, 2246, 2254, 2267, 2277, 2272],
-/* 2299 */
-/*!************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/PropTypes.js ***!
-  \************************************************************************************/
-[3577, 2262, 2297],
-/* 2300 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/MenuItem.js ***!
-  \*****************************************************************************/
-[3578, 2171, 2170, 2209, 2210, 2246, 2254, 2261, 2277, 2272, 2296],
-/* 2301 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Glyphicon.js ***!
-  \******************************************************************************/
-[3579, 2171, 2170, 2209, 2210, 2246, 2254, 2272],
-/* 2302 */
-/*!*******************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/OrderingsDropdown.jsx ***!
-  \*******************************************************************************************************************************/
-[3580, 2169, 2300, 2301],
-/* 2303 */
-/*!*********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/FiltersModal.jsx ***!
-  \*********************************************************************************************************************************/
-[3581, 2304, 2267, 2301, 2343, 2354, 2355],
-/* 2304 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Modal.js ***!
-  \**************************************************************************/
-[3582, 2170, 2209, 2210, 2246, 2171, 2254, 2305, 2257, 2259, 2310, 2311, 2330, 2263, 2335, 2337, 2338, 2339, 2340, 2341, 2272, 2296, 2342, 2276],
-/* 2305 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/index.js ***!
-  \*************************************************************************/
-[3583, 2306, 2307, 2308],
-/* 2306 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/on.js ***!
-  \**********************************************************************/
-[3584, 2259],
-/* 2307 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/off.js ***!
-  \***********************************************************************/
-[3585, 2259],
-/* 2308 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/events/filter.js ***!
-  \**************************************************************************/
-[3586, 2258, 2309],
-/* 2309 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/query/querySelectorAll.js ***!
-  \***********************************************************************************/
-634,
-/* 2310 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-helpers/util/scrollbarSize.js ***!
-  \*******************************************************************************/
-[3587, 2259],
-/* 2311 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/Modal.js ***!
-  \*************************************************************************/
-[3588, 2265, 2312, 2263, 2313, 2315, 2294, 2291, 2333, 2290, 2334, 2289, 2314],
-/* 2312 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-prop-types/lib/componentOrElement.js ***!
-  \****************************************************************************************/
-[3589, 2262],
-/* 2313 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/Portal.js ***!
-  \**************************************************************************/
-[3590, 2312, 2294, 2314],
-/* 2314 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/getContainer.js ***!
-  \**************************************************************************************/
-639,
-/* 2315 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/ModalManager.js ***!
-  \********************************************************************************/
-[3591, 2316, 2325, 2329, 2330, 2332],
-/* 2316 */
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/style/index.js ***!
-  \*****************************************************************************************/
-[3592, 2317, 2319, 2321, 2322, 2323, 2324],
-/* 2317 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/camelizeStyle.js ***!
-  \************************************************************************************************/
-[3593, 2318],
-/* 2318 */
-/*!*******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/camelize.js ***!
-  \*******************************************************************************************/
-643,
-/* 2319 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/hyphenateStyle.js ***!
-  \*************************************************************************************************/
-[3594, 2320],
-/* 2320 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/hyphenate.js ***!
-  \********************************************************************************************/
-645,
-/* 2321 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/style/getComputedStyle.js ***!
-  \****************************************************************************************************/
-[3595, 2317],
-/* 2322 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/style/removeStyle.js ***!
-  \***********************************************************************************************/
-647,
-/* 2323 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/transition/properties.js ***!
-  \***************************************************************************************************/
-[3596, 2290],
-/* 2324 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/transition/isTransform.js ***!
-  \****************************************************************************************************/
-649,
-/* 2325 */
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/index.js ***!
-  \*****************************************************************************************/
-[3597, 2326, 2328, 2327],
-/* 2326 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/addClass.js ***!
-  \********************************************************************************************/
-[3598, 2327],
-/* 2327 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/hasClass.js ***!
-  \********************************************************************************************/
-652,
-/* 2328 */
-/*!***********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/class/removeClass.js ***!
-  \***********************************************************************************************/
-653,
-/* 2329 */
-/*!************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/util/scrollbarSize.js ***!
-  \************************************************************************************************/
-[3599, 2290],
-/* 2330 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/isOverflowing.js ***!
-  \***************************************************************************************/
-[3600, 2331, 2295],
-/* 2331 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/query/isWindow.js ***!
-  \********************************************************************************************/
-656,
-/* 2332 */
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/manageAriaHidden.js ***!
-  \******************************************************************************************/
-657,
-/* 2333 */
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/utils/addFocusListener.js ***!
-  \******************************************************************************************/
-658,
-/* 2334 */
-/*!*******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/~/dom-helpers/activeElement.js ***!
-  \*******************************************************************************************/
-[3601, 2295],
-/* 2335 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/Fade.js ***!
-  \*************************************************************************/
-[3602, 2171, 2209, 2210, 2246, 2254, 2336],
-/* 2336 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-overlays/lib/Transition.js ***!
-  \******************************************************************************/
-[3603, 2254, 2292, 2323],
-/* 2337 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalBody.js ***!
-  \******************************************************************************/
-[3604, 2171, 2170, 2209, 2210, 2246, 2254, 2263, 2272],
-/* 2338 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalDialog.js ***!
-  \********************************************************************************/
-[3605, 2171, 2170, 2209, 2210, 2246, 2254, 2272, 2276],
-/* 2339 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalFooter.js ***!
-  \********************************************************************************/
-[3606, 2171, 2170, 2209, 2210, 2246, 2254, 2263, 2272],
-/* 2340 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalHeader.js ***!
-  \********************************************************************************/
-[3607, 2171, 2170, 2209, 2210, 2246, 2254, 2272, 2296],
-/* 2341 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/ModalTitle.js ***!
-  \*******************************************************************************/
-[3608, 2171, 2170, 2209, 2210, 2246, 2254, 2263, 2272],
-/* 2342 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/utils/splitComponentProps.js ***!
-  \**********************************************************************************************/
-[3609, 2273],
-/* 2343 */
-/*!*******************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/FlatFilter.jsx ***!
-  \*******************************************************************************************************************************/
-[3610, 2344, 2352],
-/* 2344 */
-/*!***********************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/xor.js ***!
-  \***********************************************************/
-[3611, 2017, 2345, 2346, 2351],
-/* 2345 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseRest.js ***!
-  \*****************************************************************/
-[3612, 1891, 2087, 1936],
-/* 2346 */
-/*!****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseXor.js ***!
-  \****************************************************************/
-[3613, 2347, 2085, 2349],
-/* 2347 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseDifference.js ***!
-  \***********************************************************************/
-[3614, 2054, 1942, 2348, 2074, 1972, 2058],
-/* 2348 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_arrayIncludesWith.js ***!
-  \**************************************************************************/
-673,
-/* 2349 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseUniq.js ***!
-  \*****************************************************************/
-[3615, 2054, 1942, 2348, 2058, 2350, 2042],
-/* 2350 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createSet.js ***!
-  \******************************************************************/
-[3616, 2029, 1922, 2042],
-/* 2351 */
-/*!*************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/isArrayLikeObject.js ***!
-  \*************************************************************************/
-[3617, 1978, 1928],
-/* 2352 */
-/*!****************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/Filter.less ***!
-  \****************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !../../../../../css-loader!../../../../../../../../~/less-loader!./Filter.less */ 2353);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../../../../style-loader/addStyles.js */ 2158)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../../../../css-loader/index.js!../../../../../../../../node_modules/less-loader/index.js!./Filter.less", function() {
-				var newContent = require("!!../../../../../css-loader/index.js!../../../../../../../../node_modules/less-loader/index.js!./Filter.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 2353 */
-/*!*********************************************************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/Filter.less ***!
-  \*********************************************************************************************************************************************************************************************/
-[3618, 2157],
-/* 2354 */
-/*!***********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/filter/GroupingFilter.jsx ***!
-  \***********************************************************************************************************************************/
-[3619, 2266, 2267, 2301, 2344, 2352],
-/* 2355 */
-/*!**********************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/chartDataPropTypes.js ***!
-  \**********************************************************************************************************************/
-[3620, 2356],
-/* 2356 */
-/*!*****************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/experimentTypeUtils.js ***!
-  \*****************************************************************************************************************/
-681,
-/* 2357 */
-/*!********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/DownloadButton.jsx ***!
-  \********************************************************************************************************************************************/
-[3621, 2304, 2267, 2301, 2358, 2359, 2355],
-/* 2358 */
-/*!*****************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/Disclaimers.jsx ***!
-  \*****************************************************************************************************************************************/
-683,
-/* 2359 */
-/*!*************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/controls/download-button/Download.js ***!
-  \*************************************************************************************************************************************/
-[3622, 2360, 2364],
-/* 2360 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/range.js ***!
-  \*************************************************************/
-[3623, 2361],
-/* 2361 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_createRange.js ***!
-  \********************************************************************/
-[3624, 2362, 2363, 1954],
-/* 2362 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_baseRange.js ***!
-  \******************************************************************/
-687,
-/* 2363 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/_isIterateeCall.js ***!
-  \***********************************************************************/
-[3625, 1961, 1978, 1949, 1903],
-/* 2364 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/downloadjs/download.js ***!
-  \********************************************************************/
-689,
-/* 2365 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/show/HeatmapCanvas.jsx ***!
-  \************************************************************************************************************/
-[3626, 2366, 2368, 2369, 2370, 2355],
-/* 2366 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-highcharts/dist/ReactHighcharts.js ***!
-  \**************************************************************************************/
-[3627, 2367],
-/* 2367 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/highcharts/highcharts.js ***!
-  \**********************************************************************/
-692,
-/* 2368 */
-/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/highcharts/modules/heatmap.js ***!
-  \***************************************************************************/
-693,
-/* 2369 */
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/highcharts-custom-events/js/customEvents.js ***!
-  \*****************************************************************************************/
-694,
-/* 2370 */
-/*!******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/object-hash/index.js ***!
-  \******************************************************************/
-695,
-/* 2371 */
-/*!*******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/heatmapCellTooltipFormatter.jsx ***!
-  \*******************************************************************************************************************************************/
-[3629, 2372, 2375],
-/* 2372 */
-/*!**********************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/HeatmapCellTooltip.jsx ***!
-  \**********************************************************************************************************************************/
-[3630, 2373],
-/* 2373 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-number-format/index.js ***!
-  \*************************************************************************************/
-[3631, 2374],
-/* 2374 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-number-format/src/NumberFormat.jsx ***!
-  \*************************************************************************************************/
-762,
-/* 2375 */
-/*!******************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/he/he.js ***!
-  \******************************************************/
-763,
-/* 2376 */
-/*!******************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/formatters/axesFormatters.jsx ***!
-  \******************************************************************************************************************************/
-[3632, 2375],
-/* 2377 */
-/*!************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/Main.jsx ***!
-  \************************************************************************************************************************/
-[3633, 2378, 2381, 2355],
-/* 2378 */
-/*!*******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.jsx ***!
-  \*******************************************************************************************************************************************/
-[3634, 2379],
-/* 2379 */
-/*!********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.less ***!
-  \********************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !../../../../css-loader!../../../../../../../~/less-loader!./DataSeriesHeatmapLegend.less */ 2380);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../../../style-loader/addStyles.js */ 2158)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../../../css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./DataSeriesHeatmapLegend.less", function() {
-				var newContent = require("!!../../../../css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./DataSeriesHeatmapLegend.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 2380 */
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.less ***!
-  \*************************************************************************************************************************************************************************************************************/
-[3635, 2157],
-/* 2381 */
-/*!*****************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.jsx ***!
-  \*****************************************************************************************************************************************/
-[3636, 2382, 2383],
-/* 2382 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/utils.js ***!
-  \**********************************************************************************************/
-770,
-/* 2383 */
-/*!******************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.less ***!
-  \******************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !../../../../css-loader!../../../../../../../~/less-loader!./GradientHeatmapLegend.less */ 2384);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../../../style-loader/addStyles.js */ 2158)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../../../css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./GradientHeatmapLegend.less", function() {
-				var newContent = require("!!../../../../css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./GradientHeatmapLegend.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 2384 */
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/heatmap-legend/GradientHeatmapLegend.less ***!
-  \***********************************************************************************************************************************************************************************************************/
-[3637, 2157],
-/* 2385 */
-/*!************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.jsx ***!
-  \************************************************************************************************************************************/
-[3638, 2267, 2301, 2386, 2435, 2437],
-/* 2386 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/index.js ***!
-  \********************************************************************/
-[3639, 2387],
-/* 2387 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Slider.js ***!
-  \*********************************************************************/
-[3640, 2388, 2392, 2171, 2209, 2210, 2246, 2393, 2254, 2397, 2398, 2433, 2434],
-/* 2388 */
-/*!*************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/defineProperty.js ***!
-  \*************************************************************************************/
-[3641, 2389],
-/* 2389 */
-/*!*********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/core-js/object/define-property.js ***!
-  \*********************************************************************************************/
-[3642, 2390],
-/* 2390 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/fn/object/define-property.js ***!
-  \**********************************************************************************************************/
-[3643, 2391, 2177],
-/* 2391 */
-/*!*******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/~/core-js/library/modules/es6.object.define-property.js ***!
-  \*******************************************************************************************************************/
-[3644, 2175, 2185, 2181],
-/* 2392 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/babel-runtime/helpers/toConsumableArray.js ***!
-  \****************************************************************************************/
-[3645, 2279],
-/* 2393 */
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-util/lib/Dom/addEventListener.js ***!
-  \*********************************************************************************/
-[3646, 2394],
-/* 2394 */
-/*!*********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/add-dom-event-listener/lib/index.js ***!
-  \*********************************************************************************/
-[3647, 2395],
-/* 2395 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/add-dom-event-listener/lib/EventObject.js ***!
-  \***************************************************************************************/
-[3648, 2396, 1856],
-/* 2396 */
-/*!*******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/add-dom-event-listener/lib/EventBaseObject.js ***!
-  \*******************************************************************************************/
-784,
-/* 2397 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Track.js ***!
-  \********************************************************************/
-785,
-/* 2398 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Handle.js ***!
-  \*********************************************************************/
-[3649, 2209, 2210, 2246, 2399],
-/* 2399 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-tooltip/lib/index.js ***!
-  \*********************************************************************/
-[3650, 2400],
-/* 2400 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-tooltip/lib/Tooltip.js ***!
-  \***********************************************************************/
-[3651, 2171, 2170, 2209, 2210, 2246, 1861, 2401, 2432],
-/* 2401 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/index.js ***!
-  \*********************************************************************/
-[3652, 2402],
-/* 2402 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/Trigger.js ***!
-  \***********************************************************************/
-[3653, 2171, 1861, 1854, 2403, 2404, 2405, 2430, 2431],
-/* 2403 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/~/rc-util/lib/Dom/contains.js ***!
-  \**************************************************************************************/
-791,
-/* 2404 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/~/rc-util/lib/Dom/addEventListener.js ***!
-  \**********************************************************************************************/
-[3646, 2394],
-/* 2405 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/Popup.js ***!
-  \*********************************************************************/
-[3654, 2171, 2209, 2210, 2246, 1861, 2406, 2419, 2428, 2429],
-/* 2406 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-align/lib/index.js ***!
-  \*******************************************************************/
-[3655, 2407],
-/* 2407 */
-/*!*******************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-align/lib/Align.js ***!
-  \*******************************************************************/
-[3656, 1861, 2408, 2417, 2418],
-/* 2408 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/index.js ***!
-  \********************************************************************/
-[3657, 2409, 2411, 2412, 2413, 2414, 2415],
-/* 2409 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/utils.js ***!
-  \********************************************************************/
-[3658, 2410],
-/* 2410 */
-/*!****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/propertyUtils.js ***!
-  \****************************************************************************/
-798,
-/* 2411 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getOffsetParent.js ***!
-  \******************************************************************************/
-[3659, 2409],
-/* 2412 */
-/*!***************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getVisibleRectForElement.js ***!
-  \***************************************************************************************/
-[3660, 2409, 2411],
-/* 2413 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/adjustForViewport.js ***!
-  \********************************************************************************/
-[3661, 2409],
-/* 2414 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getRegion.js ***!
-  \************************************************************************/
-[3662, 2409],
-/* 2415 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getElFuturePos.js ***!
-  \*****************************************************************************/
-[3663, 2416],
-/* 2416 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/dom-align/lib/getAlignOffset.js ***!
-  \*****************************************************************************/
-804,
-/* 2417 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-align/~/rc-util/lib/Dom/addEventListener.js ***!
-  \********************************************************************************************/
-[3646, 2394],
-/* 2418 */
-/*!**********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-align/lib/isWindow.js ***!
-  \**********************************************************************/
-806,
-/* 2419 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/index.js ***!
-  \*********************************************************************/
-[3664, 2420],
-/* 2420 */
-/*!***********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/Animate.js ***!
-  \***********************************************************************/
-[3665, 1861, 2421, 2422, 2427],
-/* 2421 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/ChildrenUtils.js ***!
-  \*****************************************************************************/
-809,
-/* 2422 */
-/*!****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/AnimateChild.js ***!
-  \****************************************************************************/
-[3666, 1861, 2423, 2427],
-/* 2423 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-animation/lib/index.js ***!
-  \************************************************************************/
-[3667, 2424, 2425],
-/* 2424 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-animation/lib/Event.js ***!
-  \************************************************************************/
-812,
-/* 2425 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/component-classes/index.js ***!
-  \************************************************************************/
-[3668, 2426, 2426],
-/* 2426 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/component-indexof/index.js ***!
-  \************************************************************************/
-814,
-/* 2427 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-animate/lib/util.js ***!
-  \********************************************************************/
-815,
-/* 2428 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/PopupInner.js ***!
-  \**************************************************************************/
-[3669, 2209, 2210, 2246, 1861, 2429],
-/* 2429 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/LazyRenderBox.js ***!
-  \*****************************************************************************/
-[3670, 2170, 2209, 2210, 2246, 1861],
-/* 2430 */
-/*!*********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/lib/utils.js ***!
-  \*********************************************************************/
-[3671, 2171],
-/* 2431 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-trigger/~/rc-util/lib/getContainerRenderMixin.js ***!
-  \*************************************************************************************************/
-819,
-/* 2432 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-tooltip/lib/placements.js ***!
-  \**************************************************************************/
-820,
-/* 2433 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Steps.js ***!
-  \********************************************************************/
-[3672, 2388, 2254, 2265],
-/* 2434 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/lib/Marks.js ***!
-  \********************************************************************/
-[3673, 2171, 2211, 2388, 2254],
-/* 2435 */
-/*!************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/rc-slider/assets/index.css ***!
-  \************************************************************************/
-[3674, 2436, 2158],
-/* 2436 */
-/*!*************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./atlas_bundles/baseline-expression/~/rc-slider/assets/index.css ***!
-  \*************************************************************************************************************************/
-[3675, 2157],
-/* 2437 */
-/*!*************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.less ***!
-  \*************************************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !../../../../css-loader!../../../../../../../~/less-loader!./CoexpressionOption.less */ 2438);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../../../style-loader/addStyles.js */ 2158)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../../../css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./CoexpressionOption.less", function() {
-				var newContent = require("!!../../../../css-loader/index.js!../../../../../../../node_modules/less-loader/index.js!./CoexpressionOption.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 2438 */
-/*!******************************************************************************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./~/less-loader!./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/coexpression/CoexpressionOption.less ***!
-  \******************************************************************************************************************************************************************************************************/
-[3676, 2157],
-/* 2439 */
-/*!**********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/Events.js ***!
-  \**********************************************************************************************************/
-[3677, 1865],
-/* 2440 */
-/*!****************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/manipulate/Manipulators.js ***!
-  \****************************************************************************************************************/
-828,
-/* 2441 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/show/BoxplotCanvas.jsx ***!
-  \************************************************************************************************************/
-[3678, 2366, 2442],
-/* 2442 */
-/*!***************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/highcharts/highcharts-more.js ***!
-  \***************************************************************************/
-830,
-/* 2443 */
-/*!********************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/layout/jsonPayloadPropTypes.js ***!
-  \********************************************************************************************************************/
-[3679, 2356],
-/* 2444 */
-/*!**************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/main.js ***!
-  \**************************************************************************************************/
-[3680, 2445, 2446, 2455, 2456, 2457, 2465],
-/* 2445 */
-/*!****************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/chartConfiguration.js ***!
-  \****************************************************************************************************************/
-[3681, 2356, 2382],
-/* 2446 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapData.js ***!
-  \*********************************************************************************************************/
-[3682, 2447, 2449],
-/* 2447 */
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapDataSeries.js ***!
-  \***************************************************************************************************************/
-[3683, 2448, 2356],
-/* 2448 */
-/*!**************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/lodash/lodash.js ***!
-  \**************************************************************/
-836,
-/* 2449 */
-/*!*******************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapAxisCategories.js ***!
-  \*******************************************************************************************************************/
-[3684, 2104, 434, 2356, 2450],
-/* 2450 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets ^\.\/.*\-icon\.png$ ***!
-  \************************************************************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./gsea_go-icon.png": 2451,
-		"./gsea_interpro-icon.png": 2452,
-		"./gsea_reactome-icon.png": 2453,
-		"./ma-plot-icon.png": 2454
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 2450;
-
-
-/***/ }),
-/* 2451 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/gsea_go-icon.png ***!
-  \*********************************************************************************************************/
-839,
-/* 2452 */
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/gsea_interpro-icon.png ***!
-  \***************************************************************************************************************/
-840,
-/* 2453 */
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/gsea_reactome-icon.png ***!
-  \***************************************************************************************************************/
-841,
-/* 2454 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/assets/ma-plot-icon.png ***!
-  \*********************************************************************************************************/
-842,
-/* 2455 */
-/*!*********************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/boxplotData.js ***!
-  \*********************************************************************************************************/
-843,
-/* 2456 */
-/*!**************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapOrderings.js ***!
-  \**************************************************************************************************************/
-[3685, 2448, 2356],
-/* 2457 */
-/*!***************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapColourAxis.js ***!
-  \***************************************************************************************************************/
-[3686, 2458, 2356],
-/* 2458 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/color/index.js ***!
-  \************************************************************/
-[3687, 2459, 2460, 2464],
-/* 2459 */
-/*!************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/clone/clone.js ***!
-  \************************************************************/
-847,
-/* 2460 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/color-convert/index.js ***!
-  \********************************************************************/
-[3688, 2461, 2463],
-/* 2461 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/color-convert/conversions.js ***!
-  \**************************************************************************/
-[3689, 2462],
-/* 2462 */
-/*!*****************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/color-name/index.js ***!
-  \*****************************************************************/
-850,
-/* 2463 */
-/*!********************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/color-convert/route.js ***!
-  \********************************************************************/
-[3690, 2461],
-/* 2464 */
-/*!**************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/color-string/color-string.js ***!
-  \**************************************************************************/
-[3691, 2462],
-/* 2465 */
-/*!************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-heatmap-highcharts/src/load/heatmapFilters.js ***!
-  \************************************************************************************************************/
-[3692, 2448],
-/* 2466 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/index.js ***!
-  \********************************************************************************/
-[3693, 2467],
-/* 2467 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/src/Feedback.jsx ***!
-  \****************************************************************************************/
-[3694, 2468, 2470, 2471, 2267, 2472, 2473, 2476, 2477, 2486],
-/* 2468 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-localstorage/react-localstorage.js ***!
-  \**************************************************************************************/
-[3695, 2469],
-/* 2469 */
-/*!*******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-localstorage/lib/warning.js ***!
-  \*******************************************************************************/
-857,
-/* 2470 */
-/*!*****************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-timer-mixin/TimerMixin.js ***!
-  \*****************************************************************************/
-858,
-/* 2471 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-addons-css-transition-group/index.js ***!
-  \****************************************************************************************/
-859,
-/* 2472 */
-/*!******************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormGroup.js ***!
-  \******************************************************************************/
-[3696, 2171, 2170, 2209, 2210, 2246, 2254, 2272, 2276, 2297],
-/* 2473 */
-/*!********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormControl.js ***!
-  \********************************************************************************/
-[3697, 2171, 2170, 2209, 2210, 2246, 2254, 2263, 2265, 2474, 2475, 2272],
-/* 2474 */
-/*!****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormControlFeedback.js ***!
-  \****************************************************************************************/
-[3698, 2170, 2171, 2209, 2210, 2246, 2254, 2301, 2272],
-/* 2475 */
-/*!**************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-bootstrap/lib/FormControlStatic.js ***!
-  \**************************************************************************************/
-[3699, 2171, 2170, 2209, 2210, 2246, 2254, 2263, 2272],
-/* 2476 */
-/*!***************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/assets/emojione.sprites.png ***!
-  \***************************************************************************************************/
-870,
-/* 2477 */
-/*!**********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/react-emojione.js ***!
-  \**********************************************************************************/
-[3700, 2478, 2479, 2483],
-/* 2478 */
-/*!*****************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/data/ascii-to-unicode.js ***!
-  \*****************************************************************************************/
-872,
-/* 2479 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/renderers/renderer-factory.js ***!
-  \**********************************************************************************************/
-[3701, 2480, 2485],
-/* 2480 */
-/*!********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/renderers/emoji-renderer.js ***!
-  \********************************************************************************************/
-[3702, 2481, 2483],
-/* 2481 */
-/*!******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/styles/emojione-sprite.js ***!
-  \******************************************************************************************/
-[3703, 2482],
-/* 2482 */
-/*!****************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/styles/emojione-sprite-positions.js ***!
-  \****************************************************************************************************/
-876,
-/* 2483 */
-/*!*************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/utils/emoji-format-conversion.js ***!
-  \*************************************************************************************************/
-[3704, 2484],
-/* 2484 */
-/*!***********************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/data/emoji-data.js ***!
-  \***********************************************************************************/
-878,
-/* 2485 */
-/*!**********************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/react-emojione/lib/renderers/unicode-renderer.js ***!
-  \**********************************************************************************************/
-[3705, 2483],
-/* 2486 */
-/*!*******************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
-  \*******************************************************************************************/
-[3706, 2487, 2158],
-/* 2487 */
-/*!********************************************************************************************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/~/css-loader!./atlas_bundles/baseline-expression/~/expression-atlas-feedback/src/gxaFeedback.css ***!
-  \********************************************************************************************************************************************/
-[3707, 2157],
-/* 2488 */
-/*!*************************************************************!*\
-  !*** ./atlas_bundles/baseline-expression/src/urlManager.js ***!
-  \*************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 2288:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var Url = __webpack_require__(/*! url */ 2104);
-	var QueryString = __webpack_require__(/*! querystring */ 2107);
-	
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.render = exports.default = undefined;
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactGa = __webpack_require__(173);
+
+	var _reactGa2 = _interopRequireDefault(_reactGa);
+
+	var _urijs = __webpack_require__(193);
+
+	var _urijs2 = _interopRequireDefault(_urijs);
+
+	var _ContainerLoader = __webpack_require__(2289);
+
+	var _ContainerLoader2 = _interopRequireDefault(_ContainerLoader);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	/**
+	 * @param {Object}          options
+	 * @param {string | Object} options.target - a <div> id or a DOM element, as returned by ReactDOM.findDOMNode()
+	 * @param {boolean}         options.disableGoogleAnalytics - Disable Google Analytics
+	 * @param {function}        options.fail - Callback to run if the AJAX request to the server fails. (jqXHR, textStatus)
+	 * @param {function}        options.render - Callback to run after each render
+	 * @param {boolean}         options.showAnatomogram - optionally hide the anatomogram
+	 * @param {boolean}         options.isWidget
+	 * @param {string}          options.atlasUrl - Atlas host and path with protocol and port
+	 * @param {string}          options.inProxy - Inbound proxy to pull assets from outside your domain
+	 * @param {string}          options.outProxy - Outbound proxy for links that take you outside the current domain
+	 * @param {string}          options.experiment
+	 * @param {Object|string}   options.query - Query object or relative URL endpoint to source data from:
+	 *                              e.g. json/experiments/E-PROT-1, /json/genes/ENSG00000005801, /json/genesets/GO:0000001
+	 *                                   json/baseline_refexperiment?geneQuery=…, /json/baseline_experiments?geneQuery=…
+	 * @param {string}                              options.query.species
+	 * @param {{value: string, category: string}[]} options.query.gene
+	 * @param {{value: string, category: string}[]} options.query.condition
+	 * @param {string}                              options.query.source
+	 */
+	var DEFAULT_OPTIONS = {
+	    showAnatomogram: true,
+	    isWidget: true,
+	    disableGoogleAnalytics: false,
+	    atlasUrl: 'https://www.ebi.ac.uk/gxa/',
+	    inProxy: '',
+	    outProxy: '',
+	    experiment: ''
+	};
+
+	var ExpressionAtlasHeatmap = function ExpressionAtlasHeatmap(options) {
+	    var parsedQuery = parseQuery(options.query);
+	    var sourceUrl = typeof parsedQuery === 'string' ? parsedQuery : (0, _urijs2.default)(resolveEndpoint(options.experiment)).addSearch(parsedQuery);
+
+	    return _react2.default.createElement(_ContainerLoader2.default, _extends({}, DEFAULT_OPTIONS, options, {
+	        sourceUrl: sourceUrl.toString()
+	    }));
+	};
+
+	var render = function render(options) {
+	    var _options$disableGoogl = options.disableGoogleAnalytics,
+	        disableGoogleAnalytics = _options$disableGoogl === undefined ? false : _options$disableGoogl,
+	        _options$render = options.render,
+	        render = _options$render === undefined ? function () {} : _options$render,
+	        target = options.target;
+
+	    _reactDom2.default.render(_react2.default.createElement(ExpressionAtlasHeatmap, options), typeof target === 'string' ? document.getElementById(target) : target, render);
+
+	    if (!disableGoogleAnalytics) {
+	        _reactGa2.default.initialize('UA-37676851-1', {
+	            gaOptions: {
+	                name: 'atlas-highcharts-widget'
+	            }
+	        });
+	        _reactGa2.default.pageview(window.location.pathname);
+	    }
+	};
+
+	function resolveEndpoint(experiment) {
+	    return !experiment ? 'json/baseline_experiments' : experiment === 'reference' ? 'json/baseline_refexperiment' : 'json/experiments/' + experiment;
+	}
+
+	function parseQuery(query) {
+	    if (!query) {
+	        return null;
+	    }
+
+	    if (typeof query === 'string') {
+	        return query;
+	    }
+
+	    return {
+	        geneQuery: stringifyIfNotString(query.gene),
+	        conditionQuery: stringifyIfNotString(query.condition),
+	        species: stringifyIfNotString(query.species),
+	        source: stringifyIfNotString(query.source)
+	    };
+	}
+
+	function stringifyIfNotString(o) {
+	    return typeof o === 'string' ? o : JSON.stringify(o);
+	}
+
+	exports.default = ExpressionAtlasHeatmap;
+	exports.render = render;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(DEFAULT_OPTIONS, 'DEFAULT_OPTIONS', 'src/Main.js');
+
+	    __REACT_HOT_LOADER__.register(ExpressionAtlasHeatmap, 'ExpressionAtlasHeatmap', 'src/Main.js');
+
+	    __REACT_HOT_LOADER__.register(render, 'render', 'src/Main.js');
+
+	    __REACT_HOT_LOADER__.register(resolveEndpoint, 'resolveEndpoint', 'src/Main.js');
+
+	    __REACT_HOT_LOADER__.register(parseQuery, 'parseQuery', 'src/Main.js');
+
+	    __REACT_HOT_LOADER__.register(stringifyIfNotString, 'stringifyIfNotString', 'src/Main.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_reactDom2, '_reactDom2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_reactGa2, '_reactGa2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_urijs2, '_urijs2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_ContainerLoader2, '_ContainerLoader2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(DEFAULT_OPTIONS, 'DEFAULT_OPTIONS', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(ExpressionAtlasHeatmap, 'ExpressionAtlasHeatmap', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(render, 'render', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(resolveEndpoint, 'resolveEndpoint', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(parseQuery, 'parseQuery', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(stringifyIfNotString, 'stringifyIfNotString', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2289:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }return target;
+	};
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactRefetch = __webpack_require__(199);
+
+	var _urijs = __webpack_require__(193);
+
+	var _urijs2 = _interopRequireDefault(_urijs);
+
+	var _Container = __webpack_require__(2290);
+
+	var _Container2 = _interopRequireDefault(_Container);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var Loading = function Loading(_ref) {
+	  var spinnerUrl = _ref.spinnerUrl;
+	  return _react2.default.createElement('div', null, _react2.default.createElement('img', { src: spinnerUrl }));
+	};
+
+	var failAndShowMessage = function failAndShowMessage(_ref2) {
+	  var onFailure = _ref2.onFailure,
+	      request = _ref2.request,
+	      message = _ref2.message;
+
+	  Boolean(onFailure) && onFailure({
+	    url: request.url,
+	    method: request.method,
+	    message: message
+	  });
+
+	  return _react2.default.createElement('div', null, _react2.default.createElement('p', null, message));
+	};
+
+	var showMessage = function showMessage(message) {
+	  return failAndShowMessage({
+	    onFailure: function onFailure() {},
+	    request: {},
+	    message: message
+	  });
+	};
+
+	var ContainerLoader = function ContainerLoader(props) {
+	  var inProxy = props.inProxy,
+	      atlasUrl = props.atlasUrl,
+	      fail = props.fail,
+	      sourceUrlFetch = props.sourceUrlFetch;
+
+	  if (sourceUrlFetch.pending) {
+
+	    return _react2.default.createElement(Loading, { spinnerUrl: inProxy + (0, _urijs2.default)('resources/images/loading.gif', atlasUrl).toString() });
+	  } else if (sourceUrlFetch.rejected) {
+
+	    return failAndShowMessage({
+	      onFailure: fail,
+	      request: sourceUrlFetch.meta.request,
+	      message: 'Error: ' + (sourceUrlFetch.reason.message ? sourceUrlFetch.reason.message : 'Unknown cause, please contact arrayexpress-atlas@ebi.ac.uk')
+	    });
+	  } else if (sourceUrlFetch.fulfilled) {
+
+	    if (sourceUrlFetch.value.error) {
+	      return failAndShowMessage({
+	        onFailure: fail,
+	        request: sourceUrlFetch.meta.request,
+	        message: '' + sourceUrlFetch.value.error
+	      });
+	    } else if (!sourceUrlFetch.value.profiles) {
+	      return showMessage('Sorry, no results could be found matching your query.');
+	    } else {
+	      return _react2.default.createElement(_Container2.default, _extends({}, props, { data: sourceUrlFetch.value }));
+	    }
+	  }
+	};
+
+	ContainerLoader.propTypes = {
+	  inProxy: _propTypes2.default.string.isRequired,
+	  atlasUrl: _propTypes2.default.string.isRequired,
+	  sourceUrl: _propTypes2.default.string.isRequired,
+	  fail: _propTypes2.default.func
+	};
+
+	var _default = (0, _reactRefetch.connect)(function (props) {
+	  return {
+	    sourceUrlFetch: props.inProxy + (0, _urijs2.default)(props.sourceUrl, props.atlasUrl).toString()
+	  };
+	})(ContainerLoader);
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(Loading, 'Loading', 'src/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(failAndShowMessage, 'failAndShowMessage', 'src/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(showMessage, 'showMessage', 'src/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(ContainerLoader, 'ContainerLoader', 'src/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', 'src/layout/ContainerLoader.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_urijs2, '_urijs2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_Container2, '_Container2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(Loading, 'Loading', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(failAndShowMessage, 'failAndShowMessage', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(showMessage, 'showMessage', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(ContainerLoader, 'ContainerLoader', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+
+	  __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2290:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _urijs = __webpack_require__(193);
+
+	var _urijs2 = _interopRequireDefault(_urijs);
+
+	var _anatomogram = __webpack_require__(2291);
+
+	var _anatomogram2 = _interopRequireDefault(_anatomogram);
+
+	var _ExperimentDescription = __webpack_require__(2349);
+
+	var _ExperimentDescription2 = _interopRequireDefault(_ExperimentDescription);
+
+	var _Footer = __webpack_require__(2350);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _ChartContainer = __webpack_require__(2351);
+
+	var _ChartContainer2 = _interopRequireDefault(_ChartContainer);
+
+	var _jsonPayloadPropTypes = __webpack_require__(2389);
+
+	var _jsonPayloadPropTypes2 = _interopRequireDefault(_jsonPayloadPropTypes);
+
+	var _main = __webpack_require__(2390);
+
+	var _main2 = _interopRequireDefault(_main);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var ChartWithAnatomogram = function ChartWithAnatomogram(_ref) {
+	    var data = _ref.data,
+	        inProxy = _ref.inProxy,
+	        outProxy = _ref.outProxy,
+	        atlasUrl = _ref.atlasUrl,
+	        showAnatomogram = _ref.showAnatomogram,
+	        isWidget = _ref.isWidget;
+	    var experiment = data.experiment,
+	        columnHeaders = data.columnHeaders,
+	        anatomogram = data.anatomogram;
+
+	    var pathToResources = inProxy + (0, _urijs2.default)('resources/js-bundles/', atlasUrl).toString();
+
+	    var chartData = (0, _main2.default)(data, inProxy, outProxy, atlasUrl, pathToResources, isWidget);
+
+	    if (anatomogram && showAnatomogram) {
+	        var Wrapped = _anatomogram2.default.wrapComponent({
+	            anatomogramData: anatomogram,
+	            pathToResources: inProxy + (0, _urijs2.default)('resources/js-bundles/', atlasUrl).toString(),
+	            expressedTissueColour: experiment ? 'gray' : 'red',
+	            hoveredTissueColour: experiment ? 'red' : 'purple',
+	            idsExpressedInExperiment: columnHeaders.map(function (header) {
+	                return header.factorValueOntologyTermId;
+	            })
+	        }, _ChartContainer2.default, { chartData: chartData });
+	        return _react2.default.createElement(Wrapped, null);
+	    } else {
+	        return _react2.default.createElement(_ChartContainer2.default, _extends({ chartData: chartData }, {
+	            ontologyIdsToHighlight: [],
+	            onOntologyIdIsUnderFocus: function onOntologyIdIsUnderFocus() {}
+	        }));
+	    }
+	};
+
+	ChartWithAnatomogram.propTypes = {
+	    inProxy: _propTypes2.default.string.isRequired,
+	    outProxy: _propTypes2.default.string.isRequired,
+	    atlasUrl: _propTypes2.default.string.isRequired,
+	    sourceUrl: _propTypes2.default.string.isRequired,
+	    showAnatomogram: _propTypes2.default.bool.isRequired,
+	    isWidget: _propTypes2.default.bool.isRequired,
+	    data: _jsonPayloadPropTypes2.default.isRequired
+	};
+
+	var Container = function Container(props) {
+	    var data = props.data,
+	        inProxy = props.inProxy,
+	        outProxy = props.outProxy,
+	        atlasUrl = props.atlasUrl,
+	        showAnatomogram = props.showAnatomogram,
+	        isWidget = props.isWidget;
+	    var _data$config = data.config,
+	        geneQuery = _data$config.geneQuery,
+	        conditionQuery = _data$config.conditionQuery,
+	        species = _data$config.species;
+
+	    var moreInformationUrl = data.experiment ? // single experiment?
+	    (0, _urijs2.default)(data.experiment.relUrl, atlasUrl).search('') : (0, _urijs2.default)(atlasUrl).segment('query').search({ geneQuery: geneQuery, conditionQuery: conditionQuery, species: species });
+
+	    return _react2.default.createElement('div', null, isWidget && data.experiment && _react2.default.createElement(_ExperimentDescription2.default, { outProxy: outProxy,
+	        experimentUrl: (0, _urijs2.default)(data.experiment.relUrl, atlasUrl).toString(),
+	        description: data.experiment.description }), _react2.default.createElement(ChartWithAnatomogram, props), isWidget && _react2.default.createElement(_Footer2.default, { outProxy: outProxy,
+	        atlasUrl: atlasUrl,
+	        moreInformationUrl: moreInformationUrl.toString() }));
+	};
+
+	Container.propTypes = ChartWithAnatomogram.propTypes;
+
+	var _default = Container;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(ChartWithAnatomogram, 'ChartWithAnatomogram', 'src/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(Container, 'Container', 'src/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/layout/Container.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_urijs2, '_urijs2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_anatomogram2, '_anatomogram2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_ExperimentDescription2, '_ExperimentDescription2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_Footer2, '_Footer2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_ChartContainer2, '_ChartContainer2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_jsonPayloadPropTypes2, '_jsonPayloadPropTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_main2, '_main2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(ChartWithAnatomogram, 'ChartWithAnatomogram', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(Container, 'Container', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2291:
+[2737, 2292],
+
+/***/ 2292:
+[2738, 2293, 2297, 2347],
+
+/***/ 2293:
+[2739, 2294, 2296],
+
+/***/ 2294:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _snapSvg = __webpack_require__(2295);
+
+	var _snapSvg2 = _interopRequireDefault(_snapSvg);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	//http://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
+	var ArraysEqual = function ArraysEqual(a, b) {
+	    if (a === b) return true;
+	    if (a == null || b == null) return false;
+	    if (a.length != b.length) return false;
+	    for (var i = 0; i < a.length; ++i) {
+	        if (a[i] !== b[i]) return false;
+	    }
+	    return true;
+	};
+
+	var AnatomogramImageParts = _react2.default.createClass({
+	    displayName: 'AnatomogramImageParts',
+
+	    propTypes: {
+	        idsExpressedInExperiment: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        idsHeatmapWantsHighlighted: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        idsMousedOver: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        idsNotHighlighted: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        expressedTissueColour: _react2.default.PropTypes.string.isRequired,
+	        hoveredTissueColour: _react2.default.PropTypes.string.isRequired,
+	        whenMousedOverIdsChange: _react2.default.PropTypes.func
+	    },
+
+	    getDefaultProps: function getDefaultProps() {
+	        return { whenMousedOverIdsChange: function whenMousedOverIdsChange(nextIds, oldIds) {} };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            toDraw: [].concat(this._idsThatShouldBeStronglyHighlighted(this.props).map(this._highlightStrongly), this.props.idsExpressedInExperiment.map(this._highlightSlightly), this.props.idsNotHighlighted.map(this._highlightAsBackground)) };
+	    },
+	    render: function render() {
+	        return _react2.default.createElement('span', null);
+	    },
+	    _highlightStrongly: function _highlightStrongly(svgPathId) {
+	        return { id: svgPathId, colour: this.props.hoveredTissueColour, opacity: 0.7 };
+	    },
+	    _highlightSlightly: function _highlightSlightly(svgPathId) {
+	        return { id: svgPathId, colour: this.props.expressedTissueColour, opacity: 0.5 };
+	    },
+	    _highlightAsBackground: function _highlightAsBackground(svgPathId) {
+	        return { id: svgPathId, colour: 'gray', opacity: 0.5 };
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        this.props.whenMousedOverIdsChange([], this.props.idsMousedOver);
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        var _this = this;
+
+	        if (!ArraysEqual(nextProps.idsMousedOver, this.props.idsMousedOver)) {
+	            this.props.whenMousedOverIdsChange(nextProps.idsMousedOver, this.props.idsMousedOver);
+	        }
+	        var oldStrong = this._idsThatShouldBeStronglyHighlighted(this.props);
+	        var newStrong = this._idsThatShouldBeStronglyHighlighted(nextProps);
+	        var oldWeak = this.props.idsExpressedInExperiment;
+	        var newWeak = nextProps.idsExpressedInExperiment;
+
+	        var toDraw = [].concat(
+	        //ids that heatmap wants highlighted are the most highlighted
+	        newStrong.filter(function (id) {
+	            return !oldStrong.includes(id);
+	        }).map(this._highlightStrongly),
+	        //ids that are expressed in the experiment are highlighted with a weaker colour, often the same as background
+	        newWeak.filter(function (id) {
+	            return !newStrong.includes(id);
+	        }).filter(function (id) {
+	            return !oldWeak.includes(id);
+	        }).map(this._highlightSlightly), nextProps.idsNotHighlighted.filter(function (id) {
+	            return !_this.props.idsNotHighlighted.includes(id);
+	        }).map(this._highlightAsBackground));
+
+	        this.setState({ toDraw: toDraw });
+	    },
+	    _idsThatShouldBeStronglyHighlighted: function _idsThatShouldBeStronglyHighlighted(properties) {
+	        return properties.idsHeatmapWantsHighlighted.concat(properties.idsMousedOver);
+	    }
+	});
+
+	var AnatomogramImage = _react2.default.createClass({
+	    displayName: 'AnatomogramImage',
+
+	    propTypes: {
+	        file: function file(props, propName, componentName) {
+	            if (propName === 'file') {
+	                if (typeof props[propName] !== 'string') {
+	                    return new Error('Expected string to specify file, got: ' + props[propName]);
+	                }
+	                if (!props[propName]) {
+	                    return new Error('Path to file empty!');
+	                }
+	            }
+	            return '';
+	        },
+	        height: _react2.default.PropTypes.number.isRequired,
+	        allSvgPathIds: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        idsExpressedInExperiment: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        idsToBeHighlighted: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired,
+	        expressedTissueColour: _react2.default.PropTypes.string.isRequired,
+	        hoveredTissueColour: _react2.default.PropTypes.string.isRequired,
+	        whenMousedOverIdsChange: _react2.default.PropTypes.func
+	    },
+
+	    getInitialState: function getInitialState() {
+	        return { mousedOverSvgIds: [] };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        if (nextProps.file !== this.props.file) {
+	            this._loadAnatomogram(nextProps.file);
+	        }
+	    },
+	    componentDidMount: function componentDidMount() {
+	        this._loadAnatomogram(this.props.file);
+	        this._draw();
+	    },
+	    componentDidUpdate: function componentDidUpdate() {
+	        this._draw();
+	    },
+	    _draw: function _draw() {
+	        var svg = (0, _snapSvg2.default)(_reactDom2.default.findDOMNode(this._anatomogram)).select('#LAYER_EFO');
+	        if (svg !== null) {
+	            this._drawOnSvg(svg, this._imageParts.state.toDraw);
+	            this._imageParts.setState({ toDraw: [] });
+	        }
+	    },
+	    _drawInitialLayout: function _drawInitialLayout(svg) {
+	        if (this._imageParts) {
+	            this._drawOnSvg(svg, this._imageParts.getInitialState().toDraw);
+	            this._imageParts.setState({ toDraw: [] });
+	        }
+	    },
+	    _drawOnSvg: function _drawOnSvg(svg, instructions) {
+	        var _this2 = this;
+
+	        instructions.forEach(function (instruction) {
+	            _this2._highlightOrganismParts(svg, instruction.id, instruction.colour, instruction.opacity);
+	        });
+	    },
+	    render: function render() {
+	        var _this3 = this;
+
+	        var idsExpressedInExperiment = [],
+	            idsHoveredOver = [],
+	            idsHeatmapWantsHighlighted = [],
+	            idsNotHighlighted = [];
+
+	        this.props.allSvgPathIds.forEach(function (id) {
+	            if (_this3.state.mousedOverSvgIds.includes(id)) {
+	                idsHoveredOver.push(id);
+	            } else if (_this3.props.idsToBeHighlighted.includes(id)) {
+	                idsHeatmapWantsHighlighted.push(id);
+	            } else if (_this3.props.idsExpressedInExperiment.includes(id)) {
+	                idsExpressedInExperiment.push(id);
+	            } else {
+	                idsNotHighlighted.push(id);
+	            }
+	        });
+
+	        return _react2.default.createElement(
+	            'span',
+	            null,
+	            _react2.default.createElement('svg', { ref: function ref(c) {
+	                    return _this3._anatomogram = c;
+	                }, style: { display: "table-cell", width: "230px", height: this.props.height + "px" } }),
+	            _react2.default.createElement(AnatomogramImageParts, {
+	                ref: function ref(c) {
+	                    return _this3._imageParts = c;
+	                }, key: this.props.file,
+	                idsExpressedInExperiment: idsExpressedInExperiment,
+	                idsHeatmapWantsHighlighted: idsHeatmapWantsHighlighted,
+	                idsMousedOver: idsHoveredOver,
+	                idsNotHighlighted: idsNotHighlighted,
+	                expressedTissueColour: this.props.expressedTissueColour,
+	                hoveredTissueColour: this.props.hoveredTissueColour,
+	                whenMousedOverIdsChange: this.props.whenMousedOverIdsChange
+	            })
+	        );
+	    },
+	    _highlightPath: function _highlightPath(svgPathId) {
+	        this.setState({ hoveredPathId: svgPathId });
+	    },
+	    _loadAnatomogram: function _loadAnatomogram(svgFile) {
+	        var _this4 = this;
+
+	        var svgCanvas = (0, _snapSvg2.default)(_reactDom2.default.findDOMNode(this._anatomogram)),
+	            allElements = svgCanvas.selectAll('*');
+
+	        if (allElements) {
+	            allElements.remove();
+	        }
+
+	        var displayAllOrganismPartsCallback = this._drawInitialLayout;
+	        var registerHoverEventsCallback = this._registerHoverEvents;
+
+	        _snapSvg2.default.load(svgFile, function (fragment) {
+	            displayAllOrganismPartsCallback(fragment.select('#LAYER_EFO'));
+	            registerHoverEventsCallback(fragment.select('#LAYER_EFO'));
+	            fragment.selectAll('svg > g').forEach(function (g) {
+	                g.transform('S1.6,0,0');
+	                svgCanvas.append(g);
+	            });
+	            var img = fragment.select('#ccLogo');
+	            if (img) {
+	                // svgCanvas.node.clientHeight and svgCanvas.node.clientWidth is more “correct” but are 0 in Firefox
+	                var heightTranslate = Number.parseInt(_this4._anatomogram.style.height) - 15;
+	                var widthTranslate = Number.parseInt(_this4._anatomogram.style.width) / 2 - 40;
+	                img.transform('t' + widthTranslate + ',' + heightTranslate);
+	                svgCanvas.append(img);
+	            }
+	        });
+	    },
+	    _registerHoverEvents: function _registerHoverEvents(svg) {
+	        var _this5 = this;
+
+	        if (svg) {
+	            (function () {
+	                // Sometimes svg is null... why?
+	                var MaxOverlappingTissues = 5;
+	                var mouseoverCallback = function mouseoverCallback(svgPathId) {
+	                    _this5.setState(function (previousState) {
+	                        return { mousedOverSvgIds: [].concat(_toConsumableArray(previousState.mousedOverSvgIds), [svgPathId]).slice(-MaxOverlappingTissues) };
+	                    });
+	                };
+
+	                var mouseoutCallback = function mouseoutCallback(svgPathId) {
+	                    _this5.setState(function (previousState) {
+	                        return { mousedOverSvgIds: previousState.mousedOverSvgIds.map(function (el) {
+	                                return el === svgPathId ? '' : el;
+	                            }) };
+	                    });
+	                };
+
+	                var attachCallbacks = function attachCallbacks(svgElement, svgPathId) {
+	                    if (svgElement) {
+	                        svgElement.mouseover(function () {
+	                            mouseoverCallback(svgPathId);
+	                        });
+	                        svgElement.mouseout(function () {
+	                            mouseoutCallback(svgPathId);
+	                        });
+	                    }
+	                };
+
+	                _this5.props.allSvgPathIds.forEach(function (svgPathId) {
+	                    var svgElement = svg.select('#' + svgPathId);
+	                    attachCallbacks(svgElement, svgPathId);
+	                    if (svgElement && svgElement.type === 'use') {
+	                        attachCallbacks(svg.select(svgElement.node.getAttribute('xlink:href')), svgPathId);
+	                    }
+	                });
+	            })();
+	        }
+	    },
+	    _highlightOrganismParts: function _highlightOrganismParts(svg, svgPathId, colour, opacity) {
+	        var el = svg.select('#' + svgPathId);
+	        if (el && el.type === 'use') {
+	            this._recursivelyChangeProperties(svg.select(el.node.getAttribute('xlink:href')), colour, opacity);
+	        }
+	        this._recursivelyChangeProperties(el, colour, opacity);
+	    },
+	    _recursivelyChangeProperties: function _recursivelyChangeProperties(svgElement, colour, opacity) {
+	        var _this6 = this;
+
+	        if (svgElement) {
+	            svgElement.selectAll('*').forEach(function (innerElement) {
+	                _this6._recursivelyChangeProperties(innerElement);
+	            });
+	            svgElement.attr({ "fill": colour, "fill-opacity": opacity });
+	        }
+	    }
+	});
+
+	exports.default = AnatomogramImage;
+
+/***/ },
+
+/***/ 2295:
+433,
+
+/***/ 2296:
+[2744, 2297, 2343],
+
+/***/ 2297:
+[2745, 437, 443, 2298, 2299, 2300, 2311],
+
+/***/ 2298:
+444,
+
+/***/ 2299:
+445,
+
+/***/ 2300:
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./brain_selected.png": 2301,
+		"./brain_unselected.png": 2302,
+		"./female_selected.png": 2303,
+		"./female_unselected.png": 2304,
+		"./flower_parts_selected.png": 2305,
+		"./flower_parts_unselected.png": 2306,
+		"./male_selected.png": 2307,
+		"./male_unselected.png": 2308,
+		"./whole_plant_selected.png": 2309,
+		"./whole_plant_unselected.png": 2310
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 2300;
+
+
+/***/ },
+
+/***/ 2301:
+447,
+
+/***/ 2302:
+448,
+
+/***/ 2303:
+449,
+
+/***/ 2304:
+450,
+
+/***/ 2305:
+451,
+
+/***/ 2306:
+452,
+
+/***/ 2307:
+453,
+
+/***/ 2308:
+454,
+
+/***/ 2309:
+455,
+
+/***/ 2310:
+456,
+
+/***/ 2311:
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./anolis_carolinensis.svg": 2312,
+		"./arabidopsis_thaliana_whole_plant.svg": 2313,
+		"./brachypodium_distachyon_flower_parts.svg": 2314,
+		"./brachypodium_distachyon_whole_plant.svg": 2315,
+		"./chicken.svg": 2316,
+		"./cow.svg": 2317,
+		"./hordeum_vulgare_flower_parts.svg": 2318,
+		"./hordeum_vulgare_whole_plant.svg": 2319,
+		"./human_brain.svg": 2320,
+		"./human_female.svg": 2321,
+		"./human_male.svg": 2322,
+		"./macaca_mulatta.svg": 2323,
+		"./monodelphis_domestica.svg": 2324,
+		"./mouse_brain.svg": 2325,
+		"./mouse_female.svg": 2326,
+		"./mouse_male.svg": 2327,
+		"./oryza_sativa_flower_parts.svg": 2328,
+		"./oryza_sativa_whole_plant.svg": 2329,
+		"./papio_anubis.svg": 2330,
+		"./rat.svg": 2331,
+		"./solanum_lycopersicum_flower_parts.svg": 2332,
+		"./solanum_lycopersicum_whole_plant.svg": 2333,
+		"./solanum_tuberosum_whole_plant.svg": 2334,
+		"./sorghum_bicolor_flower_parts.svg": 2335,
+		"./sorghum_bicolor_whole_plant.svg": 2336,
+		"./tetraodon_nigroviridis.svg": 2337,
+		"./triticum_aestivum_flower_parts.svg": 2338,
+		"./triticum_aestivum_whole_plant.svg": 2339,
+		"./xenopus_tropicalis.svg": 2340,
+		"./zea_mays_flower_parts.svg": 2341,
+		"./zea_mays_whole_plant.svg": 2342
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 2311;
+
+
+/***/ },
+
+/***/ 2312:
+458,
+
+/***/ 2313:
+459,
+
+/***/ 2314:
+460,
+
+/***/ 2315:
+461,
+
+/***/ 2316:
+462,
+
+/***/ 2317:
+463,
+
+/***/ 2318:
+464,
+
+/***/ 2319:
+465,
+
+/***/ 2320:
+466,
+
+/***/ 2321:
+467,
+
+/***/ 2322:
+468,
+
+/***/ 2323:
+469,
+
+/***/ 2324:
+470,
+
+/***/ 2325:
+471,
+
+/***/ 2326:
+472,
+
+/***/ 2327:
+473,
+
+/***/ 2328:
+474,
+
+/***/ 2329:
+475,
+
+/***/ 2330:
+476,
+
+/***/ 2331:
+477,
+
+/***/ 2332:
+478,
+
+/***/ 2333:
+479,
+
+/***/ 2334:
+480,
+
+/***/ 2335:
+481,
+
+/***/ 2336:
+482,
+
+/***/ 2337:
+483,
+
+/***/ 2338:
+484,
+
+/***/ 2339:
+485,
+
+/***/ 2340:
+486,
+
+/***/ 2341:
+487,
+
+/***/ 2342:
+488,
+
+/***/ 2343:
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(2344);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(2346)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./../../../../../node_modules/less-loader/index.js!./SelectionIcon.less", function() {
+				var newContent = require("!!./../../css-loader/index.js!./../../../../../node_modules/less-loader/index.js!./SelectionIcon.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2344:
+[2748, 2345],
+
+/***/ 2345:
+491,
+
+/***/ 2346:
+492,
+
+/***/ 2347:
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(2348);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(2346)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./../../../../../node_modules/less-loader/index.js!./ContainerLayout.less", function() {
+				var newContent = require("!!./../../css-loader/index.js!./../../../../../node_modules/less-loader/index.js!./ContainerLayout.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2348:
+[2749, 2345],
+
+/***/ 2349:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var ExperimentDescription = function ExperimentDescription(props) {
+	    return _react2.default.createElement('div', { style: { width: '100%', paddingBottom: '20px' } }, _react2.default.createElement('div', null, _react2.default.createElement('a', { target: '_blank', href: props.outProxy + props.experimentUrl }, props.description)));
+	};
+
+	ExperimentDescription.propTypes = {
+	    outProxy: _propTypes2.default.string.isRequired,
+	    experimentUrl: _propTypes2.default.string.isRequired,
+	    description: _propTypes2.default.string.isRequired
+	};
+
+	var _default = ExperimentDescription;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(ExperimentDescription, 'ExperimentDescription', 'src/layout/ExperimentDescription.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/layout/ExperimentDescription.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js');
+
+	    __REACT_HOT_LOADER__.register(ExperimentDescription, 'ExperimentDescription', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2350:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var Footer = function Footer(props) {
+	    return _react2.default.createElement('div', { style: { clear: 'both', paddingTop: '40px' } }, _react2.default.createElement('a', { href: props.outProxy + props.moreInformationUrl }, ' See more expression data at Expression Atlas.'), _react2.default.createElement('br', null), 'This expression view is provided by ', _react2.default.createElement('a', { href: props.outProxy + props.atlasUrl }, 'Expression Atlas'), '.', _react2.default.createElement('br', null), 'Please send any queries or feedback to ', _react2.default.createElement('a', { href: 'mailto:arrayexpress-atlas@ebi.ac.uk' }, 'arrayexpress-atlas@ebi.ac.uk'), '.');
+	};
+
+	Footer.propTypes = {
+	    outProxy: _propTypes2.default.string.isRequired,
+	    atlasUrl: _propTypes2.default.string.isRequired,
+	    moreInformationUrl: _propTypes2.default.string.isRequired
+	};
+
+	var _default = Footer;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(Footer, 'Footer', 'src/layout/Footer.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/layout/Footer.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js');
+
+	    __REACT_HOT_LOADER__.register(Footer, 'Footer', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2351:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _uncontrollable = __webpack_require__(498);
+
+	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
+
+	var _HeatmapWithControls = __webpack_require__(2352);
+
+	var _HeatmapWithControls2 = _interopRequireDefault(_HeatmapWithControls);
+
+	var _BoxplotCanvas = __webpack_require__(2387);
+
+	var _BoxplotCanvas2 = _interopRequireDefault(_BoxplotCanvas);
+
+	var _chartDataPropTypes = __webpack_require__(2360);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	var Heatmap = (0, _uncontrollable2.default)(_HeatmapWithControls2.default, {
+	    selectedGenomeBrowser: 'onSelectGenomeBrowser',
+	    selectedOrderingName: 'onSelectOrdering',
+	    selectedFilters: 'onSelectFilters',
+	    coexpressionsShown: 'onCoexpressionOptionChange',
+	    zoom: 'onZoom'
+	});
+	//starting values on component creation, managed by uncontrollable later
+	var heatmapDefaults = function heatmapDefaults(_ref) {
+	    var orderings = _ref.orderings,
+	        expressionLevelFilters = _ref.expressionLevelFilters,
+	        groupingFilters = _ref.groupingFilters,
+	        heatmapConfig = _ref.heatmapConfig;
+	    return {
+	        defaultSelectedGenomeBrowser: 'none',
+	        defaultSelectedOrderingName: orderings.default.name,
+	        defaultSelectedFilters: [expressionLevelFilters].concat(_toConsumableArray(groupingFilters)).map(function (filter) {
+	            return {
+	                name: filter.name,
+	                valueNames: filter.values.filter(function (fv) {
+	                    return !fv.disabled;
+	                }).map(function (fv) {
+	                    return fv.name;
+	                }) // Deep copy from props
+	            };
+	        }),
+	        defaultCoexpressionsShown: 0,
+	        defaultZoom: false
+	    };
+	};
+
+	var ChartContainer = function (_React$Component) {
+	    _inherits(ChartContainer, _React$Component);
+
+	    function ChartContainer(props) {
+	        _classCallCheck(this, ChartContainer);
+
+	        var _this = _possibleConstructorReturn(this, (ChartContainer.__proto__ || Object.getPrototypeOf(ChartContainer)).call(this, props));
+
+	        _this.state = {
+	            chartType: 'heatmap'
+	        };
+
+	        _this.handleClick = _this._handleClick.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(ChartContainer, [{
+	        key: '_theOtherChartType',
+	        value: function _theOtherChartType() {
+	            return this.state.chartType === 'heatmap' ? 'boxplot' : 'heatmap';
+	        }
+	    }, {
+	        key: '_handleClick',
+	        value: function _handleClick(e) {
+	            e.preventDefault();
+	            this.setState({ chartType: this._theOtherChartType() });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', null, this.props.chartData.boxplotData && _react2.default.createElement('a', { href: '#', onClick: this.handleClick }, 'Switch to ' + this._theOtherChartType() + ' view'), _react2.default.createElement('div', { className: this.state.chartType === 'heatmap' ? '' : 'hidden' }, _react2.default.createElement(Heatmap, _extends({
+	                ontologyIdsToHighlight: this.props.ontologyIdsToHighlight,
+	                onOntologyIdIsUnderFocus: this.props.onOntologyIdIsUnderFocus
+	            }, this.props.chartData, heatmapDefaults(this.props.chartData)))), this.props.chartData.boxplotData && _react2.default.createElement('div', { className: this.state.chartType === 'boxplot' ? '' : 'hidden' }, _react2.default.createElement(_BoxplotCanvas2.default, this.props.chartData.boxplotData)));
+	        }
+	    }]);
+
+	    return ChartContainer;
+	}(_react2.default.Component);
+
+	ChartContainer.propTypes = {
+	    chartData: _chartDataPropTypes.chartDataPropTypes.isRequired,
+	    ontologyIdsToHighlight: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    onOntologyIdIsUnderFocus: _propTypes2.default.func.isRequired
+	};
+
+	var _default = ChartContainer;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(Heatmap, 'Heatmap', 'src/manipulate/ChartContainer.js');
+
+	    __REACT_HOT_LOADER__.register(heatmapDefaults, 'heatmapDefaults', 'src/manipulate/ChartContainer.js');
+
+	    __REACT_HOT_LOADER__.register(ChartContainer, 'ChartContainer', 'src/manipulate/ChartContainer.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/ChartContainer.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, "_extends", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_uncontrollable2, "_uncontrollable2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_HeatmapWithControls2, "_HeatmapWithControls2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_BoxplotCanvas2, "_BoxplotCanvas2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, "_toConsumableArray", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(Heatmap, "Heatmap", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(heatmapDefaults, "heatmapDefaults", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(ChartContainer, "ChartContainer", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2352:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _GenomeBrowsersDropdown = __webpack_require__(2353);
+
+	var _GenomeBrowsersDropdown2 = _interopRequireDefault(_GenomeBrowsersDropdown);
+
+	var _OrderingsDropdown = __webpack_require__(2354);
+
+	var _OrderingsDropdown2 = _interopRequireDefault(_OrderingsDropdown);
+
+	var _FiltersModal = __webpack_require__(2355);
+
+	var _FiltersModal2 = _interopRequireDefault(_FiltersModal);
+
+	var _DownloadButton = __webpack_require__(2362);
+
+	var _DownloadButton2 = _interopRequireDefault(_DownloadButton);
+
+	var _HeatmapCanvas = __webpack_require__(2365);
+
+	var _HeatmapCanvas2 = _interopRequireDefault(_HeatmapCanvas);
+
+	var _heatmapCellTooltipFormatter = __webpack_require__(2367);
+
+	var _heatmapCellTooltipFormatter2 = _interopRequireDefault(_heatmapCellTooltipFormatter);
+
+	var _axesFormatters2 = __webpack_require__(2371);
+
+	var _axesFormatters3 = _interopRequireDefault(_axesFormatters2);
+
+	var _Main = __webpack_require__(2372);
+
+	var _CoexpressionOption = __webpack_require__(2380);
+
+	var _CoexpressionOption2 = _interopRequireDefault(_CoexpressionOption);
+
+	var _Events = __webpack_require__(2385);
+
+	var _Events2 = _interopRequireDefault(_Events);
+
+	var _Manipulators = __webpack_require__(2386);
+
+	var _lodash = __webpack_require__(434);
+
+	var _chartDataPropTypes = __webpack_require__(2360);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var HeatmapWithControls = function (_React$Component) {
+	    _inherits(HeatmapWithControls, _React$Component);
+
+	    function HeatmapWithControls(props) {
+	        _classCallCheck(this, HeatmapWithControls);
+
+	        return _possibleConstructorReturn(this, (HeatmapWithControls.__proto__ || Object.getPrototypeOf(HeatmapWithControls)).call(this, props));
+	    }
+
+	    _createClass(HeatmapWithControls, [{
+	        key: '_getSelectedExpressionLevelFilters',
+	        value: function _getSelectedExpressionLevelFilters() {
+	            var _this2 = this;
+
+	            return this.props.selectedFilters.find(function (selectedFilter) {
+	                return selectedFilter.name === _this2.props.expressionLevelFilters.name;
+	            }).valueNames;
+	        }
+	    }, {
+	        key: '_getSelectedOrdering',
+	        value: function _getSelectedOrdering() {
+	            var _this3 = this;
+
+	            var selectedOrderingKey = Object.keys(this.props.orderings).find(function (orderingKey) {
+	                return _this3.props.orderings[orderingKey].name === _this3.props.selectedOrderingName;
+	            });
+	            return this.props.orderings[selectedOrderingKey];
+	        }
+	    }, {
+	        key: '_heatmapDataToPresent',
+	        value: function _heatmapDataToPresent() {
+	            var _this4 = this;
+
+	            return (0, _Manipulators.manipulate)({
+	                //this.state.selectedHeatmapFilters
+	                //.find(selectedFilter => selectedFilter.name === this.props.chartData.expressionLevelFilters.name)
+	                //.valueNames
+	                keepSeries: function keepSeries(series) {
+	                    return _this4.props.selectedFilters[0].valueNames.includes(series.info.name);
+	                },
+	                keepRow: this.props.heatmapConfig.coexpressionsAvailable ? function (rowHeader) {
+	                    return _this4._rowHeadersThatCoexpressionSliderSaysWeCanInclude().includes(rowHeader.label);
+	                } : function () {
+	                    return true;
+	                },
+	                keepColumn: this.props.groupingFilters.length > 0 ? function (columnHeader) {
+	                    return _this4._columnHeadersThatColumnGroupingFiltersSayWeCanInclude().includes(columnHeader.label);
+	                } : function () {
+	                    return true;
+	                },
+	                ordering: this._getSelectedOrdering(),
+	                allowEmptyColumns: Boolean(this.props.heatmapConfig.experiment)
+	            }, this.props.heatmapData);
+	        }
+	    }, {
+	        key: '_rowHeadersThatCoexpressionSliderSaysWeCanInclude',
+	        value: function _rowHeadersThatCoexpressionSliderSaysWeCanInclude() {
+	            // to keep up with the quirky function names
+	            return this.props.heatmapData.yAxisCategories.slice(0, this.props.coexpressionsShown + 1).map(function (yAxisCategory) {
+	                return yAxisCategory.label;
+	            });
+	        }
+	    }, {
+	        key: '_columnHeadersThatColumnGroupingFiltersSayWeCanInclude',
+	        value: function _columnHeadersThatColumnGroupingFiltersSayWeCanInclude() {
+	            // In experiment heatmaps no Anatomical Systems filter are available, but they are built nonetheless and every
+	            // grouping filter is selected by default, so all columns are included
+	            var groupingFilterNames = this.props.groupingFilters.filter(function (filter) {
+	                return filter.valueGroupings.length > 0;
+	            }).map(function (groupingFilter) {
+	                return groupingFilter.name;
+	            });
+
+	            return (0, _lodash.spread)(_lodash.intersection)(this.props.selectedFilters.filter(function (selectedFilter) {
+	                return groupingFilterNames.includes(selectedFilter.name);
+	            }).map(function (selectedFilter) {
+	                return selectedFilter.valueNames;
+	            }));
+	        }
+	    }, {
+	        key: '_renderOrderings',
+	        value: function _renderOrderings(heatmapDataToPresent) {
+	            var _this5 = this;
+
+	            return this.props.heatmapConfig.isMultiExperiment ? _react2.default.createElement('div', { style: { display: 'inline-block', padding: '5px' } }, _react2.default.createElement(_OrderingsDropdown2.default, {
+	                orderings: Object.keys(this.props.orderings).map(function (orderingKey) {
+	                    return _this5.props.orderings[orderingKey].name;
+	                }),
+	                selected: this.props.selectedOrderingName,
+	                onSelect: this.props.onSelectOrdering,
+	                zoom: this.props.zoom,
+	                hasLessThanTwoRows: heatmapDataToPresent.yAxisCategories.length < 2
+	            })) : null;
+	        }
+	    }, {
+	        key: '_renderFilters',
+	        value: function _renderFilters() {
+	            return this.props.heatmapConfig.isMultiExperiment ? _react2.default.createElement('div', { style: { display: 'inline-block', padding: '5px' } }, _react2.default.createElement(_FiltersModal2.default, { filters: [this.props.expressionLevelFilters].concat(_toConsumableArray(this.props.groupingFilters)),
+	                selectedFilters: this.props.selectedFilters,
+	                onSelectFilters: this.props.onSelectFilters,
+	                disabled: this.props.zoom
+	            })) : null;
+	        }
+	    }, {
+	        key: '_renderDownloadButton',
+	        value: function _renderDownloadButton(heatmapDataToPresent) {
+	            var downloadOptions = {
+	                download: {
+	                    name: this.props.heatmapConfig.shortDescription || "download",
+	                    descriptionLines: [this.props.heatmapConfig.description].concat(_toConsumableArray(this.props.selectedOrderingName ? ['Ordering: ' + this.props.selectedOrderingName] : []), _toConsumableArray(this.props.heatmapConfig.coexpressionsAvailable ? ['Including ' + this.props.coexpressionsShown + ' genes with similar expression pattern'] : [])),
+	                    heatmapData: heatmapDataToPresent
+	                },
+	                disclaimer: this.props.heatmapConfig.disclaimer
+	            };
+
+	            return _react2.default.createElement('div', { style: { display: 'inline-block', padding: '5px' } }, _react2.default.createElement(_DownloadButton2.default, downloadOptions));
+	        }
+	    }, {
+	        key: '_renderGenomeBrowserSelect',
+	        value: function _renderGenomeBrowserSelect() {
+	            return this.props.heatmapConfig.genomeBrowsers.length ? _react2.default.createElement('div', { style: { display: 'inline-block', padding: '5px' } }, _react2.default.createElement(_GenomeBrowsersDropdown2.default, { genomeBrowsers: this.props.heatmapConfig.genomeBrowsers,
+	                selected: this.props.selectedGenomeBrowser,
+	                onSelect: this.props.onSelectGenomeBrowser })) : null;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this6 = this;
+
+	            var heatmapDataToPresent = this._heatmapDataToPresent();
+
+	            var _axesFormatters = (0, _axesFormatters3.default)(this.props.heatmapConfig),
+	                yAxisStyle = _axesFormatters.yAxisStyle,
+	                yAxisFormatter = _axesFormatters.yAxisFormatter,
+	                xAxisStyle = _axesFormatters.xAxisStyle,
+	                xAxisFormatter = _axesFormatters.xAxisFormatter;
+
+	            var heatmapProps = {
+	                heatmapData: heatmapDataToPresent,
+	                colourAxis: this.props.colourAxis,
+	                cellTooltipFormatter: (0, _heatmapCellTooltipFormatter2.default)(this.props.heatmapConfig),
+	                yAxisStyle: yAxisStyle,
+	                yAxisFormatter: yAxisFormatter,
+	                xAxisStyle: xAxisStyle,
+	                xAxisFormatter: xAxisFormatter,
+	                onZoom: this.props.onZoom,
+	                ontologyIdsToHighlight: this.props.ontologyIdsToHighlight,
+	                events: (0, _Events2.default)({
+	                    heatmapData: heatmapDataToPresent,
+	                    onSelectOntologyIds: this.props.onOntologyIdIsUnderFocus,
+	                    genomeBrowser: this.props.selectedGenomeBrowser,
+	                    experimentAccession: this.props.heatmapConfig.experiment && this.props.heatmapConfig.experiment.accession,
+	                    accessKey: this.props.heatmapConfig.experiment && this.props.heatmapConfig.experiment.accessKey,
+	                    atlasUrl: this.props.heatmapConfig.atlasUrl
+	                })
+	            };
+
+	            var infoMessages = this.props.selectedGenomeBrowser === 'none' ? ['hoo'] : ['Click on a cell to open the selected genome browser with attached tracks if available'];
+	            var info = infoMessages.map(function (item) {
+	                return _react2.default.createElement('p', { key: item, style: { clear: 'both', float: 'right', fontSize: 'small', margin: '0' } }, item);
+	            });
+
+	            return _react2.default.createElement('div', null, _react2.default.createElement('div', null, _react2.default.createElement('div', { style: { float: 'left', lineHeight: '2.5rem', padding: '0.5rem 0' } }, this.props.heatmapConfig.introductoryMessage), _react2.default.createElement('div', { style: { float: 'right', padding: '0.5rem 0' } }, this._renderGenomeBrowserSelect(), this._renderOrderings(heatmapDataToPresent), this._renderFilters(), this._renderDownloadButton(heatmapDataToPresent)), _react2.default.createElement('p', { style: { clear: 'both', float: 'right', fontSize: 'small', margin: '0',
+	                    visibility: this.props.selectedGenomeBrowser === 'none' ? 'hidden' : ' visible' } }, 'Click on a cell to open the selected genome browser with attached tracks if available')), _react2.default.createElement('div', { style: { clear: 'both' } }, heatmapProps.heatmapData.yAxisCategories < 1 ? _react2.default.createElement('div', { style: { padding: '50px 0' } }, 'No data match your filtering criteria or your original query. Please, change your query or your filters and try again.') : this.props.heatmapConfig.isMultiExperiment ? _react2.default.createElement('div', null, _react2.default.createElement(_HeatmapCanvas2.default, heatmapProps), _react2.default.createElement(_Main.DataSeriesLegend, {
+	                dataSeries: this.props.heatmapData.dataSeries,
+	                selectedExpressionLevelFilters: this._getSelectedExpressionLevelFilters()
+	            })) : _react2.default.createElement('div', null, _react2.default.createElement(_Main.GradientLegend, {
+	                heatmapConfig: this.props.heatmapConfig,
+	                colourAxis: this.props.colourAxis
+	            }), _react2.default.createElement(_HeatmapCanvas2.default, heatmapProps)), this.props.heatmapConfig.coexpressionsAvailable && !this.props.heatmapConfig.isWidget ? _react2.default.createElement(_CoexpressionOption2.default, { geneName: this.props.heatmapData.yAxisCategories[0].label,
+	                numCoexpressionsVisible: this.props.coexpressionsShown,
+	                numCoexpressionsAvailable: this.props.heatmapData.yAxisCategories.length - 1,
+	                showCoexpressionsCallback: function showCoexpressionsCallback(e) {
+	                    return _this6.props.onCoexpressionOptionChange(e);
+	                }
+	            }) : null));
+	        }
+	    }]);
+
+	    return HeatmapWithControls;
+	}(_react2.default.Component);
+
+	HeatmapWithControls.propTypes = {
+	    heatmapConfig: _chartDataPropTypes.heatmapConfigPropTypes.isRequired,
+	    heatmapData: _chartDataPropTypes.heatmapDataPropTypes.isRequired,
+	    colourAxis: _chartDataPropTypes.colourAxisPropTypes, // Only available in experiment heatmap
+
+	    orderings: _chartDataPropTypes.orderingsPropTypesValidator,
+	    selectedOrderingName: _propTypes2.default.string.isRequired,
+	    onSelectOrdering: _propTypes2.default.func.isRequired,
+
+	    expressionLevelFilters: _chartDataPropTypes.filterPropTypes.isRequired,
+	    groupingFilters: _propTypes2.default.arrayOf(_chartDataPropTypes.filterPropTypes).isRequired,
+	    selectedFilters: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        valueNames: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired
+	    })).isRequired,
+	    onSelectFilters: _propTypes2.default.func.isRequired,
+
+	    selectedGenomeBrowser: _propTypes2.default.string,
+	    onSelectGenomeBrowser: _propTypes2.default.func,
+
+	    legendItems: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        key: _propTypes2.default.string.isRequired,
+	        name: _propTypes2.default.string.isRequired,
+	        colour: _propTypes2.default.string.isRequired,
+	        on: _propTypes2.default.bool.isRequired
+	    })),
+
+	    dataSeriesLegendProps: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        key: _propTypes2.default.string.isRequired,
+	        name: _propTypes2.default.string.isRequired,
+	        colour: _propTypes2.default.string.isRequired,
+	        on: _propTypes2.default.bool.isRequired
+	    })),
+
+	    gradientLegendProps: _chartDataPropTypes.colourAxisPropTypes,
+
+	    coexpressionsShown: _propTypes2.default.number,
+	    onCoexpressionOptionChange: _propTypes2.default.func,
+
+	    zoom: _propTypes2.default.bool.isRequired,
+	    onZoom: _propTypes2.default.func,
+	    ontologyIdsToHighlight: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    onOntologyIdIsUnderFocus: _propTypes2.default.func.isRequired
+	};
+
+	var _default = HeatmapWithControls;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(HeatmapWithControls, 'HeatmapWithControls', 'src/manipulate/HeatmapWithControls.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/HeatmapWithControls.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_GenomeBrowsersDropdown2, "_GenomeBrowsersDropdown2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_OrderingsDropdown2, "_OrderingsDropdown2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_FiltersModal2, "_FiltersModal2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_DownloadButton2, "_DownloadButton2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_HeatmapCanvas2, "_HeatmapCanvas2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_heatmapCellTooltipFormatter2, "_heatmapCellTooltipFormatter2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_axesFormatters3, "_axesFormatters3", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_CoexpressionOption2, "_CoexpressionOption2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_Events2, "_Events2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, "_toConsumableArray", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(HeatmapWithControls, "HeatmapWithControls", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2353:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Dropdown = __webpack_require__(1230);
+
+	var _Dropdown2 = _interopRequireDefault(_Dropdown);
+
+	var _MenuItem = __webpack_require__(1280);
+
+	var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+	var _Glyphicon = __webpack_require__(1210);
+
+	var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var GenomeBrowsersDropdown = function (_React$Component) {
+	    _inherits(GenomeBrowsersDropdown, _React$Component);
+
+	    function GenomeBrowsersDropdown(props) {
+	        _classCallCheck(this, GenomeBrowsersDropdown);
+
+	        return _possibleConstructorReturn(this, (GenomeBrowsersDropdown.__proto__ || Object.getPrototypeOf(GenomeBrowsersDropdown)).call(this, props));
+	    }
+
+	    _createClass(GenomeBrowsersDropdown, [{
+	        key: 'handleChange',
+	        value: function handleChange(eventKey, event) {
+	            event.preventDefault();
+	            this.props.onSelect(eventKey);
+	        }
+	    }, {
+	        key: '_genomeBrowserIcon',
+	        value: function _genomeBrowserIcon(genomeBrowser) {
+	            switch (genomeBrowser) {
+	                case 'none':
+	                    return 'eye-close';
+	                default:
+	                    return 'eye-open';
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var genomeBrowsers = [{
+	                id: 'none',
+	                label: 'Select genome browser to view tracks'
+	            }].concat(_toConsumableArray(this.props.genomeBrowsers.map(function (genomeBrowserName) {
+	                return {
+	                    id: genomeBrowserName.replace(/\s+/g, '').toLowerCase(),
+	                    label: genomeBrowserName + ' genome browser'
+	                };
+	            })));
+
+	            return _react2.default.createElement('div', null, _react2.default.createElement(_Dropdown2.default, { id: 'genome-browsers-dropdown',
+	                onSelect: function onSelect(key, e) {
+	                    return _this2.handleChange(key, e);
+	                },
+	                title: 'Choose genome browser' }, _react2.default.createElement(_Dropdown2.default.Toggle, { bsSize: 'small',
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, _react2.default.createElement(_Glyphicon2.default, { glyph: this._genomeBrowserIcon(this.props.selected)
+	            }), ' ', genomeBrowsers.find(function (gb) {
+	                return _this2.props.selected === gb.id;
+	            }).label), _react2.default.createElement(_Dropdown2.default.Menu, { bsSize: 'small' }, genomeBrowsers.map(function (gb) {
+	                return _react2.default.createElement(_MenuItem2.default, { style: { listStyleImage: 'none' }, key: gb.id, eventKey: gb.id, href: '#' }, gb.label);
+	            }))));
+	        }
+	    }]);
+
+	    return GenomeBrowsersDropdown;
+	}(_react2.default.Component);
+
+	GenomeBrowsersDropdown.propTypes = {
+	    genomeBrowsers: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    selected: _propTypes2.default.string,
+	    onSelect: _propTypes2.default.func
+	};
+
+	var _default = GenomeBrowsersDropdown;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(GenomeBrowsersDropdown, 'GenomeBrowsersDropdown', 'src/manipulate/controls/GenomeBrowsersDropdown.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/GenomeBrowsersDropdown.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_Dropdown2, "_Dropdown2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_MenuItem2, "_MenuItem2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_Glyphicon2, "_Glyphicon2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, "_toConsumableArray", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(GenomeBrowsersDropdown, "GenomeBrowsersDropdown", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2354:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Dropdown = __webpack_require__(1230);
+
+	var _Dropdown2 = _interopRequireDefault(_Dropdown);
+
+	var _MenuItem = __webpack_require__(1280);
+
+	var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+	var _Glyphicon = __webpack_require__(1210);
+
+	var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var OrderingsDropdown = function (_React$Component) {
+	    _inherits(OrderingsDropdown, _React$Component);
+
+	    function OrderingsDropdown() {
+	        _classCallCheck(this, OrderingsDropdown);
+
+	        return _possibleConstructorReturn(this, (OrderingsDropdown.__proto__ || Object.getPrototypeOf(OrderingsDropdown)).apply(this, arguments));
+	    }
+
+	    _createClass(OrderingsDropdown, [{
+	        key: 'handleChange',
+	        value: function handleChange(eventKey, event) {
+	            event.preventDefault();
+	            this.props.onSelect(event.target.text);
+	        }
+	    }, {
+	        key: '_orderingIcon',
+	        value: function _orderingIcon(ordering) {
+	            switch (ordering) {
+	                case 'Alphabetical order':
+	                    return 'sort-by-alphabet';
+	                case 'Gene expression rank':
+	                    return 'sort-by-attributes-alt';
+	                case 'By experiment type':
+	                    return 'sort-by-order';
+	                default:
+	                    return 'sort-by-order';
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement('div', null, _react2.default.createElement(_Dropdown2.default, { id: 'orderings-dropdown',
+	                onSelect: function onSelect(key, e) {
+	                    return _this2.handleChange(key, e);
+	                },
+	                title: this.props.zoom ? 'Reset zoom to enable sorting options' : '',
+	                disabled: this.props.zoom || this.props.hasLessThanTwoRows }, _react2.default.createElement(_Dropdown2.default.Toggle, { bsSize: 'small',
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, _react2.default.createElement(_Glyphicon2.default, { glyph: this._orderingIcon(this.props.selected) }), ' ', this.props.selected), _react2.default.createElement(_Dropdown2.default.Menu, { bsSize: 'small' }, this.props.orderings.map(function (orderingName) {
+	                return _react2.default.createElement(_MenuItem2.default, { style: { listStyleImage: 'none' }, key: orderingName, href: '#' }, orderingName);
+	            }))));
+	        }
+	    }]);
+
+	    return OrderingsDropdown;
+	}(_react2.default.Component);
+
+	OrderingsDropdown.propTypes = {
+	    orderings: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    selected: _propTypes2.default.string.isRequired,
+	    onSelect: _propTypes2.default.func.isRequired,
+	    zoom: _propTypes2.default.bool.isRequired,
+	    hasLessThanTwoRows: _propTypes2.default.bool.isRequired
+	};
+
+	var _default = OrderingsDropdown;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(OrderingsDropdown, 'OrderingsDropdown', 'src/manipulate/controls/OrderingsDropdown.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/OrderingsDropdown.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_Dropdown2, "_Dropdown2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_MenuItem2, "_MenuItem2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_Glyphicon2, "_Glyphicon2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(OrderingsDropdown, "OrderingsDropdown", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2355:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Modal = __webpack_require__(1281);
+
+	var _Modal2 = _interopRequireDefault(_Modal);
+
+	var _Button = __webpack_require__(1202);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _Glyphicon = __webpack_require__(1210);
+
+	var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
+
+	var _FlatFilter = __webpack_require__(2356);
+
+	var _FlatFilter2 = _interopRequireDefault(_FlatFilter);
+
+	var _GroupingFilter = __webpack_require__(2359);
+
+	var _GroupingFilter2 = _interopRequireDefault(_GroupingFilter);
+
+	var _chartDataPropTypes = __webpack_require__(2360);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var FiltersModal = function (_React$Component) {
+	    _inherits(FiltersModal, _React$Component);
+
+	    function FiltersModal(props) {
+	        _classCallCheck(this, FiltersModal);
+
+	        var _this = _possibleConstructorReturn(this, (FiltersModal.__proto__ || Object.getPrototypeOf(FiltersModal)).call(this, props));
+
+	        _this.state = {
+	            currentTab: _this.props.filters[0].name,
+	            showModal: false
+	        };
+
+	        _this.open = _this._open.bind(_this);
+	        _this.close = _this._close.bind(_this);
+	        _this.onSelectFilterValue = _this._onSelectFilterValue.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(FiltersModal, [{
+	        key: '_close',
+	        value: function _close() {
+	            this.setState({
+	                showModal: false
+	            });
+	        }
+	    }, {
+	        key: '_open',
+	        value: function _open() {
+	            this.setState({
+	                showModal: true
+	            });
+	        }
+	    }, {
+	        key: '_onSelectFilterValue',
+	        value: function _onSelectFilterValue(filterName, newFilterValues) {
+	            this.props.onSelectFilters(this.props.selectedFilters.map(function (previousSelectedFilter) {
+	                return {
+	                    name: previousSelectedFilter.name,
+	                    valueNames: previousSelectedFilter.name === filterName ? newFilterValues : previousSelectedFilter.valueNames.map(function (valueName) {
+	                        return valueName;
+	                    })
+	                };
+	            }));
+	        }
+	    }, {
+	        key: '_renderFlatFilter',
+	        value: function _renderFlatFilter(filter) {
+	            return _react2.default.createElement(_FlatFilter2.default, _extends({ key: filter.name,
+	                selected: this.props.selectedFilters.find(function (selectedFilter) {
+	                    return selectedFilter.name === filter.name;
+	                }).valueNames,
+	                onSelectFilterValue: this.onSelectFilterValue
+	            }, filter));
+	        }
+	    }, {
+	        key: '_renderGroupingFilter',
+	        value: function _renderGroupingFilter(filter) {
+	            return _react2.default.createElement(_GroupingFilter2.default, _extends({ key: filter.name,
+	                selected: this.props.selectedFilters.find(function (selectedFilter) {
+	                    return selectedFilter.name === filter.name;
+	                }).valueNames,
+	                onSelectFilterValue: this.onSelectFilterValue
+	            }, filter));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement('div', null, _react2.default.createElement(_Button2.default, { bsSize: 'small', onClick: this.open, disabled: this.props.disabled,
+	                title: this.props.disabled ? 'Reset zoom to enable filters' : '',
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, _react2.default.createElement(_Glyphicon2.default, { glyph: 'equalizer' }), _react2.default.createElement('span', { style: { verticalAlign: 'middle' } }, ' Filters')), _react2.default.createElement(_Modal2.default, { show: this.state.showModal, onHide: this.close, bsSize: 'large' }, _react2.default.createElement(_Modal2.default.Header, { closeButton: true }, this.props.filters.length > 1 ? _react2.default.createElement('ul', { className: 'nav nav-tabs' }, this.props.filters.map(function (f) {
+	                return _react2.default.createElement('li', { key: f.name,
+	                    className: f.name == _this2.state.currentTab ? "active" : "" }, _react2.default.createElement('a', { href: '#', onClick: function onClick() {
+	                        _this2.setState({ currentTab: f.name });
+	                    } }, f.name));
+	            })) : _react2.default.createElement('h4', { className: 'modal-title' }, ' Filters ')), _react2.default.createElement(_Modal2.default.Body, null, this.props.filters.filter(function (filter) {
+	                return filter.name == _this2.state.currentTab;
+	            }).map(function (filter) {
+	                return filter.valueGroupings ? _this2._renderGroupingFilter(filter) : _this2._renderFlatFilter(filter);
+	            })), _react2.default.createElement(_Modal2.default.Footer, null, _react2.default.createElement(_Button2.default, { onClick: this.close,
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, 'Close'))));
+	        }
+	    }]);
+
+	    return FiltersModal;
+	}(_react2.default.Component);
+
+	FiltersModal.propTypes = {
+	    filters: _propTypes2.default.arrayOf(_chartDataPropTypes.filterPropTypes).isRequired,
+	    selectedFilters: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        valueNames: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired
+	    })).isRequired,
+
+	    disabled: _propTypes2.default.bool.isRequired,
+	    onSelectFilters: _propTypes2.default.func.isRequired
+	};
+
+	var _default = FiltersModal;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(FiltersModal, 'FiltersModal', 'src/manipulate/controls/filter/FiltersModal.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/filter/FiltersModal.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, "_extends", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_Modal2, "_Modal2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_Button2, "_Button2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_Glyphicon2, "_Glyphicon2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_FlatFilter2, "_FlatFilter2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_GroupingFilter2, "_GroupingFilter2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(FiltersModal, "FiltersModal", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersModal.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2356:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _xor = __webpack_require__(673);
+
+	var _xor2 = _interopRequireDefault(_xor);
+
+	__webpack_require__(2357);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var FlatFilter = function (_React$Component) {
+	    _inherits(FlatFilter, _React$Component);
+
+	    function FlatFilter() {
+	        _classCallCheck(this, FlatFilter);
+
+	        return _possibleConstructorReturn(this, (FlatFilter.__proto__ || Object.getPrototypeOf(FlatFilter)).apply(this, arguments));
+	    }
+
+	    _createClass(FlatFilter, [{
+	        key: '_toggleFilterValue',
+	        value: function _toggleFilterValue(filterValueName) {
+	            this.props.onSelectFilterValue(this.props.name, (0, _xor2.default)(this.props.selected, [filterValueName]));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement('div', { className: 'gxaFilter' }, _react2.default.createElement('h5', null, this.props.name), _react2.default.createElement('div', { className: 'filterBody' }, _react2.default.createElement('div', null, this.props.values.map(function (value) {
+	                return _react2.default.createElement('div', { key: value.name }, _react2.default.createElement('input', { type: 'checkbox',
+	                    value: value.name,
+	                    onChange: function onChange() {
+	                        return _this2._toggleFilterValue(value.name);
+	                    },
+	                    disabled: value.disabled,
+	                    checked: _this2.props.selected.includes(value.name)
+	                }), _react2.default.createElement('span', { style: { color: value.disabled ? 'grey' : '' } }, value.name));
+	            }))));
+	        }
+	    }]);
+
+	    return FlatFilter;
+	}(_react2.default.Component);
+
+	FlatFilter.propTypes = {
+	    name: _propTypes2.default.string.isRequired,
+	    values: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        disabled: _propTypes2.default.bool.isRequired
+	    })).isRequired,
+	    selected: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    onSelectFilterValue: _propTypes2.default.func.isRequired
+	};
+
+	var _default = FlatFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(FlatFilter, 'FlatFilter', 'src/manipulate/controls/filter/FlatFilter.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/filter/FlatFilter.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_xor2, "_xor2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(FlatFilter, "FlatFilter", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FlatFilter.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2357:
+[2884, 2358, 2346],
+
+/***/ 2358:
+[2885, 2345],
+
+/***/ 2359:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _ButtonGroup = __webpack_require__(1203);
+
+	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
+
+	var _Button = __webpack_require__(1202);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _Glyphicon = __webpack_require__(1210);
+
+	var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
+
+	var _xor = __webpack_require__(673);
+
+	var _xor2 = _interopRequireDefault(_xor);
+
+	__webpack_require__(2357);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var FilterOption = function (_React$Component) {
+	    _inherits(FilterOption, _React$Component);
+
+	    function FilterOption() {
+	        _classCallCheck(this, FilterOption);
+
+	        return _possibleConstructorReturn(this, (FilterOption.__proto__ || Object.getPrototypeOf(FilterOption)).apply(this, arguments));
+	    }
+
+	    _createClass(FilterOption, [{
+	        key: 'toggleAll',
+	        value: function toggleAll() {
+	            this.props.onNewSelected((0, _xor2.default)(this.props.values, this.props.selected).length ? this.props.values : []);
+	        }
+	    }, {
+	        key: 'toggleOne',
+	        value: function toggleOne(valueName) {
+	            this.props.onNewSelected((0, _xor2.default)(this.props.selected, [valueName]));
+	        }
+	    }, {
+	        key: 'toggleOpen',
+	        value: function toggleOpen() {
+	            this.props.onToggleOpen();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var allChecked = this.props.values.every(function (v) {
+	                return _this2.props.selected.includes(v);
+	            });
+	            var allUnchecked = this.props.values.every(function (v) {
+	                return !_this2.props.selected.includes(v);
+	            });
+
+	            var openable = this.props.values.length !== 1 || this.props.values[0] !== this.props.name;
+	            // Indeterminate is only a visual state, logically they are unchecked
+	            return _react2.default.createElement('div', { className: 'filterBody large-6 columns' }, _react2.default.createElement('input', { type: 'checkbox',
+	                value: this.props.name,
+	                onChange: function onChange() {
+	                    return _this2.toggleAll();
+	                },
+	                checked: allChecked,
+	                ref: function ref(checkbox) {
+	                    checkbox ? checkbox.indeterminate = !allChecked && !allUnchecked : null;
+	                }
+	            }), _react2.default.createElement('div', { className: 'groupName',
+	                onClick: function onClick() {
+	                    return _this2.toggleOpen();
+	                },
+	                href: '#' }, this.props.name, ' ', openable && _react2.default.createElement(_Glyphicon2.default, { style: { fontSize: 'x-small', paddingLeft: '5px' }, glyph: this.props.isOpen ? 'menu-up' : 'menu-down' })), openable && this.props.isOpen && _react2.default.createElement('div', { className: 'options' }, this.props.values.map(function (value) {
+	                return _react2.default.createElement('div', { className: 'option', key: value }, _react2.default.createElement('input', { type: 'checkbox',
+	                    value: value,
+	                    onChange: function onChange() {
+	                        return _this2.toggleOne(value);
+	                    },
+	                    checked: _this2.props.selected.includes(value) }), _react2.default.createElement('span', null, ' ', value));
+	            })));
+	        }
+	    }]);
+
+	    return FilterOption;
+	}(_react2.default.Component);
+
+	FilterOption.propTypes = {
+	    name: _propTypes2.default.string.isRequired,
+	    values: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    selected: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    isOpen: _propTypes2.default.bool.isRequired,
+	    onToggleOpen: _propTypes2.default.func.isRequired,
+	    onNewSelected: _propTypes2.default.func.isRequired
+	};
+
+	var GroupingFilter = function (_React$Component2) {
+	    _inherits(GroupingFilter, _React$Component2);
+
+	    function GroupingFilter(props) {
+	        _classCallCheck(this, GroupingFilter);
+
+	        var _this3 = _possibleConstructorReturn(this, (GroupingFilter.__proto__ || Object.getPrototypeOf(GroupingFilter)).call(this, props));
+
+	        _this3.state = {
+	            groupsUserAskedToKeepOpen: []
+	        };
+	        return _this3;
+	    }
+
+	    _createClass(GroupingFilter, [{
+	        key: '_renderValueGrouping',
+	        value: function _renderValueGrouping(name, values) {
+	            var _this4 = this;
+
+	            var userWantedOpen = this.state.groupsUserAskedToKeepOpen.includes(name);
+	            var selectedHere = this.props.selected.filter(function (e) {
+	                return values.includes(e);
+	            });
+	            var selectedNotHere = this.props.selected.filter(function (e) {
+	                return !values.includes(e);
+	            });
+	            // isOpen={userWantedOpen || impliedOpen} is a nifty idea, but the user loses focus and there are potentially
+	            // too many things going on we could think of using CSS animations (such as a background fading highlight on
+	            // the affected tissues to signal the interactions between subsystems)
+	            //const impliedOpen = !(selectedHere.length === 0 || values.every(v => selectedHere.includes(v)))
+	            return _react2.default.createElement(FilterOption, { key: name,
+	                name: name,
+	                values: values,
+	                selected: selectedHere,
+	                isOpen: userWantedOpen,
+	                onToggleOpen: function onToggleOpen() {
+	                    _this4.setState(function (previousState) {
+	                        return {
+	                            groupsUserAskedToKeepOpen: (0, _xor2.default)(previousState.groupsUserAskedToKeepOpen, [name])
+	                        };
+	                    });
+	                },
+	                onNewSelected: function onNewSelected(selectedInThisOption) {
+	                    _this4.props.onSelectFilterValue(_this4.props.name, selectedNotHere.concat(selectedInThisOption));
+	                } });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this5 = this;
+
+	            return _react2.default.createElement('div', { className: 'gxaFilter' }, _react2.default.createElement(_ButtonGroup2.default, null, _react2.default.createElement(_Button2.default, { bsSize: 'xsmall',
+	                onClick: function onClick() {
+	                    _this5.props.onSelectFilterValue(_this5.props.name, _this5.props.values.map(function (value) {
+	                        return value.name;
+	                    }));
+	                },
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, _react2.default.createElement(_Glyphicon2.default, { glyph: 'plus' }), _react2.default.createElement('span', { style: { verticalAlign: 'middle' } }, ' Choose all')), _react2.default.createElement(_Button2.default, { bsSize: 'xsmall',
+	                onClick: function onClick() {
+	                    _this5.props.onSelectFilterValue(_this5.props.name, []);
+	                },
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, _react2.default.createElement(_Glyphicon2.default, { glyph: 'minus' }), _react2.default.createElement('span', { style: { verticalAlign: 'middle' } }, ' Remove all'))), _react2.default.createElement('div', { className: 'row' }, this.props.valueGroupings.map(function (a) {
+	                return _this5._renderValueGrouping(a[0], a[1]);
+	            })));
+	        }
+	    }]);
+
+	    return GroupingFilter;
+	}(_react2.default.Component);
+
+	GroupingFilter.propTypes = {
+	    name: _propTypes2.default.string.isRequired,
+	    values: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        disabled: _propTypes2.default.bool.isRequired
+	    })).isRequired,
+	    valueGroupings: _propTypes2.default.array, // Indirectly validated as [string, array of strings] in FilterOption
+	    onSelectFilterValue: _propTypes2.default.func.isRequired
+	};
+
+	var _default = GroupingFilter;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(FilterOption, 'FilterOption', 'src/manipulate/controls/filter/GroupingFilter.js');
+
+	    __REACT_HOT_LOADER__.register(GroupingFilter, 'GroupingFilter', 'src/manipulate/controls/filter/GroupingFilter.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/filter/GroupingFilter.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_ButtonGroup2, "_ButtonGroup2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_Button2, "_Button2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_Glyphicon2, "_Glyphicon2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_xor2, "_xor2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(FilterOption, "FilterOption", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(GroupingFilter, "GroupingFilter", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/GroupingFilter.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2360:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.colourAxisPropTypes = exports.dataSeriesPropTypes = exports.filterPropTypes = exports.orderingsPropTypesValidator = exports.chartDataPropTypes = exports.heatmapDataPropTypes = exports.heatmapConfigPropTypes = undefined;
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	// const heatmapDataPropTypes = (props, propName) => {
+	//     const heatmapData = props[propName]
+	//     // const possiblyError = ValidateDataSeries(heatmapData.dataSeries)
+	//     // if (possiblyError !== undefined) {
+	//     //     return possiblyError
+	//     // }
+	//
+	//     const width = heatmapData.xAxisCategories.length
+	//     const height = heatmapData.yAxisCategories.length
+	//
+	//     for (let i = 0 i < heatmapData.dataSeries.length i++) {
+	//         for (let j = 0 j < heatmapData.dataSeries[i].data.length j++) {
+	//             const point = heatmapData.dataSeries[i].data[j]
+	//             const x = point.x
+	//             const y = point.y
+	//             if (x < 0 || y < 0 || x >= width || y >= height) {
+	//                 return new Error(`Point with coordinates outside range: ${x}, ${y}`)
+	//             }
+	//         }
+	//     }
+	// }
+
+	var differentialTooltipPropTypes = _propTypes2.default.shape({
+	    contrastDescription: _propTypes2.default.string.isRequired,
+	    experimentDescription: _propTypes2.default.string.isRequired,
+	    properties: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        contrastPropertyType: _propTypes2.default.oneOf(['FACTOR', 'SAMPLE']),
+	        propertyName: _propTypes2.default.string.isRequired,
+	        referenceValue: _propTypes2.default.string.isRequired,
+	        testValue: _propTypes2.default.string.isRequired
+	    })).isRequired,
+	    referenceReplicates: _propTypes2.default.number.isRequired,
+	    resources: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        icon: _propTypes2.default.string.isRequired,
+	        type: _propTypes2.default.string.isRequired,
+	        url: _propTypes2.default.string.isRequired
+	    })).isRequired,
+	    testReplicates: _propTypes2.default.number.isRequired
+	});
+
+	var baselineTooltipPropTypes = _propTypes2.default.shape({
+	    properties: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        contrastPropertyType: _propTypes2.default.oneOf(['FACTOR', 'SAMPLE']),
+	        propertyName: _propTypes2.default.string.isRequired,
+	        testValue: _propTypes2.default.string.isRequired
+	    })).isRequired,
+	    replicates: _propTypes2.default.number.isRequired
+	});
+
+	var baselineExperimentsTooltipPropTypes = _propTypes2.default.shape({});
+
+	var orderingsPropTypesValidator = function orderingsPropTypesValidator(props, propName, componentName) {
+	    var orderings = props[propName];
+
+	    var isPermutation = function isPermutation(arr) {
+	        return [].concat(arr).sort(function (a, b) {
+	            return a - b;
+	        }).map(function (el, ix) {
+	            return el === ix;
+	        }).reduce(function (l, r) {
+	            return l && r;
+	        });
+	    };
+
+	    if (!orderings.hasOwnProperty('default')) {
+	        return new Error('Default ordering missing in \'' + componentName + '\'');
+	    }
+
+	    Object.keys(orderings).forEach(function (orderingName) {
+	        var ordering = orderings[orderingName];
+
+	        if (!isPermutation(ordering.columns)) {
+	            return new Error('Column ordering invalid: \'' + orderingName + '\' in \'' + componentName + '\'');
+	        }
+	        if (!isPermutation(ordering.rows)) {
+	            return new Error('Row ordering invalid: \'' + orderingName + '\' in \'' + componentName + '\'');
+	        }
+	    });
+	};
+
+	var dataSeriesPropTypes = _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	    data: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        info: _propTypes2.default.shape({
+	            unit: _propTypes2.default.string.isRequired,
+	            foldChange: _propTypes2.default.number, // These three only in diff experiments
+	            pValue: _propTypes2.default.number,
+	            tStat: _propTypes2.default.number
+	        }).isRequired,
+	        value: _propTypes2.default.number.isRequired,
+	        x: _propTypes2.default.number.isRequired,
+	        y: _propTypes2.default.number.isRequired
+	    })).isRequired,
+	    info: _propTypes2.default.shape({
+	        colour: _propTypes2.default.string.isRequired,
+	        name: _propTypes2.default.string.isRequired
+	    }).isRequired
+	}));
+
+	var heatmapDataPropTypes = _propTypes2.default.shape({
+	    dataSeries: dataSeriesPropTypes.isRequired,
+	    xAxisCategories: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        id: _propTypes2.default.string.isRequired,
+	        info: _propTypes2.default.shape({
+	            groupings: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	                memberName: _propTypes2.default.string.isRequired,
+	                name: _propTypes2.default.string.isRequired,
+	                values: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	                    id: _propTypes2.default.string.isRequired,
+	                    label: _propTypes2.default.string.isRequired
+	                })).isRequired
+	            })).isRequired,
+	            tooltip: _propTypes2.default.oneOfType([differentialTooltipPropTypes, baselineTooltipPropTypes, baselineExperimentsTooltipPropTypes]).isRequired,
+	            trackId: _propTypes2.default.string.isRequired
+	        }).isRequired,
+	        label: _propTypes2.default.string.isRequired
+	    })).isRequired,
+	    yAxisCategories: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        id: _propTypes2.default.string.isRequired,
+	        info: _propTypes2.default.shape({
+	            designElement: _propTypes2.default.string.isRequired,
+	            trackId: _propTypes2.default.string.isRequired
+	        }).isRequired,
+	        label: _propTypes2.default.string.isRequired
+	    })).isRequired
+	});
+
+	var boxplotDataPropTypes = _propTypes2.default.shape({
+	    dataSeries: _propTypes2.default.arrayOf(_propTypes2.default.arrayOf(_propTypes2.default.number)).isRequired,
+	    xAxisCategories: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    title: _propTypes2.default.string.isRequired,
+	    unit: _propTypes2.default.string.isRequired
+	});
+
+	var heatmapConfigPropTypes = _propTypes2.default.shape({
+	    inProxy: _propTypes2.default.string.isRequired,
+	    outProxy: _propTypes2.default.string.isRequired,
+	    atlasUrl: _propTypes2.default.string.isRequired,
+	    description: _propTypes2.default.string.isRequired,
+	    genomeBrowsers: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    introductoryMessage: _propTypes2.default.string.isRequired,
+	    shortDescription: _propTypes2.default.string.isRequired,
+	    xAxisLegendName: _propTypes2.default.string.isRequired,
+	    yAxisLegendName: _propTypes2.default.string.isRequired,
+
+	    experiment: _experimentTypeUtils.experimentPropTypes,
+
+	    disclaimer: _propTypes2.default.string.isRequired,
+	    coexpressionsAvailable: _propTypes2.default.bool.isRequired,
+	    isMultiExperiment: _propTypes2.default.bool.isRequired,
+	    isBaseline: _propTypes2.default.bool.isRequired,
+	    isDifferential: _propTypes2.default.bool.isRequired
+
+	});
+
+	var filterPropTypes = _propTypes2.default.shape({
+	    name: _propTypes2.default.string.isRequired,
+	    values: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        disabled: _propTypes2.default.bool.isRequired
+	    })).isRequired,
+	    valueGroupings: _propTypes2.default.array // Indirectly validated as [string, array of strings] in FilterOption
+	});
+
+	var colourAxisPropTypes = _propTypes2.default.shape({
+	    unit: _propTypes2.default.string.isRequired,
+	    dataClasses: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        color: _propTypes2.default.string.isRequired,
+	        from: _propTypes2.default.number.isRequired,
+	        to: _propTypes2.default.number.isRequired
+	    })).isRequired
+	});
+
+	var chartDataPropTypes = _propTypes2.default.shape({
+	    heatmapConfig: heatmapConfigPropTypes.isRequired,
+	    colourAxis: colourAxisPropTypes,
+	    orderings: orderingsPropTypesValidator,
+	    heatmapData: heatmapDataPropTypes.isRequired,
+	    boxplotData: boxplotDataPropTypes,
+	    expressionLevelFilters: filterPropTypes.isRequired,
+	    groupingFilters: _propTypes2.default.arrayOf(filterPropTypes)
+	});
+
+	exports.heatmapConfigPropTypes = heatmapConfigPropTypes;
+	exports.heatmapDataPropTypes = heatmapDataPropTypes;
+	exports.chartDataPropTypes = chartDataPropTypes;
+	exports.orderingsPropTypesValidator = orderingsPropTypesValidator;
+	exports.filterPropTypes = filterPropTypes;
+	exports.dataSeriesPropTypes = dataSeriesPropTypes;
+	exports.colourAxisPropTypes = colourAxisPropTypes;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(differentialTooltipPropTypes, 'differentialTooltipPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineTooltipPropTypes, 'baselineTooltipPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineExperimentsTooltipPropTypes, 'baselineExperimentsTooltipPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(orderingsPropTypesValidator, 'orderingsPropTypesValidator', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(dataSeriesPropTypes, 'dataSeriesPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(heatmapDataPropTypes, 'heatmapDataPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(boxplotDataPropTypes, 'boxplotDataPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(heatmapConfigPropTypes, 'heatmapConfigPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(filterPropTypes, 'filterPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(colourAxisPropTypes, 'colourAxisPropTypes', 'src/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(chartDataPropTypes, 'chartDataPropTypes', 'src/manipulate/chartDataPropTypes.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(differentialTooltipPropTypes, 'differentialTooltipPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineTooltipPropTypes, 'baselineTooltipPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineExperimentsTooltipPropTypes, 'baselineExperimentsTooltipPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(orderingsPropTypesValidator, 'orderingsPropTypesValidator', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(dataSeriesPropTypes, 'dataSeriesPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(heatmapDataPropTypes, 'heatmapDataPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(boxplotDataPropTypes, 'boxplotDataPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(heatmapConfigPropTypes, 'heatmapConfigPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(filterPropTypes, 'filterPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(colourAxisPropTypes, 'colourAxisPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(chartDataPropTypes, 'chartDataPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2361:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getUnits = exports.isRnaSeqBaseline = exports.isBaseline = exports.isDifferential = exports.isMultiExperiment = exports.experimentPropTypes = undefined;
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var experimentPropTypes = _propTypes2.default.shape({
+	    accession: _propTypes2.default.string.isRequired, // Is it worth to enumerate the experiment types?
+	    type: _propTypes2.default.string.isRequired,
+	    relUrl: _propTypes2.default.string.isRequired,
+	    description: _propTypes2.default.string.isRequired,
+	    species: _propTypes2.default.string.isRequired,
+	    accessKey: _propTypes2.default.string.isRequired
+	});
+
+	var isMultiExperiment = function isMultiExperiment(experiment) {
+	    return !Boolean(experiment);
+	};
+
+	// From ExperimentType.java:
+	// RNASEQ_MRNA_BASELINE("rnaseq_mrna_baseline")
+	// RNASEQ_MRNA_DIFFERENTIAL("rnaseq_mrna_differential")
+	// MICROARRAY_ANY("microarray parent type")
+	// MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential")
+	// MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
+	// MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential")
+	// PROTEOMICS_BASELINE("proteomics_baseline")
+	// SINGLE_CELL_RNASEQ_MRNA_BASELINE("scrnaseq_mrna_baseline")
+	var isDifferential = function isDifferential(experiment) {
+	    return !isMultiExperiment(experiment) && experiment.type.toUpperCase().endsWith('DIFFERENTIAL');
+	};
+
+	var isBaseline = function isBaseline(experiment) {
+	    return !isMultiExperiment(experiment) && experiment.type.toUpperCase().endsWith('BASELINE');
+	};
+
+	var isRnaSeqBaseline = function isRnaSeqBaseline(experiment) {
+	    return !isMultiExperiment(experiment) && experiment.type.toUpperCase() === 'RNASEQ_MRNA_BASELINE';
+	};
+
+	var getUnits = function getUnits(experiment) {
+	    if (isDifferential(experiment)) {
+	        return 'Log2-fold change'; // What we use for point.value, we don't use it for display. See Formatters.jsx.
+	    } else if (isRnaSeqBaseline(experiment)) {
+	        return experiment.description.toUpperCase().includes('FANTOM') ? 'TPM' : 'FPKM';
+	    } else {
+	        return '';
+	    }
+	};
+
+	exports.experimentPropTypes = experimentPropTypes;
+	exports.isMultiExperiment = isMultiExperiment;
+	exports.isDifferential = isDifferential;
+	exports.isBaseline = isBaseline;
+	exports.isRnaSeqBaseline = isRnaSeqBaseline;
+	exports.getUnits = getUnits;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(experimentPropTypes, 'experimentPropTypes', 'src/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isMultiExperiment, 'isMultiExperiment', 'src/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isDifferential, 'isDifferential', 'src/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isBaseline, 'isBaseline', 'src/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isRnaSeqBaseline, 'isRnaSeqBaseline', 'src/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(getUnits, 'getUnits', 'src/load/experimentTypeUtils.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(experimentPropTypes, 'experimentPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isMultiExperiment, 'isMultiExperiment', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isDifferential, 'isDifferential', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isBaseline, 'isBaseline', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(isRnaSeqBaseline, 'isRnaSeqBaseline', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(getUnits, 'getUnits', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2362:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Modal = __webpack_require__(1281);
+
+	var _Modal2 = _interopRequireDefault(_Modal);
+
+	var _Button = __webpack_require__(1202);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _Glyphicon = __webpack_require__(1210);
+
+	var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
+
+	var _Disclaimers = __webpack_require__(2363);
+
+	var _Disclaimers2 = _interopRequireDefault(_Disclaimers);
+
+	var _Download = __webpack_require__(2364);
+
+	var _Download2 = _interopRequireDefault(_Download);
+
+	var _chartDataPropTypes = __webpack_require__(2360);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var DownloadButton = function (_React$Component) {
+	    _inherits(DownloadButton, _React$Component);
+
+	    function DownloadButton(props) {
+	        _classCallCheck(this, DownloadButton);
+
+	        var _this = _possibleConstructorReturn(this, (DownloadButton.__proto__ || Object.getPrototypeOf(DownloadButton)).call(this, props));
+
+	        _this.state = { showModal: false };
+
+	        _this.afterDownloadButtonClicked = _this._afterDownloadButtonClicked.bind(_this);
+	        _this.commenceDownloadAndCloseModal = _this._commenceDownloadAndCloseModal.bind(_this);
+	        _this.closeModal = _this._closeModal.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(DownloadButton, [{
+	        key: '_closeModal',
+	        value: function _closeModal() {
+	            this.setState({ showModal: false });
+	        }
+	    }, {
+	        key: '_disclaimer',
+	        value: function _disclaimer() {
+	            return this.props.disclaimer && _Disclaimers2.default[this.props.disclaimer] || { title: null, content: null };
+	        }
+	    }, {
+	        key: '_afterDownloadButtonClicked',
+	        value: function _afterDownloadButtonClicked() {
+	            if (!this._disclaimer().title && !this._disclaimer().content) {
+	                this._commenceDownload();
+	            } else {
+	                this.setState({ showModal: true });
+	            }
+	        }
+	    }, {
+	        key: '_commenceDownload',
+	        value: function _commenceDownload() {
+	            (0, _Download2.default)(this.props.download);
+	            typeof window.ga === 'function' && window.ga('atlas-highcharts-widget.send', 'event', 'HeatmapHighcharts', 'downloadData');
+	        }
+	    }, {
+	        key: '_commenceDownloadAndCloseModal',
+	        value: function _commenceDownloadAndCloseModal() {
+	            this._commenceDownload();
+	            this.closeModal();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('a', { onClick: this.afterDownloadButtonClicked }, _react2.default.createElement(_Button2.default, { bsSize: 'small',
+	                style: { textTransform: 'unset', letterSpacing: 'unset', height: 'unset' } }, _react2.default.createElement(_Glyphicon2.default, { glyph: 'download-alt' }), ' Download table content'), _react2.default.createElement(_Modal2.default, { show: this.state.showModal, onHide: this.closeModal }, _react2.default.createElement(_Modal2.default.Header, { closeButton: true }, _react2.default.createElement(_Modal2.default.Title, null, this._disclaimer().title)), _react2.default.createElement(_Modal2.default.Body, null, this._disclaimer().content), _react2.default.createElement(_Modal2.default.Footer, null, _react2.default.createElement(_Button2.default, { onClick: this._closeModal }, 'Close'), _react2.default.createElement(_Button2.default, { bsStyle: 'primary', onClick: this.commenceDownloadAndCloseModal }, 'Continue downloading'))));
+	        }
+	    }]);
+
+	    return DownloadButton;
+	}(_react2.default.Component);
+
+	DownloadButton.propTypes = {
+	    download: _propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        descriptionLines: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	        heatmapData: _chartDataPropTypes.heatmapDataPropTypes
+	    }),
+	    disclaimer: _propTypes2.default.string.isRequired
+	};
+
+	var _default = DownloadButton;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(DownloadButton, 'DownloadButton', 'src/manipulate/controls/download-button/DownloadButton.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/download-button/DownloadButton.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_Modal2, "_Modal2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_Button2, "_Button2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_Glyphicon2, "_Glyphicon2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_Disclaimers2, "_Disclaimers2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_Download2, "_Download2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(DownloadButton, "DownloadButton", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2363:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var BlueprintText = {
+	    title: "The Blueprint project Data Reuse statement",
+	    content: _react2.default.createElement("div", null, _react2.default.createElement("p", null, "This document refers to the reuse of data generated by the EC funded FP7 High Impact Project, Blueprint."), _react2.default.createElement("p", null, "Blueprint regularly released analysis results via its ftp site and makes the raw sequence data available through the sequence archives at the EMBL-EBI. Much Blueprint data is generated from samples whose data must be released through a managed access process. For these data sets external users must apply for permission to access the data from the European Genome-phenome Archive (EGA) through the Blueprint Data Access Committee."), _react2.default.createElement("p", null, "The Blueprint consortium expects this data to be valuable to other researchers and in keeping with Fort Lauderdale principles data users may use the data for many studies, but are expected to allow the data producers to make the first presentations and to publish the first paper with global analyses of the data."), _react2.default.createElement("h4", null, "Global analyses of Project data"), _react2.default.createElement("p", null, "Blueprint plans to publish global analyses of the sequencing data, epigenetic marks, expression levels and variation both in the context of normal hematopoietic cells and of those neoplastic and non-neoplastic diseases studied within the consortium. Talks, posters, and papers on all such analyses are to be published first by the Blueprint project, by approved presenters on behalf of the Project, with the Project as author. When the first major Project paper on these analyses is published, then researchers inside and outside the Project are free to present and publish using the Project data for these and other analyses."), _react2.default.createElement("h4", null, "Large-scale analyses of Project data"), _react2.default.createElement("p", null, "Groups within the Project may make presentations and publish papers on more extensive analyses of topics to be included in the main analysis presentations and papers, coincident with the main project analysis presentations and papers. The major points would be included in the main Project presentations and papers, but these additional presentations and papers allow more focused discussion of methods and results. The author list would include the Consortium."), _react2.default.createElement("h4", null, "Methods development using Project data"), _react2.default.createElement("p", null, "Researchers who have used small amounts of Project data (&lt= one chromosome) may present methods development posters, talks, and papers that include these data prior to the first major Project paper, without needing Project approval or authorship, although the Project should be acknowledged. Methods presentations or papers on global analyses or analyses using large amounts of Project data, on topics that the Consortium plans to examine, would be similar to large-scale analyses of Project data: researchers within the Project may make presentations or submit papers at the same time as the main Project presentations and papers, and others could do so after the Project publishes the first major analysis paper."), _react2.default.createElement("h4", null, "Disease studies using Project data"), _react2.default.createElement("p", null, "Researchers may present and publish on use of Project data in specific chromosome regions (that are not of general interest) or as summaries (such as number of differentially expressed genes in cell types assayed by Blueprint) for studies on diseases not studied by BLUEPRINT without Project approval, prior to the first major Project paper being published. The Project should not be listed as an author."), _react2.default.createElement("h4", null, "Authors who use data from the project must acknowledge Blueprint using the following wording"), _react2.default.createElement("p", null, "This study makes use of data generated by the Blueprint Consortium. A full list of the investigators who contributed to the generation of the data is available from", _react2.default.createElement("a", { href: "http://www.blueprint-epigenome.eu" }, "www.blueprint-epigenome.eu"), ". Funding for the project was provided by the European Union's Seventh Framework Programme (FP7/2007-2013) under grant agreement no 282510 \u2013 BLUEPRINT."))
+	};
+
+	var ZebrafishText = {
+	    title: "Data Reuse statement",
+	    content: _react2.default.createElement("div", null, _react2.default.createElement("p", null, "This is a pre-publication release in accordance with ", _react2.default.createElement("a", { href: "http://www.sanger.ac.uk/datasharing/" }, "the Fort Lauderdale Agreement "), ". Feel free to search and download data on your genes of interest."), _react2.default.createElement("p", null, "Equally, you can use the dataset to show developmental expression profiles for specific genes in your publications."), _react2.default.createElement("p", null, "However, we ask that you refrain from publishing larger scale or genome-wide analyses of this dataset for 12 months from the time of deposition in Expression Atlas or until we have published our transcriptional time-course paper, whichever comes first."), _react2.default.createElement("p", null, "For citations in publications before the paper is out please use this link to the Expression Atlas site (", _react2.default.createElement("a", { href: "https://www.ebi.ac.uk/gxa/experiments/E-ERAD-475" }, "http://www.ebi.ac.uk/gxa/experiments/E-ERAD-475"), ") and acknowledge us: \u201CWe would like to thank the Busch-Nentwich lab for providing RNA-seq data.\u201D"))
+	};
+
+	var _default = { "fortLauderdale": BlueprintText, "zebrafish": ZebrafishText };
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(BlueprintText, "BlueprintText", "src/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(ZebrafishText, "ZebrafishText", "src/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "default", "src/manipulate/controls/download-button/Disclaimers.js");
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(BlueprintText, "BlueprintText", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(ZebrafishText, "ZebrafishText", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2364:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _range2 = __webpack_require__(689);
+
+	var _range3 = _interopRequireDefault(_range2);
+
+	var _downloadjs = __webpack_require__(693);
+
+	var _downloadjs2 = _interopRequireDefault(_downloadjs);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	var heatmapDataIntoLinesOfData = function heatmapDataIntoLinesOfData(heatmapData) {
+
+	    var heatmapDataAsMatrix = (0, _range3.default)(heatmapData.yAxisCategories.length).map(function (y) {
+	        return (0, _range3.default)(heatmapData.xAxisCategories.length).map(function (x) {
+	            return 'NA';
+	        });
+	    });
+
+	    heatmapData.dataSeries.forEach(function (series) {
+	        series.data.forEach(function (point) {
+	            heatmapDataAsMatrix[point.y][point.x] = point.value;
+	        });
+	    });
+
+	    return [[''].concat(heatmapData.xAxisCategories.map(function (header) {
+	        return header.label;
+	    }))].concat(heatmapData.yAxisCategories.map(function (rowLabel, ix) {
+	        return [].concat.apply([rowLabel.label], heatmapDataAsMatrix[ix]);
+	    })).map(function (line) {
+	        return line.join('\t');
+	    });
+	};
+
+	var CommenceDownload = function CommenceDownload(_ref) {
+	    var name = _ref.name,
+	        descriptionLines = _ref.descriptionLines,
+	        heatmapData = _ref.heatmapData;
+
+	    (0, _downloadjs2.default)(new Blob(['# Downloaded from: ' + window.location.href, '# Timestamp: ' + new Date().toISOString()].concat(_toConsumableArray(descriptionLines.map(function (line) {
+	        return '# ' + line;
+	    })), _toConsumableArray(heatmapDataIntoLinesOfData(heatmapData))).map(function (line) {
+	        return line + '\n';
+	    })), name.replace(/ +/, '_') + '.tsv', 'text/tsv');
+	};
+
+	var _default = CommenceDownload;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(heatmapDataIntoLinesOfData, 'heatmapDataIntoLinesOfData', 'src/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(CommenceDownload, 'CommenceDownload', 'src/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/controls/download-button/Download.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_range3, '_range3', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(_downloadjs2, '_downloadjs2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, '_toConsumableArray', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(heatmapDataIntoLinesOfData, 'heatmapDataIntoLinesOfData', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(CommenceDownload, 'CommenceDownload', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2365:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactHighcharts = __webpack_require__(1347);
+
+	var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
+
+	var _heatmap = __webpack_require__(2366);
+
+	var _heatmap2 = _interopRequireDefault(_heatmap);
+
+	var _highchartsCustomEvents = __webpack_require__(698);
+
+	var _highchartsCustomEvents2 = _interopRequireDefault(_highchartsCustomEvents);
+
+	var _objectHash = __webpack_require__(699);
+
+	var _objectHash2 = _interopRequireDefault(_objectHash);
+
+	var _chartDataPropTypes = __webpack_require__(2360);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var Highcharts = _reactHighcharts2.default.Highcharts;
+	(0, _heatmap2.default)(Highcharts);
+	(0, _highchartsCustomEvents2.default)(Highcharts);
+
+	// Custom Events default behaviour disables context menu on right-click, we bring it back
+	window.oncontextmenu = function () {
+	    return true;
+	};
+
+	var HeatmapCanvas = function (_React$Component) {
+	    _inherits(HeatmapCanvas, _React$Component);
+
+	    function HeatmapCanvas(props) {
+	        _classCallCheck(this, HeatmapCanvas);
+
+	        return _possibleConstructorReturn(this, (HeatmapCanvas.__proto__ || Object.getPrototypeOf(HeatmapCanvas)).call(this, props));
+	    }
+
+	    _createClass(HeatmapCanvas, [{
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps) {
+	            // Callback that does setState fails: https://github.com/kirjs/react-highcharts/issues/245
+	            // Don’t call render again after zoom happens
+	            return _objectHash2.default.MD5([nextProps.heatmapData, nextProps.events.onClick]) !== _objectHash2.default.MD5([this.props.heatmapData, this.props.events.onClick]);
+	        }
+	    }, {
+	        key: '_countColumns',
+	        value: function _countColumns() {
+	            return this.props.heatmapData.xAxisCategories.length;
+	        }
+	    }, {
+	        key: '_getAdjustedMarginRight',
+	        value: function _getAdjustedMarginRight() {
+	            // TODO Should add extra margin if labels are slanted and last ones (3 or so?) are very long. See reference_experiment_single_gene.html
+	            var initialMarginRight = 60;
+	            return initialMarginRight * (1 + 10 / Math.pow(1 + this._countColumns(), 2));
+	        }
+	    }, {
+	        key: '_getAdjustedMarginTop',
+	        value: function _getAdjustedMarginTop() {
+	            var longestColumnLabelLength = Math.max.apply(Math, _toConsumableArray(this.props.heatmapData.xAxisCategories.map(function (category) {
+	                return category.label.length;
+	            })));
+
+	            // Minimum margins when labels aren’t tilted, -45° and -90° respectively see labels.autoRotation below
+	            var horizontalLabelsMarginTop = 30,
+	                tiltedLabelsMarginTop = 100,
+	                verticalLabelsMarginTop = 200;
+
+	            // TODO To know if the labels are actually rotated we must take into account the width of the chart and div
+
+	            if (this._countColumns() < 10) {
+	                return Math.max(horizontalLabelsMarginTop, Math.round(longestColumnLabelLength));
+	            } else if (this._countColumns() < 80) {
+	                return Math.max(tiltedLabelsMarginTop, Math.round(longestColumnLabelLength * 3.85));
+	            } else {
+	                return Math.max(verticalLabelsMarginTop, Math.round(longestColumnLabelLength * 5.5));
+	            }
+	        }
+	    }, {
+	        key: '_getAdjustedHeight',
+	        value: function _getAdjustedHeight(marginTop, marginBottom) {
+	            var rowsCount = this.props.heatmapData.yAxisCategories.length;
+	            var rowHeight = 30;
+	            return rowsCount * rowHeight + marginTop + marginBottom;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            // TODO Should the margins be recalculated when the window is resized?
+	            var marginBottom = 10;
+	            var marginTop = this._getAdjustedMarginTop();
+	            var marginRight = this._getAdjustedMarginRight();
+	            var height = this._getAdjustedHeight(marginTop, marginBottom);
+
+	            var _props = this.props,
+	                cellTooltipFormatter = _props.cellTooltipFormatter,
+	                xAxisFormatter = _props.xAxisFormatter,
+	                yAxisFormatter = _props.yAxisFormatter,
+	                events = _props.events,
+	                onZoom = _props.onZoom;
+
+	            var highchartsConfig = {
+	                chart: {
+	                    marginTop: marginTop,
+	                    marginBottom: marginBottom,
+	                    marginRight: marginRight,
+	                    height: height,
+	                    type: 'heatmap',
+	                    spacingTop: 0,
+	                    plotBorderWidth: 1,
+	                    events: {
+	                        handleGxaAnatomogramTissueMouseEnter: function handleGxaAnatomogramTissueMouseEnter(e) {
+	                            Highcharts.each(this.series, function (series) {
+	                                Highcharts.each(series.points, function (point) {
+	                                    if (point.series.xAxis.categories[point.x].id === e.svgPathId) {
+	                                        point.select(true, true);
+	                                    }
+	                                });
+	                            });
+	                        },
+	                        handleGxaAnatomogramTissueMouseLeave: function handleGxaAnatomogramTissueMouseLeave(e) {
+	                            var points = this.getSelectedPoints();
+	                            if (points.length > 0) {
+	                                Highcharts.each(points, function (point) {
+	                                    point.select(false);
+	                                });
+	                            }
+	                        }
+	                    },
+	                    zoomType: 'x'
+	                },
+
+	                plotOptions: {
+	                    heatmap: {
+	                        turboThreshold: 0
+	                    },
+
+	                    series: {
+	                        cursor: events.onClick ? 'pointer' : undefined,
+	                        point: {
+	                            events: {
+	                                click: events.onClick ? function () {
+	                                    events.onClick(this.x, this.y);
+	                                } : function () {}
+	                            }
+	                        },
+
+	                        states: {
+	                            hover: {
+	                                color: '#eeec38' //#edab12 color cell on mouse over
+	                            },
+	                            select: {
+	                                color: '#eeec38'
+	                            }
+	                        }
+	                    }
+	                },
+
+	                credits: {
+	                    enabled: false
+	                },
+
+	                legend: {
+	                    enabled: false
+	                },
+
+	                title: null,
+
+	                colorAxis: this.props.colourAxis,
+
+	                xAxis: { //assay groups, contrasts, or factors across experiments
+	                    tickLength: 5,
+	                    tickColor: 'rgb(192, 192, 192)',
+	                    lineColor: 'rgb(192, 192, 192)',
+	                    labels: {
+	                        style: this.props.xAxisStyle,
+	                        // Events in labels enabled by 'highcharts-custom-events'
+	                        events: {
+	                            mouseover: function mouseover() {
+	                                events.onHoverColumn(this.value);
+	                            },
+	                            mouseout: function mouseout() {
+	                                events.onHoverOff();
+	                            }
+	                        },
+	                        autoRotation: [-45, -90],
+	                        formatter: function formatter() {
+	                            return xAxisFormatter(this.value);
+	                        }
+	                    },
+
+	                    opposite: 'true',
+	                    categories: this.props.heatmapData.xAxisCategories,
+	                    min: 0,
+	                    max: this._countColumns() - 1,
+
+	                    events: {
+	                        setExtremes: function setExtremes(event) {
+	                            onZoom(event.min !== undefined && event.max !== undefined);
+	                        }
+	                    }
+	                },
+
+	                yAxis: { //experiments or bioentities
+	                    useHTML: true,
+	                    reversed: true,
+	                    labels: {
+	                        style: this.props.yAxisStyle,
+	                        events: {
+	                            mouseover: function mouseover() {
+	                                events.onHoverRow(this.value);
+	                            },
+	                            mouseout: function mouseout() {
+	                                events.onHoverOff();
+	                            }
+	                        },
+	                        formatter: function formatter() {
+	                            return yAxisFormatter(this.value);
+	                        }
+	                    },
+
+	                    categories: this.props.heatmapData.yAxisCategories,
+	                    title: null,
+	                    gridLineWidth: 0,
+	                    minorGridLineWidth: 0,
+	                    endOnTick: false
+	                },
+
+	                tooltip: {
+	                    useHTML: true,
+	                    shared: false,
+	                    borderRadius: 0,
+	                    borderWidth: 0,
+	                    shadow: false,
+	                    enabled: true,
+	                    backgroundColor: 'none',
+	                    formatter: function formatter() {
+	                        return cellTooltipFormatter(this.series, this.point);
+	                    }
+	                },
+
+	                series: this.props.heatmapData.dataSeries.map(function (e) {
+	                    return {
+	                        name: e.info.name,
+	                        color: e.info.colour,
+	                        borderWidth: _this2._countColumns() > 200 ? 0 : 1,
+	                        borderColor: 'white',
+	                        data: e.data
+	                    };
+	                })
+	            };
+
+	            var maxWidthFraction = this._countColumns() > 6 ? 1 : Math.max(0.5, 1 - Math.exp(-(1 + 0.05 * Math.pow(1 + this._countColumns(), 2))));
+	            return _react2.default.createElement('div', { style: { maxWidth: maxWidthFraction * 100 + '%', minWidth: '600px' } }, _react2.default.createElement(_reactHighcharts2.default, { ref: function ref(_ref) {
+	                    return _this2.highchartsRef = _ref;
+	                }, config: highchartsConfig }));
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var chart = this.highchartsRef.getChart();
+	            var forEachXNotInYsEmit = function forEachXNotInYsEmit(xs, ys, eventName) {
+	                xs.filter(function (id) {
+	                    return ys.indexOf(id) === -1;
+	                }).filter(function (id, ix, self) {
+	                    return ix === self.indexOf(id);
+	                }).forEach(function (id) {
+	                    Highcharts.fireEvent(chart, eventName, { svgPathId: id });
+	                });
+	            };
+	            forEachXNotInYsEmit(nextProps.ontologyIdsToHighlight, this.props.ontologyIdsToHighlight, 'handleGxaAnatomogramTissueMouseEnter');
+	            forEachXNotInYsEmit(this.props.ontologyIdsToHighlight, nextProps.ontologyIdsToHighlight, 'handleGxaAnatomogramTissueMouseLeave');
+	        }
+	    }]);
+
+	    return HeatmapCanvas;
+	}(_react2.default.Component);
+
+	HeatmapCanvas.propTypes = {
+	    heatmapData: _chartDataPropTypes.heatmapDataPropTypes.isRequired,
+	    colourAxis: _chartDataPropTypes.colourAxisPropTypes, // Only for experiment heatmap
+	    cellTooltipFormatter: _propTypes2.default.func.isRequired,
+	    xAxisFormatter: _propTypes2.default.func.isRequired,
+	    xAxisStyle: _propTypes2.default.object.isRequired,
+	    yAxisFormatter: _propTypes2.default.func.isRequired,
+	    yAxisStyle: _propTypes2.default.object.isRequired,
+	    events: _propTypes2.default.shape({
+	        onHoverRow: _propTypes2.default.func.isRequired,
+	        onHoverColumn: _propTypes2.default.func.isRequired,
+	        onHoverOff: _propTypes2.default.func.isRequired,
+	        onClick: _propTypes2.default.func
+	    }),
+	    onZoom: _propTypes2.default.func.isRequired
+	};
+
+	var _default = HeatmapCanvas;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(Highcharts, 'Highcharts', 'src/show/HeatmapCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(HeatmapCanvas, 'HeatmapCanvas', 'src/show/HeatmapCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/show/HeatmapCanvas.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_reactHighcharts2, "_reactHighcharts2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_heatmap2, "_heatmap2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_highchartsCustomEvents2, "_highchartsCustomEvents2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_objectHash2, "_objectHash2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, "_toConsumableArray", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(Highcharts, "Highcharts", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(HeatmapCanvas, "HeatmapCanvas", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2366:
+697,
+
+/***/ 2367:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _server = __webpack_require__(762);
+
+	var _server2 = _interopRequireDefault(_server);
+
+	var _HeatmapCellTooltip = __webpack_require__(2368);
+
+	var _HeatmapCellTooltip2 = _interopRequireDefault(_HeatmapCellTooltip);
+
+	var _he = __webpack_require__(769);
+
+	var _he2 = _interopRequireDefault(_he);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var reactToHtml = function reactToHtml(component) {
+	    return _he2.default.decode(_server2.default.renderToStaticMarkup(component));
+	};
+
+	var _default = function _default(config) {
+	    return function (series, point) {
+	        var o = {
+	            colour: point.color,
+	            xLabel: point.options.info.xLabel || series.xAxis.categories[point.x].label,
+	            xProperties: series.xAxis.categories[point.x].info.tooltip.properties,
+	            yLabel: series.yAxis.categories[point.y].label,
+	            value: point.value,
+	            replicates: series.xAxis.categories[point.x].info.tooltip.replicates || undefined
+	        };
+
+	        Object.keys(point.options.info).forEach(function (key) {
+	            return o[key] = point.options.info[key];
+	        });
+
+	        return reactToHtml(_react2.default.createElement(_HeatmapCellTooltip2.default, _extends({}, o, { config: config })));
+	    };
+	};
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(reactToHtml, 'reactToHtml', 'src/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/formatters/heatmapCellTooltipFormatter.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_server2, '_server2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_HeatmapCellTooltip2, '_HeatmapCellTooltip2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_he2, '_he2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(reactToHtml, 'reactToHtml', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2368:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _expressionAtlasNumberFormat = __webpack_require__(2369);
+
+	var _expressionAtlasNumberFormat2 = _interopRequireDefault(_expressionAtlasNumberFormat);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var scientificNotation = function scientificNotation(value) {
+	  return _expressionAtlasNumberFormat2.default.formatScientificNotation(value, 4, { fontWeight: 'bold' });
+	};
+
+	var roundTStat = function roundTStat(n) {
+	  return n ? +n.toFixed(4) : "";
+	};
+
+	var _tinySquare = function _tinySquare(colour) {
+	  return _react2.default.createElement('span', { key: 'Tiny ' + colour + ' square',
+	    style: {
+	      border: '1px rgb(192, 192, 192) solid',
+	      marginRight: '0.25rem',
+	      width: '0.6rem',
+	      height: '0.6rem',
+	      display: 'inline-block',
+	      backgroundColor: colour
+	    }
+	  });
+	};
+
+	var _info = function _info(text) {
+	  return _react2.default.createElement('div', null, _react2.default.createElement('i', null, text));
+	};
+
+	var _div = function _div(name, value, format) {
+	  return name && value ? _react2.default.createElement('div', { key: name + ' ' + value }, name, ": ", value.length > 50 ? _react2.default.createElement('br', null) : null, (format || _bold)(value)) : null;
+	};
+
+	var _span = function _span(name, value) {
+	  return _react2.default.createElement('span', { key: name + ' ' + value }, name, ": ", value.length > 50 ? _react2.default.createElement('br', null) : null, _bold(value));
+	};
+
+	var _bold = function _bold(value) {
+	  return _react2.default.createElement('b', null, value);
+	};
+
+	var yInfo = function yInfo(_ref) {
+	  var config = _ref.config,
+	      yLabel = _ref.yLabel;
+	  return _div(config.yAxisLegendName, yLabel);
+	};
+
+	var xInfo = function xInfo(_ref2) {
+	  var xAxisLegendName = _ref2.xAxisLegendName,
+	      config = _ref2.config,
+	      xLabel = _ref2.xLabel;
+	  return _div(xAxisLegendName || config.xAxisLegendName, xLabel);
+	};
+
+	var _comparisonDiv = function _comparisonDiv(name, v1, v2, format) {
+	  return name && v1 && v2 ? _react2.default.createElement('div', { key: name + ' ' + v1 + ' ' + v2 }, name + ': ', v1.length + v2.length > 50 ? _react2.default.createElement('br', null) : null, (format || _bold)(v1), _react2.default.createElement('i', { style: { margin: "0.25rem" } }, 'vs'), (format || _bold)(v2)) : null;
+	};
+
+	var prettyName = function prettyName(name) {
+	  return name.toLowerCase().replace(/\w\S*/, function (txt) {
+	    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	  });
+	};
+
+	var xPropertiesBaselineList = function xPropertiesBaselineList(_ref3) {
+	  var xProperties = _ref3.xProperties;
+	  return xProperties.filter(function (property) {
+	    return property.contrastPropertyType !== "SAMPLE" // would fail with showing too much stuff which isn't catastrophic
+	    ;
+	  }).map(function (property) {
+	    return _div(prettyName(property.propertyName), property.testValue);
+	  });
+	};
+
+	var xPropertiesDifferentialList = function xPropertiesDifferentialList(_ref4) {
+	  var xProperties = _ref4.xProperties;
+	  return xProperties.filter(function (property) {
+	    return property.testValue !== property.referenceValue;
+	  }).map(function (property) {
+	    return _comparisonDiv(prettyName(property.propertyName), property.testValue, property.referenceValue);
+	  });
+	};
+
+	var differentialNumbers = function differentialNumbers(_ref5) {
+	  var colour = _ref5.colour,
+	      foldChange = _ref5.foldChange,
+	      pValue = _ref5.pValue,
+	      tStat = _ref5.tStat;
+	  return [_react2.default.createElement('div', { key: '' }, _tinySquare(colour), _span(_react2.default.createElement('span', null, 'Log', _react2.default.createElement('sub', null, '2'), '-fold change'), foldChange)), _div('Adjusted p-value', pValue, scientificNotation), _div('T-statistic', roundTStat(tStat))];
+	};
+
+	var baselineNumbers = function baselineNumbers(_ref6) {
+	  var colour = _ref6.colour,
+	      value = _ref6.value,
+	      unit = _ref6.unit,
+	      replicates = _ref6.replicates;
+	  return [_tinySquare(colour), _span('Expression level', value ? value + ' ' + unit : 'Below cutoff')].concat(replicates ? _div('Number of biological replicates', replicates) : []);
+	};
+
+	var HeatmapCellTooltip = function HeatmapCellTooltip(props) {
+	  return _react2.default.createElement('div', { style: {
+	      whiteSpace: 'pre', background: 'rgba(255, 255, 255, .85)',
+	      padding: '5px', border: '1px solid darkgray',
+	      borderRadius: '3px', boxShadow: '2px 2px 2px darkslategray' } }, yInfo(props), props.config.isMultiExperiment ? xInfo(props) : props.config.isDifferential ? xPropertiesDifferentialList(props) : xPropertiesBaselineList(props), props.config.isDifferential ? differentialNumbers(props) : baselineNumbers(props));
+	};
+
+	HeatmapCellTooltip.propTypes = {
+	  config: _propTypes2.default.shape({
+	    isDifferential: _propTypes2.default.bool.isRequired,
+	    isMultiExperiment: _propTypes2.default.bool.isRequired,
+	    xAxisLegendName: _propTypes2.default.string.isRequired,
+	    yAxisLegendName: _propTypes2.default.string.isRequired
+	  }).isRequired,
+	  colour: _propTypes2.default.string.isRequired,
+	  xLabel: _propTypes2.default.string.isRequired,
+	  xProperties: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	    propertyName: _propTypes2.default.string.isRequired,
+	    referenceValue: _propTypes2.default.string, // present iff differential
+	    testValue: _propTypes2.default.string.isRequired
+	  })),
+	  yLabel: _propTypes2.default.string.isRequired,
+	  value: _propTypes2.default.number.isRequired,
+	  unit: _propTypes2.default.string.isRequired,
+	  replicates: _propTypes2.default.number,
+	  foldChange: _propTypes2.default.number,
+	  pValue: _propTypes2.default.number,
+	  tStat: _propTypes2.default.number,
+	  xAxisLegendName: _propTypes2.default.string
+	};
+
+	var _default = HeatmapCellTooltip;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(scientificNotation, 'scientificNotation', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(roundTStat, 'roundTStat', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_tinySquare, '_tinySquare', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_info, '_info', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_div, '_div', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_span, '_span', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_bold, '_bold', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(yInfo, 'yInfo', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(xInfo, 'xInfo', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_comparisonDiv, '_comparisonDiv', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(prettyName, 'prettyName', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(xPropertiesBaselineList, 'xPropertiesBaselineList', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(xPropertiesDifferentialList, 'xPropertiesDifferentialList', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(differentialNumbers, 'differentialNumbers', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(baselineNumbers, 'baselineNumbers', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(HeatmapCellTooltip, 'HeatmapCellTooltip', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/formatters/HeatmapCellTooltip.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_expressionAtlasNumberFormat2, '_expressionAtlasNumberFormat2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(scientificNotation, 'scientificNotation', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(roundTStat, 'roundTStat', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_tinySquare, '_tinySquare', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_info, '_info', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_div, '_div', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_span, '_span', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_bold, '_bold', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(yInfo, 'yInfo', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(xInfo, 'xInfo', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_comparisonDiv, '_comparisonDiv', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(prettyName, 'prettyName', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(xPropertiesBaselineList, 'xPropertiesBaselineList', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(xPropertiesDifferentialList, 'xPropertiesDifferentialList', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(differentialNumbers, 'differentialNumbers', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(baselineNumbers, 'baselineNumbers', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(HeatmapCellTooltip, 'HeatmapCellTooltip', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+
+	  __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2369:
+[2891, 2370],
+
+/***/ 2370:
+768,
+
+/***/ 2371:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _server = __webpack_require__(762);
+
+	var _server2 = _interopRequireDefault(_server);
+
+	var _he = __webpack_require__(769);
+
+	var _he2 = _interopRequireDefault(_he);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var reactToHtml = function reactToHtml(component) {
+	    return _he2.default.decode(_server2.default.renderToStaticMarkup(component));
+	};
+
+	var YAxisLabel = function YAxisLabel(props) {
+	    var geneNameWithLink = _react2.default.createElement('a', { href: props.config.outProxy + props.url }, props.labelText);
+
+	    return props.extra ? _react2.default.createElement('span', null, geneNameWithLink, _react2.default.createElement('em', { style: { color: "black" } }, '\t' + props.extra)) : _react2.default.createElement('span', null, geneNameWithLink);
+	};
+
+	YAxisLabel.propTypes = {
+	    config: _propTypes2.default.shape({
+	        atlasUrl: _propTypes2.default.string.isRequired,
+	        outProxy: _propTypes2.default.string.isRequired,
+	        isMultiExperiment: _propTypes2.default.bool.isRequired,
+	        isDifferential: _propTypes2.default.bool.isRequired,
+	        experiment: _propTypes2.default.shape({
+	            accession: _propTypes2.default.string.isRequired,
+	            type: _propTypes2.default.string.isRequired,
+	            relUrl: _propTypes2.default.string.isRequired,
+	            description: _propTypes2.default.string.isRequired,
+	            species: _propTypes2.default.string.isRequired
+	        })
+	    }).isRequired,
+	    labelText: _propTypes2.default.string.isRequired,
+	    resourceId: _propTypes2.default.string.isRequired,
+	    url: _propTypes2.default.string.isRequired,
+	    extra: _propTypes2.default.string
+	};
+
+	var _default = function _default(config) {
+	    return {
+	        xAxisFormatter: function xAxisFormatter(value) {
+	            return value.label;
+	        },
+	        xAxisStyle: {
+	            fontSize: config.isDifferential ? '9px' : 'smaller',
+	            cursor: 'default',
+	            textOverflow: config.experiment ? 'none' : 'ellipsis',
+	            whiteSpace: config.isDifferential ? 'normal' : 'nowrap'
+	        },
+
+	        yAxisFormatter: function yAxisFormatter(value) {
+	            return reactToHtml(_react2.default.createElement(YAxisLabel, { config: config,
+	                labelText: value.label,
+	                resourceId: value.id,
+	                url: value.info.url,
+	                extra: value.info.designElement || ''
+	            }));
+	        },
+	        yAxisStyle: {
+	            fontSize: config.isMultiExperiment ? 'smaller' : 'small',
+	            color: '#148ff3'
+	        }
+	    };
+	};
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(reactToHtml, 'reactToHtml', 'src/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(YAxisLabel, 'YAxisLabel', 'src/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/formatters/axesFormatters.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_server2, '_server2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_he2, '_he2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(reactToHtml, 'reactToHtml', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(YAxisLabel, 'YAxisLabel', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2372:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.GradientLegend = exports.DataSeriesLegend = undefined;
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _DataSeriesHeatmapLegend = __webpack_require__(2373);
+
+	var _DataSeriesHeatmapLegend2 = _interopRequireDefault(_DataSeriesHeatmapLegend);
+
+	var _GradientHeatmapLegend = __webpack_require__(2376);
+
+	var _GradientHeatmapLegend2 = _interopRequireDefault(_GradientHeatmapLegend);
+
+	var _chartDataPropTypes = __webpack_require__(2360);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	var DataSeriesLegend = function DataSeriesLegend(_ref) {
+	    var dataSeries = _ref.dataSeries,
+	        selectedExpressionLevelFilters = _ref.selectedExpressionLevelFilters;
+
+	    var legendItems = dataSeries.map(function (series) {
+	        return {
+	            key: series.info.name,
+	            name: series.info.name,
+	            colour: series.info.colour,
+	            on: selectedExpressionLevelFilters.includes(series.info.name)
+	        };
+	    });
+
+	    return _react2.default.createElement(_DataSeriesHeatmapLegend2.default, { legendItems: legendItems });
+	};
+
+	DataSeriesLegend.propTypes = {
+	    dataSeries: _chartDataPropTypes.dataSeriesPropTypes.isRequired,
+	    selectedExpressionLevelFilters: _propTypes2.default.array
+	};
+
+	var GradientLegend = function GradientLegend(_ref2) {
+	    var colourAxis = _ref2.colourAxis;
+
+	    var minDownRegulatedValue = Math.min.apply(Math, _toConsumableArray(colourAxis.dataClasses.filter(function (dataClass) {
+	        return dataClass.from <= 0;
+	    }).map(function (dataClass) {
+	        return dataClass.from;
+	    })));
+	    var maxDownRegulatedValue = Math.max.apply(Math, _toConsumableArray(colourAxis.dataClasses.filter(function (dataClass) {
+	        return dataClass.to <= 0;
+	    }).map(function (dataClass) {
+	        return dataClass.to;
+	    })));
+	    var downRegulatedColours = colourAxis.dataClasses.filter(function (dataClass) {
+	        return dataClass.from <= 0;
+	    }).map(function (dataClass) {
+	        return dataClass.color;
+	    });
+
+	    var minUpRegulatedValue = Math.min.apply(Math, _toConsumableArray(colourAxis.dataClasses.filter(function (dataClass) {
+	        return dataClass.from >= 0;
+	    }).map(function (dataClass) {
+	        return dataClass.from;
+	    })));
+	    var maxUpRegulatedValue = Math.max.apply(Math, _toConsumableArray(colourAxis.dataClasses.filter(function (dataClass) {
+	        return dataClass.to >= 0;
+	    }).map(function (dataClass) {
+	        return dataClass.to;
+	    })));
+	    var upRegulatedColours = colourAxis.dataClasses.filter(function (dataClass) {
+	        return dataClass.from >= 0;
+	    }).map(function (dataClass) {
+	        return dataClass.color;
+	    });
+
+	    return _react2.default.createElement(_GradientHeatmapLegend2.default, {
+	        gradients: [{
+	            fromValue: minDownRegulatedValue,
+	            toValue: maxDownRegulatedValue,
+	            colours: downRegulatedColours
+	        }, {
+	            fromValue: minUpRegulatedValue,
+	            toValue: maxUpRegulatedValue,
+	            colours: upRegulatedColours
+	        }],
+	        unit: colourAxis.unit
+	    });
+	};
+
+	GradientLegend.propTypes = {
+	    heatmapConfig: _chartDataPropTypes.heatmapConfigPropTypes.isRequired,
+	    colourAxis: _chartDataPropTypes.colourAxisPropTypes.isRequired
+	};
+
+	exports.DataSeriesLegend = DataSeriesLegend;
+	exports.GradientLegend = GradientLegend;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(DataSeriesLegend, 'DataSeriesLegend', 'src/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(GradientLegend, 'GradientLegend', 'src/manipulate/heatmap-legend/Main.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_DataSeriesHeatmapLegend2, '_DataSeriesHeatmapLegend2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_GradientHeatmapLegend2, '_GradientHeatmapLegend2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, '_toConsumableArray', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(DataSeriesLegend, 'DataSeriesLegend', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(GradientLegend, 'GradientLegend', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2373:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	__webpack_require__(2374);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var DataSeriesHeatmapLegendBox = function DataSeriesHeatmapLegendBox(props) {
+	    return _react2.default.createElement('div', { className: 'legend-item' + (props.on ? '' : ' legend-item-off') }, _react2.default.createElement('div', { style: { background: props.colour }, className: 'legend-rectangle' }), _react2.default.createElement('span', { style: { verticalAlign: 'middle' } }, props.name));
+	};
+
+	DataSeriesHeatmapLegendBox.propTypes = {
+	    name: _propTypes2.default.string.isRequired,
+	    colour: _propTypes2.default.string.isRequired,
+	    on: _propTypes2.default.bool.isRequired
+	};
+
+	var DataSeriesHeatmapLegend = function DataSeriesHeatmapLegend(props) {
+	    return _react2.default.createElement('div', { className: 'gxaHeatmapLegend' }, props.legendItems.map(function (legendItemProps) {
+	        return _react2.default.createElement(DataSeriesHeatmapLegendBox, legendItemProps);
+	    }), _react2.default.createElement('div', { className: 'legend-item' }, _react2.default.createElement('span', { className: 'icon icon-generic gxaInfoIcon',
+	        'data-icon': 'i', 'data-toggle': 'tooltip', 'data-placement': 'bottom',
+	        title: 'Baseline expression levels in RNA-seq experiments are in FPKM or TPM. Low: 0.5-10, Medium: 11-1,000,  High: >1,000. Proteomics expression levels are mapped to low, medium, high per experiment basis.' })), _react2.default.createElement(DataSeriesHeatmapLegendBox, { key: 'No data available',
+	        name: 'No data available',
+	        colour: 'white',
+	        on: true
+	    }));
+	};
+
+	DataSeriesHeatmapLegend.propTypes = {
+	    legendItems: _propTypes2.default.arrayOf(_propTypes2.default.shape(DataSeriesHeatmapLegendBox.propTypes)).isRequired
+	};
+
+	var _default = DataSeriesHeatmapLegend;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(DataSeriesHeatmapLegendBox, 'DataSeriesHeatmapLegendBox', 'src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(DataSeriesHeatmapLegend, 'DataSeriesHeatmapLegend', 'src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(DataSeriesHeatmapLegendBox, 'DataSeriesHeatmapLegendBox', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(DataSeriesHeatmapLegend, 'DataSeriesHeatmapLegend', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2374:
+[2892, 2375, 2346],
+
+/***/ 2375:
+[2893, 2345],
+
+/***/ 2376:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _utils = __webpack_require__(2377);
+
+	__webpack_require__(2378);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var renderGradient = function renderGradient(_ref, index) {
+	    var fromValue = _ref.fromValue,
+	        toValue = _ref.toValue,
+	        colours = _ref.colours;
+
+	    var spanStyle = { backgroundImage: 'linear-gradient(to right, ' + colours.join(', ') + ')' };
+
+	    return fromValue < toValue ? _react2.default.createElement('div', { style: { display: 'table-row' }, key: 'gradient_' + index }, _react2.default.createElement('div', { className: 'gxaGradientLevel gxaGradientLevelMin' }, (0, _utils.numberWithCommas)(fromValue)), _react2.default.createElement('div', { style: { display: 'table-cell', verticalAlign: 'middle' } }, _react2.default.createElement('span', { className: 'gxaGradientColour', style: spanStyle })), _react2.default.createElement('div', { className: 'gxaGradientLevel gxaGradientLevelMax' }, (0, _utils.numberWithCommas)(toValue))) : null;
+	};
+
+	var GradientHeatmapLegend = function GradientHeatmapLegend(_ref2) {
+	    var gradients = _ref2.gradients,
+	        unit = _ref2.unit;
+	    return _react2.default.createElement('div', { className: 'gxaGradientLegend' }, _react2.default.createElement('div', null, !unit ? _react2.default.createElement('span', null, 'Expression level') : unit.indexOf("fold change") > -1 ? _react2.default.createElement('span', null, 'Log', _react2.default.createElement('sub', null, '2'), '-fold change') : _react2.default.createElement('span', null, 'Expression level in ', unit)), gradients.map(renderGradient));
+	};
+
+	GradientHeatmapLegend.propTypes = {
+	    gradients: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        fromValue: _propTypes2.default.number,
+	        toValue: _propTypes2.default.number,
+	        colours: _propTypes2.default.arrayOf(_propTypes2.default.string)
+	    })).isRequired,
+	    unit: _propTypes2.default.string.isRequired
+	};
+
+	var _default = GradientHeatmapLegend;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(renderGradient, 'renderGradient', 'src/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(GradientHeatmapLegend, 'GradientHeatmapLegend', 'src/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(renderGradient, 'renderGradient', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(GradientHeatmapLegend, 'GradientHeatmapLegend', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2377:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var capitalizeFirstLetter = function capitalizeFirstLetter(str) {
+	    return str.charAt(0).toUpperCase() + str.substr(1);
+	};
+
+	// http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+	var numberWithCommas = function numberWithCommas(x) {
+	    var parts = x.toString().split(".");
+	    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    return parts.join(".");
+	};
+
+	exports.capitalizeFirstLetter = capitalizeFirstLetter;
+	exports.numberWithCommas = numberWithCommas;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(capitalizeFirstLetter, "capitalizeFirstLetter", "src/utils.js");
+
+	    __REACT_HOT_LOADER__.register(numberWithCommas, "numberWithCommas", "src/utils.js");
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(capitalizeFirstLetter, "capitalizeFirstLetter", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/utils.js");
+
+	    __REACT_HOT_LOADER__.register(numberWithCommas, "numberWithCommas", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/utils.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/utils.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2378:
+[2894, 2379, 2346],
+
+/***/ 2379:
+[2895, 2345],
+
+/***/ 2380:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () {
+	    function defineProperties(target, props) {
+	        for (var i = 0; i < props.length; i++) {
+	            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	        }
+	    }return function (Constructor, protoProps, staticProps) {
+	        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	    };
+	}();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Button = __webpack_require__(1202);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _Glyphicon = __webpack_require__(1210);
+
+	var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
+
+	var _rcSlider = __webpack_require__(780);
+
+	var _rcSlider2 = _interopRequireDefault(_rcSlider);
+
+	__webpack_require__(2381);
+
+	__webpack_require__(2383);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	        throw new TypeError("Cannot call a class as a function");
+	    }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var CoexpressionOption = function (_React$Component) {
+	    _inherits(CoexpressionOption, _React$Component);
+
+	    function CoexpressionOption() {
+	        _classCallCheck(this, CoexpressionOption);
+
+	        return _possibleConstructorReturn(this, (CoexpressionOption.__proto__ || Object.getPrototypeOf(CoexpressionOption)).apply(this, arguments));
+	    }
+
+	    _createClass(CoexpressionOption, [{
+	        key: '_showOfferToDisplay',
+	        value: function _showOfferToDisplay() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement(_Button2.default, { bsSize: 'xsmall', onClick: function onClick() {
+	                    return _this2.props.showCoexpressionsCallback(10);
+	                } }, _react2.default.createElement(_Glyphicon2.default, { glyph: 'th' }), _react2.default.createElement('span', { style: { verticalAlign: 'middle' } }, ' Add similarly expressed genes'));
+	        }
+	    }, {
+	        key: '_showSlider',
+	        value: function _showSlider() {
+	            var marks = {
+	                0: 'off',
+	                10: '10'
+	            };
+	            marks[this.props.numCoexpressionsAvailable] = this.props.numCoexpressionsAvailable;
+
+	            return _react2.default.createElement('div', null, _react2.default.createElement('p', null, 'Display genes with similar expression to ' + this.props.geneName + ':'), _react2.default.createElement('div', { className: 'gxaSlider' }, _react2.default.createElement(_rcSlider2.default, { min: 0,
+	                max: this.props.numCoexpressionsAvailable,
+	                onAfterChange: this.props.showCoexpressionsCallback,
+	                marks: marks, included: false, defaultValue: this.props.numCoexpressionsVisible })));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'gxaDisplayCoexpressionOffer' }, this.props.numCoexpressionsAvailable ? this.props.numCoexpressionsVisible ? this._showSlider() : this._showOfferToDisplay() : _react2.default.createElement('span', null, 'No genes with similar expression to ' + this.props.geneName + ' available for display'));
+	        }
+	    }]);
+
+	    return CoexpressionOption;
+	}(_react2.default.Component);
+
+	CoexpressionOption.propTypes = {
+	    geneName: _propTypes2.default.string.isRequired,
+	    numCoexpressionsVisible: _propTypes2.default.number.isRequired,
+	    numCoexpressionsAvailable: _propTypes2.default.number.isRequired,
+	    showCoexpressionsCallback: _propTypes2.default.func.isRequired
+	};
+
+	var _default = CoexpressionOption;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(CoexpressionOption, 'CoexpressionOption', 'src/manipulate/coexpression/CoexpressionOption.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/coexpression/CoexpressionOption.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_createClass, "_createClass", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_react2, "_react2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, "_propTypes2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_Button2, "_Button2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_Glyphicon2, "_Glyphicon2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_rcSlider2, "_rcSlider2", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, "_interopRequireDefault", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_classCallCheck, "_classCallCheck", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_possibleConstructorReturn, "_possibleConstructorReturn", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_inherits, "_inherits", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(CoexpressionOption, "CoexpressionOption", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2381:
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(2382);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(2346)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../atlas_bundles/baseline-expression/node_modules/css-loader/index.js!./index.css", function() {
+				var newContent = require("!!./../../../atlas_bundles/baseline-expression/node_modules/css-loader/index.js!./index.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 2382:
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(2345)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".rc-slider {\n  position: relative;\n  height: 4px;\n  width: 100%;\n  border-radius: 6px;\n  background-color: #e9e9e9;\n  box-sizing: border-box;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n.rc-slider * {\n  box-sizing: border-box;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n.rc-slider-track {\n  position: absolute;\n  left: 0;\n  height: 4px;\n  border-radius: 6px;\n  background-color: #abe2fb;\n}\n.rc-slider-handle {\n  position: absolute;\n  margin-left: -7px;\n  margin-top: -5px;\n  width: 14px;\n  height: 14px;\n  cursor: pointer;\n  border-radius: 50%;\n  border: solid 2px #96dbfa;\n  background-color: #fff;\n}\n.rc-slider-handle:hover {\n  border-color: #57c5f7;\n}\n.rc-slider-handle-active:active {\n  border-color: #57c5f7;\n  box-shadow: 0 0 5px #57c5f7;\n}\n.rc-slider-mark {\n  position: absolute;\n  top: 10px;\n  left: 0;\n  width: 100%;\n  font-size: 12px;\n}\n.rc-slider-mark-text {\n  position: absolute;\n  display: inline-block;\n  vertical-align: middle;\n  text-align: center;\n  cursor: pointer;\n  color: #999;\n}\n.rc-slider-mark-text-active {\n  color: #666;\n}\n.rc-slider-step {\n  position: absolute;\n  width: 100%;\n  height: 4px;\n  background: transparent;\n}\n.rc-slider-dot {\n  position: absolute;\n  bottom: -2px;\n  margin-left: -4px;\n  width: 8px;\n  height: 8px;\n  border: 2px solid #e9e9e9;\n  background-color: #fff;\n  cursor: pointer;\n  border-radius: 50%;\n  vertical-align: middle;\n}\n.rc-slider-dot:first-child {\n  margin-left: -4px;\n}\n.rc-slider-dot:last-child {\n  margin-left: -4px;\n}\n.rc-slider-dot-active {\n  border-color: #96dbfa;\n}\n.rc-slider-disabled {\n  background-color: #e9e9e9;\n}\n.rc-slider-disabled .rc-slider-track {\n  background-color: #ccc;\n}\n.rc-slider-disabled .rc-slider-handle,\n.rc-slider-disabled .rc-slider-dot {\n  border-color: #ccc;\n  background-color: #fff;\n  cursor: not-allowed;\n}\n.rc-slider-disabled .rc-slider-mark-text,\n.rc-slider-disabled .rc-slider-dot {\n  cursor: not-allowed !important;\n}\n.rc-slider-vertical {\n  width: 4px;\n  height: 100%;\n}\n.rc-slider-vertical .rc-slider-track {\n  bottom: 0;\n  width: 4px;\n}\n.rc-slider-vertical .rc-slider-handle {\n  position: absolute;\n  margin-left: -5px;\n  margin-bottom: -7px;\n}\n.rc-slider-vertical .rc-slider-mark {\n  top: 0;\n  left: 10px;\n  height: 100%;\n}\n.rc-slider-vertical .rc-slider-step {\n  height: 100%;\n  width: 4px;\n}\n.rc-slider-vertical .rc-slider-dot {\n  left: 2px;\n  margin-bottom: -4px;\n}\n.rc-slider-vertical .rc-slider-dot:first-child {\n  margin-bottom: -4px;\n}\n.rc-slider-vertical .rc-slider-dot:last-child {\n  margin-bottom: -4px;\n}\n.rc-slider-tooltip-zoom-down-enter,\n.rc-slider-tooltip-zoom-down-appear {\n  -webkit-animation-duration: .3s;\n          animation-duration: .3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  display: block !important;\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-slider-tooltip-zoom-down-leave {\n  -webkit-animation-duration: .3s;\n          animation-duration: .3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  display: block !important;\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-slider-tooltip-zoom-down-enter.rc-slider-tooltip-zoom-down-enter-active,\n.rc-slider-tooltip-zoom-down-appear.rc-slider-tooltip-zoom-down-appear-active {\n  -webkit-animation-name: rcSliderTooltipZoomDownIn;\n          animation-name: rcSliderTooltipZoomDownIn;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n.rc-slider-tooltip-zoom-down-leave.rc-slider-tooltip-zoom-down-leave-active {\n  -webkit-animation-name: rcSliderTooltipZoomDownOut;\n          animation-name: rcSliderTooltipZoomDownOut;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n.rc-slider-tooltip-zoom-down-enter,\n.rc-slider-tooltip-zoom-down-appear {\n  -webkit-transform: scale(0, 0);\n          transform: scale(0, 0);\n  -webkit-animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);\n          animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);\n}\n.rc-slider-tooltip-zoom-down-leave {\n  -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n          animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n}\n@-webkit-keyframes rcSliderTooltipZoomDownIn {\n  0% {\n    opacity: 0;\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(0, 0);\n            transform: scale(0, 0);\n  }\n  100% {\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n}\n@keyframes rcSliderTooltipZoomDownIn {\n  0% {\n    opacity: 0;\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(0, 0);\n            transform: scale(0, 0);\n  }\n  100% {\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n}\n@-webkit-keyframes rcSliderTooltipZoomDownOut {\n  0% {\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(0, 0);\n            transform: scale(0, 0);\n  }\n}\n@keyframes rcSliderTooltipZoomDownOut {\n  0% {\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform-origin: 50% 100%;\n            transform-origin: 50% 100%;\n    -webkit-transform: scale(0, 0);\n            transform: scale(0, 0);\n  }\n}\n.rc-tooltip {\n  position: absolute;\n  left: -9999px;\n  top: -9999px;\n  visibility: visible;\n  box-sizing: border-box;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n.rc-tooltip * {\n  box-sizing: border-box;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n.rc-tooltip-hidden {\n  display: none;\n}\n.rc-tooltip-placement-top {\n  padding: 4px 0 8px 0;\n}\n.rc-tooltip-inner {\n  padding: 6px 2px;\n  min-width: 24px;\n  height: 24px;\n  font-size: 12px;\n  line-height: 1;\n  color: #fff;\n  text-align: center;\n  text-decoration: none;\n  background-color: #6c6c6c;\n  border-radius: 6px;\n  box-shadow: 0 0 4px #d9d9d9;\n}\n.rc-tooltip-arrow {\n  position: absolute;\n  width: 0;\n  height: 0;\n  border-color: transparent;\n  border-style: solid;\n}\n.rc-tooltip-placement-top .rc-tooltip-arrow {\n  bottom: 4px;\n  left: 50%;\n  margin-left: -4px;\n  border-width: 4px 4px 0;\n  border-top-color: #6c6c6c;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+
+/***/ 2383:
+[2911, 2384, 2346],
+
+/***/ 2384:
+[2912, 2345],
+
+/***/ 2385:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _urijs = __webpack_require__(193);
+
+	var _urijs2 = _interopRequireDefault(_urijs);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var _ontologyIdsForColumn = function _ontologyIdsForColumn(heatmapData, x) {
+	  return heatmapData.xAxisCategories[x].id;
+	};
+
+	var _ontologyIdsForRow = function _ontologyIdsForRow(heatmapData, y) {
+	  return [].concat.apply([], [].concat.apply([], heatmapData.dataSeries.map(function (series) {
+	    return series.data;
+	  })).filter(function (point) {
+	    return point.y === y && !!point.value;
+	  }).map(function (point) {
+	    return _ontologyIdsForColumn(heatmapData, point.x);
+	  }).map(function (e) {
+	    return Array.isArray(e) ? e : [e];
+	  })).filter(function (e, ix, self) {
+	    return self.indexOf(e) === ix;
+	  });
+	};
+
+	var makeEventCallbacks = function makeEventCallbacks(_ref) {
+	  var heatmapData = _ref.heatmapData,
+	      onSelectOntologyIds = _ref.onSelectOntologyIds,
+	      genomeBrowser = _ref.genomeBrowser,
+	      experimentAccession = _ref.experimentAccession,
+	      accessKey = _ref.accessKey,
+	      atlasUrl = _ref.atlasUrl;
+
+	  return {
+	    onHoverRow: function onHoverRow(y) {
+	      onSelectOntologyIds(_ontologyIdsForRow(heatmapData, y));
+	    },
+
+	    onHoverColumn: function onHoverColumn(x) {
+	      onSelectOntologyIds(_ontologyIdsForColumn(heatmapData, x));
+	    },
+
+	    onHoverOff: function onHoverOff() {
+	      onSelectOntologyIds([]);
+	    },
+
+	    /*
+	      For this to work genomeBrowser needs to be included in the props that cause a re-render in HeatmapCanvas.jsx
+	       TODO we have suffered a bit of a defeat here because it made us include accessKey.
+	      If instead of genomeBrowser string we had a {name, uri} here, we could do
+	      URI(genomeBrowser.uri, atlasUrl).search({
+	        experimentAccession: experimentAccession,
+	        geneId: heatmapData.xAxisCategories[x].info.trackId,
+	        trackId: heatmapData.yAxisCategories[y].info.trackId
+	      })
+	    */
+	    onClick: genomeBrowser !== 'none' ? function (x, y) {
+	      window.open((0, _urijs2.default)('external-services/genome-browser/' + genomeBrowser, atlasUrl).search({
+	        experimentAccession: experimentAccession,
+	        geneId: heatmapData.yAxisCategories[y].info.trackId,
+	        trackId: heatmapData.xAxisCategories[x].info.trackId,
+	        accessKey: accessKey
+	      }).toString(), '_blank');
+	    } : undefined
+	  };
+	};
+
+	var _default = makeEventCallbacks;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_ontologyIdsForColumn, '_ontologyIdsForColumn', 'src/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_ontologyIdsForRow, '_ontologyIdsForRow', 'src/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(makeEventCallbacks, 'makeEventCallbacks', 'src/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', 'src/manipulate/Events.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_urijs2, '_urijs2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_ontologyIdsForColumn, '_ontologyIdsForColumn', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_ontologyIdsForRow, '_ontologyIdsForRow', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(makeEventCallbacks, 'makeEventCallbacks', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+
+	  __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2386:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	/*
+	 All functions in this module accept and return a following format of data:
+	 {
+	     dataSeries : [info: {...: String}, data: [Point]}]
+	     xAxisCategories: [X axis label]
+	     yAxisCategories: [Y axis label]
+	 }
+	 */
+
+	var orderHeatmapData = function orderHeatmapData(ordering, data) {
+	    var permuteX = function permuteX(x) {
+	        return ordering.columns.indexOf(x);
+	    };
+	    var permuteY = function permuteY(y) {
+	        return ordering.rows.indexOf(y);
+	    };
+
+	    var permutePoint = function permutePoint(point) {
+	        return {
+	            x: permuteX(point.x),
+	            y: permuteY(point.y),
+	            value: point.value,
+	            info: point.info
+	        };
+	    };
+
+	    var permuteArray = function permuteArray(arr, permute) {
+	        return arr.map(function (el, ix) {
+	            return [el, permute(ix)];
+	        }).sort(function (l, r) {
+	            return l[1] - r[1];
+	        }).map(function (el) {
+	            return el[0];
+	        });
+	    };
+
+	    return {
+	        dataSeries: data.dataSeries.map(function (series) {
+	            return {
+	                info: series.info,
+	                data: series.data.map(permutePoint) };
+	        }),
+	        xAxisCategories: permuteArray(data.xAxisCategories, permuteX),
+	        yAxisCategories: permuteArray(data.yAxisCategories, permuteY)
+	    };
+	};
+
+	var _axisElementsForFilteredDataSeries = function _axisElementsForFilteredDataSeries(axis, conditionPerSeries, conditionPerPoint, dataSeries) {
+	    return dataSeries.filter(conditionPerSeries).map(function (e) {
+	        return e.data;
+	    }).reduce(function (l, r) {
+	        return l.concat(r);
+	    }, []).filter(conditionPerPoint).map(function (e) {
+	        return e[axis];
+	    }).filter(function (e, ix, self) {
+	        return self.indexOf(e) === ix;
+	    }) // unique
+	    .sort(function (l, r) {
+	        return l - r;
+	    });
+	};
+
+	var _filterHeatmapData = function _filterHeatmapData(keepSeries, keepPoint, data) {
+	    var allXs = _axisElementsForFilteredDataSeries("x", keepSeries, keepPoint, data.dataSeries);
+	    var allYs = _axisElementsForFilteredDataSeries("y", keepSeries, keepPoint, data.dataSeries);
+
+	    var newDataSeries = data.dataSeries.map(function (series, ix) {
+	        return keepSeries(series, ix) ? series.data.filter(keepPoint) : [];
+	    }).map(function (series) {
+	        return series.map(function (point) {
+	            return {
+	                x: allXs.indexOf(point.x),
+	                y: allYs.indexOf(point.y),
+	                value: point.value,
+	                info: point.info
+	            };
+	        }).filter(function (point) {
+	            return point.x > -1 && point.y > -1;
+	        });
+	    });
+
+	    return {
+	        dataSeries: data.dataSeries.map(function (e, ix) {
+	            return {
+	                info: e.info,
+	                data: newDataSeries[ix]
+	            };
+	        }),
+	        xAxisCategories: data.xAxisCategories.filter(function (e, ix) {
+	            return allXs.includes(ix);
+	        }),
+	        yAxisCategories: data.yAxisCategories.filter(function (e, ix) {
+	            return allYs.includes(ix);
+	        })
+	    };
+	};
+
+	var filterHeatmapData = function filterHeatmapData(keepSeries, keepRow, keepColumn, data) {
+	    return _filterHeatmapData(keepSeries, function (point) {
+	        return keepRow(data.yAxisCategories[point.y]) && keepColumn(data.xAxisCategories[point.x]);
+	    }, data);
+	};
+
+	var _calculateInserts = function _calculateInserts(fullColumns, originalColumns) {
+	    var result = [];
+	    var fullColumnsCursor = 0;
+	    var originalColumnsCursor = 0;
+
+	    while (fullColumnsCursor < fullColumns.length && originalColumnsCursor < originalColumns.length) {
+	        if (fullColumns.length > fullColumnsCursor && originalColumns.length > originalColumnsCursor && fullColumns[fullColumnsCursor] === originalColumns[originalColumnsCursor]) {
+	            result.push("");
+	            fullColumnsCursor++;
+	            originalColumnsCursor++;
+	        } else if (fullColumns.length > fullColumnsCursor) {
+	            result.push(fullColumns[fullColumnsCursor]);
+	            fullColumnsCursor++;
+	        } else if (originalColumns[originalColumnsCursor].length > originalColumnsCursor) {
+	            result.push("");
+	            originalColumnsCursor++;
+	        }
+	    }
+	    return result;
+	};
+
+	var _indicesForInserts = function _indicesForInserts(inserts) {
+	    var i = -1;
+	    return inserts.map(function (e) {
+	        !e && i++;
+	        return i;
+	    });
+	};
+
+	var insertEmptyColumns = function insertEmptyColumns(newColumns, data) {
+	    var fullColumns = newColumns.concat(data.xAxisCategories.filter(function (originalColumn) {
+	        return newColumns.findIndex(function (e) {
+	            return e.label === originalColumn.label;
+	        }) === -1;
+	    }));
+
+	    var insertIndices = _indicesForInserts(_calculateInserts(fullColumns.map(function (e) {
+	        return e.label;
+	    }), data.xAxisCategories.map(function (e) {
+	        return e.label;
+	    })));
+
+	    return {
+	        dataSeries: data.dataSeries.map(function (e) {
+	            return {
+	                info: e.info,
+	                data: e.data.map(function (point) {
+	                    return _extends({}, point, {
+	                        x: insertIndices.indexOf(point.x)
+	                    });
+	                })
+	            };
+	        }),
+	        xAxisCategories: fullColumns,
+	        yAxisCategories: data.yAxisCategories
+	    };
+	};
+
+	var manipulate = function manipulate(args, data) {
+	    var orderedHeatmapData = orderHeatmapData(args.ordering, data);
+	    return insertEmptyColumns(args.allowEmptyColumns ? orderedHeatmapData.xAxisCategories : [], filterHeatmapData(args.keepSeries, args.keepRow, args.keepColumn, orderedHeatmapData));
+	};
+
+	exports.insertEmptyColumns = insertEmptyColumns;
+	exports.filterHeatmapData = filterHeatmapData;
+	exports.orderHeatmapData = orderHeatmapData;
+	exports.manipulate = manipulate;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(orderHeatmapData, "orderHeatmapData", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_axisElementsForFilteredDataSeries, "_axisElementsForFilteredDataSeries", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_filterHeatmapData, "_filterHeatmapData", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(filterHeatmapData, "filterHeatmapData", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_calculateInserts, "_calculateInserts", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_indicesForInserts, "_indicesForInserts", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(insertEmptyColumns, "insertEmptyColumns", "src/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(manipulate, "manipulate", "src/manipulate/Manipulators.js");
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, "_extends", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(orderHeatmapData, "orderHeatmapData", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_axisElementsForFilteredDataSeries, "_axisElementsForFilteredDataSeries", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_filterHeatmapData, "_filterHeatmapData", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(filterHeatmapData, "filterHeatmapData", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_calculateInserts, "_calculateInserts", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_indicesForInserts, "_indicesForInserts", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(insertEmptyColumns, "insertEmptyColumns", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(manipulate, "manipulate", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+
+	    __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2387:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _reactHighcharts = __webpack_require__(1347);
+
+	var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
+
+	var _highchartsMore = __webpack_require__(2388);
+
+	var _highchartsMore2 = _interopRequireDefault(_highchartsMore);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _toConsumableArray(arr) {
+	    if (Array.isArray(arr)) {
+	        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	            arr2[i] = arr[i];
+	        }return arr2;
+	    } else {
+	        return Array.from(arr);
+	    }
+	}
+
+	(0, _highchartsMore2.default)(_reactHighcharts2.default.Highcharts);
+
+	var BoxplotCanvas = function BoxplotCanvas(_ref) {
+	    var title = _ref.title,
+	        xAxisCategories = _ref.xAxisCategories,
+	        dataSeries = _ref.dataSeries,
+	        unit = _ref.unit;
+
+	    var initialMarginRight = 60;
+	    var marginRight = initialMarginRight * (1 + 10 / Math.pow(1 + xAxisCategories.length, 2));
+
+	    // We need to filter because Mat.min(undefined, <any number or anything whatsoever>) returns NaN
+	    var min = Math.min.apply(Math, _toConsumableArray(dataSeries.filter(function (quartiles) {
+	        return quartiles.length;
+	    }).map(function (quartiles) {
+	        return quartiles[0];
+	    })));
+	    var max = Math.max.apply(Math, _toConsumableArray(dataSeries.filter(function (quartiles) {
+	        return quartiles.length;
+	    }).map(function (quartiles) {
+	        return quartiles[4];
+	    })));
+
+	    // If no all five points are the same and we want to show the box plot with just points
+	    // const scatter = dataSeries.every(quartiles => _.uniq(quartiles).length === 1)
+
+	    var series = {
+	        name: 'Observations',
+	        data: dataSeries,
+	        tooltip: {
+	            headerFormat: '<em>Factor: {point.key}</em><br/>'
+	        }
+	    };
+
+	    var config = {
+	        chart: {
+	            marginRight: marginRight,
+	            type: 'boxplot',
+	            spacingRight: xAxisCategories.slice(-1)[0].length > 6 ? 100 : 0
+	        },
+
+	        plotOptions: {
+	            boxplot: {
+	                turboThreshold: 0
+	            },
+	            column: {
+	                dataLabels: {
+	                    crop: false
+	                }
+	            },
+	            series: {
+	                states: {
+	                    hover: {
+	                        color: '#eeec38' //#edab12 color cell on mouse over
+	                    },
+	                    select: {
+	                        color: '#eeec38'
+	                    }
+	                }
+	            }
+	        },
+
+	        credits: {
+	            enabled: false
+	        },
+
+	        title: {
+	            text: title
+	        },
+
+	        legend: {
+	            enabled: false
+	        },
+
+	        xAxis: {
+	            tickLength: 5,
+	            tickColor: 'rgb(192, 192, 192)',
+	            lineColor: 'rgb(192, 192, 192)',
+	            categories: xAxisCategories,
+	            labels: {
+	                style: {
+	                    fontSize: '9px'
+	                }
+	                // opposite: 'true'
+	            } },
+
+	        yAxis: {
+	            title: {
+	                text: 'Expression' + (unit ? ' (' + unit + ')' : '')
+	            },
+	            min: min,
+	            max: max
+	            // reversed: true
+	        },
+
+	        series: [series]
+	    };
+
+	    return _react2.default.createElement(_reactHighcharts2.default, { config: config });
+	};
+
+	BoxplotCanvas.propTypes = {
+	    title: _propTypes2.default.string.isRequired,
+	    xAxisCategories: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    dataSeries: _propTypes2.default.arrayOf(_propTypes2.default.arrayOf(_propTypes2.default.number)).isRequired,
+	    unit: _propTypes2.default.string.isRequired
+	};
+
+	var _default = BoxplotCanvas;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(BoxplotCanvas, 'BoxplotCanvas', 'src/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/show/BoxplotCanvas.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_reactHighcharts2, '_reactHighcharts2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_highchartsMore2, '_highchartsMore2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_toConsumableArray, '_toConsumableArray', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(BoxplotCanvas, 'BoxplotCanvas', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2388:
+935,
+
+/***/ 2389:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var baselineColumnHeadersPropTypes = _propTypes2.default.shape({
+	    assayGroupId: _propTypes2.default.string.isRequired,
+	    factorValue: _propTypes2.default.string.isRequired,
+	    factorValueOntologyTermId: _propTypes2.default.string, // Some factors don’t have an ontology term... yet
+	    assayGroupSummary: _propTypes2.default.shape({ // Present when rows are genes
+	        replicates: _propTypes2.default.number.isRequired,
+	        properties: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	            propertyName: _propTypes2.default.string.isRequired,
+	            testValue: _propTypes2.default.string.isRequired,
+	            contrastPropertyType: _propTypes2.default.oneOf(['FACTOR', 'SAMPLE']).isRequired
+	        })).isRequired
+	    })
+	});
+
+	var assayGroupPropTypes = _propTypes2.default.shape({
+	    id: _propTypes2.default.string.isRequired,
+	    assayAccessions: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	    replicates: _propTypes2.default.number.isRequired
+	});
+
+	var differentialColumnHeadersPropTypes = _propTypes2.default.shape({
+	    id: _propTypes2.default.string.isRequired,
+	    arrayDesignAccession: _propTypes2.default.string, // Present in microarray experiments
+	    referenceAssayGroup: assayGroupPropTypes.isRequired,
+	    testAssayGroup: assayGroupPropTypes.isRequired,
+	    displayName: _propTypes2.default.string.isRequired,
+	    contrastSummary: _propTypes2.default.shape({
+	        properties: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	            propertyName: _propTypes2.default.string.isRequired,
+	            testValue: _propTypes2.default.string.isRequired,
+	            contrastPropertyType: _propTypes2.default.oneOf(['FACTOR', 'SAMPLE']).isRequired,
+	            referenceValue: _propTypes2.default.string.isRequired
+	        })).isRequired,
+	        experimentDescription: _propTypes2.default.string.isRequired,
+	        contrastDescription: _propTypes2.default.string.isRequired,
+	        testReplicates: _propTypes2.default.number.isRequired,
+	        referenceReplicates: _propTypes2.default.number.isRequired
+	    }).isRequired,
+	    resources: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        type: _propTypes2.default.string.isRequired,
+	        name: _propTypes2.default.string.isRequired
+	    })).isRequired
+	});
+
+	var baselineExperimentProfilesRowsPropTypes = _propTypes2.default.shape({
+	    id: _propTypes2.default.string.isRequired, // Experiment accession
+	    experimentType: _propTypes2.default.string.isRequired,
+	    name: _propTypes2.default.string.isRequired, // Human-friendly exp. name with slice
+	    expressions: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        value: _propTypes2.default.number
+	    })).isRequired,
+	    uri: _propTypes2.default.string.isRequired
+	});
+
+	var baselineGeneProfilesRowsExpressionsPropTypes = _propTypes2.default.shape({
+	    value: _propTypes2.default.number,
+	    quartiles: _propTypes2.default.shape({
+	        min: _propTypes2.default.number.isRequired,
+	        lower: _propTypes2.default.number.isRequired,
+	        median: _propTypes2.default.number.isRequired,
+	        upper: _propTypes2.default.number.isRequired,
+	        max: _propTypes2.default.number.isRequired
+	    })
+	});
+
+	var baselineGeneProfilesRowsPropTypes = _propTypes2.default.shape({
+	    id: _propTypes2.default.string.isRequired, // Gene ID
+	    name: _propTypes2.default.string.isRequired, // Gene name
+	    expressions: _propTypes2.default.arrayOf(baselineGeneProfilesRowsExpressionsPropTypes).isRequired,
+	    uri: _propTypes2.default.string.isRequired
+	});
+
+	var baselineProfilesPropTypes = _propTypes2.default.shape({
+	    searchResultTotal: _propTypes2.default.string.isRequired,
+	    rows: _propTypes2.default.arrayOf(_propTypes2.default.oneOfType([baselineExperimentProfilesRowsPropTypes, baselineGeneProfilesRowsPropTypes]))
+	});
+
+	var differentialProfilesPropTypes = _propTypes2.default.shape({
+	    maxDownLevel: _propTypes2.default.number,
+	    maxUpLevel: _propTypes2.default.number,
+	    minDownLevel: _propTypes2.default.number,
+	    minUpLevel: _propTypes2.default.number,
+	    rows: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        id: _propTypes2.default.string.isRequired,
+	        name: _propTypes2.default.string.isRequired,
+	        designElement: _propTypes2.default.string.isRequired, // Present but empty in RNA-seq differential exps
+	        expressions: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	            contrastName: _propTypes2.default.string.isRequired,
+	            color: _propTypes2.default.string,
+	            foldChange: _propTypes2.default.number,
+	            pValue: _propTypes2.default.number,
+	            tStat: _propTypes2.default.number
+	        })).isRequired
+	    })).isRequired,
+	    searchResultTotal: _propTypes2.default.number
+	});
+
+	var dataPropTypes = _propTypes2.default.shape({
+	    config: _propTypes2.default.shape({
+	        geneQuery: _propTypes2.default.string.isRequired,
+	        conditionQuery: _propTypes2.default.string.isRequired,
+	        species: _propTypes2.default.string.isRequired,
+	        genomeBrowsers: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	        columnType: _propTypes2.default.string.isRequired,
+	        disclaimer: _propTypes2.default.string.isRequired
+	    }).isRequired,
+
+	    columnHeaders: _propTypes2.default.arrayOf(_propTypes2.default.oneOfType([baselineColumnHeadersPropTypes, differentialColumnHeadersPropTypes])).isRequired,
+
+	    columnGroupings: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	        name: _propTypes2.default.string.isRequired,
+	        memberName: _propTypes2.default.string.isRequired,
+	        groups: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+	            id: _propTypes2.default.string.isRequired,
+	            name: _propTypes2.default.string.isRequired,
+	            values: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired
+	        }))
+	    })).isRequired,
+
+	    profiles: _propTypes2.default.oneOfType([baselineProfilesPropTypes, differentialProfilesPropTypes]).isRequired,
+
+	    anatomogramData: _propTypes2.default.shape({
+	        allSvgPathIds: _propTypes2.default.arrayOf(_propTypes2.default.string).isRequired,
+	        species: _propTypes2.default.string.isRequired
+	    }),
+
+	    coexpressions: _propTypes2.default.arrayOf(_propTypes2.default.shape({ // Only present in baseline, single result
+	        geneName: _propTypes2.default.string.isRequired,
+	        geneId: _propTypes2.default.string.isRequired,
+	        jsonProfiles: baselineProfilesPropTypes
+	    })),
+
+	    experiment: _experimentTypeUtils.experimentPropTypes
+
+	});
+
+	var _default = dataPropTypes;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(baselineColumnHeadersPropTypes, 'baselineColumnHeadersPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(assayGroupPropTypes, 'assayGroupPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(differentialColumnHeadersPropTypes, 'differentialColumnHeadersPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineExperimentProfilesRowsPropTypes, 'baselineExperimentProfilesRowsPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineGeneProfilesRowsExpressionsPropTypes, 'baselineGeneProfilesRowsExpressionsPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineGeneProfilesRowsPropTypes, 'baselineGeneProfilesRowsPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineProfilesPropTypes, 'baselineProfilesPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(differentialProfilesPropTypes, 'differentialProfilesPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(dataPropTypes, 'dataPropTypes', 'src/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/layout/jsonPayloadPropTypes.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_react2, '_react2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_propTypes2, '_propTypes2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineColumnHeadersPropTypes, 'baselineColumnHeadersPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(assayGroupPropTypes, 'assayGroupPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(differentialColumnHeadersPropTypes, 'differentialColumnHeadersPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineExperimentProfilesRowsPropTypes, 'baselineExperimentProfilesRowsPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineGeneProfilesRowsExpressionsPropTypes, 'baselineGeneProfilesRowsExpressionsPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineGeneProfilesRowsPropTypes, 'baselineGeneProfilesRowsPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(baselineProfilesPropTypes, 'baselineProfilesPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(differentialProfilesPropTypes, 'differentialProfilesPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(dataPropTypes, 'dataPropTypes', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2390:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _chartConfiguration = __webpack_require__(2391);
+
+	var _chartConfiguration2 = _interopRequireDefault(_chartConfiguration);
+
+	var _heatmapData = __webpack_require__(2392);
+
+	var _heatmapData2 = _interopRequireDefault(_heatmapData);
+
+	var _boxplotData = __webpack_require__(2400);
+
+	var _boxplotData2 = _interopRequireDefault(_boxplotData);
+
+	var _heatmapOrderings = __webpack_require__(2401);
+
+	var _heatmapOrderings2 = _interopRequireDefault(_heatmapOrderings);
+
+	var _heatmapColourAxis = __webpack_require__(2402);
+
+	var _heatmapColourAxis2 = _interopRequireDefault(_heatmapColourAxis);
+
+	var _heatmapFilters = __webpack_require__(2403);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var _default = function _default(data, inProxy, outProxy, atlasUrl, pathToResources, isWidget) {
+
+	    // This ensures that adding or removing coexpressed genes doesn’t change the colours in the heat map. Colours are
+	    // computed upfront and then we just add/remove rows with the coexpression slider.
+	    // coexpressions is an array because at first it was envisioned that the JSON payload could carry coexpressions of
+	    // more than one gene, but that’s not the case, and ended up being a single item array.
+	    var allRows = data.coexpressions ? data.profiles.rows.concat(data.coexpressions[0].jsonProfiles.rows) : data.profiles.rows;
+
+	    var heatmapData = (0, _heatmapData2.default)(allRows, data.config.geneQuery, data.columnHeaders, data.columnGroupings, data.experiment, inProxy, atlasUrl, pathToResources);
+
+	    return {
+	        heatmapData: heatmapData,
+	        boxplotData: (0, _boxplotData2.default)(data),
+	        heatmapConfig: (0, _chartConfiguration2.default)(data, inProxy, outProxy, atlasUrl, isWidget),
+	        colourAxis: (0, _heatmapColourAxis2.default)(data.experiment, heatmapData.dataSeries),
+	        orderings: (0, _heatmapOrderings2.default)(data.experiment, allRows, data.columnHeaders),
+	        expressionLevelFilters: (0, _heatmapFilters.getExpressionLevelFilters)(data.experiment, heatmapData.dataSeries),
+	        groupingFilters: (0, _heatmapFilters.getColumnGroupingFilters)(heatmapData.xAxisCategories)
+	    };
+	};
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/load/main.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_chartConfiguration2, '_chartConfiguration2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_heatmapData2, '_heatmapData2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_boxplotData2, '_boxplotData2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_heatmapOrderings2, '_heatmapOrderings2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_heatmapColourAxis2, '_heatmapColourAxis2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2391:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	var _utils = __webpack_require__(2377);
+
+	// Message on top of the chart: “Showing 3 experiments:”, “Showing 12 genes of 432 found:”, “Showing 32 genes:”...
+	var introductoryMessage = function introductoryMessage(experiment, profiles) {
+	    var shownRows = profiles.rows.length;
+	    var totalRows = profiles.searchResultTotal;
+
+	    var what = (experiment ? 'gene' : 'experiment') + (totalRows > 1 ? 's' : '');
+
+	    return 'Showing ' + (0, _utils.numberWithCommas)(shownRows) + ' ' + (totalRows === shownRows ? what + ':' : 'of ' + (0, _utils.numberWithCommas)(totalRows) + ' ' + what + ' found:');
+	};
+
+	var queryDescription = function queryDescription(geneQuery, conditionQuery, species) {
+	    // Since Atlas uses URLEncoder in SemanticQuery.java
+	    var plusDecode = function plusDecode(str) {
+	        return decodeURIComponent(str.replace(/\+/g, '%20'));
+	    };
+
+	    var decodedGeneQuery = plusDecode(geneQuery);
+	    var decodedConditionQuery = plusDecode(conditionQuery);
+	    var decodedSpecies = plusDecode(species);
+
+	    return 'Query results for: ' + decodedGeneQuery + (decodedConditionQuery ? ', in conditions ' + decodedConditionQuery : '') + (decodedSpecies ? ', in species ' + (decodedSpecies[0].toUpperCase() + decodedSpecies.slice(1).toLowerCase()) : '');
+	};
+
+	var getChartConfiguration = function getChartConfiguration(data, inProxy, outProxy, atlasUrl, isWidget) {
+	    var experiment = data.experiment,
+	        profiles = data.profiles;
+	    var _data$config = data.config,
+	        geneQuery = _data$config.geneQuery,
+	        conditionQuery = _data$config.conditionQuery,
+	        species = _data$config.species,
+	        disclaimer = _data$config.disclaimer,
+	        columnType = _data$config.columnType,
+	        resources = _data$config.resources;
+
+	    var chartTextDecorations = {
+	        introductoryMessage: introductoryMessage(experiment, profiles),
+	        xAxisLegendName: (0, _utils.capitalizeFirstLetter)(columnType) || 'Experimental condition',
+	        yAxisLegendName: (0, _experimentTypeUtils.isMultiExperiment)(experiment) ? 'Experiment' : 'Gene name'
+	    };
+
+	    var description = (0, _experimentTypeUtils.isMultiExperiment)(experiment) ? queryDescription(geneQuery, conditionQuery, species) :
+	    // description can be empty, see ExperimentsCacheLoader.java or BaselineExperimentsBuilder.java
+	    experiment.description || experiment.accession;
+
+	    var shortDescription = (0, _experimentTypeUtils.isMultiExperiment)(experiment) ? 'expression_atlas-' + species.replace(/ +/, '_') : experiment.accession;
+
+	    return Object.freeze(_extends({
+	        inProxy: inProxy,
+	        outProxy: outProxy,
+	        atlasUrl: atlasUrl,
+	        experiment: experiment,
+	        isWidget: isWidget,
+	        description: description,
+	        shortDescription: shortDescription,
+	        disclaimer: disclaimer
+	    }, chartTextDecorations, {
+	        genomeBrowsers: data.config.genomeBrowsers,
+	        coexpressionsAvailable: Boolean(data.coexpressions),
+	        isMultiExperiment: (0, _experimentTypeUtils.isMultiExperiment)(experiment),
+	        isBaseline: (0, _experimentTypeUtils.isBaseline)(experiment),
+	        isDifferential: (0, _experimentTypeUtils.isDifferential)(experiment)
+	    }));
+	};
+
+	var _default = getChartConfiguration;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(introductoryMessage, 'introductoryMessage', 'src/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(queryDescription, 'queryDescription', 'src/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(getChartConfiguration, 'getChartConfiguration', 'src/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/load/chartConfiguration.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(introductoryMessage, 'introductoryMessage', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(queryDescription, 'queryDescription', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(getChartConfiguration, 'getChartConfiguration', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2392:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _heatmapDataSeries = __webpack_require__(2393);
+
+	var _heatmapDataSeries2 = _interopRequireDefault(_heatmapDataSeries);
+
+	var _heatmapAxisCategories = __webpack_require__(2394);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var _default = function _default(allRows, geneQuery, columnHeaders, columnGroupings, experiment, inProxy, atlasUrl, pathToResources) {
+	  return {
+	    xAxisCategories: (0, _heatmapAxisCategories.getHeatmapXAxisCategories)({ columnHeaders: columnHeaders, columnGroupings: columnGroupings, experiment: experiment, inProxy: inProxy, atlasUrl: atlasUrl, pathToResources: pathToResources }),
+	    yAxisCategories: (0, _heatmapAxisCategories.getHeatmapYAxisCategories)({ rows: allRows, geneQuery: geneQuery, experiment: experiment, inProxy: inProxy, atlasUrl: atlasUrl }),
+	    dataSeries: (0, _heatmapDataSeries2.default)(allRows, experiment)
+	  };
+	};
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', 'src/load/heatmapData.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_heatmapDataSeries2, '_heatmapDataSeries2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapData.js');
+
+	  __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapData.js');
+
+	  __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapData.js');
+
+	  __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapData.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2393:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) {
+	    for (var i = 1; i < arguments.length; i++) {
+	        var source = arguments[i];for (var key in source) {
+	            if (Object.prototype.hasOwnProperty.call(source, key)) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }return target;
+	};
+
+	var _lodash = __webpack_require__(434);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	// Returns an object with coordinates, expression value and other properties for each heat map cell
+	var buildHeatMapDataPointFromExpression = function buildHeatMapDataPointFromExpression(_ref) {
+	    var rowInfo = _ref.rowInfo,
+	        rowIndex = _ref.rowIndex,
+	        expression = _ref.expression,
+	        expressionIndex = _ref.expressionIndex;
+	    return expression.hasOwnProperty('value') ? {
+	        x: expressionIndex,
+	        y: rowIndex,
+	        value: expression.value,
+	        info: rowInfo
+	    } : expression.hasOwnProperty('foldChange') ? {
+	        x: expressionIndex,
+	        y: rowIndex,
+	        value: expression.foldChange,
+	        info: _extends({
+	            pValue: expression.pValue,
+	            foldChange: expression.foldChange,
+	            tStat: expression.tStat
+	        }, rowInfo)
+	    } : null;
+	};
+
+	var buildDataPointsFromRowExpressions = function buildDataPointsFromRowExpressions(_ref2) {
+	    var rowInfo = _ref2.rowInfo,
+	        expressions = _ref2.row.expressions,
+	        rowIndex = _ref2.rowIndex;
+	    return expressions.map(function (expression, expressionIndex) {
+	        return buildHeatMapDataPointFromExpression({ rowInfo: rowInfo, rowIndex: rowIndex, expression: expression, expressionIndex: expressionIndex });
+	    }).filter(function (el) {
+	        return el;
+	    });
+	};
+
+	// Returns lodash wrapper of an array with alternating entries of experiment type and an array of data points of that
+	// type
+	var _createDataPointsAndGroupThemByExperimentType = function _createDataPointsAndGroupThemByExperimentType(profilesRowsChain) {
+	    return profilesRowsChain.map(function (row, rowIndex) {
+	        return [row.experimentType, buildDataPointsFromRowExpressions({ rowInfo: { type: row.experimentType, description: row.name, unit: row.expressionUnit || "" /*no need for this safeguard after master from June 2017 is released*/ }, row: row, rowIndex: rowIndex })];
+	    }).groupBy(function (experimentTypeAndRow) {
+	        return experimentTypeAndRow[0];
+	    })
+	    // Just leave the data points...
+	    .mapValues(function (rows) {
+	        return rows.map(function (experimentTypeAndRow) {
+	            return experimentTypeAndRow[1];
+	        });
+	    })
+	    // Next, flatten all data point arrays into a single one for each experiment type:
+	    // {'rnaseq_mrna_baseline': [[v1],[v2,v3],[v4,v5,v6]]} => {'rnaseq_mrna_baseline': [[v1,v2,v3,v4,v5,v6]]}
+	    .mapValues(_lodash2.default.flatten)
+	    // Return an array of two-element arrays instead of array of objects:
+	    // {'rnaseq_mrna_baeline': [...], 'proteomics_baseline': [...]} =>
+	    //    [['rnaseq_mrna_baseline, [...]], ['proteomics_baseline', [...]]]
+	    .toPairs();
+	};
+
+	// Returns a function that, when passed an experimentType and an array of dataPoints, maps the array to pairs where the
+	// first element is the position in the thresholds array for that experiment type (e.g. 0, 1, 2, 3 for “Below cutoff”,
+	// “Low”, “Medium” and “High”, respectively) according to its value, and the second is the dataPoint itself
+	var dataPointsToThresholdCategoriesMapper = function dataPointsToThresholdCategoriesMapper(thresholds) {
+	    return function (experimentType, dataPoints) {
+	        return dataPoints.map(function (dataPoint) {
+	            return [_lodash2.default.sortedIndex(thresholds[experimentType] || thresholds.DEFAULT, dataPoint.value), dataPoint];
+	        });
+	    };
+	};
+
+	// Produces an array with as many thresholds/seriesNames/seriesColours each array entry contains an object with an
+	// info field (an object composed of the series/threshold name and colour) and a data array with the data points that
+	// correspond to that threshold
+	var experimentProfilesRowsAsDataPointsSplitByThresholds = function experimentProfilesRowsAsDataPointsSplitByThresholds(thresholds, seriesNames, seriesColours, profilesRows) {
+	    return _bucketsIntoSeries(seriesNames, seriesColours)(
+	    // Get lodash wrapper of the experiment type / data points array
+	    _createDataPointsAndGroupThemByExperimentType(_lodash2.default.chain(profilesRows))
+	    // Map arrays of exp. type and data points to arrays of [threshold group index, data point]
+	    .map(_lodash2.default.spread(dataPointsToThresholdCategoriesMapper(thresholds)))
+	    // After this flatten we have all the data points categorised by threshold in a single array... hooray!
+	    .flatten()).value();
+	};
+
+	// Create the array of pairs in a single experiment to be passed to _bucketsIntoSeries
+	var _splitDataSetByProportion = function _splitDataSetByProportion(data, names, colours) {
+	    var sortedValues = data.map(function (point) {
+	        return point.value;
+	    }).sort(function (l, r) {
+	        return l - r;
+	    });
+	    var howManyPointsInTotal = data.length;
+	    var howManyDataSetsToSplitIn = names.length;
+	    return _bucketsIntoSeries(names, colours)(_lodash2.default.chain(data).map(function (point) {
+	        return [Math.floor(_lodash2.default.sortedIndex(sortedValues, point.value) / howManyPointsInTotal * howManyDataSetsToSplitIn), point];
+	    })).value();
+	};
+
+	var splitGeneRowsIntoProportionalSeriesOfDataPoints = function splitGeneRowsIntoProportionalSeriesOfDataPoints(profilesRows, experiment, filters, names, colours) {
+	    var dataPoints = _lodash2.default.flatten(profilesRows.map(function (row, rowIndex) {
+	        return buildDataPointsFromRowExpressions({ rowInfo: { unit: row.expressionUnit || "" /*no need for this safeguard after master from June 2017 is released*/ }, row: row, rowIndex: rowIndex });
+	    }));
+
+	    return _lodash2.default.flatten(_lodash2.default.range(filters.length).map(function (i) {
+	        return _splitDataSetByProportion(dataPoints.filter(filters[i]), names[i], colours[i]);
+	    }));
+	};
+
+	// chain is a lodash wrapper of an array of pairs: [[0, dataPoint1], [0, dataPoint2], ... [3, dataPointN]]
+	// The first entry is the number of the category (i.e. “Below cutoff”, ”Low”...) and the second entry is the data point
+	// Returns an array
+	//    [{info: {...}, data:[data points of category 0]}, {info: {...}, data:[data points of category 1]}], etc.
+	var _bucketsIntoSeries = _lodash2.default.curry(function (seriesNames, seriesColours, pairsOfCategoryAndDataPointChain) {
+	    return pairsOfCategoryAndDataPointChain.groupBy(function (categoryAndDataPoint) {
+	        return categoryAndDataPoint[0];
+	    }).mapValues(function (pairs) {
+	        return pairs.map(function (categoryAndDataPoint) {
+	            return categoryAndDataPoint[1];
+	        });
+	    }).transform(function (result, bucketValues, bucketNumber) {
+	        result[bucketNumber].data = bucketValues;
+	    },
+	    // The empty with the series info but no data points
+	    _lodash2.default.range(seriesNames.length).map(function (i) {
+	        return {
+	            info: {
+	                name: seriesNames[i],
+	                colour: seriesColours[i]
+	            },
+	            data: []
+	        };
+	    }));
+	});
+
+	var getDataSeries = function getDataSeries(profilesRows, experiment) {
+	    var _fns = [_lodash2.default.lt, _lodash2.default.eq, _lodash2.default.gt].map(function (f) {
+	        return function (point) {
+	            return f(point.value, 0);
+	        };
+	    });
+	    var _belowCutoff = _fns[1];
+
+	    if ((0, _experimentTypeUtils.isDifferential)(experiment)) {
+	        return splitGeneRowsIntoProportionalSeriesOfDataPoints(profilesRows, experiment, _fns, [['High down', 'Down'], ['Below cutoff'], ['Up', 'High up']], [['#0000ff', '#8cc6ff'], ['gainsboro'], ['#e9967a', '#b22222']]);
+	    } else if ((0, _experimentTypeUtils.isBaseline)(experiment)) {
+	        return splitGeneRowsIntoProportionalSeriesOfDataPoints(profilesRows, experiment, [_belowCutoff, _lodash2.default.negate(_belowCutoff)], [['Below cutoff'], ['Low', 'Medium', 'High']], [['gainsboro'], ['#8cc6ff', '#0000ff', '#0000b3']]);
+	    } else if ((0, _experimentTypeUtils.isMultiExperiment)(experiment)) {
+	        return experimentProfilesRowsAsDataPointsSplitByThresholds({
+	            RNASEQ_MRNA_BASELINE: [0, 10, 1000],
+	            PROTEOMICS_BASELINE: [0, 0.001, 8],
+	            DEFAULT: [0, 10, 1000]
+	        }, ['Below cutoff', 'Low', 'Medium', 'High'], ['#eaeaea', '#45affd', '#1E74CA', '#024990'], profilesRows);
+	    } else {
+	        return null;
+	    }
+	};
+
+	var _default = getDataSeries;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(buildHeatMapDataPointFromExpression, 'buildHeatMapDataPointFromExpression', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(buildDataPointsFromRowExpressions, 'buildDataPointsFromRowExpressions', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_createDataPointsAndGroupThemByExperimentType, '_createDataPointsAndGroupThemByExperimentType', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(dataPointsToThresholdCategoriesMapper, 'dataPointsToThresholdCategoriesMapper', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(experimentProfilesRowsAsDataPointsSplitByThresholds, 'experimentProfilesRowsAsDataPointsSplitByThresholds', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_splitDataSetByProportion, '_splitDataSetByProportion', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(splitGeneRowsIntoProportionalSeriesOfDataPoints, 'splitGeneRowsIntoProportionalSeriesOfDataPoints', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_bucketsIntoSeries, '_bucketsIntoSeries', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(getDataSeries, 'getDataSeries', 'src/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/load/heatmapDataSeries.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_lodash2, '_lodash2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(buildHeatMapDataPointFromExpression, 'buildHeatMapDataPointFromExpression', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(buildDataPointsFromRowExpressions, 'buildDataPointsFromRowExpressions', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_createDataPointsAndGroupThemByExperimentType, '_createDataPointsAndGroupThemByExperimentType', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(dataPointsToThresholdCategoriesMapper, 'dataPointsToThresholdCategoriesMapper', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(experimentProfilesRowsAsDataPointsSplitByThresholds, 'experimentProfilesRowsAsDataPointsSplitByThresholds', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_splitDataSetByProportion, '_splitDataSetByProportion', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(splitGeneRowsIntoProportionalSeriesOfDataPoints, 'splitGeneRowsIntoProportionalSeriesOfDataPoints', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_bucketsIntoSeries, '_bucketsIntoSeries', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(getDataSeries, 'getDataSeries', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2394:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.getHeatmapYAxisCategories = exports.getHeatmapXAxisCategories = undefined;
+
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }return target;
+	};
+
+	var _url = __webpack_require__(437);
+
+	var _url2 = _interopRequireDefault(_url);
+
+	var _path = __webpack_require__(443);
+
+	var _path2 = _interopRequireDefault(_path);
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	// For each column grouping get the groups that contain a specific ID, or the group Unmapped if it has no groups
+	var getGroupsThatContainId = function getGroupsThatContainId(columnGroupings, id) {
+	  return columnGroupings.map(function (grouping) {
+	    var values = grouping.groups.filter(function (group) {
+	      return group.values.includes(id);
+	    }).map(function (group) {
+	      return {
+	        label: group.name,
+	        id: group.id
+	      };
+	    });
+
+	    return {
+	      name: grouping.name,
+	      memberName: grouping.memberName,
+	      values: values.length ? values : [{ label: 'Unmapped', id: '' }]
+	    };
+	  });
+	};
+
+	var getHeatmapXAxisCategories = function getHeatmapXAxisCategories(_ref) {
+	  var columnHeaders = _ref.columnHeaders,
+	      columnGroupings = _ref.columnGroupings,
+	      experiment = _ref.experiment,
+	      inProxy = _ref.inProxy,
+	      atlasUrl = _ref.atlasUrl,
+	      pathToResources = _ref.pathToResources;
+
+	  if ((0, _experimentTypeUtils.isMultiExperiment)(experiment)) {
+	    return columnHeaders.map(function (columnHeader) {
+	      return {
+	        label: columnHeader.factorValue,
+	        id: columnHeader.factorValueOntologyTermId || '',
+	        info: {
+	          trackId: '',
+	          tooltip: {},
+	          groupings: getGroupsThatContainId(columnGroupings, columnHeader.factorValueOntologyTermId || '')
+	        }
+	      };
+	    });
+	  } else if ((0, _experimentTypeUtils.isDifferential)(experiment)) {
+	    return columnHeaders.map(function (columnHeader) {
+	      return {
+	        label: columnHeader.displayName,
+	        id: columnHeader.id,
+	        info: {
+	          trackId: columnHeader.id,
+	          tooltip: _extends({
+	            resources: columnHeader.resources.map(function (resource) {
+	              return {
+	                type: resource.type,
+	                url: _url2.default.resolve(inProxy + atlasUrl, resource.uri),
+	                icon: _url2.default.resolve(pathToResources, _path2.default.basename(__webpack_require__(2395)("./" + resource.type + '-icon.png')))
+	              };
+	            })
+	          }, columnHeader.contrastSummary),
+	          groupings: []
+	        }
+	      };
+	    });
+	  } else {
+	    return columnHeaders.map(function (columnHeader) {
+	      return {
+	        label: columnHeader.factorValue,
+	        id: columnHeader.factorValueOntologyTermId || '',
+	        info: {
+	          trackId: columnHeader.assayGroupId,
+	          tooltip: {
+	            properties: columnHeader.assayGroupSummary.properties,
+	            replicates: columnHeader.assayGroupSummary.replicates
+	          },
+	          groupings: getGroupsThatContainId(columnGroupings, columnHeader.factorValueOntologyTermId || '')
+	        }
+	      };
+	    });
+	  }
+	};
+
+	var getHeatmapYAxisCategories = function getHeatmapYAxisCategories(_ref2) {
+	  var rows = _ref2.rows,
+	      geneQuery = _ref2.geneQuery,
+	      experiment = _ref2.experiment,
+	      inProxy = _ref2.inProxy,
+	      atlasUrl = _ref2.atlasUrl;
+	  return rows.map(function (profile) {
+	    return {
+	      label: profile.name,
+	      id: profile.id,
+	      info: {
+	        trackId: profile.id,
+	        designElement: profile.designElement || '',
+	        url: _url2.default.resolve(inProxy + atlasUrl, profile.uri)
+	      }
+	    };
+	  });
+	};
+
+	exports.getHeatmapXAxisCategories = getHeatmapXAxisCategories;
+	exports.getHeatmapYAxisCategories = getHeatmapYAxisCategories;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(getGroupsThatContainId, 'getGroupsThatContainId', 'src/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(getHeatmapXAxisCategories, 'getHeatmapXAxisCategories', 'src/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(getHeatmapYAxisCategories, 'getHeatmapYAxisCategories', 'src/load/heatmapAxisCategories.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_extends, '_extends', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(_url2, '_url2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(_path2, '_path2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(getGroupsThatContainId, 'getGroupsThatContainId', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(getHeatmapXAxisCategories, 'getHeatmapXAxisCategories', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(getHeatmapYAxisCategories, 'getHeatmapYAxisCategories', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+
+	  __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2395:
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./gsea_go-icon.png": 2396,
+		"./gsea_interpro-icon.png": 2397,
+		"./gsea_reactome-icon.png": 2398,
+		"./ma-plot-icon.png": 2399
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 2395;
+
+
+/***/ },
+
+/***/ 2396:
+943,
+
+/***/ 2397:
+944,
+
+/***/ 2398:
+945,
+
+/***/ 2399:
+946,
+
+/***/ 2400:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var quartilesFromExpression = function quartilesFromExpression(expression) {
+	  return expression.quartiles ? [expression.quartiles.min, expression.quartiles.lower, expression.quartiles.median, expression.quartiles.upper, expression.quartiles.max] : [];
+	};
+
+	var tryCreateBoxplotData = function tryCreateBoxplotData(_ref) {
+	  var dataRow = _ref.dataRow,
+	      columnHeaders = _ref.columnHeaders;
+
+	  var dataSeries = dataRow.expressions.map(quartilesFromExpression);
+
+	  if (dataSeries.map(function (e) {
+	    return e.length;
+	  }).reduce(function (l, r) {
+	    return l + r;
+	  }, 0)) {
+	    return {
+	      dataSeries: dataSeries,
+	      xAxisCategories: columnHeaders.map(function (header) {
+	        return header.factorValue;
+	      }),
+	      title: dataRow.name + " - " + dataRow.id,
+	      unit: dataRow.expressionUnit
+	    };
+	  } else {
+	    return null;
+	  }
+	};
+
+	var _default = function _default(_ref2) {
+	  var profiles = _ref2.profiles,
+	      columnHeaders = _ref2.columnHeaders;
+	  return profiles.rows.length === 1 ? tryCreateBoxplotData({ dataRow: profiles.rows[0], columnHeaders: columnHeaders }) : null;
+	};
+
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(quartilesFromExpression, "quartilesFromExpression", "src/load/boxplotData.js");
+
+	  __REACT_HOT_LOADER__.register(tryCreateBoxplotData, "tryCreateBoxplotData", "src/load/boxplotData.js");
+
+	  __REACT_HOT_LOADER__.register(_default, "default", "src/load/boxplotData.js");
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(quartilesFromExpression, "quartilesFromExpression", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/boxplotData.js");
+
+	  __REACT_HOT_LOADER__.register(tryCreateBoxplotData, "tryCreateBoxplotData", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/boxplotData.js");
+
+	  __REACT_HOT_LOADER__.register(_default, "_default", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/boxplotData.js");
+
+	  __REACT_HOT_LOADER__.register(_temp, "_temp", "/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/boxplotData.js");
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2401:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(434);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	//apply rank first, use comparator to resolve ties
+	var createOrdering = function createOrdering(rank, comparator, arr) {
+	    return arr.map(function (e, ix) {
+	        return [e, ix];
+	    })
+	    //lower ranks go to the beginning of series
+	    .sort(function (e_ixLeft, e_ixRight) {
+	        return rank[e_ixLeft[1]] - rank[e_ixRight[1]] || comparator(e_ixLeft[0], e_ixRight[0]);
+	    }).map(function (e_ix) {
+	        return e_ix[1];
+	    });
+	};
+
+	var createAlphabeticalOrdering = function createAlphabeticalOrdering(property, arr) {
+	    return createOrdering(arr.map(_lodash2.default.constant(0)), comparatorByProperty(property), arr);
+	};
+
+	var comparatorByProperty = _lodash2.default.curry(function (property, e1, e2) {
+	    return e1[property].localeCompare(e2[property]);
+	});
+
+	var rankColumnsByWhereTheyAppearFirst = function rankColumnsByWhereTheyAppearFirst(expressions) {
+	    return _lodash2.default.chain(expressions).map(function (row) {
+	        return row.map(function (e) {
+	            return +e.hasOwnProperty('value');
+	        });
+	    }).thru(_lodash2.default.spread(_lodash2.default.zip)).map(function (column) {
+	        return column.map(function (e, ix) {
+	            return e * (ix + 1);
+	        }).filter(_lodash2.default.identity);
+	    }).map(_lodash2.default.min).value();
+	};
+
+	var highestColumnRankPossible = function highestColumnRankPossible(expressions) {
+	    return expressions.length ? expressions[0].length : Number.MAX_VALUE;
+	};
+
+	var thresholdColumnsByExpressionAboveCutoff = function thresholdColumnsByExpressionAboveCutoff(expressions) {
+	    return rankColumnsByExpression(expressions, 0)
+	    //check if the function assigned the rank value corresponding to everything filtered off
+	    .map(function (e) {
+	        return e === highestColumnRankPossible(expressions) ? 1 : 0;
+	    });
+	};
+
+	var rankColumnsByExpression = function rankColumnsByExpression(expressions, minimalExpression) {
+	    var includeInRanking = typeof minimalExpression === 'number' ? function (e) {
+	        return e.hasOwnProperty('value') && !isNaN(e.value) && Math.abs(e.value) > minimalExpression;
+	    } : function (e) {
+	        return e.hasOwnProperty('value') && !isNaN(e.value);
+	    };
+
+	    return _lodash2.default.chain(expressions).map(function (row) {
+	        var valuesInRow = _lodash2.default.uniq(row.filter(includeInRanking).map(function (e) {
+	            return e.value;
+	        }).sort(function (l, r) {
+	            return r - l;
+	        }));
+
+	        return row.map(function (e) {
+	            return includeInRanking(e) ? valuesInRow.indexOf(e.value) : 'missing';
+	        });
+	    }).thru(_lodash2.default.spread(_lodash2.default.zip)).map(function (ranks) {
+	        return ranks.filter(_lodash2.default.negate(isNaN));
+	    }).map(function (ranks) {
+	        return ranks.length ? _lodash2.default.sum(ranks) / ranks.length : highestColumnRankPossible(expressions);
+	    }).value();
+	};
+
+	var rankColumnsByThreshold = function rankColumnsByThreshold(threshold, expressions) {
+	    return expressions.map(function (row) {
+	        return row.map(function (point) {
+	            return +(point.hasOwnProperty('value') && point.value !== 0);
+	        });
+	    }).reduce(function (r1, r2) {
+	        return r1.map(function (el, ix) {
+	            return el + r2[ix];
+	        }, _lodash2.default.fill(Array(expressions.length ? expressions[0].length : 0), 0));
+	    }).map(function (countOfExperimentsWhereTissueExpressedAboveCutoff) {
+	        return countOfExperimentsWhereTissueExpressedAboveCutoff > expressions.length * threshold ? 0 : 1;
+	    });
+	};
+
+	var noOrdering = function noOrdering(arr) {
+	    return arr.map(function (el, ix) {
+	        return ix;
+	    });
+	};
+
+	var combineRanks = function combineRanks(ranksAndWeights) {
+	    return _lodash2.default.chain(ranksAndWeights).map(function (rankAndWeight) {
+	        return rankAndWeight[0].map(function (rank) {
+	            return rank * rankAndWeight[1];
+	        });
+	    }).thru(_lodash2.default.spread(_lodash2.default.zip)).map(_lodash2.default.sum).value();
+	};
+
+	var createOrderings = function createOrderings(expressions, columnHeaders, rows, experiment) {
+	    var transposed = _lodash2.default.zip.apply(_lodash2.default, expressions);
+
+	    if ((0, _experimentTypeUtils.isMultiExperiment)(experiment)) {
+	        return {
+	            default: {
+	                name: 'By experiment type',
+	                columns: createAlphabeticalOrdering('factorValue', columnHeaders),
+	                rows: noOrdering(rows)
+	            },
+	            alphabetical: {
+	                name: 'Alphabetical order',
+	                columns: createAlphabeticalOrdering('factorValue', columnHeaders),
+	                rows: createAlphabeticalOrdering('name', rows)
+	            },
+	            geneExpression: {
+	                name: 'Gene expression rank',
+	                columns: createOrdering(combineRanks([[rankColumnsByWhereTheyAppearFirst(expressions), 1], [rankColumnsByExpression(expressions), 1e3], [rankColumnsByThreshold(0.05 + 0.4 / Math.pow(1 + transposed.length / 8, 0.4), expressions), 1e6], [thresholdColumnsByExpressionAboveCutoff(expressions), 1e7]]), comparatorByProperty('factorValue'), columnHeaders),
+	                rows: createOrdering(combineRanks([[rankColumnsByExpression(transposed), 1e3], [rankColumnsByThreshold(0.05 + 0.4 / (1 + expressions.length / 5), transposed), 1e6]]), comparatorByProperty('name'), rows)
+	            }
+	        };
+	    } else {
+	        return {
+	            default: {
+	                name: 'Default',
+	                columns: noOrdering(columnHeaders),
+	                rows: noOrdering(rows)
+	            }
+	        };
+	    }
+	};
+
+	var extractExpressionValues = function extractExpressionValues(rows, experiment) {
+	    var _valueFieldExtractor = function _valueFieldExtractor(valueField) {
+	        return function (expression) {
+	            return expression.hasOwnProperty(valueField) ? { value: expression[valueField] } : {};
+	        };
+	    };
+
+	    return rows.map(function (row) {
+	        return row.expressions.map(_valueFieldExtractor((0, _experimentTypeUtils.isDifferential)(experiment) ? 'foldChange' : 'value'));
+	    });
+	};
+
+	var createOrderingsForData = function createOrderingsForData(experiment, rows, columnHeaders) {
+	    return createOrderings(extractExpressionValues(rows, experiment), columnHeaders, rows, experiment);
+	};
+
+	var _default = createOrderingsForData;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(createOrdering, 'createOrdering', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createAlphabeticalOrdering, 'createAlphabeticalOrdering', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(comparatorByProperty, 'comparatorByProperty', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(rankColumnsByWhereTheyAppearFirst, 'rankColumnsByWhereTheyAppearFirst', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(highestColumnRankPossible, 'highestColumnRankPossible', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(thresholdColumnsByExpressionAboveCutoff, 'thresholdColumnsByExpressionAboveCutoff', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(rankColumnsByExpression, 'rankColumnsByExpression', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(rankColumnsByThreshold, 'rankColumnsByThreshold', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(noOrdering, 'noOrdering', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(combineRanks, 'combineRanks', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createOrderings, 'createOrderings', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(extractExpressionValues, 'extractExpressionValues', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createOrderingsForData, 'createOrderingsForData', 'src/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/load/heatmapOrderings.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_lodash2, '_lodash2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createOrdering, 'createOrdering', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createAlphabeticalOrdering, 'createAlphabeticalOrdering', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(comparatorByProperty, 'comparatorByProperty', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(rankColumnsByWhereTheyAppearFirst, 'rankColumnsByWhereTheyAppearFirst', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(highestColumnRankPossible, 'highestColumnRankPossible', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(thresholdColumnsByExpressionAboveCutoff, 'thresholdColumnsByExpressionAboveCutoff', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(rankColumnsByExpression, 'rankColumnsByExpression', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(rankColumnsByThreshold, 'rankColumnsByThreshold', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(noOrdering, 'noOrdering', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(combineRanks, 'combineRanks', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createOrderings, 'createOrderings', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(extractExpressionValues, 'extractExpressionValues', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(createOrderingsForData, 'createOrderingsForData', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2402:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _color = __webpack_require__(950);
+
+	var _color2 = _interopRequireDefault(_color);
+
+	var _experimentTypeUtils = __webpack_require__(2361);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var highlightColour = function highlightColour(c) {
+	    return c.light() ? c.clone().lighten(0.5) : c.clone().saturate(0.3).darken(0.5);
+	};
+
+	var dataClassesFromSeries = function dataClassesFromSeries(dataSeries) {
+	    // No need to validate here, as it’s already been done in Container.jsx (cf. with previous version of ColorAxis.js)
+	    var xs = dataSeries.map(function (series) {
+	        return series.data.length === 0 && series.info.name === 'Below cutoff' ? {
+	            data: [{ value: 0.0 }],
+	            colour: series.info.colour
+	        } : {
+	            data: series.data,
+	            colour: series.info.colour
+	        };
+	    }).filter(function (series) {
+	        return series.data.length > 0;
+	    }).map(function (series, ix, self) {
+	        var theseSeriesValuesSorted = series.data.map(function (point) {
+	            return point.value;
+	        });
+	        theseSeriesValuesSorted.sort(function (l, r) {
+	            return l - r;
+	        });
+
+	        return {
+	            min: theseSeriesValuesSorted[0],
+	            minColour: ix === 0 ? highlightColour((0, _color2.default)(self[ix].colour)) : (0, _color2.default)(self[ix].colour).mix((0, _color2.default)(self[ix - 1].colour)),
+	            max: theseSeriesValuesSorted[theseSeriesValuesSorted.length - 1],
+	            maxColour: ix === self.length - 1 ? highlightColour((0, _color2.default)(self[ix].colour)) : (0, _color2.default)(self[ix].colour).mix((0, _color2.default)(self[ix + 1].colour)),
+	            median: theseSeriesValuesSorted[Math.floor(series.data.length / 2)],
+	            medianColour: (0, _color2.default)(self[ix].colour),
+	            sortedValues: theseSeriesValuesSorted
+	        };
+	    });
+
+	    var needToSplit = function needToSplit(x) {
+	        return x.sortedValues.length > 3 && x.sortedValues[0] !== x.sortedValues[x.sortedValues.length - 1] && x.minColour.rgbString() !== x.maxColour.rgbString();
+	    };
+
+	    var splitInHalf = function splitInHalf(x) {
+	        return [{
+	            min: x.min,
+	            minColour: x.minColour,
+	            max: x.median,
+	            maxColour: x.medianColour,
+	            median: x.sortedValues[Math.floor(x.sortedValues.length / 4)],
+	            medianColour: x.minColour.clone().mix(x.medianColour),
+	            sortedValues: x.sortedValues.slice(0, Math.floor(x.sortedValues.length / 2))
+	        }, {
+	            min: x.median,
+	            minColour: x.medianColour,
+	            max: x.max,
+	            maxColour: x.maxColour,
+	            median: x.sortedValues[Math.floor(3 * x.sortedValues.length / 4)],
+	            medianColour: x.medianColour.clone().mix(x.maxColour),
+	            sortedValues: x.sortedValues.slice(Math.floor(x.sortedValues.length / 2))
+	        }];
+	    };
+
+	    var l = Number.MIN_VALUE;
+	    var L = xs.length;
+	    while (l < L) {
+	        xs = [].concat.apply([], xs.map(function (x) {
+	            if (needToSplit(x)) {
+	                return splitInHalf(x);
+	            } else {
+	                return [x];
+	            }
+	        }));
+	        l = L;
+	        L = xs.length;
+	    }
+
+	    // The format of dataClasses is defined in http://api.highcharts.com/highmaps/colorAxis.dataClasses
+	    return xs.map(function (x) {
+	        return {
+	            from: x.min,
+	            to: x.max,
+	            color: x.medianColour.hexString()
+	        };
+	    });
+	};
+
+	var unitsUsedInDataSeries = function unitsUsedInDataSeries(dataSeries) {
+	    return [].concat.apply([], dataSeries.map(function (series) {
+	        return series.data;
+	    })).map(function (point) {
+	        return point.info.unit;
+	    }).filter(function (el) {
+	        return el;
+	    }).filter(function (el, ix, self) {
+	        return self.indexOf(el) === ix;
+	    }).join();
+	};
+
+	var getColourAxisFromDataSeries = function getColourAxisFromDataSeries(experiment, dataSeries) {
+	    return (0, _experimentTypeUtils.isMultiExperiment)(experiment) ? null : {
+	        dataClasses: dataClassesFromSeries(dataSeries),
+	        unit: unitsUsedInDataSeries(dataSeries)
+	    };
+	};
+
+	var _default = getColourAxisFromDataSeries;
+	exports.default = _default;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(highlightColour, 'highlightColour', 'src/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(dataClassesFromSeries, 'dataClassesFromSeries', 'src/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(unitsUsedInDataSeries, 'unitsUsedInDataSeries', 'src/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(getColourAxisFromDataSeries, 'getColourAxisFromDataSeries', 'src/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(_default, 'default', 'src/load/heatmapColourAxis.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_color2, '_color2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(highlightColour, 'highlightColour', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(dataClassesFromSeries, 'dataClassesFromSeries', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(unitsUsedInDataSeries, 'unitsUsedInDataSeries', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(getColourAxisFromDataSeries, 'getColourAxisFromDataSeries', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(_default, '_default', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2403:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getColumnGroupingFilters = exports.getExpressionLevelFilters = undefined;
+
+	var _lodash = __webpack_require__(434);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	var getExpressionLevelFilters = function getExpressionLevelFilters(experiment, dataSeries) {
+	    return {
+	        name: 'Expression value' + (experiment ? ' \u2013 relative' : ''),
+	        values: dataSeries.map(function (series) {
+	            return {
+	                name: series.info.name,
+	                disabled: series.data.length === 0
+	            };
+	        })
+	    };
+	};
+
+	var getColumnGroupingFilters = function getColumnGroupingFilters(xAxisCategories) {
+	    var groupingTriplets = _lodash2.default.flattenDeep(xAxisCategories.reduce(function (acc, columnHeader) {
+	        var _groupingTriplets = columnHeader.info.groupings.map(function (grouping) {
+	            return grouping.values.map(function (groupingValue) {
+	                return {
+	                    name: grouping.name,
+	                    groupingLabel: groupingValue.label,
+	                    columnLabel: columnHeader.label
+	                };
+	            });
+	        });
+	        acc.push(_groupingTriplets);
+
+	        return acc;
+	    }, []));
+
+	    var groupingNames = _lodash2.default.uniq(groupingTriplets.map(function (groupingTriplet) {
+	        return groupingTriplet.name;
+	    }));
+
+	    return groupingNames.map(function (groupingName) {
+	        var columnLabels = _lodash2.default.uniq(groupingTriplets.filter(function (groupingTriplet) {
+	            return groupingTriplet.name === groupingName;
+	        }).map(function (groupingTriplet) {
+	            return groupingTriplet.columnLabel;
+	        }));
+
+	        var groupingLabels = _lodash2.default.uniq(groupingTriplets.filter(function (groupingTriplet) {
+	            return groupingTriplet.name === groupingName;
+	        }).map(function (groupingTriplet) {
+	            return groupingTriplet.groupingLabel;
+	        })).sort();
+
+	        var groupingLabelsWithUnmappedLast = groupingLabels.filter(function (l) {
+	            return l !== 'Unmapped';
+	        }).concat(groupingLabels.find(function (l) {
+	            return l === 'Unmapped';
+	        }) || []);
+
+	        return {
+	            name: groupingName,
+	            values: columnLabels.map(function (label) {
+	                return {
+	                    name: label,
+	                    disabled: false // Guaranteed because values are extracted from xAxisCategories
+	                };
+	            }),
+	            valueGroupings: groupingLabelsWithUnmappedLast.map(function (groupingLabel) {
+	                return [groupingLabel, _lodash2.default.sortedUniq(groupingTriplets.filter(function (groupingTriplet) {
+	                    return groupingTriplet.name === groupingName && groupingTriplet.groupingLabel === groupingLabel;
+	                }).map(function (groupingTriplet) {
+	                    return groupingTriplet.columnLabel;
+	                }))];
+	            })
+	        };
+	    });
+	};
+
+	exports.getExpressionLevelFilters = getExpressionLevelFilters;
+	exports.getColumnGroupingFilters = getColumnGroupingFilters;
+	;
+
+	var _temp = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(getExpressionLevelFilters, 'getExpressionLevelFilters', 'src/load/heatmapFilters.js');
+
+	    __REACT_HOT_LOADER__.register(getColumnGroupingFilters, 'getColumnGroupingFilters', 'src/load/heatmapFilters.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	        return;
+	    }
+
+	    __REACT_HOT_LOADER__.register(_lodash2, '_lodash2', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapFilters.js');
+
+	    __REACT_HOT_LOADER__.register(_interopRequireDefault, '_interopRequireDefault', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapFilters.js');
+
+	    __REACT_HOT_LOADER__.register(getExpressionLevelFilters, 'getExpressionLevelFilters', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapFilters.js');
+
+	    __REACT_HOT_LOADER__.register(getColumnGroupingFilters, 'getColumnGroupingFilters', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapFilters.js');
+
+	    __REACT_HOT_LOADER__.register(_temp, '_temp', '/Users/wbazant/dev/atlas/gxa/src/main/javascript/atlas_bundles/baseline-expression/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapFilters.js');
+	}();
+
+	;
+
+/***/ },
+
+/***/ 2404:
+959,
+
+/***/ 2405:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Url = __webpack_require__(437);
+	var QueryString = __webpack_require__(2406);
+
 	/**
 	 * Stringify the `query` object, assign it to the `bs` search field in the URL and store it in the History
 	 * @param {object} querySelect
@@ -6243,10 +8376,10 @@ webpackJsonp_name_([2],[
 	 */
 	exports.baselinePush = function pushQueryIntoBrowserHistory(querySelect, replace) {
 	    var currentUrlObject = Url.parse(window.location.toString());
-	
+
 	    var newUrlQueryParams = QueryString.parse(currentUrlObject.query);
 	    newUrlQueryParams.bs = JSON.stringify(querySelect);
-	
+
 	    var newUrlObject = {
 	        protocol: currentUrlObject.protocol,
 	        host: currentUrlObject.host,
@@ -6254,22 +8387,208 @@ webpackJsonp_name_([2],[
 	        pathname: currentUrlObject.pathname,
 	        query: newUrlQueryParams
 	    };
-	
+
 	    if (replace) {
 	        history.replaceState(null, '', Url.format(newUrlObject));
 	    } else {
 	        history.pushState(null, '', Url.format(newUrlObject));
 	    }
 	};
-	
+
 	exports.parseBaselineUrlParameter = function getQuerySelectFromLocation() {
 	    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location;
-	
+
 	    var currentURL = Url.parse(location.toString());
 	    var differentialSelectParam = QueryString.parse(currentURL.query).bs;
 	    return differentialSelectParam ? JSON.parse(differentialSelectParam) : {};
 	};
 
-/***/ })
-]);
-//# sourceMappingURL=expressionAtlasBaselineExpression.bundle.js.map
+/***/ },
+
+/***/ 2406:
+[2747, 2407, 2408],
+
+/***/ 2407:
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+
+	module.exports = function(qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
+
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
+
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
+
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
+
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
+
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr, vstr, k, v;
+
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
+
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
+
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
+
+	  return obj;
+	};
+
+	var isArray = Array.isArray || function (xs) {
+	  return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+
+/***/ },
+
+/***/ 2408:
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	var stringifyPrimitive = function(v) {
+	  switch (typeof v) {
+	    case 'string':
+	      return v;
+
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+
+	    case 'number':
+	      return isFinite(v) ? v : '';
+
+	    default:
+	      return '';
+	  }
+	};
+
+	module.exports = function(obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+
+	  if (typeof obj === 'object') {
+	    return map(objectKeys(obj), function(k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (isArray(obj[k])) {
+	        return map(obj[k], function(v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+
+	  }
+
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+	         encodeURIComponent(stringifyPrimitive(obj));
+	};
+
+	var isArray = Array.isArray || function (xs) {
+	  return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+	function map (xs, f) {
+	  if (xs.map) return xs.map(f);
+	  var res = [];
+	  for (var i = 0; i < xs.length; i++) {
+	    res.push(f(xs[i], i));
+	  }
+	  return res;
+	}
+
+	var objectKeys = Object.keys || function (obj) {
+	  var res = [];
+	  for (var key in obj) {
+	    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+	  }
+	  return res;
+	};
+
+
+/***/ }
+
+});
