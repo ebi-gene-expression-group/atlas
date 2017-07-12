@@ -14,7 +14,7 @@ class ExperimentPage extends Component {
                 basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}>
                 <div>
                     <Route path='/' render={props => (
-                        <Experiment {...props}/>
+                        <Experiment {...props} clustersData={this.props.clustersData}/>
                     )}/>
                 </div>
             </BrowserRouter>
@@ -25,7 +25,8 @@ class ExperimentPage extends Component {
 
 ExperimentPage.propTypes = {
     atlasUrl: PropTypes.string.isRequired,
-    experimentAccession: PropTypes.string.isRequired
+    experimentAccession: PropTypes.string.isRequired,
+    clustersData: PropTypes.object.isRequired
 };
 
 class Experiment extends Component {
@@ -34,8 +35,9 @@ class Experiment extends Component {
         super(props);
         this.state = {
             params: queryString.parse(props.location.search),
-            p1: "",
-            p2: ""
+            geneId: "",
+            clusterId: "",
+            K: "",
         };
     }
 
@@ -45,15 +47,24 @@ class Experiment extends Component {
         this.setState(_newparam);
 
         this.props.history.push("?" + queryString.stringify({
-            p1: (param === "p1" ? item.target.value : this.state.p1),
-            p2: (param === "p2" ? item.target.value : this.state.p2)
+            geneId: (param === "geneId" ? item.target.value : this.state.geneId),
+            clusterId: (param === "clusterId" ? item.target.value : this.state.clusterId)
         }));
     };
 
+    handleOptionsChange(e) {
+        this.setState({clusterId: e.target.value});
+
+        this.props.history.push("?" + queryString.stringify({
+                clusterId: e.target.value
+            }));
+    }
+
     componentDidMount() {
         this.setState({
-            p1: this.state.params.p1,
-            p2: this.state.params.p2
+            geneId: this.state.params.geneId,
+            clusterId: this.state.params.clusterId,
+            K: this.state.params.k
         });
     }
 
@@ -63,15 +74,14 @@ class Experiment extends Component {
             <div>
                 <h3>Experiment Page section</h3>
                 <div className="large-6 columns">
-                    <label>Perplexity:</label>
-                    <input type="text" value={this.state.p1} onChange={this.handleChange.bind(this, "p1")}/>
-                    <h3>Plot</h3>
-                    <ReferencePlot />
+                    <ReferencePlot clustersData={this.props.clustersData}
+                                   clusterId={this.state.clusterId}
+                                   handleOptionsChange={this.handleOptionsChange.bind(this)} />
 
                 </div>
                 <div className="large-6 columns">
                     <label>GeneId:</label>
-                    <input type="text" value={this.state.p2} onChange={this.handleChange.bind(this, "p2")}/>
+                    <input type="text" value={this.state.geneId} onChange={this.handleChange.bind(this, "geneId")}/>
                 </div>
             </div>
         );

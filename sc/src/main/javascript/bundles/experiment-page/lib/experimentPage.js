@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -48,15 +50,16 @@ var ExperimentPage = function (_Component) {
     _createClass(ExperimentPage, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                {
-                    basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString() },
+                null,
                 _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/', render: function render(props) {
-                            return _react2.default.createElement(Experiment, props);
+                            return _react2.default.createElement(Experiment, _extends({}, props, { clustersData: _this2.props.clustersData }));
                         } })
                 )
             );
@@ -68,7 +71,8 @@ var ExperimentPage = function (_Component) {
 
 ExperimentPage.propTypes = {
     atlasUrl: _propTypes2.default.string.isRequired,
-    experimentAccession: _propTypes2.default.string.isRequired
+    experimentAccession: _propTypes2.default.string.isRequired,
+    clustersData: _propTypes2.default.object.isRequired
 };
 
 var Experiment = function (_Component2) {
@@ -77,14 +81,16 @@ var Experiment = function (_Component2) {
     function Experiment(props) {
         _classCallCheck(this, Experiment);
 
-        var _this2 = _possibleConstructorReturn(this, (Experiment.__proto__ || Object.getPrototypeOf(Experiment)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (Experiment.__proto__ || Object.getPrototypeOf(Experiment)).call(this, props));
 
-        _this2.state = {
+        _this3.state = {
             params: _queryString2.default.parse(props.location.search),
-            p1: "",
-            p2: ""
+            geneId: "",
+            clusterId: "",
+            K: "",
+            clustersChosen: ""
         };
-        return _this2;
+        return _this3;
     }
 
     _createClass(Experiment, [{
@@ -95,16 +101,26 @@ var Experiment = function (_Component2) {
             this.setState(_newparam);
 
             this.props.history.push("?" + _queryString2.default.stringify({
-                p1: param === "p1" ? item.target.value : this.state.p1,
-                p2: param === "p2" ? item.target.value : this.state.p2
+                geneId: param === "geneId" ? item.target.value : this.state.geneId,
+                clusterId: param === "clusterId" ? item.target.value : this.state.clusterId
+            }));
+        }
+    }, {
+        key: 'handleOptionsChange',
+        value: function handleOptionsChange(e) {
+            this.setState({ clusterId: e.target.value });
+
+            this.props.history.push("?" + _queryString2.default.stringify({
+                clusterId: e.target.value
             }));
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.setState({
-                p1: this.state.params.p1,
-                p2: this.state.params.p2
+                geneId: this.state.params.geneId,
+                clusterId: this.state.params.clusterId,
+                K: this.state.params.k
             });
         }
     }, {
@@ -127,13 +143,15 @@ var Experiment = function (_Component2) {
                         null,
                         'Perplexity:'
                     ),
-                    _react2.default.createElement('input', { type: 'text', value: this.state.p1, onChange: this.handleChange.bind(this, "p1") }),
+                    _react2.default.createElement('input', { type: 'text', value: this.state.clusterId, onChange: this.handleChange.bind(this, "clusterId") }),
                     _react2.default.createElement(
                         'h3',
                         null,
                         'Plot'
                     ),
-                    _react2.default.createElement(_singleCellTsnePlot2.default, null)
+                    _react2.default.createElement(_singleCellTsnePlot2.default, { clustersData: this.props.clustersData,
+                        clusterId: this.state.clusterId,
+                        handleOptionsChange: this.handleOptionsChange.bind(this) })
                 ),
                 _react2.default.createElement(
                     'div',
@@ -143,7 +161,7 @@ var Experiment = function (_Component2) {
                         null,
                         'GeneId:'
                     ),
-                    _react2.default.createElement('input', { type: 'text', value: this.state.p2, onChange: this.handleChange.bind(this, "p2") })
+                    _react2.default.createElement('input', { type: 'text', value: this.state.geneId, onChange: this.handleChange.bind(this, "geneId") })
                 )
             );
         }

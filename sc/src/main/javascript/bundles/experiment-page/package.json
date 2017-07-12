@@ -6,7 +6,7 @@
   "author": "Elisabet Barrera Casanova <barrera@ebi.ac.uk>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "babel src -d lib --ignore '**/*.less' --copy-files",
     "prepublish": "npm run build"
   },
   "dependencies": {
