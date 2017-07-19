@@ -15,7 +15,7 @@ public abstract class BioentityPropertyFile extends AtlasResource<Stream<Bioenti
 
     public final Species species;
 
-    protected Stream<BioentityProperty> lineOfProperties(String bioentityIdentifier, String [] propertyNames, String [] propertyValues){
+    protected Stream<BioentityProperty> lineOfProperties(String bioentityIdentifier, String[] propertyNames, String[] propertyValues) {
         Preconditions.checkState(propertyNames.length == propertyValues.length);
 
         return IntStream
@@ -29,10 +29,16 @@ public abstract class BioentityPropertyFile extends AtlasResource<Stream<Bioenti
 
     }
 
-    protected BioentityProperty bioentityProperty(String bioentityIdentifier, String propertyName, String propertyValue){
-        return new BioentityProperty(bioentityIdentifier,species.getEnsemblName(), propertyName, propertyValue);
+    protected BioentityProperty bioentityProperty(String bioentityIdentifier, String propertyName, String propertyValue) {
+        return new BioentityProperty(bioentityIdentifier, species.getEnsemblName(), propertyName, cleanUpPropertyValue(propertyValue));
     }
 
+    String stuffInCurlyBracketsAtTheEnd = "\\{.*\\}$";
+    String stuffInSquareBracketsAtTheEnd = "\\[.*\\]$";
+
+    String cleanUpPropertyValue(String propertyValue) {
+        return propertyValue.replaceFirst(stuffInCurlyBracketsAtTheEnd, "").replaceFirst(stuffInSquareBracketsAtTheEnd, "").trim();
+    }
 
 
     public BioentityPropertyFile(Path path, Species species) {
