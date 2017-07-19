@@ -10,7 +10,7 @@ import java.util.*;
 
 @Named
 @Scope("singleton")
-public class AnalyticsIndexerMonitor implements Observer {
+public class AnalyticsIndexerMonitor {
 
     private long magetabFilesTotalSize;
     private long processedMagetabFilesSize;
@@ -52,8 +52,7 @@ public class AnalyticsIndexerMonitor implements Observer {
                 date, date, "", processedExperimentsCount, processedMagetabFilesSize, 0D));
     }
 
-    @Override
-    public void update(Observable o, @Nullable Object arg) {
+    public synchronized void update(@Nullable Object arg) {
         if (arg == null) {
             stringBuilder.append(String.format("--- Analytics index build finished %s --- %n", new Date()));
         }
