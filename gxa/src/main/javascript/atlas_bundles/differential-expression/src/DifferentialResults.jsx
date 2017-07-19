@@ -7,7 +7,7 @@ const ReactDOM = require('react-dom');
 //*------------------------------------------------------------------*
 
 const AtlasFeedback = require('expression-atlas-feedback');
-const EbiSpeciesIcon = require('react-ebi-species').Icon;
+import EbiSpeciesIcon  from 'react-ebi-species';
 
 import URI from 'urijs'
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import URI from 'urijs';
-const EbiSpeciesIcon = require('react-ebi-species').Icon;
+import EbiSpeciesIcon  from 'react-ebi-species';
 
 const SpeciesItem = props =>
 {
