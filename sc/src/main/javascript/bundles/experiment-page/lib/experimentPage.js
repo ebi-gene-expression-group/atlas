@@ -30,6 +30,10 @@ var _singleCellTsnePlot = require('single-cell-tsne-plot');
 
 var _singleCellTsnePlot2 = _interopRequireDefault(_singleCellTsnePlot);
 
+var _singleCellGeneTsnePlot = require('single-cell-gene-tsne-plot');
+
+var _singleCellGeneTsnePlot2 = _interopRequireDefault(_singleCellGeneTsnePlot);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59,7 +63,13 @@ var ExperimentPage = function (_Component) {
                     'div',
                     null,
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/', render: function render(props) {
-                            return _react2.default.createElement(Experiment, _extends({}, props, { clustersData: _this2.props.clustersData }));
+                            return _react2.default.createElement(Experiment, _extends({}, props, {
+                                atlasUrl: _this2.props.atlasUrl,
+                                suggesterEndpoint: _this2.props.suggesterEndpoint,
+                                experimentAccession: _this2.props.experimentAccession,
+                                referenceDataSourceUrlTemplate: _this2.props.referenceDataSourceUrlTemplate,
+                                clustersData: _this2.props.clustersData
+                            }));
                         } })
                 )
             );
@@ -72,7 +82,9 @@ var ExperimentPage = function (_Component) {
 ExperimentPage.propTypes = {
     atlasUrl: _propTypes2.default.string.isRequired,
     experimentAccession: _propTypes2.default.string.isRequired,
-    clustersData: _propTypes2.default.object.isRequired
+    clustersData: _propTypes2.default.object.isRequired,
+    suggesterEndpoint: _propTypes2.default.string,
+    referenceDataSourceUrlTemplate: _propTypes2.default.string
 };
 
 var Experiment = function (_Component2) {
@@ -86,9 +98,8 @@ var Experiment = function (_Component2) {
         _this3.state = {
             params: _queryString2.default.parse(props.location.search),
             geneId: "",
-            clusterId: "",
-            K: "",
-            clustersChosen: ""
+            k: "",
+            clustersId: []
         };
         return _this3;
     }
@@ -97,21 +108,12 @@ var Experiment = function (_Component2) {
         key: 'handleChange',
         value: function handleChange(param, item) {
             var _newparam = {};
-            _newparam[param] = item.target.value;
+            _newparam[param] = param === "k" ? item.target.value : item;
             this.setState(_newparam);
 
             this.props.history.push("?" + _queryString2.default.stringify({
-                geneId: param === "geneId" ? item.target.value : this.state.geneId,
-                clusterId: param === "clusterId" ? item.target.value : this.state.clusterId
-            }));
-        }
-    }, {
-        key: 'handleOptionsChange',
-        value: function handleOptionsChange(e) {
-            this.setState({ clusterId: e.target.value });
-
-            this.props.history.push("?" + _queryString2.default.stringify({
-                clusterId: e.target.value
+                geneId: param === "geneId" ? item : this.state.geneId,
+                k: param === "k" ? item.target.value : this.state.k
             }));
         }
     }, {
@@ -119,8 +121,8 @@ var Experiment = function (_Component2) {
         value: function componentDidMount() {
             this.setState({
                 geneId: this.state.params.geneId,
-                clusterId: this.state.params.clusterId,
-                K: this.state.params.k
+                k: this.state.params.k,
+                clustersId: this.state.params.clustersId
             });
         }
     }, {
@@ -129,7 +131,7 @@ var Experiment = function (_Component2) {
 
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'row' },
                 _react2.default.createElement(
                     'h3',
                     null,
@@ -137,31 +139,20 @@ var Experiment = function (_Component2) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'large-6 columns' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Perplexity:'
-                    ),
-                    _react2.default.createElement('input', { type: 'text', value: this.state.clusterId, onChange: this.handleChange.bind(this, "clusterId") }),
-                    _react2.default.createElement(
-                        'h3',
-                        null,
-                        'Plot'
-                    ),
+                    { className: 'small-6 columns' },
                     _react2.default.createElement(_singleCellTsnePlot2.default, { clustersData: this.props.clustersData,
-                        clusterId: this.state.clusterId,
-                        handleOptionsChange: this.handleOptionsChange.bind(this) })
+                        clusterId: this.state.k,
+                        handleOptionsChange: this.handleChange.bind(this, "k") })
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'large-6 columns' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'GeneId:'
-                    ),
-                    _react2.default.createElement('input', { type: 'text', value: this.state.geneId, onChange: this.handleChange.bind(this, "geneId") })
+                    { className: 'small-6 columns' },
+                    _react2.default.createElement(_singleCellGeneTsnePlot2.default, { atlasUrl: this.props.atlasUrl,
+                        suggesterEndpoint: this.props.suggesterEndpoint,
+                        referenceDataSourceUrlTemplate: this.props.referenceDataSourceUrlTemplate,
+                        geneId: this.state.geneId,
+                        onSelect: this.handleChange.bind(this, "geneId")
+                    })
                 )
             );
         }
@@ -171,7 +162,10 @@ var Experiment = function (_Component2) {
 }(_react.Component);
 
 Experiment.propTypes = {
-    props: _propTypes2.default.object
+    props: _propTypes2.default.object,
+    atlasUrl: _propTypes2.default.string,
+    suggesterEndpoint: _propTypes2.default.string,
+    referenceDataSourceUrlTemplate: _propTypes2.default.string
 };
 
 exports.default = ExperimentPage;

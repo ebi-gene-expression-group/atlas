@@ -7,9 +7,7 @@
 
 
 <div class="row">
-
     <div id="container"></div>
-
 </div>
 
 <script>
@@ -28,6 +26,8 @@
     experimentPage.render({
         atlasUrl: "${pageContext.request.contextPath}/",
         experimentAccession: "${experimentAccession}",
-        clustersData: data
+        suggesterEndpoint:"json/suggestions",
+        clustersData: data,
+        referenceDataSourceUrlTemplate:"${pageContext.request.contextPath}/gxa_sc/json/experiments/${experimentAccession}/expression?query={0}"
     }, 'container');
 </script>

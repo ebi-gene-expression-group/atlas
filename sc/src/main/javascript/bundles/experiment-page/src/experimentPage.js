@@ -5,16 +5,23 @@ import PropTypes from 'prop-types';
 import URI from 'urijs';
 
 import ReferencePlot from 'single-cell-tsne-plot';
+import GeneTSNEPlot from 'single-cell-gene-tsne-plot';
 
 class ExperimentPage extends Component {
 
     render() {
         return (
             <BrowserRouter
-                basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}>
+                >
                 <div>
                     <Route path='/' render={props => (
-                        <Experiment {...props} clustersData={this.props.clustersData}/>
+                        <Experiment {...props}
+                                    atlasUrl={this.props.atlasUrl}
+                                    suggesterEndpoint={this.props.suggesterEndpoint}
+                                    experimentAccession={this.props.experimentAccession}
+                                    referenceDataSourceUrlTemplate={this.props.referenceDataSourceUrlTemplate}
+                                    clustersData={this.props.clustersData}
+                        />
                     )}/>
                 </div>
             </BrowserRouter>
@@ -26,7 +33,9 @@ class ExperimentPage extends Component {
 ExperimentPage.propTypes = {
     atlasUrl: PropTypes.string.isRequired,
     experimentAccession: PropTypes.string.isRequired,
-    clustersData: PropTypes.object.isRequired
+    clustersData: PropTypes.object.isRequired,
+    suggesterEndpoint: PropTypes.string,
+    referenceDataSourceUrlTemplate: PropTypes.string
 };
 
 class Experiment extends Component {
@@ -36,52 +45,50 @@ class Experiment extends Component {
         this.state = {
             params: queryString.parse(props.location.search),
             geneId: "",
-            clusterId: "",
-            K: "",
+            k: "",
+            clustersId: [],
         };
     }
 
     handleChange(param, item) {
         let _newparam = {};
-        _newparam[param] = item.target.value;
+        _newparam[param] = (param === "k" ? item.target.value : item);
         this.setState(_newparam);
 
         this.props.history.push("?" + queryString.stringify({
-            geneId: (param === "geneId" ? item.target.value : this.state.geneId),
-            clusterId: (param === "clusterId" ? item.target.value : this.state.clusterId)
+            geneId: (param === "geneId" ? item : this.state.geneId),
+            k: (param === "k" ? item.target.value : this.state.k)
         }));
     };
-
-    handleOptionsChange(e) {
-        this.setState({clusterId: e.target.value});
-
-        this.props.history.push("?" + queryString.stringify({
-                clusterId: e.target.value
-            }));
-    }
 
     componentDidMount() {
         this.setState({
             geneId: this.state.params.geneId,
-            clusterId: this.state.params.clusterId,
-            K: this.state.params.k
+            k: this.state.params.k,
+            clustersId: this.state.params.clustersId
         });
     }
 
     render() {
 
         return (
-            <div>
+            <div className="row">
                 <h3>Experiment Page section</h3>
-                <div className="large-6 columns">
+                <div className="small-6 columns">
                     <ReferencePlot clustersData={this.props.clustersData}
-                                   clusterId={this.state.clusterId}
-                                   handleOptionsChange={this.handleOptionsChange.bind(this)} />
+                                   clusterId={this.state.k}
+                                   handleOptionsChange={this.handleChange.bind(this, "k")} />
 
                 </div>
-                <div className="large-6 columns">
-                    <label>GeneId:</label>
-                    <input type="text" value={this.state.geneId} onChange={this.handleChange.bind(this, "geneId")}/>
+                <div className="small-6 columns">
+
+                    <GeneTSNEPlot atlasUrl={this.props.atlasUrl}
+                                  suggesterEndpoint={this.props.suggesterEndpoint}
+                                  referenceDataSourceUrlTemplate={this.props.referenceDataSourceUrlTemplate}
+                                  geneId={this.state.geneId}
+                                  onSelect={this.handleChange.bind(this, "geneId")}
+                    />
+
                 </div>
             </div>
         );
@@ -89,7 +96,10 @@ class Experiment extends Component {
 }
 
 Experiment.propTypes = {
-    props: PropTypes.object
+    props: PropTypes.object,
+    atlasUrl: PropTypes.string,
+    suggesterEndpoint: PropTypes.string,
+    referenceDataSourceUrlTemplate: PropTypes.string
 };
 
 

@@ -17,7 +17,8 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.0.0",
     "urijs": "^1.18.10",
-    "single-cell-tsne-plot": "latest"
+    "single-cell-tsne-plot": "latest",
+    "single-cell-gene-tsne-plot": "latest"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
