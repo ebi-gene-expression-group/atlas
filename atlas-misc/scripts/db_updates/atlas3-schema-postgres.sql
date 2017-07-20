@@ -151,6 +151,17 @@ CREATE TABLE ATLAS_JOBS(
     JOBOBJECT VARCHAR(255) NULL -- Experiment accession or organism
 );
 
+-- Table used by Atlas production code to maintain Atlas eligibility checking status
+DROP TABLE ATLAS_ELIGIBILITY CASCADE;
+CREATE TABLE ATLAS_ELIGIBILITY(
+    DATE_LAST_UPDATED DATE DEFAULT current_date, -- Date Atlas eligibiliy last run
+    AE2_ACC VARCHAR(255) NOT NULL, -- AE2 accession
+    ENA_STUDY_ID VARCHAR(255) NULL, -- ENA study id
+    GEO_ACC VARCHAR(255) NULL, -- GEO accession
+    STATUS VARCHAR(255) NULL, -- Corresponds to values in 'Atlas status' column in http://plantain:3002/
+    COMMENT VARCHAR(255) NULL -- Any error messages in the case of Atlas eligibility failure (or unexpected system-level exceptions while running the eligibility code)
+);
+
 -- Differential analytics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 and log2fold>=1
 -- Used by the UI
 DROP MATERIALIZED VIEW VW_DIFFANALYTICS CASCADE;
