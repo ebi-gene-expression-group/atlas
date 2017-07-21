@@ -102,7 +102,7 @@ public final class JsonBaselineExperimentsController extends JsonExceptionHandli
                                     }
                                 }
                         )
-                ).or(JsonNull.INSTANCE)
+                ).orElse(JsonNull.INSTANCE)
         );
 
         if(!experimentProfiles.isEmpty()){

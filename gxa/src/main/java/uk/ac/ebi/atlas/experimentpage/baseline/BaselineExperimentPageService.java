@@ -58,7 +58,7 @@ public class BaselineExperimentPageService extends ExperimentPageService {
             return jsonError("No genes found for query: '" + preferences.getGeneQuery() + "'");
         }
 
-        result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).or(JsonNull.INSTANCE));
+        result.add("anatomogram", anatomogramFactory.get(requestContext.getDataColumnsToReturn(),experiment).orElse(JsonNull.INSTANCE));
 
         for(Map.Entry<String, JsonElement> e: payloadAttributes(experiment, accessKey, preferences).entrySet()){
             result.add(e.getKey(), e.getValue());
