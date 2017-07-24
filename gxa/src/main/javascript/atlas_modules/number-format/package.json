@@ -1,6 +1,6 @@
 {
   "name": "expression-atlas-number-format",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Legend for differential expression experiments",
   "main": "index.js",
   "author": "Wojciech Bażant<wbazant@ebi.ac.uk>, Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
