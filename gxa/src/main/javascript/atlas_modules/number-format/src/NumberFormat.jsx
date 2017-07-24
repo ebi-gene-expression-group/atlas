@@ -33,7 +33,7 @@ const formatScientificNotation = (value, accuracy, spanStyle) => {
     }
 };
 
-export default {
-    baselineExpression: formatBaselineExpression,
-    scientificNotation: formatScientificNotation
+export {
+    formatBaselineExpression as baselineExpression ,
+    formatScientificNotation as default
 };
