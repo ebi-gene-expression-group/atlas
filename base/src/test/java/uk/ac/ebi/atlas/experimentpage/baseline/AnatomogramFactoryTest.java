@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class AnatomogramFactoryTest {
 
     @Test
-    public void anatomogramShowsUpWhenThereIsVariationAcrossOrganismParts() {
+    public void anatomogramShowsUpWhenThereAreOrganismParts() {
         ExperimentDesign experimentDesign = new ExperimentDesign();
         AssayGroup g1 = new AssayGroup("g1", "r1");
         AssayGroup g2 = new AssayGroup("g2", "r2");
@@ -34,8 +34,8 @@ public class AnatomogramFactoryTest {
 
         assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g2, g3), experiment).isPresent(), is(true));
         assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g3), experiment).isPresent(), is(true));
-        assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g2), experiment).isPresent(), is(false));
-        assertThat(new AnatomogramFactory().get(ImmutableList.of(g1), experiment).isPresent(), is(false));
+        assertThat(new AnatomogramFactory().get(ImmutableList.of(g1, g2), experiment).isPresent(), is(true));
+        assertThat(new AnatomogramFactory().get(ImmutableList.of(g1), experiment).isPresent(), is(true));
         assertThat(new AnatomogramFactory().get(ImmutableList.<AssayGroup>of(), experiment).isPresent(), is(false));
     }
 }
