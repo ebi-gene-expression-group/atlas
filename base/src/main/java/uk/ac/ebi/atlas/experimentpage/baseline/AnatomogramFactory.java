@@ -34,7 +34,7 @@ public class AnatomogramFactory {
                 selectedDataColumns.stream()
                         .map(assayGroup -> safeFactorValue(baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram)))
                         .collect(Collectors.toSet());
-        if (s.size() > 1) {
+        if (s.size() > 0) {
             return Optional.of(
                     getAnatomogramProperties(
                             baselineExperiment.getSpecies(),
