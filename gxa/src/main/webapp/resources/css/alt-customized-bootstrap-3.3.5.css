@@ -755,6 +755,37 @@ button.close {
     font-weight: bolder;
 }
 
+.nav  li.disabled  a {
+    color: #aaa;
+}
+
+.nav-pills > li {
+    float: left;
+}
+.nav-pills > li + li {
+    margin-left: 2px;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border-bottom-color: transparent;
+    font-weight: bold;
+}
+
+/*BOOTSTRAP addition*/
+.nav-pills li a:hover {
+    color: #777;
+}
+.nav-pills li a {
+    color: #207a7a;
+    text-decoration: none;
+}
+.nav-pills > li.active > a {
+    outline:0;
+}
+
 /*tab content*/
 .tab-content > .tab-pane {
     margin-top: 1em;
