@@ -77,7 +77,4 @@ public class OrganismPartGroupingService {
         }
     }
 
-    public Collection<ColumnGroup> getAnatomicalSystemsIncluding(String ontologyTermId) {
-        return anatomicalSystemsMap.get().get(ontologyTermId);
-    }
 }
