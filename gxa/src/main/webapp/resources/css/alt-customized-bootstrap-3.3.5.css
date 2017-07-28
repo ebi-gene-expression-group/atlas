@@ -16,7 +16,6 @@
     background-clip: padding-box;
     border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: 4px;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
@@ -233,7 +232,6 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px;
 }
 .btn:focus,
 .btn:active:focus,
@@ -407,14 +405,12 @@ fieldset[disabled] .btn-primary.active {
     padding: 1px 5px;
     font-size: 12px;
     line-height: 1.5;
-    border-radius: 3px;
 }
 
 .btn-sm {
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;
-    border-radius: 3px;
 }
 
 .close {
@@ -500,7 +496,6 @@ button.close {
     background-clip: padding-box;
     border: 1px solid #999;
     border: 1px solid rgba(0, 0, 0, .2);
-    border-radius: 6px;
     outline: 0;
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
     box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
@@ -614,7 +609,6 @@ button.close {
     color: white;
     text-align: center;
     background-color: cornflowerblue;
-    border-radius: 4px;
 }
 .tooltip-arrow {
     position: absolute;
@@ -717,7 +711,7 @@ button.close {
 .nav .noBorderTab {
     border:none !important;}
 .nav  li.disabled  a {
-    color: red;}
+    color: #888;}
 .nav  li.disabled  a:hover, .nav > li.disabled > a:focus {
     color: #777;
     text-decoration: none;
@@ -748,7 +742,6 @@ button.close {
     margin-right: 2px;
     line-height: 1.42857143;
     border: 1px solid transparent;
-    border-radius: 4px 4px 0 0;
 }
 .nav-tabs > li > a:hover {
     border-color: #eee #eee #ddd;
@@ -783,7 +776,6 @@ button.close {
 .nav-tabs .disabled {
     margin-right: 2px;
     line-height: 1.42857143;
-    border-radius: 4px 4px 0 0;
     padding: 10px 15px;
     color:#dedede;
     background-color: #fff;
