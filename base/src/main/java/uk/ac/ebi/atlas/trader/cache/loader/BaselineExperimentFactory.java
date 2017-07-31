@@ -65,7 +65,7 @@ public abstract class BaselineExperimentFactory implements ExperimentFactory<Bas
         for (String alternativeViewAccession : factorsConfig.getAlternativeViews()) {
             accessions.add(alternativeViewAccession);
             descriptions.add("View by " + configurationTrader.getBaselineFactorsConfiguration
-                    (alternativeViewAccession).getDefaultQueryFactorType().toLowerCase());
+                    (alternativeViewAccession).getDefaultQueryFactorType().toLowerCase().replace("_", " "));
         }
         return Pair.of(accessions, descriptions);
     }
