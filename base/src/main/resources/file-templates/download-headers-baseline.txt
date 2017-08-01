@@ -1,4 +1,0 @@
-# Expression Atlas version: ${project.version}
-# Query: {0} matching: {1}, {2}expressed above the expression level cutoff: {3} in experiment {4}
-# Selected columns: {5}
-# Timestamp: {6}

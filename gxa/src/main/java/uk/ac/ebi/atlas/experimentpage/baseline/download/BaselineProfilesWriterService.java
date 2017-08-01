@@ -17,8 +17,6 @@ import uk.ac.ebi.atlas.profiles.stream.ProteomicsBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.stream.RnaSeqBaselineProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesWriterFactory;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.search.SearchDescription;
-import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -33,8 +31,6 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
-import static org.apache.commons.lang3.StringUtils.wrap;
 
 public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.Absolute> extends ExternallyAvailableContent.Supplier<BaselineExperiment> {
 
@@ -120,16 +116,10 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
 
         return inputStreamFactory.write(experiment, requestContext,
                 new ProfileStreamFilter<AssayGroup, BaselineProfileStreamOptions<Unit>, BaselineProfile>(requestContext, geneQueryResponse),
-                baselineProfilesWriterFactory.create(writer, requestContext,
-                        describe(requestContext.getGeneQuery(), totalCoexpressionsRequested)
-                ));
+                baselineProfilesWriterFactory.create(writer, requestContext,totalCoexpressionsRequested)
+                );
     }
 
-
-    private String describe(SemanticQuery geneQuery, int coexpressedGenes) {
-        return coexpressedGenes == 0 ? wrap(SearchDescription.get(geneQuery), "'") :
-                geneQuery.description() + " with " + coexpressedGenes + " similarly expressed genes";
-    }
 
     ExternallyAvailableContent getOne(final BaselineExperiment experiment, final BaselineRequestPreferences<Unit> preferences, final String id, String description) {
         return new ExternallyAvailableContent(makeUri(id),

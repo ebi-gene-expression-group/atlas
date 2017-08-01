@@ -15,12 +15,12 @@ public class MicroarrayProfilesWriterFactory extends DifferentialProfilesWriterF
         MicroarrayRequestContext> {
 
     @Override
-    protected String[] getProfileIdColumnHeaders(MicroarrayRequestContext requestContext, DifferentialDownLoadOptions profileDownloadOption) {
+    protected String[] getProfileIdColumnHeaders(MicroarrayRequestContext requestContext) {
         return new String[]{"Gene ID", "Gene Name", "Design Element"};
     }
 
     @Override
-    protected Iterable<String> labelsForColumn(MicroarrayRequestContext requestContext, DifferentialDownLoadOptions profileDownloadOptions,
+    protected Iterable<String> labelsForColumn(MicroarrayRequestContext requestContext,
                                                Contrast dataColumnDescriptor){
         String name = requestContext.displayNameForColumn(dataColumnDescriptor);
         return ImmutableList.of(
@@ -30,8 +30,7 @@ public class MicroarrayProfilesWriterFactory extends DifferentialProfilesWriterF
     }
 
     @Override
-    protected Iterable<String> valuesFromColumn(MicroarrayRequestContext requestContext, DifferentialDownLoadOptions
-            profileDownloadOptions,@Nullable MicroarrayExpression expression) {
+    protected Iterable<String> valuesFromColumn(MicroarrayRequestContext requestContext, @Nullable MicroarrayExpression expression) {
         return expression == null ? ImmutableList.of("","", "") :
                 ImmutableList.of(
                 Double.toString(expression.getFoldChange()),

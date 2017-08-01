@@ -84,7 +84,7 @@ public class BaselineProfilesWriterServiceTest {
 
         baselineRequestContext = new BaselineRequestContext(preferencesMock, baselineExperimentMock);
 
-        when(baselineProfilesWriterFactory.create(any(), any(), anyString())).thenReturn(profilesWriter);
+        when(baselineProfilesWriterFactory.create(any(), any(), 0)).thenReturn(profilesWriter);
 
         subject = new BaselineProfilesWriterService<ExpressionUnit.Absolute>(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
                 coexpressedGenesService){

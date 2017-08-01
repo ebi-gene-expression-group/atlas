@@ -12,67 +12,46 @@ import javax.annotation.Nullable;
 import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class ProfilesWriterFactory<DataColumnDescriptor extends DescribesDataColumns,
         Expr extends Expression,
         Prof extends Profile<DataColumnDescriptor, Expr, Prof>,
-        R extends RequestContext<DataColumnDescriptor,?, ?>,
-        DownloadOptions extends ProfilesWriterFactory.ProfileDownloadOptions> {
+        R extends RequestContext<DataColumnDescriptor,?, ?>> {
 
-    protected static class ProfileDownloadOptions {
-        public final String queryDescription;
-        public ProfileDownloadOptions(String queryDescription){
-            this.queryDescription = queryDescription;
-        }
-    }
+    protected abstract String getTsvFileMasthead(R requestContext, String queryDescription);
 
-    protected abstract String getTsvFileMasthead(R requestContext, DownloadOptions profileDownloadOptions);
-
-    protected String[] getProfileIdColumnHeaders(R requestContext, DownloadOptions profileDownloadOption) {
+    protected String[] getProfileIdColumnHeaders(R requestContext) {
         return new String[]{"Gene ID", "Gene Name"};
     }
 
-    protected Iterable<String> labelsForColumn(R requestContext, DownloadOptions profileDownloadOptions, DataColumnDescriptor dataColumnDescriptor){
+    protected Iterable<String> labelsForColumn(R requestContext, DataColumnDescriptor dataColumnDescriptor){
         return Collections.singleton(requestContext.displayNameForColumn(dataColumnDescriptor));
     }
 
-    protected Iterable<String> valuesFromColumn(R requestContext, DownloadOptions profileDownloadOptions,@Nullable Expr expression) {
+    protected Iterable<String> valuesFromColumn(R requestContext, @Nullable Expr expression) {
         return Collections.singleton(expression == null ? "" : Double.toString(expression.getLevel()));
     }
 
-    final protected ProfilesWriter<Prof> create(Writer responseWriter, final R requestContext, final DownloadOptions profileDownloadOptions) {
+    final protected ProfilesWriter<Prof> create(Writer responseWriter, final R requestContext, String queryDescription) {
         final List<DataColumnDescriptor> columns = requestContext.getDataColumnsToReturn();
-        Function<Prof, String[]> profileToLine = new Function<Prof, String[]>() {
-            @Nullable
-            @Override
-            public String[] apply(final @Nullable Prof prof) {
-                return buildCsvRow(prof.identifiers(), FluentIterable.from(columns).transformAndConcat(
-                        new Function<DataColumnDescriptor, Iterable<String>>() {
-                    @Nullable
-                    @Override
-                    public Iterable<String> apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
-                        return valuesFromColumn(requestContext, profileDownloadOptions, prof.getExpression(dataColumnDescriptor));
-                    }
-                }).toArray(String.class));
-            }
-        };
-
-
         return new ProfilesWriter<>(
                 responseWriter,
-                getTsvFileMasthead(requestContext, profileDownloadOptions),
-                buildCsvHeaderLine(requestContext, profileDownloadOptions, columns),
-                profileToLine);
+                getTsvFileMasthead(requestContext, queryDescription),
+                buildCsvHeaderLine(requestContext, columns),
+                prof -> buildCsvRow(prof.identifiers(), FluentIterable.from(columns).transformAndConcat(
+                        dataColumnDescriptor -> valuesFromColumn(requestContext, prof.getExpression(dataColumnDescriptor)))
+                       .toArray(String.class)));
     }
 
-    private String[] buildCsvHeaderLine(final R requestContext, final DownloadOptions profileDownloadOptions, final List<DataColumnDescriptor> columns) {
-        return buildCsvRow(getProfileIdColumnHeaders(requestContext, profileDownloadOptions),
+    private String[] buildCsvHeaderLine(final R requestContext, final List<DataColumnDescriptor> columns) {
+        return buildCsvRow(getProfileIdColumnHeaders(requestContext),
                 FluentIterable.from(columns)
                         .transformAndConcat(new Function<DataColumnDescriptor, Iterable<String>>() {
                             @Nullable
                             @Override
                             public Iterable<String> apply(@Nullable DataColumnDescriptor dataColumnDescriptor) {
-                                return labelsForColumn(requestContext, profileDownloadOptions, dataColumnDescriptor);
+                                return labelsForColumn(requestContext, dataColumnDescriptor);
                             }
                         })
                         .toArray(String.class)

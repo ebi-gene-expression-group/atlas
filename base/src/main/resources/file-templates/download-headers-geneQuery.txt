@@ -1,3 +1,0 @@
-# Expression Atlas version: ${project.version}
-# Query: {0}{1}specifically up/down differentially expressed{2}{3}, given the False Discovery Rate cutoff: 0.05
-# Timestamp: {4}

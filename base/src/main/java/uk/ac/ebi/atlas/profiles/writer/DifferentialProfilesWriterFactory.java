@@ -21,49 +21,27 @@ import java.util.Date;
 
 public abstract class DifferentialProfilesWriterFactory<Expr extends DifferentialExpression, Prof extends
         DifferentialProfile<Expr, Prof>, R extends DifferentialRequestContext<?,?>> extends
-        ProfilesWriterFactory<Contrast, Expr, Prof, R, DifferentialProfilesWriterFactory.DifferentialDownLoadOptions> {
-
-    static class DifferentialDownLoadOptions extends ProfilesWriterFactory.ProfileDownloadOptions {
-        public DifferentialDownLoadOptions(String queryDescription) {
-            super(queryDescription);
-        }
-        /*
-        There might be options which value to actually download - foldChange, pValue, or tStat
-        units will possibly vary, too
-         */
-    }
-
-    private String tsvFileMastheadTemplate;
-
-    @Value("classpath:/file-templates/download-headers-differential.txt")
-    public void setTsvFileMastheadTemplate(Resource tsvFileMastheadResource) {
-        try (InputStream inputStream = tsvFileMastheadResource.getInputStream()) {
-            tsvFileMastheadTemplate = IOUtils.toString(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        ProfilesWriterFactory<Contrast, Expr, Prof, R> {
 
     public ProfilesWriter<Prof> create(Writer responseWriter, R requestContext){
-        return create(responseWriter, requestContext, new DifferentialDownLoadOptions(SearchDescription.get(requestContext.getGeneQuery())));
+        return create(responseWriter, requestContext,SearchDescription.get(requestContext.getGeneQuery()));
     }
 
     @Override
-    protected Iterable<String> labelsForColumn(R requestContext, DifferentialDownLoadOptions profileDownloadOptions,
+    protected Iterable<String> labelsForColumn(R requestContext,
                                                Contrast dataColumnDescriptor){
         String name = requestContext.displayNameForColumn(dataColumnDescriptor);
         return ImmutableList.of(name+".foldChange", name+".pValue");
     }
 
     @Override
-    protected Iterable<String> valuesFromColumn(R requestContext, DifferentialDownLoadOptions profileDownloadOptions, @Nullable Expr expression) {
+    protected Iterable<String> valuesFromColumn(R requestContext, @Nullable Expr expression) {
         return expression == null ? ImmutableList.of("","") :
                 ImmutableList.of(Double.toString(expression.getFoldChange()), Double.toString(expression.getPValue()));
     }
 
     @Override
-    protected String getTsvFileMasthead(R requestContext, DifferentialDownLoadOptions profileDownloadOptions) {
-        String geneQuery = profileDownloadOptions.queryDescription;
+    protected String getTsvFileMasthead(R requestContext, String queryDescription) {
         String specific = requestContext.isSpecific() ? " specifically" : "";
         String regulation = " " + requestContext.getRegulation().getLabel();
         String selectedContrasts = formatSelectedContrasts(requestContext);
@@ -71,8 +49,11 @@ public abstract class DifferentialProfilesWriterFactory<Expr extends Differentia
         double foldChangeCutoff = requestContext.getFoldChangeCutoff();
         String experimentAccession = requestContext.getExperimentAccession();
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, specific, regulation, selectedContrasts, pValueCutoff, foldChangeCutoff,
-                experimentAccession, timeStamp);
+        return MessageFormat.format(
+                "# Expression Atlas\n" +
+                "# Query: Genes matching: {0},{1}{2} differentially expressed in {3} given the adjusted p-value cutoff {4} and log2-fold change cutoff {5} in experiment {6}\n" +
+                "# Timestamp: {7}",
+                queryDescription, specific, regulation, selectedContrasts, pValueCutoff, foldChangeCutoff, experimentAccession, timeStamp);
     }
 
     private String formatSelectedContrasts(DifferentialRequestContext requestContext) {
