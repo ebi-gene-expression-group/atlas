@@ -33,6 +33,8 @@ public class AnatomogramFactory {
         Set<String> s =
                 selectedDataColumns.stream()
                         .map(assayGroup -> safeFactorValue(baselineExperiment.getFactors(assayGroup).factorOfType(factorTypeWithAnatomogram)))
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
                         .collect(Collectors.toSet());
         if (s.size() > 0) {
             return Optional.of(
@@ -46,11 +48,11 @@ public class AnatomogramFactory {
         }
     }
 
-    private String safeFactorValue(@Nullable Factor factor) {
+    private Optional<String> safeFactorValue(@Nullable Factor factor) {
         if (factor == null) {
-            return "";
+            return Optional.empty();
         } else {
-            return factor.getValue();
+            return Optional.of(factor.getValue());
         }
     }
 
