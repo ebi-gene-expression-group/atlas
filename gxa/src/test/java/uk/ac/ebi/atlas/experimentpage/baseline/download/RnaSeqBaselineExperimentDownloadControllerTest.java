@@ -1,18 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.baseline.Factor;
-import uk.ac.ebi.atlas.search.SemanticQuery;
-import uk.ac.ebi.atlas.species.Species;
-import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -23,7 +18,6 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -82,7 +76,7 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
 
         verify(baselineProfilesWriterService)
                 .write(eq(printWriterMock), any(BaselineRequestPreferences.class),
-                        any(BaselineExperiment.class), anyMap());
+                        any(BaselineExperiment.class));
     }
 
 

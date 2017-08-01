@@ -43,28 +43,8 @@ public class BaselineExperimentDownloadService<T extends BaselineRequestPreferen
                 "Content-Disposition", "attachment; filename=\"" + experiment.getAccession() + "-query-results.tsv\"");
         response.setContentType("text/plain; charset=utf-8");
 
-        long genesCount = baselineProfilesWriterService.write(response.getWriter(), preferences, experiment, readCoexpressionsRequested(request));
+        long genesCount = baselineProfilesWriterService.write(response.getWriter(), preferences, experiment);
         LOGGER.info("<downloadGeneProfiles> streamed {} gene expression profiles", genesCount);
     }
 
-    Map<String, Integer> readCoexpressionsRequested(HttpServletRequest request) {
-        return request.getParameterMap().containsKey("coexpressions")
-                ? coexpressionsRequested(request.getParameter("coexpressions"))
-                : new HashMap<>();
-    }
-
-    private Map<String, Integer> coexpressionsRequested(String argument) {
-        Map<String, Integer> result = new HashMap<>();
-        try {
-            JsonElement el = jsonParser.parse(argument.replace("\\\"","\""));
-            if (el != null && el.isJsonObject()) {
-                for (Map.Entry<String, JsonElement> e : el.getAsJsonObject().entrySet()) {
-                    result.put(e.getKey().toUpperCase(), e.getValue().getAsInt());
-                }
-            }
-        } catch (JsonSyntaxException | NumberFormatException e) {
-            LOGGER.debug(e.toString());
-        }
-        return result;
-    }
 }

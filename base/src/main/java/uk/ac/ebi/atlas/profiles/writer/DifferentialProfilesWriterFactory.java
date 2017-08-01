@@ -1,18 +1,12 @@
 package uk.ac.ebi.atlas.profiles.writer;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.experiment.differential.Contrast;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.search.SearchDescription;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -22,10 +16,6 @@ import java.util.Date;
 public abstract class DifferentialProfilesWriterFactory<Expr extends DifferentialExpression, Prof extends
         DifferentialProfile<Expr, Prof>, R extends DifferentialRequestContext<?,?>> extends
         ProfilesWriterFactory<Contrast, Expr, Prof, R> {
-
-    public ProfilesWriter<Prof> create(Writer responseWriter, R requestContext){
-        return create(responseWriter, requestContext,SearchDescription.get(requestContext.getGeneQuery()));
-    }
 
     @Override
     protected Iterable<String> labelsForColumn(R requestContext,

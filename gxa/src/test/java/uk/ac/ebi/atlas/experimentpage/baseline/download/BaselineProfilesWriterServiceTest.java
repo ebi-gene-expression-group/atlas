@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -38,7 +37,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -86,8 +84,8 @@ public class BaselineProfilesWriterServiceTest {
 
         when(baselineProfilesWriterFactory.create(any(), any(), 0)).thenReturn(profilesWriter);
 
-        subject = new BaselineProfilesWriterService<ExpressionUnit.Absolute>(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService,
-                coexpressedGenesService){
+        subject = new BaselineProfilesWriterService<ExpressionUnit.Absolute>(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService
+        ){
             @Override
             public Collection<ExternallyAvailableContent> get(BaselineExperiment experiment) {
                 return ImmutableList.of();
@@ -112,7 +110,7 @@ public class BaselineProfilesWriterServiceTest {
         Writer writer = mock(Writer.class);
         Map<String, Integer> coexpressions = new HashMap<>();
 
-        subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
+        subject.write(writer, preferencesMock, baselineExperimentMock);
 
         Mockito.verifyNoMoreInteractions(coexpressedGenesService);
     }
@@ -140,7 +138,7 @@ public class BaselineProfilesWriterServiceTest {
         when(coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response,
                 coexpressions)).thenReturn(extendedResponse);
 
-        subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
+        subject.write(writer, preferencesMock, baselineExperimentMock);
 
         Mockito.verify(coexpressedGenesService).extendGeneQueryResponseWithCoexpressions(baselineExperimentMock, response, coexpressions);
     }
@@ -174,7 +172,7 @@ public class BaselineProfilesWriterServiceTest {
 
         when(solrQueryService.fetchResponse(any(SemanticQuery.class), any(Species.class))).thenReturn(response);
 
-        subject.write(writer, preferencesMock, baselineExperimentMock, coexpressions);
+        subject.write(writer, preferencesMock, baselineExperimentMock);
     }
 
 }

@@ -7,12 +7,15 @@ import uk.ac.ebi.atlas.experimentpage.context.RequestContext;
 import uk.ac.ebi.atlas.model.DescribesDataColumns;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.search.SearchDescription;
 
 import javax.annotation.Nullable;
 import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.apache.commons.lang3.StringUtils.wrap;
 
 public abstract class ProfilesWriterFactory<DataColumnDescriptor extends DescribesDataColumns,
         Expr extends Expression,
@@ -33,11 +36,11 @@ public abstract class ProfilesWriterFactory<DataColumnDescriptor extends Describ
         return Collections.singleton(expression == null ? "" : Double.toString(expression.getLevel()));
     }
 
-    final protected ProfilesWriter<Prof> create(Writer responseWriter, final R requestContext, String queryDescription) {
+    public final ProfilesWriter<Prof> create(Writer responseWriter, final R requestContext) {
         final List<DataColumnDescriptor> columns = requestContext.getDataColumnsToReturn();
         return new ProfilesWriter<>(
                 responseWriter,
-                getTsvFileMasthead(requestContext, queryDescription),
+                getTsvFileMasthead(requestContext, wrap(SearchDescription.get(requestContext.getGeneQuery()), "'")),
                 buildCsvHeaderLine(requestContext, columns),
                 prof -> buildCsvRow(prof.identifiers(), FluentIterable.from(columns).transformAndConcat(
                         dataColumnDescriptor -> valuesFromColumn(requestContext, prof.getExpression(dataColumnDescriptor)))

@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableMap;
 import uk.ac.ebi.atlas.experimentpage.baseline.coexpression.CoexpressedGenesService;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -30,7 +29,6 @@ import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 
 public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.Absolute> extends ExternallyAvailableContent.Supplier<BaselineExperiment> {
 
@@ -47,8 +45,8 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
         RnaSeq(RnaSeqBaselineProfileStreamFactory inputStreamFactory,
                BaselineProfilesWriterFactory baselineProfilesWriterFactory,
                SolrQueryService solrQueryService,
-               CoexpressedGenesService coexpressedGenesService, DataFileHub dataFileHub) {
-            super(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService, coexpressedGenesService);
+               DataFileHub dataFileHub) {
+            super(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService);
             this.dataFileHub = dataFileHub;
         }
 
@@ -66,9 +64,8 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
         @Inject
         Proteomics(ProteomicsBaselineProfileStreamFactory inputStreamFactory,
                    BaselineProfilesWriterFactory baselineProfilesWriterFactory,
-                   SolrQueryService solrQueryService,
-                   CoexpressedGenesService coexpressedGenesService) {
-            super(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService, coexpressedGenesService);
+                   SolrQueryService solrQueryService) {
+            super(inputStreamFactory, baselineProfilesWriterFactory, solrQueryService);
         }
 
         @Override
@@ -84,40 +81,24 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
 
     private SolrQueryService solrQueryService;
 
-    private CoexpressedGenesService coexpressedGenesService;
-
     BaselineProfilesWriterService(ProfileStreamFactory<AssayGroup, BaselineExpression,
             BaselineExperiment, BaselineProfileStreamOptions<Unit>, BaselineProfile> inputStreamFactory,
                                   BaselineProfilesWriterFactory baselineProfilesWriterFactory,
-                                  SolrQueryService solrQueryService,
-                                  CoexpressedGenesService coexpressedGenesService) {
+                                  SolrQueryService solrQueryService) {
         this.inputStreamFactory = inputStreamFactory;
         this.baselineProfilesWriterFactory = baselineProfilesWriterFactory;
         this.solrQueryService = solrQueryService;
-        this.coexpressedGenesService = coexpressedGenesService;
 
     }
 
-    public long write(Writer writer, BaselineRequestPreferences<Unit> preferences, BaselineExperiment experiment,
-                      Map<String, Integer> coexpressionsRequested) {
-        int totalCoexpressionsRequested = 0;
-        for (Map.Entry<String, Integer> e : coexpressionsRequested.entrySet()) {
-            totalCoexpressionsRequested += e.getValue();
-        }
+    public long write(Writer writer, BaselineRequestPreferences<Unit> preferences, BaselineExperiment experiment) {
 
         final BaselineRequestContext<Unit> requestContext = new BaselineRequestContext<>(preferences, experiment);
         GeneQueryResponse geneQueryResponse =
                 solrQueryService.fetchResponse(requestContext.getGeneQuery(), requestContext.getSpecies());
-        if (totalCoexpressionsRequested > 0) {
-            geneQueryResponse =
-                    coexpressedGenesService.extendGeneQueryResponseWithCoexpressions(
-                            experiment, geneQueryResponse, coexpressionsRequested);
-        }
-
         return inputStreamFactory.write(experiment, requestContext,
                 new ProfileStreamFilter<AssayGroup, BaselineProfileStreamOptions<Unit>, BaselineProfile>(requestContext, geneQueryResponse),
-                baselineProfilesWriterFactory.create(writer, requestContext,totalCoexpressionsRequested)
-                );
+                baselineProfilesWriterFactory.create(writer, requestContext));
     }
 
 
@@ -130,7 +111,7 @@ public abstract class BaselineProfilesWriterService<Unit extends ExpressionUnit.
                         MessageFormat.format("attachment; filename=\"{0}-query-results.{1}\"", experiment.getAccession(), id));
                 response.setContentType("text/plain; charset=utf-8");
 
-                write(response.getWriter(), preferences, experiment, ImmutableMap.<String, Integer>of());
+                write(response.getWriter(), preferences, experiment);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

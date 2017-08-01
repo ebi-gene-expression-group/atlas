@@ -43,14 +43,4 @@ public class BaselineProfilesWriterFactory<Unit extends ExpressionUnit.Absolute>
                     requestContext.getAllDataColumns().size());
         }
     }
-
-    public ProfilesWriter<BaselineProfile> create(Writer responseWriter, BaselineRequestContext<Unit> baselineRequestContext, int coexpressionsRequested){
-        return create(responseWriter, baselineRequestContext, describe(baselineRequestContext.getGeneQuery(), coexpressionsRequested));
-    }
-
-
-    private String describe(SemanticQuery geneQuery, int coexpressedGenes) {
-        return coexpressedGenes == 0 ? wrap(SearchDescription.get(geneQuery), "'") :
-                geneQuery.description() + " with " + coexpressedGenes + " similarly expressed genes";
-    }
 }
