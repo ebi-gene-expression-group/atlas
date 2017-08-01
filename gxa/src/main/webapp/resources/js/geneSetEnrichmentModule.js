@@ -16,50 +16,93 @@ var geneSetEnrichmentModule = (function ($) {
         }
     }
 
-    function _init(allData) {
+    function _init(selector, allData) {
 
-        var $experimentsTable = $("#gene-set-enrichment-results-table");
+        var $experimentsTable = $(selector);
         //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
         $experimentsTable.dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
         var oTable = $experimentsTable.DataTable({
             "autoWidth": false,
             "processing": true,
-            "data":allData,
-            "columns":[
-                { "title":"Experiment", "data":"experiment", "className":"center", "type":"center",
+            "data": allData,
+            "columns": [
+                {
+                    "title": "Experiment", "data": "experiment", "className": "center", "type": "center",
                     "render": function (data, type, full) {
                         return data;
-                    } },
-                { "title":"Comparison", "data":"comparison_title", "className":"center", "type":"center",
+                    }
+                },
+                {
+                    "title": "Comparison", "data": "comparison_title", "className": "center", "type": "center",
                     "render": function (data, type, full) {
                         return formatExperimentDescription(data);
-                    } },
-                { "title":"P-Value", "data":"p-value", "className":"center", "type":"title-numeric", "width":"10%",
+                    }
+                },
+                {
+                    "title": "P-Value",
+                    "data": "p-value",
+                    "className": "center",
+                    "type": "title-numeric",
+                    "width": "10%",
                     "render": function (data, type, full) {
                         return type == 'sort' ? data : formatPValue(data);
-                    } },
-                { "title":"Observed", "data":"observed", "className":"center", "type":"title-numeric", "width":"5%",
+                    }
+                },
+                {
+                    "title": "Observed",
+                    "data": "observed",
+                    "className": "center",
+                    "type": "title-numeric",
+                    "width": "5%",
                     "render": function (data, type, full) {
                         return data;
-                    } },
-                { "title":"Expected", "data":"expected", "className":"center", "type":"title-numeric", "width":"5%",
+                    }
+                },
+                {
+                    "title": "Expected",
+                    "data": "expected",
+                    "className": "center",
+                    "type": "title-numeric",
+                    "width": "5%",
                     "render": function (data, type, full) {
                         return data;
-                    } },
-                { "title":"Adjusted P-Value", "data":"adjusted p-value", "className":"center", "type":"title-numeric", "width":"10%",
+                    }
+                },
+                {
+                    "title": "Adjusted P-Value",
+                    "data": "adjusted p-value",
+                    "className": "center",
+                    "type": "title-numeric",
+                    "width": "10%",
                     "render": function (data, type, full) {
-                        return  type == 'sort' ? data : formatPValue(data);
-                    } },
-                { "title":"Observed/Expected", "data":"effect size", "className":"center", "type":"title-numeric", "width":"10%",
+                        return type == 'sort' ? data : formatPValue(data);
+                    }
+                },
+                {
+                    "title": "Observed/Expected",
+                    "data": "effect size",
+                    "className": "center",
+                    "type": "title-numeric",
+                    "width": "10%",
                     "render": function (data, type, full) {
                         return data;
-                    } }
+                    }
+                }
             ],
-            "order": [[ 5, "asc" ]],
-            "lengthMenu":[
+            "order": [[5, "asc"]],
+            "lengthMenu": [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
+            ],
+            dom: '<"button primary white-color float-left margin-right-large"B>lfrtip',
+            language: {
+                buttons: {
+                    csv: "Download all results"
+                }
+            },
+            buttons: [
+                "csvHtml5"
             ]
         });
     }
