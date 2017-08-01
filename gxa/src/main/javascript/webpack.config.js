@@ -14,17 +14,20 @@ module.exports = {
         expressionAtlasBrowseBySpecies: './atlas_bundles/browse-by-species',
         // polyfills: ['babel-polyfill', 'whatwg-fetch'],
         dependencies: [
-            // Bundled dependencies: expressionAtlasHeatmapHighcharts
+            // Here go our shared packages and third party packages
+            // expressionAtlasHeatmapHighcharts, experimentPage, expressionAtlasBaselineExpression
             'expression-atlas-heatmap-highcharts',
             'anatomogram',
+            // expressionAtlasBaselineExpression, expressionAtlasDifferentialExpression
             'expression-atlas-feedback',
-            'react-refetch',
+            // expressionAtlasBrowseBySpecies, expressionAtlasDifferentialExpression
             'react-ebi-species',
+            // expressionAtlasHeatmapHighcharts, expressionAtlasDifferentialExpression
+            'expression-atlas-number-format',
 
             // Required by: expressionAtlasHeatmapHighcharts
             'color',
             'downloadjs',
-            'expression-atlas-number-format',
             'he',
             'highcharts',
             'highcharts-custom-events',
@@ -36,11 +39,8 @@ module.exports = {
             'react-bootstrap',
             'react-dom',
             'react-highcharts',
-            'react-tooltip',
+            'react-refetch',
             'urijs',
-
-            // Required by: anatomogram
-            'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
 
             // Node.js stuff
             'url',
