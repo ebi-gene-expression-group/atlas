@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.controllers;
 
+import com.google.common.base.Joiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Arrays;
 
 public abstract class HtmlExceptionHandlingController {
 
@@ -45,7 +44,7 @@ public abstract class HtmlExceptionHandlingController {
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {
-        LOGGER.error("{} - {}", e.getMessage(), Arrays.deepToString(e.getStackTrace()));
+        LOGGER.error("{} - {}", e.getMessage(), Joiner.on("\n\t").join(e.getStackTrace()));
         ModelAndView mav = new ModelAndView("error-page");
         mav.addObject("exceptionMessage", e.getMessage());
         return mav;

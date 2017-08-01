@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.controllers;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.Arrays;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -23,7 +22,7 @@ public abstract class JsonExceptionHandlingController extends ReturnsJsonErrors 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public String handleException(Exception e) {
-        LOGGER.error("{} - {}", e.getMessage(), Arrays.deepToString(e.getStackTrace()));
+        LOGGER.error("{} - {}", e.getMessage(), Joiner.on("\n\t").join(e.getStackTrace()));
         return gson.toJson(jsonError(isBlank(e.getMessage()) ? "Unknown error" : e.getMessage()));
     }
 }
