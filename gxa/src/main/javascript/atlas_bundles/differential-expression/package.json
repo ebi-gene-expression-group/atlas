@@ -11,6 +11,7 @@
   "license": "Apache license, version 2.0",
   "private": true,
   "dependencies": {
+    "expression-atlas-number-format": "latest",
     "expression-atlas-feedback": "file:../../atlas_modules/feedback",
     "jquery": "2.2.1",
     "jquery-ui-bundle": "1.11.4",
