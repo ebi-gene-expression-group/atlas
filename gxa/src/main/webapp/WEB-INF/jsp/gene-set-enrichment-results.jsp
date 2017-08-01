@@ -4,32 +4,36 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation/experiments-table.css" media="screen">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.foundation.min.css" media="screen">
 
-<h3>Gene set enrichment results</h3>
-<h4>Species: <i> ${species} </i></h4>
-<h4>Genes: </h4>
-<div style="margin-bottom: 30px">
-    <div id="query-short">
+<div class="row expanded">
+    <div class="small-12 columns">
+        <h3>Gene set enrichment results</h3>
+        <h4>Species: <i> ${species} </i></h4>
+        <h4>Genes: </h4>
+        <div style="margin-bottom: 30px">
+            <div id="query-short">
         <span>
-    ${queryShort}
+            ${queryShort}
         </span>
-        <a role="button" style="cursor: pointer;" onclick="$('#query-short').hide() ; $('#query-full').show()" >
-            … (show all)</a>
-    </div>
-    <div id="query-full" style="display:none">
+                <a role="button" style="cursor: pointer;" onclick="$('#query-short').hide() ; $('#query-full').show()" >
+                    … (show all)</a>
+            </div>
+            <div id="query-full" style="display:none">
     <span>
         ${query}
     </span>
-    <a role="button" style="cursor: pointer;" onclick="$('#query-full').hide() ; $('#query-short').show()" >
-        (show fewer)</a>
+                <a role="button" style="cursor: pointer;" onclick="$('#query-full').hide() ; $('#query-short').show()" >
+                    (show fewer)</a>
+            </div>
+        </div>
+
+        <table id="gene-set-enrichment-results-table">
+            <thead></thead>
+
+            <tbody/>
+        </table>
     </div>
 </div>
 
-
-<table id="gene-set-enrichment-results-table">
-    <thead></thead>
-
-    <tbody/>
-</table>
 
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.foundation.min.js"></script>
