@@ -6,16 +6,6 @@ echo "============================================================"
 echo "Stopping Tomcat on ves-hx-77..."
 sudo -u tc_fg02 ssh ves-hx-77 '/nfs/public/rw/webadmin/tomcat/bases/fg/tc-fg-gxa_test/bin/controller stop'
 
-# Skipping Solr sync, see http://ves-hx-77:8983/solr/#/analytics/replication
-#echo "============================================================"
-#echo `date`
-#echo "============================================================"
-#echo "Replicating Solr indexes from ves-hx-69 to ves-hx-77..."
-#curl http://ves-hx-77:8983/solr/analytics/replication?command=fetchindex
-#curl http://ves-hx-77:8983/solr/baselineConditions/replication?command=fetchindex
-#curl http://ves-hx-77:8983/solr/differentialConditions/replication?command=fetchindex
-#curl http://ves-hx-77:8983/solr/gxa/replication?command=fetchindex
-
 echo "============================================================"
 echo `date`
 echo "============================================================"
@@ -28,33 +18,33 @@ echo "============================================================"
 echo "Syncing admin logs from ves-hx-76 to ves-hx-77..."
 sudo -u tc_fg02 ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv/gxa/data/admin/* /srv/gxa/data/admin'
 
-echo "============================================================"
-echo `date`
-echo "============================================================"
-echo "Syncing serialized expression from ves-hx-76 to ves-hx-77..."
-sudo -u tc_fg02 ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv/gxa/data/serialized_expression/* /srv/gxa/data/serialized_expression'
+echo "Skipping syncing of serialized expression: this is only safe if code in ves-hx-76 and ves-hx-77 are in sync"
+#echo "============================================================"
+#echo `date`
+#echo "============================================================"
+#echo "Syncing serialized expression from ves-hx-76 to ves-hx-77..."
+#sudo -u tc_fg02 ssh ves-hx-77 'rsync -irtpz --safe-links --delete ves-hx-76:/srv/gxa/data/serialized_expression/* /srv/gxa/data/serialized_expression'
 
-# sudo -u fg_atlas ssh ves-hx-77 './atlas_scripts/sync_data_dir.sh'
 echo "============================================================"
 echo `date`
 echo "============================================================"
 echo "Syncing magetab directory from experiments to experiments_test..."
 sudo -u fg_atlas sh -c 'rsync -irlpt --delete /nfs/public/ro/fg/atlas/experiments/* /nfs/public/ro/fg/atlas/experiments_test'
 
-echo "Refreshing VATLASTST to latest snapshot..."
-sudo -u dxatlas sh -c '/net/nasP/oracle/delphix/ebi_refresh_vdb.sh Delphix_Silver1 VATLASTST "`/net/nasP/oracle/delphix/ebi_list_snapshots.sh Delphix_Silver1 VATLASTST | tail -1`"'
 echo "============================================================"
 echo `date`
 echo "============================================================"
+echo "Refreshing VATLASTST to latest snapshot..."
+sudo -u dxatlas sh -c '/nfs/dbtools/delphix/postgres/ebi_refresh_vdb.sh -d pgsql-dlvm-005.ebi.ac.uk -S "`/nfs/dbtools/delphix/postgres/ebi_list_snapshots.sh -d pgsql-dlvm-005.ebi.ac.uk | tail -n1`"'
 
+echo "============================================================"
+echo `date`
+echo "============================================================"
 echo "Starting Tomcat..."
 sudo -u tc_fg02 ssh ves-hx-77 '/nfs/public/rw/webadmin/tomcat/bases/fg/tc-fg-gxa_test/bin/controller jpda start' &
-echo "============================================================"
-echo `date`
-echo "============================================================"
 
-echo -n "Waiting for Atlas to start... "
-sleep 60
+echo -n "Waiting tow minutes for Atlas to start... "
+sleep 120
 echo "done"
 
 echo "============================================================"
