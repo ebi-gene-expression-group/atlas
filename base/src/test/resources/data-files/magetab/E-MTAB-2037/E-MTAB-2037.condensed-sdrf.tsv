@@ -1,132 +1,132 @@
-E-MTAB-2037		DRR001024	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001024	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001024	characteristic	developmental stage	7 days before flowering to 7 days after flowering
 E-MTAB-2037		DRR001024	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001024	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001024	factor	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001025	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001024	characteristic	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001024	factor	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001025	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001025	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001025	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001025	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001025	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001026	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001025	characteristic	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001025	factor	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001026	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001026	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001026	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001026	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001026	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001027	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001026	characteristic	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001026	factor	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001027	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001027	characteristic	developmental stage	7 days before flowering
 E-MTAB-2037		DRR001027	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001027	characteristic	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001027	factor	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001028	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001027	characteristic	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001027	factor	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001028	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001028	characteristic	developmental stage	0-7 days after flowering
 E-MTAB-2037		DRR001028	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001028	characteristic	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001028	factor	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001029	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001028	characteristic	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001028	factor	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001029	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001029	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001029	characteristic	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001029	factor	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001030	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001029	characteristic	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001029	factor	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001030	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001030	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001030	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001030	factor	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001031	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001030	characteristic	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001030	factor	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001031	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001031	characteristic	developmental stage	7 days before flowering to 7 days after flowering
 E-MTAB-2037		DRR001031	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001031	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001031	factor	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001032	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001031	characteristic	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001031	factor	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001032	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001032	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001032	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001032	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001032	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001033	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001032	characteristic	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001032	factor	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001033	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001033	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001033	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001033	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001033	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001034	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001033	characteristic	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001033	factor	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001034	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001034	characteristic	developmental stage	7 days before flowering
 E-MTAB-2037		DRR001034	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001034	characteristic	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001034	factor	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001035	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001034	characteristic	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001034	factor	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001035	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001035	characteristic	developmental stage	0-7 days after flowering
 E-MTAB-2037		DRR001035	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001035	characteristic	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001035	factor	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001036	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001035	characteristic	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001035	factor	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001036	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001036	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001036	characteristic	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001036	factor	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001037	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001036	characteristic	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001036	factor	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001037	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001037	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001037	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001037	factor	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001038	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001037	characteristic	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001037	factor	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001038	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001038	characteristic	developmental stage	7 days before flowering to 7 days after flowering
 E-MTAB-2037		DRR001038	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001038	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001038	factor	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001039	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001038	characteristic	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001038	factor	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001039	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001039	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001039	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001039	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001039	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001040	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001039	characteristic	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001039	factor	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001040	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001040	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001040	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001040	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001040	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001041	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001040	characteristic	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001040	factor	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001041	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001041	characteristic	developmental stage	7 days before flowering
 E-MTAB-2037		DRR001041	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001041	characteristic	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001041	factor	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001042	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001041	characteristic	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001041	factor	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001042	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001042	characteristic	developmental stage	0-7 days after flowering
 E-MTAB-2037		DRR001042	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001042	characteristic	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001042	factor	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001043	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001042	characteristic	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001042	factor	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001043	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001043	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001043	characteristic	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001043	factor	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001044	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001043	characteristic	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001043	factor	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001044	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001044	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001044	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001044	factor	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001045	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001044	characteristic	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001044	factor	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001045	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001045	characteristic	developmental stage	7 days before flowering to 7 days after flowering
 E-MTAB-2037		DRR001045	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001045	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001045	factor	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
-E-MTAB-2037		DRR001046	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001045	characteristic	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001045	factor	organism part	leaf	http://purl.obolibrary.org/obo/PO_0025034
+E-MTAB-2037		DRR001046	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001046	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001046	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001046	characteristic	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001046	factor	organism part	root	http://www.ebi.ac.uk/efo/EFO_0000989
-E-MTAB-2037		DRR001047	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001046	characteristic	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001046	factor	organism part	root	http://purl.obolibrary.org/obo/PO_0009005
+E-MTAB-2037		DRR001047	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001047	characteristic	developmental stage	7 days after germination
 E-MTAB-2037		DRR001047	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001047	characteristic	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001047	factor	organism part	shoot	http://www.ebi.ac.uk/efo/EFO_0000992
-E-MTAB-2037		DRR001048	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001047	characteristic	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001047	factor	organism part	shoot	http://purl.obolibrary.org/obo/PO_0009006
+E-MTAB-2037		DRR001048	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001048	characteristic	developmental stage	7 days before flowering
 E-MTAB-2037		DRR001048	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001048	characteristic	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001048	factor	organism part	pre-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001049	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001048	characteristic	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001048	factor	organism part	pre-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001049	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001049	characteristic	developmental stage	0-7 days after flowering
 E-MTAB-2037		DRR001049	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001049	characteristic	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001049	factor	organism part	post-flowering panicle	http://www.ebi.ac.uk/efo/EFO_0001029
-E-MTAB-2037		DRR001050	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001049	characteristic	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001049	factor	organism part	post-flowering panicle	http://purl.obolibrary.org/obo/PO_0009049
+E-MTAB-2037		DRR001050	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001050	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001050	characteristic	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001050	factor	organism part	callus	http://www.ebi.ac.uk/efo/EFO_0005683
-E-MTAB-2037		DRR001051	characteristic	cultivar	Nipponbare
+E-MTAB-2037		DRR001050	characteristic	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001050	factor	organism part	callus	http://purl.obolibrary.org/obo/PO_0005052
+E-MTAB-2037		DRR001051	characteristic	cultivar	Nipponbare	http://www.ebi.ac.uk/efo/EFO_0007587
 E-MTAB-2037		DRR001051	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
-E-MTAB-2037		DRR001051	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
-E-MTAB-2037		DRR001051	factor	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-2037		DRR001051	characteristic	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
+E-MTAB-2037		DRR001051	factor	organism part	seed	http://purl.obolibrary.org/obo/PO_0009010
