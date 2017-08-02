@@ -9,12 +9,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
+import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.web.*;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
@@ -328,6 +329,152 @@ public class ExperimentDownloadControllerIT {
         }
 
         return builder.build();
+    }
+
+
+    @Test
+    public void testSomeRnaSeqBaselineExperiments() throws Exception{
+        Set<String> rnaSeqExperiments = experimentTrader.getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
+        assertTrue(rnaSeqExperiments.size()>0);
+
+        for(String accession: rnaSeqExperiments){
+
+            BaselineExperiment experiment = (BaselineExperiment)
+                    experimentTrader.getPublicExperiment(accession);
+
+            defaultParametersHeaderRnaSeqBaseline(experiment);
+
+            weHaveSomeResultsRnaSeqBaseline(experiment);
+
+            noDataWithVeryLargeCutoffRnaSeqBaseline(experiment);
+
+        }
+    }
+
+    public void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment) throws Exception {
+
+        RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
+
+        String queryLine = headersAndBody.getLeft().get(1);
+
+        assertTrue(Pattern.matches(".*Genes .* expressed.*"+experiment.getAccession(),
+                queryLine));
+
+        String[] columnHeaders = headersAndBody.getRight().get(0).split("\t");
+        assertEquals("Gene ID", columnHeaders[0]);
+        assertEquals("Gene Name", columnHeaders[1]);
+        assertThat(columnHeaders.length, greaterThan(2));
+    }
+
+    public void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment) throws Exception {
+
+        RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+        if(Math.random() < 0.5){
+            requestPreferences.setSpecific(false);
+        }
+        requestPreferences.setCutoff(0.0);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
+
+
+        List<String> dataColumns = headersAndBody.getRight().subList(1, headersAndBody.getRight().size());
+        ImmutableMap<String, String[]> geneNameToLine = indexByGeneNameMicroarray(dataColumns);
+        Set<String> geneNames = geneNameToLine.keySet();
+
+        assertThat(dataColumns.size(), greaterThan(0) );
+        assertEquals(dataColumns.size(), geneNames.size());
+
+
+    }
+
+    public void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment) throws Exception {
+
+        RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+
+        requestPreferences.setCutoff(10000000D);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
+
+        assertEquals(1, headersAndBody.getRight().size());
+    }
+
+
+    @Test
+    public void testSomeProteomicsBaselineExperiments() throws Exception{
+        Set<String> experimentAccessions = experimentTrader.getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
+        assertTrue(experimentAccessions.size()>0);
+
+        for(String accession: experimentAccessions){
+
+            BaselineExperiment experiment = (BaselineExperiment)
+                    experimentTrader.getPublicExperiment(accession);
+
+            defaultParametersHeaderProteomicsBaseline(experiment);
+
+            weHaveSomeResultsProteomicsBaseline(experiment);
+
+            noDataWithVeryLargeCutoffProteomicsBaseline(experiment);
+
+        }
+    }
+
+    public void defaultParametersHeaderProteomicsBaseline(BaselineExperiment experiment) throws Exception {
+
+        ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.proteomicsExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
+
+        String queryLine = headersAndBody.getLeft().get(1);
+
+        assertTrue(Pattern.matches(".*Genes .* expressed.*"+experiment.getAccession(),
+                queryLine));
+
+        String[] columnHeaders = headersAndBody.getRight().get(0).split("\t");
+        assertEquals("Gene ID", columnHeaders[0]);
+        assertEquals("Gene Name", columnHeaders[1]);
+        assertThat(columnHeaders.length, greaterThan(2));
+    }
+
+    public void weHaveSomeResultsProteomicsBaseline(BaselineExperiment experiment) throws Exception {
+
+        ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
+        if(Math.random() < 0.5){
+            requestPreferences.setSpecific(false);
+        }
+        requestPreferences.setCutoff(0.0);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.proteomicsExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
+
+
+        List<String> dataColumns = headersAndBody.getRight().subList(1, headersAndBody.getRight().size());
+        ImmutableMap<String, String[]> geneNameToLine = indexByGeneNameMicroarray(dataColumns);
+        Set<String> geneNames = geneNameToLine.keySet();
+
+        assertThat(dataColumns.size(), greaterThan(0) );
+        assertEquals(dataColumns.size(), geneNames.size());
+
+
+    }
+
+    public void noDataWithVeryLargeCutoffProteomicsBaseline(BaselineExperiment experiment) throws Exception {
+
+        ProteomicsBaselineRequestPreferences requestPreferences = new ProteomicsBaselineRequestPreferences();
+
+        requestPreferences.setCutoff(100D);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.proteomicsExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
+
+        assertEquals(1, headersAndBody.getRight().size());
     }
 
 }

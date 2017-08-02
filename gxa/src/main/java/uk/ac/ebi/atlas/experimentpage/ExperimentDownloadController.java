@@ -58,10 +58,10 @@ public class ExperimentDownloadController {
     private class NoExperimentSubResourceException extends RuntimeException {}
 
     @RequestMapping(value = url, params = "type=PROTEOMICS_BASELINE")
-    public void proteomicsExperimentDownload(HttpServletRequest request, @PathVariable String experimentAccession,
-                                     @RequestParam(value = "accessKey", required = false) String accessKey,
-                                     @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
-                                     HttpServletResponse response)
+    public void proteomicsExperimentDownload(@PathVariable String experimentAccession,
+                                             @RequestParam(value = "accessKey", required = false) String accessKey,
+                                             @ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences,
+                                             HttpServletResponse response)
             throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
@@ -69,10 +69,10 @@ public class ExperimentDownloadController {
     }
 
     @RequestMapping(value = url, params = "type=RNASEQ_MRNA_BASELINE")
-    public void rnaSeqBaselineExperimentDownload(HttpServletRequest request, @PathVariable String experimentAccession,
-                                     @RequestParam(value = "accessKey", required = false) String accessKey,
-                                     @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
-                                     HttpServletResponse response)
+    public void rnaSeqBaselineExperimentDownload(@PathVariable String experimentAccession,
+                                                 @RequestParam(value = "accessKey", required = false) String accessKey,
+                                                 @ModelAttribute("preferences") @Valid RnaSeqBaselineRequestPreferences preferences,
+                                                 HttpServletResponse response)
             throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
 
