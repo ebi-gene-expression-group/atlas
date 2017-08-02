@@ -5,9 +5,11 @@ import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentpage.ExperimentDownloadController;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
@@ -15,6 +17,7 @@ import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,7 +38,7 @@ public class MicroarrayExperimentDownloadControllerIT {
     private static final int GENE_NAME_INDEX = 1;
 
     @Inject
-    MicroarrayExperimentDownloadController subject;
+    ExperimentDownloadController subject;
 
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
@@ -62,29 +65,32 @@ public class MicroarrayExperimentDownloadControllerIT {
         }
     }
 
-    private Pair<List<String>, List<String>> headersAndBody(Writer responseWriter){
+    private Pair<List<String>, List<String>> headersAndBody(MockHttpServletResponse response){
         List<String> headers = new ArrayList<>();
         List<String> body = new ArrayList<>();
 
-        for(String l : responseWriter.toString().split("\n")){
-            if(l.startsWith("#")){
-                headers.add(l);
-            } else {
-                body.add(l);
+        try {
+            for(String l : response.getContentAsString().split("\n")){
+                if(l.startsWith("#")){
+                    headers.add(l);
+                } else {
+                    body.add(l);
+                }
             }
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
 
         return Pair.of(headers, body);
     }
 
     public void defaultParametersHeader(MicroarrayExperiment experiment) throws Exception {
-        StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
 
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
-
-        Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
         String queryLine = headersAndBody.getLeft().get(1);
 
@@ -99,7 +105,6 @@ public class MicroarrayExperimentDownloadControllerIT {
     }
 
     public void weHaveSomeResults(MicroarrayExperiment experiment) throws Exception {
-        StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         if(Math.random() < 0.5){
@@ -107,8 +112,9 @@ public class MicroarrayExperimentDownloadControllerIT {
         }
         requestPreferences.setCutoff(1D);
         requestPreferences.setFoldChangeCutoff(0D);
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
-        Pair<List<String>, List<String>> headersAndBody = headersAndBody(responseWriter);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
 
         List<String> dataColumns = headersAndBody.getRight().subList(1, headersAndBody.getRight().size());
@@ -122,29 +128,28 @@ public class MicroarrayExperimentDownloadControllerIT {
     }
 
     public void upDownRegulationWorks(MicroarrayExperiment experiment) throws Exception {
-        StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         requestPreferences.setRegulation(Regulation.UP);
 
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        List<String> geneNamesUp = geneNames(headersAndBody(response).getRight());
 
-        List<String> geneNamesUp = geneNames(headersAndBody(responseWriter).getRight());
-
-        responseWriter = new StringWriter(100000);
+        response = new MockHttpServletResponse();
         requestPreferences.setRegulation(Regulation.DOWN);
 
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
 
-        List<String> geneNamesDown = geneNames(headersAndBody(responseWriter).getRight());
+        List<String> geneNamesDown = geneNames(headersAndBody(response).getRight());
 
-        responseWriter = new StringWriter(100000);
+        response = new MockHttpServletResponse();
         requestPreferences.setRegulation(Regulation.UP_DOWN);
 
 
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
 
-        List<String> geneNamesUpDown = geneNames(headersAndBody(responseWriter).getRight());
+        List<String> geneNamesUpDown = geneNames(headersAndBody(response).getRight());
 
         Set<String> resultsSeparately = new HashSet<>();
         resultsSeparately.addAll(geneNamesUp);
@@ -155,25 +160,27 @@ public class MicroarrayExperimentDownloadControllerIT {
 
 
     public void noDataWithVeryStrictPValueCutoff(MicroarrayExperiment experiment) throws Exception {
-        StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         requestPreferences.setCutoff(1e-100);
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
-        assertEquals(1, headersAndBody(responseWriter).getRight().size());
+        assertEquals(1, headersAndBody.getRight().size());
     }
 
 
 
     public void noDataWithVeryLargeFoldChangeCutoff(MicroarrayExperiment experiment) throws Exception {
-        StringWriter responseWriter = new StringWriter(100000);
 
         MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
         requestPreferences.setFoldChangeCutoff(50000D);
-        subject.fetchAndWriteGeneProfiles(responseWriter, experiment, requestPreferences);
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        subject.microarrayExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
+        Pair<List<String>, List<String>> headersAndBody = headersAndBody(response);
 
-        assertEquals(1, headersAndBody(responseWriter).getRight().size());
+        assertEquals(1, headersAndBody.getRight().size());
     }
 
     private ImmutableMap<String, String[]> indexByGeneName(List<String> lines) {
