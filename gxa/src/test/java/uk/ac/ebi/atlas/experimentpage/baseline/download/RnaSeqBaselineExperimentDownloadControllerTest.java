@@ -79,28 +79,4 @@ public class RnaSeqBaselineExperimentDownloadControllerTest {
                         any(BaselineExperiment.class));
     }
 
-
-    @Test
-    public void parseGoodCoexpressionArgument(){
-        testParse("{\\\"AC190623.3_FG001\\\":10}", ImmutableMap.of("AC190623.3_FG001", 10));
-        testParse("{\"AC190623.3_FG001\":10}", ImmutableMap.of("AC190623.3_FG001", 10));
-    }
-
-    @Test
-    public void returnEmptyForMalformedCoexpressionArgument(){
-        Map<String, Integer> empty = ImmutableMap.of();
-        testParse("", empty);
-        testParse("\"banana\"", empty);
-        testParse("notJson:[", empty);
-        testParse("{\"AC190623.3_FG001\":notAnInteger}", empty);
-    }
-
-    public void testParse(String input, Map<String, Integer> expected) {
-        when(requestMock.getParameterMap()).thenReturn(ImmutableMap.of("geneQuery", new String[] {"idOfGeneGoesHere"},
-                "coexpressions", new String[]{input}));
-        when(requestMock.getParameter("coexpressions")).thenReturn(input);
-
-        Map<String, Integer> result = subject.readCoexpressionsRequested(requestMock);
-        assertEquals(expected, result);
-    }
 }
