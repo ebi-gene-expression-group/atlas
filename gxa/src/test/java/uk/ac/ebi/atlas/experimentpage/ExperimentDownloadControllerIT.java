@@ -9,11 +9,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.ExpressionUnit;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.Regulation;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.resource.DataFileHub;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 import uk.ac.ebi.atlas.web.*;
 
@@ -41,6 +43,9 @@ public class ExperimentDownloadControllerIT {
 
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
+
+    @Inject
+    DataFileHub dataFileHub;
 
     @Test
     public void testSomeMicroarrayExperiments() throws Exception{
@@ -338,22 +343,23 @@ public class ExperimentDownloadControllerIT {
         assertTrue(rnaSeqExperiments.size()>0);
 
         for(String accession: rnaSeqExperiments){
+            for(ExpressionUnit.Absolute.Rna unit: dataFileHub.getRnaSeqBaselineExperimentFiles(accession).dataFiles()){
+                BaselineExperiment experiment = (BaselineExperiment)
+                        experimentTrader.getPublicExperiment(accession);
 
-            BaselineExperiment experiment = (BaselineExperiment)
-                    experimentTrader.getPublicExperiment(accession);
+                defaultParametersHeaderRnaSeqBaseline(experiment, unit);
 
-            defaultParametersHeaderRnaSeqBaseline(experiment);
+                weHaveSomeResultsRnaSeqBaseline(experiment, unit);
 
-            weHaveSomeResultsRnaSeqBaseline(experiment);
-
-            noDataWithVeryLargeCutoffRnaSeqBaseline(experiment);
-
+                noDataWithVeryLargeCutoffRnaSeqBaseline(experiment,unit);
+            }
         }
     }
 
-    public void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment) throws Exception {
+    public void defaultParametersHeaderRnaSeqBaseline(BaselineExperiment experiment,ExpressionUnit.Absolute.Rna unit) throws Exception {
 
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+        requestPreferences.setUnit(unit);
 
         MockHttpServletResponse response = new MockHttpServletResponse();
         subject.rnaSeqBaselineExperimentDownload(experiment.getAccession(), "", requestPreferences, response);
@@ -370,9 +376,11 @@ public class ExperimentDownloadControllerIT {
         assertThat(columnHeaders.length, greaterThan(2));
     }
 
-    public void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment) throws Exception {
+    public void weHaveSomeResultsRnaSeqBaseline(BaselineExperiment experiment,ExpressionUnit.Absolute.Rna unit) throws Exception {
 
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+        requestPreferences.setUnit(unit);
+
         if(Math.random() < 0.5){
             requestPreferences.setSpecific(false);
         }
@@ -392,9 +400,10 @@ public class ExperimentDownloadControllerIT {
 
     }
 
-    public void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment) throws Exception {
+    public void noDataWithVeryLargeCutoffRnaSeqBaseline(BaselineExperiment experiment,ExpressionUnit.Absolute.Rna unit) throws Exception {
 
         RnaSeqBaselineRequestPreferences requestPreferences = new RnaSeqBaselineRequestPreferences();
+        requestPreferences.setUnit(unit);
 
         requestPreferences.setCutoff(10000000D);
         MockHttpServletResponse response = new MockHttpServletResponse();
