@@ -38,8 +38,10 @@ public class ExpressionAtlasContentService {
 
     @Inject
     public ExpressionAtlasContentService(
-            BaselineProfilesWriterService.Proteomics proteomicsBaselineProfilesWriterService,
-            BaselineProfilesWriterService.RnaSeq rnaSeqBaselineProfilesWriterService,
+            ExperimentDownloadSupplier.Proteomics proteomicsExperimentDownloadSupplier,
+            ExperimentDownloadSupplier.RnaSeqBaseline rnaSeqBaselineExperimentDownloadSupplier,
+            ExperimentDownloadSupplier.RnaSeqDifferential rnaSeqDifferentialExperimentDownloadSupplier,
+            ExperimentDownloadSupplier.Microarray microarrayExperimentDownloadSupplier,
             ContrastImageSupplier.RnaSeq rnaSeqDifferentialContrastImageSupplier,
             ContrastImageSupplier.Microarray microarrayContrastImageSupplier,
             StaticFilesDownload.Baseline baselineStaticFilesDownload,
@@ -47,8 +49,6 @@ public class ExpressionAtlasContentService {
             StaticFilesDownload.Microarray microarrayStaticFilesDownload,
             DifferentialSecondaryDataFiles.RnaSeq rnaSeqDifferentialSecondaryDataFiles,
             DifferentialSecondaryDataFiles.Microarray microarraySecondaryDataFiles,
-            RnaSeqExperimentDownloadController rnaSeqExperimentDownloadController,
-            MicroarrayExperimentDownloadController microarrayExperimentDownloadController,
             ExperimentDesignFile.Baseline baselineExperimentDesignFile,
             ExperimentDesignFile.RnaSeq rnaSeqDifferentialExperimentDesignFile,
             ExperimentDesignFile.Microarray microarrayExperimentDesignFile,
@@ -61,7 +61,7 @@ public class ExpressionAtlasContentService {
         this.proteomicsBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
-                                proteomicsBaselineProfilesWriterService,
+                                proteomicsExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
                                 baselineLinkToArrayExpress)
@@ -69,7 +69,7 @@ public class ExpressionAtlasContentService {
         this.rnaSeqBaselineExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
-                                rnaSeqBaselineProfilesWriterService,
+                                rnaSeqBaselineExperimentDownloadSupplier,
                                 baselineStaticFilesDownload,
                                 baselineExperimentDesignFile,
                                 baselineLinkToArrayExpress)
@@ -77,7 +77,7 @@ public class ExpressionAtlasContentService {
         this.rnaSeqDifferentialExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
-                                rnaSeqExperimentDownloadController,
+                                rnaSeqDifferentialExperimentDownloadSupplier,
                                 rnaSeqDifferentialSecondaryDataFiles,
                                 rnaSeqDifferentialStaticFilesDownload,
                                 rnaSeqDifferentialExperimentDesignFile,
@@ -88,7 +88,7 @@ public class ExpressionAtlasContentService {
         this.microarrayExperimentExternallyAvailableContentService =
                 new ExternallyAvailableContentService<>(
                         ImmutableList.of(
-                                microarrayExperimentDownloadController,
+                                microarrayExperimentDownloadSupplier,
                                 microarraySecondaryDataFiles,
                                 microarrayStaticFilesDownload,
                                 microarrayExperimentDesignFile,
