@@ -4,13 +4,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import uk.ac.ebi.atlas.model.download.ExternallyAvailableContent;
 import uk.ac.ebi.atlas.model.experiment.ExperimentType;
@@ -23,6 +28,8 @@ import java.text.MessageFormat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -30,8 +37,19 @@ import static org.hamcrest.Matchers.is;
 public class ExternallyAvailableContentControllerEIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternallyAvailableContentControllerEIT.class);
+
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
+
+    @Autowired
+    WebApplicationContext wac;
+
+    MockMvc mockMvc;
+
+    @Before
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+    }
 
     private EndPoint endPointForExperiment(String accession, ExternallyAvailableContent.ContentType contentType){
         return new EndPoint(MessageFormat.format("/gxa/json/experiments/{0}/resources/{1}", accession, contentType));
@@ -50,8 +68,7 @@ public class ExternallyAvailableContentControllerEIT {
 
             if(!uri.contains("www.ebi.ac.uk")) {
                 LOGGER.info(uri);
-                Response r = RestAssured.get(URI.create(uri).toURL());
-                assertThat(uri, r.getStatusCode(), is(200));
+                this.mockMvc.perform(get("/" + uri)).andExpect(status().isOk());
             }
         }
     }

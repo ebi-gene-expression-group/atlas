@@ -61,16 +61,16 @@ public class ExternallyAvailableContentController {
 
             } catch (MalformedURLException e) {
                 result.addProperty("url",
-                        MessageFormat.format("{0}/{1}{2}",
-                                ApplicationProperties.buildServerURL(request),
-                                content.uri.getSchemeSpecificPart(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
-                        )
+                        MessageFormat.format("{0}{1}",
+                                content.uri.getSchemeSpecificPart(),
+                                isNotEmpty(accessKey) ? "?accessKey="+accessKey : "")
                 );
             }
 
         } else {
-            result.addProperty("url", MessageFormat.format("{0}/experiments-content/{1}/resources/{2}{3}",
-                    ApplicationProperties.buildServerURL(request), accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
+            result.addProperty("url",
+                    MessageFormat.format("experiments-content/{0}/resources/{1}{2}",
+                            accession, content.uri.toString(), isNotEmpty(accessKey)? "?accessKey="+accessKey : ""
             ));
         }
         return result;
