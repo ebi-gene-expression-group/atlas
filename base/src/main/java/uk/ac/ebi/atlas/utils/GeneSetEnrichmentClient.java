@@ -93,15 +93,24 @@ public class GeneSetEnrichmentClient {
         result.addProperty("experiment_accession", line[0]);
         result.addProperty("comparison_id", line[1]);
         result.addProperty("p-value", Double.parseDouble(line[2]));
-        result.addProperty("observed", Double.parseDouble(line[3]));
+        result.addProperty("observed", Integer.parseInt(line[3]));
         result.addProperty("expected", Double.parseDouble(line[4]));
         result.addProperty("adjusted p-value", Double.parseDouble(line[5]));
-        result.addProperty("effect size", Double.parseDouble(line[6]));
+        result.addProperty("effect size", parseOrNaN(line[6]));
         result.add("comparison_title", new JsonObject()); // enriched later
         result.addProperty("experiment", ""); // enriched later
 
         // line 7 offered by the API is the url - we reconstruct that later
         return result;
+    }
+
+    //Effect size is observed/expected, and R says 1/0 is Inf
+    Double parseOrNaN(String s){
+        try {
+            return Double.parseDouble(s);
+        } catch (NumberFormatException e){
+            return Double.NaN;
+        }
     }
 
     Optional<String> validateInput(Species species, Collection<String> bioentityIdentifiers) {
