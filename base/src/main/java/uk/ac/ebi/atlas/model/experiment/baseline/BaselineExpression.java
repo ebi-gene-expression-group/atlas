@@ -12,7 +12,6 @@ import java.text.NumberFormat;
 
 public class BaselineExpression implements Expression {
     private double level;
-    private boolean known = true;
     private String dataColumnDescriptorId;
     private double[] quartiles;
     private static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
@@ -83,11 +82,6 @@ public class BaselineExpression implements Expression {
 
     public double[] getQuartiles() {
         return quartiles;
-    }
-
-    @Override
-    public boolean isKnown() {
-        return known;
     }
 
     public double getLevel() {

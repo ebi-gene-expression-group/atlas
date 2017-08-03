@@ -65,7 +65,7 @@ public class ExternallyViewableProfilesList<DataColumnDescriptor extends Describ
         JsonArray expressions = new JsonArray();
         for(DataColumnDescriptor c: prescribedOrderOfColumns){
             if(profile.isExpressedOnAnyOf(ImmutableSet.of(c))){
-                expressions.add(profile.getExpression(c).isKnown() ? profile.getExpression(c).toJson() : new JsonObject());
+                expressions.add( profile.getExpression(c).toJson());
             } else {
                 expressions.add(new JsonObject());
             }

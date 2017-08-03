@@ -51,11 +51,6 @@ public class DifferentialExpression implements Expression {
     }
 
     @Override
-    public boolean isKnown() {
-        return true;
-    }
-
-    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
