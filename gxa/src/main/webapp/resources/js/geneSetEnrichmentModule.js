@@ -86,11 +86,11 @@ var geneSetEnrichmentModule = (function ($) {
                     "type": "title-numeric",
                     "width": "10%",
                     "render": function (data, type, full) {
-                        return data;
+                        return type == 'sort' ? (isNaN(data) ? 0 : data) : data;
                     }
                 }
             ],
-            "order": [[5, "asc"]],
+            "order": [[6, "desc"]],
             "lengthMenu": [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
