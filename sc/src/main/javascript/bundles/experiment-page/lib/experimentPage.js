@@ -58,7 +58,8 @@ var ExperimentPage = function (_Component) {
 
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                null,
+                { basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString()
+                },
                 _react2.default.createElement(
                     'div',
                     null,
@@ -99,7 +100,7 @@ var Experiment = function (_Component2) {
             params: _queryString2.default.parse(props.location.search),
             geneId: "",
             k: "",
-            clustersId: []
+            clusterId: []
         };
         return _this3;
     }
@@ -111,9 +112,15 @@ var Experiment = function (_Component2) {
             _newparam[param] = param === "k" ? item.target.value : item;
             this.setState(_newparam);
 
+            //        const stringified = queryString.stringify({
+            //            geneId: (param === "geneId" ? item : this.state.geneId),
+            //            k: (param === "k" ? item.target.value : this.state.k)
+            //        });
+
             this.props.history.push("?" + _queryString2.default.stringify({
                 geneId: param === "geneId" ? item : this.state.geneId,
-                k: param === "k" ? item.target.value : this.state.k
+                k: param === "k" ? item.target.value : this.state.k,
+                clusterId: this.state.clusterId
             }));
         }
     }, {
@@ -122,7 +129,7 @@ var Experiment = function (_Component2) {
             this.setState({
                 geneId: this.state.params.geneId,
                 k: this.state.params.k,
-                clustersId: this.state.params.clustersId
+                clusterId: JSON.parse(this.state.params.clusterId || '[]')
             });
         }
     }, {
@@ -141,7 +148,8 @@ var Experiment = function (_Component2) {
                     'div',
                     { className: 'small-6 columns' },
                     _react2.default.createElement(_singleCellTsnePlot2.default, { clustersData: this.props.clustersData,
-                        clusterId: this.state.k,
+                        k: this.state.k,
+                        clusterId: this.state.clusterId,
                         handleOptionsChange: this.handleChange.bind(this, "k") })
                 ),
                 _react2.default.createElement(

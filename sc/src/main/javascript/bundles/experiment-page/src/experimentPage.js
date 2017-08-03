@@ -11,7 +11,7 @@ class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter
+            <BrowserRouter basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}
                 >
                 <div>
                     <Route path='/' render={props => (
@@ -46,7 +46,7 @@ class Experiment extends Component {
             params: queryString.parse(props.location.search),
             geneId: "",
             k: "",
-            clustersId: [],
+            clusterId: [],
         };
     }
 
@@ -55,9 +55,15 @@ class Experiment extends Component {
         _newparam[param] = (param === "k" ? item.target.value : item);
         this.setState(_newparam);
 
+//        const stringified = queryString.stringify({
+//            geneId: (param === "geneId" ? item : this.state.geneId),
+//            k: (param === "k" ? item.target.value : this.state.k)
+//        });
+
         this.props.history.push("?" + queryString.stringify({
             geneId: (param === "geneId" ? item : this.state.geneId),
-            k: (param === "k" ? item.target.value : this.state.k)
+            k: (param === "k" ? item.target.value : this.state.k),
+            clusterId: this.state.clusterId
         }));
     };
 
@@ -65,7 +71,7 @@ class Experiment extends Component {
         this.setState({
             geneId: this.state.params.geneId,
             k: this.state.params.k,
-            clustersId: this.state.params.clustersId
+            clusterId: JSON.parse(this.state.params.clusterId || '[]')
         });
     }
 
@@ -76,7 +82,8 @@ class Experiment extends Component {
                 <h3>Experiment Page section</h3>
                 <div className="small-6 columns">
                     <ReferencePlot clustersData={this.props.clustersData}
-                                   clusterId={this.state.k}
+                                   k={this.state.k}
+                                   clusterId={this.state.clusterId}
                                    handleOptionsChange={this.handleChange.bind(this, "k")} />
 
                 </div>

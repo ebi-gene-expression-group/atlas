@@ -8243,6 +8243,13 @@ var AtlasAutocomplete = function (_React$Component) {
   }
 
   _createClass(AtlasAutocomplete, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        selectedItem: nextProps.initialValue
+      });
+    }
+  }, {
     key: '_speciesSelectOnChange',
     value: function _speciesSelectOnChange(event) {
       this.setState({ species: event.target.value });
@@ -8988,12 +8995,14 @@ var Autocomplete = function (_React$Component) {
       highlightedIndex: null
     };
     _this._debugStates = [];
+    _this.ensureHighlightedIndex = _this.ensureHighlightedIndex.bind(_this);
     _this.exposeAPI = _this.exposeAPI.bind(_this);
     _this.handleInputFocus = _this.handleInputFocus.bind(_this);
     _this.handleInputBlur = _this.handleInputBlur.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleKeyDown = _this.handleKeyDown.bind(_this);
     _this.handleInputClick = _this.handleInputClick.bind(_this);
+    _this.maybeAutoCompleteText = _this.maybeAutoCompleteText.bind(_this);
     return _this;
   }
 
@@ -9364,15 +9373,16 @@ Autocomplete.propTypes = {
    * Arguments: `items: Array<Any>, value: String, styles: Object`
    *
    * Invoked to generate the render tree for the dropdown menu. Ensure the
-   * returned tree includes `items` or else no items will be rendered.
-   * `styles` will contain { top, left, minWidth } which are the coordinates
-   * of the top-left corner and the width of the dropdown menu.
+   * returned tree includes every entry in `items` or else the highlight order
+   * and keyboard navigation logic will break. `styles` will contain
+   * { top, left, minWidth } which are the coordinates of the top-left corner
+   * and the width of the dropdown menu.
    */
   renderMenu: PropTypes.func,
   /**
    * Styles that are applied to the dropdown menu in the default `renderMenu`
    * implementation. If you override `renderMenu` and you want to use
-   * `menuStyles` you must manually apply them (`this.props.menuStyles`).
+   * `menuStyle` you must manually apply them (`this.props.menuStyle`).
    */
   menuStyle: PropTypes.object,
   /**
