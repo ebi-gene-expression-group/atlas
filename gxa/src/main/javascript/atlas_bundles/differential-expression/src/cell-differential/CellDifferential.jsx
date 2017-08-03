@@ -1,10 +1,10 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const ReactDOMServer = require('react-dom/server');
-const $ = require('jquery');
-require('jquery-ui-bundle');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactDOMServer from 'react-dom/server'
+import $ from 'jquery'
+import 'jquery-ui-bundle'
 
-const NumberFormat = require('expression-atlas-number-format').default;
+import ScientificNotationNumber from 'expression-atlas-number-format'
 
 require('./gxaShowHideCell.css');
 require('./gxaDifferentialCellTooltip.css');
@@ -62,7 +62,7 @@ const CellDifferential = React.createClass({
                         </thead>
                         <tbody>
                             <tr>
-                                {pValue ? <td>{NumberFormat.scientificNotation(pValue)}</td> : null}
+                                {pValue ? <td><ScientificNotationNumber value={pValue} /></td> : null}
                                 {tStatistic ? <td>{Math.floor(tStatistic * 1e4) / 1e4}</td> : null}
                                 <td>{foldChange}</td>
                             </tr>

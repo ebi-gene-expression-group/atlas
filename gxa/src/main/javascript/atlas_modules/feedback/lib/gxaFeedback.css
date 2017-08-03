@@ -1,0 +1,132 @@
+div.gxaFeedbackQuestionBox {
+  margin: 30px;
+  width: 300px;
+  background-color: #b3e0ff;
+  border: 3px solid #008ae6;
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+#feedbackBoxCross {
+  margin: 3px;
+  margin-top: 5px;
+  float: right;
+  cursor:pointer;
+}
+
+#feedbackBoxCross:before {
+  color: #BF2222;
+}
+
+div.gxaFeedbackQuestionBox p {
+  margin: 2%;
+ font-weight: bold;
+ text-align: center;
+}
+
+div.gxaFeedbackQuestionBox a {
+  float: right;
+  margin-top: 6px;
+  cursor:pointer;
+}
+
+div.gxaFeedbackQuestionBoxAnswer {
+  position:relative;
+text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+div.gxaFeedbackQuestionBox button {
+ width: auto;
+}
+
+.feedbackBoxTransitionWrapper-leave {
+  opacity: 1;
+}
+
+.feedbackBoxTransitionWrapper-leave.feedbackBoxTransitionWrapper-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.gxaSmiley {
+  opacity: 0.6;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.gxaSmiley:hover {
+  opacity: 0.9;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.gxaSmileyClicked {
+  opacity: 1;
+}
+
+.gxaSmileyFeedbackBox {
+  text-align: center;
+  clear: both;
+  width: 300px;
+  opacity: 0.8;
+  filter: alpha(opacity=80); /* For IE8 and earlier */
+}
+
+.gxaSmileyRow {
+  text-align: center!important;
+}
+
+.gxaSmileyFeedbackBox p {
+  padding-left: 18px;
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.gxaSmileyFeedbackBox form {
+  padding: 6px;
+  width: 87%;
+}
+
+.gxaSmileyFeedbackBox button {
+  width: 100px;
+  margin-left: 91px;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+.form-control::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}

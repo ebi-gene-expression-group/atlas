@@ -17,6 +17,7 @@ fi
 for dir in atlas_bundles/*
 do
     pushd . > /dev/null
+    echo "Upgrading $dir:"
     cd $dir
     yarn upgrade
     popd > /dev/null

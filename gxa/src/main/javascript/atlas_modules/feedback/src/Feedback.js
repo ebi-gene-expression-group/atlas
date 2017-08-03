@@ -1,18 +1,16 @@
-var React = require('react');
-var LocalStorageMixin = require('react-localstorage');
-var TimerMixin = require('react-timer-mixin');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import React from 'react'
+import LocalStorageMixin from 'react-localstorage'
+import TimerMixin from 'react-timer-mixin'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-var BootstrapButton = require('react-bootstrap/lib/Button');
-var BootstrapFormGroup = require('react-bootstrap/lib/FormGroup');
-var BootstrapFormControl = require('react-bootstrap/lib/FormControl');
+import BootstrapButton from 'react-bootstrap/lib/Button'
+import BootstrapFormGroup from 'react-bootstrap/lib/FormGroup'
+import BootstrapFormControl from 'react-bootstrap/lib/FormControl'
 
-var EmojiSpritesFile = require('../assets/emojione.sprites.png');
-var Emoji = require('react-emojione');
+import EmojiSpritesFile from './assets/emojione.sprites.png'
+import Emoji from 'react-emojione'
 
-require("./gxaFeedback.css");
-
-//*------------------------------------------------------------------*
+import './gxaFeedback.css'
 
 var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent){
   return (
