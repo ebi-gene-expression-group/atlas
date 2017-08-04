@@ -1901,6 +1901,18 @@ expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.1.2.t
     react-localstorage "^0.3.1"
     react-timer-mixin "^0.13.3"
 
+expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz:
+  version "1.2.0"
+  resolved "../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz#46aa37409f015f34fc2952a8c6ab2bc316c036e6"
+  dependencies:
+    react "^15.6.1"
+    react-addons-css-transition-group "^15.6.0"
+    react-bootstrap "^0.31.2"
+    react-dom "^15.6.1"
+    react-emojione "^3.1.10"
+    react-localstorage "^0.3.1"
+    react-timer-mixin "^0.13.3"
+
 expression-atlas-number-format@latest:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/expression-atlas-number-format/-/expression-atlas-number-format-2.0.2.tgz#a800bfd319565bc21b559035280d83d28bb82141"
