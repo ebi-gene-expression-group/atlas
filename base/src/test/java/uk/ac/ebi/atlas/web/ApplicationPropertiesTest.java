@@ -6,14 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.search.SemanticQuery;
 import uk.ac.ebi.atlas.species.Species;
 import uk.ac.ebi.atlas.species.SpeciesProperties;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -106,17 +105,6 @@ public class ApplicationPropertiesTest {
         // TODO Assert that the parameters are present with the required values in any order
         //then
         assertThat(downloadUrl, is(DOWNLOAD_URL));
-    }
-
-    @Test
-    public void buildServerUrl() throws Exception {
-
-        when(httpServletRequestMock.getServerName()).thenReturn("localhost");
-        when(httpServletRequestMock.getServerPort()).thenReturn(9090);
-        when(httpServletRequestMock.getContextPath()).thenReturn("/gxa");
-        when(httpServletRequestMock.isSecure()).thenReturn(false);
-
-        assertThat(ApplicationProperties.buildServerURL(httpServletRequestMock), is("http://localhost:9090/gxa"));
     }
 
     @Test

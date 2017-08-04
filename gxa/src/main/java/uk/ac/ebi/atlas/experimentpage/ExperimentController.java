@@ -40,7 +40,6 @@ public class ExperimentController extends HtmlExceptionHandlingController {
 
     @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/**"})
     public String showExperimentPage(Model model,
-                                     HttpServletRequest request,
                                      @PathVariable String experimentAccession,
                                      @RequestParam(defaultValue = "") String accessKey) {
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
@@ -48,13 +47,12 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         model.addAllAttributes(experiment.getAttributes());
 
-        model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, request, accessKey)));
+        model.addAttribute("content", gson.toJson(experimentPageContentForExperiment(experiment, accessKey)));
 
         return "foundation-experiment-page";
     }
 
-    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final HttpServletRequest request,
-                                                  final String accessKey){
+    private JsonObject experimentPageContentForExperiment(final Experiment experiment, final String accessKey){
         JsonObject result = new JsonObject();
 
         // the client can't know that otherwise and it needs that!
@@ -87,7 +85,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         }
 
         availableTabs.add(
-                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, request, accessKey))
+                customContentTab("multipart", "Supplementary Information", "sections", supplementaryInformationTabs(experiment, accessKey))
         );
 
         availableTabs.add(
@@ -110,7 +108,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
         }
     }
 
-    private JsonArray supplementaryInformationTabs(final Experiment experiment, final HttpServletRequest request, final String accessKey) {
+    private JsonArray supplementaryInformationTabs(final Experiment experiment, final String accessKey) {
         JsonArray supplementaryInformationTabs = new JsonArray();
         if(dataFileHub.getExperimentFiles(experiment.getAccession()).analysisMethods.exists()){
             supplementaryInformationTabs.add(customContentTab("static-table", "Analysis Methods", "data",
@@ -133,8 +131,7 @@ public class ExperimentController extends HtmlExceptionHandlingController {
                                     .getArrayDesignsThatHaveQcReports())
                             .transform(arrayDesign -> Pair.of(
                                     "QC for array design " +arrayDesign,
-                                    QCReportController.getQcReportUrl(
-                                            request,experiment.getAccession(), arrayDesign, accessKey
+                                    QCReportController.getQcReportUrl(experiment.getAccession(), arrayDesign, accessKey
                                     )
                             )).toList()
                     )

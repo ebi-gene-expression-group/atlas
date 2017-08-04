@@ -23,16 +23,11 @@ public class QCReportController {
 
     private static final String QC_REPORT_URL = "/experiments-content/{experimentAccession}/qc/{arrayDesign}/{resource:.*}";
 
-    public static String getQcReportUrl(HttpServletRequest request, String experimentAccession,
-                                        String arrayDesign, String accessKey) {
-        return ApplicationProperties.buildServerURL(request) +
-                QC_REPORT_URL
-                        .replace("{experimentAccession}", experimentAccession)
-                        .replace("{arrayDesign}", arrayDesign)
-                        .replace("{resource:.*}", "index.html")
-                + (
-                org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey=" + accessKey : ""
-        );
+    public static String getQcReportUrl(String experimentAccession, String arrayDesign, String accessKey) {
+        return QC_REPORT_URL.replace("{experimentAccession}", experimentAccession)
+                            .replace("{arrayDesign}", arrayDesign)
+                            .replace("{resource:.*}", "index.html")
+                + (org.apache.commons.lang.StringUtils.isNotEmpty(accessKey) ? "?accessKey=" + accessKey : "");
     }
 
 

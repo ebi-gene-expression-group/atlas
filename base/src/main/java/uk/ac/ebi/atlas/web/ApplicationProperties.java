@@ -90,26 +90,6 @@ public class ApplicationProperties {
         return speciesToExperimentProperties.get(species.getReferenceName());
     }
 
-    /*
-    Our load balancer sends us requests through http, so load balanced requests won't know that they're through https.
-    Solution: use relative links throughout the application, and remove occurences of this method.
-     */
-    @Deprecated
-    public static String buildServerURL(HttpServletRequest request) {
-        String spec = request.getServerName() + (request.getServerPort() != 80 ? ":" + request.getServerPort() : "") + request.getContextPath();
-        if (request.isSecure() || request.getServerName().startsWith("www.") || request.getServerName().startsWith("wwwdev.")) {
-            spec = "https://" + spec;
-        } else {
-            spec = "http://" + spec;
-        }
-
-        try {
-            return new URL(spec).toExternalForm();
-        } catch (MalformedURLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     public String buildDownloadURL(SemanticQuery geneQuery, HttpServletRequest request) {
         Map<String, String[]> allParameters = new HashMap<>(request.getParameterMap());
         allParameters.put("geneQuery", new String[]{geneQuery.toUrlEncodedJson()});
