@@ -63,7 +63,7 @@ public abstract class CreatesProfilesFromTsvFiles<DataColumnDescriptor extends D
             for(Integer index: lookUpIndices.keySet()){
                 DataColumnDescriptor correspondingColumn = lookUpIndices.get(index);
                 Expr nextExpression = nextExpression(index,correspondingColumn, currentLine);
-                if(nextExpression!= null && nextExpression.getLevel()!= 0.0 && expressionFilter.apply(nextExpression)){
+                if(nextExpression!= null && expressionFilter.apply(nextExpression)){
                     profile.add(correspondingColumn, nextExpression);
                 }
             }

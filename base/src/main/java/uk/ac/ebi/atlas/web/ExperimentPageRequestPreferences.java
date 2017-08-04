@@ -11,6 +11,8 @@ import java.util.Set;
 
 public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUnit> extends SearchRequest {
 
+    public static final double nonZeroButVerySmallCutoffValue = 10e-100d;
+
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
     private static final int HEATMAP_SIZE_MIN = 0;
@@ -86,11 +88,15 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
     Currently:
     - Kryo serialized files
     - Histograms
-    This combined with experiment accession should 1-1 map to a data file.
-    A bit of a design wart -
+    This combined with experiment accession should 1-1 map to a data file. The design is unclear and a bit of a wart. Sorry. :)
+
+    When we serialize files, calculate histograms, or request everything for download, we mean "everything but zero"
+    On the other hand we also offer an option in the UI to explicitly ask for zeros.
+    We can't afford to kryo serialize these - the format is only better because we take advantage of data sparsity.
+    If someone chooses to ask for zeros we need to go through the original text file.
      */
     public String serializationShortString(){
-        return getClass().getSimpleName();
+        return getClass().getSimpleName()+getCutoff().equals(0.0d);
     }
 
     @Override

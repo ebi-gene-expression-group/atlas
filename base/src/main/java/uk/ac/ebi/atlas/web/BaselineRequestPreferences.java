@@ -15,18 +15,9 @@ public abstract class BaselineRequestPreferences<Unit extends ExpressionUnit.Abs
     protected SemanticQuery getDefaultGeneQuery() {
         return SemanticQuery.create(SemanticQueryTerm.create(DEFAULT_GENE_QUERY_VALUE, DEFAULT_GENE_QUERY_CATEGORY));
     }
-
-    @Override
-    public void setCutoff(Double cutoff) {
-        if (cutoff != null) {
-            super.setCutoff(BaselineExpressionLevelRounder.round(cutoff));
-        } else {
-            super.setCutoff(null);
-        }
-    }
-
+    
     public static void setRequestAllData(BaselineRequestPreferences preferences){
-        preferences.setCutoff(0.0d);
+        preferences.setCutoff(ExperimentPageRequestPreferences.nonZeroButVerySmallCutoffValue);
         preferences.setGeneQuery(SemanticQuery.create());
     }
 }

@@ -73,7 +73,7 @@ public class ProfileStreamKryoLayer<DataColumnDescriptor extends DescribesDataCo
 
         final UnsafeOutput output = kryoFileHandle.write();
         for(Prof profile : new IterableObjectInputStream<>(
-                createFromTsvFile(experiment, options, Predicates.<Expr>alwaysTrue())
+                createFromTsvFile(experiment, options, expr -> true)
                 )){
             kryo.writeClassAndObject(output, profile);
         }

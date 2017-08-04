@@ -15,10 +15,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.stream.*;
 import uk.ac.ebi.atlas.resource.DataFileHub;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
-import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.RnaSeqBaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -77,6 +74,7 @@ public class ExpressionSerializerService {
         for(ExpressionUnit.Absolute.Rna unit: dataFileHub.getRnaSeqBaselineExperimentFiles(experiment.getAccession()).dataFiles()){
             RnaSeqBaselineRequestPreferences p = new RnaSeqBaselineRequestPreferences();
             p.setUnit(unit);
+            BaselineRequestPreferences.setRequestAllData(p);
             b.add(new BaselineRequestContext<>(p, experiment));
         }
 
@@ -85,19 +83,25 @@ public class ExpressionSerializerService {
 
     private ImmutableList<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>> proteomicsBaselineStreamOptions(BaselineExperiment experiment) {
         return ImmutableList.<BaselineProfileStreamOptions<ExpressionUnit.Absolute.Protein>>of(
-                new BaselineRequestContext<>(new ProteomicsBaselineRequestPreferences(), experiment)
+                new BaselineRequestContext<>(ProteomicsBaselineRequestPreferences.requestAllData(), experiment)
         );
     }
 
     private ImmutableList<RnaSeqRequestContext> rnaSeqStreamOptions(DifferentialExperiment experiment) {
+        DifferentialRequestPreferences p = new DifferentialRequestPreferences();
+        p.setCutoff(1d);
+        p.setFoldChangeCutoff(ExperimentPageRequestPreferences.nonZeroButVerySmallCutoffValue);
         return ImmutableList.of(
-                new RnaSeqRequestContext(new DifferentialRequestPreferences(), experiment)
+                new RnaSeqRequestContext(p, experiment)
         );
     }
 
     private ImmutableList<MicroarrayRequestContext> microarrayProfileStreamOptions(MicroarrayExperiment microarrayExperiment) {
+        MicroarrayRequestPreferences p = new MicroarrayRequestPreferences();
+        p.setCutoff(1d);
+        p.setFoldChangeCutoff(ExperimentPageRequestPreferences.nonZeroButVerySmallCutoffValue);
         return ImmutableList.of(
-                new MicroarrayRequestContext(new MicroarrayRequestPreferences(), microarrayExperiment)
+                new MicroarrayRequestContext(p, microarrayExperiment)
         );
     }
 
