@@ -6,7 +6,6 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "expression-atlas-experiment-page": "latest",
-    "highcharts": "git://github.com/gxa/highcharts-dist.git"
+    "expression-atlas-experiment-page": "latest"
   }
 }
