@@ -2,8 +2,6 @@ package uk.ac.ebi.atlas.experimentpage;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,21 +20,19 @@ import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExpressionAtlasExperimentTrader;
 
 import javax.inject.Inject;
-import java.net.URI;
 import java.text.MessageFormat;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:dbContext.xml"})
-public class ExternallyAvailableContentControllerEIT {
+public class ExternallyAvailableContentControllerWIT {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExternallyAvailableContentControllerEIT.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExternallyAvailableContentControllerWIT.class);
 
     @Inject
     ExpressionAtlasExperimentTrader experimentTrader;
