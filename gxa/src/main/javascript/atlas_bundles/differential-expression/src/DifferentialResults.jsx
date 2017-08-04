@@ -139,7 +139,11 @@ const DifferentialResults = React.createClass({
             </tr>
             </thead>
             <tbody>
-            {differentialResultRows}
+            { this.props.results.map(diffResult =>
+                <DifferentialResultRow key = {diffResult.id}
+                                       displayLevels = {this.state.displayLevels}
+                                       atlasUrl = {this.props.atlasUrl}
+                                       {...diffResult} />) }
             </tbody>
           </table>
           <div className={`margin-top-medium`}>
@@ -152,14 +156,6 @@ const DifferentialResults = React.createClass({
           </div>
         </div>
       );
-
-        let differentialResultRows = this.props.results.map(diffResult =>
-              <DifferentialResultRow
-                key = {diffResult.id}
-                displayLevels = {this.state.displayLevels}
-                atlasUrl = {this.props.atlasUrl}
-                {...diffResult} />
-        );
     }
 });
 
