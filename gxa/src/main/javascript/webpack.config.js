@@ -3,6 +3,30 @@ var path = require('path');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackShellPlugin = require('webpack-shell-plugin');
 
+const baselineDeps = [ 'expression-atlas-feedback', 'expression-atlas-heatmap-highcharts', 'prop-types', 'react',
+  'react-dom']
+
+const bioentityInfoDeps = ['react', 'react-dom']
+
+const browseByDeps = ['react', 'react-dom', 'react-ebi-species', 'urijs']
+
+const differentialDeps = [ 'expression-atlas-feedback',  'expression-atlas-number-format',  'jquery',
+  'jquery-ui-bundle', 'prop-types', 'react', 'react-dom', 'react-ebi-species', 'urijs']
+
+const heatmapDeps = ['expression-atlas-heatmap-highcharts']
+const experimentPageDeps = ['expression-atlas-experiment-page']
+
+const dependenciesArray =
+  Array.from(
+    new Set(
+      [].concat(baselineDeps, bioentityInfoDeps, browseByDeps, differentialDeps, experimentPageDeps, heatmapDeps)))
+
+const alias = dependenciesArray
+  .reduce(function(acc, moduleName) {
+    acc[moduleName] = path.resolve('./node_modules/' + moduleName)
+    return acc
+  }, {})
+
 module.exports = {
   // define the bundles we want
   entry: {
@@ -12,61 +36,11 @@ module.exports = {
     expressionAtlasDifferentialExpression: './atlas_bundles/differential-expression',
     expressionAtlasBioentityInformation: './atlas_bundles/bioentity-information',
     expressionAtlasBrowseBySpecies: './atlas_bundles/browse-by-species',
-    // polyfills: ['babel-polyfill', 'whatwg-fetch'],
-    dependencies: [
-      // Here go our shared packages and third party packages
-      // expressionAtlasHeatmapHighcharts, experimentPage, expressionAtlasBaselineExpression
-      'expression-atlas-heatmap-highcharts',
-      'anatomogram',
-      // expressionAtlasBaselineExpression, expressionAtlasDifferentialExpression
-      'expression-atlas-feedback',
-      // expressionAtlasBrowseBySpecies, expressionAtlasDifferentialExpression
-      'react-ebi-species',
-      // expressionAtlasHeatmapHighcharts, expressionAtlasDifferentialExpression
-      'expression-atlas-number-format',
-
-      // expressionAtlasHeatmapHighcharts
-      'color',
-      'downloadjs',
-      'he',
-      'highcharts',
-      'highcharts-custom-events',
-      'jquery',
-      'lodash',
-      'object-hash',
-      'rc-slider',
-      'react',
-      'react-bootstrap',
-      'react-dom',
-      'react-highcharts',
-      'prop-types',
-      'react-refetch',
-      'urijs',
-
-      // Node.js stuff
-      'url',
-      'path',
-      'events',
-
-      // Anatomogram
-      'react-svg',
-      'transform-props-with',
-
-      // feedback
-      'react-addons-css-transition-group',
-
-      // 'react-bootstrap',
-      'react-emojione',
-      'react-localstorage',
-      'react-timer-mixin',
-    ]
+    // polyfills: ['babel-polyfill', 'whatwg-fetch']
   },
 
   resolve: {
-    alias: {
-      "react": path.resolve('./node_modules/react'),
-      "react-dom": path.resolve('./node_modules/react-dom')
-    },
+    alias
   },
 
   output: {
@@ -84,9 +58,9 @@ module.exports = {
       dry: false
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'dependencies',
+      name: 'dependencies', // According to the docs it defaults to filename, but it doesn’t
       filename: 'vendorCommons.bundle.js',
-      minChunks: Infinity     // Explicit definition-based split. Don’t put shared modules between main and demo entries in vendor.bundle.js
+      minChunks: 3
     }),
     new webpack.DefinePlugin({
       "process.env": {

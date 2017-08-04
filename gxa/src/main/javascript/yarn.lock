@@ -2098,7 +2098,7 @@ express@^4.13.3, express@^4.15.2:
     utils-merge "1.0.0"
     vary "~1.1.1"
 
-expression-atlas-experiment-page@^1.0.1:
+expression-atlas-experiment-page@latest:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.1.tgz#cb66bdd24b8470add931176e45a98f4cffd8ebcd"
   dependencies:
@@ -2120,18 +2120,6 @@ expression-atlas-experiment-page@^1.0.1:
     react-table "^6.5.3"
     sanitize-html "^1.14.1"
     urijs "^1.18.10"
-
-expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.1.2.tgz:
-  version "1.1.2"
-  resolved "./atlas_modules/expression-atlas-feedback-v1.1.2.tgz#236e72014091adc97ccee282806226ec09561ae3"
-  dependencies:
-    react "^15.6.1"
-    react-addons-css-transition-group "^15.6.0"
-    react-bootstrap "^0.31.2"
-    react-dom "^15.6.1"
-    react-emojione "^3.1.10"
-    react-localstorage "^0.3.1"
-    react-timer-mixin "^0.13.3"
 
 expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.2.0.tgz:
   version "1.2.0"
@@ -3185,6 +3173,10 @@ isomorphic-fetch@^2.1.1:
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
+
+jquery-ui-bundle@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/jquery-ui-bundle/-/jquery-ui-bundle-1.12.1.tgz#d6be2e4c377494e2378b1cae2920a91d1182d8c4"
 
 jquery@^3.2.1:
   version "3.2.1"
@@ -4573,7 +4565,7 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-ebi-species@^1.2.5:
+react-ebi-species@latest:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/react-ebi-species/-/react-ebi-species-1.2.5.tgz#7b5772b454c3a9c90ec05bdc393f6e625514dcce"
   dependencies:
