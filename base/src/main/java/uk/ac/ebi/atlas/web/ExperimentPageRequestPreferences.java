@@ -12,7 +12,7 @@ import java.util.Set;
 
 public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUnit> extends SearchRequest {
 
-    public static final double nonZeroButVerySmallCutoffValue = 10e-100d;
+    public static final double nonZeroButVerySmallCutoffValue = Double.MIN_VALUE;
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
     private static final int HEATMAP_SIZE_MIN = 0;
@@ -55,7 +55,7 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
     public abstract double getDefaultCutoff();
 
     public void setCutoff(Double cutoff) {
-        if (cutoff != null) {
+        if (cutoff != null && cutoff > nonZeroButVerySmallCutoffValue) {
             this.cutoff = BaselineExpressionLevelRounder.round(cutoff);
         }
     }
