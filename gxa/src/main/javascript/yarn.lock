@@ -2099,13 +2099,11 @@ express@^4.13.3, express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-experiment-page@latest:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.1.tgz#cb66bdd24b8470add931176e45a98f4cffd8ebcd"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/expression-atlas-experiment-page/-/expression-atlas-experiment-page-1.0.2.tgz#e6a066f5469e1786f1f6f5dd1ae7e6d1a1e65a2c"
   dependencies:
     expression-atlas-heatmap-highcharts latest
-    highcharts "git://github.com/gxa/highcharts-dist.git"
     lodash "^4.17.4"
-    path "^0.12.7"
     pluralize "^6.0.0"
     prop-types "^15.5.10"
     qs "^6.5.0"
@@ -4020,13 +4018,6 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
-path@^0.12.7:
-  version "0.12.7"
-  resolved "https://registry.yarnpkg.com/path/-/path-0.12.7.tgz#d4dc2a506c4ce2197eb481ebfcd5b36c0140b10f"
-  dependencies:
-    process "^0.11.1"
-    util "^0.10.3"
-
 pbkdf2@^3.0.3:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.13.tgz#c37d295531e786b1da3e3eadc840426accb0ae25"
@@ -4351,7 +4342,7 @@ process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
 
-process@^0.11.0, process@^0.11.1:
+process@^0.11.0:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
