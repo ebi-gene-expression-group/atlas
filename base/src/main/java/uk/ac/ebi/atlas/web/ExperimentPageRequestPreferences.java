@@ -55,8 +55,8 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
     public abstract double getDefaultCutoff();
 
     public void setCutoff(Double cutoff) {
-        if (cutoff != null && cutoff > nonZeroButVerySmallCutoffValue) {
-            this.cutoff = BaselineExpressionLevelRounder.round(cutoff);
+        if (cutoff != null) {
+            this.cutoff = cutoff;
         }
     }
 

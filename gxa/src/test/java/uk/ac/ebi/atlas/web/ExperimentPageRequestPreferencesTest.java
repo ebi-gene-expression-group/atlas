@@ -17,23 +17,7 @@ public class ExperimentPageRequestPreferencesTest {
     public void setUp() throws Exception {
         subject = new RnaSeqBaselineRequestPreferences();
     }
-
-    @Test
-    public void cutoffShouldBeRoundedToNoFractionalDigitForValuesLargerThanOne() {
-        //given
-        subject.setCutoff(2.1211);
-        //then
-        assertThat(subject.getCutoff(), is(2d));
-    }
-
-    @Test
-    public void cutoffShouldBeRoundedTo1FractionalDigitForValuesSmallerThanOne() {
-        //given
-        subject.setCutoff(0.1211);
-        //then
-        assertThat(subject.getCutoff(), is(0.1d));
-    }
-
+    
     @Test
     public void heatmapMatrixSizeIsSetToTheDefaultRankingSizeIfRequestDoesntSpecifyAnyValue() {
         //given
