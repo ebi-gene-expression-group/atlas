@@ -8,7 +8,7 @@ import BootstrapFormGroup from 'react-bootstrap/lib/FormGroup'
 import BootstrapFormControl from 'react-bootstrap/lib/FormControl'
 
 import EmojiSpritesFile from './assets/emojione.sprites.png'
-import Emoji from 'react-emojione'
+import {emojify} from 'react-emojione';
 
 import './gxaFeedback.css'
 
@@ -169,9 +169,9 @@ var FeedbackBox = React.createClass({
 
     render: function () {
       return (
-        <span style={{padding:"6px"}} >
+        <span style={{padding: `6px`}} >
           <span className={this.props.selected? "gxaSmiley gxaSmileyClicked": "gxaSmiley"} onClick={this._onClick} >
-          {Emoji.emojify(this.props.emoji,this._emojifyOptions)}
+          {emojify(this.props.emoji, this._emojifyOptions)}
           </span>
         </span>
       );

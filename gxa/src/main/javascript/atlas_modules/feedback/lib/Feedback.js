@@ -34,8 +34,6 @@ var _emojioneSprites2 = _interopRequireDefault(_emojioneSprites);
 
 var _reactEmojione = require('react-emojione');
 
-var _reactEmojione2 = _interopRequireDefault(_reactEmojione);
-
 require('./gxaFeedback.css');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -225,11 +223,11 @@ var Smiley = _react2.default.createClass({
   render: function render() {
     return _react2.default.createElement(
       'span',
-      { style: { padding: "6px" } },
+      { style: { padding: '6px' } },
       _react2.default.createElement(
         'span',
         { className: this.props.selected ? "gxaSmiley gxaSmileyClicked" : "gxaSmiley", onClick: this._onClick },
-        _reactEmojione2.default.emojify(this.props.emoji, this._emojifyOptions)
+        (0, _reactEmojione.emojify)(this.props.emoji, this._emojifyOptions)
       )
     );
   }
