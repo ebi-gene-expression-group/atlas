@@ -1,7 +1,7 @@
 var expressionAtlasBrowseBySpecies =
 webpackJsonp_name_([4],{
 
-/***/ 1094:
+/***/ 1128:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/urijs/src/punycode.js ***!
   \****************************************************************************/
@@ -542,11 +542,11 @@ webpackJsonp_name_([4],{
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 32)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 25)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 32)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 24)))
 
 /***/ }),
 
-/***/ 1095:
+/***/ 1129:
 /*!************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/urijs/src/IPv6.js ***!
   \************************************************************************/
@@ -747,7 +747,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 1096:
+/***/ 1130:
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/urijs/src/SecondLevelDomains.js ***!
   \**************************************************************************************/
@@ -1008,7 +1008,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 1097:
+/***/ 1131:
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/fbjs/lib/emptyFunction.js ***!
   \********************************************************************************/
@@ -1058,7 +1058,7 @@ module.exports = emptyFunction;
 
 /***/ }),
 
-/***/ 1098:
+/***/ 1132:
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/fbjs/lib/invariant.js ***!
   \****************************************************************************/
@@ -1125,7 +1125,7 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ 1099:
+/***/ 1133:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/fbjs/lib/warning.js ***!
   \**************************************************************************/
@@ -1146,7 +1146,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 1097);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 1131);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -1201,7 +1201,7 @@ module.exports = warning;
 
 /***/ }),
 
-/***/ 1100:
+/***/ 1134:
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \*********************************************************************************************/
@@ -1228,7 +1228,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 2857:
+/***/ 2932:
 /*!**************************************************!*\
   !*** ./atlas_bundles/browse-by-species/index.js ***!
   \**************************************************/
@@ -1244,7 +1244,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _browseBySpeciesRenderer = __webpack_require__(/*! ./src/browseBySpeciesRenderer.jsx */ 2858);
+var _browseBySpeciesRenderer = __webpack_require__(/*! ./src/browseBySpeciesRenderer.jsx */ 2933);
 
 var _browseBySpeciesRenderer2 = _interopRequireDefault(_browseBySpeciesRenderer);
 
@@ -1254,7 +1254,7 @@ exports.render = _browseBySpeciesRenderer2.default;
 
 /***/ }),
 
-/***/ 2858:
+/***/ 2933:
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/browseBySpeciesRenderer.jsx ***!
   \*************************************************************************/
@@ -1281,11 +1281,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _BrowseBySpecies = __webpack_require__(/*! ./BrowseBySpecies.jsx */ 2859);
+var _BrowseBySpecies = __webpack_require__(/*! ./BrowseBySpecies.jsx */ 2934);
 
 var _BrowseBySpecies2 = _interopRequireDefault(_BrowseBySpecies);
 
@@ -1295,7 +1295,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 2859:
+/***/ 2934:
 /*!*****************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/BrowseBySpecies.jsx ***!
   \*****************************************************************/
@@ -1316,7 +1316,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SpeciesItem = __webpack_require__(/*! ./SpeciesItem.jsx */ 2860);
+var _SpeciesItem = __webpack_require__(/*! ./SpeciesItem.jsx */ 2935);
 
 var _SpeciesItem2 = _interopRequireDefault(_SpeciesItem);
 
@@ -1350,7 +1350,7 @@ exports.default = BrowseBySpecies;
 
 /***/ }),
 
-/***/ 2860:
+/***/ 2935:
 /*!*************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/src/SpeciesItem.jsx ***!
   \*************************************************************/
@@ -1369,11 +1369,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _urijs = __webpack_require__(/*! urijs */ 2861);
+var _urijs = __webpack_require__(/*! urijs */ 2936);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 2862);
+var _reactEbiSpecies = __webpack_require__(/*! react-ebi-species */ 2937);
 
 var _reactEbiSpecies2 = _interopRequireDefault(_reactEbiSpecies);
 
@@ -1447,7 +1447,7 @@ exports.default = SpeciesItem;
 
 /***/ }),
 
-/***/ 2861:
+/***/ 2936:
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/urijs/src/URI.js ***!
   \***********************************************************************/
@@ -1472,10 +1472,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // https://github.com/umdjs/umd/blob/master/returnExports.js
   if (typeof module === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 1094), __webpack_require__(/*! ./IPv6 */ 1095), __webpack_require__(/*! ./SecondLevelDomains */ 1096));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 1128), __webpack_require__(/*! ./IPv6 */ 1129), __webpack_require__(/*! ./SecondLevelDomains */ 1130));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 1094), __webpack_require__(/*! ./IPv6 */ 1095), __webpack_require__(/*! ./SecondLevelDomains */ 1096)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 1128), __webpack_require__(/*! ./IPv6 */ 1129), __webpack_require__(/*! ./SecondLevelDomains */ 1130)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -3716,7 +3716,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 2862:
+/***/ 2937:
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/react-ebi-species/lib/index.js ***!
   \*************************************************************************************/
@@ -3736,11 +3736,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EbiSpeciesIcon = __webpack_require__(/*! ./EbiSpeciesIcon.js */ 2863);
+var _EbiSpeciesIcon = __webpack_require__(/*! ./EbiSpeciesIcon.js */ 2938);
 
 var _EbiSpeciesIcon2 = _interopRequireDefault(_EbiSpeciesIcon);
 
@@ -3755,7 +3755,7 @@ exports.render = render;
 
 /***/ }),
 
-/***/ 2863:
+/***/ 2938:
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/react-ebi-species/lib/EbiSpeciesIcon.js ***!
   \**********************************************************************************************/
@@ -3774,13 +3774,13 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(/*! prop-types */ 2864);
+var _propTypes = __webpack_require__(/*! prop-types */ 2939);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-__webpack_require__(/*! ./ebi-visual-species.css */ 2867);
+__webpack_require__(/*! ./ebi-visual-species.css */ 2942);
 
-var _mapping = __webpack_require__(/*! ./mapping.js */ 2869);
+var _mapping = __webpack_require__(/*! ./mapping.js */ 2944);
 
 var _mapping2 = _interopRequireDefault(_mapping);
 
@@ -3818,7 +3818,7 @@ exports.default = EbiSpeciesIcon;
 
 /***/ }),
 
-/***/ 2864:
+/***/ 2939:
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/prop-types/index.js ***!
   \**************************************************************************/
@@ -3850,7 +3850,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 2865)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 2940)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -3860,7 +3860,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 2865:
+/***/ 2940:
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \********************************************************************************************/
@@ -3880,12 +3880,12 @@ if (true) {
 
 
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 1097);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 1098);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 1099);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 1131);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 1132);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 1133);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 1100);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 2866);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 1134);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 2941);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -4385,7 +4385,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 2866:
+/***/ 2941:
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/prop-types/checkPropTypes.js ***!
   \***********************************************************************************/
@@ -4406,9 +4406,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 1098);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 1099);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 1100);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 1132);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 1133);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 1134);
   var loggedTypeFailures = {};
 }
 
@@ -4459,7 +4459,7 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 2867:
+/***/ 2942:
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/react-ebi-species/lib/ebi-visual-species.css ***!
   \***************************************************************************************************/
@@ -4470,7 +4470,7 @@ module.exports = checkPropTypes;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./ebi-visual-species.css */ 2868);
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./ebi-visual-species.css */ 2943);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -4496,7 +4496,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 2868:
+/***/ 2943:
 /*!*****************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/browse-by-species/node_modules/react-ebi-species/lib/ebi-visual-species.css ***!
   \*****************************************************************************************************************************/
@@ -4516,7 +4516,7 @@ exports.push([module.i, "/* Taken from: https://github.com/ebiwd/EBI-Icon-fonts 
 
 /***/ }),
 
-/***/ 2869:
+/***/ 2944:
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/browse-by-species/node_modules/react-ebi-species/lib/mapping.js ***!
   \***************************************************************************************/
@@ -4639,5 +4639,5 @@ exports.getAllSpecies = getAllSpecies;
 
 /***/ })
 
-},[2857]);
+},[2932]);
 //# sourceMappingURL=expressionAtlasBrowseBySpecies.bundle.js.map

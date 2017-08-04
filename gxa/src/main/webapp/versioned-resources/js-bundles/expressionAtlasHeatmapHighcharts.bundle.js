@@ -32,7 +32,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 1325)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ 1379)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -65,7 +65,7 @@ if (true) {
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(/*! ../core-js/object/assign */ 1519);
+var _assign = __webpack_require__(/*! ../core-js/object/assign */ 1573);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -120,7 +120,7 @@ exports.default = function (instance, Constructor) {
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(/*! ../helpers/typeof */ 295);
+var _typeof2 = __webpack_require__(/*! ../helpers/typeof */ 317);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -148,15 +148,15 @@ exports.default = function (self, call) {
 
 exports.__esModule = true;
 
-var _setPrototypeOf = __webpack_require__(/*! ../core-js/object/set-prototype-of */ 1547);
+var _setPrototypeOf = __webpack_require__(/*! ../core-js/object/set-prototype-of */ 1601);
 
 var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
 
-var _create = __webpack_require__(/*! ../core-js/object/create */ 1551);
+var _create = __webpack_require__(/*! ../core-js/object/create */ 1605);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _typeof2 = __webpack_require__(/*! ../helpers/typeof */ 295);
+var _typeof2 = __webpack_require__(/*! ../helpers/typeof */ 317);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -287,7 +287,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 702);
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 742);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -376,7 +376,7 @@ if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 exports.__esModule = true;
 exports._curry = exports.bsSizes = exports.bsStyles = exports.bsClass = undefined;
 
-var _entries = __webpack_require__(/*! babel-runtime/core-js/object/entries */ 763);
+var _entries = __webpack_require__(/*! babel-runtime/core-js/object/entries */ 803);
 
 var _entries2 = _interopRequireDefault(_entries);
 
@@ -390,7 +390,7 @@ exports.splitBsProps = splitBsProps;
 exports.splitBsPropsAndOmit = splitBsPropsAndOmit;
 exports.addStyle = addStyle;
 
-var _invariant = __webpack_require__(/*! invariant */ 215);
+var _invariant = __webpack_require__(/*! invariant */ 233);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -398,7 +398,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _StyleConfig = __webpack_require__(/*! ./StyleConfig */ 298);
+var _StyleConfig = __webpack_require__(/*! ./StyleConfig */ 320);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -593,7 +593,8 @@ var _curry = exports._curry = curry;
 /* 72 */,
 /* 73 */,
 /* 74 */,
-/* 75 */
+/* 75 */,
+/* 76 */
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/helpers/createClass.js ***!
   \********************************************************************************************/
@@ -606,7 +607,7 @@ var _curry = exports._curry = curry;
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ 780);
+var _defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ 820);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -631,12 +632,12 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 76 */,
 /* 77 */,
 /* 78 */,
 /* 79 */,
 /* 80 */,
-/* 81 */
+/* 81 */,
+/* 82 */
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_export.js ***!
   \*********************************************************************************************************************/
@@ -644,10 +645,10 @@ exports.default = function () {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global    = __webpack_require__(/*! ./_global */ 112)
+var global    = __webpack_require__(/*! ./_global */ 113)
   , core      = __webpack_require__(/*! ./_core */ 55)
-  , ctx       = __webpack_require__(/*! ./_ctx */ 428)
-  , hide      = __webpack_require__(/*! ./_hide */ 164)
+  , ctx       = __webpack_require__(/*! ./_ctx */ 454)
+  , hide      = __webpack_require__(/*! ./_hide */ 175)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -707,7 +708,7 @@ $export.R = 128; // real proto method for `library`
 module.exports = $export;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_wks.js ***!
   \******************************************************************************************************************/
@@ -715,9 +716,9 @@ module.exports = $export;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store      = __webpack_require__(/*! ./_shared */ 434)('wks')
-  , uid        = __webpack_require__(/*! ./_uid */ 293)
-  , Symbol     = __webpack_require__(/*! ./_global */ 112).Symbol
+var store      = __webpack_require__(/*! ./_shared */ 460)('wks')
+  , uid        = __webpack_require__(/*! ./_uid */ 315)
+  , Symbol     = __webpack_require__(/*! ./_global */ 113).Symbol
   , USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function(name){
@@ -728,7 +729,6 @@ var $exports = module.exports = function(name){
 $exports.store = store;
 
 /***/ }),
-/* 83 */,
 /* 84 */,
 /* 85 */,
 /* 86 */,
@@ -742,7 +742,8 @@ $exports.store = store;
 /* 94 */,
 /* 95 */,
 /* 96 */,
-/* 97 */
+/* 97 */,
+/* 98 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isObject.js ***!
   \**************************************************************************/
@@ -784,7 +785,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_to-iobject.js ***!
   \*************************************************************************************************************************/
@@ -793,14 +794,13 @@ module.exports = isObject;
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(/*! ./_iobject */ 753)
-  , defined = __webpack_require__(/*! ./_defined */ 431);
+var IObject = __webpack_require__(/*! ./_iobject */ 793)
+  , defined = __webpack_require__(/*! ./_defined */ 457);
 module.exports = function(it){
   return IObject(defined(it));
 };
 
 /***/ }),
-/* 99 */,
 /* 100 */,
 /* 101 */,
 /* 102 */,
@@ -812,7 +812,8 @@ module.exports = function(it){
 /* 108 */,
 /* 109 */,
 /* 110 */,
-/* 111 */
+/* 111 */,
+/* 112 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isObjectLike.js ***!
   \******************************************************************************/
@@ -852,7 +853,7 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_global.js ***!
   \*********************************************************************************************************************/
@@ -866,7 +867,7 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 
 /***/ }),
-/* 113 */
+/* 114 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-dp.js ***!
   \************************************************************************************************************************/
@@ -874,12 +875,12 @@ if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject       = __webpack_require__(/*! ./_an-object */ 165)
-  , IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 750)
-  , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 429)
+var anObject       = __webpack_require__(/*! ./_an-object */ 176)
+  , IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 790)
+  , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 455)
   , dP             = Object.defineProperty;
 
-exports.f = __webpack_require__(/*! ./_descriptors */ 133) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+exports.f = __webpack_require__(/*! ./_descriptors */ 138) ? Object.defineProperty : function defineProperty(O, P, Attributes){
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -892,7 +893,7 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 133) ? Object.defineProper
 };
 
 /***/ }),
-/* 114 */
+/* 115 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/util/inDOM.js ***!
   \*********************************************************************************/
@@ -910,7 +911,6 @@ exports.default = !!(typeof window !== 'undefined' && window.document && window.
 module.exports = exports['default'];
 
 /***/ }),
-/* 115 */,
 /* 116 */,
 /* 117 */,
 /* 118 */,
@@ -927,7 +927,12 @@ module.exports = exports['default'];
 /* 129 */,
 /* 130 */,
 /* 131 */,
-/* 132 */
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getNative.js ***!
   \****************************************************************************/
@@ -935,8 +940,8 @@ module.exports = exports['default'];
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 1343),
-    getValue = __webpack_require__(/*! ./_getValue */ 1348);
+var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 1397),
+    getValue = __webpack_require__(/*! ./_getValue */ 1402);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -955,7 +960,7 @@ module.exports = getNative;
 
 
 /***/ }),
-/* 133 */
+/* 138 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_descriptors.js ***!
   \**************************************************************************************************************************/
@@ -964,12 +969,12 @@ module.exports = getNative;
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(/*! ./_fails */ 166)(function(){
+module.exports = !__webpack_require__(/*! ./_fails */ 177)(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 134 */
+/* 139 */
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_has.js ***!
   \******************************************************************************************************************/
@@ -983,7 +988,7 @@ module.exports = function(it, key){
 };
 
 /***/ }),
-/* 135 */
+/* 140 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types-extra/lib/elementType.js ***!
   \*******************************************************************************************/
@@ -1004,7 +1009,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 444);
+var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 470);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
@@ -1029,7 +1034,7 @@ exports.default = (0, _createChainableTypeChecker2.default)(elementType);
 module.exports = exports['default'];
 
 /***/ }),
-/* 136 */
+/* 141 */
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/experimentTypeUtils.js ***!
   \***************************************************************************************************************************/
@@ -1107,11 +1112,6 @@ exports.isRnaSeqBaseline = isRnaSeqBaseline;
 exports.getUnits = getUnits;
 
 /***/ }),
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
 /* 142 */,
 /* 143 */,
 /* 144 */,
@@ -1131,7 +1131,18 @@ exports.getUnits = getUnits;
 /* 158 */,
 /* 159 */,
 /* 160 */,
-/* 161 */
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseGetTag.js ***!
   \*****************************************************************************/
@@ -1139,9 +1150,9 @@ exports.getUnits = getUnits;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(/*! ./_Symbol */ 162),
-    getRawTag = __webpack_require__(/*! ./_getRawTag */ 1344),
-    objectToString = __webpack_require__(/*! ./_objectToString */ 1345);
+var Symbol = __webpack_require__(/*! ./_Symbol */ 173),
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ 1398),
+    objectToString = __webpack_require__(/*! ./_objectToString */ 1399);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -1170,7 +1181,7 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 162 */
+/* 173 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Symbol.js ***!
   \*************************************************************************/
@@ -1187,7 +1198,7 @@ module.exports = Symbol;
 
 
 /***/ }),
-/* 163 */
+/* 174 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_toKey.js ***!
   \************************************************************************/
@@ -1195,7 +1206,7 @@ module.exports = Symbol;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isSymbol = __webpack_require__(/*! ./isSymbol */ 216);
+var isSymbol = __webpack_require__(/*! ./isSymbol */ 234);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -1219,7 +1230,7 @@ module.exports = toKey;
 
 
 /***/ }),
-/* 164 */
+/* 175 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_hide.js ***!
   \*******************************************************************************************************************/
@@ -1227,9 +1238,9 @@ module.exports = toKey;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP         = __webpack_require__(/*! ./_object-dp */ 113)
-  , createDesc = __webpack_require__(/*! ./_property-desc */ 219);
-module.exports = __webpack_require__(/*! ./_descriptors */ 133) ? function(object, key, value){
+var dP         = __webpack_require__(/*! ./_object-dp */ 114)
+  , createDesc = __webpack_require__(/*! ./_property-desc */ 237);
+module.exports = __webpack_require__(/*! ./_descriptors */ 138) ? function(object, key, value){
   return dP.f(object, key, createDesc(1, value));
 } : function(object, key, value){
   object[key] = value;
@@ -1237,7 +1248,7 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 133) ? function(objec
 };
 
 /***/ }),
-/* 165 */
+/* 176 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_an-object.js ***!
   \************************************************************************************************************************/
@@ -1245,14 +1256,14 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 133) ? function(objec
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(/*! ./_is-object */ 218);
+var isObject = __webpack_require__(/*! ./_is-object */ 236);
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
 
 /***/ }),
-/* 166 */
+/* 177 */
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_fails.js ***!
   \********************************************************************************************************************/
@@ -1269,7 +1280,7 @@ module.exports = function(exec){
 };
 
 /***/ }),
-/* 167 */
+/* 178 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-keys.js ***!
   \**************************************************************************************************************************/
@@ -1278,15 +1289,15 @@ module.exports = function(exec){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys       = __webpack_require__(/*! ./_object-keys-internal */ 752)
-  , enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 435);
+var $keys       = __webpack_require__(/*! ./_object-keys-internal */ 792)
+  , enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 461);
 
 module.exports = Object.keys || function keys(O){
   return $keys(O, enumBugKeys);
 };
 
 /***/ }),
-/* 168 */
+/* 179 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/warning/browser.js ***!
   \**************************************************************************/
@@ -1358,7 +1369,7 @@ module.exports = warning;
 
 
 /***/ }),
-/* 169 */
+/* 180 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/Glyphicon.js ***!
   \****************************************************************************************/
@@ -1450,7 +1461,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('glyphicon', Glyphicon);
 module.exports = exports['default'];
 
 /***/ }),
-/* 170 */
+/* 181 */
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/chartDataPropTypes.js ***!
   \********************************************************************************************************************************/
@@ -1474,7 +1485,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _experimentTypeUtils = __webpack_require__(/*! ../load/experimentTypeUtils */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ../load/experimentTypeUtils */ 141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1683,7 +1694,7 @@ exports.dataSeriesPropTypes = dataSeriesPropTypes;
 exports.colourAxisPropTypes = colourAxisPropTypes;
 
 /***/ }),
-/* 171 */
+/* 182 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/helpers/defineProperty.js ***!
   \***********************************************************************************************/
@@ -1696,7 +1707,7 @@ exports.colourAxisPropTypes = colourAxisPropTypes;
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ 780);
+var _defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ 820);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -1718,17 +1729,6 @@ exports.default = function (obj, key, value) {
 };
 
 /***/ }),
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
 /* 183 */,
 /* 184 */,
 /* 185 */,
@@ -1760,7 +1760,25 @@ exports.default = function (obj, key, value) {
 /* 211 */,
 /* 212 */,
 /* 213 */,
-/* 214 */
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/urijs/src/URI.js ***!
   \************************************************************************/
@@ -1785,10 +1803,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // https://github.com/umdjs/umd/blob/master/returnExports.js
   if (typeof module === 'object' && module.exports) {
     // Node
-    module.exports = factory(__webpack_require__(/*! ./punycode */ 693), __webpack_require__(/*! ./IPv6 */ 694), __webpack_require__(/*! ./SecondLevelDomains */ 695));
+    module.exports = factory(__webpack_require__(/*! ./punycode */ 733), __webpack_require__(/*! ./IPv6 */ 734), __webpack_require__(/*! ./SecondLevelDomains */ 735));
   } else if (true) {
     // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 693), __webpack_require__(/*! ./IPv6 */ 694), __webpack_require__(/*! ./SecondLevelDomains */ 695)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! ./punycode */ 733), __webpack_require__(/*! ./IPv6 */ 734), __webpack_require__(/*! ./SecondLevelDomains */ 735)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -4028,7 +4046,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 215 */
+/* 233 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/invariant/browser.js ***!
   \****************************************************************************/
@@ -4091,7 +4109,7 @@ module.exports = invariant;
 
 
 /***/ }),
-/* 216 */
+/* 234 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isSymbol.js ***!
   \**************************************************************************/
@@ -4099,8 +4117,8 @@ module.exports = invariant;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 161),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 172),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -4131,7 +4149,7 @@ module.exports = isSymbol;
 
 
 /***/ }),
-/* 217 */
+/* 235 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_copyObject.js ***!
   \*****************************************************************************/
@@ -4139,8 +4157,8 @@ module.exports = isSymbol;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assignValue = __webpack_require__(/*! ./_assignValue */ 719),
-    baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ 720);
+var assignValue = __webpack_require__(/*! ./_assignValue */ 759),
+    baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ 760);
 
 /**
  * Copies properties of `source` to `object`.
@@ -4182,7 +4200,7 @@ module.exports = copyObject;
 
 
 /***/ }),
-/* 218 */
+/* 236 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_is-object.js ***!
   \************************************************************************************************************************/
@@ -4195,7 +4213,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 219 */
+/* 237 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_property-desc.js ***!
   \****************************************************************************************************************************/
@@ -4213,7 +4231,7 @@ module.exports = function(bitmap, value){
 };
 
 /***/ }),
-/* 220 */
+/* 238 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-pie.js ***!
   \*************************************************************************************************************************/
@@ -4224,7 +4242,7 @@ module.exports = function(bitmap, value){
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 221 */
+/* 239 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iterators.js ***!
   \************************************************************************************************************************/
@@ -4235,7 +4253,7 @@ exports.f = {}.propertyIsEnumerable;
 module.exports = {};
 
 /***/ }),
-/* 222 */
+/* 240 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/Button.js ***!
   \*************************************************************************************/
@@ -4248,7 +4266,7 @@ module.exports = {};
 
 exports.__esModule = true;
 
-var _values = __webpack_require__(/*! babel-runtime/core-js/object/values */ 1556);
+var _values = __webpack_require__(/*! babel-runtime/core-js/object/values */ 1610);
 
 var _values2 = _interopRequireDefault(_values);
 
@@ -4284,15 +4302,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _StyleConfig = __webpack_require__(/*! ./utils/StyleConfig */ 298);
+var _StyleConfig = __webpack_require__(/*! ./utils/StyleConfig */ 320);
 
-var _SafeAnchor = __webpack_require__(/*! ./SafeAnchor */ 445);
+var _SafeAnchor = __webpack_require__(/*! ./SafeAnchor */ 471);
 
 var _SafeAnchor2 = _interopRequireDefault(_SafeAnchor);
 
@@ -4379,7 +4397,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('btn', (0, _bootstrapUtils.bsS
 module.exports = exports['default'];
 
 /***/ }),
-/* 223 */
+/* 241 */
 /*!**********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/utils/createChainedFunction.js ***!
   \**********************************************************************************************************/
@@ -4431,7 +4449,7 @@ exports['default'] = createChainedFunction;
 module.exports = exports['default'];
 
 /***/ }),
-/* 224 */
+/* 242 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/utils.js ***!
   \*****************************************************************************/
@@ -4440,7 +4458,7 @@ module.exports = exports['default'];
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__propertyUtils__ = __webpack_require__(/*! ./propertyUtils */ 1671);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__propertyUtils__ = __webpack_require__(/*! ./propertyUtils */ 1725);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 
@@ -5007,7 +5025,7 @@ mix(utils, domUtils);
 /* harmony default export */ __webpack_exports__["a"] = (utils);
 
 /***/ }),
-/* 225 */
+/* 243 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/index.js ***!
   \********************************************************************************/
@@ -5015,8 +5033,8 @@ mix(utils, domUtils);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Parser = __webpack_require__(/*! ./Parser.js */ 793),
-    DomHandler = __webpack_require__(/*! domhandler */ 1693);
+var Parser = __webpack_require__(/*! ./Parser.js */ 833),
+    DomHandler = __webpack_require__(/*! domhandler */ 1747);
 
 function defineProp(name, value){
 	delete module.exports[name];
@@ -5026,26 +5044,26 @@ function defineProp(name, value){
 
 module.exports = {
 	Parser: Parser,
-	Tokenizer: __webpack_require__(/*! ./Tokenizer.js */ 794),
-	ElementType: __webpack_require__(/*! domelementtype */ 226),
+	Tokenizer: __webpack_require__(/*! ./Tokenizer.js */ 834),
+	ElementType: __webpack_require__(/*! domelementtype */ 244),
 	DomHandler: DomHandler,
 	get FeedHandler(){
-		return defineProp("FeedHandler", __webpack_require__(/*! ./FeedHandler.js */ 1695));
+		return defineProp("FeedHandler", __webpack_require__(/*! ./FeedHandler.js */ 1749));
 	},
 	get Stream(){
-		return defineProp("Stream", __webpack_require__(/*! ./Stream.js */ 1696));
+		return defineProp("Stream", __webpack_require__(/*! ./Stream.js */ 1750));
 	},
 	get WritableStream(){
-		return defineProp("WritableStream", __webpack_require__(/*! ./WritableStream.js */ 798));
+		return defineProp("WritableStream", __webpack_require__(/*! ./WritableStream.js */ 838));
 	},
 	get ProxyHandler(){
-		return defineProp("ProxyHandler", __webpack_require__(/*! ./ProxyHandler.js */ 1713));
+		return defineProp("ProxyHandler", __webpack_require__(/*! ./ProxyHandler.js */ 1767));
 	},
 	get DomUtils(){
-		return defineProp("DomUtils", __webpack_require__(/*! domutils */ 1714));
+		return defineProp("DomUtils", __webpack_require__(/*! domutils */ 1768));
 	},
 	get CollectingHandler(){
-		return defineProp("CollectingHandler", __webpack_require__(/*! ./CollectingHandler.js */ 1726));
+		return defineProp("CollectingHandler", __webpack_require__(/*! ./CollectingHandler.js */ 1780));
 	},
 	// For legacy support
 	DefaultHandler: DomHandler,
@@ -5086,7 +5104,7 @@ module.exports = {
 
 
 /***/ }),
-/* 226 */
+/* 244 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domelementtype/index.js ***!
   \*******************************************************************************/
@@ -5112,24 +5130,6 @@ module.exports = {
 
 
 /***/ }),
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
 /* 245 */,
 /* 246 */,
 /* 247 */,
@@ -5162,7 +5162,29 @@ module.exports = {
 /* 274 */,
 /* 275 */,
 /* 276 */,
-/* 277 */
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/identity.js ***!
   \**************************************************************************/
@@ -5194,7 +5216,7 @@ module.exports = identity;
 
 
 /***/ }),
-/* 278 */
+/* 300 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createCtor.js ***!
   \*****************************************************************************/
@@ -5202,8 +5224,8 @@ module.exports = identity;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseCreate = __webpack_require__(/*! ./_baseCreate */ 279),
-    isObject = __webpack_require__(/*! ./isObject */ 97);
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ 301),
+    isObject = __webpack_require__(/*! ./isObject */ 98);
 
 /**
  * Creates a function that produces an instance of `Ctor` regardless of
@@ -5242,7 +5264,7 @@ module.exports = createCtor;
 
 
 /***/ }),
-/* 279 */
+/* 301 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseCreate.js ***!
   \*****************************************************************************/
@@ -5250,7 +5272,7 @@ module.exports = createCtor;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(/*! ./isObject */ 97);
+var isObject = __webpack_require__(/*! ./isObject */ 98);
 
 /** Built-in value references. */
 var objectCreate = Object.create;
@@ -5283,7 +5305,7 @@ module.exports = baseCreate;
 
 
 /***/ }),
-/* 280 */
+/* 302 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_copyArray.js ***!
   \****************************************************************************/
@@ -5314,7 +5336,7 @@ module.exports = copyArray;
 
 
 /***/ }),
-/* 281 */
+/* 303 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isIndex.js ***!
   \**************************************************************************/
@@ -5347,7 +5369,7 @@ module.exports = isIndex;
 
 
 /***/ }),
-/* 282 */
+/* 304 */
 /*!********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/eq.js ***!
   \********************************************************************/
@@ -5395,7 +5417,7 @@ module.exports = eq;
 
 
 /***/ }),
-/* 283 */
+/* 305 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/keys.js ***!
   \**********************************************************************/
@@ -5403,9 +5425,9 @@ module.exports = eq;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 721),
-    baseKeys = __webpack_require__(/*! ./_baseKeys */ 724),
-    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 284);
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 761),
+    baseKeys = __webpack_require__(/*! ./_baseKeys */ 764),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 306);
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -5443,7 +5465,7 @@ module.exports = keys;
 
 
 /***/ }),
-/* 284 */
+/* 306 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isArrayLike.js ***!
   \*****************************************************************************/
@@ -5451,8 +5473,8 @@ module.exports = keys;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(/*! ./isFunction */ 403),
-    isLength = __webpack_require__(/*! ./isLength */ 413);
+var isFunction = __webpack_require__(/*! ./isFunction */ 429),
+    isLength = __webpack_require__(/*! ./isLength */ 439);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -5487,7 +5509,7 @@ module.exports = isArrayLike;
 
 
 /***/ }),
-/* 285 */
+/* 307 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_ListCache.js ***!
   \****************************************************************************/
@@ -5495,11 +5517,11 @@ module.exports = isArrayLike;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ 1377),
-    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ 1378),
-    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ 1379),
-    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ 1380),
-    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ 1381);
+var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ 1431),
+    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ 1432),
+    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ 1433),
+    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ 1434),
+    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ 1435);
 
 /**
  * Creates an list cache object.
@@ -5530,7 +5552,7 @@ module.exports = ListCache;
 
 
 /***/ }),
-/* 286 */
+/* 308 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_assocIndexOf.js ***!
   \*******************************************************************************/
@@ -5538,7 +5560,7 @@ module.exports = ListCache;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(/*! ./eq */ 282);
+var eq = __webpack_require__(/*! ./eq */ 304);
 
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -5562,7 +5584,7 @@ module.exports = assocIndexOf;
 
 
 /***/ }),
-/* 287 */
+/* 309 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_nativeCreate.js ***!
   \*******************************************************************************/
@@ -5570,7 +5592,7 @@ module.exports = assocIndexOf;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132);
+var getNative = __webpack_require__(/*! ./_getNative */ 137);
 
 /* Built-in method references that are verified to be native. */
 var nativeCreate = getNative(Object, 'create');
@@ -5579,7 +5601,7 @@ module.exports = nativeCreate;
 
 
 /***/ }),
-/* 288 */
+/* 310 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getMapData.js ***!
   \*****************************************************************************/
@@ -5587,7 +5609,7 @@ module.exports = nativeCreate;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isKeyable = __webpack_require__(/*! ./_isKeyable */ 1395);
+var isKeyable = __webpack_require__(/*! ./_isKeyable */ 1449);
 
 /**
  * Gets the data for `map`.
@@ -5608,7 +5630,7 @@ module.exports = getMapData;
 
 
 /***/ }),
-/* 289 */
+/* 311 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_setToArray.js ***!
   \*****************************************************************************/
@@ -5637,7 +5659,7 @@ module.exports = setToArray;
 
 
 /***/ }),
-/* 290 */
+/* 312 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_castPath.js ***!
   \***************************************************************************/
@@ -5646,9 +5668,9 @@ module.exports = setToArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(/*! ./isArray */ 53),
-    isKey = __webpack_require__(/*! ./_isKey */ 426),
-    stringToPath = __webpack_require__(/*! ./_stringToPath */ 742),
-    toString = __webpack_require__(/*! ./toString */ 743);
+    isKey = __webpack_require__(/*! ./_isKey */ 452),
+    stringToPath = __webpack_require__(/*! ./_stringToPath */ 782),
+    toString = __webpack_require__(/*! ./toString */ 783);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -5669,7 +5691,7 @@ module.exports = castPath;
 
 
 /***/ }),
-/* 291 */
+/* 313 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayMap.js ***!
   \***************************************************************************/
@@ -5701,7 +5723,7 @@ module.exports = arrayMap;
 
 
 /***/ }),
-/* 292 */
+/* 314 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/uncontrollable/index.js ***!
   \*******************************************************************************/
@@ -5714,7 +5736,7 @@ module.exports = arrayMap;
 
 exports.__esModule = true;
 
-var _createUncontrollable = __webpack_require__(/*! ./createUncontrollable */ 1516);
+var _createUncontrollable = __webpack_require__(/*! ./createUncontrollable */ 1570);
 
 var _createUncontrollable2 = _interopRequireDefault(_createUncontrollable);
 
@@ -5743,7 +5765,7 @@ exports.default = (0, _createUncontrollable2.default)(mixin, set);
 module.exports = exports['default'];
 
 /***/ }),
-/* 293 */
+/* 315 */
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_uid.js ***!
   \******************************************************************************************************************/
@@ -5758,7 +5780,7 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 294 */
+/* 316 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_to-object.js ***!
   \************************************************************************************************************************/
@@ -5767,13 +5789,13 @@ module.exports = function(key){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(/*! ./_defined */ 431);
+var defined = __webpack_require__(/*! ./_defined */ 457);
 module.exports = function(it){
   return Object(defined(it));
 };
 
 /***/ }),
-/* 295 */
+/* 317 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/helpers/typeof.js ***!
   \***************************************************************************************/
@@ -5786,11 +5808,11 @@ module.exports = function(it){
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(/*! ../core-js/symbol/iterator */ 1526);
+var _iterator = __webpack_require__(/*! ../core-js/symbol/iterator */ 1580);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(/*! ../core-js/symbol */ 1536);
+var _symbol = __webpack_require__(/*! ../core-js/symbol */ 1590);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -5805,7 +5827,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 296 */
+/* 318 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/ownerDocument.js ***!
   \************************************************************************************/
@@ -5826,7 +5848,7 @@ function ownerDocument(node) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 297 */
+/* 319 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/query/contains.js ***!
   \*************************************************************************************/
@@ -5841,7 +5863,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ../util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! ../util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -5871,7 +5893,7 @@ function fallback(context, node) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 298 */
+/* 320 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/utils/StyleConfig.js ***!
   \************************************************************************************************/
@@ -5917,7 +5939,7 @@ var Style = exports.Style = {
 };
 
 /***/ }),
-/* 299 */
+/* 321 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/events/on.js ***!
   \********************************************************************************/
@@ -5932,7 +5954,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ../util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! ../util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -5959,7 +5981,7 @@ exports.default = on;
 module.exports = exports['default'];
 
 /***/ }),
-/* 300 */
+/* 322 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/lodash.js ***!
   \************************************************************************/
@@ -23053,10 +23075,10 @@ module.exports = exports['default'];
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ 25), __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ 24), __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module)))
 
 /***/ }),
-/* 301 */
+/* 323 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/inherits/inherits_browser.js ***!
   \************************************************************************************/
@@ -23090,28 +23112,6 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
 /* 324 */,
 /* 325 */,
 /* 326 */,
@@ -23187,7 +23187,33 @@ if (typeof Object.create === 'function') {
 /* 396 */,
 /* 397 */,
 /* 398 */,
-/* 399 */
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/object-assign/index.js ***!
   \******************************************************************************/
@@ -23289,7 +23315,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 400 */
+/* 426 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/fbjs/lib/invariant.js ***!
   \*****************************************************************************/
@@ -23355,7 +23381,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 /***/ }),
-/* 401 */
+/* 427 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/fbjs/lib/warning.js ***!
   \***************************************************************************/
@@ -23376,7 +23402,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 691);
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ 731);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -23430,7 +23456,7 @@ if (true) {
 module.exports = warning;
 
 /***/ }),
-/* 402 */
+/* 428 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createWrap.js ***!
   \*****************************************************************************/
@@ -23438,16 +23464,16 @@ module.exports = warning;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetData = __webpack_require__(/*! ./_baseSetData */ 699),
-    createBind = __webpack_require__(/*! ./_createBind */ 1349),
-    createCurry = __webpack_require__(/*! ./_createCurry */ 1350),
-    createHybrid = __webpack_require__(/*! ./_createHybrid */ 704),
-    createPartial = __webpack_require__(/*! ./_createPartial */ 1367),
-    getData = __webpack_require__(/*! ./_getData */ 708),
-    mergeData = __webpack_require__(/*! ./_mergeData */ 1368),
-    setData = __webpack_require__(/*! ./_setData */ 711),
-    setWrapToString = __webpack_require__(/*! ./_setWrapToString */ 713),
-    toInteger = __webpack_require__(/*! ./toInteger */ 716);
+var baseSetData = __webpack_require__(/*! ./_baseSetData */ 739),
+    createBind = __webpack_require__(/*! ./_createBind */ 1403),
+    createCurry = __webpack_require__(/*! ./_createCurry */ 1404),
+    createHybrid = __webpack_require__(/*! ./_createHybrid */ 744),
+    createPartial = __webpack_require__(/*! ./_createPartial */ 1421),
+    getData = __webpack_require__(/*! ./_getData */ 748),
+    mergeData = __webpack_require__(/*! ./_mergeData */ 1422),
+    setData = __webpack_require__(/*! ./_setData */ 751),
+    setWrapToString = __webpack_require__(/*! ./_setWrapToString */ 753),
+    toInteger = __webpack_require__(/*! ./toInteger */ 756);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -23547,7 +23573,7 @@ module.exports = createWrap;
 
 
 /***/ }),
-/* 403 */
+/* 429 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isFunction.js ***!
   \****************************************************************************/
@@ -23555,8 +23581,8 @@ module.exports = createWrap;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 161),
-    isObject = __webpack_require__(/*! ./isObject */ 97);
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 172),
+    isObject = __webpack_require__(/*! ./isObject */ 98);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -23595,7 +23621,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 404 */
+/* 430 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_apply.js ***!
   \************************************************************************/
@@ -23627,7 +23653,7 @@ module.exports = apply;
 
 
 /***/ }),
-/* 405 */
+/* 431 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_LazyWrapper.js ***!
   \******************************************************************************/
@@ -23635,8 +23661,8 @@ module.exports = apply;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseCreate = __webpack_require__(/*! ./_baseCreate */ 279),
-    baseLodash = __webpack_require__(/*! ./_baseLodash */ 406);
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ 301),
+    baseLodash = __webpack_require__(/*! ./_baseLodash */ 432);
 
 /** Used as references for the maximum length and index of an array. */
 var MAX_ARRAY_LENGTH = 4294967295;
@@ -23666,7 +23692,7 @@ module.exports = LazyWrapper;
 
 
 /***/ }),
-/* 406 */
+/* 432 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseLodash.js ***!
   \*****************************************************************************/
@@ -23687,7 +23713,7 @@ module.exports = baseLodash;
 
 
 /***/ }),
-/* 407 */
+/* 433 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_setToString.js ***!
   \******************************************************************************/
@@ -23695,8 +23721,8 @@ module.exports = baseLodash;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ 1359),
-    shortOut = __webpack_require__(/*! ./_shortOut */ 712);
+var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ 1413),
+    shortOut = __webpack_require__(/*! ./_shortOut */ 752);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -23712,7 +23738,7 @@ module.exports = setToString;
 
 
 /***/ }),
-/* 408 */
+/* 434 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayEach.js ***!
   \****************************************************************************/
@@ -23745,7 +23771,7 @@ module.exports = arrayEach;
 
 
 /***/ }),
-/* 409 */
+/* 435 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayIncludes.js ***!
   \********************************************************************************/
@@ -23753,7 +23779,7 @@ module.exports = arrayEach;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(/*! ./_baseIndexOf */ 1362);
+var baseIndexOf = __webpack_require__(/*! ./_baseIndexOf */ 1416);
 
 /**
  * A specialized version of `_.includes` for arrays without support for
@@ -23773,7 +23799,7 @@ module.exports = arrayIncludes;
 
 
 /***/ }),
-/* 410 */
+/* 436 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_replaceHolders.js ***!
   \*********************************************************************************/
@@ -23813,7 +23839,7 @@ module.exports = replaceHolders;
 
 
 /***/ }),
-/* 411 */
+/* 437 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isArguments.js ***!
   \*****************************************************************************/
@@ -23821,8 +23847,8 @@ module.exports = replaceHolders;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 1371),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 1425),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -23860,7 +23886,7 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 412 */
+/* 438 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isBuffer.js ***!
   \**************************************************************************/
@@ -23869,7 +23895,7 @@ module.exports = isArguments;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(/*! ./_root */ 52),
-    stubFalse = __webpack_require__(/*! ./stubFalse */ 1372);
+    stubFalse = __webpack_require__(/*! ./stubFalse */ 1426);
 
 /** Detect free variable `exports`. */
 var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -23910,7 +23936,7 @@ module.exports = isBuffer;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module)))
 
 /***/ }),
-/* 413 */
+/* 439 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isLength.js ***!
   \**************************************************************************/
@@ -23956,7 +23982,7 @@ module.exports = isLength;
 
 
 /***/ }),
-/* 414 */
+/* 440 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isPrototype.js ***!
   \******************************************************************************/
@@ -23985,7 +24011,7 @@ module.exports = isPrototype;
 
 
 /***/ }),
-/* 415 */
+/* 441 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseClone.js ***!
   \****************************************************************************/
@@ -23993,25 +24019,25 @@ module.exports = isPrototype;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(/*! ./_Stack */ 416),
-    arrayEach = __webpack_require__(/*! ./_arrayEach */ 408),
-    assignValue = __webpack_require__(/*! ./_assignValue */ 719),
-    baseAssign = __webpack_require__(/*! ./_baseAssign */ 718),
-    baseAssignIn = __webpack_require__(/*! ./_baseAssignIn */ 1399),
-    cloneBuffer = __webpack_require__(/*! ./_cloneBuffer */ 1402),
-    copyArray = __webpack_require__(/*! ./_copyArray */ 280),
-    copySymbols = __webpack_require__(/*! ./_copySymbols */ 1403),
-    copySymbolsIn = __webpack_require__(/*! ./_copySymbolsIn */ 1404),
-    getAllKeys = __webpack_require__(/*! ./_getAllKeys */ 730),
-    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ 732),
-    getTag = __webpack_require__(/*! ./_getTag */ 733),
-    initCloneArray = __webpack_require__(/*! ./_initCloneArray */ 1407),
-    initCloneByTag = __webpack_require__(/*! ./_initCloneByTag */ 1408),
-    initCloneObject = __webpack_require__(/*! ./_initCloneObject */ 1417),
+var Stack = __webpack_require__(/*! ./_Stack */ 442),
+    arrayEach = __webpack_require__(/*! ./_arrayEach */ 434),
+    assignValue = __webpack_require__(/*! ./_assignValue */ 759),
+    baseAssign = __webpack_require__(/*! ./_baseAssign */ 758),
+    baseAssignIn = __webpack_require__(/*! ./_baseAssignIn */ 1453),
+    cloneBuffer = __webpack_require__(/*! ./_cloneBuffer */ 1456),
+    copyArray = __webpack_require__(/*! ./_copyArray */ 302),
+    copySymbols = __webpack_require__(/*! ./_copySymbols */ 1457),
+    copySymbolsIn = __webpack_require__(/*! ./_copySymbolsIn */ 1458),
+    getAllKeys = __webpack_require__(/*! ./_getAllKeys */ 770),
+    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ 772),
+    getTag = __webpack_require__(/*! ./_getTag */ 773),
+    initCloneArray = __webpack_require__(/*! ./_initCloneArray */ 1461),
+    initCloneByTag = __webpack_require__(/*! ./_initCloneByTag */ 1462),
+    initCloneObject = __webpack_require__(/*! ./_initCloneObject */ 1471),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isBuffer = __webpack_require__(/*! ./isBuffer */ 412),
-    isObject = __webpack_require__(/*! ./isObject */ 97),
-    keys = __webpack_require__(/*! ./keys */ 283);
+    isBuffer = __webpack_require__(/*! ./isBuffer */ 438),
+    isObject = __webpack_require__(/*! ./isObject */ 98),
+    keys = __webpack_require__(/*! ./keys */ 305);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -24149,7 +24175,7 @@ module.exports = baseClone;
 
 
 /***/ }),
-/* 416 */
+/* 442 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Stack.js ***!
   \************************************************************************/
@@ -24157,12 +24183,12 @@ module.exports = baseClone;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(/*! ./_ListCache */ 285),
-    stackClear = __webpack_require__(/*! ./_stackClear */ 1382),
-    stackDelete = __webpack_require__(/*! ./_stackDelete */ 1383),
-    stackGet = __webpack_require__(/*! ./_stackGet */ 1384),
-    stackHas = __webpack_require__(/*! ./_stackHas */ 1385),
-    stackSet = __webpack_require__(/*! ./_stackSet */ 1386);
+var ListCache = __webpack_require__(/*! ./_ListCache */ 307),
+    stackClear = __webpack_require__(/*! ./_stackClear */ 1436),
+    stackDelete = __webpack_require__(/*! ./_stackDelete */ 1437),
+    stackGet = __webpack_require__(/*! ./_stackGet */ 1438),
+    stackHas = __webpack_require__(/*! ./_stackHas */ 1439),
+    stackSet = __webpack_require__(/*! ./_stackSet */ 1440);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -24187,7 +24213,7 @@ module.exports = Stack;
 
 
 /***/ }),
-/* 417 */
+/* 443 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Map.js ***!
   \**********************************************************************/
@@ -24195,7 +24221,7 @@ module.exports = Stack;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132),
+var getNative = __webpack_require__(/*! ./_getNative */ 137),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /* Built-in method references that are verified to be native. */
@@ -24205,7 +24231,7 @@ module.exports = Map;
 
 
 /***/ }),
-/* 418 */
+/* 444 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_MapCache.js ***!
   \***************************************************************************/
@@ -24213,11 +24239,11 @@ module.exports = Map;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ 1387),
-    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ 1394),
-    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ 1396),
-    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ 1397),
-    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ 1398);
+var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ 1441),
+    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ 1448),
+    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ 1450),
+    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ 1451),
+    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ 1452);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -24248,7 +24274,7 @@ module.exports = MapCache;
 
 
 /***/ }),
-/* 419 */
+/* 445 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getSymbols.js ***!
   \*****************************************************************************/
@@ -24256,8 +24282,8 @@ module.exports = MapCache;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 727),
-    stubArray = __webpack_require__(/*! ./stubArray */ 728);
+var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 767),
+    stubArray = __webpack_require__(/*! ./stubArray */ 768);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -24289,7 +24315,7 @@ module.exports = getSymbols;
 
 
 /***/ }),
-/* 420 */
+/* 446 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayPush.js ***!
   \****************************************************************************/
@@ -24320,7 +24346,7 @@ module.exports = arrayPush;
 
 
 /***/ }),
-/* 421 */
+/* 447 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getPrototype.js ***!
   \*******************************************************************************/
@@ -24328,7 +24354,7 @@ module.exports = arrayPush;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(/*! ./_overArg */ 725);
+var overArg = __webpack_require__(/*! ./_overArg */ 765);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -24337,7 +24363,7 @@ module.exports = getPrototype;
 
 
 /***/ }),
-/* 422 */
+/* 448 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneArrayBuffer.js ***!
   \***********************************************************************************/
@@ -24345,7 +24371,7 @@ module.exports = getPrototype;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Uint8Array = __webpack_require__(/*! ./_Uint8Array */ 735);
+var Uint8Array = __webpack_require__(/*! ./_Uint8Array */ 775);
 
 /**
  * Creates a clone of `arrayBuffer`.
@@ -24364,7 +24390,7 @@ module.exports = cloneArrayBuffer;
 
 
 /***/ }),
-/* 423 */
+/* 449 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_SetCache.js ***!
   \***************************************************************************/
@@ -24372,9 +24398,9 @@ module.exports = cloneArrayBuffer;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(/*! ./_MapCache */ 418),
-    setCacheAdd = __webpack_require__(/*! ./_setCacheAdd */ 1424),
-    setCacheHas = __webpack_require__(/*! ./_setCacheHas */ 1425);
+var MapCache = __webpack_require__(/*! ./_MapCache */ 444),
+    setCacheAdd = __webpack_require__(/*! ./_setCacheAdd */ 1478),
+    setCacheHas = __webpack_require__(/*! ./_setCacheHas */ 1479);
 
 /**
  *
@@ -24402,7 +24428,7 @@ module.exports = SetCache;
 
 
 /***/ }),
-/* 424 */
+/* 450 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cacheHas.js ***!
   \***************************************************************************/
@@ -24426,7 +24452,7 @@ module.exports = cacheHas;
 
 
 /***/ }),
-/* 425 */
+/* 451 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseGet.js ***!
   \**************************************************************************/
@@ -24434,8 +24460,8 @@ module.exports = cacheHas;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(/*! ./_castPath */ 290),
-    toKey = __webpack_require__(/*! ./_toKey */ 163);
+var castPath = __webpack_require__(/*! ./_castPath */ 312),
+    toKey = __webpack_require__(/*! ./_toKey */ 174);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -24461,7 +24487,7 @@ module.exports = baseGet;
 
 
 /***/ }),
-/* 426 */
+/* 452 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isKey.js ***!
   \************************************************************************/
@@ -24470,7 +24496,7 @@ module.exports = baseGet;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArray = __webpack_require__(/*! ./isArray */ 53),
-    isSymbol = __webpack_require__(/*! ./isSymbol */ 216);
+    isSymbol = __webpack_require__(/*! ./isSymbol */ 234);
 
 /** Used to match property names within property paths. */
 var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -24501,7 +24527,7 @@ module.exports = isKey;
 
 
 /***/ }),
-/* 427 */
+/* 453 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/Assets.js ***!
   \*********************************************************************************/
@@ -24517,7 +24543,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.supportedSpecies = exports.getDefaultView = exports.getAnatomogramViews = undefined;
 
-var _svgsMetadata = __webpack_require__(/*! ./json/svgsMetadata.json */ 1461);
+var _svgsMetadata = __webpack_require__(/*! ./json/svgsMetadata.json */ 1515);
 
 var _svgsMetadata2 = _interopRequireDefault(_svgsMetadata);
 
@@ -24566,7 +24592,7 @@ exports.getDefaultView = getDefaultView;
 exports.supportedSpecies = supportedSpecies;
 
 /***/ }),
-/* 428 */
+/* 454 */
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_ctx.js ***!
   \******************************************************************************************************************/
@@ -24575,7 +24601,7 @@ exports.supportedSpecies = supportedSpecies;
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(/*! ./_a-function */ 1522);
+var aFunction = __webpack_require__(/*! ./_a-function */ 1576);
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -24596,7 +24622,7 @@ module.exports = function(fn, that, length){
 };
 
 /***/ }),
-/* 429 */
+/* 455 */
 /*!***************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_to-primitive.js ***!
   \***************************************************************************************************************************/
@@ -24605,7 +24631,7 @@ module.exports = function(fn, that, length){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(/*! ./_is-object */ 218);
+var isObject = __webpack_require__(/*! ./_is-object */ 236);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function(it, S){
@@ -24618,7 +24644,7 @@ module.exports = function(it, S){
 };
 
 /***/ }),
-/* 430 */
+/* 456 */
 /*!******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_cof.js ***!
   \******************************************************************************************************************/
@@ -24633,7 +24659,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 431 */
+/* 457 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_defined.js ***!
   \**********************************************************************************************************************/
@@ -24648,7 +24674,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 432 */
+/* 458 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_to-integer.js ***!
   \*************************************************************************************************************************/
@@ -24664,7 +24690,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 433 */
+/* 459 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_shared-key.js ***!
   \*************************************************************************************************************************/
@@ -24672,14 +24698,14 @@ module.exports = function(it){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(/*! ./_shared */ 434)('keys')
-  , uid    = __webpack_require__(/*! ./_uid */ 293);
+var shared = __webpack_require__(/*! ./_shared */ 460)('keys')
+  , uid    = __webpack_require__(/*! ./_uid */ 315);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-/* 434 */
+/* 460 */
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_shared.js ***!
   \*********************************************************************************************************************/
@@ -24687,7 +24713,7 @@ module.exports = function(key){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(/*! ./_global */ 112)
+var global = __webpack_require__(/*! ./_global */ 113)
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
@@ -24695,7 +24721,7 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 435 */
+/* 461 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_enum-bug-keys.js ***!
   \****************************************************************************************************************************/
@@ -24709,7 +24735,7 @@ module.exports = (
 ).split(',');
 
 /***/ }),
-/* 436 */
+/* 462 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-gops.js ***!
   \**************************************************************************************************************************/
@@ -24720,7 +24746,7 @@ module.exports = (
 exports.f = Object.getOwnPropertySymbols;
 
 /***/ }),
-/* 437 */
+/* 463 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_library.js ***!
   \**********************************************************************************************************************/
@@ -24731,7 +24757,7 @@ exports.f = Object.getOwnPropertySymbols;
 module.exports = true;
 
 /***/ }),
-/* 438 */
+/* 464 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-create.js ***!
   \****************************************************************************************************************************/
@@ -24740,23 +24766,23 @@ module.exports = true;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject    = __webpack_require__(/*! ./_an-object */ 165)
-  , dPs         = __webpack_require__(/*! ./_object-dps */ 1530)
-  , enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 435)
-  , IE_PROTO    = __webpack_require__(/*! ./_shared-key */ 433)('IE_PROTO')
+var anObject    = __webpack_require__(/*! ./_an-object */ 176)
+  , dPs         = __webpack_require__(/*! ./_object-dps */ 1584)
+  , enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 461)
+  , IE_PROTO    = __webpack_require__(/*! ./_shared-key */ 459)('IE_PROTO')
   , Empty       = function(){ /* empty */ }
   , PROTOTYPE   = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function(){
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(/*! ./_dom-create */ 751)('iframe')
+  var iframe = __webpack_require__(/*! ./_dom-create */ 791)('iframe')
     , i      = enumBugKeys.length
     , lt     = '<'
     , gt     = '>'
     , iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(/*! ./_html */ 1531).appendChild(iframe);
+  __webpack_require__(/*! ./_html */ 1585).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -24783,7 +24809,7 @@ module.exports = Object.create || function create(O, Properties){
 
 
 /***/ }),
-/* 439 */
+/* 465 */
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_set-to-string-tag.js ***!
   \********************************************************************************************************************************/
@@ -24791,16 +24817,16 @@ module.exports = Object.create || function create(O, Properties){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(/*! ./_object-dp */ 113).f
-  , has = __webpack_require__(/*! ./_has */ 134)
-  , TAG = __webpack_require__(/*! ./_wks */ 82)('toStringTag');
+var def = __webpack_require__(/*! ./_object-dp */ 114).f
+  , has = __webpack_require__(/*! ./_has */ 139)
+  , TAG = __webpack_require__(/*! ./_wks */ 83)('toStringTag');
 
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 };
 
 /***/ }),
-/* 440 */
+/* 466 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_wks-ext.js ***!
   \**********************************************************************************************************************/
@@ -24808,10 +24834,10 @@ module.exports = function(it, tag, stat){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(/*! ./_wks */ 82);
+exports.f = __webpack_require__(/*! ./_wks */ 83);
 
 /***/ }),
-/* 441 */
+/* 467 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_wks-define.js ***!
   \*************************************************************************************************************************/
@@ -24819,18 +24845,18 @@ exports.f = __webpack_require__(/*! ./_wks */ 82);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global         = __webpack_require__(/*! ./_global */ 112)
+var global         = __webpack_require__(/*! ./_global */ 113)
   , core           = __webpack_require__(/*! ./_core */ 55)
-  , LIBRARY        = __webpack_require__(/*! ./_library */ 437)
-  , wksExt         = __webpack_require__(/*! ./_wks-ext */ 440)
-  , defineProperty = __webpack_require__(/*! ./_object-dp */ 113).f;
+  , LIBRARY        = __webpack_require__(/*! ./_library */ 463)
+  , wksExt         = __webpack_require__(/*! ./_wks-ext */ 466)
+  , defineProperty = __webpack_require__(/*! ./_object-dp */ 114).f;
 module.exports = function(name){
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if(name.charAt(0) != '_' && !(name in $Symbol))defineProperty($Symbol, name, {value: wksExt.f(name)});
 };
 
 /***/ }),
-/* 442 */
+/* 468 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-gopd.js ***!
   \**************************************************************************************************************************/
@@ -24838,15 +24864,15 @@ module.exports = function(name){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE            = __webpack_require__(/*! ./_object-pie */ 220)
-  , createDesc     = __webpack_require__(/*! ./_property-desc */ 219)
-  , toIObject      = __webpack_require__(/*! ./_to-iobject */ 98)
-  , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 429)
-  , has            = __webpack_require__(/*! ./_has */ 134)
-  , IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 750)
+var pIE            = __webpack_require__(/*! ./_object-pie */ 238)
+  , createDesc     = __webpack_require__(/*! ./_property-desc */ 237)
+  , toIObject      = __webpack_require__(/*! ./_to-iobject */ 99)
+  , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 455)
+  , has            = __webpack_require__(/*! ./_has */ 139)
+  , IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 790)
   , gOPD           = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(/*! ./_descriptors */ 133) ? gOPD : function getOwnPropertyDescriptor(O, P){
+exports.f = __webpack_require__(/*! ./_descriptors */ 138) ? gOPD : function getOwnPropertyDescriptor(O, P){
   O = toIObject(O);
   P = toPrimitive(P, true);
   if(IE8_DOM_DEFINE)try {
@@ -24856,7 +24882,7 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 133) ? gOPD : function get
 };
 
 /***/ }),
-/* 443 */
+/* 469 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types-extra/lib/all.js ***!
   \***********************************************************************************/
@@ -24872,7 +24898,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = all;
 
-var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 444);
+var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 470);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
@@ -24909,7 +24935,7 @@ function all() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 444 */
+/* 470 */
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js ***!
   \****************************************************************************************************************/
@@ -24963,7 +24989,7 @@ function createChainableTypeChecker(validate) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 445 */
+/* 471 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/SafeAnchor.js ***!
   \*****************************************************************************************/
@@ -25004,7 +25030,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
@@ -25105,7 +25131,7 @@ exports['default'] = SafeAnchor;
 module.exports = exports['default'];
 
 /***/ }),
-/* 446 */
+/* 472 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/events/off.js ***!
   \*********************************************************************************/
@@ -25120,7 +25146,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ../util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! ../util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -25141,7 +25167,7 @@ exports.default = off;
 module.exports = exports['default'];
 
 /***/ }),
-/* 447 */
+/* 473 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/utils/ownerDocument.js ***!
   \*************************************************************************************************/
@@ -25160,11 +25186,11 @@ exports.default = function (componentOrElement) {
   return (0, _ownerDocument2.default)(_reactDom2.default.findDOMNode(componentOrElement));
 };
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _ownerDocument = __webpack_require__(/*! dom-helpers/ownerDocument */ 296);
+var _ownerDocument = __webpack_require__(/*! dom-helpers/ownerDocument */ 318);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -25173,7 +25199,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = exports['default'];
 
 /***/ }),
-/* 448 */
+/* 474 */
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/utils/ValidComponentChildren.js ***!
   \***********************************************************************************************************/
@@ -25376,7 +25402,7 @@ exports['default'] = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 449 */
+/* 475 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/Handle.js ***!
   \******************************************************************************/
@@ -25391,7 +25417,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
@@ -25472,7 +25498,7 @@ Handle.propTypes = {
 };
 
 /***/ }),
-/* 450 */
+/* 476 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/utils.js ***!
   \*****************************************************************************/
@@ -25493,11 +25519,11 @@ Handle.propTypes = {
 /* harmony export (immutable) */ __webpack_exports__["b"] = ensureValuePrecision;
 /* harmony export (immutable) */ __webpack_exports__["j"] = pauseEvent;
 /* harmony export (immutable) */ __webpack_exports__["d"] = getKeyboardValueMutator;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(/*! babel-runtime/helpers/toConsumableArray */ 785);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(/*! babel-runtime/helpers/toConsumableArray */ 825);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(/*! react-dom */ 12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(/*! react-dom */ 9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_util_es_KeyCode__ = __webpack_require__(/*! rc-util/es/KeyCode */ 1659);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_util_es_KeyCode__ = __webpack_require__(/*! rc-util/es/KeyCode */ 1713);
 
 
 
@@ -25619,7 +25645,7 @@ function getKeyboardValueMutator(e) {
 }
 
 /***/ }),
-/* 451 */
+/* 477 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/maps/entities.json ***!
   \***********************************************************************************/
@@ -25630,7 +25656,7 @@ function getKeyboardValueMutator(e) {
 module.exports = {"Aacute":"Á","aacute":"á","Abreve":"Ă","abreve":"ă","ac":"∾","acd":"∿","acE":"∾̳","Acirc":"Â","acirc":"â","acute":"´","Acy":"А","acy":"а","AElig":"Æ","aelig":"æ","af":"⁡","Afr":"𝔄","afr":"𝔞","Agrave":"À","agrave":"à","alefsym":"ℵ","aleph":"ℵ","Alpha":"Α","alpha":"α","Amacr":"Ā","amacr":"ā","amalg":"⨿","amp":"&","AMP":"&","andand":"⩕","And":"⩓","and":"∧","andd":"⩜","andslope":"⩘","andv":"⩚","ang":"∠","ange":"⦤","angle":"∠","angmsdaa":"⦨","angmsdab":"⦩","angmsdac":"⦪","angmsdad":"⦫","angmsdae":"⦬","angmsdaf":"⦭","angmsdag":"⦮","angmsdah":"⦯","angmsd":"∡","angrt":"∟","angrtvb":"⊾","angrtvbd":"⦝","angsph":"∢","angst":"Å","angzarr":"⍼","Aogon":"Ą","aogon":"ą","Aopf":"𝔸","aopf":"𝕒","apacir":"⩯","ap":"≈","apE":"⩰","ape":"≊","apid":"≋","apos":"'","ApplyFunction":"⁡","approx":"≈","approxeq":"≊","Aring":"Å","aring":"å","Ascr":"𝒜","ascr":"𝒶","Assign":"≔","ast":"*","asymp":"≈","asympeq":"≍","Atilde":"Ã","atilde":"ã","Auml":"Ä","auml":"ä","awconint":"∳","awint":"⨑","backcong":"≌","backepsilon":"϶","backprime":"‵","backsim":"∽","backsimeq":"⋍","Backslash":"∖","Barv":"⫧","barvee":"⊽","barwed":"⌅","Barwed":"⌆","barwedge":"⌅","bbrk":"⎵","bbrktbrk":"⎶","bcong":"≌","Bcy":"Б","bcy":"б","bdquo":"„","becaus":"∵","because":"∵","Because":"∵","bemptyv":"⦰","bepsi":"϶","bernou":"ℬ","Bernoullis":"ℬ","Beta":"Β","beta":"β","beth":"ℶ","between":"≬","Bfr":"𝔅","bfr":"𝔟","bigcap":"⋂","bigcirc":"◯","bigcup":"⋃","bigodot":"⨀","bigoplus":"⨁","bigotimes":"⨂","bigsqcup":"⨆","bigstar":"★","bigtriangledown":"▽","bigtriangleup":"△","biguplus":"⨄","bigvee":"⋁","bigwedge":"⋀","bkarow":"⤍","blacklozenge":"⧫","blacksquare":"▪","blacktriangle":"▴","blacktriangledown":"▾","blacktriangleleft":"◂","blacktriangleright":"▸","blank":"␣","blk12":"▒","blk14":"░","blk34":"▓","block":"█","bne":"=⃥","bnequiv":"≡⃥","bNot":"⫭","bnot":"⌐","Bopf":"𝔹","bopf":"𝕓","bot":"⊥","bottom":"⊥","bowtie":"⋈","boxbox":"⧉","boxdl":"┐","boxdL":"╕","boxDl":"╖","boxDL":"╗","boxdr":"┌","boxdR":"╒","boxDr":"╓","boxDR":"╔","boxh":"─","boxH":"═","boxhd":"┬","boxHd":"╤","boxhD":"╥","boxHD":"╦","boxhu":"┴","boxHu":"╧","boxhU":"╨","boxHU":"╩","boxminus":"⊟","boxplus":"⊞","boxtimes":"⊠","boxul":"┘","boxuL":"╛","boxUl":"╜","boxUL":"╝","boxur":"└","boxuR":"╘","boxUr":"╙","boxUR":"╚","boxv":"│","boxV":"║","boxvh":"┼","boxvH":"╪","boxVh":"╫","boxVH":"╬","boxvl":"┤","boxvL":"╡","boxVl":"╢","boxVL":"╣","boxvr":"├","boxvR":"╞","boxVr":"╟","boxVR":"╠","bprime":"‵","breve":"˘","Breve":"˘","brvbar":"¦","bscr":"𝒷","Bscr":"ℬ","bsemi":"⁏","bsim":"∽","bsime":"⋍","bsolb":"⧅","bsol":"\\","bsolhsub":"⟈","bull":"•","bullet":"•","bump":"≎","bumpE":"⪮","bumpe":"≏","Bumpeq":"≎","bumpeq":"≏","Cacute":"Ć","cacute":"ć","capand":"⩄","capbrcup":"⩉","capcap":"⩋","cap":"∩","Cap":"⋒","capcup":"⩇","capdot":"⩀","CapitalDifferentialD":"ⅅ","caps":"∩︀","caret":"⁁","caron":"ˇ","Cayleys":"ℭ","ccaps":"⩍","Ccaron":"Č","ccaron":"č","Ccedil":"Ç","ccedil":"ç","Ccirc":"Ĉ","ccirc":"ĉ","Cconint":"∰","ccups":"⩌","ccupssm":"⩐","Cdot":"Ċ","cdot":"ċ","cedil":"¸","Cedilla":"¸","cemptyv":"⦲","cent":"¢","centerdot":"·","CenterDot":"·","cfr":"𝔠","Cfr":"ℭ","CHcy":"Ч","chcy":"ч","check":"✓","checkmark":"✓","Chi":"Χ","chi":"χ","circ":"ˆ","circeq":"≗","circlearrowleft":"↺","circlearrowright":"↻","circledast":"⊛","circledcirc":"⊚","circleddash":"⊝","CircleDot":"⊙","circledR":"®","circledS":"Ⓢ","CircleMinus":"⊖","CirclePlus":"⊕","CircleTimes":"⊗","cir":"○","cirE":"⧃","cire":"≗","cirfnint":"⨐","cirmid":"⫯","cirscir":"⧂","ClockwiseContourIntegral":"∲","CloseCurlyDoubleQuote":"”","CloseCurlyQuote":"’","clubs":"♣","clubsuit":"♣","colon":":","Colon":"∷","Colone":"⩴","colone":"≔","coloneq":"≔","comma":",","commat":"@","comp":"∁","compfn":"∘","complement":"∁","complexes":"ℂ","cong":"≅","congdot":"⩭","Congruent":"≡","conint":"∮","Conint":"∯","ContourIntegral":"∮","copf":"𝕔","Copf":"ℂ","coprod":"∐","Coproduct":"∐","copy":"©","COPY":"©","copysr":"℗","CounterClockwiseContourIntegral":"∳","crarr":"↵","cross":"✗","Cross":"⨯","Cscr":"𝒞","cscr":"𝒸","csub":"⫏","csube":"⫑","csup":"⫐","csupe":"⫒","ctdot":"⋯","cudarrl":"⤸","cudarrr":"⤵","cuepr":"⋞","cuesc":"⋟","cularr":"↶","cularrp":"⤽","cupbrcap":"⩈","cupcap":"⩆","CupCap":"≍","cup":"∪","Cup":"⋓","cupcup":"⩊","cupdot":"⊍","cupor":"⩅","cups":"∪︀","curarr":"↷","curarrm":"⤼","curlyeqprec":"⋞","curlyeqsucc":"⋟","curlyvee":"⋎","curlywedge":"⋏","curren":"¤","curvearrowleft":"↶","curvearrowright":"↷","cuvee":"⋎","cuwed":"⋏","cwconint":"∲","cwint":"∱","cylcty":"⌭","dagger":"†","Dagger":"‡","daleth":"ℸ","darr":"↓","Darr":"↡","dArr":"⇓","dash":"‐","Dashv":"⫤","dashv":"⊣","dbkarow":"⤏","dblac":"˝","Dcaron":"Ď","dcaron":"ď","Dcy":"Д","dcy":"д","ddagger":"‡","ddarr":"⇊","DD":"ⅅ","dd":"ⅆ","DDotrahd":"⤑","ddotseq":"⩷","deg":"°","Del":"∇","Delta":"Δ","delta":"δ","demptyv":"⦱","dfisht":"⥿","Dfr":"𝔇","dfr":"𝔡","dHar":"⥥","dharl":"⇃","dharr":"⇂","DiacriticalAcute":"´","DiacriticalDot":"˙","DiacriticalDoubleAcute":"˝","DiacriticalGrave":"`","DiacriticalTilde":"˜","diam":"⋄","diamond":"⋄","Diamond":"⋄","diamondsuit":"♦","diams":"♦","die":"¨","DifferentialD":"ⅆ","digamma":"ϝ","disin":"⋲","div":"÷","divide":"÷","divideontimes":"⋇","divonx":"⋇","DJcy":"Ђ","djcy":"ђ","dlcorn":"⌞","dlcrop":"⌍","dollar":"$","Dopf":"𝔻","dopf":"𝕕","Dot":"¨","dot":"˙","DotDot":"⃜","doteq":"≐","doteqdot":"≑","DotEqual":"≐","dotminus":"∸","dotplus":"∔","dotsquare":"⊡","doublebarwedge":"⌆","DoubleContourIntegral":"∯","DoubleDot":"¨","DoubleDownArrow":"⇓","DoubleLeftArrow":"⇐","DoubleLeftRightArrow":"⇔","DoubleLeftTee":"⫤","DoubleLongLeftArrow":"⟸","DoubleLongLeftRightArrow":"⟺","DoubleLongRightArrow":"⟹","DoubleRightArrow":"⇒","DoubleRightTee":"⊨","DoubleUpArrow":"⇑","DoubleUpDownArrow":"⇕","DoubleVerticalBar":"∥","DownArrowBar":"⤓","downarrow":"↓","DownArrow":"↓","Downarrow":"⇓","DownArrowUpArrow":"⇵","DownBreve":"̑","downdownarrows":"⇊","downharpoonleft":"⇃","downharpoonright":"⇂","DownLeftRightVector":"⥐","DownLeftTeeVector":"⥞","DownLeftVectorBar":"⥖","DownLeftVector":"↽","DownRightTeeVector":"⥟","DownRightVectorBar":"⥗","DownRightVector":"⇁","DownTeeArrow":"↧","DownTee":"⊤","drbkarow":"⤐","drcorn":"⌟","drcrop":"⌌","Dscr":"𝒟","dscr":"𝒹","DScy":"Ѕ","dscy":"ѕ","dsol":"⧶","Dstrok":"Đ","dstrok":"đ","dtdot":"⋱","dtri":"▿","dtrif":"▾","duarr":"⇵","duhar":"⥯","dwangle":"⦦","DZcy":"Џ","dzcy":"џ","dzigrarr":"⟿","Eacute":"É","eacute":"é","easter":"⩮","Ecaron":"Ě","ecaron":"ě","Ecirc":"Ê","ecirc":"ê","ecir":"≖","ecolon":"≕","Ecy":"Э","ecy":"э","eDDot":"⩷","Edot":"Ė","edot":"ė","eDot":"≑","ee":"ⅇ","efDot":"≒","Efr":"𝔈","efr":"𝔢","eg":"⪚","Egrave":"È","egrave":"è","egs":"⪖","egsdot":"⪘","el":"⪙","Element":"∈","elinters":"⏧","ell":"ℓ","els":"⪕","elsdot":"⪗","Emacr":"Ē","emacr":"ē","empty":"∅","emptyset":"∅","EmptySmallSquare":"◻","emptyv":"∅","EmptyVerySmallSquare":"▫","emsp13":" ","emsp14":" ","emsp":" ","ENG":"Ŋ","eng":"ŋ","ensp":" ","Eogon":"Ę","eogon":"ę","Eopf":"𝔼","eopf":"𝕖","epar":"⋕","eparsl":"⧣","eplus":"⩱","epsi":"ε","Epsilon":"Ε","epsilon":"ε","epsiv":"ϵ","eqcirc":"≖","eqcolon":"≕","eqsim":"≂","eqslantgtr":"⪖","eqslantless":"⪕","Equal":"⩵","equals":"=","EqualTilde":"≂","equest":"≟","Equilibrium":"⇌","equiv":"≡","equivDD":"⩸","eqvparsl":"⧥","erarr":"⥱","erDot":"≓","escr":"ℯ","Escr":"ℰ","esdot":"≐","Esim":"⩳","esim":"≂","Eta":"Η","eta":"η","ETH":"Ð","eth":"ð","Euml":"Ë","euml":"ë","euro":"€","excl":"!","exist":"∃","Exists":"∃","expectation":"ℰ","exponentiale":"ⅇ","ExponentialE":"ⅇ","fallingdotseq":"≒","Fcy":"Ф","fcy":"ф","female":"♀","ffilig":"ﬃ","fflig":"ﬀ","ffllig":"ﬄ","Ffr":"𝔉","ffr":"𝔣","filig":"ﬁ","FilledSmallSquare":"◼","FilledVerySmallSquare":"▪","fjlig":"fj","flat":"♭","fllig":"ﬂ","fltns":"▱","fnof":"ƒ","Fopf":"𝔽","fopf":"𝕗","forall":"∀","ForAll":"∀","fork":"⋔","forkv":"⫙","Fouriertrf":"ℱ","fpartint":"⨍","frac12":"½","frac13":"⅓","frac14":"¼","frac15":"⅕","frac16":"⅙","frac18":"⅛","frac23":"⅔","frac25":"⅖","frac34":"¾","frac35":"⅗","frac38":"⅜","frac45":"⅘","frac56":"⅚","frac58":"⅝","frac78":"⅞","frasl":"⁄","frown":"⌢","fscr":"𝒻","Fscr":"ℱ","gacute":"ǵ","Gamma":"Γ","gamma":"γ","Gammad":"Ϝ","gammad":"ϝ","gap":"⪆","Gbreve":"Ğ","gbreve":"ğ","Gcedil":"Ģ","Gcirc":"Ĝ","gcirc":"ĝ","Gcy":"Г","gcy":"г","Gdot":"Ġ","gdot":"ġ","ge":"≥","gE":"≧","gEl":"⪌","gel":"⋛","geq":"≥","geqq":"≧","geqslant":"⩾","gescc":"⪩","ges":"⩾","gesdot":"⪀","gesdoto":"⪂","gesdotol":"⪄","gesl":"⋛︀","gesles":"⪔","Gfr":"𝔊","gfr":"𝔤","gg":"≫","Gg":"⋙","ggg":"⋙","gimel":"ℷ","GJcy":"Ѓ","gjcy":"ѓ","gla":"⪥","gl":"≷","glE":"⪒","glj":"⪤","gnap":"⪊","gnapprox":"⪊","gne":"⪈","gnE":"≩","gneq":"⪈","gneqq":"≩","gnsim":"⋧","Gopf":"𝔾","gopf":"𝕘","grave":"`","GreaterEqual":"≥","GreaterEqualLess":"⋛","GreaterFullEqual":"≧","GreaterGreater":"⪢","GreaterLess":"≷","GreaterSlantEqual":"⩾","GreaterTilde":"≳","Gscr":"𝒢","gscr":"ℊ","gsim":"≳","gsime":"⪎","gsiml":"⪐","gtcc":"⪧","gtcir":"⩺","gt":">","GT":">","Gt":"≫","gtdot":"⋗","gtlPar":"⦕","gtquest":"⩼","gtrapprox":"⪆","gtrarr":"⥸","gtrdot":"⋗","gtreqless":"⋛","gtreqqless":"⪌","gtrless":"≷","gtrsim":"≳","gvertneqq":"≩︀","gvnE":"≩︀","Hacek":"ˇ","hairsp":" ","half":"½","hamilt":"ℋ","HARDcy":"Ъ","hardcy":"ъ","harrcir":"⥈","harr":"↔","hArr":"⇔","harrw":"↭","Hat":"^","hbar":"ℏ","Hcirc":"Ĥ","hcirc":"ĥ","hearts":"♥","heartsuit":"♥","hellip":"…","hercon":"⊹","hfr":"𝔥","Hfr":"ℌ","HilbertSpace":"ℋ","hksearow":"⤥","hkswarow":"⤦","hoarr":"⇿","homtht":"∻","hookleftarrow":"↩","hookrightarrow":"↪","hopf":"𝕙","Hopf":"ℍ","horbar":"―","HorizontalLine":"─","hscr":"𝒽","Hscr":"ℋ","hslash":"ℏ","Hstrok":"Ħ","hstrok":"ħ","HumpDownHump":"≎","HumpEqual":"≏","hybull":"⁃","hyphen":"‐","Iacute":"Í","iacute":"í","ic":"⁣","Icirc":"Î","icirc":"î","Icy":"И","icy":"и","Idot":"İ","IEcy":"Е","iecy":"е","iexcl":"¡","iff":"⇔","ifr":"𝔦","Ifr":"ℑ","Igrave":"Ì","igrave":"ì","ii":"ⅈ","iiiint":"⨌","iiint":"∭","iinfin":"⧜","iiota":"℩","IJlig":"Ĳ","ijlig":"ĳ","Imacr":"Ī","imacr":"ī","image":"ℑ","ImaginaryI":"ⅈ","imagline":"ℐ","imagpart":"ℑ","imath":"ı","Im":"ℑ","imof":"⊷","imped":"Ƶ","Implies":"⇒","incare":"℅","in":"∈","infin":"∞","infintie":"⧝","inodot":"ı","intcal":"⊺","int":"∫","Int":"∬","integers":"ℤ","Integral":"∫","intercal":"⊺","Intersection":"⋂","intlarhk":"⨗","intprod":"⨼","InvisibleComma":"⁣","InvisibleTimes":"⁢","IOcy":"Ё","iocy":"ё","Iogon":"Į","iogon":"į","Iopf":"𝕀","iopf":"𝕚","Iota":"Ι","iota":"ι","iprod":"⨼","iquest":"¿","iscr":"𝒾","Iscr":"ℐ","isin":"∈","isindot":"⋵","isinE":"⋹","isins":"⋴","isinsv":"⋳","isinv":"∈","it":"⁢","Itilde":"Ĩ","itilde":"ĩ","Iukcy":"І","iukcy":"і","Iuml":"Ï","iuml":"ï","Jcirc":"Ĵ","jcirc":"ĵ","Jcy":"Й","jcy":"й","Jfr":"𝔍","jfr":"𝔧","jmath":"ȷ","Jopf":"𝕁","jopf":"𝕛","Jscr":"𝒥","jscr":"𝒿","Jsercy":"Ј","jsercy":"ј","Jukcy":"Є","jukcy":"є","Kappa":"Κ","kappa":"κ","kappav":"ϰ","Kcedil":"Ķ","kcedil":"ķ","Kcy":"К","kcy":"к","Kfr":"𝔎","kfr":"𝔨","kgreen":"ĸ","KHcy":"Х","khcy":"х","KJcy":"Ќ","kjcy":"ќ","Kopf":"𝕂","kopf":"𝕜","Kscr":"𝒦","kscr":"𝓀","lAarr":"⇚","Lacute":"Ĺ","lacute":"ĺ","laemptyv":"⦴","lagran":"ℒ","Lambda":"Λ","lambda":"λ","lang":"⟨","Lang":"⟪","langd":"⦑","langle":"⟨","lap":"⪅","Laplacetrf":"ℒ","laquo":"«","larrb":"⇤","larrbfs":"⤟","larr":"←","Larr":"↞","lArr":"⇐","larrfs":"⤝","larrhk":"↩","larrlp":"↫","larrpl":"⤹","larrsim":"⥳","larrtl":"↢","latail":"⤙","lAtail":"⤛","lat":"⪫","late":"⪭","lates":"⪭︀","lbarr":"⤌","lBarr":"⤎","lbbrk":"❲","lbrace":"{","lbrack":"[","lbrke":"⦋","lbrksld":"⦏","lbrkslu":"⦍","Lcaron":"Ľ","lcaron":"ľ","Lcedil":"Ļ","lcedil":"ļ","lceil":"⌈","lcub":"{","Lcy":"Л","lcy":"л","ldca":"⤶","ldquo":"“","ldquor":"„","ldrdhar":"⥧","ldrushar":"⥋","ldsh":"↲","le":"≤","lE":"≦","LeftAngleBracket":"⟨","LeftArrowBar":"⇤","leftarrow":"←","LeftArrow":"←","Leftarrow":"⇐","LeftArrowRightArrow":"⇆","leftarrowtail":"↢","LeftCeiling":"⌈","LeftDoubleBracket":"⟦","LeftDownTeeVector":"⥡","LeftDownVectorBar":"⥙","LeftDownVector":"⇃","LeftFloor":"⌊","leftharpoondown":"↽","leftharpoonup":"↼","leftleftarrows":"⇇","leftrightarrow":"↔","LeftRightArrow":"↔","Leftrightarrow":"⇔","leftrightarrows":"⇆","leftrightharpoons":"⇋","leftrightsquigarrow":"↭","LeftRightVector":"⥎","LeftTeeArrow":"↤","LeftTee":"⊣","LeftTeeVector":"⥚","leftthreetimes":"⋋","LeftTriangleBar":"⧏","LeftTriangle":"⊲","LeftTriangleEqual":"⊴","LeftUpDownVector":"⥑","LeftUpTeeVector":"⥠","LeftUpVectorBar":"⥘","LeftUpVector":"↿","LeftVectorBar":"⥒","LeftVector":"↼","lEg":"⪋","leg":"⋚","leq":"≤","leqq":"≦","leqslant":"⩽","lescc":"⪨","les":"⩽","lesdot":"⩿","lesdoto":"⪁","lesdotor":"⪃","lesg":"⋚︀","lesges":"⪓","lessapprox":"⪅","lessdot":"⋖","lesseqgtr":"⋚","lesseqqgtr":"⪋","LessEqualGreater":"⋚","LessFullEqual":"≦","LessGreater":"≶","lessgtr":"≶","LessLess":"⪡","lesssim":"≲","LessSlantEqual":"⩽","LessTilde":"≲","lfisht":"⥼","lfloor":"⌊","Lfr":"𝔏","lfr":"𝔩","lg":"≶","lgE":"⪑","lHar":"⥢","lhard":"↽","lharu":"↼","lharul":"⥪","lhblk":"▄","LJcy":"Љ","ljcy":"љ","llarr":"⇇","ll":"≪","Ll":"⋘","llcorner":"⌞","Lleftarrow":"⇚","llhard":"⥫","lltri":"◺","Lmidot":"Ŀ","lmidot":"ŀ","lmoustache":"⎰","lmoust":"⎰","lnap":"⪉","lnapprox":"⪉","lne":"⪇","lnE":"≨","lneq":"⪇","lneqq":"≨","lnsim":"⋦","loang":"⟬","loarr":"⇽","lobrk":"⟦","longleftarrow":"⟵","LongLeftArrow":"⟵","Longleftarrow":"⟸","longleftrightarrow":"⟷","LongLeftRightArrow":"⟷","Longleftrightarrow":"⟺","longmapsto":"⟼","longrightarrow":"⟶","LongRightArrow":"⟶","Longrightarrow":"⟹","looparrowleft":"↫","looparrowright":"↬","lopar":"⦅","Lopf":"𝕃","lopf":"𝕝","loplus":"⨭","lotimes":"⨴","lowast":"∗","lowbar":"_","LowerLeftArrow":"↙","LowerRightArrow":"↘","loz":"◊","lozenge":"◊","lozf":"⧫","lpar":"(","lparlt":"⦓","lrarr":"⇆","lrcorner":"⌟","lrhar":"⇋","lrhard":"⥭","lrm":"‎","lrtri":"⊿","lsaquo":"‹","lscr":"𝓁","Lscr":"ℒ","lsh":"↰","Lsh":"↰","lsim":"≲","lsime":"⪍","lsimg":"⪏","lsqb":"[","lsquo":"‘","lsquor":"‚","Lstrok":"Ł","lstrok":"ł","ltcc":"⪦","ltcir":"⩹","lt":"<","LT":"<","Lt":"≪","ltdot":"⋖","lthree":"⋋","ltimes":"⋉","ltlarr":"⥶","ltquest":"⩻","ltri":"◃","ltrie":"⊴","ltrif":"◂","ltrPar":"⦖","lurdshar":"⥊","luruhar":"⥦","lvertneqq":"≨︀","lvnE":"≨︀","macr":"¯","male":"♂","malt":"✠","maltese":"✠","Map":"⤅","map":"↦","mapsto":"↦","mapstodown":"↧","mapstoleft":"↤","mapstoup":"↥","marker":"▮","mcomma":"⨩","Mcy":"М","mcy":"м","mdash":"—","mDDot":"∺","measuredangle":"∡","MediumSpace":" ","Mellintrf":"ℳ","Mfr":"𝔐","mfr":"𝔪","mho":"℧","micro":"µ","midast":"*","midcir":"⫰","mid":"∣","middot":"·","minusb":"⊟","minus":"−","minusd":"∸","minusdu":"⨪","MinusPlus":"∓","mlcp":"⫛","mldr":"…","mnplus":"∓","models":"⊧","Mopf":"𝕄","mopf":"𝕞","mp":"∓","mscr":"𝓂","Mscr":"ℳ","mstpos":"∾","Mu":"Μ","mu":"μ","multimap":"⊸","mumap":"⊸","nabla":"∇","Nacute":"Ń","nacute":"ń","nang":"∠⃒","nap":"≉","napE":"⩰̸","napid":"≋̸","napos":"ŉ","napprox":"≉","natural":"♮","naturals":"ℕ","natur":"♮","nbsp":" ","nbump":"≎̸","nbumpe":"≏̸","ncap":"⩃","Ncaron":"Ň","ncaron":"ň","Ncedil":"Ņ","ncedil":"ņ","ncong":"≇","ncongdot":"⩭̸","ncup":"⩂","Ncy":"Н","ncy":"н","ndash":"–","nearhk":"⤤","nearr":"↗","neArr":"⇗","nearrow":"↗","ne":"≠","nedot":"≐̸","NegativeMediumSpace":"​","NegativeThickSpace":"​","NegativeThinSpace":"​","NegativeVeryThinSpace":"​","nequiv":"≢","nesear":"⤨","nesim":"≂̸","NestedGreaterGreater":"≫","NestedLessLess":"≪","NewLine":"\n","nexist":"∄","nexists":"∄","Nfr":"𝔑","nfr":"𝔫","ngE":"≧̸","nge":"≱","ngeq":"≱","ngeqq":"≧̸","ngeqslant":"⩾̸","nges":"⩾̸","nGg":"⋙̸","ngsim":"≵","nGt":"≫⃒","ngt":"≯","ngtr":"≯","nGtv":"≫̸","nharr":"↮","nhArr":"⇎","nhpar":"⫲","ni":"∋","nis":"⋼","nisd":"⋺","niv":"∋","NJcy":"Њ","njcy":"њ","nlarr":"↚","nlArr":"⇍","nldr":"‥","nlE":"≦̸","nle":"≰","nleftarrow":"↚","nLeftarrow":"⇍","nleftrightarrow":"↮","nLeftrightarrow":"⇎","nleq":"≰","nleqq":"≦̸","nleqslant":"⩽̸","nles":"⩽̸","nless":"≮","nLl":"⋘̸","nlsim":"≴","nLt":"≪⃒","nlt":"≮","nltri":"⋪","nltrie":"⋬","nLtv":"≪̸","nmid":"∤","NoBreak":"⁠","NonBreakingSpace":" ","nopf":"𝕟","Nopf":"ℕ","Not":"⫬","not":"¬","NotCongruent":"≢","NotCupCap":"≭","NotDoubleVerticalBar":"∦","NotElement":"∉","NotEqual":"≠","NotEqualTilde":"≂̸","NotExists":"∄","NotGreater":"≯","NotGreaterEqual":"≱","NotGreaterFullEqual":"≧̸","NotGreaterGreater":"≫̸","NotGreaterLess":"≹","NotGreaterSlantEqual":"⩾̸","NotGreaterTilde":"≵","NotHumpDownHump":"≎̸","NotHumpEqual":"≏̸","notin":"∉","notindot":"⋵̸","notinE":"⋹̸","notinva":"∉","notinvb":"⋷","notinvc":"⋶","NotLeftTriangleBar":"⧏̸","NotLeftTriangle":"⋪","NotLeftTriangleEqual":"⋬","NotLess":"≮","NotLessEqual":"≰","NotLessGreater":"≸","NotLessLess":"≪̸","NotLessSlantEqual":"⩽̸","NotLessTilde":"≴","NotNestedGreaterGreater":"⪢̸","NotNestedLessLess":"⪡̸","notni":"∌","notniva":"∌","notnivb":"⋾","notnivc":"⋽","NotPrecedes":"⊀","NotPrecedesEqual":"⪯̸","NotPrecedesSlantEqual":"⋠","NotReverseElement":"∌","NotRightTriangleBar":"⧐̸","NotRightTriangle":"⋫","NotRightTriangleEqual":"⋭","NotSquareSubset":"⊏̸","NotSquareSubsetEqual":"⋢","NotSquareSuperset":"⊐̸","NotSquareSupersetEqual":"⋣","NotSubset":"⊂⃒","NotSubsetEqual":"⊈","NotSucceeds":"⊁","NotSucceedsEqual":"⪰̸","NotSucceedsSlantEqual":"⋡","NotSucceedsTilde":"≿̸","NotSuperset":"⊃⃒","NotSupersetEqual":"⊉","NotTilde":"≁","NotTildeEqual":"≄","NotTildeFullEqual":"≇","NotTildeTilde":"≉","NotVerticalBar":"∤","nparallel":"∦","npar":"∦","nparsl":"⫽⃥","npart":"∂̸","npolint":"⨔","npr":"⊀","nprcue":"⋠","nprec":"⊀","npreceq":"⪯̸","npre":"⪯̸","nrarrc":"⤳̸","nrarr":"↛","nrArr":"⇏","nrarrw":"↝̸","nrightarrow":"↛","nRightarrow":"⇏","nrtri":"⋫","nrtrie":"⋭","nsc":"⊁","nsccue":"⋡","nsce":"⪰̸","Nscr":"𝒩","nscr":"𝓃","nshortmid":"∤","nshortparallel":"∦","nsim":"≁","nsime":"≄","nsimeq":"≄","nsmid":"∤","nspar":"∦","nsqsube":"⋢","nsqsupe":"⋣","nsub":"⊄","nsubE":"⫅̸","nsube":"⊈","nsubset":"⊂⃒","nsubseteq":"⊈","nsubseteqq":"⫅̸","nsucc":"⊁","nsucceq":"⪰̸","nsup":"⊅","nsupE":"⫆̸","nsupe":"⊉","nsupset":"⊃⃒","nsupseteq":"⊉","nsupseteqq":"⫆̸","ntgl":"≹","Ntilde":"Ñ","ntilde":"ñ","ntlg":"≸","ntriangleleft":"⋪","ntrianglelefteq":"⋬","ntriangleright":"⋫","ntrianglerighteq":"⋭","Nu":"Ν","nu":"ν","num":"#","numero":"№","numsp":" ","nvap":"≍⃒","nvdash":"⊬","nvDash":"⊭","nVdash":"⊮","nVDash":"⊯","nvge":"≥⃒","nvgt":">⃒","nvHarr":"⤄","nvinfin":"⧞","nvlArr":"⤂","nvle":"≤⃒","nvlt":"<⃒","nvltrie":"⊴⃒","nvrArr":"⤃","nvrtrie":"⊵⃒","nvsim":"∼⃒","nwarhk":"⤣","nwarr":"↖","nwArr":"⇖","nwarrow":"↖","nwnear":"⤧","Oacute":"Ó","oacute":"ó","oast":"⊛","Ocirc":"Ô","ocirc":"ô","ocir":"⊚","Ocy":"О","ocy":"о","odash":"⊝","Odblac":"Ő","odblac":"ő","odiv":"⨸","odot":"⊙","odsold":"⦼","OElig":"Œ","oelig":"œ","ofcir":"⦿","Ofr":"𝔒","ofr":"𝔬","ogon":"˛","Ograve":"Ò","ograve":"ò","ogt":"⧁","ohbar":"⦵","ohm":"Ω","oint":"∮","olarr":"↺","olcir":"⦾","olcross":"⦻","oline":"‾","olt":"⧀","Omacr":"Ō","omacr":"ō","Omega":"Ω","omega":"ω","Omicron":"Ο","omicron":"ο","omid":"⦶","ominus":"⊖","Oopf":"𝕆","oopf":"𝕠","opar":"⦷","OpenCurlyDoubleQuote":"“","OpenCurlyQuote":"‘","operp":"⦹","oplus":"⊕","orarr":"↻","Or":"⩔","or":"∨","ord":"⩝","order":"ℴ","orderof":"ℴ","ordf":"ª","ordm":"º","origof":"⊶","oror":"⩖","orslope":"⩗","orv":"⩛","oS":"Ⓢ","Oscr":"𝒪","oscr":"ℴ","Oslash":"Ø","oslash":"ø","osol":"⊘","Otilde":"Õ","otilde":"õ","otimesas":"⨶","Otimes":"⨷","otimes":"⊗","Ouml":"Ö","ouml":"ö","ovbar":"⌽","OverBar":"‾","OverBrace":"⏞","OverBracket":"⎴","OverParenthesis":"⏜","para":"¶","parallel":"∥","par":"∥","parsim":"⫳","parsl":"⫽","part":"∂","PartialD":"∂","Pcy":"П","pcy":"п","percnt":"%","period":".","permil":"‰","perp":"⊥","pertenk":"‱","Pfr":"𝔓","pfr":"𝔭","Phi":"Φ","phi":"φ","phiv":"ϕ","phmmat":"ℳ","phone":"☎","Pi":"Π","pi":"π","pitchfork":"⋔","piv":"ϖ","planck":"ℏ","planckh":"ℎ","plankv":"ℏ","plusacir":"⨣","plusb":"⊞","pluscir":"⨢","plus":"+","plusdo":"∔","plusdu":"⨥","pluse":"⩲","PlusMinus":"±","plusmn":"±","plussim":"⨦","plustwo":"⨧","pm":"±","Poincareplane":"ℌ","pointint":"⨕","popf":"𝕡","Popf":"ℙ","pound":"£","prap":"⪷","Pr":"⪻","pr":"≺","prcue":"≼","precapprox":"⪷","prec":"≺","preccurlyeq":"≼","Precedes":"≺","PrecedesEqual":"⪯","PrecedesSlantEqual":"≼","PrecedesTilde":"≾","preceq":"⪯","precnapprox":"⪹","precneqq":"⪵","precnsim":"⋨","pre":"⪯","prE":"⪳","precsim":"≾","prime":"′","Prime":"″","primes":"ℙ","prnap":"⪹","prnE":"⪵","prnsim":"⋨","prod":"∏","Product":"∏","profalar":"⌮","profline":"⌒","profsurf":"⌓","prop":"∝","Proportional":"∝","Proportion":"∷","propto":"∝","prsim":"≾","prurel":"⊰","Pscr":"𝒫","pscr":"𝓅","Psi":"Ψ","psi":"ψ","puncsp":" ","Qfr":"𝔔","qfr":"𝔮","qint":"⨌","qopf":"𝕢","Qopf":"ℚ","qprime":"⁗","Qscr":"𝒬","qscr":"𝓆","quaternions":"ℍ","quatint":"⨖","quest":"?","questeq":"≟","quot":"\"","QUOT":"\"","rAarr":"⇛","race":"∽̱","Racute":"Ŕ","racute":"ŕ","radic":"√","raemptyv":"⦳","rang":"⟩","Rang":"⟫","rangd":"⦒","range":"⦥","rangle":"⟩","raquo":"»","rarrap":"⥵","rarrb":"⇥","rarrbfs":"⤠","rarrc":"⤳","rarr":"→","Rarr":"↠","rArr":"⇒","rarrfs":"⤞","rarrhk":"↪","rarrlp":"↬","rarrpl":"⥅","rarrsim":"⥴","Rarrtl":"⤖","rarrtl":"↣","rarrw":"↝","ratail":"⤚","rAtail":"⤜","ratio":"∶","rationals":"ℚ","rbarr":"⤍","rBarr":"⤏","RBarr":"⤐","rbbrk":"❳","rbrace":"}","rbrack":"]","rbrke":"⦌","rbrksld":"⦎","rbrkslu":"⦐","Rcaron":"Ř","rcaron":"ř","Rcedil":"Ŗ","rcedil":"ŗ","rceil":"⌉","rcub":"}","Rcy":"Р","rcy":"р","rdca":"⤷","rdldhar":"⥩","rdquo":"”","rdquor":"”","rdsh":"↳","real":"ℜ","realine":"ℛ","realpart":"ℜ","reals":"ℝ","Re":"ℜ","rect":"▭","reg":"®","REG":"®","ReverseElement":"∋","ReverseEquilibrium":"⇋","ReverseUpEquilibrium":"⥯","rfisht":"⥽","rfloor":"⌋","rfr":"𝔯","Rfr":"ℜ","rHar":"⥤","rhard":"⇁","rharu":"⇀","rharul":"⥬","Rho":"Ρ","rho":"ρ","rhov":"ϱ","RightAngleBracket":"⟩","RightArrowBar":"⇥","rightarrow":"→","RightArrow":"→","Rightarrow":"⇒","RightArrowLeftArrow":"⇄","rightarrowtail":"↣","RightCeiling":"⌉","RightDoubleBracket":"⟧","RightDownTeeVector":"⥝","RightDownVectorBar":"⥕","RightDownVector":"⇂","RightFloor":"⌋","rightharpoondown":"⇁","rightharpoonup":"⇀","rightleftarrows":"⇄","rightleftharpoons":"⇌","rightrightarrows":"⇉","rightsquigarrow":"↝","RightTeeArrow":"↦","RightTee":"⊢","RightTeeVector":"⥛","rightthreetimes":"⋌","RightTriangleBar":"⧐","RightTriangle":"⊳","RightTriangleEqual":"⊵","RightUpDownVector":"⥏","RightUpTeeVector":"⥜","RightUpVectorBar":"⥔","RightUpVector":"↾","RightVectorBar":"⥓","RightVector":"⇀","ring":"˚","risingdotseq":"≓","rlarr":"⇄","rlhar":"⇌","rlm":"‏","rmoustache":"⎱","rmoust":"⎱","rnmid":"⫮","roang":"⟭","roarr":"⇾","robrk":"⟧","ropar":"⦆","ropf":"𝕣","Ropf":"ℝ","roplus":"⨮","rotimes":"⨵","RoundImplies":"⥰","rpar":")","rpargt":"⦔","rppolint":"⨒","rrarr":"⇉","Rrightarrow":"⇛","rsaquo":"›","rscr":"𝓇","Rscr":"ℛ","rsh":"↱","Rsh":"↱","rsqb":"]","rsquo":"’","rsquor":"’","rthree":"⋌","rtimes":"⋊","rtri":"▹","rtrie":"⊵","rtrif":"▸","rtriltri":"⧎","RuleDelayed":"⧴","ruluhar":"⥨","rx":"℞","Sacute":"Ś","sacute":"ś","sbquo":"‚","scap":"⪸","Scaron":"Š","scaron":"š","Sc":"⪼","sc":"≻","sccue":"≽","sce":"⪰","scE":"⪴","Scedil":"Ş","scedil":"ş","Scirc":"Ŝ","scirc":"ŝ","scnap":"⪺","scnE":"⪶","scnsim":"⋩","scpolint":"⨓","scsim":"≿","Scy":"С","scy":"с","sdotb":"⊡","sdot":"⋅","sdote":"⩦","searhk":"⤥","searr":"↘","seArr":"⇘","searrow":"↘","sect":"§","semi":";","seswar":"⤩","setminus":"∖","setmn":"∖","sext":"✶","Sfr":"𝔖","sfr":"𝔰","sfrown":"⌢","sharp":"♯","SHCHcy":"Щ","shchcy":"щ","SHcy":"Ш","shcy":"ш","ShortDownArrow":"↓","ShortLeftArrow":"←","shortmid":"∣","shortparallel":"∥","ShortRightArrow":"→","ShortUpArrow":"↑","shy":"­","Sigma":"Σ","sigma":"σ","sigmaf":"ς","sigmav":"ς","sim":"∼","simdot":"⩪","sime":"≃","simeq":"≃","simg":"⪞","simgE":"⪠","siml":"⪝","simlE":"⪟","simne":"≆","simplus":"⨤","simrarr":"⥲","slarr":"←","SmallCircle":"∘","smallsetminus":"∖","smashp":"⨳","smeparsl":"⧤","smid":"∣","smile":"⌣","smt":"⪪","smte":"⪬","smtes":"⪬︀","SOFTcy":"Ь","softcy":"ь","solbar":"⌿","solb":"⧄","sol":"/","Sopf":"𝕊","sopf":"𝕤","spades":"♠","spadesuit":"♠","spar":"∥","sqcap":"⊓","sqcaps":"⊓︀","sqcup":"⊔","sqcups":"⊔︀","Sqrt":"√","sqsub":"⊏","sqsube":"⊑","sqsubset":"⊏","sqsubseteq":"⊑","sqsup":"⊐","sqsupe":"⊒","sqsupset":"⊐","sqsupseteq":"⊒","square":"□","Square":"□","SquareIntersection":"⊓","SquareSubset":"⊏","SquareSubsetEqual":"⊑","SquareSuperset":"⊐","SquareSupersetEqual":"⊒","SquareUnion":"⊔","squarf":"▪","squ":"□","squf":"▪","srarr":"→","Sscr":"𝒮","sscr":"𝓈","ssetmn":"∖","ssmile":"⌣","sstarf":"⋆","Star":"⋆","star":"☆","starf":"★","straightepsilon":"ϵ","straightphi":"ϕ","strns":"¯","sub":"⊂","Sub":"⋐","subdot":"⪽","subE":"⫅","sube":"⊆","subedot":"⫃","submult":"⫁","subnE":"⫋","subne":"⊊","subplus":"⪿","subrarr":"⥹","subset":"⊂","Subset":"⋐","subseteq":"⊆","subseteqq":"⫅","SubsetEqual":"⊆","subsetneq":"⊊","subsetneqq":"⫋","subsim":"⫇","subsub":"⫕","subsup":"⫓","succapprox":"⪸","succ":"≻","succcurlyeq":"≽","Succeeds":"≻","SucceedsEqual":"⪰","SucceedsSlantEqual":"≽","SucceedsTilde":"≿","succeq":"⪰","succnapprox":"⪺","succneqq":"⪶","succnsim":"⋩","succsim":"≿","SuchThat":"∋","sum":"∑","Sum":"∑","sung":"♪","sup1":"¹","sup2":"²","sup3":"³","sup":"⊃","Sup":"⋑","supdot":"⪾","supdsub":"⫘","supE":"⫆","supe":"⊇","supedot":"⫄","Superset":"⊃","SupersetEqual":"⊇","suphsol":"⟉","suphsub":"⫗","suplarr":"⥻","supmult":"⫂","supnE":"⫌","supne":"⊋","supplus":"⫀","supset":"⊃","Supset":"⋑","supseteq":"⊇","supseteqq":"⫆","supsetneq":"⊋","supsetneqq":"⫌","supsim":"⫈","supsub":"⫔","supsup":"⫖","swarhk":"⤦","swarr":"↙","swArr":"⇙","swarrow":"↙","swnwar":"⤪","szlig":"ß","Tab":"\t","target":"⌖","Tau":"Τ","tau":"τ","tbrk":"⎴","Tcaron":"Ť","tcaron":"ť","Tcedil":"Ţ","tcedil":"ţ","Tcy":"Т","tcy":"т","tdot":"⃛","telrec":"⌕","Tfr":"𝔗","tfr":"𝔱","there4":"∴","therefore":"∴","Therefore":"∴","Theta":"Θ","theta":"θ","thetasym":"ϑ","thetav":"ϑ","thickapprox":"≈","thicksim":"∼","ThickSpace":"  ","ThinSpace":" ","thinsp":" ","thkap":"≈","thksim":"∼","THORN":"Þ","thorn":"þ","tilde":"˜","Tilde":"∼","TildeEqual":"≃","TildeFullEqual":"≅","TildeTilde":"≈","timesbar":"⨱","timesb":"⊠","times":"×","timesd":"⨰","tint":"∭","toea":"⤨","topbot":"⌶","topcir":"⫱","top":"⊤","Topf":"𝕋","topf":"𝕥","topfork":"⫚","tosa":"⤩","tprime":"‴","trade":"™","TRADE":"™","triangle":"▵","triangledown":"▿","triangleleft":"◃","trianglelefteq":"⊴","triangleq":"≜","triangleright":"▹","trianglerighteq":"⊵","tridot":"◬","trie":"≜","triminus":"⨺","TripleDot":"⃛","triplus":"⨹","trisb":"⧍","tritime":"⨻","trpezium":"⏢","Tscr":"𝒯","tscr":"𝓉","TScy":"Ц","tscy":"ц","TSHcy":"Ћ","tshcy":"ћ","Tstrok":"Ŧ","tstrok":"ŧ","twixt":"≬","twoheadleftarrow":"↞","twoheadrightarrow":"↠","Uacute":"Ú","uacute":"ú","uarr":"↑","Uarr":"↟","uArr":"⇑","Uarrocir":"⥉","Ubrcy":"Ў","ubrcy":"ў","Ubreve":"Ŭ","ubreve":"ŭ","Ucirc":"Û","ucirc":"û","Ucy":"У","ucy":"у","udarr":"⇅","Udblac":"Ű","udblac":"ű","udhar":"⥮","ufisht":"⥾","Ufr":"𝔘","ufr":"𝔲","Ugrave":"Ù","ugrave":"ù","uHar":"⥣","uharl":"↿","uharr":"↾","uhblk":"▀","ulcorn":"⌜","ulcorner":"⌜","ulcrop":"⌏","ultri":"◸","Umacr":"Ū","umacr":"ū","uml":"¨","UnderBar":"_","UnderBrace":"⏟","UnderBracket":"⎵","UnderParenthesis":"⏝","Union":"⋃","UnionPlus":"⊎","Uogon":"Ų","uogon":"ų","Uopf":"𝕌","uopf":"𝕦","UpArrowBar":"⤒","uparrow":"↑","UpArrow":"↑","Uparrow":"⇑","UpArrowDownArrow":"⇅","updownarrow":"↕","UpDownArrow":"↕","Updownarrow":"⇕","UpEquilibrium":"⥮","upharpoonleft":"↿","upharpoonright":"↾","uplus":"⊎","UpperLeftArrow":"↖","UpperRightArrow":"↗","upsi":"υ","Upsi":"ϒ","upsih":"ϒ","Upsilon":"Υ","upsilon":"υ","UpTeeArrow":"↥","UpTee":"⊥","upuparrows":"⇈","urcorn":"⌝","urcorner":"⌝","urcrop":"⌎","Uring":"Ů","uring":"ů","urtri":"◹","Uscr":"𝒰","uscr":"𝓊","utdot":"⋰","Utilde":"Ũ","utilde":"ũ","utri":"▵","utrif":"▴","uuarr":"⇈","Uuml":"Ü","uuml":"ü","uwangle":"⦧","vangrt":"⦜","varepsilon":"ϵ","varkappa":"ϰ","varnothing":"∅","varphi":"ϕ","varpi":"ϖ","varpropto":"∝","varr":"↕","vArr":"⇕","varrho":"ϱ","varsigma":"ς","varsubsetneq":"⊊︀","varsubsetneqq":"⫋︀","varsupsetneq":"⊋︀","varsupsetneqq":"⫌︀","vartheta":"ϑ","vartriangleleft":"⊲","vartriangleright":"⊳","vBar":"⫨","Vbar":"⫫","vBarv":"⫩","Vcy":"В","vcy":"в","vdash":"⊢","vDash":"⊨","Vdash":"⊩","VDash":"⊫","Vdashl":"⫦","veebar":"⊻","vee":"∨","Vee":"⋁","veeeq":"≚","vellip":"⋮","verbar":"|","Verbar":"‖","vert":"|","Vert":"‖","VerticalBar":"∣","VerticalLine":"|","VerticalSeparator":"❘","VerticalTilde":"≀","VeryThinSpace":" ","Vfr":"𝔙","vfr":"𝔳","vltri":"⊲","vnsub":"⊂⃒","vnsup":"⊃⃒","Vopf":"𝕍","vopf":"𝕧","vprop":"∝","vrtri":"⊳","Vscr":"𝒱","vscr":"𝓋","vsubnE":"⫋︀","vsubne":"⊊︀","vsupnE":"⫌︀","vsupne":"⊋︀","Vvdash":"⊪","vzigzag":"⦚","Wcirc":"Ŵ","wcirc":"ŵ","wedbar":"⩟","wedge":"∧","Wedge":"⋀","wedgeq":"≙","weierp":"℘","Wfr":"𝔚","wfr":"𝔴","Wopf":"𝕎","wopf":"𝕨","wp":"℘","wr":"≀","wreath":"≀","Wscr":"𝒲","wscr":"𝓌","xcap":"⋂","xcirc":"◯","xcup":"⋃","xdtri":"▽","Xfr":"𝔛","xfr":"𝔵","xharr":"⟷","xhArr":"⟺","Xi":"Ξ","xi":"ξ","xlarr":"⟵","xlArr":"⟸","xmap":"⟼","xnis":"⋻","xodot":"⨀","Xopf":"𝕏","xopf":"𝕩","xoplus":"⨁","xotime":"⨂","xrarr":"⟶","xrArr":"⟹","Xscr":"𝒳","xscr":"𝓍","xsqcup":"⨆","xuplus":"⨄","xutri":"△","xvee":"⋁","xwedge":"⋀","Yacute":"Ý","yacute":"ý","YAcy":"Я","yacy":"я","Ycirc":"Ŷ","ycirc":"ŷ","Ycy":"Ы","ycy":"ы","yen":"¥","Yfr":"𝔜","yfr":"𝔶","YIcy":"Ї","yicy":"ї","Yopf":"𝕐","yopf":"𝕪","Yscr":"𝒴","yscr":"𝓎","YUcy":"Ю","yucy":"ю","yuml":"ÿ","Yuml":"Ÿ","Zacute":"Ź","zacute":"ź","Zcaron":"Ž","zcaron":"ž","Zcy":"З","zcy":"з","Zdot":"Ż","zdot":"ż","zeetrf":"ℨ","ZeroWidthSpace":"​","Zeta":"Ζ","zeta":"ζ","zfr":"𝔷","Zfr":"ℨ","ZHcy":"Ж","zhcy":"ж","zigrarr":"⇝","zopf":"𝕫","Zopf":"ℤ","Zscr":"𝒵","zscr":"𝓏","zwj":"‍","zwnj":"‌"}
 
 /***/ }),
-/* 452 */
+/* 478 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/maps/xml.json ***!
   \******************************************************************************/
@@ -25641,32 +25667,6 @@ module.exports = {"Aacute":"Á","aacute":"á","Abreve":"Ă","abreve":"ă","ac":"
 module.exports = {"amp":"&","apos":"'","gt":">","lt":"<","quot":"\""}
 
 /***/ }),
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
 /* 479 */,
 /* 480 */,
 /* 481 */,
@@ -25876,7 +25876,47 @@ module.exports = {"amp":"&","apos":"'","gt":">","lt":"<","quot":"\""}
 /* 685 */,
 /* 686 */,
 /* 687 */,
-/* 688 */
+/* 688 */,
+/* 689 */,
+/* 690 */,
+/* 691 */,
+/* 692 */,
+/* 693 */,
+/* 694 */,
+/* 695 */,
+/* 696 */,
+/* 697 */,
+/* 698 */,
+/* 699 */,
+/* 700 */,
+/* 701 */,
+/* 702 */,
+/* 703 */,
+/* 704 */,
+/* 705 */,
+/* 706 */,
+/* 707 */,
+/* 708 */,
+/* 709 */,
+/* 710 */,
+/* 711 */,
+/* 712 */,
+/* 713 */,
+/* 714 */,
+/* 715 */,
+/* 716 */,
+/* 717 */,
+/* 718 */,
+/* 719 */,
+/* 720 */,
+/* 721 */,
+/* 722 */,
+/* 723 */,
+/* 724 */,
+/* 725 */,
+/* 726 */,
+/* 727 */,
+/* 728 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/trim.js ***!
   \**********************************************************************************/
@@ -25895,7 +25935,7 @@ module.exports = trim;
 
 
 /***/ }),
-/* 689 */
+/* 729 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/console/warn.js ***!
   \******************************************************************************************/
@@ -25911,7 +25951,7 @@ module.exports = warn;
 
 
 /***/ }),
-/* 690 */
+/* 730 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/create-react-class/index.js ***!
   \***********************************************************************************/
@@ -25933,7 +25973,7 @@ module.exports = warn;
 
 
 var React = __webpack_require__(/*! react */ 0);
-var factory = __webpack_require__(/*! ./factory */ 1323);
+var factory = __webpack_require__(/*! ./factory */ 1377);
 
 if (typeof React === 'undefined') {
   throw Error(
@@ -25953,7 +25993,7 @@ module.exports = factory(
 
 
 /***/ }),
-/* 691 */
+/* 731 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/fbjs/lib/emptyFunction.js ***!
   \*********************************************************************************/
@@ -26002,7 +26042,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 692 */
+/* 732 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \**********************************************************************************************/
@@ -26028,7 +26068,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 693 */
+/* 733 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/urijs/src/punycode.js ***!
   \*****************************************************************************/
@@ -26569,10 +26609,10 @@ module.exports = ReactPropTypesSecret;
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 32)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 25)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/module.js */ 32)(module), __webpack_require__(/*! ./../../../../../node_modules/webpack/buildin/global.js */ 24)))
 
 /***/ }),
-/* 694 */
+/* 734 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/urijs/src/IPv6.js ***!
   \*************************************************************************/
@@ -26772,7 +26812,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 695 */
+/* 735 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/urijs/src/SecondLevelDomains.js ***!
   \***************************************************************************************/
@@ -27032,7 +27072,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 696 */
+/* 736 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/utils/isPlainObject.js ***!
   \************************************************************************************************/
@@ -27072,7 +27112,7 @@ function isPlainObject(obj) {
 }
 
 /***/ }),
-/* 697 */
+/* 737 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/PromiseState.js ***!
   \*****************************************************************************************/
@@ -27271,7 +27311,7 @@ var PromiseState = function () {
 exports.default = PromiseState;
 
 /***/ }),
-/* 698 */
+/* 738 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/fp/placeholder.js ***!
   \********************************************************************************/
@@ -27288,7 +27328,7 @@ module.exports = {};
 
 
 /***/ }),
-/* 699 */
+/* 739 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseSetData.js ***!
   \******************************************************************************/
@@ -27296,8 +27336,8 @@ module.exports = {};
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(/*! ./identity */ 277),
-    metaMap = __webpack_require__(/*! ./_metaMap */ 700);
+var identity = __webpack_require__(/*! ./identity */ 299),
+    metaMap = __webpack_require__(/*! ./_metaMap */ 740);
 
 /**
  * The base implementation of `setData` without support for hot loop shorting.
@@ -27316,7 +27356,7 @@ module.exports = baseSetData;
 
 
 /***/ }),
-/* 700 */
+/* 740 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_metaMap.js ***!
   \**************************************************************************/
@@ -27324,7 +27364,7 @@ module.exports = baseSetData;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var WeakMap = __webpack_require__(/*! ./_WeakMap */ 701);
+var WeakMap = __webpack_require__(/*! ./_WeakMap */ 741);
 
 /** Used to store function metadata. */
 var metaMap = WeakMap && new WeakMap;
@@ -27333,7 +27373,7 @@ module.exports = metaMap;
 
 
 /***/ }),
-/* 701 */
+/* 741 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_WeakMap.js ***!
   \**************************************************************************/
@@ -27341,7 +27381,7 @@ module.exports = metaMap;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132),
+var getNative = __webpack_require__(/*! ./_getNative */ 137),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /* Built-in method references that are verified to be native. */
@@ -27351,7 +27391,7 @@ module.exports = WeakMap;
 
 
 /***/ }),
-/* 702 */
+/* 742 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_freeGlobal.js ***!
   \*****************************************************************************/
@@ -27364,10 +27404,10 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 module.exports = freeGlobal;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ 25)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ 24)))
 
 /***/ }),
-/* 703 */
+/* 743 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_toSource.js ***!
   \***************************************************************************/
@@ -27404,7 +27444,7 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 704 */
+/* 744 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createHybrid.js ***!
   \*******************************************************************************/
@@ -27412,14 +27452,14 @@ module.exports = toSource;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var composeArgs = __webpack_require__(/*! ./_composeArgs */ 705),
-    composeArgsRight = __webpack_require__(/*! ./_composeArgsRight */ 706),
-    countHolders = __webpack_require__(/*! ./_countHolders */ 1351),
-    createCtor = __webpack_require__(/*! ./_createCtor */ 278),
-    createRecurry = __webpack_require__(/*! ./_createRecurry */ 707),
-    getHolder = __webpack_require__(/*! ./_getHolder */ 715),
-    reorder = __webpack_require__(/*! ./_reorder */ 1366),
-    replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 410),
+var composeArgs = __webpack_require__(/*! ./_composeArgs */ 745),
+    composeArgsRight = __webpack_require__(/*! ./_composeArgsRight */ 746),
+    countHolders = __webpack_require__(/*! ./_countHolders */ 1405),
+    createCtor = __webpack_require__(/*! ./_createCtor */ 300),
+    createRecurry = __webpack_require__(/*! ./_createRecurry */ 747),
+    getHolder = __webpack_require__(/*! ./_getHolder */ 755),
+    reorder = __webpack_require__(/*! ./_reorder */ 1420),
+    replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 436),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /** Used to compose bitmasks for function metadata. */
@@ -27507,7 +27547,7 @@ module.exports = createHybrid;
 
 
 /***/ }),
-/* 705 */
+/* 745 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_composeArgs.js ***!
   \******************************************************************************/
@@ -27557,7 +27597,7 @@ module.exports = composeArgs;
 
 
 /***/ }),
-/* 706 */
+/* 746 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_composeArgsRight.js ***!
   \***********************************************************************************/
@@ -27609,7 +27649,7 @@ module.exports = composeArgsRight;
 
 
 /***/ }),
-/* 707 */
+/* 747 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createRecurry.js ***!
   \********************************************************************************/
@@ -27617,9 +27657,9 @@ module.exports = composeArgsRight;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isLaziable = __webpack_require__(/*! ./_isLaziable */ 1352),
-    setData = __webpack_require__(/*! ./_setData */ 711),
-    setWrapToString = __webpack_require__(/*! ./_setWrapToString */ 713);
+var isLaziable = __webpack_require__(/*! ./_isLaziable */ 1406),
+    setData = __webpack_require__(/*! ./_setData */ 751),
+    setWrapToString = __webpack_require__(/*! ./_setWrapToString */ 753);
 
 /** Used to compose bitmasks for function metadata. */
 var WRAP_BIND_FLAG = 1,
@@ -27676,7 +27716,7 @@ module.exports = createRecurry;
 
 
 /***/ }),
-/* 708 */
+/* 748 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getData.js ***!
   \**************************************************************************/
@@ -27684,8 +27724,8 @@ module.exports = createRecurry;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metaMap = __webpack_require__(/*! ./_metaMap */ 700),
-    noop = __webpack_require__(/*! ./noop */ 709);
+var metaMap = __webpack_require__(/*! ./_metaMap */ 740),
+    noop = __webpack_require__(/*! ./noop */ 749);
 
 /**
  * Gets metadata for `func`.
@@ -27702,7 +27742,7 @@ module.exports = getData;
 
 
 /***/ }),
-/* 709 */
+/* 749 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/noop.js ***!
   \**********************************************************************/
@@ -27730,7 +27770,7 @@ module.exports = noop;
 
 
 /***/ }),
-/* 710 */
+/* 750 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_LodashWrapper.js ***!
   \********************************************************************************/
@@ -27738,8 +27778,8 @@ module.exports = noop;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseCreate = __webpack_require__(/*! ./_baseCreate */ 279),
-    baseLodash = __webpack_require__(/*! ./_baseLodash */ 406);
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ 301),
+    baseLodash = __webpack_require__(/*! ./_baseLodash */ 432);
 
 /**
  * The base constructor for creating `lodash` wrapper objects.
@@ -27763,7 +27803,7 @@ module.exports = LodashWrapper;
 
 
 /***/ }),
-/* 711 */
+/* 751 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_setData.js ***!
   \**************************************************************************/
@@ -27771,8 +27811,8 @@ module.exports = LodashWrapper;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetData = __webpack_require__(/*! ./_baseSetData */ 699),
-    shortOut = __webpack_require__(/*! ./_shortOut */ 712);
+var baseSetData = __webpack_require__(/*! ./_baseSetData */ 739),
+    shortOut = __webpack_require__(/*! ./_shortOut */ 752);
 
 /**
  * Sets metadata for `func`.
@@ -27794,7 +27834,7 @@ module.exports = setData;
 
 
 /***/ }),
-/* 712 */
+/* 752 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_shortOut.js ***!
   \***************************************************************************/
@@ -27842,7 +27882,7 @@ module.exports = shortOut;
 
 
 /***/ }),
-/* 713 */
+/* 753 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_setWrapToString.js ***!
   \**********************************************************************************/
@@ -27850,10 +27890,10 @@ module.exports = shortOut;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getWrapDetails = __webpack_require__(/*! ./_getWrapDetails */ 1357),
-    insertWrapDetails = __webpack_require__(/*! ./_insertWrapDetails */ 1358),
-    setToString = __webpack_require__(/*! ./_setToString */ 407),
-    updateWrapDetails = __webpack_require__(/*! ./_updateWrapDetails */ 1361);
+var getWrapDetails = __webpack_require__(/*! ./_getWrapDetails */ 1411),
+    insertWrapDetails = __webpack_require__(/*! ./_insertWrapDetails */ 1412),
+    setToString = __webpack_require__(/*! ./_setToString */ 433),
+    updateWrapDetails = __webpack_require__(/*! ./_updateWrapDetails */ 1415);
 
 /**
  * Sets the `toString` method of `wrapper` to mimic the source of `reference`
@@ -27874,7 +27914,7 @@ module.exports = setWrapToString;
 
 
 /***/ }),
-/* 714 */
+/* 754 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_defineProperty.js ***!
   \*********************************************************************************/
@@ -27882,7 +27922,7 @@ module.exports = setWrapToString;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132);
+var getNative = __webpack_require__(/*! ./_getNative */ 137);
 
 var defineProperty = (function() {
   try {
@@ -27896,7 +27936,7 @@ module.exports = defineProperty;
 
 
 /***/ }),
-/* 715 */
+/* 755 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getHolder.js ***!
   \****************************************************************************/
@@ -27920,7 +27960,7 @@ module.exports = getHolder;
 
 
 /***/ }),
-/* 716 */
+/* 756 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/toInteger.js ***!
   \***************************************************************************/
@@ -27928,7 +27968,7 @@ module.exports = getHolder;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toFinite = __webpack_require__(/*! ./toFinite */ 717);
+var toFinite = __webpack_require__(/*! ./toFinite */ 757);
 
 /**
  * Converts `value` to an integer.
@@ -27967,7 +28007,7 @@ module.exports = toInteger;
 
 
 /***/ }),
-/* 717 */
+/* 757 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/toFinite.js ***!
   \**************************************************************************/
@@ -27975,7 +28015,7 @@ module.exports = toInteger;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toNumber = __webpack_require__(/*! ./toNumber */ 1369);
+var toNumber = __webpack_require__(/*! ./toNumber */ 1423);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -28020,7 +28060,7 @@ module.exports = toFinite;
 
 
 /***/ }),
-/* 718 */
+/* 758 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseAssign.js ***!
   \*****************************************************************************/
@@ -28028,8 +28068,8 @@ module.exports = toFinite;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(/*! ./_copyObject */ 217),
-    keys = __webpack_require__(/*! ./keys */ 283);
+var copyObject = __webpack_require__(/*! ./_copyObject */ 235),
+    keys = __webpack_require__(/*! ./keys */ 305);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -28048,7 +28088,7 @@ module.exports = baseAssign;
 
 
 /***/ }),
-/* 719 */
+/* 759 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_assignValue.js ***!
   \******************************************************************************/
@@ -28056,8 +28096,8 @@ module.exports = baseAssign;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ 720),
-    eq = __webpack_require__(/*! ./eq */ 282);
+var baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ 760),
+    eq = __webpack_require__(/*! ./eq */ 304);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -28087,7 +28127,7 @@ module.exports = assignValue;
 
 
 /***/ }),
-/* 720 */
+/* 760 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseAssignValue.js ***!
   \**********************************************************************************/
@@ -28095,7 +28135,7 @@ module.exports = assignValue;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var defineProperty = __webpack_require__(/*! ./_defineProperty */ 714);
+var defineProperty = __webpack_require__(/*! ./_defineProperty */ 754);
 
 /**
  * The base implementation of `assignValue` and `assignMergeValue` without
@@ -28123,7 +28163,7 @@ module.exports = baseAssignValue;
 
 
 /***/ }),
-/* 721 */
+/* 761 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayLikeKeys.js ***!
   \********************************************************************************/
@@ -28131,12 +28171,12 @@ module.exports = baseAssignValue;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTimes = __webpack_require__(/*! ./_baseTimes */ 1370),
-    isArguments = __webpack_require__(/*! ./isArguments */ 411),
+var baseTimes = __webpack_require__(/*! ./_baseTimes */ 1424),
+    isArguments = __webpack_require__(/*! ./isArguments */ 437),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isBuffer = __webpack_require__(/*! ./isBuffer */ 412),
-    isIndex = __webpack_require__(/*! ./_isIndex */ 281),
-    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 722);
+    isBuffer = __webpack_require__(/*! ./isBuffer */ 438),
+    isIndex = __webpack_require__(/*! ./_isIndex */ 303),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 762);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -28183,7 +28223,7 @@ module.exports = arrayLikeKeys;
 
 
 /***/ }),
-/* 722 */
+/* 762 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isTypedArray.js ***!
   \******************************************************************************/
@@ -28191,9 +28231,9 @@ module.exports = arrayLikeKeys;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 1373),
-    baseUnary = __webpack_require__(/*! ./_baseUnary */ 723),
-    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 1374);
+var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 1427),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ 763),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 1428);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -28221,7 +28261,7 @@ module.exports = isTypedArray;
 
 
 /***/ }),
-/* 723 */
+/* 763 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseUnary.js ***!
   \****************************************************************************/
@@ -28246,7 +28286,7 @@ module.exports = baseUnary;
 
 
 /***/ }),
-/* 724 */
+/* 764 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseKeys.js ***!
   \***************************************************************************/
@@ -28254,8 +28294,8 @@ module.exports = baseUnary;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isPrototype = __webpack_require__(/*! ./_isPrototype */ 414),
-    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 1375);
+var isPrototype = __webpack_require__(/*! ./_isPrototype */ 440),
+    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 1429);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -28287,7 +28327,7 @@ module.exports = baseKeys;
 
 
 /***/ }),
-/* 725 */
+/* 765 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_overArg.js ***!
   \**************************************************************************/
@@ -28313,7 +28353,7 @@ module.exports = overArg;
 
 
 /***/ }),
-/* 726 */
+/* 766 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/keysIn.js ***!
   \************************************************************************/
@@ -28321,9 +28361,9 @@ module.exports = overArg;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 721),
-    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ 1400),
-    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 284);
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ 761),
+    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ 1454),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 306);
 
 /**
  * Creates an array of the own and inherited enumerable property names of `object`.
@@ -28356,7 +28396,7 @@ module.exports = keysIn;
 
 
 /***/ }),
-/* 727 */
+/* 767 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayFilter.js ***!
   \******************************************************************************/
@@ -28392,7 +28432,7 @@ module.exports = arrayFilter;
 
 
 /***/ }),
-/* 728 */
+/* 768 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/stubArray.js ***!
   \***************************************************************************/
@@ -28426,7 +28466,7 @@ module.exports = stubArray;
 
 
 /***/ }),
-/* 729 */
+/* 769 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getSymbolsIn.js ***!
   \*******************************************************************************/
@@ -28434,10 +28474,10 @@ module.exports = stubArray;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(/*! ./_arrayPush */ 420),
-    getPrototype = __webpack_require__(/*! ./_getPrototype */ 421),
-    getSymbols = __webpack_require__(/*! ./_getSymbols */ 419),
-    stubArray = __webpack_require__(/*! ./stubArray */ 728);
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ 446),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ 447),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ 445),
+    stubArray = __webpack_require__(/*! ./stubArray */ 768);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeGetSymbols = Object.getOwnPropertySymbols;
@@ -28462,7 +28502,7 @@ module.exports = getSymbolsIn;
 
 
 /***/ }),
-/* 730 */
+/* 770 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getAllKeys.js ***!
   \*****************************************************************************/
@@ -28470,9 +28510,9 @@ module.exports = getSymbolsIn;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ 731),
-    getSymbols = __webpack_require__(/*! ./_getSymbols */ 419),
-    keys = __webpack_require__(/*! ./keys */ 283);
+var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ 771),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ 445),
+    keys = __webpack_require__(/*! ./keys */ 305);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -28489,7 +28529,7 @@ module.exports = getAllKeys;
 
 
 /***/ }),
-/* 731 */
+/* 771 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseGetAllKeys.js ***!
   \*********************************************************************************/
@@ -28497,7 +28537,7 @@ module.exports = getAllKeys;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(/*! ./_arrayPush */ 420),
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ 446),
     isArray = __webpack_require__(/*! ./isArray */ 53);
 
 /**
@@ -28520,7 +28560,7 @@ module.exports = baseGetAllKeys;
 
 
 /***/ }),
-/* 732 */
+/* 772 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getAllKeysIn.js ***!
   \*******************************************************************************/
@@ -28528,9 +28568,9 @@ module.exports = baseGetAllKeys;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ 731),
-    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ 729),
-    keysIn = __webpack_require__(/*! ./keysIn */ 726);
+var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ 771),
+    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ 769),
+    keysIn = __webpack_require__(/*! ./keysIn */ 766);
 
 /**
  * Creates an array of own and inherited enumerable property names and
@@ -28548,7 +28588,7 @@ module.exports = getAllKeysIn;
 
 
 /***/ }),
-/* 733 */
+/* 773 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getTag.js ***!
   \*************************************************************************/
@@ -28556,13 +28596,13 @@ module.exports = getAllKeysIn;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DataView = __webpack_require__(/*! ./_DataView */ 1405),
-    Map = __webpack_require__(/*! ./_Map */ 417),
-    Promise = __webpack_require__(/*! ./_Promise */ 1406),
-    Set = __webpack_require__(/*! ./_Set */ 734),
-    WeakMap = __webpack_require__(/*! ./_WeakMap */ 701),
-    baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 161),
-    toSource = __webpack_require__(/*! ./_toSource */ 703);
+var DataView = __webpack_require__(/*! ./_DataView */ 1459),
+    Map = __webpack_require__(/*! ./_Map */ 443),
+    Promise = __webpack_require__(/*! ./_Promise */ 1460),
+    Set = __webpack_require__(/*! ./_Set */ 774),
+    WeakMap = __webpack_require__(/*! ./_WeakMap */ 741),
+    baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 172),
+    toSource = __webpack_require__(/*! ./_toSource */ 743);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -28617,7 +28657,7 @@ module.exports = getTag;
 
 
 /***/ }),
-/* 734 */
+/* 774 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Set.js ***!
   \**********************************************************************/
@@ -28625,7 +28665,7 @@ module.exports = getTag;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132),
+var getNative = __webpack_require__(/*! ./_getNative */ 137),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /* Built-in method references that are verified to be native. */
@@ -28635,7 +28675,7 @@ module.exports = Set;
 
 
 /***/ }),
-/* 735 */
+/* 775 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Uint8Array.js ***!
   \*****************************************************************************/
@@ -28652,7 +28692,7 @@ module.exports = Uint8Array;
 
 
 /***/ }),
-/* 736 */
+/* 776 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayReduce.js ***!
   \******************************************************************************/
@@ -28689,7 +28729,7 @@ module.exports = arrayReduce;
 
 
 /***/ }),
-/* 737 */
+/* 777 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mapToArray.js ***!
   \*****************************************************************************/
@@ -28718,7 +28758,7 @@ module.exports = mapToArray;
 
 
 /***/ }),
-/* 738 */
+/* 778 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsEqual.js ***!
   \******************************************************************************/
@@ -28726,8 +28766,8 @@ module.exports = mapToArray;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqualDeep = __webpack_require__(/*! ./_baseIsEqualDeep */ 1423),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var baseIsEqualDeep = __webpack_require__(/*! ./_baseIsEqualDeep */ 1477),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -28757,7 +28797,7 @@ module.exports = baseIsEqual;
 
 
 /***/ }),
-/* 739 */
+/* 779 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_equalArrays.js ***!
   \******************************************************************************/
@@ -28765,9 +28805,9 @@ module.exports = baseIsEqual;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(/*! ./_SetCache */ 423),
-    arraySome = __webpack_require__(/*! ./_arraySome */ 1426),
-    cacheHas = __webpack_require__(/*! ./_cacheHas */ 424);
+var SetCache = __webpack_require__(/*! ./_SetCache */ 449),
+    arraySome = __webpack_require__(/*! ./_arraySome */ 1480),
+    cacheHas = __webpack_require__(/*! ./_cacheHas */ 450);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -28851,7 +28891,7 @@ module.exports = equalArrays;
 
 
 /***/ }),
-/* 740 */
+/* 780 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isStrictComparable.js ***!
   \*************************************************************************************/
@@ -28859,7 +28899,7 @@ module.exports = equalArrays;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(/*! ./isObject */ 97);
+var isObject = __webpack_require__(/*! ./isObject */ 98);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -28877,7 +28917,7 @@ module.exports = isStrictComparable;
 
 
 /***/ }),
-/* 741 */
+/* 781 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_matchesStrictComparable.js ***!
   \******************************************************************************************/
@@ -28908,7 +28948,7 @@ module.exports = matchesStrictComparable;
 
 
 /***/ }),
-/* 742 */
+/* 782 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_stringToPath.js ***!
   \*******************************************************************************/
@@ -28916,7 +28956,7 @@ module.exports = matchesStrictComparable;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoizeCapped = __webpack_require__(/*! ./_memoizeCapped */ 1432);
+var memoizeCapped = __webpack_require__(/*! ./_memoizeCapped */ 1486);
 
 /** Used to match property names within property paths. */
 var reLeadingDot = /^\./,
@@ -28947,7 +28987,7 @@ module.exports = stringToPath;
 
 
 /***/ }),
-/* 743 */
+/* 783 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/toString.js ***!
   \**************************************************************************/
@@ -28955,7 +28995,7 @@ module.exports = stringToPath;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseToString = __webpack_require__(/*! ./_baseToString */ 1434);
+var baseToString = __webpack_require__(/*! ./_baseToString */ 1488);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -28986,7 +29026,7 @@ module.exports = toString;
 
 
 /***/ }),
-/* 744 */
+/* 784 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_flatRest.js ***!
   \***************************************************************************/
@@ -28994,9 +29034,9 @@ module.exports = toString;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var flatten = __webpack_require__(/*! ./flatten */ 1442),
-    overRest = __webpack_require__(/*! ./_overRest */ 746),
-    setToString = __webpack_require__(/*! ./_setToString */ 407);
+var flatten = __webpack_require__(/*! ./flatten */ 1496),
+    overRest = __webpack_require__(/*! ./_overRest */ 786),
+    setToString = __webpack_require__(/*! ./_setToString */ 433);
 
 /**
  * A specialized version of `baseRest` which flattens the rest array.
@@ -29013,7 +29053,7 @@ module.exports = flatRest;
 
 
 /***/ }),
-/* 745 */
+/* 785 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseFlatten.js ***!
   \******************************************************************************/
@@ -29021,8 +29061,8 @@ module.exports = flatRest;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(/*! ./_arrayPush */ 420),
-    isFlattenable = __webpack_require__(/*! ./_isFlattenable */ 1443);
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ 446),
+    isFlattenable = __webpack_require__(/*! ./_isFlattenable */ 1497);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -29062,7 +29102,7 @@ module.exports = baseFlatten;
 
 
 /***/ }),
-/* 746 */
+/* 786 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_overRest.js ***!
   \***************************************************************************/
@@ -29070,7 +29110,7 @@ module.exports = baseFlatten;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(/*! ./_apply */ 404);
+var apply = __webpack_require__(/*! ./_apply */ 430);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -29109,7 +29149,7 @@ module.exports = overRest;
 
 
 /***/ }),
-/* 747 */
+/* 787 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isPlainObject.js ***!
   \*******************************************************************************/
@@ -29117,9 +29157,9 @@ module.exports = overRest;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 161),
-    getPrototype = __webpack_require__(/*! ./_getPrototype */ 421),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 172),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ 447),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -29182,7 +29222,7 @@ module.exports = isPlainObject;
 
 
 /***/ }),
-/* 748 */
+/* 788 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/index.js ***!
   \********************************************************************************/
@@ -29202,15 +29242,15 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Anatomogram = __webpack_require__(/*! ./Anatomogram */ 1456);
+var _Anatomogram = __webpack_require__(/*! ./Anatomogram */ 1510);
 
 var _Anatomogram2 = _interopRequireDefault(_Anatomogram);
 
-var _Assets = __webpack_require__(/*! ./Assets */ 427);
+var _Assets = __webpack_require__(/*! ./Assets */ 453);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29223,7 +29263,7 @@ exports.render = render;
 exports.anatomogramSpecies = _Assets.supportedSpecies;
 
 /***/ }),
-/* 749 */
+/* 789 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/Dropdown.js ***!
   \***************************************************************************************/
@@ -29260,15 +29300,15 @@ var _classnames = __webpack_require__(/*! classnames */ 43);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _activeElement = __webpack_require__(/*! dom-helpers/activeElement */ 760);
+var _activeElement = __webpack_require__(/*! dom-helpers/activeElement */ 800);
 
 var _activeElement2 = _interopRequireDefault(_activeElement);
 
-var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 297);
+var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 319);
 
 var _contains2 = _interopRequireDefault(_contains);
 
-var _keycode = __webpack_require__(/*! keycode */ 761);
+var _keycode = __webpack_require__(/*! keycode */ 801);
 
 var _keycode2 = _interopRequireDefault(_keycode);
 
@@ -29280,51 +29320,51 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _all = __webpack_require__(/*! prop-types-extra/lib/all */ 443);
+var _all = __webpack_require__(/*! prop-types-extra/lib/all */ 469);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
-var _isRequiredForA11y = __webpack_require__(/*! prop-types-extra/lib/isRequiredForA11y */ 1554);
+var _isRequiredForA11y = __webpack_require__(/*! prop-types-extra/lib/isRequiredForA11y */ 1608);
 
 var _isRequiredForA11y2 = _interopRequireDefault(_isRequiredForA11y);
 
-var _uncontrollable = __webpack_require__(/*! uncontrollable */ 292);
+var _uncontrollable = __webpack_require__(/*! uncontrollable */ 314);
 
 var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-var _warning = __webpack_require__(/*! warning */ 168);
+var _warning = __webpack_require__(/*! warning */ 179);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _ButtonGroup = __webpack_require__(/*! ./ButtonGroup */ 1555);
+var _ButtonGroup = __webpack_require__(/*! ./ButtonGroup */ 1609);
 
 var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
 
-var _DropdownMenu = __webpack_require__(/*! ./DropdownMenu */ 1561);
+var _DropdownMenu = __webpack_require__(/*! ./DropdownMenu */ 1615);
 
 var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
 
-var _DropdownToggle = __webpack_require__(/*! ./DropdownToggle */ 1571);
+var _DropdownToggle = __webpack_require__(/*! ./DropdownToggle */ 1625);
 
 var _DropdownToggle2 = _interopRequireDefault(_DropdownToggle);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 223);
+var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 241);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 1572);
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ 1626);
 
-var _ValidComponentChildren = __webpack_require__(/*! ./utils/ValidComponentChildren */ 448);
+var _ValidComponentChildren = __webpack_require__(/*! ./utils/ValidComponentChildren */ 474);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -29656,7 +29696,7 @@ exports['default'] = UncontrolledDropdown;
 module.exports = exports['default'];
 
 /***/ }),
-/* 750 */
+/* 790 */
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_ie8-dom-define.js ***!
   \*****************************************************************************************************************************/
@@ -29664,12 +29704,12 @@ module.exports = exports['default'];
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(/*! ./_descriptors */ 133) && !__webpack_require__(/*! ./_fails */ 166)(function(){
-  return Object.defineProperty(__webpack_require__(/*! ./_dom-create */ 751)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+module.exports = !__webpack_require__(/*! ./_descriptors */ 138) && !__webpack_require__(/*! ./_fails */ 177)(function(){
+  return Object.defineProperty(__webpack_require__(/*! ./_dom-create */ 791)('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 751 */
+/* 791 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_dom-create.js ***!
   \*************************************************************************************************************************/
@@ -29677,8 +29717,8 @@ module.exports = !__webpack_require__(/*! ./_descriptors */ 133) && !__webpack_r
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(/*! ./_is-object */ 218)
-  , document = __webpack_require__(/*! ./_global */ 112).document
+var isObject = __webpack_require__(/*! ./_is-object */ 236)
+  , document = __webpack_require__(/*! ./_global */ 113).document
   // in old IE typeof document.createElement is 'object'
   , is = isObject(document) && isObject(document.createElement);
 module.exports = function(it){
@@ -29686,7 +29726,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 752 */
+/* 792 */
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-keys-internal.js ***!
   \***********************************************************************************************************************************/
@@ -29694,10 +29734,10 @@ module.exports = function(it){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has          = __webpack_require__(/*! ./_has */ 134)
-  , toIObject    = __webpack_require__(/*! ./_to-iobject */ 98)
-  , arrayIndexOf = __webpack_require__(/*! ./_array-includes */ 1524)(false)
-  , IE_PROTO     = __webpack_require__(/*! ./_shared-key */ 433)('IE_PROTO');
+var has          = __webpack_require__(/*! ./_has */ 139)
+  , toIObject    = __webpack_require__(/*! ./_to-iobject */ 99)
+  , arrayIndexOf = __webpack_require__(/*! ./_array-includes */ 1578)(false)
+  , IE_PROTO     = __webpack_require__(/*! ./_shared-key */ 459)('IE_PROTO');
 
 module.exports = function(object, names){
   var O      = toIObject(object)
@@ -29713,7 +29753,7 @@ module.exports = function(object, names){
 };
 
 /***/ }),
-/* 753 */
+/* 793 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iobject.js ***!
   \**********************************************************************************************************************/
@@ -29722,13 +29762,13 @@ module.exports = function(object, names){
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(/*! ./_cof */ 430);
+var cof = __webpack_require__(/*! ./_cof */ 456);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 754 */
+/* 794 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_to-length.js ***!
   \************************************************************************************************************************/
@@ -29737,14 +29777,14 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(/*! ./_to-integer */ 432)
+var toInteger = __webpack_require__(/*! ./_to-integer */ 458)
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-/* 755 */
+/* 795 */
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.string.iterator.js ***!
   \*********************************************************************************************************************************/
@@ -29754,10 +29794,10 @@ module.exports = function(it){
 
 "use strict";
 
-var $at  = __webpack_require__(/*! ./_string-at */ 1528)(true);
+var $at  = __webpack_require__(/*! ./_string-at */ 1582)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(/*! ./_iter-define */ 756)(String, 'String', function(iterated){
+__webpack_require__(/*! ./_iter-define */ 796)(String, 'String', function(iterated){
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -29772,7 +29812,7 @@ __webpack_require__(/*! ./_iter-define */ 756)(String, 'String', function(iterat
 });
 
 /***/ }),
-/* 756 */
+/* 796 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iter-define.js ***!
   \**************************************************************************************************************************/
@@ -29782,16 +29822,16 @@ __webpack_require__(/*! ./_iter-define */ 756)(String, 'String', function(iterat
 
 "use strict";
 
-var LIBRARY        = __webpack_require__(/*! ./_library */ 437)
-  , $export        = __webpack_require__(/*! ./_export */ 81)
-  , redefine       = __webpack_require__(/*! ./_redefine */ 757)
-  , hide           = __webpack_require__(/*! ./_hide */ 164)
-  , has            = __webpack_require__(/*! ./_has */ 134)
-  , Iterators      = __webpack_require__(/*! ./_iterators */ 221)
-  , $iterCreate    = __webpack_require__(/*! ./_iter-create */ 1529)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 439)
-  , getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 758)
-  , ITERATOR       = __webpack_require__(/*! ./_wks */ 82)('iterator')
+var LIBRARY        = __webpack_require__(/*! ./_library */ 463)
+  , $export        = __webpack_require__(/*! ./_export */ 82)
+  , redefine       = __webpack_require__(/*! ./_redefine */ 797)
+  , hide           = __webpack_require__(/*! ./_hide */ 175)
+  , has            = __webpack_require__(/*! ./_has */ 139)
+  , Iterators      = __webpack_require__(/*! ./_iterators */ 239)
+  , $iterCreate    = __webpack_require__(/*! ./_iter-create */ 1583)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 465)
+  , getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 798)
+  , ITERATOR       = __webpack_require__(/*! ./_wks */ 83)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -29853,7 +29893,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 };
 
 /***/ }),
-/* 757 */
+/* 797 */
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_redefine.js ***!
   \***********************************************************************************************************************/
@@ -29861,10 +29901,10 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./_hide */ 164);
+module.exports = __webpack_require__(/*! ./_hide */ 175);
 
 /***/ }),
-/* 758 */
+/* 798 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-gpo.js ***!
   \*************************************************************************************************************************/
@@ -29873,9 +29913,9 @@ module.exports = __webpack_require__(/*! ./_hide */ 164);
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has         = __webpack_require__(/*! ./_has */ 134)
-  , toObject    = __webpack_require__(/*! ./_to-object */ 294)
-  , IE_PROTO    = __webpack_require__(/*! ./_shared-key */ 433)('IE_PROTO')
+var has         = __webpack_require__(/*! ./_has */ 139)
+  , toObject    = __webpack_require__(/*! ./_to-object */ 316)
+  , IE_PROTO    = __webpack_require__(/*! ./_shared-key */ 459)('IE_PROTO')
   , ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function(O){
@@ -29887,7 +29927,7 @@ module.exports = Object.getPrototypeOf || function(O){
 };
 
 /***/ }),
-/* 759 */
+/* 799 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-gopn.js ***!
   \**************************************************************************************************************************/
@@ -29896,15 +29936,15 @@ module.exports = Object.getPrototypeOf || function(O){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys      = __webpack_require__(/*! ./_object-keys-internal */ 752)
-  , hiddenKeys = __webpack_require__(/*! ./_enum-bug-keys */ 435).concat('length', 'prototype');
+var $keys      = __webpack_require__(/*! ./_object-keys-internal */ 792)
+  , hiddenKeys = __webpack_require__(/*! ./_enum-bug-keys */ 461).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
   return $keys(O, hiddenKeys);
 };
 
 /***/ }),
-/* 760 */
+/* 800 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/activeElement.js ***!
   \************************************************************************************/
@@ -29920,7 +29960,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = activeElement;
 
-var _ownerDocument = __webpack_require__(/*! ./ownerDocument */ 296);
+var _ownerDocument = __webpack_require__(/*! ./ownerDocument */ 318);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -29936,7 +29976,7 @@ function activeElement() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 761 */
+/* 801 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/keycode/index.js ***!
   \************************************************************************/
@@ -30093,7 +30133,7 @@ for (var alias in aliases) {
 
 
 /***/ }),
-/* 762 */
+/* 802 */
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-to-array.js ***!
   \******************************************************************************************************************************/
@@ -30101,9 +30141,9 @@ for (var alias in aliases) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getKeys   = __webpack_require__(/*! ./_object-keys */ 167)
-  , toIObject = __webpack_require__(/*! ./_to-iobject */ 98)
-  , isEnum    = __webpack_require__(/*! ./_object-pie */ 220).f;
+var getKeys   = __webpack_require__(/*! ./_object-keys */ 178)
+  , toIObject = __webpack_require__(/*! ./_to-iobject */ 99)
+  , isEnum    = __webpack_require__(/*! ./_object-pie */ 238).f;
 module.exports = function(isEntries){
   return function(it){
     var O      = toIObject(it)
@@ -30119,7 +30159,7 @@ module.exports = function(isEntries){
 };
 
 /***/ }),
-/* 763 */
+/* 803 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/entries.js ***!
   \***********************************************************************************************/
@@ -30127,10 +30167,10 @@ module.exports = function(isEntries){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/entries */ 1559), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/entries */ 1613), __esModule: true };
 
 /***/ }),
-/* 764 */
+/* 804 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/array/from.js ***!
   \*******************************************************************************************/
@@ -30138,10 +30178,10 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/array/from */ 1562), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/array/from */ 1616), __esModule: true };
 
 /***/ }),
-/* 765 */
+/* 805 */
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/utils/addEventListener.js ***!
   \****************************************************************************************************/
@@ -30166,11 +30206,11 @@ exports.default = function (node, event, handler, capture) {
   };
 };
 
-var _on = __webpack_require__(/*! dom-helpers/events/on */ 299);
+var _on = __webpack_require__(/*! dom-helpers/events/on */ 321);
 
 var _on2 = _interopRequireDefault(_on);
 
-var _off = __webpack_require__(/*! dom-helpers/events/off */ 446);
+var _off = __webpack_require__(/*! dom-helpers/events/off */ 472);
 
 var _off2 = _interopRequireDefault(_off);
 
@@ -30179,7 +30219,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = exports['default'];
 
 /***/ }),
-/* 766 */
+/* 806 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/MenuItem.js ***!
   \***************************************************************************************/
@@ -30224,17 +30264,17 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _all = __webpack_require__(/*! prop-types-extra/lib/all */ 443);
+var _all = __webpack_require__(/*! prop-types-extra/lib/all */ 469);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _SafeAnchor = __webpack_require__(/*! ./SafeAnchor */ 445);
+var _SafeAnchor = __webpack_require__(/*! ./SafeAnchor */ 471);
 
 var _SafeAnchor2 = _interopRequireDefault(_SafeAnchor);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 223);
+var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 241);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
@@ -30389,7 +30429,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('dropdown', MenuItem);
 module.exports = exports['default'];
 
 /***/ }),
-/* 767 */
+/* 807 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/Modal.js ***!
   \************************************************************************************/
@@ -30426,19 +30466,19 @@ var _classnames = __webpack_require__(/*! classnames */ 43);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _events = __webpack_require__(/*! dom-helpers/events */ 1575);
+var _events = __webpack_require__(/*! dom-helpers/events */ 1629);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _ownerDocument = __webpack_require__(/*! dom-helpers/ownerDocument */ 296);
+var _ownerDocument = __webpack_require__(/*! dom-helpers/ownerDocument */ 318);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
-var _inDOM = __webpack_require__(/*! dom-helpers/util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! dom-helpers/util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
-var _scrollbarSize = __webpack_require__(/*! dom-helpers/util/scrollbarSize */ 768);
+var _scrollbarSize = __webpack_require__(/*! dom-helpers/util/scrollbarSize */ 808);
 
 var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 
@@ -30450,57 +30490,57 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Modal = __webpack_require__(/*! react-overlays/lib/Modal */ 1579);
+var _Modal = __webpack_require__(/*! react-overlays/lib/Modal */ 1633);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _isOverflowing = __webpack_require__(/*! react-overlays/lib/utils/isOverflowing */ 775);
+var _isOverflowing = __webpack_require__(/*! react-overlays/lib/utils/isOverflowing */ 815);
 
 var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
-var _Fade = __webpack_require__(/*! ./Fade */ 1596);
+var _Fade = __webpack_require__(/*! ./Fade */ 1650);
 
 var _Fade2 = _interopRequireDefault(_Fade);
 
-var _ModalBody = __webpack_require__(/*! ./ModalBody */ 1598);
+var _ModalBody = __webpack_require__(/*! ./ModalBody */ 1652);
 
 var _ModalBody2 = _interopRequireDefault(_ModalBody);
 
-var _ModalDialog = __webpack_require__(/*! ./ModalDialog */ 1599);
+var _ModalDialog = __webpack_require__(/*! ./ModalDialog */ 1653);
 
 var _ModalDialog2 = _interopRequireDefault(_ModalDialog);
 
-var _ModalFooter = __webpack_require__(/*! ./ModalFooter */ 1600);
+var _ModalFooter = __webpack_require__(/*! ./ModalFooter */ 1654);
 
 var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
 
-var _ModalHeader = __webpack_require__(/*! ./ModalHeader */ 1601);
+var _ModalHeader = __webpack_require__(/*! ./ModalHeader */ 1655);
 
 var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
 
-var _ModalTitle = __webpack_require__(/*! ./ModalTitle */ 1603);
+var _ModalTitle = __webpack_require__(/*! ./ModalTitle */ 1657);
 
 var _ModalTitle2 = _interopRequireDefault(_ModalTitle);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 223);
+var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 241);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _splitComponentProps2 = __webpack_require__(/*! ./utils/splitComponentProps */ 1604);
+var _splitComponentProps2 = __webpack_require__(/*! ./utils/splitComponentProps */ 1658);
 
 var _splitComponentProps3 = _interopRequireDefault(_splitComponentProps2);
 
-var _StyleConfig = __webpack_require__(/*! ./utils/StyleConfig */ 298);
+var _StyleConfig = __webpack_require__(/*! ./utils/StyleConfig */ 320);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -30760,7 +30800,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('modal', (0, _bootstrapUtils.b
 module.exports = exports['default'];
 
 /***/ }),
-/* 768 */
+/* 808 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/util/scrollbarSize.js ***!
   \*****************************************************************************************/
@@ -30795,7 +30835,7 @@ exports.default = function (recalc) {
   return size;
 };
 
-var _inDOM = __webpack_require__(/*! ./inDOM */ 114);
+var _inDOM = __webpack_require__(/*! ./inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -30806,7 +30846,7 @@ var size = void 0;
 module.exports = exports['default'];
 
 /***/ }),
-/* 769 */
+/* 809 */
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-prop-types/lib/componentOrElement.js ***!
   \**************************************************************************************************/
@@ -30825,7 +30865,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 770);
+var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 810);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
@@ -30849,7 +30889,7 @@ function validate(props, propName, componentName, location, propFullName) {
 exports.default = (0, _createChainableTypeChecker2.default)(validate);
 
 /***/ }),
-/* 770 */
+/* 810 */
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-prop-types/lib/utils/createChainableTypeChecker.js ***!
   \****************************************************************************************************************/
@@ -30900,7 +30940,7 @@ function createChainableTypeChecker(validate) {
 }
 
 /***/ }),
-/* 771 */
+/* 811 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/utils/getContainer.js ***!
   \************************************************************************************************/
@@ -30916,7 +30956,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getContainer;
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -30929,7 +30969,7 @@ function getContainer(container, defaultContainer) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 772 */
+/* 812 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/util/camelizeStyle.js ***!
   \*****************************************************************************************/
@@ -30945,7 +30985,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = camelizeStyleName;
 
-var _camelize = __webpack_require__(/*! ./camelize */ 1584);
+var _camelize = __webpack_require__(/*! ./camelize */ 1638);
 
 var _camelize2 = _interopRequireDefault(_camelize);
 
@@ -30962,7 +31002,7 @@ function camelizeStyleName(string) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 773 */
+/* 813 */
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/transition/properties.js ***!
   \********************************************************************************************/
@@ -30978,7 +31018,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
 
-var _inDOM = __webpack_require__(/*! ../util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! ../util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -31083,7 +31123,7 @@ function getTransitionProperties() {
 }
 
 /***/ }),
-/* 774 */
+/* 814 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/class/hasClass.js ***!
   \*************************************************************************************/
@@ -31104,7 +31144,7 @@ function hasClass(element, className) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 775 */
+/* 815 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/utils/isOverflowing.js ***!
   \*************************************************************************************************/
@@ -31120,11 +31160,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = isOverflowing;
 
-var _isWindow = __webpack_require__(/*! dom-helpers/query/isWindow */ 1593);
+var _isWindow = __webpack_require__(/*! dom-helpers/query/isWindow */ 1647);
 
 var _isWindow2 = _interopRequireDefault(_isWindow);
 
-var _ownerDocument = __webpack_require__(/*! dom-helpers/ownerDocument */ 296);
+var _ownerDocument = __webpack_require__(/*! dom-helpers/ownerDocument */ 318);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -31156,7 +31196,7 @@ function isOverflowing(container) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 776 */
+/* 816 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arrayIncludesWith.js ***!
   \************************************************************************************/
@@ -31189,7 +31229,7 @@ module.exports = arrayIncludesWith;
 
 
 /***/ }),
-/* 777 */
+/* 817 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-highcharts/dist/ReactHighcharts.js ***!
   \************************************************************************************************/
@@ -31199,7 +31239,7 @@ module.exports = arrayIncludesWith;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 1626));
+		module.exports = factory(__webpack_require__(/*! react */ 0), __webpack_require__(/*! highcharts */ 1680));
 	else if(typeof define === 'function' && define.amd)
 		define(["react", "highcharts"], factory);
 	else if(typeof exports === 'object')
@@ -33353,7 +33393,7 @@ module.exports = __webpack_require__(16);
 });
 
 /***/ }),
-/* 778 */
+/* 818 */
 /*!****************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/he/he.js ***!
   \****************************************************************/
@@ -33703,10 +33743,10 @@ module.exports = __webpack_require__(16);
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module), __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ 25)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module), __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ 24)))
 
 /***/ }),
-/* 779 */
+/* 819 */
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/utils.js ***!
   \********************************************************************************************************/
@@ -33735,7 +33775,7 @@ exports.capitalizeFirstLetter = capitalizeFirstLetter;
 exports.numberWithCommas = numberWithCommas;
 
 /***/ }),
-/* 780 */
+/* 820 */
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/define-property.js ***!
   \*******************************************************************************************************/
@@ -33743,10 +33783,10 @@ exports.numberWithCommas = numberWithCommas;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-property */ 1645), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-property */ 1699), __esModule: true };
 
 /***/ }),
-/* 781 */
+/* 821 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/common/Track.js ***!
   \************************************************************************************/
@@ -33789,7 +33829,7 @@ var Track = function Track(props) {
 /* harmony default export */ __webpack_exports__["a"] = (Track);
 
 /***/ }),
-/* 782 */
+/* 822 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/common/createSlider.js ***!
   \*******************************************************************************************/
@@ -33803,15 +33843,15 @@ var Track = function Track(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(/*! babel-runtime/helpers/extends */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_babel_runtime_helpers_get__ = __webpack_require__(/*! babel-runtime/helpers/get */ 1647);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_babel_runtime_helpers_get__ = __webpack_require__(/*! babel-runtime/helpers/get */ 1701);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_babel_runtime_helpers_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_babel_runtime_helpers_get__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_babel_runtime_helpers_inherits__ = __webpack_require__(/*! babel-runtime/helpers/inherits */ 35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_babel_runtime_helpers_inherits__);
@@ -33819,15 +33859,15 @@ var Track = function Track(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_util_es_Dom_addEventListener__ = __webpack_require__(/*! rc-util/es/Dom/addEventListener */ 1654);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_util_es_Dom_addEventListener__ = __webpack_require__(/*! rc-util/es/Dom/addEventListener */ 1708);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_classnames__ = __webpack_require__(/*! classnames */ 43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_warning__ = __webpack_require__(/*! warning */ 168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_warning__ = __webpack_require__(/*! warning */ 179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Steps__ = __webpack_require__(/*! ./Steps */ 1657);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Marks__ = __webpack_require__(/*! ./Marks */ 1658);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Handle__ = __webpack_require__(/*! ../Handle */ 449);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils__ = __webpack_require__(/*! ../utils */ 450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Steps__ = __webpack_require__(/*! ./Steps */ 1711);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Marks__ = __webpack_require__(/*! ./Marks */ 1712);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Handle__ = __webpack_require__(/*! ../Handle */ 475);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils__ = __webpack_require__(/*! ../utils */ 476);
 
 
 
@@ -34162,7 +34202,7 @@ function createSlider(Component) {
 }
 
 /***/ }),
-/* 783 */
+/* 823 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-sap.js ***!
   \*************************************************************************************************************************/
@@ -34171,9 +34211,9 @@ function createSlider(Component) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(/*! ./_export */ 81)
+var $export = __webpack_require__(/*! ./_export */ 82)
   , core    = __webpack_require__(/*! ./_core */ 55)
-  , fails   = __webpack_require__(/*! ./_fails */ 166);
+  , fails   = __webpack_require__(/*! ./_fails */ 177);
 module.exports = function(KEY, exec){
   var fn  = (core.Object || {})[KEY] || Object[KEY]
     , exp = {};
@@ -34182,7 +34222,7 @@ module.exports = function(KEY, exec){
 };
 
 /***/ }),
-/* 784 */
+/* 824 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/add-dom-event-listener/lib/index.js ***!
   \*******************************************************************************************/
@@ -34198,7 +34238,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = addEventListener;
 
-var _EventObject = __webpack_require__(/*! ./EventObject */ 1655);
+var _EventObject = __webpack_require__(/*! ./EventObject */ 1709);
 
 var _EventObject2 = _interopRequireDefault(_EventObject);
 
@@ -34229,7 +34269,7 @@ function addEventListener(target, eventType, callback) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 785 */
+/* 825 */
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/helpers/toConsumableArray.js ***!
   \**************************************************************************************************/
@@ -34242,7 +34282,7 @@ module.exports = exports['default'];
 
 exports.__esModule = true;
 
-var _from = __webpack_require__(/*! ../core-js/array/from */ 764);
+var _from = __webpack_require__(/*! ../core-js/array/from */ 804);
 
 var _from2 = _interopRequireDefault(_from);
 
@@ -34261,7 +34301,7 @@ exports.default = function (arr) {
 };
 
 /***/ }),
-/* 786 */
+/* 826 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-util/lib/Dom/addEventListener.js ***!
   \*******************************************************************************************/
@@ -34277,11 +34317,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports['default'] = addEventListenerWrap;
 
-var _addDomEventListener = __webpack_require__(/*! add-dom-event-listener */ 784);
+var _addDomEventListener = __webpack_require__(/*! add-dom-event-listener */ 824);
 
 var _addDomEventListener2 = _interopRequireDefault(_addDomEventListener);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -34297,7 +34337,7 @@ function addEventListenerWrap(target, eventType, cb) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 787 */
+/* 827 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/getOffsetParent.js ***!
   \***************************************************************************************/
@@ -34306,7 +34346,7 @@ module.exports = exports['default'];
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 242);
 
 
 /**
@@ -34354,7 +34394,7 @@ function getOffsetParent(element) {
 /* harmony default export */ __webpack_exports__["a"] = (getOffsetParent);
 
 /***/ }),
-/* 788 */
+/* 828 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/getAlignOffset.js ***!
   \**************************************************************************************/
@@ -34399,7 +34439,7 @@ function getAlignOffset(region, align) {
 /* harmony default export */ __webpack_exports__["a"] = (getAlignOffset);
 
 /***/ }),
-/* 789 */
+/* 829 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/component-indexof/index.js ***!
   \**********************************************************************************/
@@ -34416,7 +34456,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 790 */
+/* 830 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-animate/es/util.js ***!
   \*****************************************************************************/
@@ -34448,7 +34488,7 @@ var util = {
 /* harmony default export */ __webpack_exports__["a"] = (util);
 
 /***/ }),
-/* 791 */
+/* 831 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-trigger/es/LazyRenderBox.js ***!
   \**************************************************************************************/
@@ -34461,7 +34501,7 @@ var util = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
@@ -34526,7 +34566,7 @@ LazyRenderBox.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (LazyRenderBox);
 
 /***/ }),
-/* 792 */
+/* 832 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-trigger/es/utils.js ***!
   \******************************************************************************/
@@ -34567,7 +34607,7 @@ function saveRef(name, component) {
 }
 
 /***/ }),
-/* 793 */
+/* 833 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/Parser.js ***!
   \*********************************************************************************/
@@ -34575,7 +34615,7 @@ function saveRef(name, component) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Tokenizer = __webpack_require__(/*! ./Tokenizer.js */ 794);
+var Tokenizer = __webpack_require__(/*! ./Tokenizer.js */ 834);
 
 /*
 	Options:
@@ -34697,7 +34737,7 @@ function Parser(cbs, options){
 	if(this._cbs.onparserinit) this._cbs.onparserinit(this);
 }
 
-__webpack_require__(/*! inherits */ 301)(Parser, __webpack_require__(/*! events */ 76).EventEmitter);
+__webpack_require__(/*! inherits */ 323)(Parser, __webpack_require__(/*! events */ 77).EventEmitter);
 
 Parser.prototype._updatePosition = function(initialOffset){
 	if(this.endIndex === null){
@@ -34931,7 +34971,7 @@ module.exports = Parser;
 
 
 /***/ }),
-/* 794 */
+/* 834 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/Tokenizer.js ***!
   \************************************************************************************/
@@ -34941,10 +34981,10 @@ module.exports = Parser;
 
 module.exports = Tokenizer;
 
-var decodeCodePoint = __webpack_require__(/*! entities/lib/decode_codepoint.js */ 795),
-    entityMap = __webpack_require__(/*! entities/maps/entities.json */ 451),
-    legacyMap = __webpack_require__(/*! entities/maps/legacy.json */ 796),
-    xmlMap    = __webpack_require__(/*! entities/maps/xml.json */ 452),
+var decodeCodePoint = __webpack_require__(/*! entities/lib/decode_codepoint.js */ 835),
+    entityMap = __webpack_require__(/*! entities/maps/entities.json */ 477),
+    legacyMap = __webpack_require__(/*! entities/maps/legacy.json */ 836),
+    xmlMap    = __webpack_require__(/*! entities/maps/xml.json */ 478),
 
     i = 0,
 
@@ -35848,7 +35888,7 @@ Tokenizer.prototype._emitPartial = function(value){
 
 
 /***/ }),
-/* 795 */
+/* 835 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/lib/decode_codepoint.js ***!
   \****************************************************************************************/
@@ -35856,7 +35896,7 @@ Tokenizer.prototype._emitPartial = function(value){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var decodeMap = __webpack_require__(/*! ../maps/decode.json */ 1692);
+var decodeMap = __webpack_require__(/*! ../maps/decode.json */ 1746);
 
 module.exports = decodeCodePoint;
 
@@ -35885,7 +35925,7 @@ function decodeCodePoint(codePoint){
 
 
 /***/ }),
-/* 796 */
+/* 836 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/maps/legacy.json ***!
   \*********************************************************************************/
@@ -35896,7 +35936,7 @@ function decodeCodePoint(codePoint){
 module.exports = {"Aacute":"Á","aacute":"á","Acirc":"Â","acirc":"â","acute":"´","AElig":"Æ","aelig":"æ","Agrave":"À","agrave":"à","amp":"&","AMP":"&","Aring":"Å","aring":"å","Atilde":"Ã","atilde":"ã","Auml":"Ä","auml":"ä","brvbar":"¦","Ccedil":"Ç","ccedil":"ç","cedil":"¸","cent":"¢","copy":"©","COPY":"©","curren":"¤","deg":"°","divide":"÷","Eacute":"É","eacute":"é","Ecirc":"Ê","ecirc":"ê","Egrave":"È","egrave":"è","ETH":"Ð","eth":"ð","Euml":"Ë","euml":"ë","frac12":"½","frac14":"¼","frac34":"¾","gt":">","GT":">","Iacute":"Í","iacute":"í","Icirc":"Î","icirc":"î","iexcl":"¡","Igrave":"Ì","igrave":"ì","iquest":"¿","Iuml":"Ï","iuml":"ï","laquo":"«","lt":"<","LT":"<","macr":"¯","micro":"µ","middot":"·","nbsp":" ","not":"¬","Ntilde":"Ñ","ntilde":"ñ","Oacute":"Ó","oacute":"ó","Ocirc":"Ô","ocirc":"ô","Ograve":"Ò","ograve":"ò","ordf":"ª","ordm":"º","Oslash":"Ø","oslash":"ø","Otilde":"Õ","otilde":"õ","Ouml":"Ö","ouml":"ö","para":"¶","plusmn":"±","pound":"£","quot":"\"","QUOT":"\"","raquo":"»","reg":"®","REG":"®","sect":"§","shy":"­","sup1":"¹","sup2":"²","sup3":"³","szlig":"ß","THORN":"Þ","thorn":"þ","times":"×","Uacute":"Ú","uacute":"ú","Ucirc":"Û","ucirc":"û","Ugrave":"Ù","ugrave":"ù","uml":"¨","Uuml":"Ü","uuml":"ü","Yacute":"Ý","yacute":"ý","yen":"¥","yuml":"ÿ"}
 
 /***/ }),
-/* 797 */
+/* 837 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domhandler/lib/node.js ***!
   \******************************************************************************/
@@ -35951,7 +35991,7 @@ Object.keys(domLvl1).forEach(function(key) {
 
 
 /***/ }),
-/* 798 */
+/* 838 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/WritableStream.js ***!
   \*****************************************************************************************/
@@ -35961,10 +36001,10 @@ Object.keys(domLvl1).forEach(function(key) {
 
 module.exports = Stream;
 
-var Parser = __webpack_require__(/*! ./Parser.js */ 793),
-    WritableStream = __webpack_require__(/*! stream */ 302).Writable || __webpack_require__(/*! readable-stream */ 1712).Writable,
-    StringDecoder = __webpack_require__(/*! string_decoder */ 172).StringDecoder,
-    Buffer = __webpack_require__(/*! buffer */ 137).Buffer;
+var Parser = __webpack_require__(/*! ./Parser.js */ 833),
+    WritableStream = __webpack_require__(/*! stream */ 324).Writable || __webpack_require__(/*! readable-stream */ 1766).Writable,
+    StringDecoder = __webpack_require__(/*! string_decoder */ 183).StringDecoder,
+    Buffer = __webpack_require__(/*! buffer */ 142).Buffer;
 
 function Stream(cbs, options){
 	var parser = this._parser = new Parser(cbs, options);
@@ -35977,7 +36017,7 @@ function Stream(cbs, options){
 	});
 }
 
-__webpack_require__(/*! inherits */ 301)(Stream, WritableStream);
+__webpack_require__(/*! inherits */ 323)(Stream, WritableStream);
 
 WritableStream.prototype._write = function(chunk, encoding, cb){
 	if(chunk instanceof Buffer) chunk = this._decoder.write(chunk);
@@ -35986,11 +36026,11 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 };
 
 /***/ }),
-/* 799 */,
-/* 800 */,
-/* 801 */,
-/* 802 */,
-/* 803 */
+/* 839 */,
+/* 840 */,
+/* 841 */,
+/* 842 */,
+/* 843 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/color-name/index.js ***!
   \***************************************************************************/
@@ -36154,7 +36194,7 @@ module.exports = {
 
 
 /***/ }),
-/* 804 */
+/* 844 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/color-convert/conversions.js ***!
   \************************************************************************************/
@@ -36163,7 +36203,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* MIT license */
-var cssKeywords = __webpack_require__(/*! color-name */ 803);
+var cssKeywords = __webpack_require__(/*! color-name */ 843);
 
 // NOTE: conversions should only return primitive values (i.e. arrays, or
 //       values that give correct `typeof` results).
@@ -37026,46 +37066,6 @@ convert.rgb.gray = function (rgb) {
 
 
 /***/ }),
-/* 805 */,
-/* 806 */,
-/* 807 */,
-/* 808 */,
-/* 809 */,
-/* 810 */,
-/* 811 */,
-/* 812 */,
-/* 813 */,
-/* 814 */,
-/* 815 */,
-/* 816 */,
-/* 817 */,
-/* 818 */,
-/* 819 */,
-/* 820 */,
-/* 821 */,
-/* 822 */,
-/* 823 */,
-/* 824 */,
-/* 825 */,
-/* 826 */,
-/* 827 */,
-/* 828 */,
-/* 829 */,
-/* 830 */,
-/* 831 */,
-/* 832 */,
-/* 833 */,
-/* 834 */,
-/* 835 */,
-/* 836 */,
-/* 837 */,
-/* 838 */,
-/* 839 */,
-/* 840 */,
-/* 841 */,
-/* 842 */,
-/* 843 */,
-/* 844 */,
 /* 845 */,
 /* 846 */,
 /* 847 */,
@@ -37443,7 +37443,61 @@ convert.rgb.gray = function (rgb) {
 /* 1219 */,
 /* 1220 */,
 /* 1221 */,
-/* 1222 */
+/* 1222 */,
+/* 1223 */,
+/* 1224 */,
+/* 1225 */,
+/* 1226 */,
+/* 1227 */,
+/* 1228 */,
+/* 1229 */,
+/* 1230 */,
+/* 1231 */,
+/* 1232 */,
+/* 1233 */,
+/* 1234 */,
+/* 1235 */,
+/* 1236 */,
+/* 1237 */,
+/* 1238 */,
+/* 1239 */,
+/* 1240 */,
+/* 1241 */,
+/* 1242 */,
+/* 1243 */,
+/* 1244 */,
+/* 1245 */,
+/* 1246 */,
+/* 1247 */,
+/* 1248 */,
+/* 1249 */,
+/* 1250 */,
+/* 1251 */,
+/* 1252 */,
+/* 1253 */,
+/* 1254 */,
+/* 1255 */,
+/* 1256 */,
+/* 1257 */,
+/* 1258 */,
+/* 1259 */,
+/* 1260 */,
+/* 1261 */,
+/* 1262 */,
+/* 1263 */,
+/* 1264 */,
+/* 1265 */,
+/* 1266 */,
+/* 1267 */,
+/* 1268 */,
+/* 1269 */,
+/* 1270 */,
+/* 1271 */,
+/* 1272 */,
+/* 1273 */,
+/* 1274 */,
+/* 1275 */,
+/* 1276 */
 /*!***************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/index.js ***!
   \***************************************************/
@@ -37459,12 +37513,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.render = undefined;
 
-var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 1223);
+var _expressionAtlasHeatmapHighcharts = __webpack_require__(/*! expression-atlas-heatmap-highcharts */ 1277);
 
 exports.render = _expressionAtlasHeatmapHighcharts.render;
 
 /***/ }),
-/* 1223 */
+/* 1277 */
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/Main.js ***!
   \*******************************************************************************************************/
@@ -37486,19 +37540,19 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactGa = __webpack_require__(/*! react-ga */ 1316);
+var _reactGa = __webpack_require__(/*! react-ga */ 1370);
 
 var _reactGa2 = _interopRequireDefault(_reactGa);
 
-var _urijs = __webpack_require__(/*! urijs */ 214);
+var _urijs = __webpack_require__(/*! urijs */ 232);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _ContainerLoader = __webpack_require__(/*! ./layout/ContainerLoader.js */ 1327);
+var _ContainerLoader = __webpack_require__(/*! ./layout/ContainerLoader.js */ 1381);
 
 var _ContainerLoader2 = _interopRequireDefault(_ContainerLoader);
 
@@ -37592,60 +37646,6 @@ exports.default = ExpressionAtlasHeatmap;
 exports.render = render;
 
 /***/ }),
-/* 1224 */,
-/* 1225 */,
-/* 1226 */,
-/* 1227 */,
-/* 1228 */,
-/* 1229 */,
-/* 1230 */,
-/* 1231 */,
-/* 1232 */,
-/* 1233 */,
-/* 1234 */,
-/* 1235 */,
-/* 1236 */,
-/* 1237 */,
-/* 1238 */,
-/* 1239 */,
-/* 1240 */,
-/* 1241 */,
-/* 1242 */,
-/* 1243 */,
-/* 1244 */,
-/* 1245 */,
-/* 1246 */,
-/* 1247 */,
-/* 1248 */,
-/* 1249 */,
-/* 1250 */,
-/* 1251 */,
-/* 1252 */,
-/* 1253 */,
-/* 1254 */,
-/* 1255 */,
-/* 1256 */,
-/* 1257 */,
-/* 1258 */,
-/* 1259 */,
-/* 1260 */,
-/* 1261 */,
-/* 1262 */,
-/* 1263 */,
-/* 1264 */,
-/* 1265 */,
-/* 1266 */,
-/* 1267 */,
-/* 1268 */,
-/* 1269 */,
-/* 1270 */,
-/* 1271 */,
-/* 1272 */,
-/* 1273 */,
-/* 1274 */,
-/* 1275 */,
-/* 1276 */,
-/* 1277 */,
 /* 1278 */,
 /* 1279 */,
 /* 1280 */,
@@ -37684,7 +37684,61 @@ exports.render = render;
 /* 1313 */,
 /* 1314 */,
 /* 1315 */,
-/* 1316 */
+/* 1316 */,
+/* 1317 */,
+/* 1318 */,
+/* 1319 */,
+/* 1320 */,
+/* 1321 */,
+/* 1322 */,
+/* 1323 */,
+/* 1324 */,
+/* 1325 */,
+/* 1326 */,
+/* 1327 */,
+/* 1328 */,
+/* 1329 */,
+/* 1330 */,
+/* 1331 */,
+/* 1332 */,
+/* 1333 */,
+/* 1334 */,
+/* 1335 */,
+/* 1336 */,
+/* 1337 */,
+/* 1338 */,
+/* 1339 */,
+/* 1340 */,
+/* 1341 */,
+/* 1342 */,
+/* 1343 */,
+/* 1344 */,
+/* 1345 */,
+/* 1346 */,
+/* 1347 */,
+/* 1348 */,
+/* 1349 */,
+/* 1350 */,
+/* 1351 */,
+/* 1352 */,
+/* 1353 */,
+/* 1354 */,
+/* 1355 */,
+/* 1356 */,
+/* 1357 */,
+/* 1358 */,
+/* 1359 */,
+/* 1360 */,
+/* 1361 */,
+/* 1362 */,
+/* 1363 */,
+/* 1364 */,
+/* 1365 */,
+/* 1366 */,
+/* 1367 */,
+/* 1368 */,
+/* 1369 */,
+/* 1370 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/index.js ***!
   \*****************************************************************************/
@@ -37703,12 +37757,12 @@ exports.render = render;
 /**
  * Utilities
  */
-var format = __webpack_require__(/*! ./utils/format */ 1317);
-var removeLeadingSlash = __webpack_require__(/*! ./utils/removeLeadingSlash */ 1320);
-var trim = __webpack_require__(/*! ./utils/trim */ 688);
+var format = __webpack_require__(/*! ./utils/format */ 1371);
+var removeLeadingSlash = __webpack_require__(/*! ./utils/removeLeadingSlash */ 1374);
+var trim = __webpack_require__(/*! ./utils/trim */ 728);
 
-var warn = __webpack_require__(/*! ./utils/console/warn */ 689);
-var log = __webpack_require__(/*! ./utils/console/log */ 1321);
+var warn = __webpack_require__(/*! ./utils/console/warn */ 729);
+var log = __webpack_require__(/*! ./utils/console/log */ 1375);
 
 var _debug = false;
 var _titleCase = true;
@@ -38181,7 +38235,7 @@ var ReactGA = {
   }
 };
 
-var OutboundLink = __webpack_require__(/*! ./components/OutboundLink */ 1322);
+var OutboundLink = __webpack_require__(/*! ./components/OutboundLink */ 1376);
 OutboundLink.origTrackLink = OutboundLink.trackLink;
 OutboundLink.trackLink = ReactGA.outboundLink.bind(ReactGA);
 ReactGA.OutboundLink = OutboundLink;
@@ -38190,7 +38244,7 @@ module.exports = ReactGA;
 
 
 /***/ }),
-/* 1317 */
+/* 1371 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/format.js ***!
   \************************************************************************************/
@@ -38198,9 +38252,9 @@ module.exports = ReactGA;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mightBeEmail = __webpack_require__(/*! ./mightBeEmail */ 1318);
-var toTitleCase = __webpack_require__(/*! ./toTitleCase */ 1319);
-var warn = __webpack_require__(/*! ./console/warn */ 689);
+var mightBeEmail = __webpack_require__(/*! ./mightBeEmail */ 1372);
+var toTitleCase = __webpack_require__(/*! ./toTitleCase */ 1373);
+var warn = __webpack_require__(/*! ./console/warn */ 729);
 
 var _redacted = 'REDACTED (Potential Email Address)';
 
@@ -38221,7 +38275,7 @@ module.exports = format;
 
 
 /***/ }),
-/* 1318 */
+/* 1372 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/mightBeEmail.js ***!
   \******************************************************************************************/
@@ -38240,7 +38294,7 @@ module.exports = mightBeEmail;
 
 
 /***/ }),
-/* 1319 */
+/* 1373 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/toTitleCase.js ***!
   \*****************************************************************************************/
@@ -38254,7 +38308,7 @@ module.exports = mightBeEmail;
  * https://github.com/gouch/to-title-case
  */
 
-var trim = __webpack_require__(/*! ./trim */ 688);
+var trim = __webpack_require__(/*! ./trim */ 728);
 
 function toTitleCase(s) {
   var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
@@ -38282,7 +38336,7 @@ module.exports = toTitleCase;
 
 
 /***/ }),
-/* 1320 */
+/* 1374 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/removeLeadingSlash.js ***!
   \************************************************************************************************/
@@ -38302,7 +38356,7 @@ module.exports = removeLeadingSlash;
 
 
 /***/ }),
-/* 1321 */
+/* 1375 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/utils/console/log.js ***!
   \*****************************************************************************************/
@@ -38318,7 +38372,7 @@ module.exports = log;
 
 
 /***/ }),
-/* 1322 */
+/* 1376 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-ga/src/components/OutboundLink.js ***!
   \***********************************************************************************************/
@@ -38327,9 +38381,9 @@ module.exports = log;
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(/*! react */ 0);
-var CreateReactClass = __webpack_require__(/*! create-react-class */ 690);
+var CreateReactClass = __webpack_require__(/*! create-react-class */ 730);
 var PropTypes = __webpack_require__(/*! prop-types */ 19);
-var assign = __webpack_require__(/*! object-assign */ 399);
+var assign = __webpack_require__(/*! object-assign */ 425);
 
 var NEWTAB = '_blank';
 
@@ -38374,7 +38428,7 @@ module.exports = OutboundLink;
 
 
 /***/ }),
-/* 1323 */
+/* 1377 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/create-react-class/factory.js ***!
   \*************************************************************************************/
@@ -38395,13 +38449,13 @@ module.exports = OutboundLink;
 
 
 
-var _assign = __webpack_require__(/*! object-assign */ 399);
+var _assign = __webpack_require__(/*! object-assign */ 425);
 
-var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 1324);
-var _invariant = __webpack_require__(/*! fbjs/lib/invariant */ 400);
+var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ 1378);
+var _invariant = __webpack_require__(/*! fbjs/lib/invariant */ 426);
 
 if (true) {
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 401);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 427);
 }
 
 var MIXINS_KEY = 'mixins';
@@ -39258,7 +39312,7 @@ module.exports = factory;
 
 
 /***/ }),
-/* 1324 */
+/* 1378 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/fbjs/lib/emptyObject.js ***!
   \*******************************************************************************/
@@ -39288,7 +39342,7 @@ if (true) {
 module.exports = emptyObject;
 
 /***/ }),
-/* 1325 */
+/* 1379 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \*********************************************************************************************/
@@ -39308,12 +39362,12 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 691);
-var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 400);
-var warning = __webpack_require__(/*! fbjs/lib/warning */ 401);
+var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 731);
+var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 426);
+var warning = __webpack_require__(/*! fbjs/lib/warning */ 427);
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 692);
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 1326);
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 732);
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ 1380);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -39812,7 +39866,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 /***/ }),
-/* 1326 */
+/* 1380 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types/checkPropTypes.js ***!
   \************************************************************************************/
@@ -39833,9 +39887,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 if (true) {
-  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 400);
-  var warning = __webpack_require__(/*! fbjs/lib/warning */ 401);
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 692);
+  var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 426);
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ 427);
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ 732);
   var loggedTypeFailures = {};
 }
 
@@ -39885,7 +39939,7 @@ module.exports = checkPropTypes;
 
 
 /***/ }),
-/* 1327 */
+/* 1381 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ContainerLoader.js ***!
   \*************************************************************************************************************************/
@@ -39910,13 +39964,13 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRefetch = __webpack_require__(/*! react-refetch */ 1328);
+var _reactRefetch = __webpack_require__(/*! react-refetch */ 1382);
 
-var _urijs = __webpack_require__(/*! urijs */ 214);
+var _urijs = __webpack_require__(/*! urijs */ 232);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _Container = __webpack_require__(/*! ./Container.js */ 1451);
+var _Container = __webpack_require__(/*! ./Container.js */ 1505);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -40008,7 +40062,7 @@ exports.default = (0, _reactRefetch.connect)(function (props) {
 })(ContainerLoader);
 
 /***/ }),
-/* 1328 */
+/* 1382 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/index.js ***!
   \**********************************************************************************/
@@ -40022,11 +40076,11 @@ exports.default = (0, _reactRefetch.connect)(function (props) {
 exports.__esModule = true;
 exports.PromiseState = exports.connect = undefined;
 
-var _connect = __webpack_require__(/*! ./components/connect */ 1329);
+var _connect = __webpack_require__(/*! ./components/connect */ 1383);
 
 var _connect2 = _interopRequireDefault(_connect);
 
-var _PromiseState = __webpack_require__(/*! ./PromiseState */ 697);
+var _PromiseState = __webpack_require__(/*! ./PromiseState */ 737);
 
 var _PromiseState2 = _interopRequireDefault(_PromiseState);
 
@@ -40036,7 +40090,7 @@ exports.connect = _connect2.default;
 exports.PromiseState = _PromiseState2.default;
 
 /***/ }),
-/* 1329 */
+/* 1383 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/components/connect.js ***!
   \***********************************************************************************************/
@@ -40055,43 +40109,43 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _isPlainObject = __webpack_require__(/*! ../utils/isPlainObject */ 696);
+var _isPlainObject = __webpack_require__(/*! ../utils/isPlainObject */ 736);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 1330);
+var _shallowEqual = __webpack_require__(/*! ../utils/shallowEqual */ 1384);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-var _handleResponse = __webpack_require__(/*! ../utils/handleResponse */ 1331);
+var _handleResponse = __webpack_require__(/*! ../utils/handleResponse */ 1385);
 
 var _handleResponse2 = _interopRequireDefault(_handleResponse);
 
-var _buildRequest = __webpack_require__(/*! ../utils/buildRequest */ 1333);
+var _buildRequest = __webpack_require__(/*! ../utils/buildRequest */ 1387);
 
 var _buildRequest2 = _interopRequireDefault(_buildRequest);
 
-var _checkTypes = __webpack_require__(/*! ../utils/checkTypes */ 1334);
+var _checkTypes = __webpack_require__(/*! ../utils/checkTypes */ 1388);
 
 var _checkTypes2 = _interopRequireDefault(_checkTypes);
 
-var _PromiseState = __webpack_require__(/*! ../PromiseState */ 697);
+var _PromiseState = __webpack_require__(/*! ../PromiseState */ 737);
 
 var _PromiseState2 = _interopRequireDefault(_PromiseState);
 
-var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 1335);
+var _hoistNonReactStatics = __webpack_require__(/*! hoist-non-react-statics */ 1389);
 
 var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-var _invariant = __webpack_require__(/*! invariant */ 215);
+var _invariant = __webpack_require__(/*! invariant */ 233);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _warning = __webpack_require__(/*! warning */ 1336);
+var _warning = __webpack_require__(/*! warning */ 1390);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _omit = __webpack_require__(/*! lodash/fp/omit */ 1337);
+var _omit = __webpack_require__(/*! lodash/fp/omit */ 1391);
 
 var _omit2 = _interopRequireDefault(_omit);
 
@@ -40518,10 +40572,10 @@ function connect(mapPropsToRequestsToProps, defaults, options) {
     return (0, _hoistNonReactStatics2.default)(RefetchConnect, WrappedComponent);
   };
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 25)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../../../node_modules/webpack/buildin/global.js */ 24)))
 
 /***/ }),
-/* 1330 */
+/* 1384 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/utils/shallowEqual.js ***!
   \***********************************************************************************************/
@@ -40564,7 +40618,7 @@ function shallowEqual(objA, objB) {
 }
 
 /***/ }),
-/* 1331 */
+/* 1385 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/utils/handleResponse.js ***!
   \*************************************************************************************************/
@@ -40578,7 +40632,7 @@ function shallowEqual(objA, objB) {
 exports.__esModule = true;
 exports.default = handleResponse;
 
-var _errors = __webpack_require__(/*! ./errors */ 1332);
+var _errors = __webpack_require__(/*! ./errors */ 1386);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -40602,7 +40656,7 @@ function handleResponse(response) {
 }
 
 /***/ }),
-/* 1332 */
+/* 1386 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/utils/errors.js ***!
   \*****************************************************************************************/
@@ -40635,7 +40689,7 @@ function parse(cause) {
 }
 
 /***/ }),
-/* 1333 */
+/* 1387 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/utils/buildRequest.js ***!
   \***********************************************************************************************/
@@ -40659,7 +40713,7 @@ function buildRequest(mapping) {
 }
 
 /***/ }),
-/* 1334 */
+/* 1388 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/lib/utils/checkTypes.js ***!
   \*********************************************************************************************/
@@ -40675,11 +40729,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 exports.__esModule = true;
 exports.default = checkTypes;
 
-var _invariant = __webpack_require__(/*! invariant */ 215);
+var _invariant = __webpack_require__(/*! invariant */ 233);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _isPlainObject = __webpack_require__(/*! ./isPlainObject */ 696);
+var _isPlainObject = __webpack_require__(/*! ./isPlainObject */ 736);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
@@ -40746,7 +40800,7 @@ function checkTypes(mapping) {
 }
 
 /***/ }),
-/* 1335 */
+/* 1389 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/hoist-non-react-statics/index.js ***!
   \****************************************************************************************/
@@ -40808,7 +40862,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 
 /***/ }),
-/* 1336 */
+/* 1390 */
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-refetch/node_modules/warning/browser.js ***!
   \*****************************************************************************************************/
@@ -40880,7 +40934,7 @@ module.exports = warning;
 
 
 /***/ }),
-/* 1337 */
+/* 1391 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/fp/omit.js ***!
   \*************************************************************************/
@@ -40888,15 +40942,15 @@ module.exports = warning;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var convert = __webpack_require__(/*! ./convert */ 1338),
-    func = convert('omit', __webpack_require__(/*! ../omit */ 1445));
+var convert = __webpack_require__(/*! ./convert */ 1392),
+    func = convert('omit', __webpack_require__(/*! ../omit */ 1499));
 
-func.placeholder = __webpack_require__(/*! ./placeholder */ 698);
+func.placeholder = __webpack_require__(/*! ./placeholder */ 738);
 module.exports = func;
 
 
 /***/ }),
-/* 1338 */
+/* 1392 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/fp/convert.js ***!
   \****************************************************************************/
@@ -40904,8 +40958,8 @@ module.exports = func;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseConvert = __webpack_require__(/*! ./_baseConvert */ 1339),
-    util = __webpack_require__(/*! ./_util */ 1341);
+var baseConvert = __webpack_require__(/*! ./_baseConvert */ 1393),
+    util = __webpack_require__(/*! ./_util */ 1395);
 
 /**
  * Converts `func` of `name` to an immutable auto-curried iteratee-first data-last
@@ -40925,7 +40979,7 @@ module.exports = convert;
 
 
 /***/ }),
-/* 1339 */
+/* 1393 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/fp/_baseConvert.js ***!
   \*********************************************************************************/
@@ -40933,8 +40987,8 @@ module.exports = convert;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapping = __webpack_require__(/*! ./_mapping */ 1340),
-    fallbackHolder = __webpack_require__(/*! ./placeholder */ 698);
+var mapping = __webpack_require__(/*! ./_mapping */ 1394),
+    fallbackHolder = __webpack_require__(/*! ./placeholder */ 738);
 
 /** Built-in value reference. */
 var push = Array.prototype.push;
@@ -41504,7 +41558,7 @@ module.exports = baseConvert;
 
 
 /***/ }),
-/* 1340 */
+/* 1394 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/fp/_mapping.js ***!
   \*****************************************************************************/
@@ -41883,7 +41937,7 @@ exports.skipRearg = {
 
 
 /***/ }),
-/* 1341 */
+/* 1395 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/fp/_util.js ***!
   \**************************************************************************/
@@ -41892,23 +41946,23 @@ exports.skipRearg = {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-  'ary': __webpack_require__(/*! ../ary */ 1342),
-  'assign': __webpack_require__(/*! ../_baseAssign */ 718),
-  'clone': __webpack_require__(/*! ../clone */ 1376),
-  'curry': __webpack_require__(/*! ../curry */ 1418),
-  'forEach': __webpack_require__(/*! ../_arrayEach */ 408),
+  'ary': __webpack_require__(/*! ../ary */ 1396),
+  'assign': __webpack_require__(/*! ../_baseAssign */ 758),
+  'clone': __webpack_require__(/*! ../clone */ 1430),
+  'curry': __webpack_require__(/*! ../curry */ 1472),
+  'forEach': __webpack_require__(/*! ../_arrayEach */ 434),
   'isArray': __webpack_require__(/*! ../isArray */ 53),
-  'isFunction': __webpack_require__(/*! ../isFunction */ 403),
-  'iteratee': __webpack_require__(/*! ../iteratee */ 1419),
-  'keys': __webpack_require__(/*! ../_baseKeys */ 724),
-  'rearg': __webpack_require__(/*! ../rearg */ 1441),
-  'toInteger': __webpack_require__(/*! ../toInteger */ 716),
-  'toPath': __webpack_require__(/*! ../toPath */ 1444)
+  'isFunction': __webpack_require__(/*! ../isFunction */ 429),
+  'iteratee': __webpack_require__(/*! ../iteratee */ 1473),
+  'keys': __webpack_require__(/*! ../_baseKeys */ 764),
+  'rearg': __webpack_require__(/*! ../rearg */ 1495),
+  'toInteger': __webpack_require__(/*! ../toInteger */ 756),
+  'toPath': __webpack_require__(/*! ../toPath */ 1498)
 };
 
 
 /***/ }),
-/* 1342 */
+/* 1396 */
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/ary.js ***!
   \*********************************************************************/
@@ -41916,7 +41970,7 @@ module.exports = {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createWrap = __webpack_require__(/*! ./_createWrap */ 402);
+var createWrap = __webpack_require__(/*! ./_createWrap */ 428);
 
 /** Used to compose bitmasks for function metadata. */
 var WRAP_ARY_FLAG = 128;
@@ -41948,7 +42002,7 @@ module.exports = ary;
 
 
 /***/ }),
-/* 1343 */
+/* 1397 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsNative.js ***!
   \*******************************************************************************/
@@ -41956,10 +42010,10 @@ module.exports = ary;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(/*! ./isFunction */ 403),
-    isMasked = __webpack_require__(/*! ./_isMasked */ 1346),
-    isObject = __webpack_require__(/*! ./isObject */ 97),
-    toSource = __webpack_require__(/*! ./_toSource */ 703);
+var isFunction = __webpack_require__(/*! ./isFunction */ 429),
+    isMasked = __webpack_require__(/*! ./_isMasked */ 1400),
+    isObject = __webpack_require__(/*! ./isObject */ 98),
+    toSource = __webpack_require__(/*! ./_toSource */ 743);
 
 /**
  * Used to match `RegExp`
@@ -42006,7 +42060,7 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 1344 */
+/* 1398 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getRawTag.js ***!
   \****************************************************************************/
@@ -42014,7 +42068,7 @@ module.exports = baseIsNative;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(/*! ./_Symbol */ 162);
+var Symbol = __webpack_require__(/*! ./_Symbol */ 173);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -42063,7 +42117,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 1345 */
+/* 1399 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_objectToString.js ***!
   \*********************************************************************************/
@@ -42096,7 +42150,7 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 1346 */
+/* 1400 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isMasked.js ***!
   \***************************************************************************/
@@ -42104,7 +42158,7 @@ module.exports = objectToString;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(/*! ./_coreJsData */ 1347);
+var coreJsData = __webpack_require__(/*! ./_coreJsData */ 1401);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -42127,7 +42181,7 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 1347 */
+/* 1401 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_coreJsData.js ***!
   \*****************************************************************************/
@@ -42144,7 +42198,7 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 1348 */
+/* 1402 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getValue.js ***!
   \***************************************************************************/
@@ -42168,7 +42222,7 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 1349 */
+/* 1403 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createBind.js ***!
   \*****************************************************************************/
@@ -42176,7 +42230,7 @@ module.exports = getValue;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createCtor = __webpack_require__(/*! ./_createCtor */ 278),
+var createCtor = __webpack_require__(/*! ./_createCtor */ 300),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /** Used to compose bitmasks for function metadata. */
@@ -42207,7 +42261,7 @@ module.exports = createBind;
 
 
 /***/ }),
-/* 1350 */
+/* 1404 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createCurry.js ***!
   \******************************************************************************/
@@ -42215,12 +42269,12 @@ module.exports = createBind;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(/*! ./_apply */ 404),
-    createCtor = __webpack_require__(/*! ./_createCtor */ 278),
-    createHybrid = __webpack_require__(/*! ./_createHybrid */ 704),
-    createRecurry = __webpack_require__(/*! ./_createRecurry */ 707),
-    getHolder = __webpack_require__(/*! ./_getHolder */ 715),
-    replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 410),
+var apply = __webpack_require__(/*! ./_apply */ 430),
+    createCtor = __webpack_require__(/*! ./_createCtor */ 300),
+    createHybrid = __webpack_require__(/*! ./_createHybrid */ 744),
+    createRecurry = __webpack_require__(/*! ./_createRecurry */ 747),
+    getHolder = __webpack_require__(/*! ./_getHolder */ 755),
+    replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 436),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /**
@@ -42264,7 +42318,7 @@ module.exports = createCurry;
 
 
 /***/ }),
-/* 1351 */
+/* 1405 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_countHolders.js ***!
   \*******************************************************************************/
@@ -42296,7 +42350,7 @@ module.exports = countHolders;
 
 
 /***/ }),
-/* 1352 */
+/* 1406 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isLaziable.js ***!
   \*****************************************************************************/
@@ -42304,10 +42358,10 @@ module.exports = countHolders;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 405),
-    getData = __webpack_require__(/*! ./_getData */ 708),
-    getFuncName = __webpack_require__(/*! ./_getFuncName */ 1353),
-    lodash = __webpack_require__(/*! ./wrapperLodash */ 1355);
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 431),
+    getData = __webpack_require__(/*! ./_getData */ 748),
+    getFuncName = __webpack_require__(/*! ./_getFuncName */ 1407),
+    lodash = __webpack_require__(/*! ./wrapperLodash */ 1409);
 
 /**
  * Checks if `func` has a lazy counterpart.
@@ -42335,7 +42389,7 @@ module.exports = isLaziable;
 
 
 /***/ }),
-/* 1353 */
+/* 1407 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getFuncName.js ***!
   \******************************************************************************/
@@ -42343,7 +42397,7 @@ module.exports = isLaziable;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var realNames = __webpack_require__(/*! ./_realNames */ 1354);
+var realNames = __webpack_require__(/*! ./_realNames */ 1408);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -42377,7 +42431,7 @@ module.exports = getFuncName;
 
 
 /***/ }),
-/* 1354 */
+/* 1408 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_realNames.js ***!
   \****************************************************************************/
@@ -42392,7 +42446,7 @@ module.exports = realNames;
 
 
 /***/ }),
-/* 1355 */
+/* 1409 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/wrapperLodash.js ***!
   \*******************************************************************************/
@@ -42400,12 +42454,12 @@ module.exports = realNames;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 405),
-    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ 710),
-    baseLodash = __webpack_require__(/*! ./_baseLodash */ 406),
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 431),
+    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ 750),
+    baseLodash = __webpack_require__(/*! ./_baseLodash */ 432),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111),
-    wrapperClone = __webpack_require__(/*! ./_wrapperClone */ 1356);
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112),
+    wrapperClone = __webpack_require__(/*! ./_wrapperClone */ 1410);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -42550,7 +42604,7 @@ module.exports = lodash;
 
 
 /***/ }),
-/* 1356 */
+/* 1410 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_wrapperClone.js ***!
   \*******************************************************************************/
@@ -42558,9 +42612,9 @@ module.exports = lodash;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 405),
-    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ 710),
-    copyArray = __webpack_require__(/*! ./_copyArray */ 280);
+var LazyWrapper = __webpack_require__(/*! ./_LazyWrapper */ 431),
+    LodashWrapper = __webpack_require__(/*! ./_LodashWrapper */ 750),
+    copyArray = __webpack_require__(/*! ./_copyArray */ 302);
 
 /**
  * Creates a clone of `wrapper`.
@@ -42584,7 +42638,7 @@ module.exports = wrapperClone;
 
 
 /***/ }),
-/* 1357 */
+/* 1411 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getWrapDetails.js ***!
   \*********************************************************************************/
@@ -42612,7 +42666,7 @@ module.exports = getWrapDetails;
 
 
 /***/ }),
-/* 1358 */
+/* 1412 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_insertWrapDetails.js ***!
   \************************************************************************************/
@@ -42646,7 +42700,7 @@ module.exports = insertWrapDetails;
 
 
 /***/ }),
-/* 1359 */
+/* 1413 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseSetToString.js ***!
   \**********************************************************************************/
@@ -42654,9 +42708,9 @@ module.exports = insertWrapDetails;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constant = __webpack_require__(/*! ./constant */ 1360),
-    defineProperty = __webpack_require__(/*! ./_defineProperty */ 714),
-    identity = __webpack_require__(/*! ./identity */ 277);
+var constant = __webpack_require__(/*! ./constant */ 1414),
+    defineProperty = __webpack_require__(/*! ./_defineProperty */ 754),
+    identity = __webpack_require__(/*! ./identity */ 299);
 
 /**
  * The base implementation of `setToString` without support for hot loop shorting.
@@ -42679,7 +42733,7 @@ module.exports = baseSetToString;
 
 
 /***/ }),
-/* 1360 */
+/* 1414 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/constant.js ***!
   \**************************************************************************/
@@ -42716,7 +42770,7 @@ module.exports = constant;
 
 
 /***/ }),
-/* 1361 */
+/* 1415 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_updateWrapDetails.js ***!
   \************************************************************************************/
@@ -42724,8 +42778,8 @@ module.exports = constant;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayEach = __webpack_require__(/*! ./_arrayEach */ 408),
-    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 409);
+var arrayEach = __webpack_require__(/*! ./_arrayEach */ 434),
+    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 435);
 
 /** Used to compose bitmasks for function metadata. */
 var WRAP_BIND_FLAG = 1,
@@ -42773,7 +42827,7 @@ module.exports = updateWrapDetails;
 
 
 /***/ }),
-/* 1362 */
+/* 1416 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIndexOf.js ***!
   \******************************************************************************/
@@ -42781,9 +42835,9 @@ module.exports = updateWrapDetails;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFindIndex = __webpack_require__(/*! ./_baseFindIndex */ 1363),
-    baseIsNaN = __webpack_require__(/*! ./_baseIsNaN */ 1364),
-    strictIndexOf = __webpack_require__(/*! ./_strictIndexOf */ 1365);
+var baseFindIndex = __webpack_require__(/*! ./_baseFindIndex */ 1417),
+    baseIsNaN = __webpack_require__(/*! ./_baseIsNaN */ 1418),
+    strictIndexOf = __webpack_require__(/*! ./_strictIndexOf */ 1419);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -42804,7 +42858,7 @@ module.exports = baseIndexOf;
 
 
 /***/ }),
-/* 1363 */
+/* 1417 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseFindIndex.js ***!
   \********************************************************************************/
@@ -42839,7 +42893,7 @@ module.exports = baseFindIndex;
 
 
 /***/ }),
-/* 1364 */
+/* 1418 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsNaN.js ***!
   \****************************************************************************/
@@ -42862,7 +42916,7 @@ module.exports = baseIsNaN;
 
 
 /***/ }),
-/* 1365 */
+/* 1419 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_strictIndexOf.js ***!
   \********************************************************************************/
@@ -42896,7 +42950,7 @@ module.exports = strictIndexOf;
 
 
 /***/ }),
-/* 1366 */
+/* 1420 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_reorder.js ***!
   \**************************************************************************/
@@ -42904,8 +42958,8 @@ module.exports = strictIndexOf;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyArray = __webpack_require__(/*! ./_copyArray */ 280),
-    isIndex = __webpack_require__(/*! ./_isIndex */ 281);
+var copyArray = __webpack_require__(/*! ./_copyArray */ 302),
+    isIndex = __webpack_require__(/*! ./_isIndex */ 303);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMin = Math.min;
@@ -42936,7 +42990,7 @@ module.exports = reorder;
 
 
 /***/ }),
-/* 1367 */
+/* 1421 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createPartial.js ***!
   \********************************************************************************/
@@ -42944,8 +42998,8 @@ module.exports = reorder;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(/*! ./_apply */ 404),
-    createCtor = __webpack_require__(/*! ./_createCtor */ 278),
+var apply = __webpack_require__(/*! ./_apply */ 430),
+    createCtor = __webpack_require__(/*! ./_createCtor */ 300),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /** Used to compose bitmasks for function metadata. */
@@ -42990,7 +43044,7 @@ module.exports = createPartial;
 
 
 /***/ }),
-/* 1368 */
+/* 1422 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mergeData.js ***!
   \****************************************************************************/
@@ -42998,9 +43052,9 @@ module.exports = createPartial;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var composeArgs = __webpack_require__(/*! ./_composeArgs */ 705),
-    composeArgsRight = __webpack_require__(/*! ./_composeArgsRight */ 706),
-    replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 410);
+var composeArgs = __webpack_require__(/*! ./_composeArgs */ 745),
+    composeArgsRight = __webpack_require__(/*! ./_composeArgsRight */ 746),
+    replaceHolders = __webpack_require__(/*! ./_replaceHolders */ 436);
 
 /** Used as the internal argument placeholder. */
 var PLACEHOLDER = '__lodash_placeholder__';
@@ -43091,7 +43145,7 @@ module.exports = mergeData;
 
 
 /***/ }),
-/* 1369 */
+/* 1423 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/toNumber.js ***!
   \**************************************************************************/
@@ -43099,8 +43153,8 @@ module.exports = mergeData;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(/*! ./isObject */ 97),
-    isSymbol = __webpack_require__(/*! ./isSymbol */ 216);
+var isObject = __webpack_require__(/*! ./isObject */ 98),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ 234);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -43168,7 +43222,7 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 1370 */
+/* 1424 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseTimes.js ***!
   \****************************************************************************/
@@ -43199,7 +43253,7 @@ module.exports = baseTimes;
 
 
 /***/ }),
-/* 1371 */
+/* 1425 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsArguments.js ***!
   \**********************************************************************************/
@@ -43207,8 +43261,8 @@ module.exports = baseTimes;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 161),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 172),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -43228,7 +43282,7 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 1372 */
+/* 1426 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/stubFalse.js ***!
   \***************************************************************************/
@@ -43257,7 +43311,7 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 1373 */
+/* 1427 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsTypedArray.js ***!
   \***********************************************************************************/
@@ -43265,9 +43319,9 @@ module.exports = stubFalse;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 161),
-    isLength = __webpack_require__(/*! ./isLength */ 413),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 172),
+    isLength = __webpack_require__(/*! ./isLength */ 439),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -43328,7 +43382,7 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 1374 */
+/* 1428 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_nodeUtil.js ***!
   \***************************************************************************/
@@ -43336,7 +43390,7 @@ module.exports = baseIsTypedArray;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 702);
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ 742);
 
 /** Detect free variable `exports`. */
 var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -43362,7 +43416,7 @@ module.exports = nodeUtil;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module)))
 
 /***/ }),
-/* 1375 */
+/* 1429 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_nativeKeys.js ***!
   \*****************************************************************************/
@@ -43370,7 +43424,7 @@ module.exports = nodeUtil;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(/*! ./_overArg */ 725);
+var overArg = __webpack_require__(/*! ./_overArg */ 765);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -43379,7 +43433,7 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 1376 */
+/* 1430 */
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/clone.js ***!
   \***********************************************************************/
@@ -43387,7 +43441,7 @@ module.exports = nativeKeys;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseClone = __webpack_require__(/*! ./_baseClone */ 415);
+var baseClone = __webpack_require__(/*! ./_baseClone */ 441);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_SYMBOLS_FLAG = 4;
@@ -43426,7 +43480,7 @@ module.exports = clone;
 
 
 /***/ }),
-/* 1377 */
+/* 1431 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_listCacheClear.js ***!
   \*********************************************************************************/
@@ -43450,7 +43504,7 @@ module.exports = listCacheClear;
 
 
 /***/ }),
-/* 1378 */
+/* 1432 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_listCacheDelete.js ***!
   \**********************************************************************************/
@@ -43458,7 +43512,7 @@ module.exports = listCacheClear;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 286);
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 308);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -43496,7 +43550,7 @@ module.exports = listCacheDelete;
 
 
 /***/ }),
-/* 1379 */
+/* 1433 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_listCacheGet.js ***!
   \*******************************************************************************/
@@ -43504,7 +43558,7 @@ module.exports = listCacheDelete;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 286);
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 308);
 
 /**
  * Gets the list cache value for `key`.
@@ -43526,7 +43580,7 @@ module.exports = listCacheGet;
 
 
 /***/ }),
-/* 1380 */
+/* 1434 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_listCacheHas.js ***!
   \*******************************************************************************/
@@ -43534,7 +43588,7 @@ module.exports = listCacheGet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 286);
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 308);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -43553,7 +43607,7 @@ module.exports = listCacheHas;
 
 
 /***/ }),
-/* 1381 */
+/* 1435 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_listCacheSet.js ***!
   \*******************************************************************************/
@@ -43561,7 +43615,7 @@ module.exports = listCacheHas;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 286);
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ 308);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -43590,7 +43644,7 @@ module.exports = listCacheSet;
 
 
 /***/ }),
-/* 1382 */
+/* 1436 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_stackClear.js ***!
   \*****************************************************************************/
@@ -43598,7 +43652,7 @@ module.exports = listCacheSet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(/*! ./_ListCache */ 285);
+var ListCache = __webpack_require__(/*! ./_ListCache */ 307);
 
 /**
  * Removes all key-value entries from the stack.
@@ -43616,7 +43670,7 @@ module.exports = stackClear;
 
 
 /***/ }),
-/* 1383 */
+/* 1437 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_stackDelete.js ***!
   \******************************************************************************/
@@ -43645,7 +43699,7 @@ module.exports = stackDelete;
 
 
 /***/ }),
-/* 1384 */
+/* 1438 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_stackGet.js ***!
   \***************************************************************************/
@@ -43670,7 +43724,7 @@ module.exports = stackGet;
 
 
 /***/ }),
-/* 1385 */
+/* 1439 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_stackHas.js ***!
   \***************************************************************************/
@@ -43695,7 +43749,7 @@ module.exports = stackHas;
 
 
 /***/ }),
-/* 1386 */
+/* 1440 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_stackSet.js ***!
   \***************************************************************************/
@@ -43703,9 +43757,9 @@ module.exports = stackHas;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(/*! ./_ListCache */ 285),
-    Map = __webpack_require__(/*! ./_Map */ 417),
-    MapCache = __webpack_require__(/*! ./_MapCache */ 418);
+var ListCache = __webpack_require__(/*! ./_ListCache */ 307),
+    Map = __webpack_require__(/*! ./_Map */ 443),
+    MapCache = __webpack_require__(/*! ./_MapCache */ 444);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -43740,7 +43794,7 @@ module.exports = stackSet;
 
 
 /***/ }),
-/* 1387 */
+/* 1441 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mapCacheClear.js ***!
   \********************************************************************************/
@@ -43748,9 +43802,9 @@ module.exports = stackSet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Hash = __webpack_require__(/*! ./_Hash */ 1388),
-    ListCache = __webpack_require__(/*! ./_ListCache */ 285),
-    Map = __webpack_require__(/*! ./_Map */ 417);
+var Hash = __webpack_require__(/*! ./_Hash */ 1442),
+    ListCache = __webpack_require__(/*! ./_ListCache */ 307),
+    Map = __webpack_require__(/*! ./_Map */ 443);
 
 /**
  * Removes all key-value entries from the map.
@@ -43772,7 +43826,7 @@ module.exports = mapCacheClear;
 
 
 /***/ }),
-/* 1388 */
+/* 1442 */
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Hash.js ***!
   \***********************************************************************/
@@ -43780,11 +43834,11 @@ module.exports = mapCacheClear;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hashClear = __webpack_require__(/*! ./_hashClear */ 1389),
-    hashDelete = __webpack_require__(/*! ./_hashDelete */ 1390),
-    hashGet = __webpack_require__(/*! ./_hashGet */ 1391),
-    hashHas = __webpack_require__(/*! ./_hashHas */ 1392),
-    hashSet = __webpack_require__(/*! ./_hashSet */ 1393);
+var hashClear = __webpack_require__(/*! ./_hashClear */ 1443),
+    hashDelete = __webpack_require__(/*! ./_hashDelete */ 1444),
+    hashGet = __webpack_require__(/*! ./_hashGet */ 1445),
+    hashHas = __webpack_require__(/*! ./_hashHas */ 1446),
+    hashSet = __webpack_require__(/*! ./_hashSet */ 1447);
 
 /**
  * Creates a hash object.
@@ -43815,7 +43869,7 @@ module.exports = Hash;
 
 
 /***/ }),
-/* 1389 */
+/* 1443 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_hashClear.js ***!
   \****************************************************************************/
@@ -43823,7 +43877,7 @@ module.exports = Hash;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 287);
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 309);
 
 /**
  * Removes all key-value entries from the hash.
@@ -43841,7 +43895,7 @@ module.exports = hashClear;
 
 
 /***/ }),
-/* 1390 */
+/* 1444 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_hashDelete.js ***!
   \*****************************************************************************/
@@ -43869,7 +43923,7 @@ module.exports = hashDelete;
 
 
 /***/ }),
-/* 1391 */
+/* 1445 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_hashGet.js ***!
   \**************************************************************************/
@@ -43877,7 +43931,7 @@ module.exports = hashDelete;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 287);
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 309);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -43910,7 +43964,7 @@ module.exports = hashGet;
 
 
 /***/ }),
-/* 1392 */
+/* 1446 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_hashHas.js ***!
   \**************************************************************************/
@@ -43918,7 +43972,7 @@ module.exports = hashGet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 287);
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 309);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -43944,7 +43998,7 @@ module.exports = hashHas;
 
 
 /***/ }),
-/* 1393 */
+/* 1447 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_hashSet.js ***!
   \**************************************************************************/
@@ -43952,7 +44006,7 @@ module.exports = hashHas;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 287);
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ 309);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -43978,7 +44032,7 @@ module.exports = hashSet;
 
 
 /***/ }),
-/* 1394 */
+/* 1448 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mapCacheDelete.js ***!
   \*********************************************************************************/
@@ -43986,7 +44040,7 @@ module.exports = hashSet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(/*! ./_getMapData */ 288);
+var getMapData = __webpack_require__(/*! ./_getMapData */ 310);
 
 /**
  * Removes `key` and its value from the map.
@@ -44007,7 +44061,7 @@ module.exports = mapCacheDelete;
 
 
 /***/ }),
-/* 1395 */
+/* 1449 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isKeyable.js ***!
   \****************************************************************************/
@@ -44033,7 +44087,7 @@ module.exports = isKeyable;
 
 
 /***/ }),
-/* 1396 */
+/* 1450 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mapCacheGet.js ***!
   \******************************************************************************/
@@ -44041,7 +44095,7 @@ module.exports = isKeyable;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(/*! ./_getMapData */ 288);
+var getMapData = __webpack_require__(/*! ./_getMapData */ 310);
 
 /**
  * Gets the map value for `key`.
@@ -44060,7 +44114,7 @@ module.exports = mapCacheGet;
 
 
 /***/ }),
-/* 1397 */
+/* 1451 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mapCacheHas.js ***!
   \******************************************************************************/
@@ -44068,7 +44122,7 @@ module.exports = mapCacheGet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(/*! ./_getMapData */ 288);
+var getMapData = __webpack_require__(/*! ./_getMapData */ 310);
 
 /**
  * Checks if a map value for `key` exists.
@@ -44087,7 +44141,7 @@ module.exports = mapCacheHas;
 
 
 /***/ }),
-/* 1398 */
+/* 1452 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_mapCacheSet.js ***!
   \******************************************************************************/
@@ -44095,7 +44149,7 @@ module.exports = mapCacheHas;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(/*! ./_getMapData */ 288);
+var getMapData = __webpack_require__(/*! ./_getMapData */ 310);
 
 /**
  * Sets the map `key` to `value`.
@@ -44120,7 +44174,7 @@ module.exports = mapCacheSet;
 
 
 /***/ }),
-/* 1399 */
+/* 1453 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseAssignIn.js ***!
   \*******************************************************************************/
@@ -44128,8 +44182,8 @@ module.exports = mapCacheSet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(/*! ./_copyObject */ 217),
-    keysIn = __webpack_require__(/*! ./keysIn */ 726);
+var copyObject = __webpack_require__(/*! ./_copyObject */ 235),
+    keysIn = __webpack_require__(/*! ./keysIn */ 766);
 
 /**
  * The base implementation of `_.assignIn` without support for multiple sources
@@ -44148,7 +44202,7 @@ module.exports = baseAssignIn;
 
 
 /***/ }),
-/* 1400 */
+/* 1454 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseKeysIn.js ***!
   \*****************************************************************************/
@@ -44156,9 +44210,9 @@ module.exports = baseAssignIn;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(/*! ./isObject */ 97),
-    isPrototype = __webpack_require__(/*! ./_isPrototype */ 414),
-    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ 1401);
+var isObject = __webpack_require__(/*! ./isObject */ 98),
+    isPrototype = __webpack_require__(/*! ./_isPrototype */ 440),
+    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ 1455);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -44192,7 +44246,7 @@ module.exports = baseKeysIn;
 
 
 /***/ }),
-/* 1401 */
+/* 1455 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_nativeKeysIn.js ***!
   \*******************************************************************************/
@@ -44223,7 +44277,7 @@ module.exports = nativeKeysIn;
 
 
 /***/ }),
-/* 1402 */
+/* 1456 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneBuffer.js ***!
   \******************************************************************************/
@@ -44270,7 +44324,7 @@ module.exports = cloneBuffer;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ 32)(module)))
 
 /***/ }),
-/* 1403 */
+/* 1457 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_copySymbols.js ***!
   \******************************************************************************/
@@ -44278,8 +44332,8 @@ module.exports = cloneBuffer;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(/*! ./_copyObject */ 217),
-    getSymbols = __webpack_require__(/*! ./_getSymbols */ 419);
+var copyObject = __webpack_require__(/*! ./_copyObject */ 235),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ 445);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -44297,7 +44351,7 @@ module.exports = copySymbols;
 
 
 /***/ }),
-/* 1404 */
+/* 1458 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_copySymbolsIn.js ***!
   \********************************************************************************/
@@ -44305,8 +44359,8 @@ module.exports = copySymbols;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(/*! ./_copyObject */ 217),
-    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ 729);
+var copyObject = __webpack_require__(/*! ./_copyObject */ 235),
+    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ 769);
 
 /**
  * Copies own and inherited symbols of `source` to `object`.
@@ -44324,7 +44378,7 @@ module.exports = copySymbolsIn;
 
 
 /***/ }),
-/* 1405 */
+/* 1459 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_DataView.js ***!
   \***************************************************************************/
@@ -44332,7 +44386,7 @@ module.exports = copySymbolsIn;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132),
+var getNative = __webpack_require__(/*! ./_getNative */ 137),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /* Built-in method references that are verified to be native. */
@@ -44342,7 +44396,7 @@ module.exports = DataView;
 
 
 /***/ }),
-/* 1406 */
+/* 1460 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_Promise.js ***!
   \**************************************************************************/
@@ -44350,7 +44404,7 @@ module.exports = DataView;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(/*! ./_getNative */ 132),
+var getNative = __webpack_require__(/*! ./_getNative */ 137),
     root = __webpack_require__(/*! ./_root */ 52);
 
 /* Built-in method references that are verified to be native. */
@@ -44360,7 +44414,7 @@ module.exports = Promise;
 
 
 /***/ }),
-/* 1407 */
+/* 1461 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_initCloneArray.js ***!
   \*********************************************************************************/
@@ -44397,7 +44451,7 @@ module.exports = initCloneArray;
 
 
 /***/ }),
-/* 1408 */
+/* 1462 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_initCloneByTag.js ***!
   \*********************************************************************************/
@@ -44405,13 +44459,13 @@ module.exports = initCloneArray;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 422),
-    cloneDataView = __webpack_require__(/*! ./_cloneDataView */ 1409),
-    cloneMap = __webpack_require__(/*! ./_cloneMap */ 1410),
-    cloneRegExp = __webpack_require__(/*! ./_cloneRegExp */ 1412),
-    cloneSet = __webpack_require__(/*! ./_cloneSet */ 1413),
-    cloneSymbol = __webpack_require__(/*! ./_cloneSymbol */ 1415),
-    cloneTypedArray = __webpack_require__(/*! ./_cloneTypedArray */ 1416);
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 448),
+    cloneDataView = __webpack_require__(/*! ./_cloneDataView */ 1463),
+    cloneMap = __webpack_require__(/*! ./_cloneMap */ 1464),
+    cloneRegExp = __webpack_require__(/*! ./_cloneRegExp */ 1466),
+    cloneSet = __webpack_require__(/*! ./_cloneSet */ 1467),
+    cloneSymbol = __webpack_require__(/*! ./_cloneSymbol */ 1469),
+    cloneTypedArray = __webpack_require__(/*! ./_cloneTypedArray */ 1470);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -44488,7 +44542,7 @@ module.exports = initCloneByTag;
 
 
 /***/ }),
-/* 1409 */
+/* 1463 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneDataView.js ***!
   \********************************************************************************/
@@ -44496,7 +44550,7 @@ module.exports = initCloneByTag;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 422);
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 448);
 
 /**
  * Creates a clone of `dataView`.
@@ -44515,7 +44569,7 @@ module.exports = cloneDataView;
 
 
 /***/ }),
-/* 1410 */
+/* 1464 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneMap.js ***!
   \***************************************************************************/
@@ -44523,9 +44577,9 @@ module.exports = cloneDataView;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var addMapEntry = __webpack_require__(/*! ./_addMapEntry */ 1411),
-    arrayReduce = __webpack_require__(/*! ./_arrayReduce */ 736),
-    mapToArray = __webpack_require__(/*! ./_mapToArray */ 737);
+var addMapEntry = __webpack_require__(/*! ./_addMapEntry */ 1465),
+    arrayReduce = __webpack_require__(/*! ./_arrayReduce */ 776),
+    mapToArray = __webpack_require__(/*! ./_mapToArray */ 777);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1;
@@ -44548,7 +44602,7 @@ module.exports = cloneMap;
 
 
 /***/ }),
-/* 1411 */
+/* 1465 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_addMapEntry.js ***!
   \******************************************************************************/
@@ -44574,7 +44628,7 @@ module.exports = addMapEntry;
 
 
 /***/ }),
-/* 1412 */
+/* 1466 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneRegExp.js ***!
   \******************************************************************************/
@@ -44602,7 +44656,7 @@ module.exports = cloneRegExp;
 
 
 /***/ }),
-/* 1413 */
+/* 1467 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneSet.js ***!
   \***************************************************************************/
@@ -44610,9 +44664,9 @@ module.exports = cloneRegExp;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var addSetEntry = __webpack_require__(/*! ./_addSetEntry */ 1414),
-    arrayReduce = __webpack_require__(/*! ./_arrayReduce */ 736),
-    setToArray = __webpack_require__(/*! ./_setToArray */ 289);
+var addSetEntry = __webpack_require__(/*! ./_addSetEntry */ 1468),
+    arrayReduce = __webpack_require__(/*! ./_arrayReduce */ 776),
+    setToArray = __webpack_require__(/*! ./_setToArray */ 311);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1;
@@ -44635,7 +44689,7 @@ module.exports = cloneSet;
 
 
 /***/ }),
-/* 1414 */
+/* 1468 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_addSetEntry.js ***!
   \******************************************************************************/
@@ -44661,7 +44715,7 @@ module.exports = addSetEntry;
 
 
 /***/ }),
-/* 1415 */
+/* 1469 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneSymbol.js ***!
   \******************************************************************************/
@@ -44669,7 +44723,7 @@ module.exports = addSetEntry;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(/*! ./_Symbol */ 162);
+var Symbol = __webpack_require__(/*! ./_Symbol */ 173);
 
 /** Used to convert symbols to primitives and strings. */
 var symbolProto = Symbol ? Symbol.prototype : undefined,
@@ -44690,7 +44744,7 @@ module.exports = cloneSymbol;
 
 
 /***/ }),
-/* 1416 */
+/* 1470 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_cloneTypedArray.js ***!
   \**********************************************************************************/
@@ -44698,7 +44752,7 @@ module.exports = cloneSymbol;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 422);
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ 448);
 
 /**
  * Creates a clone of `typedArray`.
@@ -44717,7 +44771,7 @@ module.exports = cloneTypedArray;
 
 
 /***/ }),
-/* 1417 */
+/* 1471 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_initCloneObject.js ***!
   \**********************************************************************************/
@@ -44725,9 +44779,9 @@ module.exports = cloneTypedArray;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseCreate = __webpack_require__(/*! ./_baseCreate */ 279),
-    getPrototype = __webpack_require__(/*! ./_getPrototype */ 421),
-    isPrototype = __webpack_require__(/*! ./_isPrototype */ 414);
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ 301),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ 447),
+    isPrototype = __webpack_require__(/*! ./_isPrototype */ 440);
 
 /**
  * Initializes an object clone.
@@ -44746,7 +44800,7 @@ module.exports = initCloneObject;
 
 
 /***/ }),
-/* 1418 */
+/* 1472 */
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/curry.js ***!
   \***********************************************************************/
@@ -44754,7 +44808,7 @@ module.exports = initCloneObject;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createWrap = __webpack_require__(/*! ./_createWrap */ 402);
+var createWrap = __webpack_require__(/*! ./_createWrap */ 428);
 
 /** Used to compose bitmasks for function metadata. */
 var WRAP_CURRY_FLAG = 8;
@@ -44814,7 +44868,7 @@ module.exports = curry;
 
 
 /***/ }),
-/* 1419 */
+/* 1473 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/iteratee.js ***!
   \**************************************************************************/
@@ -44822,8 +44876,8 @@ module.exports = curry;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseClone = __webpack_require__(/*! ./_baseClone */ 415),
-    baseIteratee = __webpack_require__(/*! ./_baseIteratee */ 1420);
+var baseClone = __webpack_require__(/*! ./_baseClone */ 441),
+    baseIteratee = __webpack_require__(/*! ./_baseIteratee */ 1474);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1;
@@ -44878,7 +44932,7 @@ module.exports = iteratee;
 
 
 /***/ }),
-/* 1420 */
+/* 1474 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIteratee.js ***!
   \*******************************************************************************/
@@ -44886,11 +44940,11 @@ module.exports = iteratee;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseMatches = __webpack_require__(/*! ./_baseMatches */ 1421),
-    baseMatchesProperty = __webpack_require__(/*! ./_baseMatchesProperty */ 1430),
-    identity = __webpack_require__(/*! ./identity */ 277),
+var baseMatches = __webpack_require__(/*! ./_baseMatches */ 1475),
+    baseMatchesProperty = __webpack_require__(/*! ./_baseMatchesProperty */ 1484),
+    identity = __webpack_require__(/*! ./identity */ 299),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    property = __webpack_require__(/*! ./property */ 1438);
+    property = __webpack_require__(/*! ./property */ 1492);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -44920,7 +44974,7 @@ module.exports = baseIteratee;
 
 
 /***/ }),
-/* 1421 */
+/* 1475 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseMatches.js ***!
   \******************************************************************************/
@@ -44928,9 +44982,9 @@ module.exports = baseIteratee;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMatch = __webpack_require__(/*! ./_baseIsMatch */ 1422),
-    getMatchData = __webpack_require__(/*! ./_getMatchData */ 1429),
-    matchesStrictComparable = __webpack_require__(/*! ./_matchesStrictComparable */ 741);
+var baseIsMatch = __webpack_require__(/*! ./_baseIsMatch */ 1476),
+    getMatchData = __webpack_require__(/*! ./_getMatchData */ 1483),
+    matchesStrictComparable = __webpack_require__(/*! ./_matchesStrictComparable */ 781);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -44953,7 +45007,7 @@ module.exports = baseMatches;
 
 
 /***/ }),
-/* 1422 */
+/* 1476 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsMatch.js ***!
   \******************************************************************************/
@@ -44961,8 +45015,8 @@ module.exports = baseMatches;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(/*! ./_Stack */ 416),
-    baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ 738);
+var Stack = __webpack_require__(/*! ./_Stack */ 442),
+    baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ 778);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -45026,7 +45080,7 @@ module.exports = baseIsMatch;
 
 
 /***/ }),
-/* 1423 */
+/* 1477 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseIsEqualDeep.js ***!
   \**********************************************************************************/
@@ -45034,14 +45088,14 @@ module.exports = baseIsMatch;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(/*! ./_Stack */ 416),
-    equalArrays = __webpack_require__(/*! ./_equalArrays */ 739),
-    equalByTag = __webpack_require__(/*! ./_equalByTag */ 1427),
-    equalObjects = __webpack_require__(/*! ./_equalObjects */ 1428),
-    getTag = __webpack_require__(/*! ./_getTag */ 733),
+var Stack = __webpack_require__(/*! ./_Stack */ 442),
+    equalArrays = __webpack_require__(/*! ./_equalArrays */ 779),
+    equalByTag = __webpack_require__(/*! ./_equalByTag */ 1481),
+    equalObjects = __webpack_require__(/*! ./_equalObjects */ 1482),
+    getTag = __webpack_require__(/*! ./_getTag */ 773),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isBuffer = __webpack_require__(/*! ./isBuffer */ 412),
-    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 722);
+    isBuffer = __webpack_require__(/*! ./isBuffer */ 438),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 762);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -45120,7 +45174,7 @@ module.exports = baseIsEqualDeep;
 
 
 /***/ }),
-/* 1424 */
+/* 1478 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_setCacheAdd.js ***!
   \******************************************************************************/
@@ -45150,7 +45204,7 @@ module.exports = setCacheAdd;
 
 
 /***/ }),
-/* 1425 */
+/* 1479 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_setCacheHas.js ***!
   \******************************************************************************/
@@ -45175,7 +45229,7 @@ module.exports = setCacheHas;
 
 
 /***/ }),
-/* 1426 */
+/* 1480 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_arraySome.js ***!
   \****************************************************************************/
@@ -45209,7 +45263,7 @@ module.exports = arraySome;
 
 
 /***/ }),
-/* 1427 */
+/* 1481 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_equalByTag.js ***!
   \*****************************************************************************/
@@ -45217,12 +45271,12 @@ module.exports = arraySome;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(/*! ./_Symbol */ 162),
-    Uint8Array = __webpack_require__(/*! ./_Uint8Array */ 735),
-    eq = __webpack_require__(/*! ./eq */ 282),
-    equalArrays = __webpack_require__(/*! ./_equalArrays */ 739),
-    mapToArray = __webpack_require__(/*! ./_mapToArray */ 737),
-    setToArray = __webpack_require__(/*! ./_setToArray */ 289);
+var Symbol = __webpack_require__(/*! ./_Symbol */ 173),
+    Uint8Array = __webpack_require__(/*! ./_Uint8Array */ 775),
+    eq = __webpack_require__(/*! ./eq */ 304),
+    equalArrays = __webpack_require__(/*! ./_equalArrays */ 779),
+    mapToArray = __webpack_require__(/*! ./_mapToArray */ 777),
+    setToArray = __webpack_require__(/*! ./_setToArray */ 311);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -45332,7 +45386,7 @@ module.exports = equalByTag;
 
 
 /***/ }),
-/* 1428 */
+/* 1482 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_equalObjects.js ***!
   \*******************************************************************************/
@@ -45340,7 +45394,7 @@ module.exports = equalByTag;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getAllKeys = __webpack_require__(/*! ./_getAllKeys */ 730);
+var getAllKeys = __webpack_require__(/*! ./_getAllKeys */ 770);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -45432,7 +45486,7 @@ module.exports = equalObjects;
 
 
 /***/ }),
-/* 1429 */
+/* 1483 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_getMatchData.js ***!
   \*******************************************************************************/
@@ -45440,8 +45494,8 @@ module.exports = equalObjects;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ 740),
-    keys = __webpack_require__(/*! ./keys */ 283);
+var isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ 780),
+    keys = __webpack_require__(/*! ./keys */ 305);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -45467,7 +45521,7 @@ module.exports = getMatchData;
 
 
 /***/ }),
-/* 1430 */
+/* 1484 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseMatchesProperty.js ***!
   \**************************************************************************************/
@@ -45475,13 +45529,13 @@ module.exports = getMatchData;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ 738),
-    get = __webpack_require__(/*! ./get */ 1431),
-    hasIn = __webpack_require__(/*! ./hasIn */ 1435),
-    isKey = __webpack_require__(/*! ./_isKey */ 426),
-    isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ 740),
-    matchesStrictComparable = __webpack_require__(/*! ./_matchesStrictComparable */ 741),
-    toKey = __webpack_require__(/*! ./_toKey */ 163);
+var baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ 778),
+    get = __webpack_require__(/*! ./get */ 1485),
+    hasIn = __webpack_require__(/*! ./hasIn */ 1489),
+    isKey = __webpack_require__(/*! ./_isKey */ 452),
+    isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ 780),
+    matchesStrictComparable = __webpack_require__(/*! ./_matchesStrictComparable */ 781),
+    toKey = __webpack_require__(/*! ./_toKey */ 174);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -45511,7 +45565,7 @@ module.exports = baseMatchesProperty;
 
 
 /***/ }),
-/* 1431 */
+/* 1485 */
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/get.js ***!
   \*********************************************************************/
@@ -45519,7 +45573,7 @@ module.exports = baseMatchesProperty;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(/*! ./_baseGet */ 425);
+var baseGet = __webpack_require__(/*! ./_baseGet */ 451);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -45555,7 +45609,7 @@ module.exports = get;
 
 
 /***/ }),
-/* 1432 */
+/* 1486 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_memoizeCapped.js ***!
   \********************************************************************************/
@@ -45563,7 +45617,7 @@ module.exports = get;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoize = __webpack_require__(/*! ./memoize */ 1433);
+var memoize = __webpack_require__(/*! ./memoize */ 1487);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -45592,7 +45646,7 @@ module.exports = memoizeCapped;
 
 
 /***/ }),
-/* 1433 */
+/* 1487 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/memoize.js ***!
   \*************************************************************************/
@@ -45600,7 +45654,7 @@ module.exports = memoizeCapped;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(/*! ./_MapCache */ 418);
+var MapCache = __webpack_require__(/*! ./_MapCache */ 444);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -45676,7 +45730,7 @@ module.exports = memoize;
 
 
 /***/ }),
-/* 1434 */
+/* 1488 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseToString.js ***!
   \*******************************************************************************/
@@ -45684,10 +45738,10 @@ module.exports = memoize;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(/*! ./_Symbol */ 162),
-    arrayMap = __webpack_require__(/*! ./_arrayMap */ 291),
+var Symbol = __webpack_require__(/*! ./_Symbol */ 173),
+    arrayMap = __webpack_require__(/*! ./_arrayMap */ 313),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isSymbol = __webpack_require__(/*! ./isSymbol */ 216);
+    isSymbol = __webpack_require__(/*! ./isSymbol */ 234);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -45724,7 +45778,7 @@ module.exports = baseToString;
 
 
 /***/ }),
-/* 1435 */
+/* 1489 */
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/hasIn.js ***!
   \***********************************************************************/
@@ -45732,8 +45786,8 @@ module.exports = baseToString;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHasIn = __webpack_require__(/*! ./_baseHasIn */ 1436),
-    hasPath = __webpack_require__(/*! ./_hasPath */ 1437);
+var baseHasIn = __webpack_require__(/*! ./_baseHasIn */ 1490),
+    hasPath = __webpack_require__(/*! ./_hasPath */ 1491);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -45769,7 +45823,7 @@ module.exports = hasIn;
 
 
 /***/ }),
-/* 1436 */
+/* 1490 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseHasIn.js ***!
   \****************************************************************************/
@@ -45793,7 +45847,7 @@ module.exports = baseHasIn;
 
 
 /***/ }),
-/* 1437 */
+/* 1491 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_hasPath.js ***!
   \**************************************************************************/
@@ -45801,12 +45855,12 @@ module.exports = baseHasIn;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(/*! ./_castPath */ 290),
-    isArguments = __webpack_require__(/*! ./isArguments */ 411),
+var castPath = __webpack_require__(/*! ./_castPath */ 312),
+    isArguments = __webpack_require__(/*! ./isArguments */ 437),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isIndex = __webpack_require__(/*! ./_isIndex */ 281),
-    isLength = __webpack_require__(/*! ./isLength */ 413),
-    toKey = __webpack_require__(/*! ./_toKey */ 163);
+    isIndex = __webpack_require__(/*! ./_isIndex */ 303),
+    isLength = __webpack_require__(/*! ./isLength */ 439),
+    toKey = __webpack_require__(/*! ./_toKey */ 174);
 
 /**
  * Checks if `path` exists on `object`.
@@ -45843,7 +45897,7 @@ module.exports = hasPath;
 
 
 /***/ }),
-/* 1438 */
+/* 1492 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/property.js ***!
   \**************************************************************************/
@@ -45851,10 +45905,10 @@ module.exports = hasPath;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseProperty = __webpack_require__(/*! ./_baseProperty */ 1439),
-    basePropertyDeep = __webpack_require__(/*! ./_basePropertyDeep */ 1440),
-    isKey = __webpack_require__(/*! ./_isKey */ 426),
-    toKey = __webpack_require__(/*! ./_toKey */ 163);
+var baseProperty = __webpack_require__(/*! ./_baseProperty */ 1493),
+    basePropertyDeep = __webpack_require__(/*! ./_basePropertyDeep */ 1494),
+    isKey = __webpack_require__(/*! ./_isKey */ 452),
+    toKey = __webpack_require__(/*! ./_toKey */ 174);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -45886,7 +45940,7 @@ module.exports = property;
 
 
 /***/ }),
-/* 1439 */
+/* 1493 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseProperty.js ***!
   \*******************************************************************************/
@@ -45911,7 +45965,7 @@ module.exports = baseProperty;
 
 
 /***/ }),
-/* 1440 */
+/* 1494 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_basePropertyDeep.js ***!
   \***********************************************************************************/
@@ -45919,7 +45973,7 @@ module.exports = baseProperty;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(/*! ./_baseGet */ 425);
+var baseGet = __webpack_require__(/*! ./_baseGet */ 451);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -45938,7 +45992,7 @@ module.exports = basePropertyDeep;
 
 
 /***/ }),
-/* 1441 */
+/* 1495 */
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/rearg.js ***!
   \***********************************************************************/
@@ -45946,8 +46000,8 @@ module.exports = basePropertyDeep;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createWrap = __webpack_require__(/*! ./_createWrap */ 402),
-    flatRest = __webpack_require__(/*! ./_flatRest */ 744);
+var createWrap = __webpack_require__(/*! ./_createWrap */ 428),
+    flatRest = __webpack_require__(/*! ./_flatRest */ 784);
 
 /** Used to compose bitmasks for function metadata. */
 var WRAP_REARG_FLAG = 256;
@@ -45982,7 +46036,7 @@ module.exports = rearg;
 
 
 /***/ }),
-/* 1442 */
+/* 1496 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/flatten.js ***!
   \*************************************************************************/
@@ -45990,7 +46044,7 @@ module.exports = rearg;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFlatten = __webpack_require__(/*! ./_baseFlatten */ 745);
+var baseFlatten = __webpack_require__(/*! ./_baseFlatten */ 785);
 
 /**
  * Flattens `array` a single level deep.
@@ -46015,7 +46069,7 @@ module.exports = flatten;
 
 
 /***/ }),
-/* 1443 */
+/* 1497 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isFlattenable.js ***!
   \********************************************************************************/
@@ -46023,8 +46077,8 @@ module.exports = flatten;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(/*! ./_Symbol */ 162),
-    isArguments = __webpack_require__(/*! ./isArguments */ 411),
+var Symbol = __webpack_require__(/*! ./_Symbol */ 173),
+    isArguments = __webpack_require__(/*! ./isArguments */ 437),
     isArray = __webpack_require__(/*! ./isArray */ 53);
 
 /** Built-in value references. */
@@ -46046,7 +46100,7 @@ module.exports = isFlattenable;
 
 
 /***/ }),
-/* 1444 */
+/* 1498 */
 /*!************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/toPath.js ***!
   \************************************************************************/
@@ -46054,13 +46108,13 @@ module.exports = isFlattenable;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(/*! ./_arrayMap */ 291),
-    copyArray = __webpack_require__(/*! ./_copyArray */ 280),
+var arrayMap = __webpack_require__(/*! ./_arrayMap */ 313),
+    copyArray = __webpack_require__(/*! ./_copyArray */ 302),
     isArray = __webpack_require__(/*! ./isArray */ 53),
-    isSymbol = __webpack_require__(/*! ./isSymbol */ 216),
-    stringToPath = __webpack_require__(/*! ./_stringToPath */ 742),
-    toKey = __webpack_require__(/*! ./_toKey */ 163),
-    toString = __webpack_require__(/*! ./toString */ 743);
+    isSymbol = __webpack_require__(/*! ./isSymbol */ 234),
+    stringToPath = __webpack_require__(/*! ./_stringToPath */ 782),
+    toKey = __webpack_require__(/*! ./_toKey */ 174),
+    toString = __webpack_require__(/*! ./toString */ 783);
 
 /**
  * Converts `value` to a property path array.
@@ -46090,7 +46144,7 @@ module.exports = toPath;
 
 
 /***/ }),
-/* 1445 */
+/* 1499 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/omit.js ***!
   \**********************************************************************/
@@ -46098,14 +46152,14 @@ module.exports = toPath;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(/*! ./_arrayMap */ 291),
-    baseClone = __webpack_require__(/*! ./_baseClone */ 415),
-    baseUnset = __webpack_require__(/*! ./_baseUnset */ 1446),
-    castPath = __webpack_require__(/*! ./_castPath */ 290),
-    copyObject = __webpack_require__(/*! ./_copyObject */ 217),
-    customOmitClone = __webpack_require__(/*! ./_customOmitClone */ 1450),
-    flatRest = __webpack_require__(/*! ./_flatRest */ 744),
-    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ 732);
+var arrayMap = __webpack_require__(/*! ./_arrayMap */ 313),
+    baseClone = __webpack_require__(/*! ./_baseClone */ 441),
+    baseUnset = __webpack_require__(/*! ./_baseUnset */ 1500),
+    castPath = __webpack_require__(/*! ./_castPath */ 312),
+    copyObject = __webpack_require__(/*! ./_copyObject */ 235),
+    customOmitClone = __webpack_require__(/*! ./_customOmitClone */ 1504),
+    flatRest = __webpack_require__(/*! ./_flatRest */ 784),
+    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ 772);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -46158,7 +46212,7 @@ module.exports = omit;
 
 
 /***/ }),
-/* 1446 */
+/* 1500 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseUnset.js ***!
   \****************************************************************************/
@@ -46166,10 +46220,10 @@ module.exports = omit;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(/*! ./_castPath */ 290),
-    last = __webpack_require__(/*! ./last */ 1447),
-    parent = __webpack_require__(/*! ./_parent */ 1448),
-    toKey = __webpack_require__(/*! ./_toKey */ 163);
+var castPath = __webpack_require__(/*! ./_castPath */ 312),
+    last = __webpack_require__(/*! ./last */ 1501),
+    parent = __webpack_require__(/*! ./_parent */ 1502),
+    toKey = __webpack_require__(/*! ./_toKey */ 174);
 
 /**
  * The base implementation of `_.unset`.
@@ -46189,7 +46243,7 @@ module.exports = baseUnset;
 
 
 /***/ }),
-/* 1447 */
+/* 1501 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/last.js ***!
   \**********************************************************************/
@@ -46220,7 +46274,7 @@ module.exports = last;
 
 
 /***/ }),
-/* 1448 */
+/* 1502 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_parent.js ***!
   \*************************************************************************/
@@ -46228,8 +46282,8 @@ module.exports = last;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(/*! ./_baseGet */ 425),
-    baseSlice = __webpack_require__(/*! ./_baseSlice */ 1449);
+var baseGet = __webpack_require__(/*! ./_baseGet */ 451),
+    baseSlice = __webpack_require__(/*! ./_baseSlice */ 1503);
 
 /**
  * Gets the parent value at `path` of `object`.
@@ -46247,7 +46301,7 @@ module.exports = parent;
 
 
 /***/ }),
-/* 1449 */
+/* 1503 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseSlice.js ***!
   \****************************************************************************/
@@ -46289,7 +46343,7 @@ module.exports = baseSlice;
 
 
 /***/ }),
-/* 1450 */
+/* 1504 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_customOmitClone.js ***!
   \**********************************************************************************/
@@ -46297,7 +46351,7 @@ module.exports = baseSlice;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isPlainObject = __webpack_require__(/*! ./isPlainObject */ 747);
+var isPlainObject = __webpack_require__(/*! ./isPlainObject */ 787);
 
 /**
  * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
@@ -46316,7 +46370,7 @@ module.exports = customOmitClone;
 
 
 /***/ }),
-/* 1451 */
+/* 1505 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Container.js ***!
   \*******************************************************************************************************************/
@@ -46339,27 +46393,27 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _urijs = __webpack_require__(/*! urijs */ 214);
+var _urijs = __webpack_require__(/*! urijs */ 232);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
-var _ExperimentDescription = __webpack_require__(/*! ./ExperimentDescription.js */ 1452);
+var _ExperimentDescription = __webpack_require__(/*! ./ExperimentDescription.js */ 1506);
 
 var _ExperimentDescription2 = _interopRequireDefault(_ExperimentDescription);
 
-var _Footer = __webpack_require__(/*! ./Footer.js */ 1453);
+var _Footer = __webpack_require__(/*! ./Footer.js */ 1507);
 
 var _Footer2 = _interopRequireDefault(_Footer);
 
-var _ChartContainer = __webpack_require__(/*! ../manipulate/ChartContainer.js */ 1454);
+var _ChartContainer = __webpack_require__(/*! ../manipulate/ChartContainer.js */ 1508);
 
 var _ChartContainer2 = _interopRequireDefault(_ChartContainer);
 
-var _jsonPayloadPropTypes = __webpack_require__(/*! ./jsonPayloadPropTypes.js */ 1732);
+var _jsonPayloadPropTypes = __webpack_require__(/*! ./jsonPayloadPropTypes.js */ 1786);
 
 var _jsonPayloadPropTypes2 = _interopRequireDefault(_jsonPayloadPropTypes);
 
-var _main = __webpack_require__(/*! ../load/main.js */ 1733);
+var _main = __webpack_require__(/*! ../load/main.js */ 1787);
 
 var _main2 = _interopRequireDefault(_main);
 
@@ -46405,7 +46459,7 @@ Container.propTypes = {
 exports.default = Container;
 
 /***/ }),
-/* 1452 */
+/* 1506 */
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/layout/ExperimentDescription.js ***!
   \*******************************************************************************************************************************/
@@ -46458,7 +46512,7 @@ ExperimentDescription.propTypes = {
 exports.default = ExperimentDescription;
 
 /***/ }),
-/* 1453 */
+/* 1507 */
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/layout/Footer.js ***!
   \****************************************************************************************************************/
@@ -46520,7 +46574,7 @@ Footer.propTypes = {
 exports.default = Footer;
 
 /***/ }),
-/* 1454 */
+/* 1508 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/ChartContainer.js ***!
   \****************************************************************************************************************************/
@@ -46541,15 +46595,15 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _HeatmapWithControls = __webpack_require__(/*! ./HeatmapWithControls.js */ 1455);
+var _HeatmapWithControls = __webpack_require__(/*! ./HeatmapWithControls.js */ 1509);
 
 var _HeatmapWithControls2 = _interopRequireDefault(_HeatmapWithControls);
 
-var _BoxplotCanvas = __webpack_require__(/*! ../show/BoxplotCanvas.js */ 1730);
+var _BoxplotCanvas = __webpack_require__(/*! ../show/BoxplotCanvas.js */ 1784);
 
 var _BoxplotCanvas2 = _interopRequireDefault(_BoxplotCanvas);
 
-var _chartDataPropTypes = __webpack_require__(/*! ./chartDataPropTypes.js */ 170);
+var _chartDataPropTypes = __webpack_require__(/*! ./chartDataPropTypes.js */ 181);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46621,7 +46675,7 @@ ChartContainer.propTypes = {
 exports.default = ChartContainer;
 
 /***/ }),
-/* 1455 */
+/* 1509 */
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/HeatmapWithControls.js ***!
   \*********************************************************************************************************************************/
@@ -46648,55 +46702,55 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _anatomogram = __webpack_require__(/*! anatomogram */ 748);
+var _anatomogram = __webpack_require__(/*! anatomogram */ 788);
 
 var _anatomogram2 = _interopRequireDefault(_anatomogram);
 
-var _uncontrollable = __webpack_require__(/*! uncontrollable */ 292);
+var _uncontrollable = __webpack_require__(/*! uncontrollable */ 314);
 
 var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-var _GenomeBrowsersDropdown = __webpack_require__(/*! ./controls/GenomeBrowsersDropdown.js */ 1518);
+var _GenomeBrowsersDropdown = __webpack_require__(/*! ./controls/GenomeBrowsersDropdown.js */ 1572);
 
 var _GenomeBrowsersDropdown2 = _interopRequireDefault(_GenomeBrowsersDropdown);
 
-var _OrderingsDropdown = __webpack_require__(/*! ./controls/OrderingsDropdown.js */ 1573);
+var _OrderingsDropdown = __webpack_require__(/*! ./controls/OrderingsDropdown.js */ 1627);
 
 var _OrderingsDropdown2 = _interopRequireDefault(_OrderingsDropdown);
 
-var _DownloadButton = __webpack_require__(/*! ./controls/download-button/DownloadButton.js */ 1574);
+var _DownloadButton = __webpack_require__(/*! ./controls/download-button/DownloadButton.js */ 1628);
 
 var _DownloadButton2 = _interopRequireDefault(_DownloadButton);
 
-var _FiltersButton = __webpack_require__(/*! ./controls/filter/FiltersButton.js */ 1612);
+var _FiltersButton = __webpack_require__(/*! ./controls/filter/FiltersButton.js */ 1666);
 
 var _FiltersButton2 = _interopRequireDefault(_FiltersButton);
 
-var _HeatmapCanvas = __webpack_require__(/*! ../show/HeatmapCanvas.js */ 1625);
+var _HeatmapCanvas = __webpack_require__(/*! ../show/HeatmapCanvas.js */ 1679);
 
 var _HeatmapCanvas2 = _interopRequireDefault(_HeatmapCanvas);
 
-var _heatmapCellTooltipFormatter = __webpack_require__(/*! ./formatters/heatmapCellTooltipFormatter.js */ 1630);
+var _heatmapCellTooltipFormatter = __webpack_require__(/*! ./formatters/heatmapCellTooltipFormatter.js */ 1684);
 
 var _heatmapCellTooltipFormatter2 = _interopRequireDefault(_heatmapCellTooltipFormatter);
 
-var _axesFormatters = __webpack_require__(/*! ./formatters/axesFormatters.js */ 1634);
+var _axesFormatters = __webpack_require__(/*! ./formatters/axesFormatters.js */ 1688);
 
 var _axesFormatters2 = _interopRequireDefault(_axesFormatters);
 
-var _Main = __webpack_require__(/*! ./heatmap-legend/Main.js */ 1635);
+var _Main = __webpack_require__(/*! ./heatmap-legend/Main.js */ 1689);
 
-var _CoexpressionOption = __webpack_require__(/*! ./coexpression/CoexpressionOption.js */ 1642);
+var _CoexpressionOption = __webpack_require__(/*! ./coexpression/CoexpressionOption.js */ 1696);
 
 var _CoexpressionOption2 = _interopRequireDefault(_CoexpressionOption);
 
-var _Events = __webpack_require__(/*! ./Events.js */ 1690);
+var _Events = __webpack_require__(/*! ./Events.js */ 1744);
 
 var _Events2 = _interopRequireDefault(_Events);
 
-var _Manipulators = __webpack_require__(/*! ./Manipulators.js */ 1729);
+var _Manipulators = __webpack_require__(/*! ./Manipulators.js */ 1783);
 
-var _chartDataPropTypes = __webpack_require__(/*! ../manipulate/chartDataPropTypes.js */ 170);
+var _chartDataPropTypes = __webpack_require__(/*! ../manipulate/chartDataPropTypes.js */ 181);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47124,7 +47178,7 @@ HeatmapWithControlsContainer.propTypes = {
 exports.default = HeatmapWithControlsContainer;
 
 /***/ }),
-/* 1456 */
+/* 1510 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/Anatomogram.js ***!
   \**************************************************************************************/
@@ -47151,19 +47205,19 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _transformPropsWith = __webpack_require__(/*! transform-props-with */ 1457);
+var _transformPropsWith = __webpack_require__(/*! transform-props-with */ 1511);
 
 var _transformPropsWith2 = _interopRequireDefault(_transformPropsWith);
 
-var _Switcher = __webpack_require__(/*! ./Switcher */ 1460);
+var _Switcher = __webpack_require__(/*! ./Switcher */ 1514);
 
 var _Switcher2 = _interopRequireDefault(_Switcher);
 
-var _AnatomogramSvg = __webpack_require__(/*! ./AnatomogramSvg */ 1476);
+var _AnatomogramSvg = __webpack_require__(/*! ./AnatomogramSvg */ 1530);
 
 var _AnatomogramSvg2 = _interopRequireDefault(_AnatomogramSvg);
 
-var _Assets = __webpack_require__(/*! ./Assets */ 427);
+var _Assets = __webpack_require__(/*! ./Assets */ 453);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47266,7 +47320,7 @@ var normaliseSpecies = function normaliseSpecies(oldProps) {
 exports.default = (0, _transformPropsWith2.default)(normaliseSpecies)(Anatomogram);
 
 /***/ }),
-/* 1457 */
+/* 1511 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/transform-props-with/lib/index.js ***!
   \*****************************************************************************************/
@@ -47287,15 +47341,15 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _castArray = __webpack_require__(/*! lodash/castArray */ 1458);
+var _castArray = __webpack_require__(/*! lodash/castArray */ 1512);
 
 var _castArray2 = _interopRequireDefault(_castArray);
 
-var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 747);
+var _isPlainObject = __webpack_require__(/*! lodash/isPlainObject */ 787);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _transformRef = __webpack_require__(/*! ./transform-ref */ 1459);
+var _transformRef = __webpack_require__(/*! ./transform-ref */ 1513);
 
 var _transformRef2 = _interopRequireDefault(_transformRef);
 
@@ -47386,7 +47440,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 1458 */
+/* 1512 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/castArray.js ***!
   \***************************************************************************/
@@ -47441,7 +47495,7 @@ module.exports = castArray;
 
 
 /***/ }),
-/* 1459 */
+/* 1513 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/transform-props-with/lib/transform-ref.js ***!
   \*************************************************************************************************/
@@ -47478,7 +47532,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 1460 */
+/* 1514 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/Switcher.js ***!
   \***********************************************************************************/
@@ -47501,14 +47555,14 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Assets = __webpack_require__(/*! ./Assets */ 427);
+var _Assets = __webpack_require__(/*! ./Assets */ 453);
 
-__webpack_require__(/*! ./Switcher.css */ 1462);
+__webpack_require__(/*! ./Switcher.css */ 1516);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var loadIcon = function loadIcon(view, selectedView) {
-  return __webpack_require__(/*! ./img */ 1465)("./" + view + '.' + (view === selectedView ? '' : 'un') + 'selected.png');
+  return __webpack_require__(/*! ./img */ 1519)("./" + view + '.' + (view === selectedView ? '' : 'un') + 'selected.png');
 };
 
 var Switcher = function Switcher(_ref) {
@@ -47536,7 +47590,7 @@ Switcher.propTypes = {
 exports.default = Switcher;
 
 /***/ }),
-/* 1461 */
+/* 1515 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/json/svgsMetadata.json ***!
   \**********************************************************************************************/
@@ -47547,7 +47601,7 @@ exports.default = Switcher;
 module.exports = [{"filename":"anolis_carolinensis.svg","species":"anolis_carolinensis","view":"","ids":["UBERON_0000955","UBERON_0000948","UBERON_0002113","UBERON_0014892"]},{"filename":"arabidopsis_thaliana.svg","species":"arabidopsis_thaliana","view":"","ids":["PO_0025034","PO_0009005","PO_0009046","PO_0009001"]},{"filename":"bos_taurus.svg","species":"bos_taurus","view":"","ids":["UBERON_0001013","UBERON_0014892","UBERON_0002114","UBERON_0000955","UBERON_0002113","UBERON_0002048","UBERON_0001155","UBERON_0000948","UBERON_0002107","UBERON_0002016","UBERON_0001898"]},{"filename":"brachypodium_distachyon.flower_parts.svg","species":"brachypodium_distachyon","view":"flower_parts","ids":["PO_0009066","PO_0009030","PO_0009001","PO_0009009","PO_0009089"]},{"filename":"brachypodium_distachyon.whole_plant.svg","species":"brachypodium_distachyon","view":"whole_plant","ids":["PO_0009010","PO_0009049","PO_0025034"]},{"filename":"gallus_gallus.svg","species":"gallus_gallus","view":"","ids":["UBERON_0000955","UBERON_0000948","UBERON_0002113","UBERON_0002107","UBERON_0001155","UBERON_0002106","UBERON_0002048","UBERON_0014892"]},{"filename":"homo_sapiens.brain.svg","species":"homo_sapiens","view":"brain","ids":["UBERON_0002148","UBERON_0001894","UBERON_0001896","UBERON_0002771","UBERON_0002702","UBERON_0002021","UBERON_0001905","UBERON_0001897","UBERON_0001898","UBERON_0002421","UBERON_0003027","UBERON_0001876","UBERON_0001870","UBERON_0001871","UBERON_0001882","UBERON_0002285","UBERON_0001873","UBERON_0001872","UBERON_0002038","UBERON_0001874","UBERON_0001875","UBERON_0002360","UBERON_0000451","UBERON_0000956","UBERON_0002037","UBERON_0002363","UBERON_0001954","UBERON_0002245"]},{"filename":"homo_sapiens.female.svg","species":"homo_sapiens","view":"female","ids":["UBERON_0001981","UBERON_0000178","UBERON_0001637","CL_0000236","CL_0000084","CL_0000623","CL_0000576","CL_0000233","UBERON_0000966","UBERON_0001831","UBERON_0001013","UBERON_0000948","UBERON_0001135","UBERON_0000955","UBERON_0000310","UBERON_0002369","UBERON_0000029","UBERON_0001134","UBERON_0000992","CL_0000738","UBERON_0001044","UBERON_0003889","UBERON_0000995","UBERON_0000002","UBERON_0001021","UBERON_0006618","UBERON_0012249","UBERON_0002421","UBERON_0000977","UBERON_0002185","UBERON_0003126","UBERON_0002048","UBERON_0002372","UBERON_0000970","UBERON_0001876","UBERON_0001736","UBERON_0001264","UBERON_0002107","UBERON_0001155","UBERON_0002371","UBERON_0001255","UBERON_0000945","UBERON_0002114","UBERON_0001043","UBERON_0002110","UBERON_0002106","UBERON_0002108","UBERON_0001987","UBERON_0001295","UBERON_0000996","UBERON_0000947","UBERON_0000007","UBERON_0007650","UBERON_0001153","UBERON_0001154","UBERON_0002116","UBERON_0002079","UBERON_0002084","UBERON_0002146","UBERON_0002135","UBERON_0001103","UBERON_0002481","UBERON_0007844","UBERON_0000341","UBERON_0001052","UBERON_0001706","UBERON_0001728","UBERON_0002037","UBERON_0002245","UBERON_0000451","UBERON_0001870","UBERON_0000004","UBERON_0001871","UBERON_0000956","UBERON_0002113","UBERON_0001225","UBERON_0001621","UBERON_0002134","UBERON_0002046","UBERON_0000014","UBERON_0000167","UBERON_0001723"]},{"filename":"homo_sapiens.male.svg","species":"homo_sapiens","view":"male","ids":["UBERON_0000956","UBERON_0000977","UBERON_0000955","UBERON_0000948","UBERON_0000310","UBERON_0002369","UBERON_0000029","UBERON_0001013","UBERON_0001134","CL_0000738","UBERON_0001871","UBERON_0006618","UBERON_0001621","UBERON_0002421","UBERON_0001000","UBERON_0000998","UBERON_0000473","UBERON_0001301","UBERON_0000970","UBERON_0002372","UBERON_0002048","UBERON_0001876","UBERON_0003126","UBERON_0002185","UBERON_0001021","UBERON_0002037","UBERON_0002245","UBERON_0002113","UBERON_0001225","UBERON_0002046","UBERON_0002371","UBERON_0001870","UBERON_0000451","UBERON_0000007","UBERON_0000947","UBERON_0007650","UBERON_0002084","UBERON_0001153","UBERON_0002116","UBERON_0001052","UBERON_0000004","UBERON_0001723","UBERON_0002079","UBERON_0002146","UBERON_0002135","UBERON_0000989","UBERON_0001728","UBERON_0002240","UBERON_0000341","UBERON_0002134","UBERON_0001103","UBERON_0002107","UBERON_0000945","UBERON_0002106","UBERON_0002114","UBERON_0002110","UBERON_0001264","UBERON_0001155","UBERON_0002108","UBERON_0001154","UBERON_0001135","UBERON_0001255","UBERON_00024818","UBERON_0007844","UBERON_0001043","UBERON_0001044","UBERON_0001831","UBERON_0001736","UBERON_0000014","UBERON_0000178","UBERON_0001981","UBERON_0001637","CL_0000236","CL_0000084","CL_0000623","CL_0000576","CL_0000233","UBERON_0001954","UBERON_0000966","UBERON_0001706","UBERON_0000167","UBERON_0002367"]},{"filename":"hordeum_vulgare.flower_parts.svg","species":"hordeum_vulgare","view":"flower_parts","ids":["PO_0009001","PO_0009030","PO_0009073","PO_0009072","PO_0009009","PO_0009066"]},{"filename":"hordeum_vulgare.whole_plant.svg","species":"hordeum_vulgare","view":"whole_plant","ids":["PO_0020142","PO_0009005","PO_0009006","PO_0009049","PO_0025034"]},{"filename":"macaca_mulatta.svg","species":"macaca_mulatta","view":"","ids":["UBERON_0000955","UBERON_0000451","UBERON_0002037","UBERON_0000948","UBERON_0002113","UBERON_0002107","UBERON_0000473"]},{"filename":"monodelphis_domestica.svg","species":"monodelphis_domestica","view":"","ids":["UBERON_0000955","UBERON_0002037","UBERON_0000948","UBERON_0002113","UBERON_0002107","UBERON_0000473"]},{"filename":"mus_musculus.brain.svg","species":"mus_musculus","view":"brain","ids":["UBERON_0001896","UBERON_0000956","UBERON_0000369","UBERON_0001894","UBERON_0000007","UBERON_0002037","UBERON_0002298","UBERON_0001891","UBERON_0001897","UBERON_0001898","UBERON_0000004","UBERON_0002259","EFO_0000530"]},{"filename":"mus_musculus.female.svg","species":"mus_musculus","view":"female","ids":["UBERON_0000947","UBERON_0001009","UBERON_0001348","UBERON_0001347","UBERON_0000945","UBERON_0002114","UBERON_0001264","UBERON_0002106","UBERON_0002369","UBERON_0002113","UBERON_0001155","UBERON_0002108","UBERON_0001153","UBERON_0002115","UBERON_0002116","UBERON_0001043","UBERON_0002110","UBERON_0000996","UBERON_0000995","UBERON_0001255","UBERON_0001831","UBERON_0001736","UBERON_0001723","UBERON_0001211","UBERON_0000981","UBERON_0002371","UBERON_0007844","UBERON_0001377","UBERON_0014892","UBERON_0002240","UBERON_0001103","UBERON_0002103","UBERON_0001645","UBERON_0000970","UBERON_0001242","UBERON_0000955","UBERON_0000948","UBERON_0002107","UBERON_0001322","UBERON_0001981","UBERON_0000014","UBERON_0001911","UBERON_0003134","UBERON_0000990","UBERON_0000029","UBERON_0001132","UBERON_0002370","UBERON_0002046","UBERON_0002048","UBERON_0000010","UBERON_0003126"]},{"filename":"mus_musculus.male.svg","species":"mus_musculus","view":"male","ids":["UBERON_0000947","UBERON_0001348","UBERON_0001347","UBERON_0000945","UBERON_0002114","UBERON_0001264","UBERON_0002106","UBERON_0002369","UBERON_0002113","UBERON_0001155","UBERON_0002108","UBERON_0001153","UBERON_0002115","UBERON_0002116","UBERON_0001043","UBERON_0002110","UBERON_0001831","UBERON_0001736","UBERON_0000029","UBERON_0000998","UBERON_0000989","UBERON_0000981","UBERON_0002371","UBERON_0007844","UBERON_0001377","UBERON_0002240","UBERON_0002048","UBERON_0001103","UBERON_0003126","UBERON_0002103","UBERON_0001645","UBERON_0001322","UBERON_0001242","UBERON_0002107","UBERON_0000948","UBERON_0000955","UBERON_0014892","UBERON_0001009","UBERON_0001981","UBERON_0000014","UBERON_0001132","UBERON_0001211","UBERON_0002367","UBERON_0001000","UBERON_0001301","UBERON_0000473","UBERON_0001255","UBERON_0002370","UBERON_0000010","UBERON_0000970","UBERON_0001723"]},{"filename":"oryza_sativa.flower_parts.svg","species":"oryza_sativa","view":"flower_parts","ids":["PO_0009010","PO_0009009","PO_0009089","PO_0009030","PO_0009066"]},{"filename":"oryza_sativa.whole_plant.svg","species":"oryza_sativa","view":"whole_plant","ids":["PO_0025034","PO_0009005","PO_0009049","PO_0009006","PO_0005052"]},{"filename":"papio_anubis.svg","species":"papio_anubis","view":"","ids":["UBERON_0000948","UBERON_0002107","UBERON_0000945","UBERON_0001155","UBERON_0002371","UBERON_0002113","UBERON_0002106","UBERON_0014892","UBERON_0002370","UBERON_0000955","UBERON_0001871","UBERON_0001870","UBERON_0000007","UBERON_0002048","UBERON_0000029","UBERON_0002037"]},{"filename":"rattus_norvegicus.svg","species":"rattus_norvegicus","view":"","ids":["UBERON_0000955","UBERON_0002113","CL_0000336","UBERON_0001388","UBERON_0000948","UBERON_0002107","UBERON_0002048","UBERON_0002106","UBERON_0002370","UBERON_0000995","UBERON_0000473","UBERON_0001155"]},{"filename":"solanum_lycopersicum.flower_parts.svg","species":"solanum_lycopersicum","view":"flower_parts","ids":["PO_0009084","PO_0009030","PO_0009072","PO_0009073","PO_0009074","PO_0009066","PO_0009010"]},{"filename":"solanum_lycopersicum.whole_plant.svg","species":"solanum_lycopersicum","view":"whole_plant","ids":["PO_0025034","PO_0000056","PO_0009046","PO_0009001","PO_0009005"]},{"filename":"solanum_tuberosum.svg","species":"solanum_tuberosum","view":"","ids":[]},{"filename":"sorghum_bicolor.flower_parts.svg","species":"sorghum_bicolor","view":"flower_parts","ids":["PO_0009049","PO_0009051","PO_0009001","PO_0009009","PO_0009089","PO_0009066","PO_0009030"]},{"filename":"sorghum_bicolor.whole_plant.svg","species":"sorghum_bicolor","view":"whole_plant","ids":["PO_0009006","PO_0006079","PO_0009047","PO_0000230","PO_0009049","PO_0025034","PO_0009005"]},{"filename":"tetraodon_nigroviridis.svg","species":"tetraodon_nigroviridis","view":"","ids":["UBERON_0000955","UBERON_0000948","UBERON_0002113","UBERON_0014892"]},{"filename":"triticum_aestivum.flower_parts.svg","species":"triticum_aestivum","view":"flower_parts","ids":["PO_0020033","PO_0020031","PO_0009089","PO_0009085","PO_0009086","PO_0009084","PO_0009009","PO_0009001","PO_0009088","PO_0009030","PO_0009066"]},{"filename":"triticum_aestivum.whole_plant.svg","species":"triticum_aestivum","view":"whole_plant","ids":["PO_0009047","PO_0009005","PO_0009049","PO_0025034"]},{"filename":"xenopus_tropicalis.svg","species":"xenopus_tropicalis","view":"","ids":["UBERON_0000955","UBERON_0002113","UBERON_0014892","UBERON_0000948","UBERON_0002107"]},{"filename":"zea_mays.flower_parts.svg","species":"zea_mays","view":"flower_parts","ids":["PO_0009001","PO_0020033","PO_0020031","PO_0020136","PO_0025597","PO_0009066","PO_0009009","PO_0009089","PO_0009084"]},{"filename":"zea_mays.whole_plant.svg","species":"zea_mays","view":"whole_plant","ids":["PO_0020126","PO_0020136","PO_0020142","PO_0020127","PO_0009005","PO_0009074","PO_0025034"]}]
 
 /***/ }),
-/* 1462 */
+/* 1516 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/Switcher.css ***!
   \************************************************************************************/
@@ -47558,7 +47612,7 @@ module.exports = [{"filename":"anolis_carolinensis.svg","species":"anolis_caroli
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./Switcher.css */ 1463);
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./Switcher.css */ 1517);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -47583,7 +47637,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1463 */
+/* 1517 */
 /*!**************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/Switcher.css ***!
   \**************************************************************************************************************/
@@ -47602,8 +47656,8 @@ exports.push([module.i, ".gxa-anatomogram-switcher {\n  display: inline-block;\n
 
 
 /***/ }),
-/* 1464 */,
-/* 1465 */
+/* 1518 */,
+/* 1519 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img ^\.\/.*selected\.png$ ***!
   \*************************************************************************************************/
@@ -47612,16 +47666,16 @@ exports.push([module.i, ".gxa-anatomogram-switcher {\n  display: inline-block;\n
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./brain.selected.png": 1466,
-	"./brain.unselected.png": 1467,
-	"./female.selected.png": 1468,
-	"./female.unselected.png": 1469,
-	"./flower_parts.selected.png": 1470,
-	"./flower_parts.unselected.png": 1471,
-	"./male.selected.png": 1472,
-	"./male.unselected.png": 1473,
-	"./whole_plant.selected.png": 1474,
-	"./whole_plant.unselected.png": 1475
+	"./brain.selected.png": 1520,
+	"./brain.unselected.png": 1521,
+	"./female.selected.png": 1522,
+	"./female.unselected.png": 1523,
+	"./flower_parts.selected.png": 1524,
+	"./flower_parts.unselected.png": 1525,
+	"./male.selected.png": 1526,
+	"./male.unselected.png": 1527,
+	"./whole_plant.selected.png": 1528,
+	"./whole_plant.unselected.png": 1529
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -47637,10 +47691,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 1465;
+webpackContext.id = 1519;
 
 /***/ }),
-/* 1466 */
+/* 1520 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/brain.selected.png ***!
   \**********************************************************************************************/
@@ -47651,7 +47705,7 @@ webpackContext.id = 1465;
 module.exports = __webpack_require__.p + "cbe297d1ea7bf5aac3cfcd540c8be570.png";
 
 /***/ }),
-/* 1467 */
+/* 1521 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/brain.unselected.png ***!
   \************************************************************************************************/
@@ -47662,7 +47716,7 @@ module.exports = __webpack_require__.p + "cbe297d1ea7bf5aac3cfcd540c8be570.png";
 module.exports = __webpack_require__.p + "bc6cb140072af5b41e6dc150228f8735.png";
 
 /***/ }),
-/* 1468 */
+/* 1522 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/female.selected.png ***!
   \***********************************************************************************************/
@@ -47673,7 +47727,7 @@ module.exports = __webpack_require__.p + "bc6cb140072af5b41e6dc150228f8735.png";
 module.exports = __webpack_require__.p + "a9cbc6e400cd961706ef5e528563fe6d.png";
 
 /***/ }),
-/* 1469 */
+/* 1523 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/female.unselected.png ***!
   \*************************************************************************************************/
@@ -47684,7 +47738,7 @@ module.exports = __webpack_require__.p + "a9cbc6e400cd961706ef5e528563fe6d.png";
 module.exports = __webpack_require__.p + "7f876a7270e2c70bc575970c544e758b.png";
 
 /***/ }),
-/* 1470 */
+/* 1524 */
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/flower_parts.selected.png ***!
   \*****************************************************************************************************/
@@ -47695,7 +47749,7 @@ module.exports = __webpack_require__.p + "7f876a7270e2c70bc575970c544e758b.png";
 module.exports = __webpack_require__.p + "406cf6d89ab420802fb26b22c5ffa994.png";
 
 /***/ }),
-/* 1471 */
+/* 1525 */
 /*!*******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/flower_parts.unselected.png ***!
   \*******************************************************************************************************/
@@ -47706,7 +47760,7 @@ module.exports = __webpack_require__.p + "406cf6d89ab420802fb26b22c5ffa994.png";
 module.exports = __webpack_require__.p + "cbab05b12c35d377aa6c047cd47d935c.png";
 
 /***/ }),
-/* 1472 */
+/* 1526 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/male.selected.png ***!
   \*********************************************************************************************/
@@ -47717,7 +47771,7 @@ module.exports = __webpack_require__.p + "cbab05b12c35d377aa6c047cd47d935c.png";
 module.exports = __webpack_require__.p + "ef28de891e5f4ac45b23ffbb6e6e2194.png";
 
 /***/ }),
-/* 1473 */
+/* 1527 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/male.unselected.png ***!
   \***********************************************************************************************/
@@ -47728,7 +47782,7 @@ module.exports = __webpack_require__.p + "ef28de891e5f4ac45b23ffbb6e6e2194.png";
 module.exports = __webpack_require__.p + "e489bf5dc0b662fd5516779442d4c046.png";
 
 /***/ }),
-/* 1474 */
+/* 1528 */
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/whole_plant.selected.png ***!
   \****************************************************************************************************/
@@ -47739,7 +47793,7 @@ module.exports = __webpack_require__.p + "e489bf5dc0b662fd5516779442d4c046.png";
 module.exports = __webpack_require__.p + "b6434f2d694b9cf3070660a5d0fb7ad3.png";
 
 /***/ }),
-/* 1475 */
+/* 1529 */
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/img/whole_plant.unselected.png ***!
   \******************************************************************************************************/
@@ -47750,7 +47804,7 @@ module.exports = __webpack_require__.p + "b6434f2d694b9cf3070660a5d0fb7ad3.png";
 module.exports = __webpack_require__.p + "780ef37f46c8cdb539dd2c5c4dfd348a.png";
 
 /***/ }),
-/* 1476 */
+/* 1530 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/AnatomogramSvg.js ***!
   \*****************************************************************************************/
@@ -47773,11 +47827,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactSvg = __webpack_require__(/*! react-svg */ 1477);
+var _reactSvg = __webpack_require__(/*! react-svg */ 1531);
 
 var _reactSvg2 = _interopRequireDefault(_reactSvg);
 
-__webpack_require__(/*! ./AnatomogramSvg.css */ 1482);
+__webpack_require__(/*! ./AnatomogramSvg.css */ 1536);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47894,7 +47948,7 @@ var initialiseSvgElements = function initialiseSvgElements(getSvgElementById, pr
 };
 
 var loadSvg = function loadSvg(species, selectedView) {
-  return __webpack_require__(/*! ./svg */ 1484)("./" + species + (selectedView ? '.' + selectedView : '') + '.svg');
+  return __webpack_require__(/*! ./svg */ 1538)("./" + species + (selectedView ? '.' + selectedView : '') + '.svg');
 };
 
 // ReactSVG loads the SVG file asynchronously (hence the callback prop). We don’t use componentDidUpdate or
@@ -47937,7 +47991,7 @@ AnatomogramSvg.propTypes = {
 exports.default = AnatomogramSvg;
 
 /***/ }),
-/* 1477 */
+/* 1531 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-svg/lib/index.js ***!
   \******************************************************************************/
@@ -47976,7 +48030,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // See: https://github.com/webpack/react-starter/issues/37
 var isBrowser = typeof window !== 'undefined';
-var SVGInjector = isBrowser ? __webpack_require__(/*! svg-injector */ 1481) : undefined;
+var SVGInjector = isBrowser ? __webpack_require__(/*! svg-injector */ 1535) : undefined;
 
 var ReactSVG = function (_Component) {
   _inherits(ReactSVG, _Component);
@@ -48075,10 +48129,10 @@ exports.default = ReactSVG;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1478 */,
-/* 1479 */,
-/* 1480 */,
-/* 1481 */
+/* 1532 */,
+/* 1533 */,
+/* 1534 */,
+/* 1535 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/svg-injector/svg-injector.js ***!
   \************************************************************************************/
@@ -48554,7 +48608,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 1482 */
+/* 1536 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/AnatomogramSvg.css ***!
   \******************************************************************************************/
@@ -48565,7 +48619,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./AnatomogramSvg.css */ 1483);
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./AnatomogramSvg.css */ 1537);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -48590,7 +48644,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1483 */
+/* 1537 */
 /*!********************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/AnatomogramSvg.css ***!
   \********************************************************************************************************************/
@@ -48609,7 +48663,7 @@ exports.push([module.i, ".gxa-anatomogram-svg-wrapper {\n  display: inline-block
 
 
 /***/ }),
-/* 1484 */
+/* 1538 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg ^\.\/.*\.svg$ ***!
   \*****************************************************************************************/
@@ -48618,37 +48672,37 @@ exports.push([module.i, ".gxa-anatomogram-svg-wrapper {\n  display: inline-block
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./anolis_carolinensis.svg": 1485,
-	"./arabidopsis_thaliana.svg": 1486,
-	"./bos_taurus.svg": 1487,
-	"./brachypodium_distachyon.flower_parts.svg": 1488,
-	"./brachypodium_distachyon.whole_plant.svg": 1489,
-	"./gallus_gallus.svg": 1490,
-	"./homo_sapiens.brain.svg": 1491,
-	"./homo_sapiens.female.svg": 1492,
-	"./homo_sapiens.male.svg": 1493,
-	"./hordeum_vulgare.flower_parts.svg": 1494,
-	"./hordeum_vulgare.whole_plant.svg": 1495,
-	"./macaca_mulatta.svg": 1496,
-	"./monodelphis_domestica.svg": 1497,
-	"./mus_musculus.brain.svg": 1498,
-	"./mus_musculus.female.svg": 1499,
-	"./mus_musculus.male.svg": 1500,
-	"./oryza_sativa.flower_parts.svg": 1501,
-	"./oryza_sativa.whole_plant.svg": 1502,
-	"./papio_anubis.svg": 1503,
-	"./rattus_norvegicus.svg": 1504,
-	"./solanum_lycopersicum.flower_parts.svg": 1505,
-	"./solanum_lycopersicum.whole_plant.svg": 1506,
-	"./solanum_tuberosum.svg": 1507,
-	"./sorghum_bicolor.flower_parts.svg": 1508,
-	"./sorghum_bicolor.whole_plant.svg": 1509,
-	"./tetraodon_nigroviridis.svg": 1510,
-	"./triticum_aestivum.flower_parts.svg": 1511,
-	"./triticum_aestivum.whole_plant.svg": 1512,
-	"./xenopus_tropicalis.svg": 1513,
-	"./zea_mays.flower_parts.svg": 1514,
-	"./zea_mays.whole_plant.svg": 1515
+	"./anolis_carolinensis.svg": 1539,
+	"./arabidopsis_thaliana.svg": 1540,
+	"./bos_taurus.svg": 1541,
+	"./brachypodium_distachyon.flower_parts.svg": 1542,
+	"./brachypodium_distachyon.whole_plant.svg": 1543,
+	"./gallus_gallus.svg": 1544,
+	"./homo_sapiens.brain.svg": 1545,
+	"./homo_sapiens.female.svg": 1546,
+	"./homo_sapiens.male.svg": 1547,
+	"./hordeum_vulgare.flower_parts.svg": 1548,
+	"./hordeum_vulgare.whole_plant.svg": 1549,
+	"./macaca_mulatta.svg": 1550,
+	"./monodelphis_domestica.svg": 1551,
+	"./mus_musculus.brain.svg": 1552,
+	"./mus_musculus.female.svg": 1553,
+	"./mus_musculus.male.svg": 1554,
+	"./oryza_sativa.flower_parts.svg": 1555,
+	"./oryza_sativa.whole_plant.svg": 1556,
+	"./papio_anubis.svg": 1557,
+	"./rattus_norvegicus.svg": 1558,
+	"./solanum_lycopersicum.flower_parts.svg": 1559,
+	"./solanum_lycopersicum.whole_plant.svg": 1560,
+	"./solanum_tuberosum.svg": 1561,
+	"./sorghum_bicolor.flower_parts.svg": 1562,
+	"./sorghum_bicolor.whole_plant.svg": 1563,
+	"./tetraodon_nigroviridis.svg": 1564,
+	"./triticum_aestivum.flower_parts.svg": 1565,
+	"./triticum_aestivum.whole_plant.svg": 1566,
+	"./xenopus_tropicalis.svg": 1567,
+	"./zea_mays.flower_parts.svg": 1568,
+	"./zea_mays.whole_plant.svg": 1569
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -48664,10 +48718,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 1484;
+webpackContext.id = 1538;
 
 /***/ }),
-/* 1485 */
+/* 1539 */
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/anolis_carolinensis.svg ***!
   \***************************************************************************************************/
@@ -48678,7 +48732,7 @@ webpackContext.id = 1484;
 module.exports = __webpack_require__.p + "42e11a1afb321056726cb714fc2b29ed.svg";
 
 /***/ }),
-/* 1486 */
+/* 1540 */
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/arabidopsis_thaliana.svg ***!
   \****************************************************************************************************/
@@ -48689,7 +48743,7 @@ module.exports = __webpack_require__.p + "42e11a1afb321056726cb714fc2b29ed.svg";
 module.exports = __webpack_require__.p + "9e029162d2d2fca8137ab8fd3cf12ffc.svg";
 
 /***/ }),
-/* 1487 */
+/* 1541 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/bos_taurus.svg ***!
   \******************************************************************************************/
@@ -48700,7 +48754,7 @@ module.exports = __webpack_require__.p + "9e029162d2d2fca8137ab8fd3cf12ffc.svg";
 module.exports = __webpack_require__.p + "1f0105bc3a6666729c11d80ffa1ae919.svg";
 
 /***/ }),
-/* 1488 */
+/* 1542 */
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/brachypodium_distachyon.flower_parts.svg ***!
   \********************************************************************************************************************/
@@ -48711,7 +48765,7 @@ module.exports = __webpack_require__.p + "1f0105bc3a6666729c11d80ffa1ae919.svg";
 module.exports = __webpack_require__.p + "1de18558e556536a227801779aa94771.svg";
 
 /***/ }),
-/* 1489 */
+/* 1543 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/brachypodium_distachyon.whole_plant.svg ***!
   \*******************************************************************************************************************/
@@ -48722,7 +48776,7 @@ module.exports = __webpack_require__.p + "1de18558e556536a227801779aa94771.svg";
 module.exports = __webpack_require__.p + "9ca356010afccc1946b8290847dc90bf.svg";
 
 /***/ }),
-/* 1490 */
+/* 1544 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/gallus_gallus.svg ***!
   \*********************************************************************************************/
@@ -48733,7 +48787,7 @@ module.exports = __webpack_require__.p + "9ca356010afccc1946b8290847dc90bf.svg";
 module.exports = __webpack_require__.p + "13d5276968b2bdba1c6d83dbc4892cc6.svg";
 
 /***/ }),
-/* 1491 */
+/* 1545 */
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/homo_sapiens.brain.svg ***!
   \**************************************************************************************************/
@@ -48744,7 +48798,7 @@ module.exports = __webpack_require__.p + "13d5276968b2bdba1c6d83dbc4892cc6.svg";
 module.exports = __webpack_require__.p + "f7155367498db4e86049d705e91b8956.svg";
 
 /***/ }),
-/* 1492 */
+/* 1546 */
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/homo_sapiens.female.svg ***!
   \***************************************************************************************************/
@@ -48755,7 +48809,7 @@ module.exports = __webpack_require__.p + "f7155367498db4e86049d705e91b8956.svg";
 module.exports = __webpack_require__.p + "52fda97ce0f3cbfac07626e56daead32.svg";
 
 /***/ }),
-/* 1493 */
+/* 1547 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/homo_sapiens.male.svg ***!
   \*************************************************************************************************/
@@ -48766,7 +48820,7 @@ module.exports = __webpack_require__.p + "52fda97ce0f3cbfac07626e56daead32.svg";
 module.exports = __webpack_require__.p + "4626c730027e5ff70254d23451537f9a.svg";
 
 /***/ }),
-/* 1494 */
+/* 1548 */
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/hordeum_vulgare.flower_parts.svg ***!
   \************************************************************************************************************/
@@ -48777,7 +48831,7 @@ module.exports = __webpack_require__.p + "4626c730027e5ff70254d23451537f9a.svg";
 module.exports = __webpack_require__.p + "81117fe192f85492d5a0a4e2465b11d0.svg";
 
 /***/ }),
-/* 1495 */
+/* 1549 */
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/hordeum_vulgare.whole_plant.svg ***!
   \***********************************************************************************************************/
@@ -48788,7 +48842,7 @@ module.exports = __webpack_require__.p + "81117fe192f85492d5a0a4e2465b11d0.svg";
 module.exports = __webpack_require__.p + "5614d388d36f6cab27fa6de4fdbac6de.svg";
 
 /***/ }),
-/* 1496 */
+/* 1550 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/macaca_mulatta.svg ***!
   \**********************************************************************************************/
@@ -48799,7 +48853,7 @@ module.exports = __webpack_require__.p + "5614d388d36f6cab27fa6de4fdbac6de.svg";
 module.exports = __webpack_require__.p + "6dc6fed18ecfbebfbf9403a6c7df6515.svg";
 
 /***/ }),
-/* 1497 */
+/* 1551 */
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/monodelphis_domestica.svg ***!
   \*****************************************************************************************************/
@@ -48810,7 +48864,7 @@ module.exports = __webpack_require__.p + "6dc6fed18ecfbebfbf9403a6c7df6515.svg";
 module.exports = __webpack_require__.p + "7b27468902ba520db2e27431e247547c.svg";
 
 /***/ }),
-/* 1498 */
+/* 1552 */
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/mus_musculus.brain.svg ***!
   \**************************************************************************************************/
@@ -48821,7 +48875,7 @@ module.exports = __webpack_require__.p + "7b27468902ba520db2e27431e247547c.svg";
 module.exports = __webpack_require__.p + "bbbcce33c7259be34c77037843606255.svg";
 
 /***/ }),
-/* 1499 */
+/* 1553 */
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/mus_musculus.female.svg ***!
   \***************************************************************************************************/
@@ -48832,7 +48886,7 @@ module.exports = __webpack_require__.p + "bbbcce33c7259be34c77037843606255.svg";
 module.exports = __webpack_require__.p + "f950766239d4c1005b43ec60a19f212a.svg";
 
 /***/ }),
-/* 1500 */
+/* 1554 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/mus_musculus.male.svg ***!
   \*************************************************************************************************/
@@ -48843,7 +48897,7 @@ module.exports = __webpack_require__.p + "f950766239d4c1005b43ec60a19f212a.svg";
 module.exports = __webpack_require__.p + "236878cf36edd206f852c1c86a98ec2c.svg";
 
 /***/ }),
-/* 1501 */
+/* 1555 */
 /*!*********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/oryza_sativa.flower_parts.svg ***!
   \*********************************************************************************************************/
@@ -48854,7 +48908,7 @@ module.exports = __webpack_require__.p + "236878cf36edd206f852c1c86a98ec2c.svg";
 module.exports = __webpack_require__.p + "eef5a18199939d306c11b75323c7fe5c.svg";
 
 /***/ }),
-/* 1502 */
+/* 1556 */
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/oryza_sativa.whole_plant.svg ***!
   \********************************************************************************************************/
@@ -48865,7 +48919,7 @@ module.exports = __webpack_require__.p + "eef5a18199939d306c11b75323c7fe5c.svg";
 module.exports = __webpack_require__.p + "feb47a20dd2a281a55f6521928d5759b.svg";
 
 /***/ }),
-/* 1503 */
+/* 1557 */
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/papio_anubis.svg ***!
   \********************************************************************************************/
@@ -48876,7 +48930,7 @@ module.exports = __webpack_require__.p + "feb47a20dd2a281a55f6521928d5759b.svg";
 module.exports = __webpack_require__.p + "63fff6b7536e843452ae95b82b28402d.svg";
 
 /***/ }),
-/* 1504 */
+/* 1558 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/rattus_norvegicus.svg ***!
   \*************************************************************************************************/
@@ -48887,7 +48941,7 @@ module.exports = __webpack_require__.p + "63fff6b7536e843452ae95b82b28402d.svg";
 module.exports = __webpack_require__.p + "28ac5ad41796711bfe061af787b1bc7e.svg";
 
 /***/ }),
-/* 1505 */
+/* 1559 */
 /*!*****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/solanum_lycopersicum.flower_parts.svg ***!
   \*****************************************************************************************************************/
@@ -48898,7 +48952,7 @@ module.exports = __webpack_require__.p + "28ac5ad41796711bfe061af787b1bc7e.svg";
 module.exports = __webpack_require__.p + "bd5b384f4015e57ab394bf1a0e60b208.svg";
 
 /***/ }),
-/* 1506 */
+/* 1560 */
 /*!****************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/solanum_lycopersicum.whole_plant.svg ***!
   \****************************************************************************************************************/
@@ -48909,7 +48963,7 @@ module.exports = __webpack_require__.p + "bd5b384f4015e57ab394bf1a0e60b208.svg";
 module.exports = __webpack_require__.p + "0f358510861736791edc8f91eb88aa27.svg";
 
 /***/ }),
-/* 1507 */
+/* 1561 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/solanum_tuberosum.svg ***!
   \*************************************************************************************************/
@@ -48920,7 +48974,7 @@ module.exports = __webpack_require__.p + "0f358510861736791edc8f91eb88aa27.svg";
 module.exports = __webpack_require__.p + "2c3a60abb1fd4675c939f2623f939379.svg";
 
 /***/ }),
-/* 1508 */
+/* 1562 */
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/sorghum_bicolor.flower_parts.svg ***!
   \************************************************************************************************************/
@@ -48931,7 +48985,7 @@ module.exports = __webpack_require__.p + "2c3a60abb1fd4675c939f2623f939379.svg";
 module.exports = __webpack_require__.p + "d716785b6df1eb3436ed0c8b083023df.svg";
 
 /***/ }),
-/* 1509 */
+/* 1563 */
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/sorghum_bicolor.whole_plant.svg ***!
   \***********************************************************************************************************/
@@ -48942,7 +48996,7 @@ module.exports = __webpack_require__.p + "d716785b6df1eb3436ed0c8b083023df.svg";
 module.exports = __webpack_require__.p + "120316d86001911ca318d627334d5074.svg";
 
 /***/ }),
-/* 1510 */
+/* 1564 */
 /*!******************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/tetraodon_nigroviridis.svg ***!
   \******************************************************************************************************/
@@ -48953,7 +49007,7 @@ module.exports = __webpack_require__.p + "120316d86001911ca318d627334d5074.svg";
 module.exports = __webpack_require__.p + "9a5bda4d22d8db48509add286b5cd013.svg";
 
 /***/ }),
-/* 1511 */
+/* 1565 */
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/triticum_aestivum.flower_parts.svg ***!
   \**************************************************************************************************************/
@@ -48964,7 +49018,7 @@ module.exports = __webpack_require__.p + "9a5bda4d22d8db48509add286b5cd013.svg";
 module.exports = __webpack_require__.p + "3dbe683fb3d8d07aba0cc901ad694d7c.svg";
 
 /***/ }),
-/* 1512 */
+/* 1566 */
 /*!*************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/triticum_aestivum.whole_plant.svg ***!
   \*************************************************************************************************************/
@@ -48975,7 +49029,7 @@ module.exports = __webpack_require__.p + "3dbe683fb3d8d07aba0cc901ad694d7c.svg";
 module.exports = __webpack_require__.p + "eb959d9bbea6f5ee892ce2c7b045fb8d.svg";
 
 /***/ }),
-/* 1513 */
+/* 1567 */
 /*!**************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/xenopus_tropicalis.svg ***!
   \**************************************************************************************************/
@@ -48986,7 +49040,7 @@ module.exports = __webpack_require__.p + "eb959d9bbea6f5ee892ce2c7b045fb8d.svg";
 module.exports = __webpack_require__.p + "98271459a68eef1b5b641ceb2fdf9e08.svg";
 
 /***/ }),
-/* 1514 */
+/* 1568 */
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/zea_mays.flower_parts.svg ***!
   \*****************************************************************************************************/
@@ -48997,7 +49051,7 @@ module.exports = __webpack_require__.p + "98271459a68eef1b5b641ceb2fdf9e08.svg";
 module.exports = __webpack_require__.p + "3f037101504d51568440b73cd5bd7808.svg";
 
 /***/ }),
-/* 1515 */
+/* 1569 */
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/anatomogram/lib/svg/zea_mays.whole_plant.svg ***!
   \****************************************************************************************************/
@@ -49008,7 +49062,7 @@ module.exports = __webpack_require__.p + "3f037101504d51568440b73cd5bd7808.svg";
 module.exports = __webpack_require__.p + "9c89f587f71426483e6bfe764220aa18.svg";
 
 /***/ }),
-/* 1516 */
+/* 1570 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/uncontrollable/createUncontrollable.js ***!
   \**********************************************************************************************/
@@ -49029,11 +49083,11 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _invariant = __webpack_require__(/*! invariant */ 215);
+var _invariant = __webpack_require__(/*! invariant */ 233);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _utils = __webpack_require__(/*! ./utils */ 1517);
+var _utils = __webpack_require__(/*! ./utils */ 1571);
 
 var utils = _interopRequireWildcard(_utils);
 
@@ -49214,7 +49268,7 @@ function createUncontrollable(mixin, set) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1517 */
+/* 1571 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/uncontrollable/utils.js ***!
   \*******************************************************************************/
@@ -49242,7 +49296,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _invariant = __webpack_require__(/*! invariant */ 215);
+var _invariant = __webpack_require__(/*! invariant */ 233);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -49341,7 +49395,7 @@ function isReactComponent(component) {
 }
 
 /***/ }),
-/* 1518 */
+/* 1572 */
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/GenomeBrowsersDropdown.js ***!
   \*********************************************************************************************************************************************/
@@ -49366,15 +49420,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Dropdown = __webpack_require__(/*! react-bootstrap/lib/Dropdown */ 749);
+var _Dropdown = __webpack_require__(/*! react-bootstrap/lib/Dropdown */ 789);
 
 var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
-var _MenuItem = __webpack_require__(/*! react-bootstrap/lib/MenuItem */ 766);
+var _MenuItem = __webpack_require__(/*! react-bootstrap/lib/MenuItem */ 806);
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 169);
+var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 180);
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
@@ -49477,7 +49531,7 @@ GenomeBrowsersDropdown.propTypes = {
 exports.default = GenomeBrowsersDropdown;
 
 /***/ }),
-/* 1519 */
+/* 1573 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/assign.js ***!
   \**********************************************************************************************/
@@ -49485,10 +49539,10 @@ exports.default = GenomeBrowsersDropdown;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/assign */ 1520), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/assign */ 1574), __esModule: true };
 
 /***/ }),
-/* 1520 */
+/* 1574 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/assign.js ***!
   \**********************************************************************************************************************/
@@ -49496,11 +49550,11 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.object.assign */ 1521);
+__webpack_require__(/*! ../../modules/es6.object.assign */ 1575);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.assign;
 
 /***/ }),
-/* 1521 */
+/* 1575 */
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.assign.js ***!
   \*******************************************************************************************************************************/
@@ -49509,12 +49563,12 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.assig
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(/*! ./_export */ 81);
+var $export = __webpack_require__(/*! ./_export */ 82);
 
-$export($export.S + $export.F, 'Object', {assign: __webpack_require__(/*! ./_object-assign */ 1523)});
+$export($export.S + $export.F, 'Object', {assign: __webpack_require__(/*! ./_object-assign */ 1577)});
 
 /***/ }),
-/* 1522 */
+/* 1576 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_a-function.js ***!
   \*************************************************************************************************************************/
@@ -49528,7 +49582,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 1523 */
+/* 1577 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-assign.js ***!
   \****************************************************************************************************************************/
@@ -49539,15 +49593,15 @@ module.exports = function(it){
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys  = __webpack_require__(/*! ./_object-keys */ 167)
-  , gOPS     = __webpack_require__(/*! ./_object-gops */ 436)
-  , pIE      = __webpack_require__(/*! ./_object-pie */ 220)
-  , toObject = __webpack_require__(/*! ./_to-object */ 294)
-  , IObject  = __webpack_require__(/*! ./_iobject */ 753)
+var getKeys  = __webpack_require__(/*! ./_object-keys */ 178)
+  , gOPS     = __webpack_require__(/*! ./_object-gops */ 462)
+  , pIE      = __webpack_require__(/*! ./_object-pie */ 238)
+  , toObject = __webpack_require__(/*! ./_to-object */ 316)
+  , IObject  = __webpack_require__(/*! ./_iobject */ 793)
   , $assign  = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(/*! ./_fails */ 166)(function(){
+module.exports = !$assign || __webpack_require__(/*! ./_fails */ 177)(function(){
   var A = {}
     , B = {}
     , S = Symbol()
@@ -49572,7 +49626,7 @@ module.exports = !$assign || __webpack_require__(/*! ./_fails */ 166)(function()
 } : $assign;
 
 /***/ }),
-/* 1524 */
+/* 1578 */
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_array-includes.js ***!
   \*****************************************************************************************************************************/
@@ -49582,9 +49636,9 @@ module.exports = !$assign || __webpack_require__(/*! ./_fails */ 166)(function()
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(/*! ./_to-iobject */ 98)
-  , toLength  = __webpack_require__(/*! ./_to-length */ 754)
-  , toIndex   = __webpack_require__(/*! ./_to-index */ 1525);
+var toIObject = __webpack_require__(/*! ./_to-iobject */ 99)
+  , toLength  = __webpack_require__(/*! ./_to-length */ 794)
+  , toIndex   = __webpack_require__(/*! ./_to-index */ 1579);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -49603,7 +49657,7 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 1525 */
+/* 1579 */
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_to-index.js ***!
   \***********************************************************************************************************************/
@@ -49611,7 +49665,7 @@ module.exports = function(IS_INCLUDES){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(/*! ./_to-integer */ 432)
+var toInteger = __webpack_require__(/*! ./_to-integer */ 458)
   , max       = Math.max
   , min       = Math.min;
 module.exports = function(index, length){
@@ -49620,7 +49674,7 @@ module.exports = function(index, length){
 };
 
 /***/ }),
-/* 1526 */
+/* 1580 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/symbol/iterator.js ***!
   \************************************************************************************************/
@@ -49628,10 +49682,10 @@ module.exports = function(index, length){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/symbol/iterator */ 1527), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/symbol/iterator */ 1581), __esModule: true };
 
 /***/ }),
-/* 1527 */
+/* 1581 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/symbol/iterator.js ***!
   \************************************************************************************************************************/
@@ -49639,12 +49693,12 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/symbol/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.string.iterator */ 755);
-__webpack_require__(/*! ../../modules/web.dom.iterable */ 1532);
-module.exports = __webpack_require__(/*! ../../modules/_wks-ext */ 440).f('iterator');
+__webpack_require__(/*! ../../modules/es6.string.iterator */ 795);
+__webpack_require__(/*! ../../modules/web.dom.iterable */ 1586);
+module.exports = __webpack_require__(/*! ../../modules/_wks-ext */ 466).f('iterator');
 
 /***/ }),
-/* 1528 */
+/* 1582 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_string-at.js ***!
   \************************************************************************************************************************/
@@ -49652,8 +49706,8 @@ module.exports = __webpack_require__(/*! ../../modules/_wks-ext */ 440).f('itera
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(/*! ./_to-integer */ 432)
-  , defined   = __webpack_require__(/*! ./_defined */ 431);
+var toInteger = __webpack_require__(/*! ./_to-integer */ 458)
+  , defined   = __webpack_require__(/*! ./_defined */ 457);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -49671,7 +49725,7 @@ module.exports = function(TO_STRING){
 };
 
 /***/ }),
-/* 1529 */
+/* 1583 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iter-create.js ***!
   \**************************************************************************************************************************/
@@ -49681,13 +49735,13 @@ module.exports = function(TO_STRING){
 
 "use strict";
 
-var create         = __webpack_require__(/*! ./_object-create */ 438)
-  , descriptor     = __webpack_require__(/*! ./_property-desc */ 219)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 439)
+var create         = __webpack_require__(/*! ./_object-create */ 464)
+  , descriptor     = __webpack_require__(/*! ./_property-desc */ 237)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 465)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(/*! ./_hide */ 164)(IteratorPrototype, __webpack_require__(/*! ./_wks */ 82)('iterator'), function(){ return this; });
+__webpack_require__(/*! ./_hide */ 175)(IteratorPrototype, __webpack_require__(/*! ./_wks */ 83)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -49695,7 +49749,7 @@ module.exports = function(Constructor, NAME, next){
 };
 
 /***/ }),
-/* 1530 */
+/* 1584 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-dps.js ***!
   \*************************************************************************************************************************/
@@ -49703,11 +49757,11 @@ module.exports = function(Constructor, NAME, next){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP       = __webpack_require__(/*! ./_object-dp */ 113)
-  , anObject = __webpack_require__(/*! ./_an-object */ 165)
-  , getKeys  = __webpack_require__(/*! ./_object-keys */ 167);
+var dP       = __webpack_require__(/*! ./_object-dp */ 114)
+  , anObject = __webpack_require__(/*! ./_an-object */ 176)
+  , getKeys  = __webpack_require__(/*! ./_object-keys */ 178);
 
-module.exports = __webpack_require__(/*! ./_descriptors */ 133) ? Object.defineProperties : function defineProperties(O, Properties){
+module.exports = __webpack_require__(/*! ./_descriptors */ 138) ? Object.defineProperties : function defineProperties(O, Properties){
   anObject(O);
   var keys   = getKeys(Properties)
     , length = keys.length
@@ -49718,7 +49772,7 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 133) ? Object.defineP
 };
 
 /***/ }),
-/* 1531 */
+/* 1585 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_html.js ***!
   \*******************************************************************************************************************/
@@ -49726,10 +49780,10 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 133) ? Object.defineP
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./_global */ 112).document && document.documentElement;
+module.exports = __webpack_require__(/*! ./_global */ 113).document && document.documentElement;
 
 /***/ }),
-/* 1532 */
+/* 1586 */
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/web.dom.iterable.js ***!
   \******************************************************************************************************************************/
@@ -49737,11 +49791,11 @@ module.exports = __webpack_require__(/*! ./_global */ 112).document && document.
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./es6.array.iterator */ 1533);
-var global        = __webpack_require__(/*! ./_global */ 112)
-  , hide          = __webpack_require__(/*! ./_hide */ 164)
-  , Iterators     = __webpack_require__(/*! ./_iterators */ 221)
-  , TO_STRING_TAG = __webpack_require__(/*! ./_wks */ 82)('toStringTag');
+__webpack_require__(/*! ./es6.array.iterator */ 1587);
+var global        = __webpack_require__(/*! ./_global */ 113)
+  , hide          = __webpack_require__(/*! ./_hide */ 175)
+  , Iterators     = __webpack_require__(/*! ./_iterators */ 239)
+  , TO_STRING_TAG = __webpack_require__(/*! ./_wks */ 83)('toStringTag');
 
 for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
   var NAME       = collections[i]
@@ -49752,7 +49806,7 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
 }
 
 /***/ }),
-/* 1533 */
+/* 1587 */
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.array.iterator.js ***!
   \********************************************************************************************************************************/
@@ -49762,16 +49816,16 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(/*! ./_add-to-unscopables */ 1534)
-  , step             = __webpack_require__(/*! ./_iter-step */ 1535)
-  , Iterators        = __webpack_require__(/*! ./_iterators */ 221)
-  , toIObject        = __webpack_require__(/*! ./_to-iobject */ 98);
+var addToUnscopables = __webpack_require__(/*! ./_add-to-unscopables */ 1588)
+  , step             = __webpack_require__(/*! ./_iter-step */ 1589)
+  , Iterators        = __webpack_require__(/*! ./_iterators */ 239)
+  , toIObject        = __webpack_require__(/*! ./_to-iobject */ 99);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(/*! ./_iter-define */ 756)(Array, 'Array', function(iterated, kind){
+module.exports = __webpack_require__(/*! ./_iter-define */ 796)(Array, 'Array', function(iterated, kind){
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -49797,7 +49851,7 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-/* 1534 */
+/* 1588 */
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_add-to-unscopables.js ***!
   \*********************************************************************************************************************************/
@@ -49808,7 +49862,7 @@ addToUnscopables('entries');
 module.exports = function(){ /* empty */ };
 
 /***/ }),
-/* 1535 */
+/* 1589 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iter-step.js ***!
   \************************************************************************************************************************/
@@ -49821,7 +49875,7 @@ module.exports = function(done, value){
 };
 
 /***/ }),
-/* 1536 */
+/* 1590 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/symbol.js ***!
   \***************************************************************************************/
@@ -49829,10 +49883,10 @@ module.exports = function(done, value){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/symbol */ 1537), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/symbol */ 1591), __esModule: true };
 
 /***/ }),
-/* 1537 */
+/* 1591 */
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/symbol/index.js ***!
   \*********************************************************************************************************************/
@@ -49840,14 +49894,14 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/symbol 
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.symbol */ 1538);
-__webpack_require__(/*! ../../modules/es6.object.to-string */ 1544);
-__webpack_require__(/*! ../../modules/es7.symbol.async-iterator */ 1545);
-__webpack_require__(/*! ../../modules/es7.symbol.observable */ 1546);
+__webpack_require__(/*! ../../modules/es6.symbol */ 1592);
+__webpack_require__(/*! ../../modules/es6.object.to-string */ 1598);
+__webpack_require__(/*! ../../modules/es7.symbol.async-iterator */ 1599);
+__webpack_require__(/*! ../../modules/es7.symbol.observable */ 1600);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Symbol;
 
 /***/ }),
-/* 1538 */
+/* 1592 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.symbol.js ***!
   \************************************************************************************************************************/
@@ -49858,31 +49912,31 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Symbol;
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global         = __webpack_require__(/*! ./_global */ 112)
-  , has            = __webpack_require__(/*! ./_has */ 134)
-  , DESCRIPTORS    = __webpack_require__(/*! ./_descriptors */ 133)
-  , $export        = __webpack_require__(/*! ./_export */ 81)
-  , redefine       = __webpack_require__(/*! ./_redefine */ 757)
-  , META           = __webpack_require__(/*! ./_meta */ 1539).KEY
-  , $fails         = __webpack_require__(/*! ./_fails */ 166)
-  , shared         = __webpack_require__(/*! ./_shared */ 434)
-  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 439)
-  , uid            = __webpack_require__(/*! ./_uid */ 293)
-  , wks            = __webpack_require__(/*! ./_wks */ 82)
-  , wksExt         = __webpack_require__(/*! ./_wks-ext */ 440)
-  , wksDefine      = __webpack_require__(/*! ./_wks-define */ 441)
-  , keyOf          = __webpack_require__(/*! ./_keyof */ 1540)
-  , enumKeys       = __webpack_require__(/*! ./_enum-keys */ 1541)
-  , isArray        = __webpack_require__(/*! ./_is-array */ 1542)
-  , anObject       = __webpack_require__(/*! ./_an-object */ 165)
-  , toIObject      = __webpack_require__(/*! ./_to-iobject */ 98)
-  , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 429)
-  , createDesc     = __webpack_require__(/*! ./_property-desc */ 219)
-  , _create        = __webpack_require__(/*! ./_object-create */ 438)
-  , gOPNExt        = __webpack_require__(/*! ./_object-gopn-ext */ 1543)
-  , $GOPD          = __webpack_require__(/*! ./_object-gopd */ 442)
-  , $DP            = __webpack_require__(/*! ./_object-dp */ 113)
-  , $keys          = __webpack_require__(/*! ./_object-keys */ 167)
+var global         = __webpack_require__(/*! ./_global */ 113)
+  , has            = __webpack_require__(/*! ./_has */ 139)
+  , DESCRIPTORS    = __webpack_require__(/*! ./_descriptors */ 138)
+  , $export        = __webpack_require__(/*! ./_export */ 82)
+  , redefine       = __webpack_require__(/*! ./_redefine */ 797)
+  , META           = __webpack_require__(/*! ./_meta */ 1593).KEY
+  , $fails         = __webpack_require__(/*! ./_fails */ 177)
+  , shared         = __webpack_require__(/*! ./_shared */ 460)
+  , setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 465)
+  , uid            = __webpack_require__(/*! ./_uid */ 315)
+  , wks            = __webpack_require__(/*! ./_wks */ 83)
+  , wksExt         = __webpack_require__(/*! ./_wks-ext */ 466)
+  , wksDefine      = __webpack_require__(/*! ./_wks-define */ 467)
+  , keyOf          = __webpack_require__(/*! ./_keyof */ 1594)
+  , enumKeys       = __webpack_require__(/*! ./_enum-keys */ 1595)
+  , isArray        = __webpack_require__(/*! ./_is-array */ 1596)
+  , anObject       = __webpack_require__(/*! ./_an-object */ 176)
+  , toIObject      = __webpack_require__(/*! ./_to-iobject */ 99)
+  , toPrimitive    = __webpack_require__(/*! ./_to-primitive */ 455)
+  , createDesc     = __webpack_require__(/*! ./_property-desc */ 237)
+  , _create        = __webpack_require__(/*! ./_object-create */ 464)
+  , gOPNExt        = __webpack_require__(/*! ./_object-gopn-ext */ 1597)
+  , $GOPD          = __webpack_require__(/*! ./_object-gopd */ 468)
+  , $DP            = __webpack_require__(/*! ./_object-dp */ 114)
+  , $keys          = __webpack_require__(/*! ./_object-keys */ 178)
   , gOPD           = $GOPD.f
   , dP             = $DP.f
   , gOPN           = gOPNExt.f
@@ -50005,11 +50059,11 @@ if(!USE_NATIVE){
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f   = $defineProperty;
-  __webpack_require__(/*! ./_object-gopn */ 759).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(/*! ./_object-pie */ 220).f  = $propertyIsEnumerable;
-  __webpack_require__(/*! ./_object-gops */ 436).f = $getOwnPropertySymbols;
+  __webpack_require__(/*! ./_object-gopn */ 799).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(/*! ./_object-pie */ 238).f  = $propertyIsEnumerable;
+  __webpack_require__(/*! ./_object-gops */ 462).f = $getOwnPropertySymbols;
 
-  if(DESCRIPTORS && !__webpack_require__(/*! ./_library */ 437)){
+  if(DESCRIPTORS && !__webpack_require__(/*! ./_library */ 463)){
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -50084,7 +50138,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function(){
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(/*! ./_hide */ 164)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(/*! ./_hide */ 175)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -50093,7 +50147,7 @@ setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
-/* 1539 */
+/* 1593 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_meta.js ***!
   \*******************************************************************************************************************/
@@ -50101,15 +50155,15 @@ setToStringTag(global.JSON, 'JSON', true);
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META     = __webpack_require__(/*! ./_uid */ 293)('meta')
-  , isObject = __webpack_require__(/*! ./_is-object */ 218)
-  , has      = __webpack_require__(/*! ./_has */ 134)
-  , setDesc  = __webpack_require__(/*! ./_object-dp */ 113).f
+var META     = __webpack_require__(/*! ./_uid */ 315)('meta')
+  , isObject = __webpack_require__(/*! ./_is-object */ 236)
+  , has      = __webpack_require__(/*! ./_has */ 139)
+  , setDesc  = __webpack_require__(/*! ./_object-dp */ 114).f
   , id       = 0;
 var isExtensible = Object.isExtensible || function(){
   return true;
 };
-var FREEZE = !__webpack_require__(/*! ./_fails */ 166)(function(){
+var FREEZE = !__webpack_require__(/*! ./_fails */ 177)(function(){
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function(it){
@@ -50156,7 +50210,7 @@ var meta = module.exports = {
 };
 
 /***/ }),
-/* 1540 */
+/* 1594 */
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_keyof.js ***!
   \********************************************************************************************************************/
@@ -50164,8 +50218,8 @@ var meta = module.exports = {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getKeys   = __webpack_require__(/*! ./_object-keys */ 167)
-  , toIObject = __webpack_require__(/*! ./_to-iobject */ 98);
+var getKeys   = __webpack_require__(/*! ./_object-keys */ 178)
+  , toIObject = __webpack_require__(/*! ./_to-iobject */ 99);
 module.exports = function(object, el){
   var O      = toIObject(object)
     , keys   = getKeys(O)
@@ -50176,7 +50230,7 @@ module.exports = function(object, el){
 };
 
 /***/ }),
-/* 1541 */
+/* 1595 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_enum-keys.js ***!
   \************************************************************************************************************************/
@@ -50185,9 +50239,9 @@ module.exports = function(object, el){
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(/*! ./_object-keys */ 167)
-  , gOPS    = __webpack_require__(/*! ./_object-gops */ 436)
-  , pIE     = __webpack_require__(/*! ./_object-pie */ 220);
+var getKeys = __webpack_require__(/*! ./_object-keys */ 178)
+  , gOPS    = __webpack_require__(/*! ./_object-gops */ 462)
+  , pIE     = __webpack_require__(/*! ./_object-pie */ 238);
 module.exports = function(it){
   var result     = getKeys(it)
     , getSymbols = gOPS.f;
@@ -50201,7 +50255,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 1542 */
+/* 1596 */
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_is-array.js ***!
   \***********************************************************************************************************************/
@@ -50210,13 +50264,13 @@ module.exports = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(/*! ./_cof */ 430);
+var cof = __webpack_require__(/*! ./_cof */ 456);
 module.exports = Array.isArray || function isArray(arg){
   return cof(arg) == 'Array';
 };
 
 /***/ }),
-/* 1543 */
+/* 1597 */
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_object-gopn-ext.js ***!
   \******************************************************************************************************************************/
@@ -50225,8 +50279,8 @@ module.exports = Array.isArray || function isArray(arg){
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(/*! ./_to-iobject */ 98)
-  , gOPN      = __webpack_require__(/*! ./_object-gopn */ 759).f
+var toIObject = __webpack_require__(/*! ./_to-iobject */ 99)
+  , gOPN      = __webpack_require__(/*! ./_object-gopn */ 799).f
   , toString  = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -50246,7 +50300,7 @@ module.exports.f = function getOwnPropertyNames(it){
 
 
 /***/ }),
-/* 1544 */
+/* 1598 */
 /*!**********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.to-string.js ***!
   \**********************************************************************************************************************************/
@@ -50257,7 +50311,7 @@ module.exports.f = function getOwnPropertyNames(it){
 
 
 /***/ }),
-/* 1545 */
+/* 1599 */
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es7.symbol.async-iterator.js ***!
   \***************************************************************************************************************************************/
@@ -50265,10 +50319,10 @@ module.exports.f = function getOwnPropertyNames(it){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./_wks-define */ 441)('asyncIterator');
+__webpack_require__(/*! ./_wks-define */ 467)('asyncIterator');
 
 /***/ }),
-/* 1546 */
+/* 1600 */
 /*!***********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es7.symbol.observable.js ***!
   \***********************************************************************************************************************************/
@@ -50276,10 +50330,10 @@ __webpack_require__(/*! ./_wks-define */ 441)('asyncIterator');
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./_wks-define */ 441)('observable');
+__webpack_require__(/*! ./_wks-define */ 467)('observable');
 
 /***/ }),
-/* 1547 */
+/* 1601 */
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/set-prototype-of.js ***!
   \********************************************************************************************************/
@@ -50287,10 +50341,10 @@ __webpack_require__(/*! ./_wks-define */ 441)('observable');
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/set-prototype-of */ 1548), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/set-prototype-of */ 1602), __esModule: true };
 
 /***/ }),
-/* 1548 */
+/* 1602 */
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/set-prototype-of.js ***!
   \********************************************************************************************************************************/
@@ -50298,11 +50352,11 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.object.set-prototype-of */ 1549);
+__webpack_require__(/*! ../../modules/es6.object.set-prototype-of */ 1603);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.setPrototypeOf;
 
 /***/ }),
-/* 1549 */
+/* 1603 */
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.set-prototype-of.js ***!
   \*****************************************************************************************************************************************/
@@ -50311,11 +50365,11 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.setPr
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = __webpack_require__(/*! ./_export */ 81);
-$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(/*! ./_set-proto */ 1550).set});
+var $export = __webpack_require__(/*! ./_export */ 82);
+$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(/*! ./_set-proto */ 1604).set});
 
 /***/ }),
-/* 1550 */
+/* 1604 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_set-proto.js ***!
   \************************************************************************************************************************/
@@ -50325,8 +50379,8 @@ $export($export.S, 'Object', {setPrototypeOf: __webpack_require__(/*! ./_set-pro
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
-var isObject = __webpack_require__(/*! ./_is-object */ 218)
-  , anObject = __webpack_require__(/*! ./_an-object */ 165);
+var isObject = __webpack_require__(/*! ./_is-object */ 236)
+  , anObject = __webpack_require__(/*! ./_an-object */ 176);
 var check = function(O, proto){
   anObject(O);
   if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
@@ -50335,7 +50389,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function(test, buggy, set){
       try {
-        set = __webpack_require__(/*! ./_ctx */ 428)(Function.call, __webpack_require__(/*! ./_object-gopd */ 442).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(/*! ./_ctx */ 454)(Function.call, __webpack_require__(/*! ./_object-gopd */ 468).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch(e){ buggy = true; }
@@ -50350,7 +50404,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 1551 */
+/* 1605 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/create.js ***!
   \**********************************************************************************************/
@@ -50358,10 +50412,10 @@ module.exports = {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/create */ 1552), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/create */ 1606), __esModule: true };
 
 /***/ }),
-/* 1552 */
+/* 1606 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/create.js ***!
   \**********************************************************************************************************************/
@@ -50369,14 +50423,14 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.object.create */ 1553);
+__webpack_require__(/*! ../../modules/es6.object.create */ 1607);
 var $Object = __webpack_require__(/*! ../../modules/_core */ 55).Object;
 module.exports = function create(P, D){
   return $Object.create(P, D);
 };
 
 /***/ }),
-/* 1553 */
+/* 1607 */
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.create.js ***!
   \*******************************************************************************************************************************/
@@ -50384,12 +50438,12 @@ module.exports = function create(P, D){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(/*! ./_export */ 81)
+var $export = __webpack_require__(/*! ./_export */ 82)
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', {create: __webpack_require__(/*! ./_object-create */ 438)});
+$export($export.S, 'Object', {create: __webpack_require__(/*! ./_object-create */ 464)});
 
 /***/ }),
-/* 1554 */
+/* 1608 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/prop-types-extra/lib/isRequiredForA11y.js ***!
   \*************************************************************************************************/
@@ -50423,7 +50477,7 @@ function isRequiredForA11y(validator) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1555 */
+/* 1609 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/ButtonGroup.js ***!
   \******************************************************************************************/
@@ -50468,11 +50522,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _all = __webpack_require__(/*! prop-types-extra/lib/all */ 443);
+var _all = __webpack_require__(/*! prop-types-extra/lib/all */ 469);
 
 var _all2 = _interopRequireDefault(_all);
 
-var _Button = __webpack_require__(/*! ./Button */ 222);
+var _Button = __webpack_require__(/*! ./Button */ 240);
 
 var _Button2 = _interopRequireDefault(_Button);
 
@@ -50540,7 +50594,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('btn-group', ButtonGroup);
 module.exports = exports['default'];
 
 /***/ }),
-/* 1556 */
+/* 1610 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/values.js ***!
   \**********************************************************************************************/
@@ -50548,10 +50602,10 @@ module.exports = exports['default'];
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/values */ 1557), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/values */ 1611), __esModule: true };
 
 /***/ }),
-/* 1557 */
+/* 1611 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/values.js ***!
   \**********************************************************************************************************************/
@@ -50559,11 +50613,11 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es7.object.values */ 1558);
+__webpack_require__(/*! ../../modules/es7.object.values */ 1612);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.values;
 
 /***/ }),
-/* 1558 */
+/* 1612 */
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es7.object.values.js ***!
   \*******************************************************************************************************************************/
@@ -50572,8 +50626,8 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.value
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
-var $export = __webpack_require__(/*! ./_export */ 81)
-  , $values = __webpack_require__(/*! ./_object-to-array */ 762)(false);
+var $export = __webpack_require__(/*! ./_export */ 82)
+  , $values = __webpack_require__(/*! ./_object-to-array */ 802)(false);
 
 $export($export.S, 'Object', {
   values: function values(it){
@@ -50582,7 +50636,7 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-/* 1559 */
+/* 1613 */
 /*!***********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/entries.js ***!
   \***********************************************************************************************************************/
@@ -50590,11 +50644,11 @@ $export($export.S, 'Object', {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es7.object.entries */ 1560);
+__webpack_require__(/*! ../../modules/es7.object.entries */ 1614);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.entries;
 
 /***/ }),
-/* 1560 */
+/* 1614 */
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es7.object.entries.js ***!
   \********************************************************************************************************************************/
@@ -50603,8 +50657,8 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.entri
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
-var $export  = __webpack_require__(/*! ./_export */ 81)
-  , $entries = __webpack_require__(/*! ./_object-to-array */ 762)(true);
+var $export  = __webpack_require__(/*! ./_export */ 82)
+  , $entries = __webpack_require__(/*! ./_object-to-array */ 802)(true);
 
 $export($export.S, 'Object', {
   entries: function entries(it){
@@ -50613,7 +50667,7 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-/* 1561 */
+/* 1615 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/DropdownMenu.js ***!
   \*******************************************************************************************/
@@ -50634,7 +50688,7 @@ var _objectWithoutProperties2 = __webpack_require__(/*! babel-runtime/helpers/ob
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _from = __webpack_require__(/*! babel-runtime/core-js/array/from */ 764);
+var _from = __webpack_require__(/*! babel-runtime/core-js/array/from */ 804);
 
 var _from2 = _interopRequireDefault(_from);
 
@@ -50654,7 +50708,7 @@ var _classnames = __webpack_require__(/*! classnames */ 43);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _keycode = __webpack_require__(/*! keycode */ 761);
+var _keycode = __webpack_require__(/*! keycode */ 801);
 
 var _keycode2 = _interopRequireDefault(_keycode);
 
@@ -50666,21 +50720,21 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _RootCloseWrapper = __webpack_require__(/*! react-overlays/lib/RootCloseWrapper */ 1570);
+var _RootCloseWrapper = __webpack_require__(/*! react-overlays/lib/RootCloseWrapper */ 1624);
 
 var _RootCloseWrapper2 = _interopRequireDefault(_RootCloseWrapper);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 223);
+var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 241);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _ValidComponentChildren = __webpack_require__(/*! ./utils/ValidComponentChildren */ 448);
+var _ValidComponentChildren = __webpack_require__(/*! ./utils/ValidComponentChildren */ 474);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -50831,7 +50885,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('dropdown-menu', DropdownMenu)
 module.exports = exports['default'];
 
 /***/ }),
-/* 1562 */
+/* 1616 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/array/from.js ***!
   \*******************************************************************************************************************/
@@ -50839,12 +50893,12 @@ module.exports = exports['default'];
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.string.iterator */ 755);
-__webpack_require__(/*! ../../modules/es6.array.from */ 1563);
+__webpack_require__(/*! ../../modules/es6.string.iterator */ 795);
+__webpack_require__(/*! ../../modules/es6.array.from */ 1617);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Array.from;
 
 /***/ }),
-/* 1563 */
+/* 1617 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.array.from.js ***!
   \****************************************************************************************************************************/
@@ -50854,16 +50908,16 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Array.from;
 
 "use strict";
 
-var ctx            = __webpack_require__(/*! ./_ctx */ 428)
-  , $export        = __webpack_require__(/*! ./_export */ 81)
-  , toObject       = __webpack_require__(/*! ./_to-object */ 294)
-  , call           = __webpack_require__(/*! ./_iter-call */ 1564)
-  , isArrayIter    = __webpack_require__(/*! ./_is-array-iter */ 1565)
-  , toLength       = __webpack_require__(/*! ./_to-length */ 754)
-  , createProperty = __webpack_require__(/*! ./_create-property */ 1566)
-  , getIterFn      = __webpack_require__(/*! ./core.get-iterator-method */ 1567);
+var ctx            = __webpack_require__(/*! ./_ctx */ 454)
+  , $export        = __webpack_require__(/*! ./_export */ 82)
+  , toObject       = __webpack_require__(/*! ./_to-object */ 316)
+  , call           = __webpack_require__(/*! ./_iter-call */ 1618)
+  , isArrayIter    = __webpack_require__(/*! ./_is-array-iter */ 1619)
+  , toLength       = __webpack_require__(/*! ./_to-length */ 794)
+  , createProperty = __webpack_require__(/*! ./_create-property */ 1620)
+  , getIterFn      = __webpack_require__(/*! ./core.get-iterator-method */ 1621);
 
-$export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 1569)(function(iter){ Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 1623)(function(iter){ Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
     var O       = toObject(arrayLike)
@@ -50893,7 +50947,7 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 1569)
 
 
 /***/ }),
-/* 1564 */
+/* 1618 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iter-call.js ***!
   \************************************************************************************************************************/
@@ -50902,7 +50956,7 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 1569)
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
-var anObject = __webpack_require__(/*! ./_an-object */ 165);
+var anObject = __webpack_require__(/*! ./_an-object */ 176);
 module.exports = function(iterator, fn, value, entries){
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -50915,7 +50969,7 @@ module.exports = function(iterator, fn, value, entries){
 };
 
 /***/ }),
-/* 1565 */
+/* 1619 */
 /*!****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_is-array-iter.js ***!
   \****************************************************************************************************************************/
@@ -50924,8 +50978,8 @@ module.exports = function(iterator, fn, value, entries){
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators  = __webpack_require__(/*! ./_iterators */ 221)
-  , ITERATOR   = __webpack_require__(/*! ./_wks */ 82)('iterator')
+var Iterators  = __webpack_require__(/*! ./_iterators */ 239)
+  , ITERATOR   = __webpack_require__(/*! ./_wks */ 83)('iterator')
   , ArrayProto = Array.prototype;
 
 module.exports = function(it){
@@ -50933,7 +50987,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 1566 */
+/* 1620 */
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_create-property.js ***!
   \******************************************************************************************************************************/
@@ -50943,8 +50997,8 @@ module.exports = function(it){
 
 "use strict";
 
-var $defineProperty = __webpack_require__(/*! ./_object-dp */ 113)
-  , createDesc      = __webpack_require__(/*! ./_property-desc */ 219);
+var $defineProperty = __webpack_require__(/*! ./_object-dp */ 114)
+  , createDesc      = __webpack_require__(/*! ./_property-desc */ 237);
 
 module.exports = function(object, index, value){
   if(index in object)$defineProperty.f(object, index, createDesc(0, value));
@@ -50952,7 +51006,7 @@ module.exports = function(object, index, value){
 };
 
 /***/ }),
-/* 1567 */
+/* 1621 */
 /*!**************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/core.get-iterator-method.js ***!
   \**************************************************************************************************************************************/
@@ -50960,9 +51014,9 @@ module.exports = function(object, index, value){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof   = __webpack_require__(/*! ./_classof */ 1568)
-  , ITERATOR  = __webpack_require__(/*! ./_wks */ 82)('iterator')
-  , Iterators = __webpack_require__(/*! ./_iterators */ 221);
+var classof   = __webpack_require__(/*! ./_classof */ 1622)
+  , ITERATOR  = __webpack_require__(/*! ./_wks */ 83)('iterator')
+  , Iterators = __webpack_require__(/*! ./_iterators */ 239);
 module.exports = __webpack_require__(/*! ./_core */ 55).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
@@ -50970,7 +51024,7 @@ module.exports = __webpack_require__(/*! ./_core */ 55).getIteratorMethod = func
 };
 
 /***/ }),
-/* 1568 */
+/* 1622 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_classof.js ***!
   \**********************************************************************************************************************/
@@ -50979,8 +51033,8 @@ module.exports = __webpack_require__(/*! ./_core */ 55).getIteratorMethod = func
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(/*! ./_cof */ 430)
-  , TAG = __webpack_require__(/*! ./_wks */ 82)('toStringTag')
+var cof = __webpack_require__(/*! ./_cof */ 456)
+  , TAG = __webpack_require__(/*! ./_wks */ 83)('toStringTag')
   // ES3 wrong here
   , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -51003,7 +51057,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 1569 */
+/* 1623 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/_iter-detect.js ***!
   \**************************************************************************************************************************/
@@ -51011,7 +51065,7 @@ module.exports = function(it){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR     = __webpack_require__(/*! ./_wks */ 82)('iterator')
+var ITERATOR     = __webpack_require__(/*! ./_wks */ 83)('iterator')
   , SAFE_CLOSING = false;
 
 try {
@@ -51034,7 +51088,7 @@ module.exports = function(exec, skipClosing){
 };
 
 /***/ }),
-/* 1570 */
+/* 1624 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/RootCloseWrapper.js ***!
   \**********************************************************************************************/
@@ -51051,7 +51105,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 297);
+var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 319);
 
 var _contains2 = _interopRequireDefault(_contains);
 
@@ -51063,15 +51117,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _addEventListener = __webpack_require__(/*! ./utils/addEventListener */ 765);
+var _addEventListener = __webpack_require__(/*! ./utils/addEventListener */ 805);
 
 var _addEventListener2 = _interopRequireDefault(_addEventListener);
 
-var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 447);
+var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 473);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -51219,7 +51273,7 @@ exports.default = RootCloseWrapper;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1571 */
+/* 1625 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/DropdownToggle.js ***!
   \*********************************************************************************************/
@@ -51264,11 +51318,11 @@ var _classnames = __webpack_require__(/*! classnames */ 43);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _Button = __webpack_require__(/*! ./Button */ 222);
+var _Button = __webpack_require__(/*! ./Button */ 240);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _SafeAnchor = __webpack_require__(/*! ./SafeAnchor */ 445);
+var _SafeAnchor = __webpack_require__(/*! ./SafeAnchor */ 471);
 
 var _SafeAnchor2 = _interopRequireDefault(_SafeAnchor);
 
@@ -51342,7 +51396,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('dropdown-toggle', DropdownTog
 module.exports = exports['default'];
 
 /***/ }),
-/* 1572 */
+/* 1626 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/utils/PropTypes.js ***!
   \**********************************************************************************************/
@@ -51357,11 +51411,11 @@ exports.__esModule = true;
 exports.requiredRoles = requiredRoles;
 exports.exclusiveRoles = exclusiveRoles;
 
-var _createChainableTypeChecker = __webpack_require__(/*! prop-types-extra/lib/utils/createChainableTypeChecker */ 444);
+var _createChainableTypeChecker = __webpack_require__(/*! prop-types-extra/lib/utils/createChainableTypeChecker */ 470);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
-var _ValidComponentChildren = __webpack_require__(/*! ./ValidComponentChildren */ 448);
+var _ValidComponentChildren = __webpack_require__(/*! ./ValidComponentChildren */ 474);
 
 var _ValidComponentChildren2 = _interopRequireDefault(_ValidComponentChildren);
 
@@ -51424,7 +51478,7 @@ function exclusiveRoles() {
 }
 
 /***/ }),
-/* 1573 */
+/* 1627 */
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/OrderingsDropdown.js ***!
   \****************************************************************************************************************************************/
@@ -51449,15 +51503,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Dropdown = __webpack_require__(/*! react-bootstrap/lib/Dropdown */ 749);
+var _Dropdown = __webpack_require__(/*! react-bootstrap/lib/Dropdown */ 789);
 
 var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
-var _MenuItem = __webpack_require__(/*! react-bootstrap/lib/MenuItem */ 766);
+var _MenuItem = __webpack_require__(/*! react-bootstrap/lib/MenuItem */ 806);
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 169);
+var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 180);
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
@@ -51530,7 +51584,7 @@ OrderingsDropdown.propTypes = {
 exports.default = OrderingsDropdown;
 
 /***/ }),
-/* 1574 */
+/* 1628 */
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/DownloadButton.js ***!
   \*****************************************************************************************************************************************************/
@@ -51555,27 +51609,27 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Modal = __webpack_require__(/*! react-bootstrap/lib/Modal */ 767);
+var _Modal = __webpack_require__(/*! react-bootstrap/lib/Modal */ 807);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 222);
+var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 240);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 169);
+var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 180);
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
-var _Disclaimers = __webpack_require__(/*! ./Disclaimers.js */ 1605);
+var _Disclaimers = __webpack_require__(/*! ./Disclaimers.js */ 1659);
 
 var _Disclaimers2 = _interopRequireDefault(_Disclaimers);
 
-var _Download = __webpack_require__(/*! ./Download.js */ 1606);
+var _Download = __webpack_require__(/*! ./Download.js */ 1660);
 
 var _Download2 = _interopRequireDefault(_Download);
 
-var _chartDataPropTypes = __webpack_require__(/*! ../../../manipulate/chartDataPropTypes.js */ 170);
+var _chartDataPropTypes = __webpack_require__(/*! ../../../manipulate/chartDataPropTypes.js */ 181);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51696,7 +51750,7 @@ DownloadButton.propTypes = {
 exports.default = DownloadButton;
 
 /***/ }),
-/* 1575 */
+/* 1629 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/events/index.js ***!
   \***********************************************************************************/
@@ -51712,19 +51766,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.listen = exports.filter = exports.off = exports.on = undefined;
 
-var _on = __webpack_require__(/*! ./on */ 299);
+var _on = __webpack_require__(/*! ./on */ 321);
 
 var _on2 = _interopRequireDefault(_on);
 
-var _off = __webpack_require__(/*! ./off */ 446);
+var _off = __webpack_require__(/*! ./off */ 472);
 
 var _off2 = _interopRequireDefault(_off);
 
-var _filter = __webpack_require__(/*! ./filter */ 1576);
+var _filter = __webpack_require__(/*! ./filter */ 1630);
 
 var _filter2 = _interopRequireDefault(_filter);
 
-var _listen = __webpack_require__(/*! ./listen */ 1578);
+var _listen = __webpack_require__(/*! ./listen */ 1632);
 
 var _listen2 = _interopRequireDefault(_listen);
 
@@ -51737,7 +51791,7 @@ exports.listen = _listen2.default;
 exports.default = { on: _on2.default, off: _off2.default, filter: _filter2.default, listen: _listen2.default };
 
 /***/ }),
-/* 1576 */
+/* 1630 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/events/filter.js ***!
   \************************************************************************************/
@@ -51753,11 +51807,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = filterEvents;
 
-var _contains = __webpack_require__(/*! ../query/contains */ 297);
+var _contains = __webpack_require__(/*! ../query/contains */ 319);
 
 var _contains2 = _interopRequireDefault(_contains);
 
-var _querySelectorAll = __webpack_require__(/*! ../query/querySelectorAll */ 1577);
+var _querySelectorAll = __webpack_require__(/*! ../query/querySelectorAll */ 1631);
 
 var _querySelectorAll2 = _interopRequireDefault(_querySelectorAll);
 
@@ -51777,7 +51831,7 @@ function filterEvents(selector, handler) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1577 */
+/* 1631 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/query/querySelectorAll.js ***!
   \*********************************************************************************************/
@@ -51821,7 +51875,7 @@ function qsa(element, selector) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1578 */
+/* 1632 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/events/listen.js ***!
   \************************************************************************************/
@@ -51836,15 +51890,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _inDOM = __webpack_require__(/*! ../util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! ../util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
-var _on = __webpack_require__(/*! ./on */ 299);
+var _on = __webpack_require__(/*! ./on */ 321);
 
 var _on2 = _interopRequireDefault(_on);
 
-var _off = __webpack_require__(/*! ./off */ 446);
+var _off = __webpack_require__(/*! ./off */ 472);
 
 var _off2 = _interopRequireDefault(_off);
 
@@ -51865,7 +51919,7 @@ exports.default = listen;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1579 */
+/* 1633 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/Modal.js ***!
   \***********************************************************************************/
@@ -51892,51 +51946,51 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _warning = __webpack_require__(/*! warning */ 168);
+var _warning = __webpack_require__(/*! warning */ 179);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _componentOrElement = __webpack_require__(/*! react-prop-types/lib/componentOrElement */ 769);
+var _componentOrElement = __webpack_require__(/*! react-prop-types/lib/componentOrElement */ 809);
 
 var _componentOrElement2 = _interopRequireDefault(_componentOrElement);
 
-var _elementType = __webpack_require__(/*! react-prop-types/lib/elementType */ 1580);
+var _elementType = __webpack_require__(/*! react-prop-types/lib/elementType */ 1634);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
-var _Portal = __webpack_require__(/*! ./Portal */ 1581);
+var _Portal = __webpack_require__(/*! ./Portal */ 1635);
 
 var _Portal2 = _interopRequireDefault(_Portal);
 
-var _ModalManager = __webpack_require__(/*! ./ModalManager */ 1582);
+var _ModalManager = __webpack_require__(/*! ./ModalManager */ 1636);
 
 var _ModalManager2 = _interopRequireDefault(_ModalManager);
 
-var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 447);
+var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 473);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
-var _addEventListener = __webpack_require__(/*! ./utils/addEventListener */ 765);
+var _addEventListener = __webpack_require__(/*! ./utils/addEventListener */ 805);
 
 var _addEventListener2 = _interopRequireDefault(_addEventListener);
 
-var _addFocusListener = __webpack_require__(/*! ./utils/addFocusListener */ 1595);
+var _addFocusListener = __webpack_require__(/*! ./utils/addFocusListener */ 1649);
 
 var _addFocusListener2 = _interopRequireDefault(_addFocusListener);
 
-var _inDOM = __webpack_require__(/*! dom-helpers/util/inDOM */ 114);
+var _inDOM = __webpack_require__(/*! dom-helpers/util/inDOM */ 115);
 
 var _inDOM2 = _interopRequireDefault(_inDOM);
 
-var _activeElement = __webpack_require__(/*! dom-helpers/activeElement */ 760);
+var _activeElement = __webpack_require__(/*! dom-helpers/activeElement */ 800);
 
 var _activeElement2 = _interopRequireDefault(_activeElement);
 
-var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 297);
+var _contains = __webpack_require__(/*! dom-helpers/query/contains */ 319);
 
 var _contains2 = _interopRequireDefault(_contains);
 
-var _getContainer = __webpack_require__(/*! ./utils/getContainer */ 771);
+var _getContainer = __webpack_require__(/*! ./utils/getContainer */ 811);
 
 var _getContainer2 = _interopRequireDefault(_getContainer);
 
@@ -52484,7 +52538,7 @@ exports.default = Modal;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1580 */
+/* 1634 */
 /*!*******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-prop-types/lib/elementType.js ***!
   \*******************************************************************************************/
@@ -52503,7 +52557,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 770);
+var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ 810);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
@@ -52527,7 +52581,7 @@ function elementType(props, propName, componentName, location, propFullName) {
 exports.default = (0, _createChainableTypeChecker2.default)(elementType);
 
 /***/ }),
-/* 1581 */
+/* 1635 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/Portal.js ***!
   \************************************************************************************/
@@ -52552,19 +52606,19 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _componentOrElement = __webpack_require__(/*! react-prop-types/lib/componentOrElement */ 769);
+var _componentOrElement = __webpack_require__(/*! react-prop-types/lib/componentOrElement */ 809);
 
 var _componentOrElement2 = _interopRequireDefault(_componentOrElement);
 
-var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 447);
+var _ownerDocument = __webpack_require__(/*! ./utils/ownerDocument */ 473);
 
 var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
-var _getContainer = __webpack_require__(/*! ./utils/getContainer */ 771);
+var _getContainer = __webpack_require__(/*! ./utils/getContainer */ 811);
 
 var _getContainer2 = _interopRequireDefault(_getContainer);
 
@@ -52689,7 +52743,7 @@ exports.default = Portal;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1582 */
+/* 1636 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/ModalManager.js ***!
   \******************************************************************************************/
@@ -52704,23 +52758,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _style = __webpack_require__(/*! dom-helpers/style */ 1583);
+var _style = __webpack_require__(/*! dom-helpers/style */ 1637);
 
 var _style2 = _interopRequireDefault(_style);
 
-var _class = __webpack_require__(/*! dom-helpers/class */ 1590);
+var _class = __webpack_require__(/*! dom-helpers/class */ 1644);
 
 var _class2 = _interopRequireDefault(_class);
 
-var _scrollbarSize = __webpack_require__(/*! dom-helpers/util/scrollbarSize */ 768);
+var _scrollbarSize = __webpack_require__(/*! dom-helpers/util/scrollbarSize */ 808);
 
 var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 
-var _isOverflowing = __webpack_require__(/*! ./utils/isOverflowing */ 775);
+var _isOverflowing = __webpack_require__(/*! ./utils/isOverflowing */ 815);
 
 var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 
-var _manageAriaHidden = __webpack_require__(/*! ./utils/manageAriaHidden */ 1594);
+var _manageAriaHidden = __webpack_require__(/*! ./utils/manageAriaHidden */ 1648);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52878,7 +52932,7 @@ exports.default = ModalManager;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1583 */
+/* 1637 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/style/index.js ***!
   \**********************************************************************************/
@@ -52894,25 +52948,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = style;
 
-var _camelizeStyle = __webpack_require__(/*! ../util/camelizeStyle */ 772);
+var _camelizeStyle = __webpack_require__(/*! ../util/camelizeStyle */ 812);
 
 var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
 
-var _hyphenateStyle = __webpack_require__(/*! ../util/hyphenateStyle */ 1585);
+var _hyphenateStyle = __webpack_require__(/*! ../util/hyphenateStyle */ 1639);
 
 var _hyphenateStyle2 = _interopRequireDefault(_hyphenateStyle);
 
-var _getComputedStyle2 = __webpack_require__(/*! ./getComputedStyle */ 1587);
+var _getComputedStyle2 = __webpack_require__(/*! ./getComputedStyle */ 1641);
 
 var _getComputedStyle3 = _interopRequireDefault(_getComputedStyle2);
 
-var _removeStyle = __webpack_require__(/*! ./removeStyle */ 1588);
+var _removeStyle = __webpack_require__(/*! ./removeStyle */ 1642);
 
 var _removeStyle2 = _interopRequireDefault(_removeStyle);
 
-var _properties = __webpack_require__(/*! ../transition/properties */ 773);
+var _properties = __webpack_require__(/*! ../transition/properties */ 813);
 
-var _isTransform = __webpack_require__(/*! ../transition/isTransform */ 1589);
+var _isTransform = __webpack_require__(/*! ../transition/isTransform */ 1643);
 
 var _isTransform2 = _interopRequireDefault(_isTransform);
 
@@ -52951,7 +53005,7 @@ function style(node, property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1584 */
+/* 1638 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/util/camelize.js ***!
   \************************************************************************************/
@@ -52976,7 +53030,7 @@ function camelize(string) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 1585 */
+/* 1639 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/util/hyphenateStyle.js ***!
   \******************************************************************************************/
@@ -52992,7 +53046,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = hyphenateStyleName;
 
-var _hyphenate = __webpack_require__(/*! ./hyphenate */ 1586);
+var _hyphenate = __webpack_require__(/*! ./hyphenate */ 1640);
 
 var _hyphenate2 = _interopRequireDefault(_hyphenate);
 
@@ -53010,7 +53064,7 @@ function hyphenateStyleName(string) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1586 */
+/* 1640 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/util/hyphenate.js ***!
   \*************************************************************************************/
@@ -53034,7 +53088,7 @@ function hyphenate(string) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1587 */
+/* 1641 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/style/getComputedStyle.js ***!
   \*********************************************************************************************/
@@ -53050,7 +53104,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _getComputedStyle;
 
-var _camelizeStyle = __webpack_require__(/*! ../util/camelizeStyle */ 772);
+var _camelizeStyle = __webpack_require__(/*! ../util/camelizeStyle */ 812);
 
 var _camelizeStyle2 = _interopRequireDefault(_camelizeStyle);
 
@@ -53100,7 +53154,7 @@ function _getComputedStyle(node) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1588 */
+/* 1642 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/style/removeStyle.js ***!
   \****************************************************************************************/
@@ -53121,7 +53175,7 @@ function removeStyle(node, key) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1589 */
+/* 1643 */
 /*!*********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/transition/isTransform.js ***!
   \*********************************************************************************************/
@@ -53144,7 +53198,7 @@ function isTransform(property) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 1590 */
+/* 1644 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/class/index.js ***!
   \**********************************************************************************/
@@ -53160,15 +53214,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.hasClass = exports.removeClass = exports.addClass = undefined;
 
-var _addClass = __webpack_require__(/*! ./addClass */ 1591);
+var _addClass = __webpack_require__(/*! ./addClass */ 1645);
 
 var _addClass2 = _interopRequireDefault(_addClass);
 
-var _removeClass = __webpack_require__(/*! ./removeClass */ 1592);
+var _removeClass = __webpack_require__(/*! ./removeClass */ 1646);
 
 var _removeClass2 = _interopRequireDefault(_removeClass);
 
-var _hasClass = __webpack_require__(/*! ./hasClass */ 774);
+var _hasClass = __webpack_require__(/*! ./hasClass */ 814);
 
 var _hasClass2 = _interopRequireDefault(_hasClass);
 
@@ -53180,7 +53234,7 @@ exports.hasClass = _hasClass2.default;
 exports.default = { addClass: _addClass2.default, removeClass: _removeClass2.default, hasClass: _hasClass2.default };
 
 /***/ }),
-/* 1591 */
+/* 1645 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/class/addClass.js ***!
   \*************************************************************************************/
@@ -53196,7 +53250,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addClass;
 
-var _hasClass = __webpack_require__(/*! ./hasClass */ 774);
+var _hasClass = __webpack_require__(/*! ./hasClass */ 814);
 
 var _hasClass2 = _interopRequireDefault(_hasClass);
 
@@ -53208,7 +53262,7 @@ function addClass(element, className) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1592 */
+/* 1646 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/class/removeClass.js ***!
   \****************************************************************************************/
@@ -53224,7 +53278,7 @@ module.exports = function removeClass(element, className) {
 };
 
 /***/ }),
-/* 1593 */
+/* 1647 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-helpers/query/isWindow.js ***!
   \*************************************************************************************/
@@ -53245,7 +53299,7 @@ function getWindow(node) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 1594 */
+/* 1648 */
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/utils/manageAriaHidden.js ***!
   \****************************************************************************************************/
@@ -53305,7 +53359,7 @@ function showSiblings(container, mountNode) {
 }
 
 /***/ }),
-/* 1595 */
+/* 1649 */
 /*!****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/utils/addFocusListener.js ***!
   \****************************************************************************************************/
@@ -53347,7 +53401,7 @@ function addFocusListener(handler) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1596 */
+/* 1650 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/Fade.js ***!
   \***********************************************************************************/
@@ -53388,7 +53442,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Transition = __webpack_require__(/*! react-overlays/lib/Transition */ 1597);
+var _Transition = __webpack_require__(/*! react-overlays/lib/Transition */ 1651);
 
 var _Transition2 = _interopRequireDefault(_Transition);
 
@@ -53483,7 +53537,7 @@ exports['default'] = Fade;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1597 */
+/* 1651 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-overlays/lib/Transition.js ***!
   \****************************************************************************************/
@@ -53507,11 +53561,11 @@ var _classnames = __webpack_require__(/*! classnames */ 43);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _on = __webpack_require__(/*! dom-helpers/events/on */ 299);
+var _on = __webpack_require__(/*! dom-helpers/events/on */ 321);
 
 var _on2 = _interopRequireDefault(_on);
 
-var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 773);
+var _properties = __webpack_require__(/*! dom-helpers/transition/properties */ 813);
 
 var _properties2 = _interopRequireDefault(_properties);
 
@@ -53523,7 +53577,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -53843,7 +53897,7 @@ Transition.defaultProps = {
 exports.default = Transition;
 
 /***/ }),
-/* 1598 */
+/* 1652 */
 /*!****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/ModalBody.js ***!
   \****************************************************************************************/
@@ -53884,7 +53938,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
@@ -53935,7 +53989,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('modal-body', ModalBody);
 module.exports = exports['default'];
 
 /***/ }),
-/* 1599 */
+/* 1653 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/ModalDialog.js ***!
   \******************************************************************************************/
@@ -53982,7 +54036,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _StyleConfig = __webpack_require__(/*! ./utils/StyleConfig */ 298);
+var _StyleConfig = __webpack_require__(/*! ./utils/StyleConfig */ 320);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -54050,7 +54104,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('modal', (0, _bootstrapUtils.b
 module.exports = exports['default'];
 
 /***/ }),
-/* 1600 */
+/* 1654 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/ModalFooter.js ***!
   \******************************************************************************************/
@@ -54091,7 +54145,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
@@ -54142,7 +54196,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('modal-footer', ModalFooter);
 module.exports = exports['default'];
 
 /***/ }),
-/* 1601 */
+/* 1655 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/ModalHeader.js ***!
   \******************************************************************************************/
@@ -54189,11 +54243,11 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _bootstrapUtils = __webpack_require__(/*! ./utils/bootstrapUtils */ 69);
 
-var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 223);
+var _createChainedFunction = __webpack_require__(/*! ./utils/createChainedFunction */ 241);
 
 var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-var _CloseButton = __webpack_require__(/*! ./CloseButton */ 1602);
+var _CloseButton = __webpack_require__(/*! ./CloseButton */ 1656);
 
 var _CloseButton2 = _interopRequireDefault(_CloseButton);
 
@@ -54283,7 +54337,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('modal-header', ModalHeader);
 module.exports = exports['default'];
 
 /***/ }),
-/* 1602 */
+/* 1656 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/CloseButton.js ***!
   \******************************************************************************************/
@@ -54370,7 +54424,7 @@ exports['default'] = CloseButton;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1603 */
+/* 1657 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/ModalTitle.js ***!
   \*****************************************************************************************/
@@ -54411,7 +54465,7 @@ var _react = __webpack_require__(/*! react */ 0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 135);
+var _elementType = __webpack_require__(/*! prop-types-extra/lib/elementType */ 140);
 
 var _elementType2 = _interopRequireDefault(_elementType);
 
@@ -54462,7 +54516,7 @@ exports['default'] = (0, _bootstrapUtils.bsClass)('modal-title', ModalTitle);
 module.exports = exports['default'];
 
 /***/ }),
-/* 1604 */
+/* 1658 */
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-bootstrap/lib/utils/splitComponentProps.js ***!
   \********************************************************************************************************/
@@ -54475,7 +54529,7 @@ module.exports = exports['default'];
 
 exports.__esModule = true;
 
-var _entries = __webpack_require__(/*! babel-runtime/core-js/object/entries */ 763);
+var _entries = __webpack_require__(/*! babel-runtime/core-js/object/entries */ 803);
 
 var _entries2 = _interopRequireDefault(_entries);
 
@@ -54505,7 +54559,7 @@ function splitComponentProps(props, Component) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 1605 */
+/* 1659 */
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Disclaimers.js ***!
   \**************************************************************************************************************************************************/
@@ -54657,7 +54711,7 @@ var PancancerText = {
 exports.default = { "fortLauderdale": BlueprintText, "zebrafish": ZebrafishText, "pancancer": PancancerText };
 
 /***/ }),
-/* 1606 */
+/* 1660 */
 /*!***********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/download-button/Download.js ***!
   \***********************************************************************************************************************************************/
@@ -54672,11 +54726,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _range2 = __webpack_require__(/*! lodash/range */ 1607);
+var _range2 = __webpack_require__(/*! lodash/range */ 1661);
 
 var _range3 = _interopRequireDefault(_range2);
 
-var _downloadjs = __webpack_require__(/*! downloadjs */ 1611);
+var _downloadjs = __webpack_require__(/*! downloadjs */ 1665);
 
 var _downloadjs2 = _interopRequireDefault(_downloadjs);
 
@@ -54722,7 +54776,7 @@ var CommenceDownload = function CommenceDownload(_ref) {
 exports.default = CommenceDownload;
 
 /***/ }),
-/* 1607 */
+/* 1661 */
 /*!***********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/range.js ***!
   \***********************************************************************/
@@ -54730,7 +54784,7 @@ exports.default = CommenceDownload;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createRange = __webpack_require__(/*! ./_createRange */ 1608);
+var createRange = __webpack_require__(/*! ./_createRange */ 1662);
 
 /**
  * Creates an array of numbers (positive and/or negative) progressing from
@@ -54779,7 +54833,7 @@ module.exports = range;
 
 
 /***/ }),
-/* 1608 */
+/* 1662 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createRange.js ***!
   \******************************************************************************/
@@ -54787,9 +54841,9 @@ module.exports = range;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseRange = __webpack_require__(/*! ./_baseRange */ 1609),
-    isIterateeCall = __webpack_require__(/*! ./_isIterateeCall */ 1610),
-    toFinite = __webpack_require__(/*! ./toFinite */ 717);
+var baseRange = __webpack_require__(/*! ./_baseRange */ 1663),
+    isIterateeCall = __webpack_require__(/*! ./_isIterateeCall */ 1664),
+    toFinite = __webpack_require__(/*! ./toFinite */ 757);
 
 /**
  * Creates a `_.range` or `_.rangeRight` function.
@@ -54820,7 +54874,7 @@ module.exports = createRange;
 
 
 /***/ }),
-/* 1609 */
+/* 1663 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseRange.js ***!
   \****************************************************************************/
@@ -54859,7 +54913,7 @@ module.exports = baseRange;
 
 
 /***/ }),
-/* 1610 */
+/* 1664 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_isIterateeCall.js ***!
   \*********************************************************************************/
@@ -54867,10 +54921,10 @@ module.exports = baseRange;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(/*! ./eq */ 282),
-    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 284),
-    isIndex = __webpack_require__(/*! ./_isIndex */ 281),
-    isObject = __webpack_require__(/*! ./isObject */ 97);
+var eq = __webpack_require__(/*! ./eq */ 304),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 306),
+    isIndex = __webpack_require__(/*! ./_isIndex */ 303),
+    isObject = __webpack_require__(/*! ./isObject */ 98);
 
 /**
  * Checks if the given arguments are from an iteratee call.
@@ -54900,7 +54954,7 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 1611 */
+/* 1665 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/downloadjs/download.js ***!
   \******************************************************************************/
@@ -55081,7 +55135,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 1612 */
+/* 1666 */
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FiltersButton.js ***!
   \*******************************************************************************************************************************************/
@@ -55106,33 +55160,33 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _chartDataPropTypes = __webpack_require__(/*! ../../chartDataPropTypes.js */ 170);
+var _chartDataPropTypes = __webpack_require__(/*! ../../chartDataPropTypes.js */ 181);
 
-var _Modal = __webpack_require__(/*! react-bootstrap/lib/Modal */ 767);
+var _Modal = __webpack_require__(/*! react-bootstrap/lib/Modal */ 807);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 222);
+var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 240);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 169);
+var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 180);
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
-var _FilterOption = __webpack_require__(/*! ./FilterOption.js */ 1613);
+var _FilterOption = __webpack_require__(/*! ./FilterOption.js */ 1667);
 
 var _FilterOption2 = _interopRequireDefault(_FilterOption);
 
-var _lodash = __webpack_require__(/*! lodash */ 300);
+var _lodash = __webpack_require__(/*! lodash */ 322);
 
-var _uncontrollable = __webpack_require__(/*! uncontrollable */ 292);
+var _uncontrollable = __webpack_require__(/*! uncontrollable */ 314);
 
 var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(/*! ./NavPills.css */ 1623);
+__webpack_require__(/*! ./NavPills.css */ 1677);
 
 
 var groupIntoPairs = function groupIntoPairs(arr, f) {
@@ -55326,7 +55380,7 @@ Main.defaultProps = {
 exports.default = Main;
 
 /***/ }),
-/* 1613 */
+/* 1667 */
 /*!******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/FilterOption.js ***!
   \******************************************************************************************************************************************/
@@ -55349,17 +55403,17 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 169);
+var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 180);
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
-var _xor = __webpack_require__(/*! lodash/xor */ 1614);
+var _xor = __webpack_require__(/*! lodash/xor */ 1668);
 
 var _xor2 = _interopRequireDefault(_xor);
 
-__webpack_require__(/*! ./Filter.css */ 1621);
+__webpack_require__(/*! ./Filter.css */ 1675);
 
-var _uncontrollable = __webpack_require__(/*! uncontrollable */ 292);
+var _uncontrollable = __webpack_require__(/*! uncontrollable */ 314);
 
 var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
@@ -55443,7 +55497,7 @@ FilterOption.defaultProps = {
 exports.default = FilterOption;
 
 /***/ }),
-/* 1614 */
+/* 1668 */
 /*!*********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/xor.js ***!
   \*********************************************************************/
@@ -55451,10 +55505,10 @@ exports.default = FilterOption;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 727),
-    baseRest = __webpack_require__(/*! ./_baseRest */ 1615),
-    baseXor = __webpack_require__(/*! ./_baseXor */ 1616),
-    isArrayLikeObject = __webpack_require__(/*! ./isArrayLikeObject */ 1620);
+var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ 767),
+    baseRest = __webpack_require__(/*! ./_baseRest */ 1669),
+    baseXor = __webpack_require__(/*! ./_baseXor */ 1670),
+    isArrayLikeObject = __webpack_require__(/*! ./isArrayLikeObject */ 1674);
 
 /**
  * Creates an array of unique values that is the
@@ -55482,7 +55536,7 @@ module.exports = xor;
 
 
 /***/ }),
-/* 1615 */
+/* 1669 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseRest.js ***!
   \***************************************************************************/
@@ -55490,9 +55544,9 @@ module.exports = xor;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(/*! ./identity */ 277),
-    overRest = __webpack_require__(/*! ./_overRest */ 746),
-    setToString = __webpack_require__(/*! ./_setToString */ 407);
+var identity = __webpack_require__(/*! ./identity */ 299),
+    overRest = __webpack_require__(/*! ./_overRest */ 786),
+    setToString = __webpack_require__(/*! ./_setToString */ 433);
 
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -55510,7 +55564,7 @@ module.exports = baseRest;
 
 
 /***/ }),
-/* 1616 */
+/* 1670 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseXor.js ***!
   \**************************************************************************/
@@ -55518,9 +55572,9 @@ module.exports = baseRest;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseDifference = __webpack_require__(/*! ./_baseDifference */ 1617),
-    baseFlatten = __webpack_require__(/*! ./_baseFlatten */ 745),
-    baseUniq = __webpack_require__(/*! ./_baseUniq */ 1618);
+var baseDifference = __webpack_require__(/*! ./_baseDifference */ 1671),
+    baseFlatten = __webpack_require__(/*! ./_baseFlatten */ 785),
+    baseUniq = __webpack_require__(/*! ./_baseUniq */ 1672);
 
 /**
  * The base implementation of methods like `_.xor`, without support for
@@ -55557,7 +55611,7 @@ module.exports = baseXor;
 
 
 /***/ }),
-/* 1617 */
+/* 1671 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseDifference.js ***!
   \*********************************************************************************/
@@ -55565,12 +55619,12 @@ module.exports = baseXor;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(/*! ./_SetCache */ 423),
-    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 409),
-    arrayIncludesWith = __webpack_require__(/*! ./_arrayIncludesWith */ 776),
-    arrayMap = __webpack_require__(/*! ./_arrayMap */ 291),
-    baseUnary = __webpack_require__(/*! ./_baseUnary */ 723),
-    cacheHas = __webpack_require__(/*! ./_cacheHas */ 424);
+var SetCache = __webpack_require__(/*! ./_SetCache */ 449),
+    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 435),
+    arrayIncludesWith = __webpack_require__(/*! ./_arrayIncludesWith */ 816),
+    arrayMap = __webpack_require__(/*! ./_arrayMap */ 313),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ 763),
+    cacheHas = __webpack_require__(/*! ./_cacheHas */ 450);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -55635,7 +55689,7 @@ module.exports = baseDifference;
 
 
 /***/ }),
-/* 1618 */
+/* 1672 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_baseUniq.js ***!
   \***************************************************************************/
@@ -55643,12 +55697,12 @@ module.exports = baseDifference;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(/*! ./_SetCache */ 423),
-    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 409),
-    arrayIncludesWith = __webpack_require__(/*! ./_arrayIncludesWith */ 776),
-    cacheHas = __webpack_require__(/*! ./_cacheHas */ 424),
-    createSet = __webpack_require__(/*! ./_createSet */ 1619),
-    setToArray = __webpack_require__(/*! ./_setToArray */ 289);
+var SetCache = __webpack_require__(/*! ./_SetCache */ 449),
+    arrayIncludes = __webpack_require__(/*! ./_arrayIncludes */ 435),
+    arrayIncludesWith = __webpack_require__(/*! ./_arrayIncludesWith */ 816),
+    cacheHas = __webpack_require__(/*! ./_cacheHas */ 450),
+    createSet = __webpack_require__(/*! ./_createSet */ 1673),
+    setToArray = __webpack_require__(/*! ./_setToArray */ 311);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -55718,7 +55772,7 @@ module.exports = baseUniq;
 
 
 /***/ }),
-/* 1619 */
+/* 1673 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/_createSet.js ***!
   \****************************************************************************/
@@ -55726,9 +55780,9 @@ module.exports = baseUniq;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Set = __webpack_require__(/*! ./_Set */ 734),
-    noop = __webpack_require__(/*! ./noop */ 709),
-    setToArray = __webpack_require__(/*! ./_setToArray */ 289);
+var Set = __webpack_require__(/*! ./_Set */ 774),
+    noop = __webpack_require__(/*! ./noop */ 749),
+    setToArray = __webpack_require__(/*! ./_setToArray */ 311);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -55748,7 +55802,7 @@ module.exports = createSet;
 
 
 /***/ }),
-/* 1620 */
+/* 1674 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/lodash/isArrayLikeObject.js ***!
   \***********************************************************************************/
@@ -55756,8 +55810,8 @@ module.exports = createSet;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArrayLike = __webpack_require__(/*! ./isArrayLike */ 284),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 111);
+var isArrayLike = __webpack_require__(/*! ./isArrayLike */ 306),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 112);
 
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -55792,7 +55846,7 @@ module.exports = isArrayLikeObject;
 
 
 /***/ }),
-/* 1621 */
+/* 1675 */
 /*!*************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/Filter.css ***!
   \*************************************************************************************************************************************/
@@ -55803,7 +55857,7 @@ module.exports = isArrayLikeObject;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!./Filter.css */ 1622);
+var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!./Filter.css */ 1676);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -55828,7 +55882,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1622 */
+/* 1676 */
 /*!***************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/Filter.css ***!
   \***************************************************************************************************************************************************************/
@@ -55847,7 +55901,7 @@ exports.push([module.i, ".gxaFilter {\n  padding-bottom: 1.25rem;\n}\n.gxaFilter
 
 
 /***/ }),
-/* 1623 */
+/* 1677 */
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/NavPills.css ***!
   \***************************************************************************************************************************************/
@@ -55858,7 +55912,7 @@ exports.push([module.i, ".gxaFilter {\n  padding-bottom: 1.25rem;\n}\n.gxaFilter
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!./NavPills.css */ 1624);
+var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!./NavPills.css */ 1678);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -55883,7 +55937,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1624 */
+/* 1678 */
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/controls/filter/NavPills.css ***!
   \*****************************************************************************************************************************************************************/
@@ -55902,7 +55956,7 @@ exports.push([module.i, ".nav  li.disabled  a {\n    color: #aaa;\n}\n\n/*\nModi
 
 
 /***/ }),
-/* 1625 */
+/* 1679 */
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/show/HeatmapCanvas.js ***!
   \*********************************************************************************************************************/
@@ -55927,23 +55981,23 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 777);
+var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 817);
 
 var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
 
-var _heatmap = __webpack_require__(/*! highcharts/modules/heatmap */ 1627);
+var _heatmap = __webpack_require__(/*! highcharts/modules/heatmap */ 1681);
 
 var _heatmap2 = _interopRequireDefault(_heatmap);
 
-var _highchartsCustomEvents = __webpack_require__(/*! highcharts-custom-events */ 1628);
+var _highchartsCustomEvents = __webpack_require__(/*! highcharts-custom-events */ 1682);
 
 var _highchartsCustomEvents2 = _interopRequireDefault(_highchartsCustomEvents);
 
-var _objectHash = __webpack_require__(/*! object-hash */ 1629);
+var _objectHash = __webpack_require__(/*! object-hash */ 1683);
 
 var _objectHash2 = _interopRequireDefault(_objectHash);
 
-var _chartDataPropTypes = __webpack_require__(/*! ../manipulate/chartDataPropTypes.js */ 170);
+var _chartDataPropTypes = __webpack_require__(/*! ../manipulate/chartDataPropTypes.js */ 181);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56246,7 +56300,7 @@ var Main = function Main(props) {
 exports.default = Main;
 
 /***/ }),
-/* 1626 */
+/* 1680 */
 /*!**************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/react-highcharts/node_modules/highcharts/highcharts.js ***!
   \**************************************************************************************************************/
@@ -56659,7 +56713,7 @@ l.push(a._id)};C.prototype.currentOptions=function(f){function r(f,d,k,b){var e;
 
 
 /***/ }),
-/* 1627 */
+/* 1681 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/highcharts/modules/heatmap.js ***!
   \*************************************************************************************/
@@ -56695,7 +56749,7 @@ a),y:Math.min(g,b),width:Math.abs(a-d),height:Math.abs(b-g)}});this.translateCol
 k)})(n)});
 
 /***/ }),
-/* 1628 */
+/* 1682 */
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/highcharts-custom-events/js/customEvents.js ***!
   \***************************************************************************************************/
@@ -57233,7 +57287,7 @@ k)})(n)});
 }));
 
 /***/ }),
-/* 1629 */
+/* 1683 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/object-hash/dist/object_hash.js ***!
   \***************************************************************************************/
@@ -57245,7 +57299,7 @@ var require;var require;!function(e){if(true)module.exports=e();else if("functio
 e[t>>5]|=128<<24-t%32,e[(t+64>>9<<4)+15]=t;for(var c=0;c<e.length;c+=16){n=E[0],r=E[1],o=E[2],i=E[3],u=E[4],a=E[5],f=E[6],s=E[7];for(var l=0;l<64;l++)l<16?I[l]=e[l+c]:I[l]=d(d(d(m(I[l-2]),I[l-7]),v(I[l-15])),I[l-16]),h=d(d(d(d(s,b(u)),g(u,a,f)),_[l]),I[l]),p=d(w(n),y(n,r,o)),s=f,f=a,a=u,u=d(i,h),i=o,o=r,r=n,n=d(h,p);E[0]=d(n,E[0]),E[1]=d(r,E[1]),E[2]=d(o,E[2]),E[3]=d(i,E[3]),E[4]=d(u,E[4]),E[5]=d(a,E[5]),E[6]=d(f,E[6]),E[7]=d(s,E[7])}return E};t.exports=function(e){return l.hash(e,_,32,!0)}}).call(this,e("lYpoI2"),"undefined"!=typeof self?self:"undefined"!=typeof window?window:{},e("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/node_modules/gulp-browserify/node_modules/crypto-browserify/sha256.js","/node_modules/gulp-browserify/node_modules/crypto-browserify")},{"./helpers":4,buffer:3,lYpoI2:10}],10:[function(e,t,n){(function(e,n,r,o,i,u,a,f,s){function c(){}var e=t.exports={};e.nextTick=function(){var e="undefined"!=typeof window&&window.setImmediate,t="undefined"!=typeof window&&window.postMessage&&window.addEventListener;if(e)return function(e){return window.setImmediate(e)};if(t){var n=[];return window.addEventListener("message",function(e){var t=e.source;if((t===window||null===t)&&"process-tick"===e.data&&(e.stopPropagation(),n.length>0)){var r=n.shift();r()}},!0),function(e){n.push(e),window.postMessage("process-tick","*")}}return function(e){setTimeout(e,0)}}(),e.title="browser",e.browser=!0,e.env={},e.argv=[],e.on=c,e.addListener=c,e.once=c,e.off=c,e.removeListener=c,e.removeAllListeners=c,e.emit=c,e.binding=function(e){throw new Error("process.binding is not supported")},e.cwd=function(){return"/"},e.chdir=function(e){throw new Error("process.chdir is not supported")}}).call(this,e("lYpoI2"),"undefined"!=typeof self?self:"undefined"!=typeof window?window:{},e("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/node_modules/gulp-browserify/node_modules/process/browser.js","/node_modules/gulp-browserify/node_modules/process")},{buffer:3,lYpoI2:10}],11:[function(e,t,n){(function(e,t,r,o,i,u,a,f,s){n.read=function(e,t,n,r,o){var i,u,a=8*o-r-1,f=(1<<a)-1,s=f>>1,c=-7,l=n?o-1:0,d=n?-1:1,h=e[t+l];for(l+=d,i=h&(1<<-c)-1,h>>=-c,c+=a;c>0;i=256*i+e[t+l],l+=d,c-=8);for(u=i&(1<<-c)-1,i>>=-c,c+=r;c>0;u=256*u+e[t+l],l+=d,c-=8);if(0===i)i=1-s;else{if(i===f)return u?NaN:(h?-1:1)*(1/0);u+=Math.pow(2,r),i-=s}return(h?-1:1)*u*Math.pow(2,i-r)},n.write=function(e,t,n,r,o,i){var u,a,f,s=8*i-o-1,c=(1<<s)-1,l=c>>1,d=23===o?Math.pow(2,-24)-Math.pow(2,-77):0,h=r?0:i-1,p=r?1:-1,g=t<0||0===t&&1/t<0?1:0;for(t=Math.abs(t),isNaN(t)||t===1/0?(a=isNaN(t)?1:0,u=c):(u=Math.floor(Math.log(t)/Math.LN2),t*(f=Math.pow(2,-u))<1&&(u--,f*=2),t+=u+l>=1?d/f:d*Math.pow(2,1-l),t*f>=2&&(u++,f/=2),u+l>=c?(a=0,u=c):u+l>=1?(a=(t*f-1)*Math.pow(2,o),u+=l):(a=t*Math.pow(2,l-1)*Math.pow(2,o),u=0));o>=8;e[n+h]=255&a,h+=p,a/=256,o-=8);for(u=u<<o|a,s+=o;s>0;e[n+h]=255&u,h+=p,u/=256,s-=8);e[n+h-p]|=128*g}}).call(this,e("lYpoI2"),"undefined"!=typeof self?self:"undefined"!=typeof window?window:{},e("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/node_modules/ieee754/index.js","/node_modules/ieee754")},{buffer:3,lYpoI2:10}]},{},[1])(1)});
 
 /***/ }),
-/* 1630 */
+/* 1684 */
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/heatmapCellTooltipFormatter.js ***!
   \****************************************************************************************************************************************************/
@@ -57270,11 +57324,11 @@ var _server = __webpack_require__(/*! react-dom/server */ 54);
 
 var _server2 = _interopRequireDefault(_server);
 
-var _HeatmapCellTooltip = __webpack_require__(/*! ./HeatmapCellTooltip.js */ 1631);
+var _HeatmapCellTooltip = __webpack_require__(/*! ./HeatmapCellTooltip.js */ 1685);
 
 var _HeatmapCellTooltip2 = _interopRequireDefault(_HeatmapCellTooltip);
 
-var _he = __webpack_require__(/*! he */ 778);
+var _he = __webpack_require__(/*! he */ 818);
 
 var _he2 = _interopRequireDefault(_he);
 
@@ -57304,7 +57358,7 @@ exports.default = function (config) {
 };
 
 /***/ }),
-/* 1631 */
+/* 1685 */
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/HeatmapCellTooltip.js ***!
   \*******************************************************************************************************************************************/
@@ -57327,7 +57381,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _expressionAtlasNumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 1632);
+var _expressionAtlasNumberFormat = __webpack_require__(/*! expression-atlas-number-format */ 1686);
 
 var _expressionAtlasNumberFormat2 = _interopRequireDefault(_expressionAtlasNumberFormat);
 
@@ -57506,7 +57560,7 @@ HeatmapCellTooltip.propTypes = {
 exports.default = HeatmapCellTooltip;
 
 /***/ }),
-/* 1632 */
+/* 1686 */
 /*!***************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-number-format/lib/index.js ***!
   \***************************************************************************************************/
@@ -57521,7 +57575,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ScientificNotationNumber = __webpack_require__(/*! ./ScientificNotationNumber.js */ 1633);
+var _ScientificNotationNumber = __webpack_require__(/*! ./ScientificNotationNumber.js */ 1687);
 
 var _ScientificNotationNumber2 = _interopRequireDefault(_ScientificNotationNumber);
 
@@ -57530,7 +57584,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _ScientificNotationNumber2.default;
 
 /***/ }),
-/* 1633 */
+/* 1687 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-number-format/lib/ScientificNotationNumber.js ***!
   \**********************************************************************************************************************/
@@ -57607,7 +57661,7 @@ ScientificNotationNumber.defaultProps = {
 exports.default = ScientificNotationNumber;
 
 /***/ }),
-/* 1634 */
+/* 1688 */
 /*!***************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/formatters/axesFormatters.js ***!
   \***************************************************************************************************************************************/
@@ -57634,7 +57688,7 @@ var _server = __webpack_require__(/*! react-dom/server */ 54);
 
 var _server2 = _interopRequireDefault(_server);
 
-var _he = __webpack_require__(/*! he */ 778);
+var _he = __webpack_require__(/*! he */ 818);
 
 var _he2 = _interopRequireDefault(_he);
 
@@ -57715,7 +57769,7 @@ exports.default = function (config) {
 };
 
 /***/ }),
-/* 1635 */
+/* 1689 */
 /*!*********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/Main.js ***!
   \*********************************************************************************************************************************/
@@ -57739,15 +57793,15 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _DataSeriesHeatmapLegend = __webpack_require__(/*! ./DataSeriesHeatmapLegend.js */ 1636);
+var _DataSeriesHeatmapLegend = __webpack_require__(/*! ./DataSeriesHeatmapLegend.js */ 1690);
 
 var _DataSeriesHeatmapLegend2 = _interopRequireDefault(_DataSeriesHeatmapLegend);
 
-var _GradientHeatmapLegend = __webpack_require__(/*! ./GradientHeatmapLegend.js */ 1639);
+var _GradientHeatmapLegend = __webpack_require__(/*! ./GradientHeatmapLegend.js */ 1693);
 
 var _GradientHeatmapLegend2 = _interopRequireDefault(_GradientHeatmapLegend);
 
-var _chartDataPropTypes = __webpack_require__(/*! ../../manipulate/chartDataPropTypes.js */ 170);
+var _chartDataPropTypes = __webpack_require__(/*! ../../manipulate/chartDataPropTypes.js */ 181);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57830,7 +57884,7 @@ exports.DataSeriesLegend = DataSeriesLegend;
 exports.GradientLegend = GradientLegend;
 
 /***/ }),
-/* 1636 */
+/* 1690 */
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.js ***!
   \****************************************************************************************************************************************************/
@@ -57853,7 +57907,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-__webpack_require__(/*! ./DataSeriesHeatmapLegend.css */ 1637);
+__webpack_require__(/*! ./DataSeriesHeatmapLegend.css */ 1691);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57905,7 +57959,7 @@ DataSeriesHeatmapLegend.propTypes = {
 exports.default = DataSeriesHeatmapLegend;
 
 /***/ }),
-/* 1637 */
+/* 1691 */
 /*!*****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.css ***!
   \*****************************************************************************************************************************************************/
@@ -57916,7 +57970,7 @@ exports.default = DataSeriesHeatmapLegend;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader!./DataSeriesHeatmapLegend.css */ 1638);
+var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader!./DataSeriesHeatmapLegend.css */ 1692);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -57941,7 +57995,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1638 */
+/* 1692 */
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/DataSeriesHeatmapLegend.css ***!
   \*******************************************************************************************************************************************************************************/
@@ -57960,7 +58014,7 @@ exports.push([module.i, ".gxaHeatmapLegend {\n  color: #606060;\n  border: 0 sol
 
 
 /***/ }),
-/* 1639 */
+/* 1693 */
 /*!**************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.js ***!
   \**************************************************************************************************************************************************/
@@ -57983,9 +58037,9 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _utils = __webpack_require__(/*! ../../utils.js */ 779);
+var _utils = __webpack_require__(/*! ../../utils.js */ 819);
 
-__webpack_require__(/*! ./GradientHeatmapLegend.css */ 1640);
+__webpack_require__(/*! ./GradientHeatmapLegend.css */ 1694);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58063,7 +58117,7 @@ GradientHeatmapLegend.propTypes = {
 exports.default = GradientHeatmapLegend;
 
 /***/ }),
-/* 1640 */
+/* 1694 */
 /*!***************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.css ***!
   \***************************************************************************************************************************************************/
@@ -58074,7 +58128,7 @@ exports.default = GradientHeatmapLegend;
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader!./GradientHeatmapLegend.css */ 1641);
+var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader!./GradientHeatmapLegend.css */ 1695);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -58099,7 +58153,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1641 */
+/* 1695 */
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/heatmap-legend/GradientHeatmapLegend.css ***!
   \*****************************************************************************************************************************************************************************/
@@ -58118,7 +58172,7 @@ exports.push([module.i, ".gxaGradientLegend {\n  font-size: 12px;\n  padding-top
 
 
 /***/ }),
-/* 1642 */
+/* 1696 */
 /*!*********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.js ***!
   \*********************************************************************************************************************************************/
@@ -58143,21 +58197,21 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 222);
+var _Button = __webpack_require__(/*! react-bootstrap/lib/Button */ 240);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 169);
+var _Glyphicon = __webpack_require__(/*! react-bootstrap/lib/Glyphicon */ 180);
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
-var _rcSlider = __webpack_require__(/*! rc-slider */ 1643);
+var _rcSlider = __webpack_require__(/*! rc-slider */ 1697);
 
 var _rcSlider2 = _interopRequireDefault(_rcSlider);
 
-__webpack_require__(/*! rc-slider/assets/index.css */ 1686);
+__webpack_require__(/*! rc-slider/assets/index.css */ 1740);
 
-__webpack_require__(/*! ./CoexpressionOption.css */ 1688);
+__webpack_require__(/*! ./CoexpressionOption.css */ 1742);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58249,7 +58303,7 @@ CoexpressionOption.propTypes = {
 exports.default = CoexpressionOption;
 
 /***/ }),
-/* 1643 */
+/* 1697 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/index.js ***!
   \*****************************************************************************/
@@ -58259,10 +58313,10 @@ exports.default = CoexpressionOption;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Slider__ = __webpack_require__(/*! ./Slider */ 1644);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Range__ = __webpack_require__(/*! ./Range */ 1660);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Handle__ = __webpack_require__(/*! ./Handle */ 449);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createSliderWithTooltip__ = __webpack_require__(/*! ./createSliderWithTooltip */ 1662);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Slider__ = __webpack_require__(/*! ./Slider */ 1698);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Range__ = __webpack_require__(/*! ./Range */ 1714);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Handle__ = __webpack_require__(/*! ./Handle */ 475);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createSliderWithTooltip__ = __webpack_require__(/*! ./createSliderWithTooltip */ 1716);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Range", function() { return __WEBPACK_IMPORTED_MODULE_1__Range__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Handle", function() { return __WEBPACK_IMPORTED_MODULE_2__Handle__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createSliderWithTooltip", function() { return __WEBPACK_IMPORTED_MODULE_3__createSliderWithTooltip__["a"]; });
@@ -58278,7 +58332,7 @@ __WEBPACK_IMPORTED_MODULE_0__Slider__["a" /* default */].createSliderWithTooltip
 
 
 /***/ }),
-/* 1644 */
+/* 1698 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/Slider.js ***!
   \******************************************************************************/
@@ -58291,7 +58345,7 @@ __WEBPACK_IMPORTED_MODULE_0__Slider__["a" /* default */].createSliderWithTooltip
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
@@ -58301,11 +58355,11 @@ __WEBPACK_IMPORTED_MODULE_0__Slider__["a" /* default */].createSliderWithTooltip
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning__ = __webpack_require__(/*! warning */ 168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning__ = __webpack_require__(/*! warning */ 179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_Track__ = __webpack_require__(/*! ./common/Track */ 781);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__common_createSlider__ = __webpack_require__(/*! ./common/createSlider */ 782);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils__ = __webpack_require__(/*! ./utils */ 450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_Track__ = __webpack_require__(/*! ./common/Track */ 821);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__common_createSlider__ = __webpack_require__(/*! ./common/createSlider */ 822);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils__ = __webpack_require__(/*! ./utils */ 476);
 
 
 
@@ -58504,7 +58558,7 @@ Slider.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_9__common_createSlider__["a" /* default */])(Slider));
 
 /***/ }),
-/* 1645 */
+/* 1699 */
 /*!*******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/define-property.js ***!
   \*******************************************************************************************************************************/
@@ -58512,14 +58566,14 @@ Slider.propTypes = {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.object.define-property */ 1646);
+__webpack_require__(/*! ../../modules/es6.object.define-property */ 1700);
 var $Object = __webpack_require__(/*! ../../modules/_core */ 55).Object;
 module.exports = function defineProperty(it, key, desc){
   return $Object.defineProperty(it, key, desc);
 };
 
 /***/ }),
-/* 1646 */
+/* 1700 */
 /*!****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.define-property.js ***!
   \****************************************************************************************************************************************/
@@ -58527,12 +58581,12 @@ module.exports = function defineProperty(it, key, desc){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(/*! ./_export */ 81);
+var $export = __webpack_require__(/*! ./_export */ 82);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 133), 'Object', {defineProperty: __webpack_require__(/*! ./_object-dp */ 113).f});
+$export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 138), 'Object', {defineProperty: __webpack_require__(/*! ./_object-dp */ 114).f});
 
 /***/ }),
-/* 1647 */
+/* 1701 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/helpers/get.js ***!
   \************************************************************************************/
@@ -58545,11 +58599,11 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 133),
 
 exports.__esModule = true;
 
-var _getPrototypeOf = __webpack_require__(/*! ../core-js/object/get-prototype-of */ 1648);
+var _getPrototypeOf = __webpack_require__(/*! ../core-js/object/get-prototype-of */ 1702);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _getOwnPropertyDescriptor = __webpack_require__(/*! ../core-js/object/get-own-property-descriptor */ 1651);
+var _getOwnPropertyDescriptor = __webpack_require__(/*! ../core-js/object/get-own-property-descriptor */ 1705);
 
 var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
 
@@ -58581,7 +58635,7 @@ exports.default = function get(object, property, receiver) {
 };
 
 /***/ }),
-/* 1648 */
+/* 1702 */
 /*!********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/get-prototype-of.js ***!
   \********************************************************************************************************/
@@ -58589,10 +58643,10 @@ exports.default = function get(object, property, receiver) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/get-prototype-of */ 1649), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/get-prototype-of */ 1703), __esModule: true };
 
 /***/ }),
-/* 1649 */
+/* 1703 */
 /*!********************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/get-prototype-of.js ***!
   \********************************************************************************************************************************/
@@ -58600,11 +58654,11 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.object.get-prototype-of */ 1650);
+__webpack_require__(/*! ../../modules/es6.object.get-prototype-of */ 1704);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.getPrototypeOf;
 
 /***/ }),
-/* 1650 */
+/* 1704 */
 /*!*****************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.get-prototype-of.js ***!
   \*****************************************************************************************************************************************/
@@ -58613,17 +58667,17 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 55).Object.getPr
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-var toObject        = __webpack_require__(/*! ./_to-object */ 294)
-  , $getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 758);
+var toObject        = __webpack_require__(/*! ./_to-object */ 316)
+  , $getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 798);
 
-__webpack_require__(/*! ./_object-sap */ 783)('getPrototypeOf', function(){
+__webpack_require__(/*! ./_object-sap */ 823)('getPrototypeOf', function(){
   return function getPrototypeOf(it){
     return $getPrototypeOf(toObject(it));
   };
 });
 
 /***/ }),
-/* 1651 */
+/* 1705 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/core-js/object/get-own-property-descriptor.js ***!
   \*******************************************************************************************************************/
@@ -58631,10 +58685,10 @@ __webpack_require__(/*! ./_object-sap */ 783)('getPrototypeOf', function(){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/get-own-property-descriptor */ 1652), __esModule: true };
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/get-own-property-descriptor */ 1706), __esModule: true };
 
 /***/ }),
-/* 1652 */
+/* 1706 */
 /*!*******************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/fn/object/get-own-property-descriptor.js ***!
   \*******************************************************************************************************************************************/
@@ -58642,14 +58696,14 @@ module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ../../modules/es6.object.get-own-property-descriptor */ 1653);
+__webpack_require__(/*! ../../modules/es6.object.get-own-property-descriptor */ 1707);
 var $Object = __webpack_require__(/*! ../../modules/_core */ 55).Object;
 module.exports = function getOwnPropertyDescriptor(it, key){
   return $Object.getOwnPropertyDescriptor(it, key);
 };
 
 /***/ }),
-/* 1653 */
+/* 1707 */
 /*!****************************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js ***!
   \****************************************************************************************************************************************************/
@@ -58658,17 +58712,17 @@ module.exports = function getOwnPropertyDescriptor(it, key){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-var toIObject                 = __webpack_require__(/*! ./_to-iobject */ 98)
-  , $getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 442).f;
+var toIObject                 = __webpack_require__(/*! ./_to-iobject */ 99)
+  , $getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 468).f;
 
-__webpack_require__(/*! ./_object-sap */ 783)('getOwnPropertyDescriptor', function(){
+__webpack_require__(/*! ./_object-sap */ 823)('getOwnPropertyDescriptor', function(){
   return function getOwnPropertyDescriptor(it, key){
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
 
 /***/ }),
-/* 1654 */
+/* 1708 */
 /*!******************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-util/es/Dom/addEventListener.js ***!
   \******************************************************************************************/
@@ -58678,9 +58732,9 @@ __webpack_require__(/*! ./_object-sap */ 783)('getOwnPropertyDescriptor', functi
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addEventListenerWrap;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_add_dom_event_listener__ = __webpack_require__(/*! add-dom-event-listener */ 784);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_add_dom_event_listener__ = __webpack_require__(/*! add-dom-event-listener */ 824);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_add_dom_event_listener___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_add_dom_event_listener__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(/*! react-dom */ 12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(/*! react-dom */ 9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 
 
@@ -58694,7 +58748,7 @@ function addEventListenerWrap(target, eventType, cb) {
 }
 
 /***/ }),
-/* 1655 */
+/* 1709 */
 /*!*************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/add-dom-event-listener/lib/EventObject.js ***!
   \*************************************************************************************************/
@@ -58709,11 +58763,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _EventBaseObject = __webpack_require__(/*! ./EventBaseObject */ 1656);
+var _EventBaseObject = __webpack_require__(/*! ./EventBaseObject */ 1710);
 
 var _EventBaseObject2 = _interopRequireDefault(_EventBaseObject);
 
-var _objectAssign = __webpack_require__(/*! object-assign */ 399);
+var _objectAssign = __webpack_require__(/*! object-assign */ 425);
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -58982,7 +59036,7 @@ exports["default"] = DomEventObject;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1656 */
+/* 1710 */
 /*!*****************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/add-dom-event-listener/lib/EventBaseObject.js ***!
   \*****************************************************************************************************/
@@ -59053,7 +59107,7 @@ exports["default"] = EventBaseObject;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1657 */
+/* 1711 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/common/Steps.js ***!
   \************************************************************************************/
@@ -59062,7 +59116,7 @@ module.exports = exports['default'];
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__ = __webpack_require__(/*! babel-runtime/helpers/extends */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_extends__);
@@ -59070,7 +59124,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(/*! classnames */ 43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_warning__ = __webpack_require__(/*! warning */ 168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_warning__ = __webpack_require__(/*! warning */ 179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_warning__);
 
 
@@ -59131,7 +59185,7 @@ var Steps = function Steps(_ref) {
 /* harmony default export */ __webpack_exports__["a"] = (Steps);
 
 /***/ }),
-/* 1658 */
+/* 1712 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/common/Marks.js ***!
   \************************************************************************************/
@@ -59142,9 +59196,9 @@ var Steps = function Steps(_ref) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(/*! babel-runtime/helpers/extends */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(/*! babel-runtime/helpers/typeof */ 295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__ = __webpack_require__(/*! babel-runtime/helpers/typeof */ 317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_typeof__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(/*! react */ 0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
@@ -59218,7 +59272,7 @@ var Marks = function Marks(_ref) {
 /* harmony default export */ __webpack_exports__["a"] = (Marks);
 
 /***/ }),
-/* 1659 */
+/* 1713 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-util/es/KeyCode.js ***!
   \*****************************************************************************/
@@ -59747,7 +59801,7 @@ KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
 /* harmony default export */ __webpack_exports__["a"] = (KeyCode);
 
 /***/ }),
-/* 1660 */
+/* 1714 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/Range.js ***!
   \*****************************************************************************/
@@ -59756,15 +59810,15 @@ KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(/*! babel-runtime/helpers/toConsumableArray */ 785);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__ = __webpack_require__(/*! babel-runtime/helpers/toConsumableArray */ 825);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_toConsumableArray__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__ = __webpack_require__(/*! babel-runtime/helpers/extends */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn__);
@@ -59776,13 +59830,13 @@ KeyCode.isCharacterKey = function isCharacterKey(keyCode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_classnames__ = __webpack_require__(/*! classnames */ 43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_shallowequal__ = __webpack_require__(/*! shallowequal */ 1661);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_shallowequal__ = __webpack_require__(/*! shallowequal */ 1715);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_shallowequal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_shallowequal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_warning__ = __webpack_require__(/*! warning */ 168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_warning__ = __webpack_require__(/*! warning */ 179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__common_Track__ = __webpack_require__(/*! ./common/Track */ 781);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__common_createSlider__ = __webpack_require__(/*! ./common/createSlider */ 782);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils__ = __webpack_require__(/*! ./utils */ 450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__common_Track__ = __webpack_require__(/*! ./common/Track */ 821);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__common_createSlider__ = __webpack_require__(/*! ./common/createSlider */ 822);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils__ = __webpack_require__(/*! ./utils */ 476);
 
 
 
@@ -60203,7 +60257,7 @@ Range.defaultProps = {
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_13__common_createSlider__["a" /* default */])(Range));
 
 /***/ }),
-/* 1661 */
+/* 1715 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/shallowequal/index.js ***!
   \*****************************************************************************/
@@ -60264,7 +60318,7 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 
 
 /***/ }),
-/* 1662 */
+/* 1716 */
 /*!***********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/es/createSliderWithTooltip.js ***!
   \***********************************************************************************************/
@@ -60276,13 +60330,13 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = createSliderWithTooltip;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__(/*! babel-runtime/helpers/objectWithoutProperties */ 42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_objectWithoutProperties__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__ = __webpack_require__(/*! babel-runtime/helpers/extends */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_possibleConstructorReturn__);
@@ -60292,8 +60346,8 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_tooltip__ = __webpack_require__(/*! rc-tooltip */ 1663);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Handle__ = __webpack_require__(/*! ./Handle */ 449);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_tooltip__ = __webpack_require__(/*! rc-tooltip */ 1717);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Handle__ = __webpack_require__(/*! ./Handle */ 475);
 
 
 
@@ -60394,7 +60448,7 @@ function createSliderWithTooltip(Component) {
 }
 
 /***/ }),
-/* 1663 */
+/* 1717 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-tooltip/es/index.js ***!
   \******************************************************************************/
@@ -60403,13 +60457,13 @@ function createSliderWithTooltip(Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Tooltip__ = __webpack_require__(/*! ./Tooltip */ 1664);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Tooltip__ = __webpack_require__(/*! ./Tooltip */ 1718);
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__Tooltip__["a" /* default */]);
 
 /***/ }),
-/* 1664 */
+/* 1718 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-tooltip/es/Tooltip.js ***!
   \********************************************************************************/
@@ -60424,7 +60478,7 @@ function createSliderWithTooltip(Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
@@ -60434,8 +60488,8 @@ function createSliderWithTooltip(Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_trigger__ = __webpack_require__(/*! rc-trigger */ 1665);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__placements__ = __webpack_require__(/*! ./placements */ 1685);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_trigger__ = __webpack_require__(/*! rc-trigger */ 1719);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__placements__ = __webpack_require__(/*! ./placements */ 1739);
 
 
 
@@ -60576,7 +60630,7 @@ Tooltip.defaultProps = {
 /* harmony default export */ __webpack_exports__["a"] = (Tooltip);
 
 /***/ }),
-/* 1665 */
+/* 1719 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-trigger/es/index.js ***!
   \******************************************************************************/
@@ -60591,16 +60645,16 @@ Tooltip.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom__ = __webpack_require__(/*! react-dom */ 12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom__ = __webpack_require__(/*! react-dom */ 9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_create_react_class__ = __webpack_require__(/*! create-react-class */ 690);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_create_react_class__ = __webpack_require__(/*! create-react-class */ 730);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_create_react_class__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_util_es_Dom_contains__ = __webpack_require__(/*! rc-util/es/Dom/contains */ 1666);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_util_lib_Dom_addEventListener__ = __webpack_require__(/*! rc-util/lib/Dom/addEventListener */ 786);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_util_es_Dom_contains__ = __webpack_require__(/*! rc-util/es/Dom/contains */ 1720);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_util_lib_Dom_addEventListener__ = __webpack_require__(/*! rc-util/lib/Dom/addEventListener */ 826);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_util_lib_Dom_addEventListener___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rc_util_lib_Dom_addEventListener__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Popup__ = __webpack_require__(/*! ./Popup */ 1667);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils__ = __webpack_require__(/*! ./utils */ 792);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_util_lib_getContainerRenderMixin__ = __webpack_require__(/*! rc-util/lib/getContainerRenderMixin */ 1684);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Popup__ = __webpack_require__(/*! ./Popup */ 1721);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils__ = __webpack_require__(/*! ./utils */ 832);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_util_lib_getContainerRenderMixin__ = __webpack_require__(/*! rc-util/lib/getContainerRenderMixin */ 1738);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_util_lib_getContainerRenderMixin___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rc_util_lib_getContainerRenderMixin__);
 
 
@@ -61061,7 +61115,7 @@ var Trigger = __WEBPACK_IMPORTED_MODULE_4_create_react_class___default()({
 /* harmony default export */ __webpack_exports__["a"] = (Trigger);
 
 /***/ }),
-/* 1666 */
+/* 1720 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-util/es/Dom/contains.js ***!
   \**********************************************************************************/
@@ -61084,7 +61138,7 @@ function contains(root, n) {
 }
 
 /***/ }),
-/* 1667 */
+/* 1721 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-trigger/es/Popup.js ***!
   \******************************************************************************/
@@ -61097,7 +61151,7 @@ function contains(root, n) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
@@ -61107,14 +61161,14 @@ function contains(root, n) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(/*! react-dom */ 12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom__ = __webpack_require__(/*! react-dom */ 9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_align__ = __webpack_require__(/*! rc-align */ 1668);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_align__ = __webpack_require__(/*! rc-align */ 1722);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_align___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rc_align__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_animate__ = __webpack_require__(/*! rc-animate */ 1677);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__PopupInner__ = __webpack_require__(/*! ./PopupInner */ 1683);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__LazyRenderBox__ = __webpack_require__(/*! ./LazyRenderBox */ 791);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils__ = __webpack_require__(/*! ./utils */ 792);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_animate__ = __webpack_require__(/*! rc-animate */ 1731);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__PopupInner__ = __webpack_require__(/*! ./PopupInner */ 1737);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__LazyRenderBox__ = __webpack_require__(/*! ./LazyRenderBox */ 831);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils__ = __webpack_require__(/*! ./utils */ 832);
 
 
 
@@ -61358,7 +61412,7 @@ var _initialiseProps = function _initialiseProps() {
 /* harmony default export */ __webpack_exports__["a"] = (Popup);
 
 /***/ }),
-/* 1668 */
+/* 1722 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-align/lib/index.js ***!
   \*****************************************************************************/
@@ -61373,7 +61427,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Align = __webpack_require__(/*! ./Align */ 1669);
+var _Align = __webpack_require__(/*! ./Align */ 1723);
 
 var _Align2 = _interopRequireDefault(_Align);
 
@@ -61384,7 +61438,7 @@ exports["default"] = _Align2["default"]; // export this package's api
 module.exports = exports['default'];
 
 /***/ }),
-/* 1669 */
+/* 1723 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-align/lib/Align.js ***!
   \*****************************************************************************/
@@ -61407,19 +61461,19 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _domAlign = __webpack_require__(/*! dom-align */ 1670);
+var _domAlign = __webpack_require__(/*! dom-align */ 1724);
 
 var _domAlign2 = _interopRequireDefault(_domAlign);
 
-var _addEventListener = __webpack_require__(/*! rc-util/lib/Dom/addEventListener */ 786);
+var _addEventListener = __webpack_require__(/*! rc-util/lib/Dom/addEventListener */ 826);
 
 var _addEventListener2 = _interopRequireDefault(_addEventListener);
 
-var _isWindow = __webpack_require__(/*! ./isWindow */ 1676);
+var _isWindow = __webpack_require__(/*! ./isWindow */ 1730);
 
 var _isWindow2 = _interopRequireDefault(_isWindow);
 
@@ -61575,7 +61629,7 @@ exports["default"] = Align;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1670 */
+/* 1724 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/index.js ***!
   \*****************************************************************************/
@@ -61585,13 +61639,13 @@ module.exports = exports['default'];
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getOffsetParent__ = __webpack_require__(/*! ./getOffsetParent */ 787);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getVisibleRectForElement__ = __webpack_require__(/*! ./getVisibleRectForElement */ 1672);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__adjustForViewport__ = __webpack_require__(/*! ./adjustForViewport */ 1673);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getRegion__ = __webpack_require__(/*! ./getRegion */ 1674);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__getElFuturePos__ = __webpack_require__(/*! ./getElFuturePos */ 1675);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__getAlignOffset__ = __webpack_require__(/*! ./getAlignOffset */ 788);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getOffsetParent__ = __webpack_require__(/*! ./getOffsetParent */ 827);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getVisibleRectForElement__ = __webpack_require__(/*! ./getVisibleRectForElement */ 1726);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__adjustForViewport__ = __webpack_require__(/*! ./adjustForViewport */ 1727);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getRegion__ = __webpack_require__(/*! ./getRegion */ 1728);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__getElFuturePos__ = __webpack_require__(/*! ./getElFuturePos */ 1729);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__getAlignOffset__ = __webpack_require__(/*! ./getAlignOffset */ 828);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
@@ -61839,7 +61893,7 @@ domAlign.__getVisibleRectForElement = __WEBPACK_IMPORTED_MODULE_2__getVisibleRec
  **/
 
 /***/ }),
-/* 1671 */
+/* 1725 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/propertyUtils.js ***!
   \*************************************************************************************/
@@ -61955,7 +62009,7 @@ function setTransformXY(node, xy) {
 }
 
 /***/ }),
-/* 1672 */
+/* 1726 */
 /*!************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/getVisibleRectForElement.js ***!
   \************************************************************************************************/
@@ -61964,8 +62018,8 @@ function setTransformXY(node, xy) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getOffsetParent__ = __webpack_require__(/*! ./getOffsetParent */ 787);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getOffsetParent__ = __webpack_require__(/*! ./getOffsetParent */ 827);
 
 
 
@@ -62030,7 +62084,7 @@ function getVisibleRectForElement(element) {
 /* harmony default export */ __webpack_exports__["a"] = (getVisibleRectForElement);
 
 /***/ }),
-/* 1673 */
+/* 1727 */
 /*!*****************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/adjustForViewport.js ***!
   \*****************************************************************************************/
@@ -62039,7 +62093,7 @@ function getVisibleRectForElement(element) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 242);
 
 
 function adjustForViewport(elFuturePos, elRegion, xRect, yRect, overflow) {
@@ -62086,7 +62140,7 @@ function adjustForViewport(elFuturePos, elRegion, xRect, yRect, overflow) {
 /* harmony default export */ __webpack_exports__["a"] = (adjustForViewport);
 
 /***/ }),
-/* 1674 */
+/* 1728 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/getRegion.js ***!
   \*********************************************************************************/
@@ -62095,7 +62149,7 @@ function adjustForViewport(elFuturePos, elRegion, xRect, yRect, overflow) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(/*! ./utils */ 242);
 
 
 function getRegion(node) {
@@ -62123,7 +62177,7 @@ function getRegion(node) {
 /* harmony default export */ __webpack_exports__["a"] = (getRegion);
 
 /***/ }),
-/* 1675 */
+/* 1729 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-align/es/getElFuturePos.js ***!
   \**************************************************************************************/
@@ -62132,7 +62186,7 @@ function getRegion(node) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getAlignOffset__ = __webpack_require__(/*! ./getAlignOffset */ 788);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getAlignOffset__ = __webpack_require__(/*! ./getAlignOffset */ 828);
 
 
 function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
@@ -62160,7 +62214,7 @@ function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
 /* harmony default export */ __webpack_exports__["a"] = (getElFuturePos);
 
 /***/ }),
-/* 1676 */
+/* 1730 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-align/lib/isWindow.js ***!
   \********************************************************************************/
@@ -62183,7 +62237,7 @@ function isWindow(obj) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1677 */
+/* 1731 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-animate/es/Animate.js ***!
   \********************************************************************************/
@@ -62194,11 +62248,11 @@ module.exports = exports['default'];
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(/*! babel-runtime/helpers/extends */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ 182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
@@ -62208,9 +62262,9 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ChildrenUtils__ = __webpack_require__(/*! ./ChildrenUtils */ 1678);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__AnimateChild__ = __webpack_require__(/*! ./AnimateChild */ 1679);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__util__ = __webpack_require__(/*! ./util */ 790);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ChildrenUtils__ = __webpack_require__(/*! ./ChildrenUtils */ 1732);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__AnimateChild__ = __webpack_require__(/*! ./AnimateChild */ 1733);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__util__ = __webpack_require__(/*! ./util */ 830);
 
 
 
@@ -62563,7 +62617,7 @@ var _initialiseProps = function _initialiseProps() {
 /* harmony default export */ __webpack_exports__["a"] = (Animate);
 
 /***/ }),
-/* 1678 */
+/* 1732 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-animate/es/ChildrenUtils.js ***!
   \**************************************************************************************/
@@ -62683,7 +62737,7 @@ function mergeChildren(prev, next) {
 }
 
 /***/ }),
-/* 1679 */
+/* 1733 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-animate/es/AnimateChild.js ***!
   \*************************************************************************************/
@@ -62692,11 +62746,11 @@ function mergeChildren(prev, next) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(/*! babel-runtime/helpers/typeof */ 295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(/*! babel-runtime/helpers/typeof */ 317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
@@ -62704,13 +62758,13 @@ function mergeChildren(prev, next) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(/*! react */ 0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom__ = __webpack_require__(/*! react-dom */ 12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom__ = __webpack_require__(/*! react-dom */ 9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_css_animation__ = __webpack_require__(/*! css-animation */ 1680);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_css_animation__ = __webpack_require__(/*! css-animation */ 1734);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_css_animation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_css_animation__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__(/*! ./util */ 790);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__(/*! ./util */ 830);
 
 
 
@@ -62825,7 +62879,7 @@ AnimateChild.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (AnimateChild);
 
 /***/ }),
-/* 1680 */
+/* 1734 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/css-animation/lib/index.js ***!
   \**********************************************************************************/
@@ -62842,11 +62896,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _Event = __webpack_require__(/*! ./Event */ 1681);
+var _Event = __webpack_require__(/*! ./Event */ 1735);
 
 var _Event2 = _interopRequireDefault(_Event);
 
-var _componentClasses = __webpack_require__(/*! component-classes */ 1682);
+var _componentClasses = __webpack_require__(/*! component-classes */ 1736);
 
 var _componentClasses2 = _interopRequireDefault(_componentClasses);
 
@@ -63026,7 +63080,7 @@ exports["default"] = cssAnimation;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1681 */
+/* 1735 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/css-animation/lib/Event.js ***!
   \**********************************************************************************/
@@ -63125,7 +63179,7 @@ exports["default"] = TransitionEvents;
 module.exports = exports['default'];
 
 /***/ }),
-/* 1682 */
+/* 1736 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/component-classes/index.js ***!
   \**********************************************************************************/
@@ -63138,9 +63192,9 @@ module.exports = exports['default'];
  */
 
 try {
-  var index = __webpack_require__(/*! indexof */ 789);
+  var index = __webpack_require__(/*! indexof */ 829);
 } catch (err) {
-  var index = __webpack_require__(/*! component-indexof */ 789);
+  var index = __webpack_require__(/*! component-indexof */ 829);
 }
 
 /**
@@ -63327,7 +63381,7 @@ ClassList.prototype.contains = function(name){
 
 
 /***/ }),
-/* 1683 */
+/* 1737 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-trigger/es/PopupInner.js ***!
   \***********************************************************************************/
@@ -63338,7 +63392,7 @@ ClassList.prototype.contains = function(name){
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ 76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
@@ -63348,7 +63402,7 @@ ClassList.prototype.contains = function(name){
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(/*! prop-types */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__LazyRenderBox__ = __webpack_require__(/*! ./LazyRenderBox */ 791);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__LazyRenderBox__ = __webpack_require__(/*! ./LazyRenderBox */ 831);
 
 
 
@@ -63407,7 +63461,7 @@ PopupInner.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (PopupInner);
 
 /***/ }),
-/* 1684 */
+/* 1738 */
 /*!**********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-util/lib/getContainerRenderMixin.js ***!
   \**********************************************************************************************/
@@ -63428,7 +63482,7 @@ var _extends3 = _interopRequireDefault(_extends2);
 
 exports['default'] = getContainerRenderMixin;
 
-var _reactDom = __webpack_require__(/*! react-dom */ 12);
+var _reactDom = __webpack_require__(/*! react-dom */ 9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -63520,7 +63574,7 @@ function getContainerRenderMixin(config) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 1685 */
+/* 1739 */
 /*!***********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-tooltip/es/placements.js ***!
   \***********************************************************************************/
@@ -63615,7 +63669,7 @@ var placements = {
 /* unused harmony default export */ var _unused_webpack_default_export = (placements);
 
 /***/ }),
-/* 1686 */
+/* 1740 */
 /*!**********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/assets/index.css ***!
   \**********************************************************************************/
@@ -63626,7 +63680,7 @@ var placements = {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./index.css */ 1687);
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!./index.css */ 1741);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -63651,7 +63705,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1687 */
+/* 1741 */
 /*!************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/rc-slider/assets/index.css ***!
   \************************************************************************************************************/
@@ -63670,7 +63724,7 @@ exports.push([module.i, ".rc-slider {\n  position: relative;\n  height: 14px;\n 
 
 
 /***/ }),
-/* 1688 */
+/* 1742 */
 /*!**********************************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.css ***!
   \**********************************************************************************************************************************************/
@@ -63681,7 +63735,7 @@ exports.push([module.i, ".rc-slider {\n  position: relative;\n  height: 14px;\n 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader!./CoexpressionOption.css */ 1689);
+var content = __webpack_require__(/*! !../../../../../../../node_modules/css-loader!./CoexpressionOption.css */ 1743);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -63706,7 +63760,7 @@ if(false) {
 }
 
 /***/ }),
-/* 1689 */
+/* 1743 */
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/coexpression/CoexpressionOption.css ***!
   \************************************************************************************************************************************************************************/
@@ -63725,7 +63779,7 @@ exports.push([module.i, ".gxaDisplayCoexpressionOffer {\n  margin-top: 30px;\n}\
 
 
 /***/ }),
-/* 1690 */
+/* 1744 */
 /*!********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Events.js ***!
   \********************************************************************************************************************/
@@ -63740,11 +63794,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _sanitizeHtml = __webpack_require__(/*! sanitize-html */ 1691);
+var _sanitizeHtml = __webpack_require__(/*! sanitize-html */ 1745);
 
 var _sanitizeHtml2 = _interopRequireDefault(_sanitizeHtml);
 
-var _urijs = __webpack_require__(/*! urijs */ 214);
+var _urijs = __webpack_require__(/*! urijs */ 232);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
@@ -63836,7 +63890,7 @@ var makeEventCallbacks = function makeEventCallbacks(_ref) {
 exports.default = makeEventCallbacks;
 
 /***/ }),
-/* 1691 */
+/* 1745 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/sanitize-html/index.js ***!
   \******************************************************************************/
@@ -63844,9 +63898,9 @@ exports.default = makeEventCallbacks;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var htmlparser = __webpack_require__(/*! htmlparser2 */ 225);
-var extend = __webpack_require__(/*! xtend */ 1727);
-var quoteRegexp = __webpack_require__(/*! regexp-quote */ 1728);
+var htmlparser = __webpack_require__(/*! htmlparser2 */ 243);
+var extend = __webpack_require__(/*! xtend */ 1781);
+var quoteRegexp = __webpack_require__(/*! regexp-quote */ 1782);
 
 function each(obj, cb) {
   if (obj) Object.keys(obj).forEach(function (key) {
@@ -64218,7 +64272,7 @@ sanitizeHtml.simpleTransform = function(newTagName, newAttribs, merge) {
 
 
 /***/ }),
-/* 1692 */
+/* 1746 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/maps/decode.json ***!
   \*********************************************************************************/
@@ -64229,7 +64283,7 @@ sanitizeHtml.simpleTransform = function(newTagName, newAttribs, merge) {
 module.exports = {"0":65533,"128":8364,"130":8218,"131":402,"132":8222,"133":8230,"134":8224,"135":8225,"136":710,"137":8240,"138":352,"139":8249,"140":338,"142":381,"145":8216,"146":8217,"147":8220,"148":8221,"149":8226,"150":8211,"151":8212,"152":732,"153":8482,"154":353,"155":8250,"156":339,"158":382,"159":376}
 
 /***/ }),
-/* 1693 */
+/* 1747 */
 /*!***************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domhandler/index.js ***!
   \***************************************************************************/
@@ -64237,11 +64291,11 @@ module.exports = {"0":65533,"128":8364,"130":8218,"131":402,"132":8222,"133":823
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ElementType = __webpack_require__(/*! domelementtype */ 226);
+var ElementType = __webpack_require__(/*! domelementtype */ 244);
 
 var re_whitespace = /\s+/g;
-var NodePrototype = __webpack_require__(/*! ./lib/node */ 797);
-var ElementPrototype = __webpack_require__(/*! ./lib/element */ 1694);
+var NodePrototype = __webpack_require__(/*! ./lib/node */ 837);
+var ElementPrototype = __webpack_require__(/*! ./lib/element */ 1748);
 
 function DomHandler(callback, options, elementCB){
 	if(typeof callback === "object"){
@@ -64457,7 +64511,7 @@ module.exports = DomHandler;
 
 
 /***/ }),
-/* 1694 */
+/* 1748 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domhandler/lib/element.js ***!
   \*********************************************************************************/
@@ -64466,7 +64520,7 @@ module.exports = DomHandler;
 /***/ (function(module, exports, __webpack_require__) {
 
 // DOM-Level-1-compliant structure
-var NodePrototype = __webpack_require__(/*! ./node */ 797);
+var NodePrototype = __webpack_require__(/*! ./node */ 837);
 var ElementPrototype = module.exports = Object.create(NodePrototype);
 
 var domLvl1 = {
@@ -64488,7 +64542,7 @@ Object.keys(domLvl1).forEach(function(key) {
 
 
 /***/ }),
-/* 1695 */
+/* 1749 */
 /*!**************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/FeedHandler.js ***!
   \**************************************************************************************/
@@ -64496,7 +64550,7 @@ Object.keys(domLvl1).forEach(function(key) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var index = __webpack_require__(/*! ./index.js */ 225),
+var index = __webpack_require__(/*! ./index.js */ 243),
     DomHandler = index.DomHandler,
     DomUtils = index.DomUtils;
 
@@ -64505,7 +64559,7 @@ function FeedHandler(callback, options){
 	this.init(callback, options);
 }
 
-__webpack_require__(/*! inherits */ 301)(FeedHandler, DomHandler);
+__webpack_require__(/*! inherits */ 323)(FeedHandler, DomHandler);
 
 FeedHandler.prototype.init = DomHandler;
 
@@ -64594,7 +64648,7 @@ module.exports = FeedHandler;
 
 
 /***/ }),
-/* 1696 */
+/* 1750 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/Stream.js ***!
   \*********************************************************************************/
@@ -64604,13 +64658,13 @@ module.exports = FeedHandler;
 
 module.exports = Stream;
 
-var Parser = __webpack_require__(/*! ./WritableStream.js */ 798);
+var Parser = __webpack_require__(/*! ./WritableStream.js */ 838);
 
 function Stream(options){
 	Parser.call(this, new Cbs(this), options);
 }
 
-__webpack_require__(/*! inherits */ 301)(Stream, Parser);
+__webpack_require__(/*! inherits */ 323)(Stream, Parser);
 
 Stream.prototype.readable = true;
 
@@ -64618,7 +64672,7 @@ function Cbs(scope){
 	this.scope = scope;
 }
 
-var EVENTS = __webpack_require__(/*! ../ */ 225).EVENTS;
+var EVENTS = __webpack_require__(/*! ../ */ 243).EVENTS;
 
 Object.keys(EVENTS).forEach(function(name){
 	if(EVENTS[name] === 0){
@@ -64639,22 +64693,22 @@ Object.keys(EVENTS).forEach(function(name){
 });
 
 /***/ }),
-/* 1697 */,
-/* 1698 */,
-/* 1699 */,
-/* 1700 */,
-/* 1701 */,
-/* 1702 */,
-/* 1703 */,
-/* 1704 */,
-/* 1705 */,
-/* 1706 */,
-/* 1707 */,
-/* 1708 */,
-/* 1709 */,
-/* 1710 */,
-/* 1711 */,
-/* 1712 */
+/* 1751 */,
+/* 1752 */,
+/* 1753 */,
+/* 1754 */,
+/* 1755 */,
+/* 1756 */,
+/* 1757 */,
+/* 1758 */,
+/* 1759 */,
+/* 1760 */,
+/* 1761 */,
+/* 1762 */,
+/* 1763 */,
+/* 1764 */,
+/* 1765 */,
+/* 1766 */
 /*!*********************************!*\
   !*** readable-stream (ignored) ***!
   \*********************************/
@@ -64665,7 +64719,7 @@ Object.keys(EVENTS).forEach(function(name){
 /* (ignored) */
 
 /***/ }),
-/* 1713 */
+/* 1767 */
 /*!***************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/ProxyHandler.js ***!
   \***************************************************************************************/
@@ -64679,7 +64733,7 @@ function ProxyHandler(cbs){
 	this._cbs = cbs || {};
 }
 
-var EVENTS = __webpack_require__(/*! ./ */ 225).EVENTS;
+var EVENTS = __webpack_require__(/*! ./ */ 243).EVENTS;
 Object.keys(EVENTS).forEach(function(name){
 	if(EVENTS[name] === 0){
 		name = "on" + name;
@@ -64702,7 +64756,7 @@ Object.keys(EVENTS).forEach(function(name){
 });
 
 /***/ }),
-/* 1714 */
+/* 1768 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/index.js ***!
   \*************************************************************************/
@@ -64713,12 +64767,12 @@ Object.keys(EVENTS).forEach(function(name){
 var DomUtils = module.exports;
 
 [
-	__webpack_require__(/*! ./lib/stringify */ 1715),
-	__webpack_require__(/*! ./lib/traversal */ 1721),
-	__webpack_require__(/*! ./lib/manipulation */ 1722),
-	__webpack_require__(/*! ./lib/querying */ 1723),
-	__webpack_require__(/*! ./lib/legacy */ 1724),
-	__webpack_require__(/*! ./lib/helpers */ 1725)
+	__webpack_require__(/*! ./lib/stringify */ 1769),
+	__webpack_require__(/*! ./lib/traversal */ 1775),
+	__webpack_require__(/*! ./lib/manipulation */ 1776),
+	__webpack_require__(/*! ./lib/querying */ 1777),
+	__webpack_require__(/*! ./lib/legacy */ 1778),
+	__webpack_require__(/*! ./lib/helpers */ 1779)
 ].forEach(function(ext){
 	Object.keys(ext).forEach(function(key){
 		DomUtils[key] = ext[key].bind(DomUtils);
@@ -64727,7 +64781,7 @@ var DomUtils = module.exports;
 
 
 /***/ }),
-/* 1715 */
+/* 1769 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/lib/stringify.js ***!
   \*********************************************************************************/
@@ -64735,8 +64789,8 @@ var DomUtils = module.exports;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ElementType = __webpack_require__(/*! domelementtype */ 226),
-    getOuterHTML = __webpack_require__(/*! dom-serializer */ 1716),
+var ElementType = __webpack_require__(/*! domelementtype */ 244),
+    getOuterHTML = __webpack_require__(/*! dom-serializer */ 1770),
     isTag = ElementType.isTag;
 
 module.exports = {
@@ -64761,7 +64815,7 @@ function getText(elem){
 
 
 /***/ }),
-/* 1716 */
+/* 1770 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-serializer/index.js ***!
   \*******************************************************************************/
@@ -64772,8 +64826,8 @@ function getText(elem){
 /*
   Module dependencies
 */
-var ElementType = __webpack_require__(/*! domelementtype */ 1717);
-var entities = __webpack_require__(/*! entities */ 1718);
+var ElementType = __webpack_require__(/*! domelementtype */ 1771);
+var entities = __webpack_require__(/*! entities */ 1772);
 
 /*
   Boolean Attributes
@@ -64950,7 +65004,7 @@ function renderComment(elem) {
 
 
 /***/ }),
-/* 1717 */
+/* 1771 */
 /*!***********************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/dom-serializer/node_modules/domelementtype/index.js ***!
   \***********************************************************************************************************/
@@ -64974,7 +65028,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 1718 */
+/* 1772 */
 /*!*************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/index.js ***!
   \*************************************************************************/
@@ -64982,8 +65036,8 @@ module.exports = {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var encode = __webpack_require__(/*! ./lib/encode.js */ 1719),
-    decode = __webpack_require__(/*! ./lib/decode.js */ 1720);
+var encode = __webpack_require__(/*! ./lib/encode.js */ 1773),
+    decode = __webpack_require__(/*! ./lib/decode.js */ 1774);
 
 exports.decode = function(data, level){
 	return (!level || level <= 0 ? decode.XML : decode.HTML)(data);
@@ -65018,7 +65072,7 @@ exports.escape = encode.escape;
 
 
 /***/ }),
-/* 1719 */
+/* 1773 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/lib/encode.js ***!
   \******************************************************************************/
@@ -65026,12 +65080,12 @@ exports.escape = encode.escape;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var inverseXML = getInverseObj(__webpack_require__(/*! ../maps/xml.json */ 452)),
+var inverseXML = getInverseObj(__webpack_require__(/*! ../maps/xml.json */ 478)),
     xmlReplacer = getInverseReplacer(inverseXML);
 
 exports.XML = getInverse(inverseXML, xmlReplacer);
 
-var inverseHTML = getInverseObj(__webpack_require__(/*! ../maps/entities.json */ 451)),
+var inverseHTML = getInverseObj(__webpack_require__(/*! ../maps/entities.json */ 477)),
     htmlReplacer = getInverseReplacer(inverseHTML);
 
 exports.HTML = getInverse(inverseHTML, htmlReplacer);
@@ -65102,7 +65156,7 @@ exports.escape = escapeXML;
 
 
 /***/ }),
-/* 1720 */
+/* 1774 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/entities/lib/decode.js ***!
   \******************************************************************************/
@@ -65110,10 +65164,10 @@ exports.escape = escapeXML;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var entityMap = __webpack_require__(/*! ../maps/entities.json */ 451),
-    legacyMap = __webpack_require__(/*! ../maps/legacy.json */ 796),
-    xmlMap    = __webpack_require__(/*! ../maps/xml.json */ 452),
-    decodeCodePoint = __webpack_require__(/*! ./decode_codepoint.js */ 795);
+var entityMap = __webpack_require__(/*! ../maps/entities.json */ 477),
+    legacyMap = __webpack_require__(/*! ../maps/legacy.json */ 836),
+    xmlMap    = __webpack_require__(/*! ../maps/xml.json */ 478),
+    decodeCodePoint = __webpack_require__(/*! ./decode_codepoint.js */ 835);
 
 var decodeXMLStrict  = getStrictDecoder(xmlMap),
     decodeHTMLStrict = getStrictDecoder(entityMap);
@@ -65184,7 +65238,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 1721 */
+/* 1775 */
 /*!*********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/lib/traversal.js ***!
   \*********************************************************************************/
@@ -65219,7 +65273,7 @@ exports.getName = function(elem){
 
 
 /***/ }),
-/* 1722 */
+/* 1776 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/lib/manipulation.js ***!
   \************************************************************************************/
@@ -65307,7 +65361,7 @@ exports.prepend = function(elem, prev){
 
 
 /***/ }),
-/* 1723 */
+/* 1777 */
 /*!********************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/lib/querying.js ***!
   \********************************************************************************/
@@ -65315,7 +65369,7 @@ exports.prepend = function(elem, prev){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isTag = __webpack_require__(/*! domelementtype */ 226).isTag;
+var isTag = __webpack_require__(/*! domelementtype */ 244).isTag;
 
 module.exports = {
 	filter: filter,
@@ -65417,7 +65471,7 @@ function findAll(test, rootElems){
 
 
 /***/ }),
-/* 1724 */
+/* 1778 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/lib/legacy.js ***!
   \******************************************************************************/
@@ -65425,7 +65479,7 @@ function findAll(test, rootElems){
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ElementType = __webpack_require__(/*! domelementtype */ 226);
+var ElementType = __webpack_require__(/*! domelementtype */ 244);
 var isTag = exports.isTag = ElementType.isTag;
 
 exports.testElement = function(options, element){
@@ -65515,7 +65569,7 @@ exports.getElementsByTagType = function(type, element, recurse, limit){
 
 
 /***/ }),
-/* 1725 */
+/* 1779 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/domutils/lib/helpers.js ***!
   \*******************************************************************************/
@@ -65667,7 +65721,7 @@ exports.uniqueSort = function(nodes) {
 
 
 /***/ }),
-/* 1726 */
+/* 1780 */
 /*!********************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/htmlparser2/lib/CollectingHandler.js ***!
   \********************************************************************************************/
@@ -65682,7 +65736,7 @@ function CollectingHandler(cbs){
 	this.events = [];
 }
 
-var EVENTS = __webpack_require__(/*! ./ */ 225).EVENTS;
+var EVENTS = __webpack_require__(/*! ./ */ 243).EVENTS;
 Object.keys(EVENTS).forEach(function(name){
 	if(EVENTS[name] === 0){
 		name = "on" + name;
@@ -65733,7 +65787,7 @@ CollectingHandler.prototype.restart = function(){
 
 
 /***/ }),
-/* 1727 */
+/* 1781 */
 /*!**************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/xtend/immutable.js ***!
   \**************************************************************************/
@@ -65763,7 +65817,7 @@ function extend() {
 
 
 /***/ }),
-/* 1728 */
+/* 1782 */
 /*!************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/regexp-quote/regexp-quote.js ***!
   \************************************************************************************/
@@ -65777,7 +65831,7 @@ module.exports = function (string) {
 
 
 /***/ }),
-/* 1729 */
+/* 1783 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/manipulate/Manipulators.js ***!
   \**************************************************************************************************************************/
@@ -65966,7 +66020,7 @@ exports.orderHeatmapData = orderHeatmapData;
 exports.manipulate = manipulate;
 
 /***/ }),
-/* 1730 */
+/* 1784 */
 /*!*********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/show/BoxplotCanvas.js ***!
   \*********************************************************************************************************************/
@@ -65989,11 +66043,11 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 777);
+var _reactHighcharts = __webpack_require__(/*! react-highcharts */ 817);
 
 var _reactHighcharts2 = _interopRequireDefault(_reactHighcharts);
 
-var _highchartsMore = __webpack_require__(/*! highcharts/highcharts-more */ 1731);
+var _highchartsMore = __webpack_require__(/*! highcharts/highcharts-more */ 1785);
 
 var _highchartsMore2 = _interopRequireDefault(_highchartsMore);
 
@@ -66113,7 +66167,7 @@ BoxplotCanvas.propTypes = {
 exports.default = BoxplotCanvas;
 
 /***/ }),
-/* 1731 */
+/* 1785 */
 /*!*************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/highcharts/highcharts-more.js ***!
   \*************************************************************************************/
@@ -66187,7 +66241,7 @@ a.isXAxis,e=a.center,h=d.chartX-e[0]-b.plotLeft,e=d.chartY-e[1]-b.plotTop;g[c?"x
 function(b,d){return a.find(this.pane,function(a){return a.options.id===d})||b.call(this,d)})})(x)});
 
 /***/ }),
-/* 1732 */
+/* 1786 */
 /*!******************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/layout/jsonPayloadPropTypes.js ***!
   \******************************************************************************************************************************/
@@ -66210,7 +66264,7 @@ var _propTypes = __webpack_require__(/*! prop-types */ 19);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _experimentTypeUtils = __webpack_require__(/*! ../load/experimentTypeUtils */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ../load/experimentTypeUtils */ 141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66353,7 +66407,7 @@ var dataPropTypes = _propTypes2.default.shape({
 exports.default = dataPropTypes;
 
 /***/ }),
-/* 1733 */
+/* 1787 */
 /*!************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/main.js ***!
   \************************************************************************************************************/
@@ -66406,40 +66460,40 @@ exports.default = function (_ref) {
     };
 };
 
-var _anatomogram = __webpack_require__(/*! anatomogram */ 748);
+var _anatomogram = __webpack_require__(/*! anatomogram */ 788);
 
-var _chartConfiguration = __webpack_require__(/*! ./chartConfiguration.js */ 1734);
+var _chartConfiguration = __webpack_require__(/*! ./chartConfiguration.js */ 1788);
 
 var _chartConfiguration2 = _interopRequireDefault(_chartConfiguration);
 
-var _heatmapData = __webpack_require__(/*! ./heatmapData.js */ 1735);
+var _heatmapData = __webpack_require__(/*! ./heatmapData.js */ 1789);
 
 var _heatmapData2 = _interopRequireDefault(_heatmapData);
 
-var _boxplotData = __webpack_require__(/*! ./boxplotData.js */ 1747);
+var _boxplotData = __webpack_require__(/*! ./boxplotData.js */ 1801);
 
 var _boxplotData2 = _interopRequireDefault(_boxplotData);
 
-var _heatmapOrderings = __webpack_require__(/*! ./heatmapOrderings.js */ 1748);
+var _heatmapOrderings = __webpack_require__(/*! ./heatmapOrderings.js */ 1802);
 
 var _heatmapOrderings2 = _interopRequireDefault(_heatmapOrderings);
 
-var _heatmapColourAxis = __webpack_require__(/*! ./heatmapColourAxis.js */ 1749);
+var _heatmapColourAxis = __webpack_require__(/*! ./heatmapColourAxis.js */ 1803);
 
 var _heatmapColourAxis2 = _interopRequireDefault(_heatmapColourAxis);
 
-var _heatmapFilters = __webpack_require__(/*! ./heatmapFilters.js */ 1756);
+var _heatmapFilters = __webpack_require__(/*! ./heatmapFilters.js */ 1810);
 
 var _heatmapFilters2 = _interopRequireDefault(_heatmapFilters);
 
-var _urijs = __webpack_require__(/*! urijs */ 214);
+var _urijs = __webpack_require__(/*! urijs */ 232);
 
 var _urijs2 = _interopRequireDefault(_urijs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 1734 */
+/* 1788 */
 /*!**************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/chartConfiguration.js ***!
   \**************************************************************************************************************************/
@@ -66456,9 +66510,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 141);
 
-var _utils = __webpack_require__(/*! ../utils */ 779);
+var _utils = __webpack_require__(/*! ../utils */ 819);
 
 // Message on top of the chart: “Showing 3 experiments:”, “Showing 12 genes of 432 found:”, “Showing 32 genes:”...
 var introductoryMessage = function introductoryMessage(experiment, profiles) {
@@ -66528,7 +66582,7 @@ var getChartConfiguration = function getChartConfiguration(data, inProxy, outPro
 exports.default = getChartConfiguration;
 
 /***/ }),
-/* 1735 */
+/* 1789 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapData.js ***!
   \*******************************************************************************************************************/
@@ -66543,11 +66597,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _heatmapDataSeries = __webpack_require__(/*! ./heatmapDataSeries.js */ 1736);
+var _heatmapDataSeries = __webpack_require__(/*! ./heatmapDataSeries.js */ 1790);
 
 var _heatmapDataSeries2 = _interopRequireDefault(_heatmapDataSeries);
 
-var _heatmapAxisCategories = __webpack_require__(/*! ./heatmapAxisCategories */ 1737);
+var _heatmapAxisCategories = __webpack_require__(/*! ./heatmapAxisCategories */ 1791);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66567,7 +66621,7 @@ exports.default = function (_ref) {
 };
 
 /***/ }),
-/* 1736 */
+/* 1790 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapDataSeries.js ***!
   \*************************************************************************************************************************/
@@ -66584,11 +66638,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _lodash = __webpack_require__(/*! lodash */ 300);
+var _lodash = __webpack_require__(/*! lodash */ 322);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils */ 141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66749,7 +66803,7 @@ var getDataSeries = function getDataSeries(profilesRows, experiment) {
 exports.default = getDataSeries;
 
 /***/ }),
-/* 1737 */
+/* 1791 */
 /*!*****************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapAxisCategories.js ***!
   \*****************************************************************************************************************************/
@@ -66767,15 +66821,15 @@ exports.getHeatmapYAxisCategories = exports.getHeatmapXAxisCategories = undefine
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _url = __webpack_require__(/*! url */ 139);
+var _url = __webpack_require__(/*! url */ 144);
 
 var _url2 = _interopRequireDefault(_url);
 
-var _path = __webpack_require__(/*! path */ 228);
+var _path = __webpack_require__(/*! path */ 246);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66809,7 +66863,7 @@ var getHeatmapXAxisCategories = function getHeatmapXAxisCategories(_ref) {
               return {
                 type: resource.type,
                 url: _url2.default.resolve(inProxy + atlasUrl, resource.uri),
-                icon: _url2.default.resolve(pathToResources, _path2.default.basename(__webpack_require__(/*! ../../assets */ 1742)("./" + resource.type + '-icon.png')))
+                icon: _url2.default.resolve(pathToResources, _path2.default.basename(__webpack_require__(/*! ../../assets */ 1796)("./" + resource.type + '-icon.png')))
               };
             })
           }, columnHeader.contrastSummary)
@@ -66856,11 +66910,11 @@ exports.getHeatmapXAxisCategories = getHeatmapXAxisCategories;
 exports.getHeatmapYAxisCategories = getHeatmapYAxisCategories;
 
 /***/ }),
-/* 1738 */,
-/* 1739 */,
-/* 1740 */,
-/* 1741 */,
-/* 1742 */
+/* 1792 */,
+/* 1793 */,
+/* 1794 */,
+/* 1795 */,
+/* 1796 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/assets ^\.\/.*\-icon\.png$ ***!
   \**********************************************************************************************************************/
@@ -66869,10 +66923,10 @@ exports.getHeatmapYAxisCategories = getHeatmapYAxisCategories;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./gsea_go-icon.png": 1743,
-	"./gsea_interpro-icon.png": 1744,
-	"./gsea_reactome-icon.png": 1745,
-	"./ma-plot-icon.png": 1746
+	"./gsea_go-icon.png": 1797,
+	"./gsea_interpro-icon.png": 1798,
+	"./gsea_reactome-icon.png": 1799,
+	"./ma-plot-icon.png": 1800
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -66888,10 +66942,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 1742;
+webpackContext.id = 1796;
 
 /***/ }),
-/* 1743 */
+/* 1797 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/assets/gsea_go-icon.png ***!
   \*******************************************************************************************************************/
@@ -66902,7 +66956,7 @@ webpackContext.id = 1742;
 module.exports = __webpack_require__.p + "f9d7f96a013e2ec827c29945ddfaf976.png";
 
 /***/ }),
-/* 1744 */
+/* 1798 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/assets/gsea_interpro-icon.png ***!
   \*************************************************************************************************************************/
@@ -66913,7 +66967,7 @@ module.exports = __webpack_require__.p + "f9d7f96a013e2ec827c29945ddfaf976.png";
 module.exports = __webpack_require__.p + "d4c989c4a8434a105611a059d89655c8.png";
 
 /***/ }),
-/* 1745 */
+/* 1799 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/assets/gsea_reactome-icon.png ***!
   \*************************************************************************************************************************/
@@ -66924,7 +66978,7 @@ module.exports = __webpack_require__.p + "d4c989c4a8434a105611a059d89655c8.png";
 module.exports = __webpack_require__.p + "06a40e2a1766793117de4ba3d7c9fbd1.png";
 
 /***/ }),
-/* 1746 */
+/* 1800 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/assets/ma-plot-icon.png ***!
   \*******************************************************************************************************************/
@@ -66935,7 +66989,7 @@ module.exports = __webpack_require__.p + "06a40e2a1766793117de4ba3d7c9fbd1.png";
 module.exports = __webpack_require__.p + "33516809471651b27fbebca5b89b4f23.png";
 
 /***/ }),
-/* 1747 */
+/* 1801 */
 /*!*******************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/boxplotData.js ***!
   \*******************************************************************************************************************/
@@ -66984,7 +67038,7 @@ exports.default = function (_ref2) {
 };
 
 /***/ }),
-/* 1748 */
+/* 1802 */
 /*!************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapOrderings.js ***!
   \************************************************************************************************************************/
@@ -66999,11 +67053,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _lodash = __webpack_require__(/*! lodash */ 300);
+var _lodash = __webpack_require__(/*! lodash */ 322);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -67149,7 +67203,7 @@ var createOrderingsForData = function createOrderingsForData(experiment, rows, c
 exports.default = createOrderingsForData;
 
 /***/ }),
-/* 1749 */
+/* 1803 */
 /*!*************************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapColourAxis.js ***!
   \*************************************************************************************************************************/
@@ -67164,11 +67218,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _color = __webpack_require__(/*! color */ 1750);
+var _color = __webpack_require__(/*! color */ 1804);
 
 var _color2 = _interopRequireDefault(_color);
 
-var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 136);
+var _experimentTypeUtils = __webpack_require__(/*! ./experimentTypeUtils.js */ 141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -67277,7 +67331,7 @@ var getColourAxisFromDataSeries = function getColourAxisFromDataSeries(experimen
 exports.default = getColourAxisFromDataSeries;
 
 /***/ }),
-/* 1750 */
+/* 1804 */
 /*!**********************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/color/index.js ***!
   \**********************************************************************/
@@ -67288,8 +67342,8 @@ exports.default = getColourAxisFromDataSeries;
 "use strict";
 
 
-var colorString = __webpack_require__(/*! color-string */ 1751);
-var convert = __webpack_require__(/*! color-convert */ 1754);
+var colorString = __webpack_require__(/*! color-string */ 1805);
+var convert = __webpack_require__(/*! color-convert */ 1808);
 
 var _slice = [].slice;
 
@@ -67768,7 +67822,7 @@ module.exports = Color;
 
 
 /***/ }),
-/* 1751 */
+/* 1805 */
 /*!*****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/color-string/index.js ***!
   \*****************************************************************************/
@@ -67777,8 +67831,8 @@ module.exports = Color;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* MIT license */
-var colorNames = __webpack_require__(/*! color-name */ 803);
-var swizzle = __webpack_require__(/*! simple-swizzle */ 1752);
+var colorNames = __webpack_require__(/*! color-name */ 843);
+var swizzle = __webpack_require__(/*! simple-swizzle */ 1806);
 
 var reverseNames = {};
 
@@ -68012,7 +68066,7 @@ function hexDouble(num) {
 
 
 /***/ }),
-/* 1752 */
+/* 1806 */
 /*!*******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/simple-swizzle/index.js ***!
   \*******************************************************************************/
@@ -68023,7 +68077,7 @@ function hexDouble(num) {
 "use strict";
 
 
-var isArrayish = __webpack_require__(/*! is-arrayish */ 1753);
+var isArrayish = __webpack_require__(/*! is-arrayish */ 1807);
 
 var concat = Array.prototype.concat;
 var slice = Array.prototype.slice;
@@ -68053,7 +68107,7 @@ swizzle.wrap = function (fn) {
 
 
 /***/ }),
-/* 1753 */
+/* 1807 */
 /*!****************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/is-arrayish/index.js ***!
   \****************************************************************************/
@@ -68076,7 +68130,7 @@ module.exports = function isArrayish(obj) {
 
 
 /***/ }),
-/* 1754 */
+/* 1808 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/color-convert/index.js ***!
   \******************************************************************************/
@@ -68084,8 +68138,8 @@ module.exports = function isArrayish(obj) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var conversions = __webpack_require__(/*! ./conversions */ 804);
-var route = __webpack_require__(/*! ./route */ 1755);
+var conversions = __webpack_require__(/*! ./conversions */ 844);
+var route = __webpack_require__(/*! ./route */ 1809);
 
 var convert = {};
 
@@ -68165,7 +68219,7 @@ module.exports = convert;
 
 
 /***/ }),
-/* 1755 */
+/* 1809 */
 /*!******************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/color-convert/route.js ***!
   \******************************************************************************/
@@ -68173,7 +68227,7 @@ module.exports = convert;
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var conversions = __webpack_require__(/*! ./conversions */ 804);
+var conversions = __webpack_require__(/*! ./conversions */ 844);
 
 /*
 	this function routes a model to all other models.
@@ -68274,7 +68328,7 @@ module.exports = function (fromModel) {
 
 
 /***/ }),
-/* 1756 */
+/* 1810 */
 /*!**********************************************************************************************************************!*\
   !*** ./atlas_bundles/heatmap-highcharts/node_modules/expression-atlas-heatmap-highcharts/lib/load/heatmapFilters.js ***!
   \**********************************************************************************************************************/
@@ -68289,7 +68343,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _lodash = __webpack_require__(/*! lodash */ 300);
+var _lodash = __webpack_require__(/*! lodash */ 322);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -68483,5 +68537,5 @@ var main = function main(_ref3) {
 exports.default = main;
 
 /***/ })
-]),[1222]);
+]),[1276]);
 //# sourceMappingURL=expressionAtlasHeatmapHighcharts.bundle.js.map
