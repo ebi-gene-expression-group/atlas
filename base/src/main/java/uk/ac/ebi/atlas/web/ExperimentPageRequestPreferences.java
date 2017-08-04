@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import org.hibernate.validator.constraints.Range;
 import uk.ac.ebi.atlas.model.ExpressionUnit;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
@@ -12,25 +13,20 @@ import java.util.Set;
 public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUnit> extends SearchRequest {
 
     public static final double nonZeroButVerySmallCutoffValue = 10e-100d;
-
     public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
     private static final int HEATMAP_SIZE_MIN = 0;
-
     private static final int HEATMAP_SIZE_MAX = 1000;
 
     private double cutoff = getDefaultCutoff();
-
+    private Set<String> selectedColumnIds = Collections.emptySet();
     @NotNull
     @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
     private Integer heatmapMatrixSize = DEFAULT_NUMBER_OF_RANKED_GENES;
-
     private boolean specific = true;
 
     protected ExperimentPageRequestPreferences() {
     }
-
-    Set<String> selectedColumnIds = Collections.emptySet();
 
     @SuppressWarnings("unused")
     public void setSelectedColumnIds(Set<String> selectedColumnIds){
@@ -59,9 +55,8 @@ public abstract class ExperimentPageRequestPreferences<Unit extends ExpressionUn
     public abstract double getDefaultCutoff();
 
     public void setCutoff(Double cutoff) {
-        // handle no value case, eg: when textbox is left empty
         if (cutoff != null) {
-            this.cutoff = cutoff;
+            this.cutoff = BaselineExpressionLevelRounder.round(cutoff);
         }
     }
 

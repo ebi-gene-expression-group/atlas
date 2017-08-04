@@ -1,12 +1,9 @@
-
 package uk.ac.ebi.atlas.web;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -15,9 +12,6 @@ import static org.hamcrest.Matchers.is;
 public class ExperimentPageRequestPreferencesTest {
 
     private ExperimentPageRequestPreferences subject;
-
-    @Mock
-    private BaselineExpressionLevelRounder baselineExpressionLevelRounderMock;
 
     @Before
     public void setUp() throws Exception {
