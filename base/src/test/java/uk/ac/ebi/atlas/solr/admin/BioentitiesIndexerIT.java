@@ -2,11 +2,12 @@ package uk.ac.ebi.atlas.solr.admin;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.SolrParams;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
@@ -31,32 +32,24 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration({"/applicationContext.xml","/solrContext.xml", "/embeddedSolrServerContext.xml", "/dbContext.xml"})
 public class BioentitiesIndexerIT {
 
-
     @Inject
     EmbeddedSolrServer embeddedBioentitiesSolrServer;
 
-
     BioentityPropertiesSource bioentityPropertiesSource;
-
     BioentityIndexMonitor bioentityIndexMonitor;
-
     BioentitiesIndexer subject;
 
-
+    @Before
     public void setUp() {
-
         bioentityPropertiesSource = mock(BioentityPropertiesSource.class);
-
         bioentityIndexMonitor = new BioentityIndexMonitor(new IndexingProgress());
-
         subject = new BioentitiesIndexer(bioentityIndexMonitor, bioentityPropertiesSource, embeddedBioentitiesSolrServer);
-
     }
 
+    @After
     public void tearDown() {
         subject.deleteAll();
     }
-
 
     List<BioentityProperty> randomProperties(int size){
         List<BioentityProperty> result = new ArrayList<>(size);
@@ -71,10 +64,7 @@ public class BioentitiesIndexerIT {
         return result;
     }
 
-
     public void addAndRetrieveAreOpposites(int size) throws Exception{
-        setUp();
-
         List<BioentityProperty> data = randomProperties(size);
 
         BioentityPropertiesSource.AnnotationFile annotationFile = mock(BioentityPropertiesSource.AnnotationFile.class);
@@ -92,13 +82,12 @@ public class BioentitiesIndexerIT {
         QueryResponse queryResponse = embeddedBioentitiesSolrServer.query(solrQuery);
 
         assertThat(ImmutableSet.copyOf(queryResponse.getBeans(BioentityProperty.class)), is(ImmutableSet.copyOf(data)));
-        tearDown();
     }
 
-    @Test(timeout = 10*1000)
+    @Test(timeout = 10*5000)
     public void test() throws Exception {
         addAndRetrieveAreOpposites(10000);
-        for(int i = 0 ; i<10; i++){
+        for(int i = 0 ; i < 10 ; i++){
             addAndRetrieveAreOpposites(5);
         }
     }
