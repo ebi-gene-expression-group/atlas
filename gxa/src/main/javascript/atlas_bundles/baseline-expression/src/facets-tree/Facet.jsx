@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import FacetItem from './FacetItem.jsx';
+import FacetItem from './FacetItem.jsx'
 
-const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 
 const Facet = props => {
     const facetItems = props.facetItems.map(facetItem =>
@@ -13,24 +14,24 @@ const Facet = props => {
             checked={facetItem.checked}
             setChecked={(facetItemName, facetItemChecked) => { props.setChecked(props.facetName, facetItemName, facetItemChecked) }}
         />
-    );
+    )
 
     return (
         <div className="margin-top-large">
             <h5>{capitalizeFirstLetter(props.facetName)}</h5>
             {facetItems}
         </div>
-    );
-};
+    )
+}
 
 Facet.propTypes = {
-    facetName: React.PropTypes.string.isRequired,
-    facetItems: React.PropTypes.arrayOf(React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired,
-        value: React.PropTypes.string.isRequired,
-        checked: React.PropTypes.bool.isRequired
+    facetName: PropTypes.string.isRequired,
+    facetItems: PropTypes.arrayOf(React.PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+        checked: PropTypes.bool.isRequired
     })).isRequired,
-    setChecked: React.PropTypes.func.isRequired
-};
+    setChecked: PropTypes.func.isRequired
+}
 
-export default Facet;
+export default Facet

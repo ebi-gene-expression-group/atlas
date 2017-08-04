@@ -14,8 +14,7 @@
     "expression-atlas-feedback": "../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz",
     "expression-atlas-heatmap-highcharts": "latest",
     "highcharts": "git://github.com/gxa/highcharts-dist.git",
-    "jquery": "^3.2.1",
-    "jquery.browser": "^0.1.0",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },

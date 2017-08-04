@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import BaselineRouter from './BaselineRouter.jsx';
+import BaselineRouter from './BaselineRouter.jsx'
 
 export default function (
     { atlasUrl = `https://www.ebi.ac.uk/gxa`, target = `gxaBaselineTab`, facetsTreeData,
@@ -15,6 +15,5 @@ export default function (
                         species={species}
         />,
         document.getElementById(target)
-    );
-
-};
+    )
+}

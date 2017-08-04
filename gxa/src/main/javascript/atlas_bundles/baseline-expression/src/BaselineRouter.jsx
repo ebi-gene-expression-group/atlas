@@ -1,47 +1,42 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import EventEmitter from 'events';
-
-import BaselineFacetsTree from './facets-tree/BaselineFacetsTree.jsx';
-import BaselineHeatmaps from './BaselineHeatmaps.jsx';
-const UrlManager = require('./urlManager.js');
+import BaselineFacetsTree from './facets-tree/BaselineFacetsTree.jsx'
+import BaselineHeatmaps from './BaselineHeatmaps.jsx'
+const UrlManager = require('./urlManager.js')
 
 class BaselineRouter extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
 
-        const anatomogramDataEventEmitter = new EventEmitter();
-        anatomogramDataEventEmitter.setMaxListeners(0);
-
-        const newQuerySelect = UrlManager.parseBaselineUrlParameter();
-        let newShowAnatomograms = false;
+        const newQuerySelect = UrlManager.parseBaselineUrlParameter()
+        let newShowAnatomograms = false
 
         if (Object.keys(newQuerySelect).length === 0) {
             Object.keys(this.props.facetsTreeData).forEach(species => {
                 const factorToPreselect =
-                    this.props.facetsTreeData[species].find(factor => factor.name.toLowerCase() === 'organism_part');
+                    this.props.facetsTreeData[species].find(factor => factor.name.toLowerCase() === 'organism_part')
                 if (factorToPreselect) {
-                    this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name);
-                    newShowAnatomograms = true;
+                    this._addElementToObjectOfArrays(newQuerySelect, species, factorToPreselect.name)
+                    newShowAnatomograms = true
                 } else if (this.props.facetsTreeData[species].length) {
                     this._addElementToObjectOfArrays(
-                        newQuerySelect, species, this.props.facetsTreeData[species][0].name);
+                        newQuerySelect, species, this.props.facetsTreeData[species][0].name)
                 }
-            });
+            })
         }
 
-        UrlManager.baselinePush(newQuerySelect, true);
+        UrlManager.baselinePush(newQuerySelect, true)
 
         this.state = {
             facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect),
             querySelect: newQuerySelect,
-            anatomogramDataEventEmitter: anatomogramDataEventEmitter,
             showAnatomograms: newShowAnatomograms
-        };
+        }
 
-        this.setChecked = this._setChecked.bind(this);
-        this.toggleAnatomograms = this._toggleAnatomograms.bind(this);
+        this.setChecked = this._setChecked.bind(this)
+        this.toggleAnatomograms = this._toggleAnatomograms.bind(this)
     }
 
     componentDidMount () {
@@ -49,18 +44,18 @@ class BaselineRouter extends React.Component {
         window.addEventListener(
             'popstate',
             () => {
-                const newQuerySelect = UrlManager.parseBaselineUrlParameter();
+                const newQuerySelect = UrlManager.parseBaselineUrlParameter()
                 this.setState({
                     querySelect: newQuerySelect,
                     facetsTreeData: this._transformPropsFacetsObjectToArray(newQuerySelect)
-                });
+                })
             },
-            false);
+            false)
     }
 
     render () {
-        const organismPartInQuerySelect = this._organismPartInQuerySelect();
-        const heatmaps = this._querySelectToHeatmaps();
+        const organismPartInQuerySelect = this._organismPartInQuerySelect()
+        const heatmaps = this._querySelectToHeatmaps()
 
         return (
             <div className="row expanded">
@@ -70,8 +65,7 @@ class BaselineRouter extends React.Component {
                         setChecked = {this.setChecked}
                         showAnatomograms = {this.state.showAnatomograms}
                         toggleAnatomograms = {this.toggleAnatomograms}
-                        disableAnatomogramsCheckbox = {!organismPartInQuerySelect}
-                    />
+                        disableAnatomogramsCheckbox = {!organismPartInQuerySelect} />
                 </div>
                 <div className="small-9 large-10 columns">
                     <BaselineHeatmaps
@@ -79,51 +73,49 @@ class BaselineRouter extends React.Component {
                         geneQuery = {this.props.geneQuery}
                         conditionQuery = {this.props.conditionQuery}
                         heatmaps = {heatmaps}
-                        showAnatomograms = {this.state.showAnatomograms}
-                        anatomogramDataEventEmitter = {this.state.anatomogramDataEventEmitter}
-                    />
+                        showAnatomograms = {this.state.showAnatomograms} />
                 </div>
             </div>
         )
     }
 
     _setChecked (species, factorName, checked) {
-        const newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect));
-        const newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData));
+        const newQuerySelect = JSON.parse(JSON.stringify(this.state.querySelect))
+        const newFacetsTreeData = JSON.parse(JSON.stringify(this.state.facetsTreeData))
 
         if (checked) {
-            this._addElementToObjectOfArrays(newQuerySelect, species, factorName);
+            this._addElementToObjectOfArrays(newQuerySelect, species, factorName)
             newFacetsTreeData.find(facet => facet.facetName === species).facetItems
-                .find(factor => factor.name === factorName).checked = true;
+                .find(factor => factor.name === factorName).checked = true
         } else {
-            this._removeElementFromObjectOfArrays(newQuerySelect, species, factorName);
+            this._removeElementFromObjectOfArrays(newQuerySelect, species, factorName)
             newFacetsTreeData.find(facet => facet.facetName === species).facetItems
-                .find(factor => factor.name === factorName).checked = false;
+                .find(factor => factor.name === factorName).checked = false
         }
 
-        UrlManager.baselinePush(newQuerySelect, false);
+        UrlManager.baselinePush(newQuerySelect, false)
         this.setState({
             facetsTreeData: newFacetsTreeData,
             querySelect: newQuerySelect
-        });
+        })
     }
 
     _addElementToObjectOfArrays (obj, arrayName, element) {
         if (!obj[arrayName]) {
-            obj[arrayName] = [];
+            obj[arrayName] = []
         }
-        obj[arrayName].push(element);
+        obj[arrayName].push(element)
     }
 
     _removeElementFromObjectOfArrays (obj, arrayName, element) {
-        delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1);
+        delete obj[arrayName].splice(obj[arrayName].indexOf(element), 1)
         if (obj[arrayName].length === 0) {
-            delete obj[arrayName];
+            delete obj[arrayName]
         }
     }
 
     _toggleAnatomograms() {
-        let newShowAnatomograms = !this.state.showAnatomograms;
+        let newShowAnatomograms = !this.state.showAnatomograms
 
         this.setState({
             showAnatomograms: newShowAnatomograms
@@ -132,7 +124,7 @@ class BaselineRouter extends React.Component {
 
     _organismPartInQuerySelect(querySelect = this.state.querySelect) {
         return Object.keys(querySelect)
-               .some(species => querySelect[species].some(facetItem => facetItem.toLowerCase() === 'organism_part'));
+               .some(species => querySelect[species].some(facetItem => facetItem.toLowerCase() === 'organism_part'))
     }
 
     // Also syncs this.state.facetsTreeData with querySelect
@@ -147,8 +139,8 @@ class BaselineRouter extends React.Component {
                         checked: querySelect[facetName] ? querySelect[facetName].includes(facetItem.name) : false
                     }
                 })
-            };
-        });
+            }
+        })
     }
 
     _querySelectToHeatmaps () {
@@ -162,7 +154,7 @@ class BaselineRouter extends React.Component {
              "factor": { "name": "CELL_LINE", "value": "Cell line" }
          ]
          */
-        let heatmaps = [];
+        let heatmaps = []
 
         // We iterate over facetsTreeData instead of over querySelect to get heatmaps in the same order as the facets
         // tree
@@ -175,15 +167,15 @@ class BaselineRouter extends React.Component {
                         factor: facetItem
                     })
                 }
-            });
-        });
+            })
+        })
 
-        return heatmaps;
+        return heatmaps
     }
 }
 
 BaselineRouter.propTypes = {
-    atlasUrl: React.PropTypes.string.isRequired,
+    atlasUrl: PropTypes.string.isRequired,
     /*
     {
         "homo sapiens": [{ "name": "ORGANISM_PART", "value": "Organism part"},
@@ -191,10 +183,10 @@ BaselineRouter.propTypes = {
         "macaca mulatta": [{ "name": "ORGANISM_PART", "value": "Organism part"}]
     }
      */
-    facetsTreeData: React.PropTypes.object.isRequired,
-    geneQuery: React.PropTypes.string.isRequired,
-    conditionQuery: React.PropTypes.string.isRequired,
-    species: React.PropTypes.string.isRequired
-};
+    facetsTreeData: PropTypes.object.isRequired,
+    geneQuery: PropTypes.string.isRequired,
+    conditionQuery: PropTypes.string.isRequired,
+    species: PropTypes.string.isRequired
+}
 
-export default BaselineRouter;
+export default BaselineRouter

@@ -1,6 +1,7 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Facet from './Facet.jsx';
+import Facet from './Facet.jsx'
 
 const BaselineFacetsTree = props => {
     const facets = props.facets.map(facet =>
@@ -10,7 +11,7 @@ const BaselineFacetsTree = props => {
             facetItems = {facet.facetItems}
             setChecked = {props.setChecked}
         />
-    );
+    )
 
     return (
         <div>
@@ -20,8 +21,8 @@ const BaselineFacetsTree = props => {
             <h4>Filter your results</h4>
             {facets}
         </div>
-    );
-};
+    )
+}
 
 BaselineFacetsTree.propTypes = {
     /*
@@ -42,18 +43,18 @@ BaselineFacetsTree.propTypes = {
          }
      ]
      */
-    facets: React.PropTypes.arrayOf(React.PropTypes.shape({
-        facetName: React.PropTypes.string.isRequired,
-        facetItems: React.PropTypes.arrayOf(React.PropTypes.shape({
-            name: React.PropTypes.string.isRequired,
-            value: React.PropTypes.string.isRequired,
-            checked: React.PropTypes.bool.isRequired
+    facets: PropTypes.arrayOf(React.PropTypes.shape({
+        facetName: PropTypes.string.isRequired,
+        facetItems: PropTypes.arrayOf(React.PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+            checked: PropTypes.bool.isRequired
         })).isRequired
     })).isRequired,
-    setChecked: React.PropTypes.func.isRequired,
-    showAnatomograms: React.PropTypes.bool.isRequired,
-    toggleAnatomograms: React.PropTypes.func.isRequired,
-    disableAnatomogramsCheckbox: React.PropTypes.bool.isRequired
-};
+    setChecked: PropTypes.func.isRequired,
+    showAnatomograms: PropTypes.bool.isRequired,
+    toggleAnatomograms: PropTypes.func.isRequired,
+    disableAnatomogramsCheckbox: PropTypes.bool.isRequired
+}
 
-export default BaselineFacetsTree;
+export default BaselineFacetsTree
