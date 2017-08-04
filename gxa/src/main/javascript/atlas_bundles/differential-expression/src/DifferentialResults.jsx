@@ -1,26 +1,23 @@
-const $ = require('jquery');
-require('jquery.browser');
-
-const React = require('react');
-const ReactDOM = require('react-dom');
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 //*------------------------------------------------------------------*
 
-const AtlasFeedback = require('expression-atlas-feedback');
-import EbiSpeciesIcon  from 'react-ebi-species';
+const AtlasFeedback = require('expression-atlas-feedback')
+import EbiSpeciesIcon  from 'react-ebi-species'
 
 import URI from 'urijs'
 
 //*------------------------------------------------------------------*
 
-const DisplayLevelsButton = require('./DisplayLevelsButton.jsx');
-const DifferentialDownloadButton = require('./DifferentialDownloadButton.jsx');
-const Legend = require('./legend/LegendDifferential.jsx');
-const CellDifferential = require('./cell-differential/CellDifferential.jsx');
+const DisplayLevelsButton = require('./DisplayLevelsButton.jsx')
+const DifferentialDownloadButton = require('./DifferentialDownloadButton.jsx')
+import Legend from './legend/LegendDifferential'
+const CellDifferential = require('./cell-differential/CellDifferential.jsx')
 
-const ContrastTooltips = require('./contrast-tooltip/contrastTooltipModule.js');
+const ContrastTooltips = require('./contrast-tooltip/contrastTooltipModule.js')
 
-require('./DifferentialResults.css');
+import './DifferentialResults.css'
 
 //*------------------------------------------------------------------*
 
@@ -112,58 +109,56 @@ const DifferentialResults = React.createClass({
     },
 
     render () {
+      return (
+        <div>
+          <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <DisplayLevelsButton hideText='Hide log<sub>2</sub>-fold change' showText='Display log<sub>2</sub>-fold change' onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} fontSize='14px' width='200px'/>
+          </div>
+
+          <div style={{display: 'inline-block', verticalAlign: 'middle'}} className="margin-left-large">
+            <Legend
+              atlasBaseURL={this.props.atlasUrl} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
+            />
+          </div>
+
+          <div style={{display: 'inline-block'}} className="margin-left-large">
+            <DifferentialDownloadButton ref="downloadProfilesButton"
+                                        results={this.props.results}
+            />
+          </div>
+
+          <table className="table-striped gxaDifferentialFacetedSearchResults">
+            <thead>
+            <tr>
+              <th style={{width: '10%'}}>Log<sub>2</sub>-fold change</th>
+              <th style={{width: '5%'}}>Species</th>
+              <th style={{width: '5%'}}>Gene name</th>
+              <th style={{width: '30%'}}>Comparison</th>
+              <th style={{width: '15%'}}>Experimental variables</th>
+              <th style={{width: '35%'}}>Experiment name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {differentialResultRows}
+            </tbody>
+          </table>
+          <div className={`margin-top-medium`}>
+            <AtlasFeedback
+              collectionCallback = {
+                typeof window.ga === `function` ?
+                  (score, comment) => { window.ga('send','event','DifferentialHeatmaps', 'feedback', comment, score) } :
+                  () => {}
+              } />
+          </div>
+        </div>
+      );
+
         let differentialResultRows = this.props.results.map(diffResult =>
               <DifferentialResultRow
                 key = {diffResult.id}
                 displayLevels = {this.state.displayLevels}
                 atlasUrl = {this.props.atlasUrl}
                 {...diffResult} />
-        );
-
-        let feedbackSmileys = $.browser.msie ? null
-            :
-            <div style = {{marginTop:'50px'}}>
-                <AtlasFeedback
-                    collectionCallback = { (score, comment) => {
-                        this.state.googleAnalyticsCallback('send','event','DifferentialHeatmaps', 'feedback', comment, score);
-                    }}/>
-            </div>;
-
-        return (
-            <div>
-                <div style={{display: 'inline-block', verticalAlign: 'middle'}}>
-                    <DisplayLevelsButton hideText='Hide log<sub>2</sub>-fold change' showText='Display log<sub>2</sub>-fold change' onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} fontSize='14px' width='200px'/>
-                </div>
-
-                <div style={{display: 'inline-block', verticalAlign: 'middle'}} className="margin-left-large">
-                    <Legend
-                        atlasBaseURL={this.props.atlasUrl} minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
-                    />
-                </div>
-
-                <div style={{display: 'inline-block'}} className="margin-left-large">
-                    <DifferentialDownloadButton ref="downloadProfilesButton"
-                                                results={this.props.results}
-                    />
-                 </div>
-
-                <table className="table-striped gxaDifferentialFacetedSearchResults">
-                    <thead>
-                        <tr>
-                            <th style={{width: '10%'}}>Log<sub>2</sub>-fold change</th>
-                            <th style={{width: '5%'}}>Species</th>
-                            <th style={{width: '5%'}}>Gene name</th>
-                            <th style={{width: '30%'}}>Comparison</th>
-                            <th style={{width: '15%'}}>Experimental variables</th>
-                            <th style={{width: '35%'}}>Experiment name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {differentialResultRows}
-                    </tbody>
-                </table>
-                {feedbackSmileys}
-            </div>
         );
     }
 });
@@ -224,11 +219,6 @@ const DifferentialResultRow = React.createClass({
 
     componentDidMount () {
         ContrastTooltips(this.props.atlasUrl, '', ReactDOM.findDOMNode(this.refs.comparison), this.props.experimentAccession, this.props.contrastId);
-        $(document).ready(() => {
-          this.setState(
-              {googleAnalyticsCallback: typeof ga !== 'undefined' ? ga : () => {}}
-            );
-        });
     }
 });
 
