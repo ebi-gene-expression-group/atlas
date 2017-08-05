@@ -37,7 +37,7 @@ public class BioentityProperty {
     }
 
     public BioentityProperty(String bioentityIdentifier, String species, String name, String value) {
-        checkArgument(StringUtils.isNotBlank(value),"Invalid blank property value");
+        checkArgument(StringUtils.isNotBlank(value), String.format("Invalid blank property value for %s – %s", bioentityIdentifier, name));
 
         this.species = species;
         this.name = name;
