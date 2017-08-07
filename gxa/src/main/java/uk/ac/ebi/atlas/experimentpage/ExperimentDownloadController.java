@@ -1,8 +1,12 @@
 package uk.ac.ebi.atlas.experimentpage;
 
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.experiment.ExperimentType;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.experiment.differential.microarray.MicroarrayExperiment;
@@ -14,7 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.alreadyForwardedButNoOtherControllerHandledTheRequest;
 import static uk.ac.ebi.atlas.experimentpage.ExperimentDispatcherUtils.buildForwardURL;
 
@@ -40,7 +50,7 @@ public class ExperimentDownloadController {
         this.microarrayExperimentDownloadSupplier = microarrayExperimentDownloadSupplier;
     }
 
-    public static final String url = "/experiments-content/{experimentAccession}/download";
+    public static final String url = "/experiments-content/{experimentAccession}/download/{experimentType}";
     
     @RequestMapping(value = url)
     public String dispatch(HttpServletRequest request,
@@ -52,6 +62,23 @@ public class ExperimentDownloadController {
         }
 
         return "forward:" + buildForwardURL(request, experimentTrader.getExperiment(experimentAccession, accessKey));
+    }
+
+    public static String getUrl(String experimentAccession, String accessKey, ExperimentType experimentType, ExperimentPageRequestPreferences<?> experimentPageRequestPreferences){
+        try {
+            List<BasicNameValuePair> parameters = org.apache.commons.beanutils.BeanUtils.describe(experimentPageRequestPreferences).entrySet().stream().map(e -> new BasicNameValuePair(e.getKey(), e.getValue())).collect(Collectors.toList());
+            if(isNotEmpty(accessKey)) {
+                parameters.add(new BasicNameValuePair("accessKey", accessKey));
+            }
+
+            String query = URLEncodedUtils.format(parameters, Charset.defaultCharset());
+
+            return URI.create(
+                    url.replace("{experimentAccession}", experimentAccession).replace("{experimentType}", experimentType.getParent().name().toUpperCase())
+                    +"?"+query).toString();
+        } catch (IllegalAccessException|InvocationTargetException|NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

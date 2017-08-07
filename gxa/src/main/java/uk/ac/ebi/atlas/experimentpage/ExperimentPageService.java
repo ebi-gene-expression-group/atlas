@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import uk.ac.ebi.atlas.controllers.ReturnsJsonErrors;
 import uk.ac.ebi.atlas.model.experiment.Experiment;
+import uk.ac.ebi.atlas.tracks.GenomeBrowserController;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import java.text.MessageFormat;
@@ -18,7 +19,7 @@ public class ExperimentPageService extends ReturnsJsonErrors {
     protected final Gson gson = new Gson();
 
     protected Map<String, JsonElement> payloadAttributes(Experiment experiment,
-                                               String accessKey, ExperimentPageRequestPreferences requestPreferences) {
+                                                         String accessKey, ExperimentPageRequestPreferences requestPreferences) {
         Map<String, JsonElement> result = new HashMap<>();
 
         result.put("experiment", experimentDescription(experiment, accessKey, requestPreferences));
@@ -32,21 +33,41 @@ public class ExperimentPageService extends ReturnsJsonErrors {
         JsonObject experimentDescription = new JsonObject();
         experimentDescription.addProperty("accession", experiment.getAccession());
         experimentDescription.addProperty("type", experiment.getType().getDescription());
-        experimentDescription.addProperty("relUrl",
-                MessageFormat.format(
-                        "experiments/{0}?geneQuery={1}",
-                        experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
-                + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey)
+
+        JsonObject urls = new JsonObject();
+        String mainPageUrl = MessageFormat.format(
+                "/experiments/{0}?geneQuery={1}",
+                experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
+                + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey);
+        urls.addProperty("main_page",
+                mainPageUrl
         );
+        urls.addProperty("genome_browsers",
+                GenomeBrowserController.redirectUrl(experiment.getAccession(), accessKey)
+        );
+        urls.addProperty("download",
+                ExperimentDownloadController.getUrl(experiment.getAccession(), accessKey, experiment.getType(), requestPreferences)
+        );
+        experimentDescription.add("urls", urls);
+
+        experimentDescription.addProperty("type", experiment.getType().getDescription());
         experimentDescription.addProperty("description", experiment.getDescription());
         experimentDescription.addProperty("species", experiment.getSpecies().getName());
+
+        /*
+        deprecated on 7 Aug 2017
+        accessKey was needed for genome browsers
+        relUrl was a bottom link for "See more data in Expression Atlas"
+        TODO remove after distributing expression-atlas-heatmap-highcharts 3.3
+         */
         experimentDescription.addProperty("accessKey", accessKey);
+        experimentDescription.addProperty("relUrl", mainPageUrl.replaceFirst("/", ""));
         return experimentDescription;
     }
 
-    public JsonObject config(Experiment<?> experiment, ExperimentPageRequestPreferences preferences){
+    public JsonObject config(Experiment<?> experiment, ExperimentPageRequestPreferences preferences) {
         JsonObject config = new JsonObject();
-        config.addProperty("geneQuery",preferences.getGeneQuery().toUrlEncodedJson());
+        config.addProperty("geneQuery", preferences.getGeneQuery().toUrlEncodedJson());
         config.addProperty("species", experiment.getSpecies().getName());
         config.add("genomeBrowsers", gson.toJsonTree(experiment.getGenomeBrowserNames()));
         config.addProperty("disclaimer", experiment.getDisclaimer());

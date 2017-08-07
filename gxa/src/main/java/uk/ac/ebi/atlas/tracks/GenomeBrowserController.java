@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Controller
 public class GenomeBrowserController extends HtmlExceptionHandlingController {
@@ -40,15 +41,35 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
 
+    private static final String REDIRECT_URL_TEMPLATE = "/experiments/{experimentAccession}/redirect/genome-browsers";
+
+    public static String redirectUrl(String experimentAccession, String accessKey){
+        return REDIRECT_URL_TEMPLATE
+                .replace("{experimentAccession}", experimentAccession)
+                + (isNotEmpty(accessKey) ? "?accessKey="+accessKey : "");
+    }
+
     @Inject
     public GenomeBrowserController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/external-services/genome-browser/{genomeBrowserName}",
-                    method = {RequestMethod.GET, RequestMethod.HEAD})
 
-    public String redirectToGenomeBrowser(@PathVariable String genomeBrowserName,
+    //Deprecated - remove after deploying experiment page with expression-atlas-heatmap-highcharts 3.3
+    @RequestMapping(value = "/external-services/genome-browser/{genomeBrowserName}", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public String redirectToGenomeBrowserPreviousUrl(@PathVariable String genomeBrowserName,
+                                                     @RequestParam String experimentAccession,
+                                                     @RequestParam String geneId,
+                                                     @RequestParam(required = false, defaultValue = "") String trackId,
+                                                     @RequestParam(required = false, defaultValue = "") String accessKey,
+                                                     HttpServletRequest request) throws IOException {
+        return redirectToGenomeBrowser(genomeBrowserName, experimentAccession, geneId, trackId, accessKey, request);
+    }
+
+
+    @RequestMapping(value = REDIRECT_URL_TEMPLATE,
+                    method = {RequestMethod.GET, RequestMethod.HEAD})
+    public String redirectToGenomeBrowser(@RequestParam String name,
                                           @RequestParam String experimentAccession,
                                           @RequestParam String geneId,
                                           @RequestParam(required = false, defaultValue = "") String trackId,
@@ -61,16 +82,16 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
         String genomeBrowserUrl = null;
         ImmutableCollection<ImmutableMap<String, String>> genomeBrowsers = experiment.getGenomeBrowsers();
 
-        for (ImmutableMap<String, String> genomeBrowser : genomeBrowsers) {
-            if (genomeBrowserName.equalsIgnoreCase(genomeBrowser.get("name").replaceAll("\\s+", ""))) {
-                genomeBrowserUrl = genomeBrowser.get("url");
+        for (ImmutableMap<String, String> genomeBrowserO : genomeBrowsers) {
+            if (name.equalsIgnoreCase(genomeBrowserO.get("name").replaceAll("\\s+", ""))) {
+                genomeBrowserUrl = genomeBrowserO.get("url");
                 break;
             }
         }
         if (isBlank(genomeBrowserUrl)) {
             throw new RuntimeException(String.format(
                     "The requested genome browser %s is not compatible with experiment %s (%s)",
-                    genomeBrowserName, experiment.getAccession(), experiment.getSpecies().getName()));
+                    name, experiment.getAccession(), experiment.getSpecies().getName()));
         }
 
         String atlasServer = String.format(
