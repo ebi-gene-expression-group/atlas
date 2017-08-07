@@ -50,7 +50,7 @@ public class ExperimentDownloadController {
         this.microarrayExperimentDownloadSupplier = microarrayExperimentDownloadSupplier;
     }
 
-    public static final String url = "/experiments-content/{experimentAccession}/download/{experimentType}";
+    public static final String url = "experiments-content/{experimentAccession}/download/{experimentType}";
     
     @RequestMapping(value = url)
     public String dispatch(HttpServletRequest request,

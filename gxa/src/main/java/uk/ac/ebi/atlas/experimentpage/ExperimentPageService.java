@@ -36,7 +36,7 @@ public class ExperimentPageService extends ReturnsJsonErrors {
 
         JsonObject urls = new JsonObject();
         String mainPageUrl = MessageFormat.format(
-                "/experiments/{0}?geneQuery={1}",
+                "experiments/{0}?geneQuery={1}",
                 experiment.getAccession(), requestPreferences.getGeneQuery().toUrlEncodedJson())
                 + (isBlank(accessKey) ? "" : "&accessKey=" + accessKey);
         urls.addProperty("main_page",
@@ -61,7 +61,7 @@ public class ExperimentPageService extends ReturnsJsonErrors {
         TODO remove after distributing expression-atlas-heatmap-highcharts 3.3
          */
         experimentDescription.addProperty("accessKey", accessKey);
-        experimentDescription.addProperty("relUrl", mainPageUrl.replaceFirst("/", ""));
+        experimentDescription.addProperty("relUrl", mainPageUrl);
         return experimentDescription;
     }
 

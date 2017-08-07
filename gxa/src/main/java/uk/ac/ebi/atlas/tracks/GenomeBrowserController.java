@@ -41,7 +41,7 @@ public class GenomeBrowserController extends HtmlExceptionHandlingController {
 
     private final ExperimentTrader experimentTrader;
 
-    private static final String REDIRECT_URL_TEMPLATE = "/experiments/{experimentAccession}/redirect/genome-browsers";
+    private static final String REDIRECT_URL_TEMPLATE = "experiments/{experimentAccession}/redirect/genome-browsers";
 
     public static String redirectUrl(String experimentAccession, String accessKey){
         return REDIRECT_URL_TEMPLATE
