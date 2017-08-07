@@ -75,50 +75,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Run ITs on an embedded Tomcat server -->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.tomcat.maven</groupId>-->
-                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
-                <!--<version>2.1</version>-->
-                <!--<configuration>-->
-                    <!--<path>/gxa</path>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>start-tomcat</id>-->
-                        <!--<phase>pre-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>run</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<fork>true</fork>-->
-                            <!--<port>8080</port>-->
-                            <!--<tomcatUsers>src/test/resources/tomcat-users.xml</tomcatUsers>-->
-                            <!-- extra dependencies to add jdbc driver, mail jars, etc. -->
-                            <!--<extraDependencies>-->
-                                <!--<extraDependency>-->
-                                    <!--<groupId>com.oracle</groupId>-->
-                                    <!--<artifactId>ojdbc6</artifactId>-->
-                                    <!--<version>11.2.0.3</version>-->
-                                <!--</extraDependency>-->
-                                <!--<extraDependency>-->
-                                    <!--<groupId>com.oracle</groupId>-->
-                                    <!--<artifactId>ucp</artifactId>-->
-                                    <!--<version>12.2.0.3</version>-->
-                                <!--</extraDependency>-->
-                            <!--</extraDependencies>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>stop-tomcat</id>-->
-                        <!--<phase>post-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>shutdown</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
             <!-- Run ITs in the server/port selenium.test.host/selenium.test.portnumber, usually lime -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>

@@ -60,14 +60,6 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>uk.ac.ebi.atlas.web.UCPDestroyPoolListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>uk.ac.ebi.atlas.web.JdbcDriverUnregisteringListener</listener-class>
-    </listener>
-
-    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 

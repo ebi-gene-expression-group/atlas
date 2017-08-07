@@ -220,30 +220,11 @@
     </build>
 
     <repositories>
-        <!-- Oracle OJDBC6 11.2.0.3 and UCP 11.2.0.3 -->
-        <repository>
-            <id>maven.oracle.com</id>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <url>https://maven.oracle.com</url>
-            <layout>default</layout>
-        </repository>
-
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven.oracle.com</id>
-            <url>https://maven.oracle.com</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <!-- PostgreSQL and pooling -->
@@ -554,29 +535,6 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
-            <properties>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <db.context>oracleContext.xml</db.context>
-                <_jdbc.url.oracle>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</_jdbc.url.oracle>
-                <_jdbc.username.oracle>atlas3dev</_jdbc.username.oracle>
-                <_jdbc.password.oracle>atlas3dev</_jdbc.password.oracle>
-                <solr.host>lime</solr.host>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-
-        <profile>
             <id>dev.pg</id>
             <properties>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
@@ -623,31 +581,6 @@
         </profile>
 
         <profile>
-            <id>integration</id>
-            <!-- Embedded tomcat started by mvn in Bamboo plan -->
-            <properties>
-                <!-- This directory is populated from /web/src/test/resources/ by the build plan  -->
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
-                <db.context>oracleContext.xml</db.context>
-                <_jdbc.url.oracle>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</_jdbc.url.oracle>
-                <_jdbc.username.oracle>atlas3it</_jdbc.username.oracle>
-                <_jdbc.password.oracle>atlas3it</_jdbc.password.oracle>
-                <solr.host>lime.ebi.ac.uk</solr.host>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
-            </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-
-        <profile>
             <id>integration.pg</id>
             <!-- Embedded tomcat started by mvn in Bamboo plan -->
             <properties>
@@ -672,30 +605,6 @@
             </build>
         </profile>
 
-        <profile>
-            <!--build used for staging and production -->
-            <id>production</id>
-            <!-- jdbc.properties is located on the filesystem and specified in Tomcat’s conf/Catalina/localhost/gxa.xml -->
-            <!-- solr.host is specified in Tomcat’s controller script with -Dsolr.host=<hostname> -->
-            <properties>
-                <data.files.location>/srv/gxa/data</data.files.location>
-                <db.context>oracleContext.xml</db.context>
-                <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
-                <mail.smtp.port>25</mail.smtp.port>
-                <mail.smtp.auth>false</mail.smtp.auth>
-            </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                        <excludes>
-                            <exclude>jdbc.properties</exclude>
-                        </excludes>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
         <profile>
             <!--build used for staging and production -->
             <id>production.pg</id>
@@ -731,29 +640,6 @@
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
-            </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                        <excludes>
-                            <exclude>jdbc.properties</exclude>
-                        </excludes>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-
-        <profile>
-            <!-- Used for build that is deployed to ves-hx-77 -->
-            <id>test</id>
-            <properties>
-                <data.files.location>/srv/gxa/data</data.files.location>
-                <db.context>oracleContext.xml</db.context>
-                <log.level.root>info</log.level.root>
-                <log.level.atlas>debug</log.level.atlas>
-                <log.prudent>false</log.prudent>
             </properties>
             <build>
                 <resources>
