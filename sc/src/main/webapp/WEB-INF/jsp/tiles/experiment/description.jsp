@@ -42,7 +42,7 @@
     <div id="alternativeViews">See also:
         <c:forEach var="alternativeViewAccession" items="${alternativeViews}" varStatus="i">
             <a id="goto-${alternativeViewAccession}" class="thick-link" title="Alternative view"
-               href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
+               href="${pageContext.request.contextPath}/experiments/${alternativeViewAccession}">
                     ${alternativeViewDescriptions.get(i.index)}
             </a>
 

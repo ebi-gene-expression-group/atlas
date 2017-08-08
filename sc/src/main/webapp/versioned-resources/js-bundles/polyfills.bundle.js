@@ -1,17 +1,9 @@
 var polyfills =
-<<<<<<< HEAD
-webpackJsonp_name_([0],[
-/* 0 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/_export.js ***!
-  \*************************************************/
-=======
 webpackJsonp_name_([1],[
 /* 0 */
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_export.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -19,19 +11,11 @@ webpackJsonp_name_([1],[
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    core = __webpack_require__(/*! ./_core */ 45),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    ctx = __webpack_require__(/*! ./_ctx */ 46),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     core = __webpack_require__(/*! ./_core */ 50),
     hide = __webpack_require__(/*! ./_hide */ 30),
     redefine = __webpack_require__(/*! ./_redefine */ 31),
     ctx = __webpack_require__(/*! ./_ctx */ 51),
->>>>>>> demo_sc_experimentPage
     PROTOTYPE = 'prototype';
 
 var $export = function $export(type, name, source) {
@@ -77,18 +61,11 @@ module.exports = $export;
 /***/ }),
 /* 1 */,
 /* 2 */,
-<<<<<<< HEAD
-/* 3 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_an-object.js ***!
-  \****************************************************/
-=======
 /* 3 */,
 /* 4 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_an-object.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -96,28 +73,17 @@ module.exports = $export;
 "use strict";
 
 
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7);
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9);
->>>>>>> demo_sc_experimentPage
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 4 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/_global.js ***!
-  \*************************************************/
-=======
 /* 5 */
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_global.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -130,20 +96,12 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
 if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 /***/ }),
-<<<<<<< HEAD
-/* 5 */,
-/* 6 */
-/*!************************************************!*\
-  !*** ./node_modules/core-js/modules/_fails.js ***!
-  \************************************************/
-=======
 /* 6 */,
 /* 7 */,
 /* 8 */
 /*!****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_fails.js ***!
   \****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -160,17 +118,10 @@ module.exports = function (exec) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 7 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_is-object.js ***!
-  \****************************************************/
-=======
 /* 9 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_is-object.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -185,17 +136,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 8 */
-/*!**********************************************!*\
-  !*** ./node_modules/core-js/modules/_wks.js ***!
-  \**********************************************/
-=======
 /* 10 */
 /*!**************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_wks.js ***!
   \**************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -203,15 +147,9 @@ module.exports = function (it) {
 "use strict";
 
 
-<<<<<<< HEAD
-var store = __webpack_require__(/*! ./_shared */ 142)('wks'),
-    uid = __webpack_require__(/*! ./_uid */ 64),
-    _Symbol = __webpack_require__(/*! ./_global */ 4).Symbol,
-=======
 var store = __webpack_require__(/*! ./_shared */ 166)('wks'),
     uid = __webpack_require__(/*! ./_uid */ 74),
     _Symbol = __webpack_require__(/*! ./_global */ 5).Symbol,
->>>>>>> demo_sc_experimentPage
     USE_SYMBOL = typeof _Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -221,22 +159,12 @@ var $exports = module.exports = function (name) {
 $exports.store = store;
 
 /***/ }),
-<<<<<<< HEAD
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_descriptors.js ***!
-  \******************************************************/
-=======
 /* 11 */,
 /* 12 */,
 /* 13 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_descriptors.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -245,28 +173,17 @@ $exports.store = store;
 
 
 // Thank's IE8 for his funny defineProperty
-<<<<<<< HEAD
-module.exports = !__webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 module.exports = !__webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return Object.defineProperty({}, 'a', { get: function get() {
       return 7;
     } }).a != 7;
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 13 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-dp.js ***!
-  \****************************************************/
-=======
 /* 14 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-dp.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -274,21 +191,12 @@ module.exports = !__webpack_require__(/*! ./_fails */ 8)(function () {
 "use strict";
 
 
-<<<<<<< HEAD
-var anObject = __webpack_require__(/*! ./_an-object */ 3),
-    IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 469),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-    dP = Object.defineProperty;
-
-exports.f = __webpack_require__(/*! ./_descriptors */ 12) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-=======
 var anObject = __webpack_require__(/*! ./_an-object */ 4),
     IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 588),
     toPrimitive = __webpack_require__(/*! ./_to-primitive */ 45),
     dP = Object.defineProperty;
 
 exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
->>>>>>> demo_sc_experimentPage
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -301,13 +209,6 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? Object.definePropert
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 14 */,
-/* 15 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_to-length.js ***!
-  \****************************************************/
-=======
 /* 15 */,
 /* 16 */,
 /* 17 */,
@@ -315,7 +216,6 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? Object.definePropert
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_to-length.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -324,28 +224,17 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? Object.definePropert
 
 
 // 7.1.15 ToLength
-<<<<<<< HEAD
-var toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-=======
 var toInteger = __webpack_require__(/*! ./_to-integer */ 62),
->>>>>>> demo_sc_experimentPage
     min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 16 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_to-object.js ***!
-  \****************************************************/
-=======
 /* 19 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_to-object.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -354,25 +243,12 @@ module.exports = function (it) {
 
 
 // 7.1.13 ToObject(argument)
-<<<<<<< HEAD
-var defined = __webpack_require__(/*! ./_defined */ 37);
-=======
 var defined = __webpack_require__(/*! ./_defined */ 41);
->>>>>>> demo_sc_experimentPage
 module.exports = function (it) {
   return Object(defined(it));
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
-/*!**********************************************!*\
-  !*** ./node_modules/core-js/modules/_has.js ***!
-  \**********************************************/
-=======
 /* 20 */,
 /* 21 */,
 /* 22 */,
@@ -382,7 +258,6 @@ module.exports = function (it) {
 /*!**************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_has.js ***!
   \**************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -396,18 +271,6 @@ module.exports = function (it, key) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_hide.js ***!
-  \***********************************************/
-=======
 /* 26 */,
 /* 27 */,
 /* 28 */,
@@ -416,7 +279,6 @@ module.exports = function (it, key) {
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_hide.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -424,15 +286,9 @@ module.exports = function (it, key) {
 "use strict";
 
 
-<<<<<<< HEAD
-var dP = __webpack_require__(/*! ./_object-dp */ 13),
-    createDesc = __webpack_require__(/*! ./_property-desc */ 53);
-module.exports = __webpack_require__(/*! ./_descriptors */ 12) ? function (object, key, value) {
-=======
 var dP = __webpack_require__(/*! ./_object-dp */ 14),
     createDesc = __webpack_require__(/*! ./_property-desc */ 60);
 module.exports = __webpack_require__(/*! ./_descriptors */ 13) ? function (object, key, value) {
->>>>>>> demo_sc_experimentPage
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -440,17 +296,10 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 13) ? function (objec
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 28 */
-/*!***************************************************!*\
-  !*** ./node_modules/core-js/modules/_redefine.js ***!
-  \***************************************************/
-=======
 /* 31 */
 /*!*******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_redefine.js ***!
   \*******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -458,26 +307,15 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 13) ? function (objec
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    has = __webpack_require__(/*! ./_has */ 20),
-    SRC = __webpack_require__(/*! ./_uid */ 64)('src'),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     hide = __webpack_require__(/*! ./_hide */ 30),
     has = __webpack_require__(/*! ./_has */ 25),
     SRC = __webpack_require__(/*! ./_uid */ 74)('src'),
->>>>>>> demo_sc_experimentPage
     TO_STRING = 'toString',
     $toString = Function[TO_STRING],
     TPL = ('' + $toString).split(TO_STRING);
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_core */ 45).inspectSource = function (it) {
-=======
 __webpack_require__(/*! ./_core */ 50).inspectSource = function (it) {
->>>>>>> demo_sc_experimentPage
   return $toString.call(it);
 };
 
@@ -502,17 +340,10 @@ __webpack_require__(/*! ./_core */ 50).inspectSource = function (it) {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 29 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_a-function.js ***!
-  \*****************************************************/
-=======
 /* 32 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_a-function.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -526,17 +357,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 30 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_to-iobject.js ***!
-  \*****************************************************/
-=======
 /* 33 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_to-iobject.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -545,29 +369,17 @@ module.exports = function (it) {
 
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-<<<<<<< HEAD
-var IObject = __webpack_require__(/*! ./_iobject */ 103),
-    defined = __webpack_require__(/*! ./_defined */ 37);
-=======
 var IObject = __webpack_require__(/*! ./_iobject */ 119),
     defined = __webpack_require__(/*! ./_defined */ 41);
->>>>>>> demo_sc_experimentPage
 module.exports = function (it) {
   return IObject(defined(it));
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 31 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-html.js ***!
-  \******************************************************/
-=======
 /* 34 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-html.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -576,13 +388,8 @@ module.exports = function (it) {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    defined = __webpack_require__(/*! ./_defined */ 37),
-=======
     fails = __webpack_require__(/*! ./_fails */ 8),
     defined = __webpack_require__(/*! ./_defined */ 41),
->>>>>>> demo_sc_experimentPage
     quot = /"/g;
 // B.2.3.2.1 CreateHTML(string, tag, attribute, value)
 var createHTML = function createHTML(string, tag, attribute, value) {
@@ -601,20 +408,12 @@ module.exports = function (NAME, exec) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 32 */,
-/* 33 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-gopd.js ***!
-  \******************************************************/
-=======
 /* 35 */,
 /* 36 */,
 /* 37 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-gopd.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -622,17 +421,6 @@ module.exports = function (NAME, exec) {
 "use strict";
 
 
-<<<<<<< HEAD
-var pIE = __webpack_require__(/*! ./_object-pie */ 104),
-    createDesc = __webpack_require__(/*! ./_property-desc */ 53),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-    has = __webpack_require__(/*! ./_has */ 20),
-    IE8_DOM_DEFINE = __webpack_require__(/*! ./_ie8-dom-define */ 469),
-    gOPD = Object.getOwnPropertyDescriptor;
-
-exports.f = __webpack_require__(/*! ./_descriptors */ 12) ? gOPD : function getOwnPropertyDescriptor(O, P) {
-=======
 var pIE = __webpack_require__(/*! ./_object-pie */ 120),
     createDesc = __webpack_require__(/*! ./_property-desc */ 60),
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
@@ -642,7 +430,6 @@ var pIE = __webpack_require__(/*! ./_object-pie */ 120),
     gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? gOPD : function getOwnPropertyDescriptor(O, P) {
->>>>>>> demo_sc_experimentPage
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -652,17 +439,10 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? gOPD : function getO
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 34 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-gpo.js ***!
-  \*****************************************************/
-=======
 /* 38 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-gpo.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -671,15 +451,9 @@ exports.f = __webpack_require__(/*! ./_descriptors */ 13) ? gOPD : function getO
 
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-<<<<<<< HEAD
-var has = __webpack_require__(/*! ./_has */ 20),
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    IE_PROTO = __webpack_require__(/*! ./_shared-key */ 248)('IE_PROTO'),
-=======
 var has = __webpack_require__(/*! ./_has */ 25),
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     IE_PROTO = __webpack_require__(/*! ./_shared-key */ 304)('IE_PROTO'),
->>>>>>> demo_sc_experimentPage
     ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -691,19 +465,11 @@ module.exports = Object.getPrototypeOf || function (O) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 35 */,
-/* 36 */
-/*!**********************************************!*\
-  !*** ./node_modules/core-js/modules/_cof.js ***!
-  \**********************************************/
-=======
 /* 39 */,
 /* 40 */
 /*!**************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_cof.js ***!
   \**************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -718,17 +484,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 37 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/_defined.js ***!
-  \**************************************************/
-=======
 /* 41 */
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_defined.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -743,17 +502,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 38 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_strict-method.js ***!
-  \********************************************************/
-=======
 /* 42 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_strict-method.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -761,11 +513,7 @@ module.exports = function (it) {
 "use strict";
 
 
-<<<<<<< HEAD
-var fails = __webpack_require__(/*! ./_fails */ 6);
-=======
 var fails = __webpack_require__(/*! ./_fails */ 8);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (method, arg) {
   return !!method && fails(function () {
@@ -774,21 +522,12 @@ module.exports = function (method, arg) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 39 */,
-/* 40 */,
-/* 41 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/_to-primitive.js ***!
-  \*******************************************************/
-=======
 /* 43 */,
 /* 44 */,
 /* 45 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_to-primitive.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -797,11 +536,7 @@ module.exports = function (method, arg) {
 
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7);
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9);
->>>>>>> demo_sc_experimentPage
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -814,17 +549,10 @@ module.exports = function (it, S) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 42 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-sap.js ***!
-  \*****************************************************/
-=======
 /* 46 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-sap.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -834,13 +562,8 @@ module.exports = function (it, S) {
 
 // most Object methods by ES6 should accept primitives
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    core = __webpack_require__(/*! ./_core */ 45),
-    fails = __webpack_require__(/*! ./_fails */ 6);
-=======
     core = __webpack_require__(/*! ./_core */ 50),
     fails = __webpack_require__(/*! ./_fails */ 8);
->>>>>>> demo_sc_experimentPage
 module.exports = function (KEY, exec) {
   var fn = (core.Object || {})[KEY] || Object[KEY],
       exp = {};
@@ -851,17 +574,10 @@ module.exports = function (KEY, exec) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 43 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-methods.js ***!
-  \********************************************************/
-=======
 /* 47 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-methods.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -876,19 +592,11 @@ module.exports = function (KEY, exec) {
 // 4 -> Array#every
 // 5 -> Array#find
 // 6 -> Array#findIndex
-<<<<<<< HEAD
-var ctx = __webpack_require__(/*! ./_ctx */ 46),
-    IObject = __webpack_require__(/*! ./_iobject */ 103),
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    asc = __webpack_require__(/*! ./_array-species-create */ 1116);
-=======
 var ctx = __webpack_require__(/*! ./_ctx */ 51),
     IObject = __webpack_require__(/*! ./_iobject */ 119),
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     toLength = __webpack_require__(/*! ./_to-length */ 18),
     asc = __webpack_require__(/*! ./_array-species-create */ 1431);
->>>>>>> demo_sc_experimentPage
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1,
       IS_FILTER = TYPE == 2,
@@ -929,20 +637,12 @@ module.exports = function (TYPE, $create) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 44 */,
-/* 45 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_core.js ***!
-  \***********************************************/
-=======
 /* 48 */,
 /* 49 */,
 /* 50 */
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_core.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -954,17 +654,10 @@ var core = module.exports = { version: '2.4.0' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 /***/ }),
-<<<<<<< HEAD
-/* 46 */
-/*!**********************************************!*\
-  !*** ./node_modules/core-js/modules/_ctx.js ***!
-  \**********************************************/
-=======
 /* 51 */
 /*!**************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_ctx.js ***!
   \**************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -973,11 +666,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
 // optional / simple context binding
-<<<<<<< HEAD
-var aFunction = __webpack_require__(/*! ./_a-function */ 29);
-=======
 var aFunction = __webpack_require__(/*! ./_a-function */ 32);
->>>>>>> demo_sc_experimentPage
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -1001,17 +690,10 @@ module.exports = function (fn, that, length) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 47 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_typed-array.js ***!
-  \******************************************************/
-=======
 /* 52 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_typed-array.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1021,47 +703,6 @@ module.exports = function (fn, that, length) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-<<<<<<< HEAD
-if (__webpack_require__(/*! ./_descriptors */ 12)) {
-  var LIBRARY = __webpack_require__(/*! ./_library */ 65),
-      global = __webpack_require__(/*! ./_global */ 4),
-      fails = __webpack_require__(/*! ./_fails */ 6),
-      $export = __webpack_require__(/*! ./_export */ 0),
-      $typed = __webpack_require__(/*! ./_typed */ 151),
-      $buffer = __webpack_require__(/*! ./_typed-buffer */ 271),
-      ctx = __webpack_require__(/*! ./_ctx */ 46),
-      anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-      propertyDesc = __webpack_require__(/*! ./_property-desc */ 53),
-      hide = __webpack_require__(/*! ./_hide */ 27),
-      redefineAll = __webpack_require__(/*! ./_redefine-all */ 72),
-      toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-      toLength = __webpack_require__(/*! ./_to-length */ 15),
-      toIndex = __webpack_require__(/*! ./_to-index */ 67),
-      toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-      has = __webpack_require__(/*! ./_has */ 20),
-      same = __webpack_require__(/*! ./_same-value */ 475),
-      classof = __webpack_require__(/*! ./_classof */ 105),
-      isObject = __webpack_require__(/*! ./_is-object */ 7),
-      toObject = __webpack_require__(/*! ./_to-object */ 16),
-      isArrayIter = __webpack_require__(/*! ./_is-array-iter */ 263),
-      create = __webpack_require__(/*! ./_object-create */ 68),
-      getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-      gOPN = __webpack_require__(/*! ./_object-gopn */ 69).f,
-      getIterFn = __webpack_require__(/*! ./core.get-iterator-method */ 265),
-      uid = __webpack_require__(/*! ./_uid */ 64),
-      wks = __webpack_require__(/*! ./_wks */ 8),
-      createArrayMethod = __webpack_require__(/*! ./_array-methods */ 43),
-      createArrayIncludes = __webpack_require__(/*! ./_array-includes */ 143),
-      speciesConstructor = __webpack_require__(/*! ./_species-constructor */ 268),
-      ArrayIterators = __webpack_require__(/*! ./es6.array.iterator */ 267),
-      Iterators = __webpack_require__(/*! ./_iterators */ 89),
-      $iterDetect = __webpack_require__(/*! ./_iter-detect */ 147),
-      setSpecies = __webpack_require__(/*! ./_set-species */ 70),
-      arrayFill = __webpack_require__(/*! ./_array-fill */ 266),
-      arrayCopyWithin = __webpack_require__(/*! ./_array-copy-within */ 484),
-      $DP = __webpack_require__(/*! ./_object-dp */ 13),
-      $GOPD = __webpack_require__(/*! ./_object-gopd */ 33),
-=======
 if (__webpack_require__(/*! ./_descriptors */ 13)) {
   var LIBRARY = __webpack_require__(/*! ./_library */ 75),
       global = __webpack_require__(/*! ./_global */ 5),
@@ -1101,7 +742,6 @@ if (__webpack_require__(/*! ./_descriptors */ 13)) {
       arrayCopyWithin = __webpack_require__(/*! ./_array-copy-within */ 603),
       $DP = __webpack_require__(/*! ./_object-dp */ 14),
       $GOPD = __webpack_require__(/*! ./_object-gopd */ 37),
->>>>>>> demo_sc_experimentPage
       dP = $DP.f,
       gOPD = $GOPD.f,
       RangeError = global.RangeError,
@@ -1550,17 +1190,10 @@ if (__webpack_require__(/*! ./_descriptors */ 13)) {
 } else module.exports = function () {/* empty */};
 
 /***/ }),
-<<<<<<< HEAD
-/* 48 */
-/*!***************************************************!*\
-  !*** ./node_modules/core-js/modules/_metadata.js ***!
-  \***************************************************/
-=======
 /* 53 */
 /*!*******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_metadata.js ***!
   \*******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1570,17 +1203,10 @@ if (__webpack_require__(/*! ./_descriptors */ 13)) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-<<<<<<< HEAD
-var Map = __webpack_require__(/*! ./es6.map */ 487),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    shared = __webpack_require__(/*! ./_shared */ 142)('metadata'),
-    store = shared.store || (shared.store = new (__webpack_require__(/*! ./es6.weak-map */ 490))());
-=======
 var Map = __webpack_require__(/*! ./es6.map */ 606),
     $export = __webpack_require__(/*! ./_export */ 0),
     shared = __webpack_require__(/*! ./_shared */ 166)('metadata'),
     store = shared.store || (shared.store = new (__webpack_require__(/*! ./es6.weak-map */ 609))());
->>>>>>> demo_sc_experimentPage
 
 var getOrCreateMetadataMap = function getOrCreateMetadataMap(target, targetKey, create) {
   var targetMetadata = store.get(target);
@@ -1632,16 +1258,6 @@ module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_property-desc.js ***!
-  \********************************************************/
-=======
 /* 54 */,
 /* 55 */,
 /* 56 */,
@@ -1652,7 +1268,6 @@ module.exports = {
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_property-desc.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1670,17 +1285,10 @@ module.exports = function (bitmap, value) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 54 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_meta.js ***!
-  \***********************************************/
-=======
 /* 61 */
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_meta.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1690,26 +1298,15 @@ module.exports = function (bitmap, value) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-<<<<<<< HEAD
-var META = __webpack_require__(/*! ./_uid */ 64)('meta'),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    has = __webpack_require__(/*! ./_has */ 20),
-    setDesc = __webpack_require__(/*! ./_object-dp */ 13).f,
-=======
 var META = __webpack_require__(/*! ./_uid */ 74)('meta'),
     isObject = __webpack_require__(/*! ./_is-object */ 9),
     has = __webpack_require__(/*! ./_has */ 25),
     setDesc = __webpack_require__(/*! ./_object-dp */ 14).f,
->>>>>>> demo_sc_experimentPage
     id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-<<<<<<< HEAD
-var FREEZE = !__webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 var FREEZE = !__webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function setMeta(it) {
@@ -1756,17 +1353,10 @@ var meta = module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 55 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_to-integer.js ***!
-  \*****************************************************/
-=======
 /* 62 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_to-integer.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1782,20 +1372,6 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */
-/*!**********************************************!*\
-  !*** ./node_modules/core-js/modules/_uid.js ***!
-  \**********************************************/
-=======
 /* 63 */,
 /* 64 */,
 /* 65 */,
@@ -1811,7 +1387,6 @@ module.exports = function (it) {
 /*!**************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_uid.js ***!
   \**************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1826,17 +1401,10 @@ module.exports = function (key) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 65 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/_library.js ***!
-  \**************************************************/
-=======
 /* 75 */
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_library.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1847,17 +1415,10 @@ module.exports = function (key) {
 module.exports = false;
 
 /***/ }),
-<<<<<<< HEAD
-/* 66 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-keys.js ***!
-  \******************************************************/
-=======
 /* 76 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-keys.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1866,30 +1427,18 @@ module.exports = false;
 
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-<<<<<<< HEAD
-var $keys = __webpack_require__(/*! ./_object-keys-internal */ 471),
-    enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 249);
-=======
 var $keys = __webpack_require__(/*! ./_object-keys-internal */ 590),
     enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 305);
->>>>>>> demo_sc_experimentPage
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 67 */
-/*!***************************************************!*\
-  !*** ./node_modules/core-js/modules/_to-index.js ***!
-  \***************************************************/
-=======
 /* 77 */
 /*!*******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_to-index.js ***!
   \*******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1897,11 +1446,7 @@ module.exports = Object.keys || function keys(O) {
 "use strict";
 
 
-<<<<<<< HEAD
-var toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-=======
 var toInteger = __webpack_require__(/*! ./_to-integer */ 62),
->>>>>>> demo_sc_experimentPage
     max = Math.max,
     min = Math.min;
 module.exports = function (index, length) {
@@ -1910,17 +1455,10 @@ module.exports = function (index, length) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 68 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-create.js ***!
-  \********************************************************/
-=======
 /* 78 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-create.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1929,38 +1467,23 @@ module.exports = function (index, length) {
 
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-<<<<<<< HEAD
-var anObject = __webpack_require__(/*! ./_an-object */ 3),
-    dPs = __webpack_require__(/*! ./_object-dps */ 472),
-    enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 249),
-    IE_PROTO = __webpack_require__(/*! ./_shared-key */ 248)('IE_PROTO'),
-=======
 var anObject = __webpack_require__(/*! ./_an-object */ 4),
     dPs = __webpack_require__(/*! ./_object-dps */ 591),
     enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ 305),
     IE_PROTO = __webpack_require__(/*! ./_shared-key */ 304)('IE_PROTO'),
->>>>>>> demo_sc_experimentPage
     Empty = function Empty() {/* empty */},
     PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var _createDict = function createDict() {
   // Thrash, waste and sodomy: IE GC bug
-<<<<<<< HEAD
-  var iframe = __webpack_require__(/*! ./_dom-create */ 246)('iframe'),
-=======
   var iframe = __webpack_require__(/*! ./_dom-create */ 302)('iframe'),
->>>>>>> demo_sc_experimentPage
       i = enumBugKeys.length,
       lt = '<',
       gt = '>',
       iframeDocument;
   iframe.style.display = 'none';
-<<<<<<< HEAD
-  __webpack_require__(/*! ./_html */ 251).appendChild(iframe);
-=======
   __webpack_require__(/*! ./_html */ 307).appendChild(iframe);
->>>>>>> demo_sc_experimentPage
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1987,17 +1510,10 @@ module.exports = Object.create || function create(O, Properties) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 69 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-gopn.js ***!
-  \******************************************************/
-=======
 /* 79 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-gopn.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2006,30 +1522,18 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-<<<<<<< HEAD
-var $keys = __webpack_require__(/*! ./_object-keys-internal */ 471),
-    hiddenKeys = __webpack_require__(/*! ./_enum-bug-keys */ 249).concat('length', 'prototype');
-=======
 var $keys = __webpack_require__(/*! ./_object-keys-internal */ 590),
     hiddenKeys = __webpack_require__(/*! ./_enum-bug-keys */ 305).concat('length', 'prototype');
->>>>>>> demo_sc_experimentPage
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 70 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_set-species.js ***!
-  \******************************************************/
-=======
 /* 80 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_set-species.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2037,17 +1541,10 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    dP = __webpack_require__(/*! ./_object-dp */ 13),
-    DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 12),
-    SPECIES = __webpack_require__(/*! ./_wks */ 8)('species');
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     dP = __webpack_require__(/*! ./_object-dp */ 14),
     DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 13),
     SPECIES = __webpack_require__(/*! ./_wks */ 10)('species');
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (KEY) {
   var C = global[KEY];
@@ -2060,17 +1557,10 @@ module.exports = function (KEY) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 71 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_an-instance.js ***!
-  \******************************************************/
-=======
 /* 81 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_an-instance.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2085,17 +1575,10 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 72 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/_redefine-all.js ***!
-  \*******************************************************/
-=======
 /* 82 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_redefine-all.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2103,11 +1586,7 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 "use strict";
 
 
-<<<<<<< HEAD
-var redefine = __webpack_require__(/*! ./_redefine */ 28);
-=======
 var redefine = __webpack_require__(/*! ./_redefine */ 31);
->>>>>>> demo_sc_experimentPage
 module.exports = function (target, src, safe) {
   for (var key in src) {
     redefine(target, key, src[key], safe);
@@ -2115,29 +1594,10 @@ module.exports = function (target, src, safe) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-=======
->>>>>>> demo_sc_experimentPage
 /* 83 */,
 /* 84 */,
 /* 85 */,
 /* 86 */,
-<<<<<<< HEAD
-/* 87 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/_set-to-string-tag.js ***!
-  \************************************************************/
-=======
 /* 87 */,
 /* 88 */,
 /* 89 */,
@@ -2155,7 +1615,6 @@ module.exports = function (target, src, safe) {
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_set-to-string-tag.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2163,32 +1622,19 @@ module.exports = function (target, src, safe) {
 "use strict";
 
 
-<<<<<<< HEAD
-var def = __webpack_require__(/*! ./_object-dp */ 13).f,
-    has = __webpack_require__(/*! ./_has */ 20),
-    TAG = __webpack_require__(/*! ./_wks */ 8)('toStringTag');
-=======
 var def = __webpack_require__(/*! ./_object-dp */ 14).f,
     has = __webpack_require__(/*! ./_has */ 25),
     TAG = __webpack_require__(/*! ./_wks */ 10)('toStringTag');
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 88 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-trim.js ***!
-  \******************************************************/
-=======
 /* 101 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-trim.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2197,15 +1643,9 @@ module.exports = function (it, tag, stat) {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    defined = __webpack_require__(/*! ./_defined */ 37),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    spaces = __webpack_require__(/*! ./_string-ws */ 253),
-=======
     defined = __webpack_require__(/*! ./_defined */ 41),
     fails = __webpack_require__(/*! ./_fails */ 8),
     spaces = __webpack_require__(/*! ./_string-ws */ 309),
->>>>>>> demo_sc_experimentPage
     space = '[' + spaces + ']',
     non = '\u200B\x85',
     ltrim = RegExp('^' + space + space + '*'),
@@ -2234,17 +1674,10 @@ var trim = exporter.trim = function (string, TYPE) {
 module.exports = exporter;
 
 /***/ }),
-<<<<<<< HEAD
-/* 89 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_iterators.js ***!
-  \****************************************************/
-=======
 /* 102 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iterators.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2255,17 +1688,10 @@ module.exports = exporter;
 module.exports = {};
 
 /***/ }),
-<<<<<<< HEAD
-/* 90 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/_add-to-unscopables.js ***!
-  \*************************************************************/
-=======
 /* 103 */
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_add-to-unscopables.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2274,31 +1700,18 @@ module.exports = {};
 
 
 // 22.1.3.31 Array.prototype[@@unscopables]
-<<<<<<< HEAD
-var UNSCOPABLES = __webpack_require__(/*! ./_wks */ 8)('unscopables'),
-    ArrayProto = Array.prototype;
-if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(/*! ./_hide */ 27)(ArrayProto, UNSCOPABLES, {});
-=======
 var UNSCOPABLES = __webpack_require__(/*! ./_wks */ 10)('unscopables'),
     ArrayProto = Array.prototype;
 if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(/*! ./_hide */ 30)(ArrayProto, UNSCOPABLES, {});
->>>>>>> demo_sc_experimentPage
 module.exports = function (key) {
   ArrayProto[UNSCOPABLES][key] = true;
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 91 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/_for-of.js ***!
-  \*************************************************/
-=======
 /* 104 */
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_for-of.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2306,21 +1719,12 @@ module.exports = function (key) {
 "use strict";
 
 
-<<<<<<< HEAD
-var ctx = __webpack_require__(/*! ./_ctx */ 46),
-    call = __webpack_require__(/*! ./_iter-call */ 482),
-    isArrayIter = __webpack_require__(/*! ./_is-array-iter */ 263),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    getIterFn = __webpack_require__(/*! ./core.get-iterator-method */ 265),
-=======
 var ctx = __webpack_require__(/*! ./_ctx */ 51),
     call = __webpack_require__(/*! ./_iter-call */ 601),
     isArrayIter = __webpack_require__(/*! ./_is-array-iter */ 319),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     toLength = __webpack_require__(/*! ./_to-length */ 18),
     getIterFn = __webpack_require__(/*! ./core.get-iterator-method */ 321),
->>>>>>> demo_sc_experimentPage
     BREAK = {},
     RETURN = {};
 var _exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -2347,23 +1751,6 @@ _exports.BREAK = BREAK;
 _exports.RETURN = RETURN;
 
 /***/ }),
-<<<<<<< HEAD
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/_iobject.js ***!
-  \**************************************************/
-=======
 /* 105 */,
 /* 106 */,
 /* 107 */,
@@ -2382,7 +1769,6 @@ _exports.RETURN = RETURN;
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iobject.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2391,27 +1777,16 @@ _exports.RETURN = RETURN;
 
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-<<<<<<< HEAD
-var cof = __webpack_require__(/*! ./_cof */ 36);
-=======
 var cof = __webpack_require__(/*! ./_cof */ 40);
->>>>>>> demo_sc_experimentPage
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 104 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-pie.js ***!
-  \*****************************************************/
-=======
 /* 120 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-pie.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2422,17 +1797,10 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-<<<<<<< HEAD
-/* 105 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/_classof.js ***!
-  \**************************************************/
-=======
 /* 121 */
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_classof.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2441,13 +1809,8 @@ exports.f = {}.propertyIsEnumerable;
 
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-<<<<<<< HEAD
-var cof = __webpack_require__(/*! ./_cof */ 36),
-    TAG = __webpack_require__(/*! ./_wks */ 8)('toStringTag')
-=======
 var cof = __webpack_require__(/*! ./_cof */ 40),
     TAG = __webpack_require__(/*! ./_wks */ 10)('toStringTag')
->>>>>>> demo_sc_experimentPage
 // ES3 wrong here
 ,
     ARG = cof(function () {
@@ -2473,25 +1836,6 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-=======
->>>>>>> demo_sc_experimentPage
 /* 122 */,
 /* 123 */,
 /* 124 */,
@@ -2512,12 +1856,6 @@ module.exports = function (it) {
 /* 139 */,
 /* 140 */,
 /* 141 */,
-<<<<<<< HEAD
-/* 142 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/_shared.js ***!
-  \*************************************************/
-=======
 /* 142 */,
 /* 143 */,
 /* 144 */,
@@ -2546,7 +1884,6 @@ module.exports = function (it) {
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_shared.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2554,11 +1891,7 @@ module.exports = function (it) {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
->>>>>>> demo_sc_experimentPage
     SHARED = '__core-js_shared__',
     store = global[SHARED] || (global[SHARED] = {});
 module.exports = function (key) {
@@ -2566,17 +1899,10 @@ module.exports = function (key) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 143 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-includes.js ***!
-  \*********************************************************/
-=======
 /* 167 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-includes.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2586,15 +1912,9 @@ module.exports = function (key) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-<<<<<<< HEAD
-var toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    toIndex = __webpack_require__(/*! ./_to-index */ 67);
-=======
 var toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     toLength = __webpack_require__(/*! ./_to-length */ 18),
     toIndex = __webpack_require__(/*! ./_to-index */ 77);
->>>>>>> demo_sc_experimentPage
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this),
@@ -2615,17 +1935,10 @@ module.exports = function (IS_INCLUDES) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 144 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-gops.js ***!
-  \******************************************************/
-=======
 /* 168 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-gops.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2636,17 +1949,10 @@ module.exports = function (IS_INCLUDES) {
 exports.f = Object.getOwnPropertySymbols;
 
 /***/ }),
-<<<<<<< HEAD
-/* 145 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/_invoke.js ***!
-  \*************************************************/
-=======
 /* 169 */
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_invoke.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2672,17 +1978,10 @@ module.exports = function (fn, args, that) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 146 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_is-regexp.js ***!
-  \****************************************************/
-=======
 /* 170 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_is-regexp.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2691,32 +1990,19 @@ module.exports = function (fn, args, that) {
 
 
 // 7.2.8 IsRegExp(argument)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    cof = __webpack_require__(/*! ./_cof */ 36),
-    MATCH = __webpack_require__(/*! ./_wks */ 8)('match');
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     cof = __webpack_require__(/*! ./_cof */ 40),
     MATCH = __webpack_require__(/*! ./_wks */ 10)('match');
->>>>>>> demo_sc_experimentPage
 module.exports = function (it) {
   var isRegExp;
   return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 147 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_iter-detect.js ***!
-  \******************************************************/
-=======
 /* 171 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iter-detect.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2724,11 +2010,7 @@ module.exports = function (it) {
 "use strict";
 
 
-<<<<<<< HEAD
-var ITERATOR = __webpack_require__(/*! ./_wks */ 8)('iterator'),
-=======
 var ITERATOR = __webpack_require__(/*! ./_wks */ 10)('iterator'),
->>>>>>> demo_sc_experimentPage
     SAFE_CLOSING = false;
 
 try {
@@ -2759,17 +2041,10 @@ module.exports = function (exec, skipClosing) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 148 */
-/*!************************************************!*\
-  !*** ./node_modules/core-js/modules/_flags.js ***!
-  \************************************************/
-=======
 /* 172 */
 /*!****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_flags.js ***!
   \****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2778,11 +2053,7 @@ module.exports = function (exec, skipClosing) {
 
 // 21.2.5.3 get RegExp.prototype.flags
 
-<<<<<<< HEAD
-var anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
 var anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 module.exports = function () {
   var that = anObject(this),
       result = '';
@@ -2795,17 +2066,10 @@ module.exports = function () {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 149 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_fix-re-wks.js ***!
-  \*****************************************************/
-=======
 /* 173 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_fix-re-wks.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2813,19 +2077,11 @@ module.exports = function () {
 "use strict";
 
 
-<<<<<<< HEAD
-var hide = __webpack_require__(/*! ./_hide */ 27),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    defined = __webpack_require__(/*! ./_defined */ 37),
-    wks = __webpack_require__(/*! ./_wks */ 8);
-=======
 var hide = __webpack_require__(/*! ./_hide */ 30),
     redefine = __webpack_require__(/*! ./_redefine */ 31),
     fails = __webpack_require__(/*! ./_fails */ 8),
     defined = __webpack_require__(/*! ./_defined */ 41),
     wks = __webpack_require__(/*! ./_wks */ 10);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (KEY, length, exec) {
   var SYMBOL = wks(KEY),
@@ -2855,17 +2111,10 @@ module.exports = function (KEY, length, exec) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 150 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_collection.js ***!
-  \*****************************************************/
-=======
 /* 174 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_collection.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2873,20 +2122,6 @@ module.exports = function (KEY, length, exec) {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    redefineAll = __webpack_require__(/*! ./_redefine-all */ 72),
-    meta = __webpack_require__(/*! ./_meta */ 54),
-    forOf = __webpack_require__(/*! ./_for-of */ 91),
-    anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    $iterDetect = __webpack_require__(/*! ./_iter-detect */ 147),
-    setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 87),
-    inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 254);
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     $export = __webpack_require__(/*! ./_export */ 0),
     redefine = __webpack_require__(/*! ./_redefine */ 31),
@@ -2899,7 +2134,6 @@ var global = __webpack_require__(/*! ./_global */ 5),
     $iterDetect = __webpack_require__(/*! ./_iter-detect */ 171),
     setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 100),
     inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 310);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
   var Base = global[NAME],
@@ -2984,17 +2218,10 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 151 */
-/*!************************************************!*\
-  !*** ./node_modules/core-js/modules/_typed.js ***!
-  \************************************************/
-=======
 /* 175 */
 /*!****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_typed.js ***!
   \****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3002,15 +2229,9 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    uid = __webpack_require__(/*! ./_uid */ 64),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     hide = __webpack_require__(/*! ./_hide */ 30),
     uid = __webpack_require__(/*! ./_uid */ 74),
->>>>>>> demo_sc_experimentPage
     TYPED = uid('typed_array'),
     VIEW = uid('view'),
     ABV = !!(global.ArrayBuffer && global.DataView),
@@ -3036,17 +2257,10 @@ module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 152 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-forced-pam.js ***!
-  \************************************************************/
-=======
 /* 176 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-forced-pam.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3055,40 +2269,6 @@ module.exports = {
 
 
 // Forced replacement prototype accessors methods
-<<<<<<< HEAD
-module.exports = __webpack_require__(/*! ./_library */ 65) || !__webpack_require__(/*! ./_fails */ 6)(function () {
-  var K = Math.random();
-  // In FF throws only define methods
-  __defineSetter__.call(null, K, function () {/* empty */});
-  delete __webpack_require__(/*! ./_global */ 4)[K];
-});
-
-/***/ }),
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-=======
 module.exports = __webpack_require__(/*! ./_library */ 75) || !__webpack_require__(/*! ./_fails */ 8)(function () {
   var K = Math.random();
   // In FF throws only define methods
@@ -3097,7 +2277,6 @@ module.exports = __webpack_require__(/*! ./_library */ 75) || !__webpack_require
 });
 
 /***/ }),
->>>>>>> demo_sc_experimentPage
 /* 177 */,
 /* 178 */,
 /* 179 */,
@@ -3167,12 +2346,6 @@ module.exports = __webpack_require__(/*! ./_library */ 75) || !__webpack_require
 /* 243 */,
 /* 244 */,
 /* 245 */,
-<<<<<<< HEAD
-/* 246 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_dom-create.js ***!
-  \*****************************************************/
-=======
 /* 246 */,
 /* 247 */,
 /* 248 */,
@@ -3233,7 +2406,6 @@ module.exports = __webpack_require__(/*! ./_library */ 75) || !__webpack_require
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_dom-create.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3241,13 +2413,8 @@ module.exports = __webpack_require__(/*! ./_library */ 75) || !__webpack_require
 "use strict";
 
 
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    document = __webpack_require__(/*! ./_global */ 4).document
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     document = __webpack_require__(/*! ./_global */ 5).document
->>>>>>> demo_sc_experimentPage
 // in old IE typeof document.createElement is 'object'
 ,
     is = isObject(document) && isObject(document.createElement);
@@ -3256,17 +2423,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 247 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_wks-define.js ***!
-  \*****************************************************/
-=======
 /* 303 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_wks-define.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3274,36 +2434,21 @@ module.exports = function (it) {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    core = __webpack_require__(/*! ./_core */ 45),
-    LIBRARY = __webpack_require__(/*! ./_library */ 65),
-    wksExt = __webpack_require__(/*! ./_wks-ext */ 470),
-    defineProperty = __webpack_require__(/*! ./_object-dp */ 13).f;
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     core = __webpack_require__(/*! ./_core */ 50),
     LIBRARY = __webpack_require__(/*! ./_library */ 75),
     wksExt = __webpack_require__(/*! ./_wks-ext */ 589),
     defineProperty = __webpack_require__(/*! ./_object-dp */ 14).f;
->>>>>>> demo_sc_experimentPage
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 248 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_shared-key.js ***!
-  \*****************************************************/
-=======
 /* 304 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_shared-key.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3311,29 +2456,17 @@ module.exports = function (name) {
 "use strict";
 
 
-<<<<<<< HEAD
-var shared = __webpack_require__(/*! ./_shared */ 142)('keys'),
-    uid = __webpack_require__(/*! ./_uid */ 64);
-=======
 var shared = __webpack_require__(/*! ./_shared */ 166)('keys'),
     uid = __webpack_require__(/*! ./_uid */ 74);
->>>>>>> demo_sc_experimentPage
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 249 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_enum-bug-keys.js ***!
-  \********************************************************/
-=======
 /* 305 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_enum-bug-keys.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3345,17 +2478,10 @@ module.exports = function (key) {
 module.exports = 'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'.split(',');
 
 /***/ }),
-<<<<<<< HEAD
-/* 250 */
-/*!***************************************************!*\
-  !*** ./node_modules/core-js/modules/_is-array.js ***!
-  \***************************************************/
-=======
 /* 306 */
 /*!*******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_is-array.js ***!
   \*******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3364,27 +2490,16 @@ module.exports = 'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,
 
 
 // 7.2.2 IsArray(argument)
-<<<<<<< HEAD
-var cof = __webpack_require__(/*! ./_cof */ 36);
-=======
 var cof = __webpack_require__(/*! ./_cof */ 40);
->>>>>>> demo_sc_experimentPage
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 251 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_html.js ***!
-  \***********************************************/
-=======
 /* 307 */
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_html.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3392,15 +2507,6 @@ module.exports = Array.isArray || function isArray(arg) {
 "use strict";
 
 
-<<<<<<< HEAD
-module.exports = __webpack_require__(/*! ./_global */ 4).document && document.documentElement;
-
-/***/ }),
-/* 252 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_set-proto.js ***!
-  \****************************************************/
-=======
 module.exports = __webpack_require__(/*! ./_global */ 5).document && document.documentElement;
 
 /***/ }),
@@ -3408,7 +2514,6 @@ module.exports = __webpack_require__(/*! ./_global */ 5).document && document.do
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_set-proto.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3418,13 +2523,8 @@ module.exports = __webpack_require__(/*! ./_global */ 5).document && document.do
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 var check = function check(O, proto) {
   anObject(O);
   if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
@@ -3433,11 +2533,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
   function (test, buggy, set) {
     try {
-<<<<<<< HEAD
-      set = __webpack_require__(/*! ./_ctx */ 46)(Function.call, __webpack_require__(/*! ./_object-gopd */ 33).f(Object.prototype, '__proto__').set, 2);
-=======
       set = __webpack_require__(/*! ./_ctx */ 51)(Function.call, __webpack_require__(/*! ./_object-gopd */ 37).f(Object.prototype, '__proto__').set, 2);
->>>>>>> demo_sc_experimentPage
       set(test, []);
       buggy = !(test instanceof Array);
     } catch (e) {
@@ -3453,17 +2549,10 @@ module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 253 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-ws.js ***!
-  \****************************************************/
-=======
 /* 309 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-ws.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3474,17 +2563,10 @@ module.exports = {
 module.exports = '\t\n\x0B\f\r \xA0\u1680\u180E\u2000\u2001\u2002\u2003' + '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 /***/ }),
-<<<<<<< HEAD
-/* 254 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/_inherit-if-required.js ***!
-  \**************************************************************/
-=======
 /* 310 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_inherit-if-required.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3492,13 +2574,8 @@ module.exports = '\t\n\x0B\f\r \xA0\u1680\u180E\u2000\u2001\u2002\u2003' + '\u20
 "use strict";
 
 
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    setPrototypeOf = __webpack_require__(/*! ./_set-proto */ 252).set;
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     setPrototypeOf = __webpack_require__(/*! ./_set-proto */ 308).set;
->>>>>>> demo_sc_experimentPage
 module.exports = function (that, target, C) {
   var P,
       S = target.constructor;
@@ -3508,17 +2585,10 @@ module.exports = function (that, target, C) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 255 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-repeat.js ***!
-  \********************************************************/
-=======
 /* 311 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-repeat.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3526,13 +2596,8 @@ module.exports = function (that, target, C) {
 "use strict";
 
 
-<<<<<<< HEAD
-var toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-    defined = __webpack_require__(/*! ./_defined */ 37);
-=======
 var toInteger = __webpack_require__(/*! ./_to-integer */ 62),
     defined = __webpack_require__(/*! ./_defined */ 41);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function repeat(count) {
   var str = String(defined(this)),
@@ -3545,17 +2610,10 @@ module.exports = function repeat(count) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 256 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_math-sign.js ***!
-  \****************************************************/
-=======
 /* 312 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_math-sign.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3569,17 +2627,10 @@ module.exports = Math.sign || function sign(x) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 257 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_math-expm1.js ***!
-  \*****************************************************/
-=======
 /* 313 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_math-expm1.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3598,17 +2649,10 @@ module.exports = !$expm1
 } : $expm1;
 
 /***/ }),
-<<<<<<< HEAD
-/* 258 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-at.js ***!
-  \****************************************************/
-=======
 /* 314 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-at.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3616,13 +2660,8 @@ module.exports = !$expm1
 "use strict";
 
 
-<<<<<<< HEAD
-var toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-    defined = __webpack_require__(/*! ./_defined */ 37);
-=======
 var toInteger = __webpack_require__(/*! ./_to-integer */ 62),
     defined = __webpack_require__(/*! ./_defined */ 41);
->>>>>>> demo_sc_experimentPage
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -3639,17 +2678,10 @@ module.exports = function (TO_STRING) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 259 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_iter-define.js ***!
-  \******************************************************/
-=======
 /* 315 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iter-define.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3657,18 +2689,6 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 
-<<<<<<< HEAD
-var LIBRARY = __webpack_require__(/*! ./_library */ 65),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    has = __webpack_require__(/*! ./_has */ 20),
-    Iterators = __webpack_require__(/*! ./_iterators */ 89),
-    $iterCreate = __webpack_require__(/*! ./_iter-create */ 260),
-    setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 87),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-    ITERATOR = __webpack_require__(/*! ./_wks */ 8)('iterator'),
-=======
 var LIBRARY = __webpack_require__(/*! ./_library */ 75),
     $export = __webpack_require__(/*! ./_export */ 0),
     redefine = __webpack_require__(/*! ./_redefine */ 31),
@@ -3679,7 +2699,6 @@ var LIBRARY = __webpack_require__(/*! ./_library */ 75),
     setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 100),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
     ITERATOR = __webpack_require__(/*! ./_wks */ 10)('iterator'),
->>>>>>> demo_sc_experimentPage
     BUGGY = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 ,
     FF_ITERATOR = '@@iterator',
@@ -3756,17 +2775,10 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 260 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_iter-create.js ***!
-  \******************************************************/
-=======
 /* 316 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iter-create.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3774,15 +2786,6 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 "use strict";
 
 
-<<<<<<< HEAD
-var create = __webpack_require__(/*! ./_object-create */ 68),
-    descriptor = __webpack_require__(/*! ./_property-desc */ 53),
-    setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 87),
-    IteratorPrototype = {};
-
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(/*! ./_hide */ 27)(IteratorPrototype, __webpack_require__(/*! ./_wks */ 8)('iterator'), function () {
-=======
 var create = __webpack_require__(/*! ./_object-create */ 78),
     descriptor = __webpack_require__(/*! ./_property-desc */ 60),
     setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 100),
@@ -3790,7 +2793,6 @@ var create = __webpack_require__(/*! ./_object-create */ 78),
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
 __webpack_require__(/*! ./_hide */ 30)(IteratorPrototype, __webpack_require__(/*! ./_wks */ 10)('iterator'), function () {
->>>>>>> demo_sc_experimentPage
   return this;
 });
 
@@ -3800,17 +2802,10 @@ module.exports = function (Constructor, NAME, next) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 261 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-context.js ***!
-  \*********************************************************/
-=======
 /* 317 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-context.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3819,13 +2814,8 @@ module.exports = function (Constructor, NAME, next) {
 
 
 // helper for String#{startsWith, endsWith, includes}
-<<<<<<< HEAD
-var isRegExp = __webpack_require__(/*! ./_is-regexp */ 146),
-    defined = __webpack_require__(/*! ./_defined */ 37);
-=======
 var isRegExp = __webpack_require__(/*! ./_is-regexp */ 170),
     defined = __webpack_require__(/*! ./_defined */ 41);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (that, searchString, NAME) {
   if (isRegExp(searchString)) throw TypeError('String#' + NAME + " doesn't accept regex!");
@@ -3833,17 +2823,10 @@ module.exports = function (that, searchString, NAME) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 262 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/_fails-is-regexp.js ***!
-  \**********************************************************/
-=======
 /* 318 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_fails-is-regexp.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3851,11 +2834,7 @@ module.exports = function (that, searchString, NAME) {
 "use strict";
 
 
-<<<<<<< HEAD
-var MATCH = __webpack_require__(/*! ./_wks */ 8)('match');
-=======
 var MATCH = __webpack_require__(/*! ./_wks */ 10)('match');
->>>>>>> demo_sc_experimentPage
 module.exports = function (KEY) {
   var re = /./;
   try {
@@ -3869,17 +2848,10 @@ module.exports = function (KEY) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 263 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_is-array-iter.js ***!
-  \********************************************************/
-=======
 /* 319 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_is-array-iter.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3888,13 +2860,8 @@ module.exports = function (KEY) {
 
 
 // check on default Array iterator
-<<<<<<< HEAD
-var Iterators = __webpack_require__(/*! ./_iterators */ 89),
-    ITERATOR = __webpack_require__(/*! ./_wks */ 8)('iterator'),
-=======
 var Iterators = __webpack_require__(/*! ./_iterators */ 102),
     ITERATOR = __webpack_require__(/*! ./_wks */ 10)('iterator'),
->>>>>>> demo_sc_experimentPage
     ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -3902,17 +2869,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 264 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/_create-property.js ***!
-  \**********************************************************/
-=======
 /* 320 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_create-property.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3920,30 +2880,18 @@ module.exports = function (it) {
 "use strict";
 
 
-<<<<<<< HEAD
-var $defineProperty = __webpack_require__(/*! ./_object-dp */ 13),
-    createDesc = __webpack_require__(/*! ./_property-desc */ 53);
-=======
 var $defineProperty = __webpack_require__(/*! ./_object-dp */ 14),
     createDesc = __webpack_require__(/*! ./_property-desc */ 60);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));else object[index] = value;
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 265 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/core.get-iterator-method.js ***!
-  \******************************************************************/
-=======
 /* 321 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/core.get-iterator-method.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3951,32 +2899,18 @@ module.exports = function (object, index, value) {
 "use strict";
 
 
-<<<<<<< HEAD
-var classof = __webpack_require__(/*! ./_classof */ 105),
-    ITERATOR = __webpack_require__(/*! ./_wks */ 8)('iterator'),
-    Iterators = __webpack_require__(/*! ./_iterators */ 89);
-module.exports = __webpack_require__(/*! ./_core */ 45).getIteratorMethod = function (it) {
-=======
 var classof = __webpack_require__(/*! ./_classof */ 121),
     ITERATOR = __webpack_require__(/*! ./_wks */ 10)('iterator'),
     Iterators = __webpack_require__(/*! ./_iterators */ 102);
 module.exports = __webpack_require__(/*! ./_core */ 50).getIteratorMethod = function (it) {
->>>>>>> demo_sc_experimentPage
   if (it != undefined) return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 266 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-fill.js ***!
-  \*****************************************************/
-=======
 /* 322 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-fill.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3985,15 +2919,9 @@ module.exports = __webpack_require__(/*! ./_core */ 50).getIteratorMethod = func
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 
 
-<<<<<<< HEAD
-var toObject = __webpack_require__(/*! ./_to-object */ 16),
-    toIndex = __webpack_require__(/*! ./_to-index */ 67),
-    toLength = __webpack_require__(/*! ./_to-length */ 15);
-=======
 var toObject = __webpack_require__(/*! ./_to-object */ 19),
     toIndex = __webpack_require__(/*! ./_to-index */ 77),
     toLength = __webpack_require__(/*! ./_to-length */ 18);
->>>>>>> demo_sc_experimentPage
 module.exports = function fill(value /*, start = 0, end = @length */) {
   var O = toObject(this),
       length = toLength(O.length),
@@ -4007,17 +2935,10 @@ module.exports = function fill(value /*, start = 0, end = @length */) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 267 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.iterator.js ***!
-  \************************************************************/
-=======
 /* 323 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.iterator.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4025,27 +2946,16 @@ module.exports = function fill(value /*, start = 0, end = @length */) {
 "use strict";
 
 
-<<<<<<< HEAD
-var addToUnscopables = __webpack_require__(/*! ./_add-to-unscopables */ 90),
-    step = __webpack_require__(/*! ./_iter-step */ 485),
-    Iterators = __webpack_require__(/*! ./_iterators */ 89),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30);
-=======
 var addToUnscopables = __webpack_require__(/*! ./_add-to-unscopables */ 103),
     step = __webpack_require__(/*! ./_iter-step */ 604),
     Iterators = __webpack_require__(/*! ./_iterators */ 102),
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33);
->>>>>>> demo_sc_experimentPage
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-<<<<<<< HEAD
-module.exports = __webpack_require__(/*! ./_iter-define */ 259)(Array, 'Array', function (iterated, kind) {
-=======
 module.exports = __webpack_require__(/*! ./_iter-define */ 315)(Array, 'Array', function (iterated, kind) {
->>>>>>> demo_sc_experimentPage
   this._t = toIObject(iterated); // target
   this._i = 0; // next index
   this._k = kind; // kind
@@ -4071,17 +2981,10 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-<<<<<<< HEAD
-/* 268 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/_species-constructor.js ***!
-  \**************************************************************/
-=======
 /* 324 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_species-constructor.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4090,15 +2993,9 @@ addToUnscopables('entries');
 
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
-<<<<<<< HEAD
-var anObject = __webpack_require__(/*! ./_an-object */ 3),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    SPECIES = __webpack_require__(/*! ./_wks */ 8)('species');
-=======
 var anObject = __webpack_require__(/*! ./_an-object */ 4),
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
     SPECIES = __webpack_require__(/*! ./_wks */ 10)('species');
->>>>>>> demo_sc_experimentPage
 module.exports = function (O, D) {
   var C = anObject(O).constructor,
       S;
@@ -4106,17 +3003,10 @@ module.exports = function (O, D) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 269 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_task.js ***!
-  \***********************************************/
-=======
 /* 325 */
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_task.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4124,19 +3014,11 @@ module.exports = function (O, D) {
 "use strict";
 
 
-<<<<<<< HEAD
-var ctx = __webpack_require__(/*! ./_ctx */ 46),
-    invoke = __webpack_require__(/*! ./_invoke */ 145),
-    html = __webpack_require__(/*! ./_html */ 251),
-    cel = __webpack_require__(/*! ./_dom-create */ 246),
-    global = __webpack_require__(/*! ./_global */ 4),
-=======
 var ctx = __webpack_require__(/*! ./_ctx */ 51),
     invoke = __webpack_require__(/*! ./_invoke */ 169),
     html = __webpack_require__(/*! ./_html */ 307),
     cel = __webpack_require__(/*! ./_dom-create */ 302),
     global = __webpack_require__(/*! ./_global */ 5),
->>>>>>> demo_sc_experimentPage
     process = global.process,
     setTask = global.setImmediate,
     clearTask = global.clearImmediate,
@@ -4175,11 +3057,7 @@ if (!setTask || !clearTask) {
     delete queue[id];
   };
   // Node.js 0.8-
-<<<<<<< HEAD
-  if (__webpack_require__(/*! ./_cof */ 36)(process) == 'process') {
-=======
   if (__webpack_require__(/*! ./_cof */ 40)(process) == 'process') {
->>>>>>> demo_sc_experimentPage
     defer = function defer(id) {
       process.nextTick(ctx(run, id, 1));
     };
@@ -4217,17 +3095,10 @@ module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 270 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_microtask.js ***!
-  \****************************************************/
-=======
 /* 326 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_microtask.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4235,21 +3106,12 @@ module.exports = {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    macrotask = __webpack_require__(/*! ./_task */ 269).set,
-    Observer = global.MutationObserver || global.WebKitMutationObserver,
-    process = global.process,
-    Promise = global.Promise,
-    isNode = __webpack_require__(/*! ./_cof */ 36)(process) == 'process';
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     macrotask = __webpack_require__(/*! ./_task */ 325).set,
     Observer = global.MutationObserver || global.WebKitMutationObserver,
     process = global.process,
     Promise = global.Promise,
     isNode = __webpack_require__(/*! ./_cof */ 40)(process) == 'process';
->>>>>>> demo_sc_experimentPage
 
 module.exports = function () {
   var head, last, notify;
@@ -4313,17 +3175,10 @@ module.exports = function () {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 271 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/_typed-buffer.js ***!
-  \*******************************************************/
-=======
 /* 327 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_typed-buffer.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4331,22 +3186,6 @@ module.exports = function () {
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 12),
-    LIBRARY = __webpack_require__(/*! ./_library */ 65),
-    $typed = __webpack_require__(/*! ./_typed */ 151),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    redefineAll = __webpack_require__(/*! ./_redefine-all */ 72),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-    toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    gOPN = __webpack_require__(/*! ./_object-gopn */ 69).f,
-    dP = __webpack_require__(/*! ./_object-dp */ 13).f,
-    arrayFill = __webpack_require__(/*! ./_array-fill */ 266),
-    setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 87),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 13),
     LIBRARY = __webpack_require__(/*! ./_library */ 75),
@@ -4361,7 +3200,6 @@ var global = __webpack_require__(/*! ./_global */ 5),
     dP = __webpack_require__(/*! ./_object-dp */ 14).f,
     arrayFill = __webpack_require__(/*! ./_array-fill */ 322),
     setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 100),
->>>>>>> demo_sc_experimentPage
     ARRAY_BUFFER = 'ArrayBuffer',
     DATA_VIEW = 'DataView',
     PROTOTYPE = 'prototype',
@@ -4628,65 +3466,6 @@ exports[ARRAY_BUFFER] = $ArrayBuffer;
 exports[DATA_VIEW] = $DataView;
 
 /***/ }),
-<<<<<<< HEAD
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-=======
->>>>>>> demo_sc_experimentPage
 /* 328 */,
 /* 329 */,
 /* 330 */,
@@ -4828,12 +3607,6 @@ exports[DATA_VIEW] = $DataView;
 /* 466 */,
 /* 467 */,
 /* 468 */,
-<<<<<<< HEAD
-/* 469 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/_ie8-dom-define.js ***!
-  \*********************************************************/
-=======
 /* 469 */,
 /* 470 */,
 /* 471 */,
@@ -4957,7 +3730,6 @@ exports[DATA_VIEW] = $DataView;
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_ie8-dom-define.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4965,29 +3737,17 @@ exports[DATA_VIEW] = $DataView;
 "use strict";
 
 
-<<<<<<< HEAD
-module.exports = !__webpack_require__(/*! ./_descriptors */ 12) && !__webpack_require__(/*! ./_fails */ 6)(function () {
-  return Object.defineProperty(__webpack_require__(/*! ./_dom-create */ 246)('div'), 'a', { get: function get() {
-=======
 module.exports = !__webpack_require__(/*! ./_descriptors */ 13) && !__webpack_require__(/*! ./_fails */ 8)(function () {
   return Object.defineProperty(__webpack_require__(/*! ./_dom-create */ 302)('div'), 'a', { get: function get() {
->>>>>>> demo_sc_experimentPage
       return 7;
     } }).a != 7;
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 470 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/_wks-ext.js ***!
-  \**************************************************/
-=======
 /* 589 */
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_wks-ext.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4995,15 +3755,6 @@ module.exports = !__webpack_require__(/*! ./_descriptors */ 13) && !__webpack_re
 "use strict";
 
 
-<<<<<<< HEAD
-exports.f = __webpack_require__(/*! ./_wks */ 8);
-
-/***/ }),
-/* 471 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-keys-internal.js ***!
-  \***************************************************************/
-=======
 exports.f = __webpack_require__(/*! ./_wks */ 10);
 
 /***/ }),
@@ -5011,7 +3762,6 @@ exports.f = __webpack_require__(/*! ./_wks */ 10);
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-keys-internal.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5019,17 +3769,10 @@ exports.f = __webpack_require__(/*! ./_wks */ 10);
 "use strict";
 
 
-<<<<<<< HEAD
-var has = __webpack_require__(/*! ./_has */ 20),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    arrayIndexOf = __webpack_require__(/*! ./_array-includes */ 143)(false),
-    IE_PROTO = __webpack_require__(/*! ./_shared-key */ 248)('IE_PROTO');
-=======
 var has = __webpack_require__(/*! ./_has */ 25),
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     arrayIndexOf = __webpack_require__(/*! ./_array-includes */ 167)(false),
     IE_PROTO = __webpack_require__(/*! ./_shared-key */ 304)('IE_PROTO');
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (object, names) {
   var O = toIObject(object),
@@ -5047,17 +3790,10 @@ module.exports = function (object, names) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 472 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-dps.js ***!
-  \*****************************************************/
-=======
 /* 591 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-dps.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5065,19 +3801,11 @@ module.exports = function (object, names) {
 "use strict";
 
 
-<<<<<<< HEAD
-var dP = __webpack_require__(/*! ./_object-dp */ 13),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    getKeys = __webpack_require__(/*! ./_object-keys */ 66);
-
-module.exports = __webpack_require__(/*! ./_descriptors */ 12) ? Object.defineProperties : function defineProperties(O, Properties) {
-=======
 var dP = __webpack_require__(/*! ./_object-dp */ 14),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     getKeys = __webpack_require__(/*! ./_object-keys */ 76);
 
 module.exports = __webpack_require__(/*! ./_descriptors */ 13) ? Object.defineProperties : function defineProperties(O, Properties) {
->>>>>>> demo_sc_experimentPage
   anObject(O);
   var keys = getKeys(Properties),
       length = keys.length,
@@ -5089,17 +3817,10 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 13) ? Object.definePr
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 473 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-gopn-ext.js ***!
-  \**********************************************************/
-=======
 /* 592 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-gopn-ext.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5110,13 +3831,8 @@ module.exports = __webpack_require__(/*! ./_descriptors */ 13) ? Object.definePr
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-<<<<<<< HEAD
-var toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    gOPN = __webpack_require__(/*! ./_object-gopn */ 69).f,
-=======
 var toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     gOPN = __webpack_require__(/*! ./_object-gopn */ 79).f,
->>>>>>> demo_sc_experimentPage
     toString = {}.toString;
 
 var windowNames = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) == 'object' && window && Object.getOwnPropertyNames ? Object.getOwnPropertyNames(window) : [];
@@ -5134,17 +3850,10 @@ module.exports.f = function getOwnPropertyNames(it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 474 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-assign.js ***!
-  \********************************************************/
-=======
 /* 593 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-assign.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5153,17 +3862,6 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 // 19.1.2.1 Object.assign(target, source, ...)
 
-<<<<<<< HEAD
-var getKeys = __webpack_require__(/*! ./_object-keys */ 66),
-    gOPS = __webpack_require__(/*! ./_object-gops */ 144),
-    pIE = __webpack_require__(/*! ./_object-pie */ 104),
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    IObject = __webpack_require__(/*! ./_iobject */ 103),
-    $assign = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 var getKeys = __webpack_require__(/*! ./_object-keys */ 76),
     gOPS = __webpack_require__(/*! ./_object-gops */ 168),
     pIE = __webpack_require__(/*! ./_object-pie */ 120),
@@ -5173,7 +3871,6 @@ var getKeys = __webpack_require__(/*! ./_object-keys */ 76),
 
 // should work with symbols and should have deterministic property order (V8 bug)
 module.exports = !$assign || __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   var A = {},
       B = {},
       S = Symbol(),
@@ -5203,17 +3900,10 @@ module.exports = !$assign || __webpack_require__(/*! ./_fails */ 8)(function () 
 } : $assign;
 
 /***/ }),
-<<<<<<< HEAD
-/* 475 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_same-value.js ***!
-  \*****************************************************/
-=======
 /* 594 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_same-value.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5227,17 +3917,10 @@ module.exports = Object.is || function is(x, y) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 476 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_bind.js ***!
-  \***********************************************/
-=======
 /* 595 */
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_bind.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5245,15 +3928,9 @@ module.exports = Object.is || function is(x, y) {
 "use strict";
 
 
-<<<<<<< HEAD
-var aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    invoke = __webpack_require__(/*! ./_invoke */ 145),
-=======
 var aFunction = __webpack_require__(/*! ./_a-function */ 32),
     isObject = __webpack_require__(/*! ./_is-object */ 9),
     invoke = __webpack_require__(/*! ./_invoke */ 169),
->>>>>>> demo_sc_experimentPage
     arraySlice = [].slice,
     factories = {};
 
@@ -5277,17 +3954,10 @@ module.exports = Function.bind || function bind(that /*, args... */) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 477 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_parse-int.js ***!
-  \****************************************************/
-=======
 /* 596 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_parse-int.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5295,15 +3965,9 @@ module.exports = Function.bind || function bind(that /*, args... */) {
 "use strict";
 
 
-<<<<<<< HEAD
-var $parseInt = __webpack_require__(/*! ./_global */ 4).parseInt,
-    $trim = __webpack_require__(/*! ./_string-trim */ 88).trim,
-    ws = __webpack_require__(/*! ./_string-ws */ 253),
-=======
 var $parseInt = __webpack_require__(/*! ./_global */ 5).parseInt,
     $trim = __webpack_require__(/*! ./_string-trim */ 101).trim,
     ws = __webpack_require__(/*! ./_string-ws */ 309),
->>>>>>> demo_sc_experimentPage
     hex = /^[\-+]?0[xX]/;
 
 module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix) {
@@ -5312,17 +3976,10 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 } : $parseInt;
 
 /***/ }),
-<<<<<<< HEAD
-/* 478 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/_parse-float.js ***!
-  \******************************************************/
-=======
 /* 597 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_parse-float.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5330,34 +3987,20 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 "use strict";
 
 
-<<<<<<< HEAD
-var $parseFloat = __webpack_require__(/*! ./_global */ 4).parseFloat,
-    $trim = __webpack_require__(/*! ./_string-trim */ 88).trim;
-
-module.exports = 1 / $parseFloat(__webpack_require__(/*! ./_string-ws */ 253) + '-0') !== -Infinity ? function parseFloat(str) {
-=======
 var $parseFloat = __webpack_require__(/*! ./_global */ 5).parseFloat,
     $trim = __webpack_require__(/*! ./_string-trim */ 101).trim;
 
 module.exports = 1 / $parseFloat(__webpack_require__(/*! ./_string-ws */ 309) + '-0') !== -Infinity ? function parseFloat(str) {
->>>>>>> demo_sc_experimentPage
   var string = $trim(String(str), 3),
       result = $parseFloat(string);
   return result === 0 && string.charAt(0) == '-' ? -0 : result;
 } : $parseFloat;
 
 /***/ }),
-<<<<<<< HEAD
-/* 479 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/_a-number-value.js ***!
-  \*********************************************************/
-=======
 /* 598 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_a-number-value.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5365,28 +4008,17 @@ module.exports = 1 / $parseFloat(__webpack_require__(/*! ./_string-ws */ 309) + 
 "use strict";
 
 
-<<<<<<< HEAD
-var cof = __webpack_require__(/*! ./_cof */ 36);
-=======
 var cof = __webpack_require__(/*! ./_cof */ 40);
->>>>>>> demo_sc_experimentPage
 module.exports = function (it, msg) {
   if (typeof it != 'number' && cof(it) != 'Number') throw TypeError(msg);
   return +it;
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 480 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_is-integer.js ***!
-  \*****************************************************/
-=======
 /* 599 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_is-integer.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5395,28 +4027,17 @@ module.exports = function (it, msg) {
 
 
 // 20.1.2.3 Number.isInteger(number)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
->>>>>>> demo_sc_experimentPage
     floor = Math.floor;
 module.exports = function isInteger(it) {
   return !isObject(it) && isFinite(it) && floor(it) === it;
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 481 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_math-log1p.js ***!
-  \*****************************************************/
-=======
 /* 600 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_math-log1p.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5430,17 +4051,10 @@ module.exports = Math.log1p || function log1p(x) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 482 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_iter-call.js ***!
-  \****************************************************/
-=======
 /* 601 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iter-call.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5449,11 +4063,7 @@ module.exports = Math.log1p || function log1p(x) {
 
 
 // call something on iterator step with safe closing on error
-<<<<<<< HEAD
-var anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
 var anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 module.exports = function (iterator, fn, value, entries) {
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -5466,17 +4076,10 @@ module.exports = function (iterator, fn, value, entries) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 483 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-reduce.js ***!
-  \*******************************************************/
-=======
 /* 602 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-reduce.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5484,17 +4087,10 @@ module.exports = function (iterator, fn, value, entries) {
 "use strict";
 
 
-<<<<<<< HEAD
-var aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    IObject = __webpack_require__(/*! ./_iobject */ 103),
-    toLength = __webpack_require__(/*! ./_to-length */ 15);
-=======
 var aFunction = __webpack_require__(/*! ./_a-function */ 32),
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     IObject = __webpack_require__(/*! ./_iobject */ 119),
     toLength = __webpack_require__(/*! ./_to-length */ 18);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
   aFunction(callbackfn);
@@ -5522,17 +4118,10 @@ module.exports = function (that, callbackfn, aLen, memo, isRight) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 484 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-copy-within.js ***!
-  \************************************************************/
-=======
 /* 603 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-copy-within.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5541,15 +4130,9 @@ module.exports = function (that, callbackfn, aLen, memo, isRight) {
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 
 
-<<<<<<< HEAD
-var toObject = __webpack_require__(/*! ./_to-object */ 16),
-    toIndex = __webpack_require__(/*! ./_to-index */ 67),
-    toLength = __webpack_require__(/*! ./_to-length */ 15);
-=======
 var toObject = __webpack_require__(/*! ./_to-object */ 19),
     toIndex = __webpack_require__(/*! ./_to-index */ 77),
     toLength = __webpack_require__(/*! ./_to-length */ 18);
->>>>>>> demo_sc_experimentPage
 
 module.exports = [].copyWithin || function copyWithin(target /*= 0*/, start /*= 0, end = @length*/) {
   var O = toObject(this),
@@ -5572,17 +4155,10 @@ module.exports = [].copyWithin || function copyWithin(target /*= 0*/, start /*= 
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 485 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_iter-step.js ***!
-  \****************************************************/
-=======
 /* 604 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_iter-step.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5595,17 +4171,10 @@ module.exports = function (done, value) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 486 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.flags.js ***!
-  \**********************************************************/
-=======
 /* 605 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.flags.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5614,18 +4183,6 @@ module.exports = function (done, value) {
 
 
 // 21.2.5.3 get RegExp.prototype.flags()
-<<<<<<< HEAD
-if (__webpack_require__(/*! ./_descriptors */ 12) && /./g.flags != 'g') __webpack_require__(/*! ./_object-dp */ 13).f(RegExp.prototype, 'flags', {
-  configurable: true,
-  get: __webpack_require__(/*! ./_flags */ 148)
-});
-
-/***/ }),
-/* 487 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.map.js ***!
-  \*************************************************/
-=======
 if (__webpack_require__(/*! ./_descriptors */ 13) && /./g.flags != 'g') __webpack_require__(/*! ./_object-dp */ 14).f(RegExp.prototype, 'flags', {
   configurable: true,
   get: __webpack_require__(/*! ./_flags */ 172)
@@ -5636,7 +4193,6 @@ if (__webpack_require__(/*! ./_descriptors */ 13) && /./g.flags != 'g') __webpac
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.map.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5644,17 +4200,10 @@ if (__webpack_require__(/*! ./_descriptors */ 13) && /./g.flags != 'g') __webpac
 "use strict";
 
 
-<<<<<<< HEAD
-var strong = __webpack_require__(/*! ./_collection-strong */ 488);
-
-// 23.1 Map Objects
-module.exports = __webpack_require__(/*! ./_collection */ 150)('Map', function (get) {
-=======
 var strong = __webpack_require__(/*! ./_collection-strong */ 607);
 
 // 23.1 Map Objects
 module.exports = __webpack_require__(/*! ./_collection */ 174)('Map', function (get) {
->>>>>>> demo_sc_experimentPage
   return function Map() {
     return get(this, arguments.length > 0 ? arguments[0] : undefined);
   };
@@ -5671,17 +4220,10 @@ module.exports = __webpack_require__(/*! ./_collection */ 174)('Map', function (
 }, strong, true);
 
 /***/ }),
-<<<<<<< HEAD
-/* 488 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/_collection-strong.js ***!
-  \************************************************************/
-=======
 /* 607 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_collection-strong.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5689,20 +4231,6 @@ module.exports = __webpack_require__(/*! ./_collection */ 174)('Map', function (
 "use strict";
 
 
-<<<<<<< HEAD
-var dP = __webpack_require__(/*! ./_object-dp */ 13).f,
-    create = __webpack_require__(/*! ./_object-create */ 68),
-    redefineAll = __webpack_require__(/*! ./_redefine-all */ 72),
-    ctx = __webpack_require__(/*! ./_ctx */ 46),
-    anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-    defined = __webpack_require__(/*! ./_defined */ 37),
-    forOf = __webpack_require__(/*! ./_for-of */ 91),
-    $iterDefine = __webpack_require__(/*! ./_iter-define */ 259),
-    step = __webpack_require__(/*! ./_iter-step */ 485),
-    setSpecies = __webpack_require__(/*! ./_set-species */ 70),
-    DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 12),
-    fastKey = __webpack_require__(/*! ./_meta */ 54).fastKey,
-=======
 var dP = __webpack_require__(/*! ./_object-dp */ 14).f,
     create = __webpack_require__(/*! ./_object-create */ 78),
     redefineAll = __webpack_require__(/*! ./_redefine-all */ 82),
@@ -5715,7 +4243,6 @@ var dP = __webpack_require__(/*! ./_object-dp */ 14).f,
     setSpecies = __webpack_require__(/*! ./_set-species */ 80),
     DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 13),
     fastKey = __webpack_require__(/*! ./_meta */ 61).fastKey,
->>>>>>> demo_sc_experimentPage
     SIZE = DESCRIPTORS ? '_s' : 'size';
 
 var getEntry = function getEntry(that, key) {
@@ -5852,17 +4379,10 @@ module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 489 */
-/*!*************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.set.js ***!
-  \*************************************************/
-=======
 /* 608 */
 /*!*****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.set.js ***!
   \*****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5870,17 +4390,10 @@ module.exports = {
 "use strict";
 
 
-<<<<<<< HEAD
-var strong = __webpack_require__(/*! ./_collection-strong */ 488);
-
-// 23.2 Set Objects
-module.exports = __webpack_require__(/*! ./_collection */ 150)('Set', function (get) {
-=======
 var strong = __webpack_require__(/*! ./_collection-strong */ 607);
 
 // 23.2 Set Objects
 module.exports = __webpack_require__(/*! ./_collection */ 174)('Set', function (get) {
->>>>>>> demo_sc_experimentPage
   return function Set() {
     return get(this, arguments.length > 0 ? arguments[0] : undefined);
   };
@@ -5892,17 +4405,10 @@ module.exports = __webpack_require__(/*! ./_collection */ 174)('Set', function (
 }, strong);
 
 /***/ }),
-<<<<<<< HEAD
-/* 490 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.weak-map.js ***!
-  \******************************************************/
-=======
 /* 609 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.weak-map.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5910,21 +4416,12 @@ module.exports = __webpack_require__(/*! ./_collection */ 174)('Set', function (
 "use strict";
 
 
-<<<<<<< HEAD
-var each = __webpack_require__(/*! ./_array-methods */ 43)(0),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    meta = __webpack_require__(/*! ./_meta */ 54),
-    assign = __webpack_require__(/*! ./_object-assign */ 474),
-    weak = __webpack_require__(/*! ./_collection-weak */ 491),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-=======
 var each = __webpack_require__(/*! ./_array-methods */ 47)(0),
     redefine = __webpack_require__(/*! ./_redefine */ 31),
     meta = __webpack_require__(/*! ./_meta */ 61),
     assign = __webpack_require__(/*! ./_object-assign */ 593),
     weak = __webpack_require__(/*! ./_collection-weak */ 610),
     isObject = __webpack_require__(/*! ./_is-object */ 9),
->>>>>>> demo_sc_experimentPage
     getWeak = meta.getWeak,
     isExtensible = Object.isExtensible,
     uncaughtFrozenStore = weak.ufstore,
@@ -5953,11 +4450,7 @@ var methods = {
 };
 
 // 23.3 WeakMap Objects
-<<<<<<< HEAD
-var $WeakMap = module.exports = __webpack_require__(/*! ./_collection */ 150)('WeakMap', wrapper, methods, weak, true, true);
-=======
 var $WeakMap = module.exports = __webpack_require__(/*! ./_collection */ 174)('WeakMap', wrapper, methods, weak, true, true);
->>>>>>> demo_sc_experimentPage
 
 // IE11 WeakMap frozen keys fix
 if (new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7) {
@@ -5980,17 +4473,10 @@ if (new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7) {
 }
 
 /***/ }),
-<<<<<<< HEAD
-/* 491 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/_collection-weak.js ***!
-  \**********************************************************/
-=======
 /* 610 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_collection-weak.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -5998,16 +4484,6 @@ if (new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7) {
 "use strict";
 
 
-<<<<<<< HEAD
-var redefineAll = __webpack_require__(/*! ./_redefine-all */ 72),
-    getWeak = __webpack_require__(/*! ./_meta */ 54).getWeak,
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-    forOf = __webpack_require__(/*! ./_for-of */ 91),
-    createArrayMethod = __webpack_require__(/*! ./_array-methods */ 43),
-    $has = __webpack_require__(/*! ./_has */ 20),
-=======
 var redefineAll = __webpack_require__(/*! ./_redefine-all */ 82),
     getWeak = __webpack_require__(/*! ./_meta */ 61).getWeak,
     anObject = __webpack_require__(/*! ./_an-object */ 4),
@@ -6016,7 +4492,6 @@ var redefineAll = __webpack_require__(/*! ./_redefine-all */ 82),
     forOf = __webpack_require__(/*! ./_for-of */ 104),
     createArrayMethod = __webpack_require__(/*! ./_array-methods */ 47),
     $has = __webpack_require__(/*! ./_has */ 25),
->>>>>>> demo_sc_experimentPage
     arrayFind = createArrayMethod(5),
     arrayFindIndex = createArrayMethod(6),
     id = 0;
@@ -6091,17 +4566,10 @@ module.exports = {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 492 */
-/*!***************************************************!*\
-  !*** ./node_modules/core-js/modules/_own-keys.js ***!
-  \***************************************************/
-=======
 /* 611 */
 /*!*******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_own-keys.js ***!
   \*******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6110,17 +4578,10 @@ module.exports = {
 
 
 // all object keys, includes non-enumerable and symbols
-<<<<<<< HEAD
-var gOPN = __webpack_require__(/*! ./_object-gopn */ 69),
-    gOPS = __webpack_require__(/*! ./_object-gops */ 144),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    Reflect = __webpack_require__(/*! ./_global */ 4).Reflect;
-=======
 var gOPN = __webpack_require__(/*! ./_object-gopn */ 79),
     gOPS = __webpack_require__(/*! ./_object-gops */ 168),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     Reflect = __webpack_require__(/*! ./_global */ 5).Reflect;
->>>>>>> demo_sc_experimentPage
 module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
   var keys = gOPN.f(anObject(it)),
       getSymbols = gOPS.f;
@@ -6128,17 +4589,10 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 493 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/_string-pad.js ***!
-  \*****************************************************/
-=======
 /* 612 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_string-pad.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6147,15 +4601,9 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 
 
 // https://github.com/tc39/proposal-string-pad-start-end
-<<<<<<< HEAD
-var toLength = __webpack_require__(/*! ./_to-length */ 15),
-    repeat = __webpack_require__(/*! ./_string-repeat */ 255),
-    defined = __webpack_require__(/*! ./_defined */ 37);
-=======
 var toLength = __webpack_require__(/*! ./_to-length */ 18),
     repeat = __webpack_require__(/*! ./_string-repeat */ 311),
     defined = __webpack_require__(/*! ./_defined */ 41);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (that, maxLength, fillString, left) {
   var S = String(defined(that)),
@@ -6170,17 +4618,10 @@ module.exports = function (that, maxLength, fillString, left) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 494 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/_object-to-array.js ***!
-  \**********************************************************/
-=======
 /* 613 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_object-to-array.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6188,15 +4629,9 @@ module.exports = function (that, maxLength, fillString, left) {
 "use strict";
 
 
-<<<<<<< HEAD
-var getKeys = __webpack_require__(/*! ./_object-keys */ 66),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    isEnum = __webpack_require__(/*! ./_object-pie */ 104).f;
-=======
 var getKeys = __webpack_require__(/*! ./_object-keys */ 76),
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     isEnum = __webpack_require__(/*! ./_object-pie */ 120).f;
->>>>>>> demo_sc_experimentPage
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it),
@@ -6214,17 +4649,10 @@ module.exports = function (isEntries) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 495 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/_collection-to-json.js ***!
-  \*************************************************************/
-=======
 /* 614 */
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_collection-to-json.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6233,13 +4661,8 @@ module.exports = function (isEntries) {
 
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-<<<<<<< HEAD
-var classof = __webpack_require__(/*! ./_classof */ 105),
-    from = __webpack_require__(/*! ./_array-from-iterable */ 496);
-=======
 var classof = __webpack_require__(/*! ./_classof */ 121),
     from = __webpack_require__(/*! ./_array-from-iterable */ 615);
->>>>>>> demo_sc_experimentPage
 module.exports = function (NAME) {
   return function toJSON() {
     if (classof(this) != NAME) throw TypeError(NAME + "#toJSON isn't generic");
@@ -6248,17 +4671,10 @@ module.exports = function (NAME) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 496 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-from-iterable.js ***!
-  \**************************************************************/
-=======
 /* 615 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-from-iterable.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6266,11 +4682,7 @@ module.exports = function (NAME) {
 "use strict";
 
 
-<<<<<<< HEAD
-var forOf = __webpack_require__(/*! ./_for-of */ 91);
-=======
 var forOf = __webpack_require__(/*! ./_for-of */ 104);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (iter, ITERATOR) {
   var result = [];
@@ -6279,128 +4691,6 @@ module.exports = function (iter, ITERATOR) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */,
-/* 532 */,
-/* 533 */,
-/* 534 */,
-/* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */,
-/* 539 */,
-/* 540 */,
-/* 541 */,
-/* 542 */,
-/* 543 */,
-/* 544 */,
-/* 545 */,
-/* 546 */,
-/* 547 */,
-/* 548 */,
-/* 549 */,
-/* 550 */,
-/* 551 */,
-/* 552 */,
-/* 553 */,
-/* 554 */,
-/* 555 */,
-/* 556 */,
-/* 557 */,
-/* 558 */,
-/* 559 */,
-/* 560 */,
-/* 561 */,
-/* 562 */,
-/* 563 */,
-/* 564 */,
-/* 565 */,
-/* 566 */,
-/* 567 */,
-/* 568 */,
-/* 569 */,
-/* 570 */,
-/* 571 */,
-/* 572 */,
-/* 573 */,
-/* 574 */,
-/* 575 */,
-/* 576 */,
-/* 577 */,
-/* 578 */,
-/* 579 */,
-/* 580 */,
-/* 581 */,
-/* 582 */,
-/* 583 */,
-/* 584 */,
-/* 585 */,
-/* 586 */,
-/* 587 */,
-/* 588 */,
-/* 589 */,
-/* 590 */,
-/* 591 */,
-/* 592 */,
-/* 593 */,
-/* 594 */,
-/* 595 */,
-/* 596 */,
-/* 597 */,
-/* 598 */,
-/* 599 */,
-/* 600 */,
-/* 601 */,
-/* 602 */,
-/* 603 */,
-/* 604 */,
-/* 605 */,
-/* 606 */,
-/* 607 */,
-/* 608 */,
-/* 609 */,
-/* 610 */,
-/* 611 */,
-/* 612 */,
-/* 613 */,
-/* 614 */,
-/* 615 */,
-=======
->>>>>>> demo_sc_experimentPage
 /* 616 */,
 /* 617 */,
 /* 618 */,
@@ -6809,9 +5099,6 @@ module.exports = function (iter, ITERATOR) {
 /* 1021 */,
 /* 1022 */,
 /* 1023 */,
-<<<<<<< HEAD
-/* 1024 */
-=======
 /* 1024 */,
 /* 1025 */,
 /* 1026 */,
@@ -7128,7 +5415,6 @@ module.exports = function (iter, ITERATOR) {
 /* 1337 */,
 /* 1338 */,
 /* 1339 */
->>>>>>> demo_sc_experimentPage
 /*!*****************************************!*\
   !*** multi babel-polyfill whatwg-fetch ***!
   \*****************************************/
@@ -7136,21 +5422,12 @@ module.exports = function (iter, ITERATOR) {
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! babel-polyfill */1025);
-module.exports = __webpack_require__(/*! whatwg-fetch */1208);
-
-
-/***/ }),
-/* 1025 */
-=======
 __webpack_require__(/*! babel-polyfill */1340);
 module.exports = __webpack_require__(/*! whatwg-fetch */1523);
 
 
 /***/ }),
 /* 1340 */
->>>>>>> demo_sc_experimentPage
 /*!**************************************************!*\
   !*** ./node_modules/babel-polyfill/lib/index.js ***!
   \**************************************************/
@@ -7161,19 +5438,11 @@ module.exports = __webpack_require__(/*! whatwg-fetch */1523);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! core-js/shim */ 1026);
-
-__webpack_require__(/*! regenerator-runtime/runtime */ 1204);
-
-__webpack_require__(/*! core-js/fn/regexp/escape */ 1205);
-=======
 __webpack_require__(/*! core-js/shim */ 1341);
 
 __webpack_require__(/*! regenerator-runtime/runtime */ 1519);
 
 __webpack_require__(/*! core-js/fn/regexp/escape */ 1520);
->>>>>>> demo_sc_experimentPage
 
 if (global._babelPolyfill) {
   throw new Error("only one instance of babel-polyfill is allowed");
@@ -7195,204 +5464,6 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-<<<<<<< HEAD
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 23)))
-
-/***/ }),
-/* 1026 */
-/*!**************************************!*\
-  !*** ./node_modules/core-js/shim.js ***!
-  \**************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(/*! ./modules/es6.symbol */ 1027);
-__webpack_require__(/*! ./modules/es6.object.create */ 1030);
-__webpack_require__(/*! ./modules/es6.object.define-property */ 1031);
-__webpack_require__(/*! ./modules/es6.object.define-properties */ 1032);
-__webpack_require__(/*! ./modules/es6.object.get-own-property-descriptor */ 1033);
-__webpack_require__(/*! ./modules/es6.object.get-prototype-of */ 1034);
-__webpack_require__(/*! ./modules/es6.object.keys */ 1035);
-__webpack_require__(/*! ./modules/es6.object.get-own-property-names */ 1036);
-__webpack_require__(/*! ./modules/es6.object.freeze */ 1037);
-__webpack_require__(/*! ./modules/es6.object.seal */ 1038);
-__webpack_require__(/*! ./modules/es6.object.prevent-extensions */ 1039);
-__webpack_require__(/*! ./modules/es6.object.is-frozen */ 1040);
-__webpack_require__(/*! ./modules/es6.object.is-sealed */ 1041);
-__webpack_require__(/*! ./modules/es6.object.is-extensible */ 1042);
-__webpack_require__(/*! ./modules/es6.object.assign */ 1043);
-__webpack_require__(/*! ./modules/es6.object.is */ 1044);
-__webpack_require__(/*! ./modules/es6.object.set-prototype-of */ 1045);
-__webpack_require__(/*! ./modules/es6.object.to-string */ 1046);
-__webpack_require__(/*! ./modules/es6.function.bind */ 1047);
-__webpack_require__(/*! ./modules/es6.function.name */ 1048);
-__webpack_require__(/*! ./modules/es6.function.has-instance */ 1049);
-__webpack_require__(/*! ./modules/es6.parse-int */ 1050);
-__webpack_require__(/*! ./modules/es6.parse-float */ 1051);
-__webpack_require__(/*! ./modules/es6.number.constructor */ 1052);
-__webpack_require__(/*! ./modules/es6.number.to-fixed */ 1053);
-__webpack_require__(/*! ./modules/es6.number.to-precision */ 1054);
-__webpack_require__(/*! ./modules/es6.number.epsilon */ 1055);
-__webpack_require__(/*! ./modules/es6.number.is-finite */ 1056);
-__webpack_require__(/*! ./modules/es6.number.is-integer */ 1057);
-__webpack_require__(/*! ./modules/es6.number.is-nan */ 1058);
-__webpack_require__(/*! ./modules/es6.number.is-safe-integer */ 1059);
-__webpack_require__(/*! ./modules/es6.number.max-safe-integer */ 1060);
-__webpack_require__(/*! ./modules/es6.number.min-safe-integer */ 1061);
-__webpack_require__(/*! ./modules/es6.number.parse-float */ 1062);
-__webpack_require__(/*! ./modules/es6.number.parse-int */ 1063);
-__webpack_require__(/*! ./modules/es6.math.acosh */ 1064);
-__webpack_require__(/*! ./modules/es6.math.asinh */ 1065);
-__webpack_require__(/*! ./modules/es6.math.atanh */ 1066);
-__webpack_require__(/*! ./modules/es6.math.cbrt */ 1067);
-__webpack_require__(/*! ./modules/es6.math.clz32 */ 1068);
-__webpack_require__(/*! ./modules/es6.math.cosh */ 1069);
-__webpack_require__(/*! ./modules/es6.math.expm1 */ 1070);
-__webpack_require__(/*! ./modules/es6.math.fround */ 1071);
-__webpack_require__(/*! ./modules/es6.math.hypot */ 1072);
-__webpack_require__(/*! ./modules/es6.math.imul */ 1073);
-__webpack_require__(/*! ./modules/es6.math.log10 */ 1074);
-__webpack_require__(/*! ./modules/es6.math.log1p */ 1075);
-__webpack_require__(/*! ./modules/es6.math.log2 */ 1076);
-__webpack_require__(/*! ./modules/es6.math.sign */ 1077);
-__webpack_require__(/*! ./modules/es6.math.sinh */ 1078);
-__webpack_require__(/*! ./modules/es6.math.tanh */ 1079);
-__webpack_require__(/*! ./modules/es6.math.trunc */ 1080);
-__webpack_require__(/*! ./modules/es6.string.from-code-point */ 1081);
-__webpack_require__(/*! ./modules/es6.string.raw */ 1082);
-__webpack_require__(/*! ./modules/es6.string.trim */ 1083);
-__webpack_require__(/*! ./modules/es6.string.iterator */ 1084);
-__webpack_require__(/*! ./modules/es6.string.code-point-at */ 1085);
-__webpack_require__(/*! ./modules/es6.string.ends-with */ 1086);
-__webpack_require__(/*! ./modules/es6.string.includes */ 1087);
-__webpack_require__(/*! ./modules/es6.string.repeat */ 1088);
-__webpack_require__(/*! ./modules/es6.string.starts-with */ 1089);
-__webpack_require__(/*! ./modules/es6.string.anchor */ 1090);
-__webpack_require__(/*! ./modules/es6.string.big */ 1091);
-__webpack_require__(/*! ./modules/es6.string.blink */ 1092);
-__webpack_require__(/*! ./modules/es6.string.bold */ 1093);
-__webpack_require__(/*! ./modules/es6.string.fixed */ 1094);
-__webpack_require__(/*! ./modules/es6.string.fontcolor */ 1095);
-__webpack_require__(/*! ./modules/es6.string.fontsize */ 1096);
-__webpack_require__(/*! ./modules/es6.string.italics */ 1097);
-__webpack_require__(/*! ./modules/es6.string.link */ 1098);
-__webpack_require__(/*! ./modules/es6.string.small */ 1099);
-__webpack_require__(/*! ./modules/es6.string.strike */ 1100);
-__webpack_require__(/*! ./modules/es6.string.sub */ 1101);
-__webpack_require__(/*! ./modules/es6.string.sup */ 1102);
-__webpack_require__(/*! ./modules/es6.date.now */ 1103);
-__webpack_require__(/*! ./modules/es6.date.to-json */ 1104);
-__webpack_require__(/*! ./modules/es6.date.to-iso-string */ 1105);
-__webpack_require__(/*! ./modules/es6.date.to-string */ 1106);
-__webpack_require__(/*! ./modules/es6.date.to-primitive */ 1107);
-__webpack_require__(/*! ./modules/es6.array.is-array */ 1109);
-__webpack_require__(/*! ./modules/es6.array.from */ 1110);
-__webpack_require__(/*! ./modules/es6.array.of */ 1111);
-__webpack_require__(/*! ./modules/es6.array.join */ 1112);
-__webpack_require__(/*! ./modules/es6.array.slice */ 1113);
-__webpack_require__(/*! ./modules/es6.array.sort */ 1114);
-__webpack_require__(/*! ./modules/es6.array.for-each */ 1115);
-__webpack_require__(/*! ./modules/es6.array.map */ 1118);
-__webpack_require__(/*! ./modules/es6.array.filter */ 1119);
-__webpack_require__(/*! ./modules/es6.array.some */ 1120);
-__webpack_require__(/*! ./modules/es6.array.every */ 1121);
-__webpack_require__(/*! ./modules/es6.array.reduce */ 1122);
-__webpack_require__(/*! ./modules/es6.array.reduce-right */ 1123);
-__webpack_require__(/*! ./modules/es6.array.index-of */ 1124);
-__webpack_require__(/*! ./modules/es6.array.last-index-of */ 1125);
-__webpack_require__(/*! ./modules/es6.array.copy-within */ 1126);
-__webpack_require__(/*! ./modules/es6.array.fill */ 1127);
-__webpack_require__(/*! ./modules/es6.array.find */ 1128);
-__webpack_require__(/*! ./modules/es6.array.find-index */ 1129);
-__webpack_require__(/*! ./modules/es6.array.species */ 1130);
-__webpack_require__(/*! ./modules/es6.array.iterator */ 267);
-__webpack_require__(/*! ./modules/es6.regexp.constructor */ 1131);
-__webpack_require__(/*! ./modules/es6.regexp.to-string */ 1132);
-__webpack_require__(/*! ./modules/es6.regexp.flags */ 486);
-__webpack_require__(/*! ./modules/es6.regexp.match */ 1133);
-__webpack_require__(/*! ./modules/es6.regexp.replace */ 1134);
-__webpack_require__(/*! ./modules/es6.regexp.search */ 1135);
-__webpack_require__(/*! ./modules/es6.regexp.split */ 1136);
-__webpack_require__(/*! ./modules/es6.promise */ 1137);
-__webpack_require__(/*! ./modules/es6.map */ 487);
-__webpack_require__(/*! ./modules/es6.set */ 489);
-__webpack_require__(/*! ./modules/es6.weak-map */ 490);
-__webpack_require__(/*! ./modules/es6.weak-set */ 1138);
-__webpack_require__(/*! ./modules/es6.typed.array-buffer */ 1139);
-__webpack_require__(/*! ./modules/es6.typed.data-view */ 1140);
-__webpack_require__(/*! ./modules/es6.typed.int8-array */ 1141);
-__webpack_require__(/*! ./modules/es6.typed.uint8-array */ 1142);
-__webpack_require__(/*! ./modules/es6.typed.uint8-clamped-array */ 1143);
-__webpack_require__(/*! ./modules/es6.typed.int16-array */ 1144);
-__webpack_require__(/*! ./modules/es6.typed.uint16-array */ 1145);
-__webpack_require__(/*! ./modules/es6.typed.int32-array */ 1146);
-__webpack_require__(/*! ./modules/es6.typed.uint32-array */ 1147);
-__webpack_require__(/*! ./modules/es6.typed.float32-array */ 1148);
-__webpack_require__(/*! ./modules/es6.typed.float64-array */ 1149);
-__webpack_require__(/*! ./modules/es6.reflect.apply */ 1150);
-__webpack_require__(/*! ./modules/es6.reflect.construct */ 1151);
-__webpack_require__(/*! ./modules/es6.reflect.define-property */ 1152);
-__webpack_require__(/*! ./modules/es6.reflect.delete-property */ 1153);
-__webpack_require__(/*! ./modules/es6.reflect.enumerate */ 1154);
-__webpack_require__(/*! ./modules/es6.reflect.get */ 1155);
-__webpack_require__(/*! ./modules/es6.reflect.get-own-property-descriptor */ 1156);
-__webpack_require__(/*! ./modules/es6.reflect.get-prototype-of */ 1157);
-__webpack_require__(/*! ./modules/es6.reflect.has */ 1158);
-__webpack_require__(/*! ./modules/es6.reflect.is-extensible */ 1159);
-__webpack_require__(/*! ./modules/es6.reflect.own-keys */ 1160);
-__webpack_require__(/*! ./modules/es6.reflect.prevent-extensions */ 1161);
-__webpack_require__(/*! ./modules/es6.reflect.set */ 1162);
-__webpack_require__(/*! ./modules/es6.reflect.set-prototype-of */ 1163);
-__webpack_require__(/*! ./modules/es7.array.includes */ 1164);
-__webpack_require__(/*! ./modules/es7.string.at */ 1165);
-__webpack_require__(/*! ./modules/es7.string.pad-start */ 1166);
-__webpack_require__(/*! ./modules/es7.string.pad-end */ 1167);
-__webpack_require__(/*! ./modules/es7.string.trim-left */ 1168);
-__webpack_require__(/*! ./modules/es7.string.trim-right */ 1169);
-__webpack_require__(/*! ./modules/es7.string.match-all */ 1170);
-__webpack_require__(/*! ./modules/es7.symbol.async-iterator */ 1171);
-__webpack_require__(/*! ./modules/es7.symbol.observable */ 1172);
-__webpack_require__(/*! ./modules/es7.object.get-own-property-descriptors */ 1173);
-__webpack_require__(/*! ./modules/es7.object.values */ 1174);
-__webpack_require__(/*! ./modules/es7.object.entries */ 1175);
-__webpack_require__(/*! ./modules/es7.object.define-getter */ 1176);
-__webpack_require__(/*! ./modules/es7.object.define-setter */ 1177);
-__webpack_require__(/*! ./modules/es7.object.lookup-getter */ 1178);
-__webpack_require__(/*! ./modules/es7.object.lookup-setter */ 1179);
-__webpack_require__(/*! ./modules/es7.map.to-json */ 1180);
-__webpack_require__(/*! ./modules/es7.set.to-json */ 1181);
-__webpack_require__(/*! ./modules/es7.system.global */ 1182);
-__webpack_require__(/*! ./modules/es7.error.is-error */ 1183);
-__webpack_require__(/*! ./modules/es7.math.iaddh */ 1184);
-__webpack_require__(/*! ./modules/es7.math.isubh */ 1185);
-__webpack_require__(/*! ./modules/es7.math.imulh */ 1186);
-__webpack_require__(/*! ./modules/es7.math.umulh */ 1187);
-__webpack_require__(/*! ./modules/es7.reflect.define-metadata */ 1188);
-__webpack_require__(/*! ./modules/es7.reflect.delete-metadata */ 1189);
-__webpack_require__(/*! ./modules/es7.reflect.get-metadata */ 1190);
-__webpack_require__(/*! ./modules/es7.reflect.get-metadata-keys */ 1191);
-__webpack_require__(/*! ./modules/es7.reflect.get-own-metadata */ 1192);
-__webpack_require__(/*! ./modules/es7.reflect.get-own-metadata-keys */ 1193);
-__webpack_require__(/*! ./modules/es7.reflect.has-metadata */ 1194);
-__webpack_require__(/*! ./modules/es7.reflect.has-own-metadata */ 1195);
-__webpack_require__(/*! ./modules/es7.reflect.metadata */ 1196);
-__webpack_require__(/*! ./modules/es7.asap */ 1197);
-__webpack_require__(/*! ./modules/es7.observable */ 1198);
-__webpack_require__(/*! ./modules/web.timers */ 1199);
-__webpack_require__(/*! ./modules/web.immediate */ 1202);
-__webpack_require__(/*! ./modules/web.dom.iterable */ 1203);
-module.exports = __webpack_require__(/*! ./modules/_core */ 45);
-
-/***/ }),
-/* 1027 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.symbol.js ***!
-  \****************************************************/
-=======
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 17)))
 
 /***/ }),
@@ -7589,7 +5660,6 @@ module.exports = __webpack_require__(/*! ./modules/_core */ 50);
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.symbol.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -7600,33 +5670,6 @@ module.exports = __webpack_require__(/*! ./modules/_core */ 50);
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    has = __webpack_require__(/*! ./_has */ 20),
-    DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 12),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    META = __webpack_require__(/*! ./_meta */ 54).KEY,
-    $fails = __webpack_require__(/*! ./_fails */ 6),
-    shared = __webpack_require__(/*! ./_shared */ 142),
-    setToStringTag = __webpack_require__(/*! ./_set-to-string-tag */ 87),
-    uid = __webpack_require__(/*! ./_uid */ 64),
-    wks = __webpack_require__(/*! ./_wks */ 8),
-    wksExt = __webpack_require__(/*! ./_wks-ext */ 470),
-    wksDefine = __webpack_require__(/*! ./_wks-define */ 247),
-    keyOf = __webpack_require__(/*! ./_keyof */ 1028),
-    enumKeys = __webpack_require__(/*! ./_enum-keys */ 1029),
-    isArray = __webpack_require__(/*! ./_is-array */ 250),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-    createDesc = __webpack_require__(/*! ./_property-desc */ 53),
-    _create = __webpack_require__(/*! ./_object-create */ 68),
-    gOPNExt = __webpack_require__(/*! ./_object-gopn-ext */ 473),
-    $GOPD = __webpack_require__(/*! ./_object-gopd */ 33),
-    $DP = __webpack_require__(/*! ./_object-dp */ 13),
-    $keys = __webpack_require__(/*! ./_object-keys */ 66),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     has = __webpack_require__(/*! ./_has */ 25),
     DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 13),
@@ -7652,7 +5695,6 @@ var global = __webpack_require__(/*! ./_global */ 5),
     $GOPD = __webpack_require__(/*! ./_object-gopd */ 37),
     $DP = __webpack_require__(/*! ./_object-dp */ 14),
     $keys = __webpack_require__(/*! ./_object-keys */ 76),
->>>>>>> demo_sc_experimentPage
     gOPD = $GOPD.f,
     dP = $DP.f,
     gOPN = gOPNExt.f,
@@ -7778,19 +5820,11 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-<<<<<<< HEAD
-  __webpack_require__(/*! ./_object-gopn */ 69).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(/*! ./_object-pie */ 104).f = $propertyIsEnumerable;
-  __webpack_require__(/*! ./_object-gops */ 144).f = $getOwnPropertySymbols;
-
-  if (DESCRIPTORS && !__webpack_require__(/*! ./_library */ 65)) {
-=======
   __webpack_require__(/*! ./_object-gopn */ 79).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(/*! ./_object-pie */ 120).f = $propertyIsEnumerable;
   __webpack_require__(/*! ./_object-gops */ 168).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(/*! ./_library */ 75)) {
->>>>>>> demo_sc_experimentPage
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -7868,11 +5902,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-<<<<<<< HEAD
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(/*! ./_hide */ 27)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
-=======
 $Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(/*! ./_hide */ 30)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
->>>>>>> demo_sc_experimentPage
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -7881,17 +5911,10 @@ setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
-<<<<<<< HEAD
-/* 1028 */
-/*!************************************************!*\
-  !*** ./node_modules/core-js/modules/_keyof.js ***!
-  \************************************************/
-=======
 /* 1343 */
 /*!****************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_keyof.js ***!
   \****************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -7899,13 +5922,8 @@ setToStringTag(global.JSON, 'JSON', true);
 "use strict";
 
 
-<<<<<<< HEAD
-var getKeys = __webpack_require__(/*! ./_object-keys */ 66),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30);
-=======
 var getKeys = __webpack_require__(/*! ./_object-keys */ 76),
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33);
->>>>>>> demo_sc_experimentPage
 module.exports = function (object, el) {
   var O = toIObject(object),
       keys = getKeys(O),
@@ -7918,17 +5936,10 @@ module.exports = function (object, el) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1029 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/_enum-keys.js ***!
-  \****************************************************/
-=======
 /* 1344 */
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_enum-keys.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -7937,15 +5948,9 @@ module.exports = function (object, el) {
 
 
 // all enumerable object keys, includes symbols
-<<<<<<< HEAD
-var getKeys = __webpack_require__(/*! ./_object-keys */ 66),
-    gOPS = __webpack_require__(/*! ./_object-gops */ 144),
-    pIE = __webpack_require__(/*! ./_object-pie */ 104);
-=======
 var getKeys = __webpack_require__(/*! ./_object-keys */ 76),
     gOPS = __webpack_require__(/*! ./_object-gops */ 168),
     pIE = __webpack_require__(/*! ./_object-pie */ 120);
->>>>>>> demo_sc_experimentPage
 module.exports = function (it) {
   var result = getKeys(it),
       getSymbols = gOPS.f;
@@ -7961,17 +5966,10 @@ module.exports = function (it) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1030 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.create.js ***!
-  \***********************************************************/
-=======
 /* 1345 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.create.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -7981,15 +5979,6 @@ module.exports = function (it) {
 
 var $export = __webpack_require__(/*! ./_export */ 0);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-<<<<<<< HEAD
-$export($export.S, 'Object', { create: __webpack_require__(/*! ./_object-create */ 68) });
-
-/***/ }),
-/* 1031 */
-/*!********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.define-property.js ***!
-  \********************************************************************/
-=======
 $export($export.S, 'Object', { create: __webpack_require__(/*! ./_object-create */ 78) });
 
 /***/ }),
@@ -7997,7 +5986,6 @@ $export($export.S, 'Object', { create: __webpack_require__(/*! ./_object-create 
 /*!************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.define-property.js ***!
   \************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8007,15 +5995,6 @@ $export($export.S, 'Object', { create: __webpack_require__(/*! ./_object-create 
 
 var $export = __webpack_require__(/*! ./_export */ 0);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-<<<<<<< HEAD
-$export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 12), 'Object', { defineProperty: __webpack_require__(/*! ./_object-dp */ 13).f });
-
-/***/ }),
-/* 1032 */
-/*!**********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.define-properties.js ***!
-  \**********************************************************************/
-=======
 $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 13), 'Object', { defineProperty: __webpack_require__(/*! ./_object-dp */ 14).f });
 
 /***/ }),
@@ -8023,7 +6002,6 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 13), 
 /*!**************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.define-properties.js ***!
   \**************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8033,15 +6011,6 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 13), 
 
 var $export = __webpack_require__(/*! ./_export */ 0);
 // 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-<<<<<<< HEAD
-$export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 12), 'Object', { defineProperties: __webpack_require__(/*! ./_object-dps */ 472) });
-
-/***/ }),
-/* 1033 */
-/*!********************************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.get-own-property-descriptor.js ***!
-  \********************************************************************************/
-=======
 $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 13), 'Object', { defineProperties: __webpack_require__(/*! ./_object-dps */ 591) });
 
 /***/ }),
@@ -8049,7 +6018,6 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 13), 
 /*!************************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.get-own-property-descriptor.js ***!
   \************************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8058,34 +6026,20 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ 13), 
 
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-<<<<<<< HEAD
-var toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    $getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 33).f;
-
-__webpack_require__(/*! ./_object-sap */ 42)('getOwnPropertyDescriptor', function () {
-=======
 var toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     $getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 37).f;
 
 __webpack_require__(/*! ./_object-sap */ 46)('getOwnPropertyDescriptor', function () {
->>>>>>> demo_sc_experimentPage
   return function getOwnPropertyDescriptor(it, key) {
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1034 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.get-prototype-of.js ***!
-  \*********************************************************************/
-=======
 /* 1349 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.get-prototype-of.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8094,34 +6048,20 @@ __webpack_require__(/*! ./_object-sap */ 46)('getOwnPropertyDescriptor', functio
 
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-<<<<<<< HEAD
-var toObject = __webpack_require__(/*! ./_to-object */ 16),
-    $getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34);
-
-__webpack_require__(/*! ./_object-sap */ 42)('getPrototypeOf', function () {
-=======
 var toObject = __webpack_require__(/*! ./_to-object */ 19),
     $getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38);
 
 __webpack_require__(/*! ./_object-sap */ 46)('getPrototypeOf', function () {
->>>>>>> demo_sc_experimentPage
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1035 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.keys.js ***!
-  \*********************************************************/
-=======
 /* 1350 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.keys.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8130,34 +6070,20 @@ __webpack_require__(/*! ./_object-sap */ 46)('getPrototypeOf', function () {
 
 
 // 19.1.2.14 Object.keys(O)
-<<<<<<< HEAD
-var toObject = __webpack_require__(/*! ./_to-object */ 16),
-    $keys = __webpack_require__(/*! ./_object-keys */ 66);
-
-__webpack_require__(/*! ./_object-sap */ 42)('keys', function () {
-=======
 var toObject = __webpack_require__(/*! ./_to-object */ 19),
     $keys = __webpack_require__(/*! ./_object-keys */ 76);
 
 __webpack_require__(/*! ./_object-sap */ 46)('keys', function () {
->>>>>>> demo_sc_experimentPage
   return function keys(it) {
     return $keys(toObject(it));
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1036 */
-/*!***************************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.get-own-property-names.js ***!
-  \***************************************************************************/
-=======
 /* 1351 */
 /*!*******************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.get-own-property-names.js ***!
   \*******************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8166,17 +6092,6 @@ __webpack_require__(/*! ./_object-sap */ 46)('keys', function () {
 
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
-<<<<<<< HEAD
-__webpack_require__(/*! ./_object-sap */ 42)('getOwnPropertyNames', function () {
-  return __webpack_require__(/*! ./_object-gopn-ext */ 473).f;
-});
-
-/***/ }),
-/* 1037 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.freeze.js ***!
-  \***********************************************************/
-=======
 __webpack_require__(/*! ./_object-sap */ 46)('getOwnPropertyNames', function () {
   return __webpack_require__(/*! ./_object-gopn-ext */ 592).f;
 });
@@ -8186,7 +6101,6 @@ __webpack_require__(/*! ./_object-sap */ 46)('getOwnPropertyNames', function () 
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.freeze.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8195,34 +6109,20 @@ __webpack_require__(/*! ./_object-sap */ 46)('getOwnPropertyNames', function () 
 
 
 // 19.1.2.5 Object.freeze(O)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    meta = __webpack_require__(/*! ./_meta */ 54).onFreeze;
-
-__webpack_require__(/*! ./_object-sap */ 42)('freeze', function ($freeze) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     meta = __webpack_require__(/*! ./_meta */ 61).onFreeze;
 
 __webpack_require__(/*! ./_object-sap */ 46)('freeze', function ($freeze) {
->>>>>>> demo_sc_experimentPage
   return function freeze(it) {
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1038 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.seal.js ***!
-  \*********************************************************/
-=======
 /* 1353 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.seal.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8231,34 +6131,20 @@ __webpack_require__(/*! ./_object-sap */ 46)('freeze', function ($freeze) {
 
 
 // 19.1.2.17 Object.seal(O)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    meta = __webpack_require__(/*! ./_meta */ 54).onFreeze;
-
-__webpack_require__(/*! ./_object-sap */ 42)('seal', function ($seal) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     meta = __webpack_require__(/*! ./_meta */ 61).onFreeze;
 
 __webpack_require__(/*! ./_object-sap */ 46)('seal', function ($seal) {
->>>>>>> demo_sc_experimentPage
   return function seal(it) {
     return $seal && isObject(it) ? $seal(meta(it)) : it;
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1039 */
-/*!***********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.prevent-extensions.js ***!
-  \***********************************************************************/
-=======
 /* 1354 */
 /*!***************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.prevent-extensions.js ***!
   \***************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8267,34 +6153,20 @@ __webpack_require__(/*! ./_object-sap */ 46)('seal', function ($seal) {
 
 
 // 19.1.2.15 Object.preventExtensions(O)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    meta = __webpack_require__(/*! ./_meta */ 54).onFreeze;
-
-__webpack_require__(/*! ./_object-sap */ 42)('preventExtensions', function ($preventExtensions) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     meta = __webpack_require__(/*! ./_meta */ 61).onFreeze;
 
 __webpack_require__(/*! ./_object-sap */ 46)('preventExtensions', function ($preventExtensions) {
->>>>>>> demo_sc_experimentPage
   return function preventExtensions(it) {
     return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1040 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.is-frozen.js ***!
-  \**************************************************************/
-=======
 /* 1355 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.is-frozen.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8303,32 +6175,19 @@ __webpack_require__(/*! ./_object-sap */ 46)('preventExtensions', function ($pre
 
 
 // 19.1.2.12 Object.isFrozen(O)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7);
-
-__webpack_require__(/*! ./_object-sap */ 42)('isFrozen', function ($isFrozen) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9);
 
 __webpack_require__(/*! ./_object-sap */ 46)('isFrozen', function ($isFrozen) {
->>>>>>> demo_sc_experimentPage
   return function isFrozen(it) {
     return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1041 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.is-sealed.js ***!
-  \**************************************************************/
-=======
 /* 1356 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.is-sealed.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8337,32 +6196,19 @@ __webpack_require__(/*! ./_object-sap */ 46)('isFrozen', function ($isFrozen) {
 
 
 // 19.1.2.13 Object.isSealed(O)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7);
-
-__webpack_require__(/*! ./_object-sap */ 42)('isSealed', function ($isSealed) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9);
 
 __webpack_require__(/*! ./_object-sap */ 46)('isSealed', function ($isSealed) {
->>>>>>> demo_sc_experimentPage
   return function isSealed(it) {
     return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1042 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.is-extensible.js ***!
-  \******************************************************************/
-=======
 /* 1357 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.is-extensible.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8371,32 +6217,19 @@ __webpack_require__(/*! ./_object-sap */ 46)('isSealed', function ($isSealed) {
 
 
 // 19.1.2.11 Object.isExtensible(O)
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7);
-
-__webpack_require__(/*! ./_object-sap */ 42)('isExtensible', function ($isExtensible) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9);
 
 __webpack_require__(/*! ./_object-sap */ 46)('isExtensible', function ($isExtensible) {
->>>>>>> demo_sc_experimentPage
   return function isExtensible(it) {
     return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1043 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.assign.js ***!
-  \***********************************************************/
-=======
 /* 1358 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.assign.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8407,15 +6240,6 @@ __webpack_require__(/*! ./_object-sap */ 46)('isExtensible', function ($isExtens
 // 19.1.3.1 Object.assign(target, source)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(/*! ./_object-assign */ 474) });
-
-/***/ }),
-/* 1044 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.is.js ***!
-  \*******************************************************/
-=======
 $export($export.S + $export.F, 'Object', { assign: __webpack_require__(/*! ./_object-assign */ 593) });
 
 /***/ }),
@@ -8423,7 +6247,6 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(/*! ./_ob
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.is.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8433,15 +6256,6 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(/*! ./_ob
 
 // 19.1.3.10 Object.is(value1, value2)
 var $export = __webpack_require__(/*! ./_export */ 0);
-<<<<<<< HEAD
-$export($export.S, 'Object', { is: __webpack_require__(/*! ./_same-value */ 475) });
-
-/***/ }),
-/* 1045 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.set-prototype-of.js ***!
-  \*********************************************************************/
-=======
 $export($export.S, 'Object', { is: __webpack_require__(/*! ./_same-value */ 594) });
 
 /***/ }),
@@ -8449,7 +6263,6 @@ $export($export.S, 'Object', { is: __webpack_require__(/*! ./_same-value */ 594)
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.set-prototype-of.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8459,15 +6272,6 @@ $export($export.S, 'Object', { is: __webpack_require__(/*! ./_same-value */ 594)
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = __webpack_require__(/*! ./_export */ 0);
-<<<<<<< HEAD
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(/*! ./_set-proto */ 252).set });
-
-/***/ }),
-/* 1046 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.object.to-string.js ***!
-  \**************************************************************/
-=======
 $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(/*! ./_set-proto */ 308).set });
 
 /***/ }),
@@ -8475,7 +6279,6 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(/*! ./_set-pr
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.object.to-string.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8484,35 +6287,20 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(/*! ./_set-pr
 
 // 19.1.3.6 Object.prototype.toString()
 
-<<<<<<< HEAD
-var classof = __webpack_require__(/*! ./_classof */ 105),
-    test = {};
-test[__webpack_require__(/*! ./_wks */ 8)('toStringTag')] = 'z';
-if (test + '' != '[object z]') {
-  __webpack_require__(/*! ./_redefine */ 28)(Object.prototype, 'toString', function toString() {
-=======
 var classof = __webpack_require__(/*! ./_classof */ 121),
     test = {};
 test[__webpack_require__(/*! ./_wks */ 10)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
   __webpack_require__(/*! ./_redefine */ 31)(Object.prototype, 'toString', function toString() {
->>>>>>> demo_sc_experimentPage
     return '[object ' + classof(this) + ']';
   }, true);
 }
 
 /***/ }),
-<<<<<<< HEAD
-/* 1047 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.function.bind.js ***!
-  \***********************************************************/
-=======
 /* 1362 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.function.bind.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8523,15 +6311,6 @@ if (test + '' != '[object z]') {
 // 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.P, 'Function', { bind: __webpack_require__(/*! ./_bind */ 476) });
-
-/***/ }),
-/* 1048 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.function.name.js ***!
-  \***********************************************************/
-=======
 $export($export.P, 'Function', { bind: __webpack_require__(/*! ./_bind */ 595) });
 
 /***/ }),
@@ -8539,7 +6318,6 @@ $export($export.P, 'Function', { bind: __webpack_require__(/*! ./_bind */ 595) }
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.function.name.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8547,15 +6325,9 @@ $export($export.P, 'Function', { bind: __webpack_require__(/*! ./_bind */ 595) }
 "use strict";
 
 
-<<<<<<< HEAD
-var dP = __webpack_require__(/*! ./_object-dp */ 13).f,
-    createDesc = __webpack_require__(/*! ./_property-desc */ 53),
-    has = __webpack_require__(/*! ./_has */ 20),
-=======
 var dP = __webpack_require__(/*! ./_object-dp */ 14).f,
     createDesc = __webpack_require__(/*! ./_property-desc */ 60),
     has = __webpack_require__(/*! ./_has */ 25),
->>>>>>> demo_sc_experimentPage
     FProto = Function.prototype,
     nameRE = /^\s*function ([^ (]*)/,
     NAME = 'name';
@@ -8565,11 +6337,7 @@ var isExtensible = Object.isExtensible || function () {
 };
 
 // 19.2.4.2 name
-<<<<<<< HEAD
-NAME in FProto || __webpack_require__(/*! ./_descriptors */ 12) && dP(FProto, NAME, {
-=======
 NAME in FProto || __webpack_require__(/*! ./_descriptors */ 13) && dP(FProto, NAME, {
->>>>>>> demo_sc_experimentPage
   configurable: true,
   get: function get() {
     try {
@@ -8584,17 +6352,10 @@ NAME in FProto || __webpack_require__(/*! ./_descriptors */ 13) && dP(FProto, NA
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1049 */
-/*!*******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.function.has-instance.js ***!
-  \*******************************************************************/
-=======
 /* 1364 */
 /*!***********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.function.has-instance.js ***!
   \***********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8602,21 +6363,12 @@ NAME in FProto || __webpack_require__(/*! ./_descriptors */ 13) && dP(FProto, NA
 "use strict";
 
 
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-    HAS_INSTANCE = __webpack_require__(/*! ./_wks */ 8)('hasInstance'),
-    FunctionProto = Function.prototype;
-// 19.2.3.6 Function.prototype[@@hasInstance](V)
-if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(/*! ./_object-dp */ 13).f(FunctionProto, HAS_INSTANCE, { value: function value(O) {
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
     HAS_INSTANCE = __webpack_require__(/*! ./_wks */ 10)('hasInstance'),
     FunctionProto = Function.prototype;
 // 19.2.3.6 Function.prototype[@@hasInstance](V)
 if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(/*! ./_object-dp */ 14).f(FunctionProto, HAS_INSTANCE, { value: function value(O) {
->>>>>>> demo_sc_experimentPage
     if (typeof this != 'function' || !isObject(O)) return false;
     if (!isObject(this.prototype)) return O instanceof this;
     // for environment w/o native `@@hasInstance` logic enough `instanceof`, but add this:
@@ -8626,17 +6378,10 @@ if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(/*! ./_object-dp */ 14
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1050 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.parse-int.js ***!
-  \*******************************************************/
-=======
 /* 1365 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.parse-int.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8645,26 +6390,15 @@ if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(/*! ./_object-dp */ 14
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $parseInt = __webpack_require__(/*! ./_parse-int */ 477);
-=======
     $parseInt = __webpack_require__(/*! ./_parse-int */ 596);
->>>>>>> demo_sc_experimentPage
 // 18.2.5 parseInt(string, radix)
 $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1051 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.parse-float.js ***!
-  \*********************************************************/
-=======
 /* 1366 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.parse-float.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8673,26 +6407,15 @@ $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt }
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $parseFloat = __webpack_require__(/*! ./_parse-float */ 478);
-=======
     $parseFloat = __webpack_require__(/*! ./_parse-float */ 597);
->>>>>>> demo_sc_experimentPage
 // 18.2.4 parseFloat(string)
 $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $parseFloat });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1052 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.constructor.js ***!
-  \****************************************************************/
-=======
 /* 1367 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.constructor.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8700,18 +6423,6 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $pars
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    has = __webpack_require__(/*! ./_has */ 20),
-    cof = __webpack_require__(/*! ./_cof */ 36),
-    inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 254),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    gOPN = __webpack_require__(/*! ./_object-gopn */ 69).f,
-    gOPD = __webpack_require__(/*! ./_object-gopd */ 33).f,
-    dP = __webpack_require__(/*! ./_object-dp */ 13).f,
-    $trim = __webpack_require__(/*! ./_string-trim */ 88).trim,
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     has = __webpack_require__(/*! ./_has */ 25),
     cof = __webpack_require__(/*! ./_cof */ 40),
@@ -8722,18 +6433,13 @@ var global = __webpack_require__(/*! ./_global */ 5),
     gOPD = __webpack_require__(/*! ./_object-gopd */ 37).f,
     dP = __webpack_require__(/*! ./_object-dp */ 14).f,
     $trim = __webpack_require__(/*! ./_string-trim */ 101).trim,
->>>>>>> demo_sc_experimentPage
     NUMBER = 'Number',
     $Number = global[NUMBER],
     Base = $Number,
     proto = $Number.prototype
 // Opera ~12 has broken Object#toString
 ,
-<<<<<<< HEAD
-    BROKEN_COF = cof(__webpack_require__(/*! ./_object-create */ 68)(proto)) == NUMBER,
-=======
     BROKEN_COF = cof(__webpack_require__(/*! ./_object-create */ 78)(proto)) == NUMBER,
->>>>>>> demo_sc_experimentPage
     TRIM = 'trim' in String.prototype;
 
 // 7.1.3 ToNumber(argument)
@@ -8777,11 +6483,7 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
       proto.valueOf.call(that);
     }) : cof(that) != NUMBER) ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
   };
-<<<<<<< HEAD
-  for (var keys = __webpack_require__(/*! ./_descriptors */ 12) ? gOPN(Base) : (
-=======
   for (var keys = __webpack_require__(/*! ./_descriptors */ 13) ? gOPN(Base) : (
->>>>>>> demo_sc_experimentPage
   // ES3:
   'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
   // ES6 (in case, if modules with ES6 Number statics required before):
@@ -8792,16 +6494,6 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
   }
   $Number.prototype = proto;
   proto.constructor = $Number;
-<<<<<<< HEAD
-  __webpack_require__(/*! ./_redefine */ 28)(global, NUMBER, $Number);
-}
-
-/***/ }),
-/* 1053 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.to-fixed.js ***!
-  \*************************************************************/
-=======
   __webpack_require__(/*! ./_redefine */ 31)(global, NUMBER, $Number);
 }
 
@@ -8810,7 +6502,6 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.to-fixed.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8819,15 +6510,9 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-    aNumberValue = __webpack_require__(/*! ./_a-number-value */ 479),
-    repeat = __webpack_require__(/*! ./_string-repeat */ 255),
-=======
     toInteger = __webpack_require__(/*! ./_to-integer */ 62),
     aNumberValue = __webpack_require__(/*! ./_a-number-value */ 598),
     repeat = __webpack_require__(/*! ./_string-repeat */ 311),
->>>>>>> demo_sc_experimentPage
     $toFixed = 1..toFixed,
     floor = Math.floor,
     data = [0, 0, 0, 0, 0, 0],
@@ -8878,11 +6563,7 @@ var log = function log(x) {
   }return n;
 };
 
-<<<<<<< HEAD
-$export($export.P + $export.F * (!!$toFixed && (0.00008.toFixed(3) !== '0.000' || 0.9.toFixed(0) !== '1' || 1.255.toFixed(2) !== '1.25' || 1000000000000000128..toFixed(0) !== '1000000000000000128') || !__webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 $export($export.P + $export.F * (!!$toFixed && (0.00008.toFixed(3) !== '0.000' || 0.9.toFixed(0) !== '1' || 1.255.toFixed(2) !== '1.25' || 1000000000000000128..toFixed(0) !== '1000000000000000128') || !__webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   // V8 ~ Android 4.3-
   $toFixed.call({});
 })), 'Number', {
@@ -8940,17 +6621,10 @@ $export($export.P + $export.F * (!!$toFixed && (0.00008.toFixed(3) !== '0.000' |
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1054 */
-/*!*****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.to-precision.js ***!
-  \*****************************************************************/
-=======
 /* 1369 */
 /*!*********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.to-precision.js ***!
   \*********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8959,13 +6633,8 @@ $export($export.P + $export.F * (!!$toFixed && (0.00008.toFixed(3) !== '0.000' |
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $fails = __webpack_require__(/*! ./_fails */ 6),
-    aNumberValue = __webpack_require__(/*! ./_a-number-value */ 479),
-=======
     $fails = __webpack_require__(/*! ./_fails */ 8),
     aNumberValue = __webpack_require__(/*! ./_a-number-value */ 598),
->>>>>>> demo_sc_experimentPage
     $toPrecision = 1..toPrecision;
 
 $export($export.P + $export.F * ($fails(function () {
@@ -8982,17 +6651,10 @@ $export($export.P + $export.F * ($fails(function () {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1055 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.epsilon.js ***!
-  \************************************************************/
-=======
 /* 1370 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.epsilon.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9006,17 +6668,10 @@ var $export = __webpack_require__(/*! ./_export */ 0);
 $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1056 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.is-finite.js ***!
-  \**************************************************************/
-=======
 /* 1371 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.is-finite.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9026,11 +6681,7 @@ $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 // 20.1.2.2 Number.isFinite(number)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    _isFinite = __webpack_require__(/*! ./_global */ 4).isFinite;
-=======
     _isFinite = __webpack_require__(/*! ./_global */ 5).isFinite;
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Number', {
   isFinite: function isFinite(it) {
@@ -9039,17 +6690,10 @@ $export($export.S, 'Number', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1057 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.is-integer.js ***!
-  \***************************************************************/
-=======
 /* 1372 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.is-integer.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9060,15 +6704,6 @@ $export($export.S, 'Number', {
 // 20.1.2.3 Number.isInteger(number)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S, 'Number', { isInteger: __webpack_require__(/*! ./_is-integer */ 480) });
-
-/***/ }),
-/* 1058 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.is-nan.js ***!
-  \***********************************************************/
-=======
 $export($export.S, 'Number', { isInteger: __webpack_require__(/*! ./_is-integer */ 599) });
 
 /***/ }),
@@ -9076,7 +6711,6 @@ $export($export.S, 'Number', { isInteger: __webpack_require__(/*! ./_is-integer 
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.is-nan.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9094,17 +6728,10 @@ $export($export.S, 'Number', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1059 */
-/*!********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.is-safe-integer.js ***!
-  \********************************************************************/
-=======
 /* 1374 */
 /*!************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.is-safe-integer.js ***!
   \************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9114,11 +6741,7 @@ $export($export.S, 'Number', {
 
 // 20.1.2.5 Number.isSafeInteger(number)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    isInteger = __webpack_require__(/*! ./_is-integer */ 480),
-=======
     isInteger = __webpack_require__(/*! ./_is-integer */ 599),
->>>>>>> demo_sc_experimentPage
     abs = Math.abs;
 
 $export($export.S, 'Number', {
@@ -9128,17 +6751,10 @@ $export($export.S, 'Number', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1060 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.max-safe-integer.js ***!
-  \*********************************************************************/
-=======
 /* 1375 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.max-safe-integer.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9152,17 +6768,10 @@ var $export = __webpack_require__(/*! ./_export */ 0);
 $export($export.S, 'Number', { MAX_SAFE_INTEGER: 0x1fffffffffffff });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1061 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.min-safe-integer.js ***!
-  \*********************************************************************/
-=======
 /* 1376 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.min-safe-integer.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9176,17 +6785,10 @@ var $export = __webpack_require__(/*! ./_export */ 0);
 $export($export.S, 'Number', { MIN_SAFE_INTEGER: -0x1fffffffffffff });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1062 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.parse-float.js ***!
-  \****************************************************************/
-=======
 /* 1377 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.parse-float.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9195,26 +6797,15 @@ $export($export.S, 'Number', { MIN_SAFE_INTEGER: -0x1fffffffffffff });
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $parseFloat = __webpack_require__(/*! ./_parse-float */ 478);
-=======
     $parseFloat = __webpack_require__(/*! ./_parse-float */ 597);
->>>>>>> demo_sc_experimentPage
 // 20.1.2.12 Number.parseFloat(string)
 $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', { parseFloat: $parseFloat });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1063 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.number.parse-int.js ***!
-  \**************************************************************/
-=======
 /* 1378 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.number.parse-int.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9223,26 +6814,15 @@ $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', { 
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $parseInt = __webpack_require__(/*! ./_parse-int */ 477);
-=======
     $parseInt = __webpack_require__(/*! ./_parse-int */ 596);
->>>>>>> demo_sc_experimentPage
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { parseInt: $parseInt });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1064 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.acosh.js ***!
-  \********************************************************/
-=======
 /* 1379 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.acosh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9252,11 +6832,7 @@ $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { pars
 
 // 20.2.2.3 Math.acosh(x)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    log1p = __webpack_require__(/*! ./_math-log1p */ 481),
-=======
     log1p = __webpack_require__(/*! ./_math-log1p */ 600),
->>>>>>> demo_sc_experimentPage
     sqrt = Math.sqrt,
     $acosh = Math.acosh;
 
@@ -9271,17 +6847,10 @@ $export($export.S + $export.F * !($acosh
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1065 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.asinh.js ***!
-  \********************************************************/
-=======
 /* 1380 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.asinh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9301,17 +6870,10 @@ function asinh(x) {
 $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', { asinh: asinh });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1066 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.atanh.js ***!
-  \********************************************************/
-=======
 /* 1381 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.atanh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9331,17 +6893,10 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1067 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.cbrt.js ***!
-  \*******************************************************/
-=======
 /* 1382 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.cbrt.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9351,11 +6906,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 
 // 20.2.2.9 Math.cbrt(x)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    sign = __webpack_require__(/*! ./_math-sign */ 256);
-=======
     sign = __webpack_require__(/*! ./_math-sign */ 312);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Math', {
   cbrt: function cbrt(x) {
@@ -9364,17 +6915,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1068 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.clz32.js ***!
-  \********************************************************/
-=======
 /* 1383 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.clz32.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9392,17 +6936,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1069 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.cosh.js ***!
-  \*******************************************************/
-=======
 /* 1384 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.cosh.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9421,17 +6958,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1070 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.expm1.js ***!
-  \********************************************************/
-=======
 /* 1385 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.expm1.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9441,26 +6971,15 @@ $export($export.S, 'Math', {
 
 // 20.2.2.14 Math.expm1(x)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $expm1 = __webpack_require__(/*! ./_math-expm1 */ 257);
-=======
     $expm1 = __webpack_require__(/*! ./_math-expm1 */ 313);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1071 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.fround.js ***!
-  \*********************************************************/
-=======
 /* 1386 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.fround.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9470,11 +6989,7 @@ $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 
 
 // 20.2.2.16 Math.fround(x)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    sign = __webpack_require__(/*! ./_math-sign */ 256),
-=======
     sign = __webpack_require__(/*! ./_math-sign */ 312),
->>>>>>> demo_sc_experimentPage
     pow = Math.pow,
     EPSILON = pow(2, -52),
     EPSILON32 = pow(2, -23),
@@ -9500,17 +7015,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1072 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.hypot.js ***!
-  \********************************************************/
-=======
 /* 1387 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.hypot.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9547,17 +7055,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1073 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.imul.js ***!
-  \*******************************************************/
-=======
 /* 1388 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.imul.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9570,11 +7071,7 @@ var $export = __webpack_require__(/*! ./_export */ 0),
     $imul = Math.imul;
 
 // some WebKit versions fails with big numbers, some has wrong arity
-<<<<<<< HEAD
-$export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return $imul(0xffffffff, 5) != -5 || $imul.length != 2;
 }), 'Math', {
   imul: function imul(x, y) {
@@ -9588,17 +7085,10 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1074 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.log10.js ***!
-  \********************************************************/
-=======
 /* 1389 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.log10.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9616,17 +7106,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1075 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.log1p.js ***!
-  \********************************************************/
-=======
 /* 1390 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.log1p.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9637,15 +7120,6 @@ $export($export.S, 'Math', {
 // 20.2.2.20 Math.log1p(x)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S, 'Math', { log1p: __webpack_require__(/*! ./_math-log1p */ 481) });
-
-/***/ }),
-/* 1076 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.log2.js ***!
-  \*******************************************************/
-=======
 $export($export.S, 'Math', { log1p: __webpack_require__(/*! ./_math-log1p */ 600) });
 
 /***/ }),
@@ -9653,7 +7127,6 @@ $export($export.S, 'Math', { log1p: __webpack_require__(/*! ./_math-log1p */ 600
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.log2.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9671,17 +7144,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1077 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.sign.js ***!
-  \*******************************************************/
-=======
 /* 1392 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.sign.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9692,15 +7158,6 @@ $export($export.S, 'Math', {
 // 20.2.2.28 Math.sign(x)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S, 'Math', { sign: __webpack_require__(/*! ./_math-sign */ 256) });
-
-/***/ }),
-/* 1078 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.sinh.js ***!
-  \*******************************************************/
-=======
 $export($export.S, 'Math', { sign: __webpack_require__(/*! ./_math-sign */ 312) });
 
 /***/ }),
@@ -9708,7 +7165,6 @@ $export($export.S, 'Math', { sign: __webpack_require__(/*! ./_math-sign */ 312) 
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.sinh.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9718,19 +7174,11 @@ $export($export.S, 'Math', { sign: __webpack_require__(/*! ./_math-sign */ 312) 
 
 // 20.2.2.30 Math.sinh(x)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    expm1 = __webpack_require__(/*! ./_math-expm1 */ 257),
-    exp = Math.exp;
-
-// V8 near Chromium 38 has a problem with very small numbers
-$export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
     expm1 = __webpack_require__(/*! ./_math-expm1 */ 313),
     exp = Math.exp;
 
 // V8 near Chromium 38 has a problem with very small numbers
 $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return !Math.sinh(-2e-17) != -2e-17;
 }), 'Math', {
   sinh: function sinh(x) {
@@ -9739,17 +7187,10 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1079 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.tanh.js ***!
-  \*******************************************************/
-=======
 /* 1394 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.tanh.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9759,11 +7200,7 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 
 // 20.2.2.33 Math.tanh(x)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    expm1 = __webpack_require__(/*! ./_math-expm1 */ 257),
-=======
     expm1 = __webpack_require__(/*! ./_math-expm1 */ 313),
->>>>>>> demo_sc_experimentPage
     exp = Math.exp;
 
 $export($export.S, 'Math', {
@@ -9775,17 +7212,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1080 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.math.trunc.js ***!
-  \********************************************************/
-=======
 /* 1395 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.math.trunc.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9803,17 +7233,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1081 */
-/*!********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.from-code-point.js ***!
-  \********************************************************************/
-=======
 /* 1396 */
 /*!************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.from-code-point.js ***!
   \************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9822,11 +7245,7 @@ $export($export.S, 'Math', {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toIndex = __webpack_require__(/*! ./_to-index */ 67),
-=======
     toIndex = __webpack_require__(/*! ./_to-index */ 77),
->>>>>>> demo_sc_experimentPage
     fromCharCode = String.fromCharCode,
     $fromCodePoint = String.fromCodePoint;
 
@@ -9848,17 +7267,10 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1082 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.raw.js ***!
-  \********************************************************/
-=======
 /* 1397 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.raw.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9867,13 +7279,8 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    toLength = __webpack_require__(/*! ./_to-length */ 15);
-=======
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     toLength = __webpack_require__(/*! ./_to-length */ 18);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'String', {
   // 21.1.2.4 String.raw(callSite, ...substitutions)
@@ -9891,17 +7298,10 @@ $export($export.S, 'String', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1083 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.trim.js ***!
-  \*********************************************************/
-=======
 /* 1398 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.trim.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9910,28 +7310,17 @@ $export($export.S, 'String', {
 
 // 21.1.3.25 String.prototype.trim()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-trim */ 88)('trim', function ($trim) {
-=======
 __webpack_require__(/*! ./_string-trim */ 101)('trim', function ($trim) {
->>>>>>> demo_sc_experimentPage
   return function trim() {
     return $trim(this, 3);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1084 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.iterator.js ***!
-  \*************************************************************/
-=======
 /* 1399 */
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.iterator.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9939,17 +7328,10 @@ __webpack_require__(/*! ./_string-trim */ 101)('trim', function ($trim) {
 "use strict";
 
 
-<<<<<<< HEAD
-var $at = __webpack_require__(/*! ./_string-at */ 258)(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(/*! ./_iter-define */ 259)(String, 'String', function (iterated) {
-=======
 var $at = __webpack_require__(/*! ./_string-at */ 314)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(/*! ./_iter-define */ 315)(String, 'String', function (iterated) {
->>>>>>> demo_sc_experimentPage
   this._t = String(iterated); // target
   this._i = 0; // next index
   // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -9964,17 +7346,10 @@ __webpack_require__(/*! ./_iter-define */ 315)(String, 'String', function (itera
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1085 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.code-point-at.js ***!
-  \******************************************************************/
-=======
 /* 1400 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.code-point-at.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9983,11 +7358,7 @@ __webpack_require__(/*! ./_iter-define */ 315)(String, 'String', function (itera
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $at = __webpack_require__(/*! ./_string-at */ 258)(false);
-=======
     $at = __webpack_require__(/*! ./_string-at */ 314)(false);
->>>>>>> demo_sc_experimentPage
 $export($export.P, 'String', {
   // 21.1.3.3 String.prototype.codePointAt(pos)
   codePointAt: function codePointAt(pos) {
@@ -9996,17 +7367,10 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1086 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.ends-with.js ***!
-  \**************************************************************/
-=======
 /* 1401 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.ends-with.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10016,21 +7380,12 @@ $export($export.P, 'String', {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    context = __webpack_require__(/*! ./_string-context */ 261),
-    ENDS_WITH = 'endsWith',
-    $endsWith = ''[ENDS_WITH];
-
-$export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 262)(ENDS_WITH), 'String', {
-=======
     toLength = __webpack_require__(/*! ./_to-length */ 18),
     context = __webpack_require__(/*! ./_string-context */ 317),
     ENDS_WITH = 'endsWith',
     $endsWith = ''[ENDS_WITH];
 
 $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 318)(ENDS_WITH), 'String', {
->>>>>>> demo_sc_experimentPage
   endsWith: function endsWith(searchString /*, endPosition = @length */) {
     var that = context(this, searchString, ENDS_WITH),
         endPosition = arguments.length > 1 ? arguments[1] : undefined,
@@ -10042,17 +7397,10 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 31
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1087 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.includes.js ***!
-  \*************************************************************/
-=======
 /* 1402 */
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.includes.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10062,34 +7410,20 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 31
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    context = __webpack_require__(/*! ./_string-context */ 261),
-    INCLUDES = 'includes';
-
-$export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 262)(INCLUDES), 'String', {
-=======
     context = __webpack_require__(/*! ./_string-context */ 317),
     INCLUDES = 'includes';
 
 $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 318)(INCLUDES), 'String', {
->>>>>>> demo_sc_experimentPage
   includes: function includes(searchString /*, position = 0 */) {
     return !!~context(this, searchString, INCLUDES).indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1088 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.repeat.js ***!
-  \***********************************************************/
-=======
 /* 1403 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.repeat.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10101,16 +7435,6 @@ var $export = __webpack_require__(/*! ./_export */ 0);
 
 $export($export.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
-<<<<<<< HEAD
-  repeat: __webpack_require__(/*! ./_string-repeat */ 255)
-});
-
-/***/ }),
-/* 1089 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.starts-with.js ***!
-  \****************************************************************/
-=======
   repeat: __webpack_require__(/*! ./_string-repeat */ 311)
 });
 
@@ -10119,7 +7443,6 @@ $export($export.P, 'String', {
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.starts-with.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10129,21 +7452,12 @@ $export($export.P, 'String', {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    context = __webpack_require__(/*! ./_string-context */ 261),
-    STARTS_WITH = 'startsWith',
-    $startsWith = ''[STARTS_WITH];
-
-$export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 262)(STARTS_WITH), 'String', {
-=======
     toLength = __webpack_require__(/*! ./_to-length */ 18),
     context = __webpack_require__(/*! ./_string-context */ 317),
     STARTS_WITH = 'startsWith',
     $startsWith = ''[STARTS_WITH];
 
 $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 318)(STARTS_WITH), 'String', {
->>>>>>> demo_sc_experimentPage
   startsWith: function startsWith(searchString /*, position = 0 */) {
     var that = context(this, searchString, STARTS_WITH),
         index = toLength(Math.min(arguments.length > 1 ? arguments[1] : undefined, that.length)),
@@ -10153,17 +7467,10 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 31
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1090 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.anchor.js ***!
-  \***********************************************************/
-=======
 /* 1405 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.anchor.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10172,28 +7479,17 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails-is-regexp */ 31
 
 // B.2.3.2 String.prototype.anchor(name)
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('anchor', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('anchor', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function anchor(name) {
     return createHTML(this, 'a', 'name', name);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1091 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.big.js ***!
-  \********************************************************/
-=======
 /* 1406 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.big.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10202,28 +7498,17 @@ __webpack_require__(/*! ./_string-html */ 34)('anchor', function (createHTML) {
 
 // B.2.3.3 String.prototype.big()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('big', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('big', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function big() {
     return createHTML(this, 'big', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1092 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.blink.js ***!
-  \**********************************************************/
-=======
 /* 1407 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.blink.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10232,28 +7517,17 @@ __webpack_require__(/*! ./_string-html */ 34)('big', function (createHTML) {
 
 // B.2.3.4 String.prototype.blink()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('blink', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('blink', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function blink() {
     return createHTML(this, 'blink', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1093 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.bold.js ***!
-  \*********************************************************/
-=======
 /* 1408 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.bold.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10262,28 +7536,17 @@ __webpack_require__(/*! ./_string-html */ 34)('blink', function (createHTML) {
 
 // B.2.3.5 String.prototype.bold()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('bold', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('bold', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function bold() {
     return createHTML(this, 'b', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1094 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.fixed.js ***!
-  \**********************************************************/
-=======
 /* 1409 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.fixed.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10292,28 +7555,17 @@ __webpack_require__(/*! ./_string-html */ 34)('bold', function (createHTML) {
 
 // B.2.3.6 String.prototype.fixed()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('fixed', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('fixed', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function fixed() {
     return createHTML(this, 'tt', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1095 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.fontcolor.js ***!
-  \**************************************************************/
-=======
 /* 1410 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.fontcolor.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10322,28 +7574,17 @@ __webpack_require__(/*! ./_string-html */ 34)('fixed', function (createHTML) {
 
 // B.2.3.7 String.prototype.fontcolor(color)
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('fontcolor', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('fontcolor', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function fontcolor(color) {
     return createHTML(this, 'font', 'color', color);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1096 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.fontsize.js ***!
-  \*************************************************************/
-=======
 /* 1411 */
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.fontsize.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10352,28 +7593,17 @@ __webpack_require__(/*! ./_string-html */ 34)('fontcolor', function (createHTML)
 
 // B.2.3.8 String.prototype.fontsize(size)
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('fontsize', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('fontsize', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function fontsize(size) {
     return createHTML(this, 'font', 'size', size);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1097 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.italics.js ***!
-  \************************************************************/
-=======
 /* 1412 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.italics.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10382,28 +7612,17 @@ __webpack_require__(/*! ./_string-html */ 34)('fontsize', function (createHTML) 
 
 // B.2.3.9 String.prototype.italics()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('italics', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('italics', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function italics() {
     return createHTML(this, 'i', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1098 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.link.js ***!
-  \*********************************************************/
-=======
 /* 1413 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.link.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10412,28 +7631,17 @@ __webpack_require__(/*! ./_string-html */ 34)('italics', function (createHTML) {
 
 // B.2.3.10 String.prototype.link(url)
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('link', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('link', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function link(url) {
     return createHTML(this, 'a', 'href', url);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1099 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.small.js ***!
-  \**********************************************************/
-=======
 /* 1414 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.small.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10442,28 +7650,17 @@ __webpack_require__(/*! ./_string-html */ 34)('link', function (createHTML) {
 
 // B.2.3.11 String.prototype.small()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('small', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('small', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function small() {
     return createHTML(this, 'small', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1100 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.strike.js ***!
-  \***********************************************************/
-=======
 /* 1415 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.strike.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10472,28 +7669,17 @@ __webpack_require__(/*! ./_string-html */ 34)('small', function (createHTML) {
 
 // B.2.3.12 String.prototype.strike()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('strike', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('strike', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function strike() {
     return createHTML(this, 'strike', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1101 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.sub.js ***!
-  \********************************************************/
-=======
 /* 1416 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.sub.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10502,28 +7688,17 @@ __webpack_require__(/*! ./_string-html */ 34)('strike', function (createHTML) {
 
 // B.2.3.13 String.prototype.sub()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('sub', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('sub', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function sub() {
     return createHTML(this, 'sub', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1102 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.string.sup.js ***!
-  \********************************************************/
-=======
 /* 1417 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.string.sup.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10532,28 +7707,17 @@ __webpack_require__(/*! ./_string-html */ 34)('sub', function (createHTML) {
 
 // B.2.3.14 String.prototype.sup()
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-html */ 31)('sup', function (createHTML) {
-=======
 __webpack_require__(/*! ./_string-html */ 34)('sup', function (createHTML) {
->>>>>>> demo_sc_experimentPage
   return function sup() {
     return createHTML(this, 'sup', '', '');
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1103 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.date.now.js ***!
-  \******************************************************/
-=======
 /* 1418 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.date.now.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10569,17 +7733,10 @@ $export($export.S, 'Date', { now: function now() {
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1104 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.date.to-json.js ***!
-  \**********************************************************/
-=======
 /* 1419 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.date.to-json.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10588,17 +7745,10 @@ $export($export.S, 'Date', { now: function now() {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41);
-
-$export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     toPrimitive = __webpack_require__(/*! ./_to-primitive */ 45);
 
 $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return new Date(NaN).toJSON() !== null || Date.prototype.toJSON.call({ toISOString: function toISOString() {
       return 1;
     } }) !== 1;
@@ -10611,17 +7761,10 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1105 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.date.to-iso-string.js ***!
-  \****************************************************************/
-=======
 /* 1420 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.date.to-iso-string.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10631,11 +7774,7 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    fails = __webpack_require__(/*! ./_fails */ 6),
-=======
     fails = __webpack_require__(/*! ./_fails */ 8),
->>>>>>> demo_sc_experimentPage
     getTime = Date.prototype.getTime;
 
 var lz = function lz(num) {
@@ -10659,17 +7798,10 @@ $export($export.P + $export.F * (fails(function () {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1106 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.date.to-string.js ***!
-  \************************************************************/
-=======
 /* 1421 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.date.to-string.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10683,28 +7815,17 @@ var DateProto = Date.prototype,
     $toString = DateProto[TO_STRING],
     getTime = DateProto.getTime;
 if (new Date(NaN) + '' != INVALID_DATE) {
-<<<<<<< HEAD
-  __webpack_require__(/*! ./_redefine */ 28)(DateProto, TO_STRING, function toString() {
-=======
   __webpack_require__(/*! ./_redefine */ 31)(DateProto, TO_STRING, function toString() {
->>>>>>> demo_sc_experimentPage
     var value = getTime.call(this);
     return value === value ? $toString.call(this) : INVALID_DATE;
   });
 }
 
 /***/ }),
-<<<<<<< HEAD
-/* 1107 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.date.to-primitive.js ***!
-  \***************************************************************/
-=======
 /* 1422 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.date.to-primitive.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10712,18 +7833,6 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 "use strict";
 
 
-<<<<<<< HEAD
-var TO_PRIMITIVE = __webpack_require__(/*! ./_wks */ 8)('toPrimitive'),
-    proto = Date.prototype;
-
-if (!(TO_PRIMITIVE in proto)) __webpack_require__(/*! ./_hide */ 27)(proto, TO_PRIMITIVE, __webpack_require__(/*! ./_date-to-primitive */ 1108));
-
-/***/ }),
-/* 1108 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/_date-to-primitive.js ***!
-  \************************************************************/
-=======
 var TO_PRIMITIVE = __webpack_require__(/*! ./_wks */ 10)('toPrimitive'),
     proto = Date.prototype;
 
@@ -10734,7 +7843,6 @@ if (!(TO_PRIMITIVE in proto)) __webpack_require__(/*! ./_hide */ 30)(proto, TO_P
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_date-to-primitive.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10742,13 +7850,8 @@ if (!(TO_PRIMITIVE in proto)) __webpack_require__(/*! ./_hide */ 30)(proto, TO_P
 "use strict";
 
 
-<<<<<<< HEAD
-var anObject = __webpack_require__(/*! ./_an-object */ 3),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-=======
 var anObject = __webpack_require__(/*! ./_an-object */ 4),
     toPrimitive = __webpack_require__(/*! ./_to-primitive */ 45),
->>>>>>> demo_sc_experimentPage
     NUMBER = 'number';
 
 module.exports = function (hint) {
@@ -10757,17 +7860,10 @@ module.exports = function (hint) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1109 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.is-array.js ***!
-  \************************************************************/
-=======
 /* 1424 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.is-array.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10778,15 +7874,6 @@ module.exports = function (hint) {
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S, 'Array', { isArray: __webpack_require__(/*! ./_is-array */ 250) });
-
-/***/ }),
-/* 1110 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.from.js ***!
-  \********************************************************/
-=======
 $export($export.S, 'Array', { isArray: __webpack_require__(/*! ./_is-array */ 306) });
 
 /***/ }),
@@ -10794,7 +7881,6 @@ $export($export.S, 'Array', { isArray: __webpack_require__(/*! ./_is-array */ 30
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.from.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10802,18 +7888,6 @@ $export($export.S, 'Array', { isArray: __webpack_require__(/*! ./_is-array */ 30
 "use strict";
 
 
-<<<<<<< HEAD
-var ctx = __webpack_require__(/*! ./_ctx */ 46),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    call = __webpack_require__(/*! ./_iter-call */ 482),
-    isArrayIter = __webpack_require__(/*! ./_is-array-iter */ 263),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    createProperty = __webpack_require__(/*! ./_create-property */ 264),
-    getIterFn = __webpack_require__(/*! ./core.get-iterator-method */ 265);
-
-$export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 147)(function (iter) {
-=======
 var ctx = __webpack_require__(/*! ./_ctx */ 51),
     $export = __webpack_require__(/*! ./_export */ 0),
     toObject = __webpack_require__(/*! ./_to-object */ 19),
@@ -10824,7 +7898,6 @@ var ctx = __webpack_require__(/*! ./_ctx */ 51),
     getIterFn = __webpack_require__(/*! ./core.get-iterator-method */ 321);
 
 $export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 171)(function (iter) {
->>>>>>> demo_sc_experimentPage
   Array.from(iter);
 }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
@@ -10858,17 +7931,10 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 171)(
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1111 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.of.js ***!
-  \******************************************************/
-=======
 /* 1426 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.of.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10877,17 +7943,10 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_iter-detect */ 171)(
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    createProperty = __webpack_require__(/*! ./_create-property */ 264);
-
-// WebKit Array.of isn't generic
-$export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
     createProperty = __webpack_require__(/*! ./_create-property */ 320);
 
 // WebKit Array.of isn't generic
 $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   function F() {}
   return !(Array.of.call(F) instanceof F);
 }), 'Array', {
@@ -10904,17 +7963,10 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1112 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.join.js ***!
-  \********************************************************/
-=======
 /* 1427 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.join.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10924,36 +7976,21 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 // 22.1.3.13 Array.prototype.join(separator)
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    arrayJoin = [].join;
-
-// fallback for not array-like strings
-$export($export.P + $export.F * (__webpack_require__(/*! ./_iobject */ 103) != Object || !__webpack_require__(/*! ./_strict-method */ 38)(arrayJoin)), 'Array', {
-=======
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     arrayJoin = [].join;
 
 // fallback for not array-like strings
 $export($export.P + $export.F * (__webpack_require__(/*! ./_iobject */ 119) != Object || !__webpack_require__(/*! ./_strict-method */ 42)(arrayJoin)), 'Array', {
->>>>>>> demo_sc_experimentPage
   join: function join(separator) {
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1113 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.slice.js ***!
-  \*********************************************************/
-=======
 /* 1428 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.slice.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10962,16 +7999,6 @@ $export($export.P + $export.F * (__webpack_require__(/*! ./_iobject */ 119) != O
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    html = __webpack_require__(/*! ./_html */ 251),
-    cof = __webpack_require__(/*! ./_cof */ 36),
-    toIndex = __webpack_require__(/*! ./_to-index */ 67),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    arraySlice = [].slice;
-
-// fallback for not array-like ES3 strings and DOM objects
-$export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
     html = __webpack_require__(/*! ./_html */ 307),
     cof = __webpack_require__(/*! ./_cof */ 40),
     toIndex = __webpack_require__(/*! ./_to-index */ 77),
@@ -10980,7 +8007,6 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 6)(function 
 
 // fallback for not array-like ES3 strings and DOM objects
 $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   if (html) arraySlice.call(html);
 }), 'Array', {
   slice: function slice(begin, end) {
@@ -11000,17 +8026,10 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1114 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.sort.js ***!
-  \********************************************************/
-=======
 /* 1429 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.sort.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11019,15 +8038,9 @@ $export($export.P + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-=======
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     fails = __webpack_require__(/*! ./_fails */ 8),
->>>>>>> demo_sc_experimentPage
     $sort = [].sort,
     test = [1, 2, 3];
 
@@ -11038,11 +8051,7 @@ $export($export.P + $export.F * (fails(function () {
   // V8 bug
   test.sort(null);
   // Old WebKit
-<<<<<<< HEAD
-}) || !__webpack_require__(/*! ./_strict-method */ 38)($sort)), 'Array', {
-=======
 }) || !__webpack_require__(/*! ./_strict-method */ 42)($sort)), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.25 Array.prototype.sort(comparefn)
   sort: function sort(comparefn) {
     return comparefn === undefined ? $sort.call(toObject(this)) : $sort.call(toObject(this), aFunction(comparefn));
@@ -11050,17 +8059,10 @@ $export($export.P + $export.F * (fails(function () {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1115 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.for-each.js ***!
-  \************************************************************/
-=======
 /* 1430 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.for-each.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11069,13 +8071,8 @@ $export($export.P + $export.F * (fails(function () {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $forEach = __webpack_require__(/*! ./_array-methods */ 43)(0),
-    STRICT = __webpack_require__(/*! ./_strict-method */ 38)([].forEach, true);
-=======
     $forEach = __webpack_require__(/*! ./_array-methods */ 47)(0),
     STRICT = __webpack_require__(/*! ./_strict-method */ 42)([].forEach, true);
->>>>>>> demo_sc_experimentPage
 
 $export($export.P + $export.F * !STRICT, 'Array', {
   // 22.1.3.10 / 15.4.4.18 Array.prototype.forEach(callbackfn [, thisArg])
@@ -11085,17 +8082,10 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1116 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-species-create.js ***!
-  \***************************************************************/
-=======
 /* 1431 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-species-create.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11104,28 +8094,17 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-<<<<<<< HEAD
-var speciesConstructor = __webpack_require__(/*! ./_array-species-constructor */ 1117);
-=======
 var speciesConstructor = __webpack_require__(/*! ./_array-species-constructor */ 1432);
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (original, length) {
   return new (speciesConstructor(original))(length);
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1117 */
-/*!********************************************************************!*\
-  !*** ./node_modules/core-js/modules/_array-species-constructor.js ***!
-  \********************************************************************/
-=======
 /* 1432 */
 /*!************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_array-species-constructor.js ***!
   \************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11133,15 +8112,9 @@ module.exports = function (original, length) {
 "use strict";
 
 
-<<<<<<< HEAD
-var isObject = __webpack_require__(/*! ./_is-object */ 7),
-    isArray = __webpack_require__(/*! ./_is-array */ 250),
-    SPECIES = __webpack_require__(/*! ./_wks */ 8)('species');
-=======
 var isObject = __webpack_require__(/*! ./_is-object */ 9),
     isArray = __webpack_require__(/*! ./_is-array */ 306),
     SPECIES = __webpack_require__(/*! ./_wks */ 10)('species');
->>>>>>> demo_sc_experimentPage
 
 module.exports = function (original) {
   var C;
@@ -11157,17 +8130,10 @@ module.exports = function (original) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1118 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.map.js ***!
-  \*******************************************************/
-=======
 /* 1433 */
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.map.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11176,15 +8142,9 @@ module.exports = function (original) {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $map = __webpack_require__(/*! ./_array-methods */ 43)(1);
-
-$export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 38)([].map, true), 'Array', {
-=======
     $map = __webpack_require__(/*! ./_array-methods */ 47)(1);
 
 $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)([].map, true), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
   map: function map(callbackfn /* , thisArg */) {
     return $map(this, callbackfn, arguments[1]);
@@ -11192,17 +8152,10 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1119 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.filter.js ***!
-  \**********************************************************/
-=======
 /* 1434 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.filter.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11211,15 +8164,9 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $filter = __webpack_require__(/*! ./_array-methods */ 43)(2);
-
-$export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 38)([].filter, true), 'Array', {
-=======
     $filter = __webpack_require__(/*! ./_array-methods */ 47)(2);
 
 $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)([].filter, true), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
   filter: function filter(callbackfn /* , thisArg */) {
     return $filter(this, callbackfn, arguments[1]);
@@ -11227,17 +8174,10 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1120 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.some.js ***!
-  \********************************************************/
-=======
 /* 1435 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.some.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11246,15 +8186,9 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $some = __webpack_require__(/*! ./_array-methods */ 43)(3);
-
-$export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 38)([].some, true), 'Array', {
-=======
     $some = __webpack_require__(/*! ./_array-methods */ 47)(3);
 
 $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)([].some, true), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
   some: function some(callbackfn /* , thisArg */) {
     return $some(this, callbackfn, arguments[1]);
@@ -11262,17 +8196,10 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1121 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.every.js ***!
-  \*********************************************************/
-=======
 /* 1436 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.every.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11281,15 +8208,9 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $every = __webpack_require__(/*! ./_array-methods */ 43)(4);
-
-$export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 38)([].every, true), 'Array', {
-=======
     $every = __webpack_require__(/*! ./_array-methods */ 47)(4);
 
 $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)([].every, true), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
   every: function every(callbackfn /* , thisArg */) {
     return $every(this, callbackfn, arguments[1]);
@@ -11297,17 +8218,10 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1122 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.reduce.js ***!
-  \**********************************************************/
-=======
 /* 1437 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.reduce.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11316,15 +8230,9 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $reduce = __webpack_require__(/*! ./_array-reduce */ 483);
-
-$export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 38)([].reduce, true), 'Array', {
-=======
     $reduce = __webpack_require__(/*! ./_array-reduce */ 602);
 
 $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)([].reduce, true), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
   reduce: function reduce(callbackfn /* , initialValue */) {
     return $reduce(this, callbackfn, arguments.length, arguments[1], false);
@@ -11332,17 +8240,10 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1123 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.reduce-right.js ***!
-  \****************************************************************/
-=======
 /* 1438 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.reduce-right.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11351,15 +8252,9 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $reduce = __webpack_require__(/*! ./_array-reduce */ 483);
-
-$export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 38)([].reduceRight, true), 'Array', {
-=======
     $reduce = __webpack_require__(/*! ./_array-reduce */ 602);
 
 $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)([].reduceRight, true), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.19 / 15.4.4.22 Array.prototype.reduceRight(callbackfn [, initialValue])
   reduceRight: function reduceRight(callbackfn /* , initialValue */) {
     return $reduce(this, callbackfn, arguments.length, arguments[1], true);
@@ -11367,17 +8262,10 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1124 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.index-of.js ***!
-  \************************************************************/
-=======
 /* 1439 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.index-of.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11386,19 +8274,11 @@ $export($export.P + $export.F * !__webpack_require__(/*! ./_strict-method */ 42)
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $indexOf = __webpack_require__(/*! ./_array-includes */ 143)(false),
-    $native = [].indexOf,
-    NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
-
-$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_strict-method */ 38)($native)), 'Array', {
-=======
     $indexOf = __webpack_require__(/*! ./_array-includes */ 167)(false),
     $native = [].indexOf,
     NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
 
 $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_strict-method */ 42)($native)), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.11 / 15.4.4.14 Array.prototype.indexOf(searchElement [, fromIndex])
   indexOf: function indexOf(searchElement /*, fromIndex = 0 */) {
     return NEGATIVE_ZERO
@@ -11408,17 +8288,10 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_st
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1125 */
-/*!*****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.last-index-of.js ***!
-  \*****************************************************************/
-=======
 /* 1440 */
 /*!*********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.last-index-of.js ***!
   \*********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11427,15 +8300,6 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_st
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    toInteger = __webpack_require__(/*! ./_to-integer */ 55),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    $native = [].lastIndexOf,
-    NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
-
-$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_strict-method */ 38)($native)), 'Array', {
-=======
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     toInteger = __webpack_require__(/*! ./_to-integer */ 62),
     toLength = __webpack_require__(/*! ./_to-length */ 18),
@@ -11443,7 +8307,6 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_st
     NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
 
 $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_strict-method */ 42)($native)), 'Array', {
->>>>>>> demo_sc_experimentPage
   // 22.1.3.14 / 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex])
   lastIndexOf: function lastIndexOf(searchElement /*, fromIndex = @[*-1] */) {
     // convert -0 to +0
@@ -11460,17 +8323,10 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_st
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1126 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.copy-within.js ***!
-  \***************************************************************/
-=======
 /* 1441 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.copy-within.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11481,17 +8337,6 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(/*! ./_st
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.P, 'Array', { copyWithin: __webpack_require__(/*! ./_array-copy-within */ 484) });
-
-__webpack_require__(/*! ./_add-to-unscopables */ 90)('copyWithin');
-
-/***/ }),
-/* 1127 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.fill.js ***!
-  \********************************************************/
-=======
 $export($export.P, 'Array', { copyWithin: __webpack_require__(/*! ./_array-copy-within */ 603) });
 
 __webpack_require__(/*! ./_add-to-unscopables */ 103)('copyWithin');
@@ -11501,7 +8346,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)('copyWithin');
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.fill.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11512,17 +8356,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)('copyWithin');
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.P, 'Array', { fill: __webpack_require__(/*! ./_array-fill */ 266) });
-
-__webpack_require__(/*! ./_add-to-unscopables */ 90)('fill');
-
-/***/ }),
-/* 1128 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.find.js ***!
-  \********************************************************/
-=======
 $export($export.P, 'Array', { fill: __webpack_require__(/*! ./_array-fill */ 322) });
 
 __webpack_require__(/*! ./_add-to-unscopables */ 103)('fill');
@@ -11532,7 +8365,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)('fill');
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.find.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11542,11 +8374,7 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)('fill');
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $find = __webpack_require__(/*! ./_array-methods */ 43)(5),
-=======
     $find = __webpack_require__(/*! ./_array-methods */ 47)(5),
->>>>>>> demo_sc_experimentPage
     KEY = 'find',
     forced = true;
 // Shouldn't skip holes
@@ -11558,15 +8386,6 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-<<<<<<< HEAD
-__webpack_require__(/*! ./_add-to-unscopables */ 90)(KEY);
-
-/***/ }),
-/* 1129 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.find-index.js ***!
-  \**************************************************************/
-=======
 __webpack_require__(/*! ./_add-to-unscopables */ 103)(KEY);
 
 /***/ }),
@@ -11574,7 +8393,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)(KEY);
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.find-index.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11584,11 +8402,7 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)(KEY);
 // 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $find = __webpack_require__(/*! ./_array-methods */ 43)(6),
-=======
     $find = __webpack_require__(/*! ./_array-methods */ 47)(6),
->>>>>>> demo_sc_experimentPage
     KEY = 'findIndex',
     forced = true;
 // Shouldn't skip holes
@@ -11600,15 +8414,6 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-<<<<<<< HEAD
-__webpack_require__(/*! ./_add-to-unscopables */ 90)(KEY);
-
-/***/ }),
-/* 1130 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.array.species.js ***!
-  \***********************************************************/
-=======
 __webpack_require__(/*! ./_add-to-unscopables */ 103)(KEY);
 
 /***/ }),
@@ -11616,7 +8421,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)(KEY);
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.array.species.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11624,15 +8428,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)(KEY);
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_set-species */ 70)('Array');
-
-/***/ }),
-/* 1131 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.constructor.js ***!
-  \****************************************************************/
-=======
 __webpack_require__(/*! ./_set-species */ 80)('Array');
 
 /***/ }),
@@ -11640,7 +8435,6 @@ __webpack_require__(/*! ./_set-species */ 80)('Array');
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.constructor.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11648,21 +8442,12 @@ __webpack_require__(/*! ./_set-species */ 80)('Array');
 "use strict";
 
 
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 254),
-    dP = __webpack_require__(/*! ./_object-dp */ 13).f,
-    gOPN = __webpack_require__(/*! ./_object-gopn */ 69).f,
-    isRegExp = __webpack_require__(/*! ./_is-regexp */ 146),
-    $flags = __webpack_require__(/*! ./_flags */ 148),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     inheritIfRequired = __webpack_require__(/*! ./_inherit-if-required */ 310),
     dP = __webpack_require__(/*! ./_object-dp */ 14).f,
     gOPN = __webpack_require__(/*! ./_object-gopn */ 79).f,
     isRegExp = __webpack_require__(/*! ./_is-regexp */ 170),
     $flags = __webpack_require__(/*! ./_flags */ 172),
->>>>>>> demo_sc_experimentPage
     $RegExp = global.RegExp,
     Base = $RegExp,
     proto = $RegExp.prototype,
@@ -11672,13 +8457,8 @@ var global = __webpack_require__(/*! ./_global */ 5),
 ,
     CORRECT_NEW = new $RegExp(re1) !== re1;
 
-<<<<<<< HEAD
-if (__webpack_require__(/*! ./_descriptors */ 12) && (!CORRECT_NEW || __webpack_require__(/*! ./_fails */ 6)(function () {
-  re2[__webpack_require__(/*! ./_wks */ 8)('match')] = false;
-=======
 if (__webpack_require__(/*! ./_descriptors */ 13) && (!CORRECT_NEW || __webpack_require__(/*! ./_fails */ 8)(function () {
   re2[__webpack_require__(/*! ./_wks */ 10)('match')] = false;
->>>>>>> demo_sc_experimentPage
   // RegExp constructor can alter flags and IsRegExp works correct with @@match
   return $RegExp(re1) != re1 || $RegExp(re2) == re2 || $RegExp(re1, 'i') != '/a/i';
 }))) {
@@ -11703,18 +8483,6 @@ if (__webpack_require__(/*! ./_descriptors */ 13) && (!CORRECT_NEW || __webpack_
     proxy(keys[i++]);
   }proto.constructor = $RegExp;
   $RegExp.prototype = proto;
-<<<<<<< HEAD
-  __webpack_require__(/*! ./_redefine */ 28)(global, 'RegExp', $RegExp);
-}
-
-__webpack_require__(/*! ./_set-species */ 70)('RegExp');
-
-/***/ }),
-/* 1132 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.to-string.js ***!
-  \**************************************************************/
-=======
   __webpack_require__(/*! ./_redefine */ 31)(global, 'RegExp', $RegExp);
 }
 
@@ -11725,7 +8493,6 @@ __webpack_require__(/*! ./_set-species */ 80)('RegExp');
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.to-string.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11733,34 +8500,19 @@ __webpack_require__(/*! ./_set-species */ 80)('RegExp');
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./es6.regexp.flags */ 486);
-var anObject = __webpack_require__(/*! ./_an-object */ 3),
-    $flags = __webpack_require__(/*! ./_flags */ 148),
-    DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 12),
-=======
 __webpack_require__(/*! ./es6.regexp.flags */ 605);
 var anObject = __webpack_require__(/*! ./_an-object */ 4),
     $flags = __webpack_require__(/*! ./_flags */ 172),
     DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ 13),
->>>>>>> demo_sc_experimentPage
     TO_STRING = 'toString',
     $toString = /./[TO_STRING];
 
 var define = function define(fn) {
-<<<<<<< HEAD
-  __webpack_require__(/*! ./_redefine */ 28)(RegExp.prototype, TO_STRING, fn, true);
-};
-
-// 21.2.5.14 RegExp.prototype.toString()
-if (__webpack_require__(/*! ./_fails */ 6)(function () {
-=======
   __webpack_require__(/*! ./_redefine */ 31)(RegExp.prototype, TO_STRING, fn, true);
 };
 
 // 21.2.5.14 RegExp.prototype.toString()
 if (__webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return $toString.call({ source: 'a', flags: 'b' }) != '/a/b';
 })) {
   define(function toString() {
@@ -11775,17 +8527,10 @@ if (__webpack_require__(/*! ./_fails */ 8)(function () {
 }
 
 /***/ }),
-<<<<<<< HEAD
-/* 1133 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.match.js ***!
-  \**********************************************************/
-=======
 /* 1448 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.match.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11794,11 +8539,7 @@ if (__webpack_require__(/*! ./_fails */ 8)(function () {
 
 
 // @@match logic
-<<<<<<< HEAD
-__webpack_require__(/*! ./_fix-re-wks */ 149)('match', 1, function (defined, MATCH, $match) {
-=======
 __webpack_require__(/*! ./_fix-re-wks */ 173)('match', 1, function (defined, MATCH, $match) {
->>>>>>> demo_sc_experimentPage
   // 21.1.3.11 String.prototype.match(regexp)
   return [function match(regexp) {
     'use strict';
@@ -11810,17 +8551,10 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('match', 1, function (defined, MAT
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1134 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.replace.js ***!
-  \************************************************************/
-=======
 /* 1449 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.replace.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11829,11 +8563,7 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('match', 1, function (defined, MAT
 
 
 // @@replace logic
-<<<<<<< HEAD
-__webpack_require__(/*! ./_fix-re-wks */ 149)('replace', 2, function (defined, REPLACE, $replace) {
-=======
 __webpack_require__(/*! ./_fix-re-wks */ 173)('replace', 2, function (defined, REPLACE, $replace) {
->>>>>>> demo_sc_experimentPage
   // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
   return [function replace(searchValue, replaceValue) {
     'use strict';
@@ -11845,17 +8575,10 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('replace', 2, function (defined, R
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1135 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.search.js ***!
-  \***********************************************************/
-=======
 /* 1450 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.search.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11864,11 +8587,7 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('replace', 2, function (defined, R
 
 
 // @@search logic
-<<<<<<< HEAD
-__webpack_require__(/*! ./_fix-re-wks */ 149)('search', 1, function (defined, SEARCH, $search) {
-=======
 __webpack_require__(/*! ./_fix-re-wks */ 173)('search', 1, function (defined, SEARCH, $search) {
->>>>>>> demo_sc_experimentPage
   // 21.1.3.15 String.prototype.search(regexp)
   return [function search(regexp) {
     'use strict';
@@ -11880,17 +8599,10 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('search', 1, function (defined, SE
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1136 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.regexp.split.js ***!
-  \**********************************************************/
-=======
 /* 1451 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.regexp.split.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11899,17 +8611,10 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('search', 1, function (defined, SE
 
 
 // @@split logic
-<<<<<<< HEAD
-__webpack_require__(/*! ./_fix-re-wks */ 149)('split', 2, function (defined, SPLIT, $split) {
-  'use strict';
-
-  var isRegExp = __webpack_require__(/*! ./_is-regexp */ 146),
-=======
 __webpack_require__(/*! ./_fix-re-wks */ 173)('split', 2, function (defined, SPLIT, $split) {
   'use strict';
 
   var isRegExp = __webpack_require__(/*! ./_is-regexp */ 170),
->>>>>>> demo_sc_experimentPage
       _split = $split,
       $push = [].push,
       $SPLIT = 'split',
@@ -11970,17 +8675,10 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('split', 2, function (defined, SPL
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1137 */
-/*!*****************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.promise.js ***!
-  \*****************************************************/
-=======
 /* 1452 */
 /*!*********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.promise.js ***!
   \*********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11988,20 +8686,6 @@ __webpack_require__(/*! ./_fix-re-wks */ 173)('split', 2, function (defined, SPL
 "use strict";
 
 
-<<<<<<< HEAD
-var LIBRARY = __webpack_require__(/*! ./_library */ 65),
-    global = __webpack_require__(/*! ./_global */ 4),
-    ctx = __webpack_require__(/*! ./_ctx */ 46),
-    classof = __webpack_require__(/*! ./_classof */ 105),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-    forOf = __webpack_require__(/*! ./_for-of */ 91),
-    speciesConstructor = __webpack_require__(/*! ./_species-constructor */ 268),
-    task = __webpack_require__(/*! ./_task */ 269).set,
-    microtask = __webpack_require__(/*! ./_microtask */ 270)(),
-=======
 var LIBRARY = __webpack_require__(/*! ./_library */ 75),
     global = __webpack_require__(/*! ./_global */ 5),
     ctx = __webpack_require__(/*! ./_ctx */ 51),
@@ -12014,7 +8698,6 @@ var LIBRARY = __webpack_require__(/*! ./_library */ 75),
     speciesConstructor = __webpack_require__(/*! ./_species-constructor */ 324),
     task = __webpack_require__(/*! ./_task */ 325).set,
     microtask = __webpack_require__(/*! ./_microtask */ 326)(),
->>>>>>> demo_sc_experimentPage
     PROMISE = 'Promise',
     TypeError = global.TypeError,
     process = global.process,
@@ -12030,11 +8713,7 @@ var USE_NATIVE = !!function () {
   try {
     // correct subclassing with @@species support
     var promise = $Promise.resolve(1),
-<<<<<<< HEAD
-        FakePromise = (promise.constructor = {})[__webpack_require__(/*! ./_wks */ 8)('species')] = function (exec) {
-=======
         FakePromise = (promise.constructor = {})[__webpack_require__(/*! ./_wks */ 10)('species')] = function (exec) {
->>>>>>> demo_sc_experimentPage
       exec(empty, empty);
     };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
@@ -12216,11 +8895,7 @@ if (!USE_NATIVE) {
     this._h = 0; // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
     this._n = false; // <- notify
   };
-<<<<<<< HEAD
-  Internal.prototype = __webpack_require__(/*! ./_redefine-all */ 72)($Promise.prototype, {
-=======
   Internal.prototype = __webpack_require__(/*! ./_redefine-all */ 82)($Promise.prototype, {
->>>>>>> demo_sc_experimentPage
     // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
     then: function then(onFulfilled, onRejected) {
       var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -12246,15 +8921,9 @@ if (!USE_NATIVE) {
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-<<<<<<< HEAD
-__webpack_require__(/*! ./_set-to-string-tag */ 87)($Promise, PROMISE);
-__webpack_require__(/*! ./_set-species */ 70)(PROMISE);
-Wrapper = __webpack_require__(/*! ./_core */ 45)[PROMISE];
-=======
 __webpack_require__(/*! ./_set-to-string-tag */ 100)($Promise, PROMISE);
 __webpack_require__(/*! ./_set-species */ 80)(PROMISE);
 Wrapper = __webpack_require__(/*! ./_core */ 50)[PROMISE];
->>>>>>> demo_sc_experimentPage
 
 // statics
 $export($export.S + $export.F * !USE_NATIVE, PROMISE, {
@@ -12277,11 +8946,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return capability.promise;
   }
 });
-<<<<<<< HEAD
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(/*! ./_iter-detect */ 147)(function (iter) {
-=======
 $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(/*! ./_iter-detect */ 171)(function (iter) {
->>>>>>> demo_sc_experimentPage
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -12327,17 +8992,10 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(/*! ./_iter-
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1138 */
-/*!******************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.weak-set.js ***!
-  \******************************************************/
-=======
 /* 1453 */
 /*!**********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.weak-set.js ***!
   \**********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12345,17 +9003,10 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(/*! ./_iter-
 "use strict";
 
 
-<<<<<<< HEAD
-var weak = __webpack_require__(/*! ./_collection-weak */ 491);
-
-// 23.4 WeakSet Objects
-__webpack_require__(/*! ./_collection */ 150)('WeakSet', function (get) {
-=======
 var weak = __webpack_require__(/*! ./_collection-weak */ 610);
 
 // 23.4 WeakSet Objects
 __webpack_require__(/*! ./_collection */ 174)('WeakSet', function (get) {
->>>>>>> demo_sc_experimentPage
   return function WeakSet() {
     return get(this, arguments.length > 0 ? arguments[0] : undefined);
   };
@@ -12367,17 +9018,10 @@ __webpack_require__(/*! ./_collection */ 174)('WeakSet', function (get) {
 }, weak, false, true);
 
 /***/ }),
-<<<<<<< HEAD
-/* 1139 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.array-buffer.js ***!
-  \****************************************************************/
-=======
 /* 1454 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.array-buffer.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12386,16 +9030,6 @@ __webpack_require__(/*! ./_collection */ 174)('WeakSet', function (get) {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $typed = __webpack_require__(/*! ./_typed */ 151),
-    buffer = __webpack_require__(/*! ./_typed-buffer */ 271),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    toIndex = __webpack_require__(/*! ./_to-index */ 67),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    ArrayBuffer = __webpack_require__(/*! ./_global */ 4).ArrayBuffer,
-    speciesConstructor = __webpack_require__(/*! ./_species-constructor */ 268),
-=======
     $typed = __webpack_require__(/*! ./_typed */ 175),
     buffer = __webpack_require__(/*! ./_typed-buffer */ 327),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
@@ -12404,7 +9038,6 @@ var $export = __webpack_require__(/*! ./_export */ 0),
     isObject = __webpack_require__(/*! ./_is-object */ 9),
     ArrayBuffer = __webpack_require__(/*! ./_global */ 5).ArrayBuffer,
     speciesConstructor = __webpack_require__(/*! ./_species-constructor */ 324),
->>>>>>> demo_sc_experimentPage
     $ArrayBuffer = buffer.ArrayBuffer,
     $DataView = buffer.DataView,
     $isView = $typed.ABV && ArrayBuffer.isView,
@@ -12421,11 +9054,7 @@ $export($export.S + $export.F * !$typed.CONSTR, ARRAY_BUFFER, {
   }
 });
 
-<<<<<<< HEAD
-$export($export.P + $export.U + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 $export($export.P + $export.U + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   return !new $ArrayBuffer(2).slice(1, undefined).byteLength;
 }), ARRAY_BUFFER, {
   // 24.1.4.3 ArrayBuffer.prototype.slice(start, end)
@@ -12444,15 +9073,6 @@ $export($export.P + $export.U + $export.F * __webpack_require__(/*! ./_fails */ 
   }
 });
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_set-species */ 70)(ARRAY_BUFFER);
-
-/***/ }),
-/* 1140 */
-/*!*************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.data-view.js ***!
-  \*************************************************************/
-=======
 __webpack_require__(/*! ./_set-species */ 80)(ARRAY_BUFFER);
 
 /***/ }),
@@ -12460,7 +9080,6 @@ __webpack_require__(/*! ./_set-species */ 80)(ARRAY_BUFFER);
 /*!*****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.data-view.js ***!
   \*****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12469,17 +9088,6 @@ __webpack_require__(/*! ./_set-species */ 80)(ARRAY_BUFFER);
 
 
 var $export = __webpack_require__(/*! ./_export */ 0);
-<<<<<<< HEAD
-$export($export.G + $export.W + $export.F * !__webpack_require__(/*! ./_typed */ 151).ABV, {
-  DataView: __webpack_require__(/*! ./_typed-buffer */ 271).DataView
-});
-
-/***/ }),
-/* 1141 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.int8-array.js ***!
-  \**************************************************************/
-=======
 $export($export.G + $export.W + $export.F * !__webpack_require__(/*! ./_typed */ 175).ABV, {
   DataView: __webpack_require__(/*! ./_typed-buffer */ 327).DataView
 });
@@ -12489,7 +9097,6 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(/*! ./_typed */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.int8-array.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12497,28 +9104,17 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(/*! ./_typed */
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Int8', 1, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Int8', 1, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Int8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1142 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.uint8-array.js ***!
-  \***************************************************************/
-=======
 /* 1457 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.uint8-array.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12526,28 +9122,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Int8', 1, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Uint8', 1, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Uint8', 1, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Uint8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1143 */
-/*!***********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.uint8-clamped-array.js ***!
-  \***********************************************************************/
-=======
 /* 1458 */
 /*!***************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.uint8-clamped-array.js ***!
   \***************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12555,28 +9140,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Uint8', 1, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Uint8', 1, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Uint8', 1, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Uint8ClampedArray(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 }, true);
 
 /***/ }),
-<<<<<<< HEAD
-/* 1144 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.int16-array.js ***!
-  \***************************************************************/
-=======
 /* 1459 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.int16-array.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12584,28 +9158,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Uint8', 1, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Int16', 2, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Int16', 2, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Int16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1145 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.uint16-array.js ***!
-  \****************************************************************/
-=======
 /* 1460 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.uint16-array.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12613,28 +9176,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Int16', 2, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Uint16', 2, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Uint16', 2, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Uint16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1146 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.int32-array.js ***!
-  \***************************************************************/
-=======
 /* 1461 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.int32-array.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12642,28 +9194,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Uint16', 2, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Int32', 4, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Int32', 4, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Int32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1147 */
-/*!****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.uint32-array.js ***!
-  \****************************************************************/
-=======
 /* 1462 */
 /*!********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.uint32-array.js ***!
   \********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12671,28 +9212,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Int32', 4, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Uint32', 4, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Uint32', 4, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Uint32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1148 */
-/*!*****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.float32-array.js ***!
-  \*****************************************************************/
-=======
 /* 1463 */
 /*!*********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.float32-array.js ***!
   \*********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12700,28 +9230,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Uint32', 4, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Float32', 4, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Float32', 4, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Float32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1149 */
-/*!*****************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.typed.float64-array.js ***!
-  \*****************************************************************/
-=======
 /* 1464 */
 /*!*********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.typed.float64-array.js ***!
   \*********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12729,28 +9248,17 @@ __webpack_require__(/*! ./_typed-array */ 52)('Float32', 4, function (init) {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_typed-array */ 47)('Float64', 8, function (init) {
-=======
 __webpack_require__(/*! ./_typed-array */ 52)('Float64', 8, function (init) {
->>>>>>> demo_sc_experimentPage
   return function Float64Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1150 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.apply.js ***!
-  \***********************************************************/
-=======
 /* 1465 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.apply.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12760,21 +9268,12 @@ __webpack_require__(/*! ./_typed-array */ 52)('Float64', 8, function (init) {
 
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    rApply = (__webpack_require__(/*! ./_global */ 4).Reflect || {}).apply,
-    fApply = Function.apply;
-// MS Edge argumentsList argument is optional
-$export($export.S + $export.F * !__webpack_require__(/*! ./_fails */ 6)(function () {
-=======
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     rApply = (__webpack_require__(/*! ./_global */ 5).Reflect || {}).apply,
     fApply = Function.apply;
 // MS Edge argumentsList argument is optional
 $export($export.S + $export.F * !__webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   rApply(function () {});
 }), 'Reflect', {
   apply: function apply(target, thisArgument, argumentsList) {
@@ -12785,17 +9284,10 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_fails */ 8)(function
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1151 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.construct.js ***!
-  \***************************************************************/
-=======
 /* 1466 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.construct.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12805,15 +9297,6 @@ $export($export.S + $export.F * !__webpack_require__(/*! ./_fails */ 8)(function
 
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    create = __webpack_require__(/*! ./_object-create */ 68),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    fails = __webpack_require__(/*! ./_fails */ 6),
-    bind = __webpack_require__(/*! ./_bind */ 476),
-    rConstruct = (__webpack_require__(/*! ./_global */ 4).Reflect || {}).construct;
-=======
     create = __webpack_require__(/*! ./_object-create */ 78),
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
@@ -12821,7 +9304,6 @@ var $export = __webpack_require__(/*! ./_export */ 0),
     fails = __webpack_require__(/*! ./_fails */ 8),
     bind = __webpack_require__(/*! ./_bind */ 595),
     rConstruct = (__webpack_require__(/*! ./_global */ 5).Reflect || {}).construct;
->>>>>>> demo_sc_experimentPage
 
 // MS Edge supports only 2 arguments and argumentsList argument is optional
 // FF Nightly sets third argument as `new.target`, but does not create `this` from it
@@ -12867,17 +9349,10 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1152 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.define-property.js ***!
-  \*********************************************************************/
-=======
 /* 1467 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.define-property.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12886,15 +9361,6 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 
 
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
-<<<<<<< HEAD
-var dP = __webpack_require__(/*! ./_object-dp */ 13),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41);
-
-// MS Edge has broken Reflect.defineProperty - throwing instead of returning false
-$export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 6)(function () {
-=======
 var dP = __webpack_require__(/*! ./_object-dp */ 14),
     $export = __webpack_require__(/*! ./_export */ 0),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
@@ -12902,7 +9368,6 @@ var dP = __webpack_require__(/*! ./_object-dp */ 14),
 
 // MS Edge has broken Reflect.defineProperty - throwing instead of returning false
 $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function () {
->>>>>>> demo_sc_experimentPage
   Reflect.defineProperty(dP.f({}, 1, { value: 1 }), 1, { value: 2 });
 }), 'Reflect', {
   defineProperty: function defineProperty(target, propertyKey, attributes) {
@@ -12919,17 +9384,10 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1153 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.delete-property.js ***!
-  \*********************************************************************/
-=======
 /* 1468 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.delete-property.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12939,13 +9397,8 @@ $export($export.S + $export.F * __webpack_require__(/*! ./_fails */ 8)(function 
 
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    gOPD = __webpack_require__(/*! ./_object-gopd */ 33).f,
-    anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
     gOPD = __webpack_require__(/*! ./_object-gopd */ 37).f,
     anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Reflect', {
   deleteProperty: function deleteProperty(target, propertyKey) {
@@ -12955,17 +9408,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1154 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.enumerate.js ***!
-  \***************************************************************/
-=======
 /* 1469 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.enumerate.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12975,11 +9421,7 @@ $export($export.S, 'Reflect', {
 // 26.1.5 Reflect.enumerate(target)
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
     anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 var Enumerate = function Enumerate(iterated) {
   this._t = anObject(iterated); // target
   this._i = 0; // next index
@@ -12990,11 +9432,7 @@ var Enumerate = function Enumerate(iterated) {
     keys.push(key);
   }
 };
-<<<<<<< HEAD
-__webpack_require__(/*! ./_iter-create */ 260)(Enumerate, 'Object', function () {
-=======
 __webpack_require__(/*! ./_iter-create */ 316)(Enumerate, 'Object', function () {
->>>>>>> demo_sc_experimentPage
   var that = this,
       keys = that._k,
       key;
@@ -13011,17 +9449,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1155 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.get.js ***!
-  \*********************************************************/
-=======
 /* 1470 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.get.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13030,21 +9461,12 @@ $export($export.S, 'Reflect', {
 
 
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
-<<<<<<< HEAD
-var gOPD = __webpack_require__(/*! ./_object-gopd */ 33),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-    has = __webpack_require__(/*! ./_has */ 20),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    isObject = __webpack_require__(/*! ./_is-object */ 7),
-    anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
 var gOPD = __webpack_require__(/*! ./_object-gopd */ 37),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
     has = __webpack_require__(/*! ./_has */ 25),
     $export = __webpack_require__(/*! ./_export */ 0),
     isObject = __webpack_require__(/*! ./_is-object */ 9),
     anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 
 function get(target, propertyKey /*, receiver*/) {
   var receiver = arguments.length < 3 ? target : arguments[2],
@@ -13058,17 +9480,10 @@ function get(target, propertyKey /*, receiver*/) {
 $export($export.S, 'Reflect', { get: get });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1156 */
-/*!*********************************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js ***!
-  \*********************************************************************************/
-=======
 /* 1471 */
 /*!*************************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js ***!
   \*************************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13077,15 +9492,9 @@ $export($export.S, 'Reflect', { get: get });
 
 
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
-<<<<<<< HEAD
-var gOPD = __webpack_require__(/*! ./_object-gopd */ 33),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
 var gOPD = __webpack_require__(/*! ./_object-gopd */ 37),
     $export = __webpack_require__(/*! ./_export */ 0),
     anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Reflect', {
   getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, propertyKey) {
@@ -13094,17 +9503,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1157 */
-/*!**********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.get-prototype-of.js ***!
-  \**********************************************************************/
-=======
 /* 1472 */
 /*!**************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.get-prototype-of.js ***!
   \**************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13114,13 +9516,8 @@ $export($export.S, 'Reflect', {
 
 // 26.1.8 Reflect.getPrototypeOf(target)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    getProto = __webpack_require__(/*! ./_object-gpo */ 34),
-    anObject = __webpack_require__(/*! ./_an-object */ 3);
-=======
     getProto = __webpack_require__(/*! ./_object-gpo */ 38),
     anObject = __webpack_require__(/*! ./_an-object */ 4);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Reflect', {
   getPrototypeOf: function getPrototypeOf(target) {
@@ -13129,17 +9526,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1158 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.has.js ***!
-  \*********************************************************/
-=======
 /* 1473 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.has.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13157,17 +9547,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1159 */
-/*!*******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.is-extensible.js ***!
-  \*******************************************************************/
-=======
 /* 1474 */
 /*!***********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.is-extensible.js ***!
   \***********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13177,11 +9560,7 @@ $export($export.S, 'Reflect', {
 
 // 26.1.10 Reflect.isExtensible(target)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     $isExtensible = Object.isExtensible;
 
 $export($export.S, 'Reflect', {
@@ -13192,17 +9571,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1160 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.own-keys.js ***!
-  \**************************************************************/
-=======
 /* 1475 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.own-keys.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13213,15 +9585,6 @@ $export($export.S, 'Reflect', {
 // 26.1.11 Reflect.ownKeys(target)
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S, 'Reflect', { ownKeys: __webpack_require__(/*! ./_own-keys */ 492) });
-
-/***/ }),
-/* 1161 */
-/*!************************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.prevent-extensions.js ***!
-  \************************************************************************/
-=======
 $export($export.S, 'Reflect', { ownKeys: __webpack_require__(/*! ./_own-keys */ 611) });
 
 /***/ }),
@@ -13229,7 +9592,6 @@ $export($export.S, 'Reflect', { ownKeys: __webpack_require__(/*! ./_own-keys */ 
 /*!****************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.prevent-extensions.js ***!
   \****************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13239,11 +9601,7 @@ $export($export.S, 'Reflect', { ownKeys: __webpack_require__(/*! ./_own-keys */ 
 
 // 26.1.12 Reflect.preventExtensions(target)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     $preventExtensions = Object.preventExtensions;
 
 $export($export.S, 'Reflect', {
@@ -13259,17 +9617,10 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1162 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.set.js ***!
-  \*********************************************************/
-=======
 /* 1477 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.set.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13278,16 +9629,6 @@ $export($export.S, 'Reflect', {
 
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-<<<<<<< HEAD
-var dP = __webpack_require__(/*! ./_object-dp */ 13),
-    gOPD = __webpack_require__(/*! ./_object-gopd */ 33),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-    has = __webpack_require__(/*! ./_has */ 20),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    createDesc = __webpack_require__(/*! ./_property-desc */ 53),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    isObject = __webpack_require__(/*! ./_is-object */ 7);
-=======
 var dP = __webpack_require__(/*! ./_object-dp */ 14),
     gOPD = __webpack_require__(/*! ./_object-gopd */ 37),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
@@ -13296,7 +9637,6 @@ var dP = __webpack_require__(/*! ./_object-dp */ 14),
     createDesc = __webpack_require__(/*! ./_property-desc */ 60),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     isObject = __webpack_require__(/*! ./_is-object */ 9);
->>>>>>> demo_sc_experimentPage
 
 function set(target, propertyKey, V /*, receiver*/) {
   var receiver = arguments.length < 4 ? target : arguments[3],
@@ -13322,17 +9662,10 @@ function set(target, propertyKey, V /*, receiver*/) {
 $export($export.S, 'Reflect', { set: set });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1163 */
-/*!**********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es6.reflect.set-prototype-of.js ***!
-  \**********************************************************************/
-=======
 /* 1478 */
 /*!**************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es6.reflect.set-prototype-of.js ***!
   \**************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13342,11 +9675,7 @@ $export($export.S, 'Reflect', { set: set });
 
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    setProto = __webpack_require__(/*! ./_set-proto */ 252);
-=======
     setProto = __webpack_require__(/*! ./_set-proto */ 308);
->>>>>>> demo_sc_experimentPage
 
 if (setProto) $export($export.S, 'Reflect', {
   setPrototypeOf: function setPrototypeOf(target, proto) {
@@ -13361,17 +9690,10 @@ if (setProto) $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1164 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.array.includes.js ***!
-  \************************************************************/
-=======
 /* 1479 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.array.includes.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13381,11 +9703,7 @@ if (setProto) $export($export.S, 'Reflect', {
 // https://github.com/tc39/Array.prototype.includes
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $includes = __webpack_require__(/*! ./_array-includes */ 143)(true);
-=======
     $includes = __webpack_require__(/*! ./_array-includes */ 167)(true);
->>>>>>> demo_sc_experimentPage
 
 $export($export.P, 'Array', {
   includes: function includes(el /*, fromIndex = 0 */) {
@@ -13393,15 +9711,6 @@ $export($export.P, 'Array', {
   }
 });
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_add-to-unscopables */ 90)('includes');
-
-/***/ }),
-/* 1165 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.string.at.js ***!
-  \*******************************************************/
-=======
 __webpack_require__(/*! ./_add-to-unscopables */ 103)('includes');
 
 /***/ }),
@@ -13409,7 +9718,6 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)('includes');
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.string.at.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13419,11 +9727,7 @@ __webpack_require__(/*! ./_add-to-unscopables */ 103)('includes');
 // https://github.com/mathiasbynens/String.prototype.at
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $at = __webpack_require__(/*! ./_string-at */ 258)(true);
-=======
     $at = __webpack_require__(/*! ./_string-at */ 314)(true);
->>>>>>> demo_sc_experimentPage
 
 $export($export.P, 'String', {
   at: function at(pos) {
@@ -13432,17 +9736,10 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1166 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.string.pad-start.js ***!
-  \**************************************************************/
-=======
 /* 1481 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.string.pad-start.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13452,11 +9749,7 @@ $export($export.P, 'String', {
 // https://github.com/tc39/proposal-string-pad-start-end
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $pad = __webpack_require__(/*! ./_string-pad */ 493);
-=======
     $pad = __webpack_require__(/*! ./_string-pad */ 612);
->>>>>>> demo_sc_experimentPage
 
 $export($export.P, 'String', {
   padStart: function padStart(maxLength /*, fillString = ' ' */) {
@@ -13465,17 +9758,10 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1167 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.string.pad-end.js ***!
-  \************************************************************/
-=======
 /* 1482 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.string.pad-end.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13485,11 +9771,7 @@ $export($export.P, 'String', {
 // https://github.com/tc39/proposal-string-pad-start-end
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $pad = __webpack_require__(/*! ./_string-pad */ 493);
-=======
     $pad = __webpack_require__(/*! ./_string-pad */ 612);
->>>>>>> demo_sc_experimentPage
 
 $export($export.P, 'String', {
   padEnd: function padEnd(maxLength /*, fillString = ' ' */) {
@@ -13498,17 +9780,10 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1168 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.string.trim-left.js ***!
-  \**************************************************************/
-=======
 /* 1483 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.string.trim-left.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13517,28 +9792,17 @@ $export($export.P, 'String', {
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-trim */ 88)('trimLeft', function ($trim) {
-=======
 __webpack_require__(/*! ./_string-trim */ 101)('trimLeft', function ($trim) {
->>>>>>> demo_sc_experimentPage
   return function trimLeft() {
     return $trim(this, 1);
   };
 }, 'trimStart');
 
 /***/ }),
-<<<<<<< HEAD
-/* 1169 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.string.trim-right.js ***!
-  \***************************************************************/
-=======
 /* 1484 */
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.string.trim-right.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13547,28 +9811,17 @@ __webpack_require__(/*! ./_string-trim */ 101)('trimLeft', function ($trim) {
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_string-trim */ 88)('trimRight', function ($trim) {
-=======
 __webpack_require__(/*! ./_string-trim */ 101)('trimRight', function ($trim) {
->>>>>>> demo_sc_experimentPage
   return function trimRight() {
     return $trim(this, 2);
   };
 }, 'trimEnd');
 
 /***/ }),
-<<<<<<< HEAD
-/* 1170 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.string.match-all.js ***!
-  \**************************************************************/
-=======
 /* 1485 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.string.match-all.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13578,17 +9831,10 @@ __webpack_require__(/*! ./_string-trim */ 101)('trimRight', function ($trim) {
 // https://tc39.github.io/String.prototype.matchAll/
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    defined = __webpack_require__(/*! ./_defined */ 37),
-    toLength = __webpack_require__(/*! ./_to-length */ 15),
-    isRegExp = __webpack_require__(/*! ./_is-regexp */ 146),
-    getFlags = __webpack_require__(/*! ./_flags */ 148),
-=======
     defined = __webpack_require__(/*! ./_defined */ 41),
     toLength = __webpack_require__(/*! ./_to-length */ 18),
     isRegExp = __webpack_require__(/*! ./_is-regexp */ 170),
     getFlags = __webpack_require__(/*! ./_flags */ 172),
->>>>>>> demo_sc_experimentPage
     RegExpProto = RegExp.prototype;
 
 var $RegExpStringIterator = function $RegExpStringIterator(regexp, string) {
@@ -13596,11 +9842,7 @@ var $RegExpStringIterator = function $RegExpStringIterator(regexp, string) {
   this._s = string;
 };
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_iter-create */ 260)($RegExpStringIterator, 'RegExp String', function next() {
-=======
 __webpack_require__(/*! ./_iter-create */ 316)($RegExpStringIterator, 'RegExp String', function next() {
->>>>>>> demo_sc_experimentPage
   var match = this._r.exec(this._s);
   return { value: match, done: match === null };
 });
@@ -13618,17 +9860,10 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1171 */
-/*!*******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.symbol.async-iterator.js ***!
-  \*******************************************************************/
-=======
 /* 1486 */
 /*!***********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.symbol.async-iterator.js ***!
   \***********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13636,15 +9871,6 @@ $export($export.P, 'String', {
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_wks-define */ 247)('asyncIterator');
-
-/***/ }),
-/* 1172 */
-/*!***************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.symbol.observable.js ***!
-  \***************************************************************/
-=======
 __webpack_require__(/*! ./_wks-define */ 303)('asyncIterator');
 
 /***/ }),
@@ -13652,7 +9878,6 @@ __webpack_require__(/*! ./_wks-define */ 303)('asyncIterator');
 /*!*******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.symbol.observable.js ***!
   \*******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13660,15 +9885,6 @@ __webpack_require__(/*! ./_wks-define */ 303)('asyncIterator');
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_wks-define */ 247)('observable');
-
-/***/ }),
-/* 1173 */
-/*!*********************************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.get-own-property-descriptors.js ***!
-  \*********************************************************************************/
-=======
 __webpack_require__(/*! ./_wks-define */ 303)('observable');
 
 /***/ }),
@@ -13676,7 +9892,6 @@ __webpack_require__(/*! ./_wks-define */ 303)('observable');
 /*!*************************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.get-own-property-descriptors.js ***!
   \*************************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13686,17 +9901,10 @@ __webpack_require__(/*! ./_wks-define */ 303)('observable');
 
 // https://github.com/tc39/proposal-object-getownpropertydescriptors
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    ownKeys = __webpack_require__(/*! ./_own-keys */ 492),
-    toIObject = __webpack_require__(/*! ./_to-iobject */ 30),
-    gOPD = __webpack_require__(/*! ./_object-gopd */ 33),
-    createProperty = __webpack_require__(/*! ./_create-property */ 264);
-=======
     ownKeys = __webpack_require__(/*! ./_own-keys */ 611),
     toIObject = __webpack_require__(/*! ./_to-iobject */ 33),
     gOPD = __webpack_require__(/*! ./_object-gopd */ 37),
     createProperty = __webpack_require__(/*! ./_create-property */ 320);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Object', {
   getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
@@ -13713,17 +9921,10 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1174 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.values.js ***!
-  \***********************************************************/
-=======
 /* 1489 */
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.values.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13733,11 +9934,7 @@ $export($export.S, 'Object', {
 
 // https://github.com/tc39/proposal-object-values-entries
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $values = __webpack_require__(/*! ./_object-to-array */ 494)(false);
-=======
     $values = __webpack_require__(/*! ./_object-to-array */ 613)(false);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Object', {
   values: function values(it) {
@@ -13746,17 +9943,10 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1175 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.entries.js ***!
-  \************************************************************/
-=======
 /* 1490 */
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.entries.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13766,11 +9956,7 @@ $export($export.S, 'Object', {
 
 // https://github.com/tc39/proposal-object-values-entries
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $entries = __webpack_require__(/*! ./_object-to-array */ 494)(true);
-=======
     $entries = __webpack_require__(/*! ./_object-to-array */ 613)(true);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Object', {
   entries: function entries(it) {
@@ -13779,17 +9965,10 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1176 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.define-getter.js ***!
-  \******************************************************************/
-=======
 /* 1491 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.define-getter.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13798,38 +9977,22 @@ $export($export.S, 'Object', {
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    $defineProperty = __webpack_require__(/*! ./_object-dp */ 13);
-
-// B.2.2.2 Object.prototype.__defineGetter__(P, getter)
-__webpack_require__(/*! ./_descriptors */ 12) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 152), 'Object', {
-=======
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
     $defineProperty = __webpack_require__(/*! ./_object-dp */ 14);
 
 // B.2.2.2 Object.prototype.__defineGetter__(P, getter)
 __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 176), 'Object', {
->>>>>>> demo_sc_experimentPage
   __defineGetter__: function __defineGetter__(P, getter) {
     $defineProperty.f(toObject(this), P, { get: aFunction(getter), enumerable: true, configurable: true });
   }
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1177 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.define-setter.js ***!
-  \******************************************************************/
-=======
 /* 1492 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.define-setter.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13838,38 +10001,22 @@ __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_r
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    $defineProperty = __webpack_require__(/*! ./_object-dp */ 13);
-
-// B.2.2.3 Object.prototype.__defineSetter__(P, setter)
-__webpack_require__(/*! ./_descriptors */ 12) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 152), 'Object', {
-=======
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
     $defineProperty = __webpack_require__(/*! ./_object-dp */ 14);
 
 // B.2.2.3 Object.prototype.__defineSetter__(P, setter)
 __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 176), 'Object', {
->>>>>>> demo_sc_experimentPage
   __defineSetter__: function __defineSetter__(P, setter) {
     $defineProperty.f(toObject(this), P, { set: aFunction(setter), enumerable: true, configurable: true });
   }
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1178 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.lookup-getter.js ***!
-  \******************************************************************/
-=======
 /* 1493 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.lookup-getter.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13878,15 +10025,6 @@ __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_r
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-    getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 33).f;
-
-// B.2.2.4 Object.prototype.__lookupGetter__(P)
-__webpack_require__(/*! ./_descriptors */ 12) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 152), 'Object', {
-=======
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     toPrimitive = __webpack_require__(/*! ./_to-primitive */ 45),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
@@ -13894,7 +10032,6 @@ __webpack_require__(/*! ./_descriptors */ 12) && $export($export.P + __webpack_r
 
 // B.2.2.4 Object.prototype.__lookupGetter__(P)
 __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 176), 'Object', {
->>>>>>> demo_sc_experimentPage
   __lookupGetter__: function __lookupGetter__(P) {
     var O = toObject(this),
         K = toPrimitive(P, true),
@@ -13906,17 +10043,10 @@ __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_r
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1179 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.object.lookup-setter.js ***!
-  \******************************************************************/
-=======
 /* 1494 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.object.lookup-setter.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13925,15 +10055,6 @@ __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_r
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    toObject = __webpack_require__(/*! ./_to-object */ 16),
-    toPrimitive = __webpack_require__(/*! ./_to-primitive */ 41),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-    getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 33).f;
-
-// B.2.2.5 Object.prototype.__lookupSetter__(P)
-__webpack_require__(/*! ./_descriptors */ 12) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 152), 'Object', {
-=======
     toObject = __webpack_require__(/*! ./_to-object */ 19),
     toPrimitive = __webpack_require__(/*! ./_to-primitive */ 45),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
@@ -13941,7 +10062,6 @@ __webpack_require__(/*! ./_descriptors */ 12) && $export($export.P + __webpack_r
 
 // B.2.2.5 Object.prototype.__lookupSetter__(P)
 __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_require__(/*! ./_object-forced-pam */ 176), 'Object', {
->>>>>>> demo_sc_experimentPage
   __lookupSetter__: function __lookupSetter__(P) {
     var O = toObject(this),
         K = toPrimitive(P, true),
@@ -13953,17 +10073,10 @@ __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_r
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1180 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.map.to-json.js ***!
-  \*********************************************************/
-=======
 /* 1495 */
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.map.to-json.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13974,15 +10087,6 @@ __webpack_require__(/*! ./_descriptors */ 13) && $export($export.P + __webpack_r
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(/*! ./_collection-to-json */ 495)('Map') });
-
-/***/ }),
-/* 1181 */
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.set.to-json.js ***!
-  \*********************************************************/
-=======
 $export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(/*! ./_collection-to-json */ 614)('Map') });
 
 /***/ }),
@@ -13990,7 +10094,6 @@ $export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(/*! ./_colle
 /*!*************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.set.to-json.js ***!
   \*************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14001,15 +10104,6 @@ $export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(/*! ./_colle
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(/*! ./_collection-to-json */ 495)('Set') });
-
-/***/ }),
-/* 1182 */
-/*!***********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.system.global.js ***!
-  \***********************************************************/
-=======
 $export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(/*! ./_collection-to-json */ 614)('Set') });
 
 /***/ }),
@@ -14017,7 +10111,6 @@ $export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(/*! ./_colle
 /*!***************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.system.global.js ***!
   \***************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14028,15 +10121,6 @@ $export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(/*! ./_colle
 // https://github.com/ljharb/proposal-global
 var $export = __webpack_require__(/*! ./_export */ 0);
 
-<<<<<<< HEAD
-$export($export.S, 'System', { global: __webpack_require__(/*! ./_global */ 4) });
-
-/***/ }),
-/* 1183 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.error.is-error.js ***!
-  \************************************************************/
-=======
 $export($export.S, 'System', { global: __webpack_require__(/*! ./_global */ 5) });
 
 /***/ }),
@@ -14044,7 +10128,6 @@ $export($export.S, 'System', { global: __webpack_require__(/*! ./_global */ 5) }
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.error.is-error.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14054,11 +10137,7 @@ $export($export.S, 'System', { global: __webpack_require__(/*! ./_global */ 5) }
 
 // https://github.com/ljharb/proposal-is-error
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    cof = __webpack_require__(/*! ./_cof */ 36);
-=======
     cof = __webpack_require__(/*! ./_cof */ 40);
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'Error', {
   isError: function isError(it) {
@@ -14067,17 +10146,10 @@ $export($export.S, 'Error', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1184 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.math.iaddh.js ***!
-  \********************************************************/
-=======
 /* 1499 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.math.iaddh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14098,17 +10170,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1185 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.math.isubh.js ***!
-  \********************************************************/
-=======
 /* 1500 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.math.isubh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14129,17 +10194,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1186 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.math.imulh.js ***!
-  \********************************************************/
-=======
 /* 1501 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.math.imulh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14165,17 +10223,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1187 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.math.umulh.js ***!
-  \********************************************************/
-=======
 /* 1502 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.math.umulh.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14201,17 +10252,10 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1188 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.define-metadata.js ***!
-  \*********************************************************************/
-=======
 /* 1503 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.define-metadata.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14219,13 +10263,8 @@ $export($export.S, 'Math', {
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     toMetaKey = metadata.key,
     ordinaryDefineOwnMetadata = metadata.set;
 
@@ -14234,17 +10273,10 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1189 */
-/*!*********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.delete-metadata.js ***!
-  \*********************************************************************/
-=======
 /* 1504 */
 /*!*************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.delete-metadata.js ***!
   \*************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14252,13 +10284,8 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     toMetaKey = metadata.key,
     getOrCreateMetadataMap = metadata.map,
     store = metadata.store;
@@ -14274,17 +10301,10 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /*, t
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1190 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.get-metadata.js ***!
-  \******************************************************************/
-=======
 /* 1505 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.get-metadata.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14292,15 +10312,9 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /*, t
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
->>>>>>> demo_sc_experimentPage
     ordinaryHasOwnMetadata = metadata.has,
     ordinaryGetOwnMetadata = metadata.get,
     toMetaKey = metadata.key;
@@ -14317,17 +10331,10 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /*, targetK
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1191 */
-/*!***********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.get-metadata-keys.js ***!
-  \***********************************************************************/
-=======
 /* 1506 */
 /*!***************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.get-metadata-keys.js ***!
   \***************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14335,19 +10342,11 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /*, targetK
 "use strict";
 
 
-<<<<<<< HEAD
-var Set = __webpack_require__(/*! ./es6.set */ 489),
-    from = __webpack_require__(/*! ./_array-from-iterable */ 496),
-    metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-=======
 var Set = __webpack_require__(/*! ./es6.set */ 608),
     from = __webpack_require__(/*! ./_array-from-iterable */ 615),
     metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
->>>>>>> demo_sc_experimentPage
     ordinaryOwnMetadataKeys = metadata.keys,
     toMetaKey = metadata.key;
 
@@ -14364,17 +10363,10 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /*, targetKey */
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1192 */
-/*!**********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.get-own-metadata.js ***!
-  \**********************************************************************/
-=======
 /* 1507 */
 /*!**************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.get-own-metadata.js ***!
   \**************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14382,13 +10374,8 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /*, targetKey */
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     ordinaryGetOwnMetadata = metadata.get,
     toMetaKey = metadata.key;
 
@@ -14397,17 +10384,10 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /*, t
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1193 */
-/*!***************************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.get-own-metadata-keys.js ***!
-  \***************************************************************************/
-=======
 /* 1508 */
 /*!*******************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.get-own-metadata-keys.js ***!
   \*******************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14415,13 +10395,8 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /*, t
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     ordinaryOwnMetadataKeys = metadata.keys,
     toMetaKey = metadata.key;
 
@@ -14430,17 +10405,10 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /*, target
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1194 */
-/*!******************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.has-metadata.js ***!
-  \******************************************************************/
-=======
 /* 1509 */
 /*!**********************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.has-metadata.js ***!
   \**********************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14448,15 +10416,9 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /*, target
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 34),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     getPrototypeOf = __webpack_require__(/*! ./_object-gpo */ 38),
->>>>>>> demo_sc_experimentPage
     ordinaryHasOwnMetadata = metadata.has,
     toMetaKey = metadata.key;
 
@@ -14472,17 +10434,10 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /*, targetK
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1195 */
-/*!**********************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.has-own-metadata.js ***!
-  \**********************************************************************/
-=======
 /* 1510 */
 /*!**************************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.has-own-metadata.js ***!
   \**************************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14490,13 +10445,8 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /*, targetK
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
->>>>>>> demo_sc_experimentPage
     ordinaryHasOwnMetadata = metadata.has,
     toMetaKey = metadata.key;
 
@@ -14505,17 +10455,10 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /*, t
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1196 */
-/*!**************************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.reflect.metadata.js ***!
-  \**************************************************************/
-=======
 /* 1511 */
 /*!******************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.reflect.metadata.js ***!
   \******************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14523,15 +10466,9 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /*, t
 "use strict";
 
 
-<<<<<<< HEAD
-var metadata = __webpack_require__(/*! ./_metadata */ 48),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-=======
 var metadata = __webpack_require__(/*! ./_metadata */ 53),
     anObject = __webpack_require__(/*! ./_an-object */ 4),
     aFunction = __webpack_require__(/*! ./_a-function */ 32),
->>>>>>> demo_sc_experimentPage
     toMetaKey = metadata.key,
     ordinaryDefineOwnMetadata = metadata.set;
 
@@ -14542,17 +10479,10 @@ metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1197 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.asap.js ***!
-  \**************************************************/
-=======
 /* 1512 */
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.asap.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14562,15 +10492,9 @@ metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
 
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    microtask = __webpack_require__(/*! ./_microtask */ 270)(),
-    process = __webpack_require__(/*! ./_global */ 4).process,
-    isNode = __webpack_require__(/*! ./_cof */ 36)(process) == 'process';
-=======
     microtask = __webpack_require__(/*! ./_microtask */ 326)(),
     process = __webpack_require__(/*! ./_global */ 5).process,
     isNode = __webpack_require__(/*! ./_cof */ 40)(process) == 'process';
->>>>>>> demo_sc_experimentPage
 
 $export($export.G, {
   asap: function asap(fn) {
@@ -14580,17 +10504,10 @@ $export($export.G, {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1198 */
-/*!********************************************************!*\
-  !*** ./node_modules/core-js/modules/es7.observable.js ***!
-  \********************************************************/
-=======
 /* 1513 */
 /*!************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/es7.observable.js ***!
   \************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14600,18 +10517,6 @@ $export($export.G, {
 // https://github.com/zenparsing/es-observable
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    global = __webpack_require__(/*! ./_global */ 4),
-    core = __webpack_require__(/*! ./_core */ 45),
-    microtask = __webpack_require__(/*! ./_microtask */ 270)(),
-    OBSERVABLE = __webpack_require__(/*! ./_wks */ 8)('observable'),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29),
-    anObject = __webpack_require__(/*! ./_an-object */ 3),
-    anInstance = __webpack_require__(/*! ./_an-instance */ 71),
-    redefineAll = __webpack_require__(/*! ./_redefine-all */ 72),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    forOf = __webpack_require__(/*! ./_for-of */ 91),
-=======
     global = __webpack_require__(/*! ./_global */ 5),
     core = __webpack_require__(/*! ./_core */ 50),
     microtask = __webpack_require__(/*! ./_microtask */ 326)(),
@@ -14622,7 +10527,6 @@ var $export = __webpack_require__(/*! ./_export */ 0),
     redefineAll = __webpack_require__(/*! ./_redefine-all */ 82),
     hide = __webpack_require__(/*! ./_hide */ 30),
     forOf = __webpack_require__(/*! ./_for-of */ 104),
->>>>>>> demo_sc_experimentPage
     RETURN = forOf.RETURN;
 
 var getMethod = function getMethod(fn) {
@@ -14818,15 +10722,6 @@ hide($Observable.prototype, OBSERVABLE, function () {
 
 $export($export.G, { Observable: $Observable });
 
-<<<<<<< HEAD
-__webpack_require__(/*! ./_set-species */ 70)('Observable');
-
-/***/ }),
-/* 1199 */
-/*!****************************************************!*\
-  !*** ./node_modules/core-js/modules/web.timers.js ***!
-  \****************************************************/
-=======
 __webpack_require__(/*! ./_set-species */ 80)('Observable');
 
 /***/ }),
@@ -14834,7 +10729,6 @@ __webpack_require__(/*! ./_set-species */ 80)('Observable');
 /*!********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/web.timers.js ***!
   \********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14843,17 +10737,10 @@ __webpack_require__(/*! ./_set-species */ 80)('Observable');
 
 
 // ie9- setTimeout & setInterval additional parameters fix
-<<<<<<< HEAD
-var global = __webpack_require__(/*! ./_global */ 4),
-    $export = __webpack_require__(/*! ./_export */ 0),
-    invoke = __webpack_require__(/*! ./_invoke */ 145),
-    partial = __webpack_require__(/*! ./_partial */ 1200),
-=======
 var global = __webpack_require__(/*! ./_global */ 5),
     $export = __webpack_require__(/*! ./_export */ 0),
     invoke = __webpack_require__(/*! ./_invoke */ 169),
     partial = __webpack_require__(/*! ./_partial */ 1515),
->>>>>>> demo_sc_experimentPage
     navigator = global.navigator,
     MSIE = !!navigator && /MSIE .\./.test(navigator.userAgent); // <- dirty ie9- check
 var wrap = function wrap(set) {
@@ -14867,17 +10754,10 @@ $export($export.G + $export.B + $export.F * MSIE, {
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1200 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/modules/_partial.js ***!
-  \**************************************************/
-=======
 /* 1515 */
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_partial.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14885,15 +10765,9 @@ $export($export.G + $export.B + $export.F * MSIE, {
 "use strict";
 
 
-<<<<<<< HEAD
-var path = __webpack_require__(/*! ./_path */ 1201),
-    invoke = __webpack_require__(/*! ./_invoke */ 145),
-    aFunction = __webpack_require__(/*! ./_a-function */ 29);
-=======
 var path = __webpack_require__(/*! ./_path */ 1516),
     invoke = __webpack_require__(/*! ./_invoke */ 169),
     aFunction = __webpack_require__(/*! ./_a-function */ 32);
->>>>>>> demo_sc_experimentPage
 module.exports = function () /* ...pargs */{
   var fn = aFunction(this),
       length = arguments.length,
@@ -14920,17 +10794,10 @@ module.exports = function () /* ...pargs */{
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1201 */
-/*!***********************************************!*\
-  !*** ./node_modules/core-js/modules/_path.js ***!
-  \***********************************************/
-=======
 /* 1516 */
 /*!***************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_path.js ***!
   \***************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14938,15 +10805,6 @@ module.exports = function () /* ...pargs */{
 "use strict";
 
 
-<<<<<<< HEAD
-module.exports = __webpack_require__(/*! ./_global */ 4);
-
-/***/ }),
-/* 1202 */
-/*!*******************************************************!*\
-  !*** ./node_modules/core-js/modules/web.immediate.js ***!
-  \*******************************************************/
-=======
 module.exports = __webpack_require__(/*! ./_global */ 5);
 
 /***/ }),
@@ -14954,7 +10812,6 @@ module.exports = __webpack_require__(/*! ./_global */ 5);
 /*!***********************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/web.immediate.js ***!
   \***********************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14963,28 +10820,17 @@ module.exports = __webpack_require__(/*! ./_global */ 5);
 
 
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $task = __webpack_require__(/*! ./_task */ 269);
-=======
     $task = __webpack_require__(/*! ./_task */ 325);
->>>>>>> demo_sc_experimentPage
 $export($export.G + $export.B, {
   setImmediate: $task.set,
   clearImmediate: $task.clear
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1203 */
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/web.dom.iterable.js ***!
-  \**********************************************************/
-=======
 /* 1518 */
 /*!**************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/web.dom.iterable.js ***!
   \**************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -14992,21 +10838,12 @@ $export($export.G + $export.B, {
 "use strict";
 
 
-<<<<<<< HEAD
-var $iterators = __webpack_require__(/*! ./es6.array.iterator */ 267),
-    redefine = __webpack_require__(/*! ./_redefine */ 28),
-    global = __webpack_require__(/*! ./_global */ 4),
-    hide = __webpack_require__(/*! ./_hide */ 27),
-    Iterators = __webpack_require__(/*! ./_iterators */ 89),
-    wks = __webpack_require__(/*! ./_wks */ 8),
-=======
 var $iterators = __webpack_require__(/*! ./es6.array.iterator */ 323),
     redefine = __webpack_require__(/*! ./_redefine */ 31),
     global = __webpack_require__(/*! ./_global */ 5),
     hide = __webpack_require__(/*! ./_hide */ 30),
     Iterators = __webpack_require__(/*! ./_iterators */ 102),
     wks = __webpack_require__(/*! ./_wks */ 10),
->>>>>>> demo_sc_experimentPage
     ITERATOR = wks('iterator'),
     TO_STRING_TAG = wks('toStringTag'),
     ArrayValues = Iterators.Array;
@@ -15027,11 +10864,7 @@ for (var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList
 }
 
 /***/ }),
-<<<<<<< HEAD
-/* 1204 */
-=======
 /* 1519 */
->>>>>>> demo_sc_experimentPage
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -15746,15 +11579,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 // object, this seems to be the most reliable technique that does not
 // use indirect eval (which violates Content Security Policy).
 (typeof global === "undefined" ? "undefined" : _typeof(global)) === "object" ? global : (typeof window === "undefined" ? "undefined" : _typeof(window)) === "object" ? window : (typeof self === "undefined" ? "undefined" : _typeof(self)) === "object" ? self : undefined);
-<<<<<<< HEAD
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 23), __webpack_require__(/*! ./../webpack/buildin/module.js */ 10)(module)))
-
-/***/ }),
-/* 1205 */
-/*!**************************************************!*\
-  !*** ./node_modules/core-js/fn/regexp/escape.js ***!
-  \**************************************************/
-=======
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 17), __webpack_require__(/*! ./../webpack/buildin/module.js */ 6)(module)))
 
 /***/ }),
@@ -15762,7 +11586,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /*!******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/fn/regexp/escape.js ***!
   \******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -15770,16 +11593,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 "use strict";
 
 
-<<<<<<< HEAD
-__webpack_require__(/*! ../../modules/core.regexp.escape */ 1206);
-module.exports = __webpack_require__(/*! ../../modules/_core */ 45).RegExp.escape;
-
-/***/ }),
-/* 1206 */
-/*!************************************************************!*\
-  !*** ./node_modules/core-js/modules/core.regexp.escape.js ***!
-  \************************************************************/
-=======
 __webpack_require__(/*! ../../modules/core.regexp.escape */ 1521);
 module.exports = __webpack_require__(/*! ../../modules/_core */ 50).RegExp.escape;
 
@@ -15788,7 +11601,6 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 50).RegExp.escap
 /*!****************************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/core.regexp.escape.js ***!
   \****************************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -15798,28 +11610,17 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ 50).RegExp.escap
 
 // https://github.com/benjamingr/RexExp.escape
 var $export = __webpack_require__(/*! ./_export */ 0),
-<<<<<<< HEAD
-    $re = __webpack_require__(/*! ./_replacer */ 1207)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
-=======
     $re = __webpack_require__(/*! ./_replacer */ 1522)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
->>>>>>> demo_sc_experimentPage
 
 $export($export.S, 'RegExp', { escape: function escape(it) {
     return $re(it);
   } });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1207 */
-/*!***************************************************!*\
-  !*** ./node_modules/core-js/modules/_replacer.js ***!
-  \***************************************************/
-=======
 /* 1522 */
 /*!*******************************************************************************!*\
   !*** ./node_modules/babel-polyfill/node_modules/core-js/modules/_replacer.js ***!
   \*******************************************************************************/
->>>>>>> demo_sc_experimentPage
 /*! no static exports found */
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
@@ -15837,11 +11638,7 @@ module.exports = function (regExp, replace) {
 };
 
 /***/ }),
-<<<<<<< HEAD
-/* 1208 */
-=======
 /* 1523 */
->>>>>>> demo_sc_experimentPage
 /*!********************************************!*\
   !*** ./node_modules/whatwg-fetch/fetch.js ***!
   \********************************************/
@@ -16311,9 +12108,5 @@ module.exports = function (regExp, replace) {
 })(typeof self !== 'undefined' ? self : undefined);
 
 /***/ })
-<<<<<<< HEAD
-],[1024]);
-=======
 ],[1339]);
->>>>>>> demo_sc_experimentPage
 //# sourceMappingURL=polyfills.bundle.js.map

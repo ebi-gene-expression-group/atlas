@@ -6,7 +6,7 @@
             <!-- local-title -->
             <div class="small-8 medium-10 columns anim" id="local-title">
                 <h4>
-                    <a href="${applicationProperties.buildServerURL(pageContext.request)}" title="Back to Expression Atlas homepage">
+                    <a href="${pageContext.request.contextPath}" title="Back to Expression Atlas homepage">
                         <div class="atlas-logo">
                             </div>
                     </a>

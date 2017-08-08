@@ -14734,7 +14734,7 @@ var Experiment = function (_Component2) {
         value: function componentDidMount() {
             this.setState({
                 geneId: this.state.params.geneId,
-                k: this.state.params.k,
+                k: Number.parseInt(this.state.params.k),
                 clusterId: JSON.parse(this.state.params.clusterId || '[]')
             });
         }

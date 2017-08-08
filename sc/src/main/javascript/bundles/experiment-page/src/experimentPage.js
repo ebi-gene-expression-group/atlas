@@ -65,7 +65,7 @@ class Experiment extends Component {
     componentDidMount() {
         this.setState({
             geneId: this.state.params.geneId,
-            k: this.state.params.k,
+            k: Number.parseInt(this.state.params.k),
             clusterId: JSON.parse(this.state.params.clusterId || '[]')
         });
     }

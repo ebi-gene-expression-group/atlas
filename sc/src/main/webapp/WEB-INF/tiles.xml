@@ -37,7 +37,6 @@
         <put-attribute name="body" value="">
             <definition template="/WEB-INF/jsp/layouts/search-body.jsp">
                 <put-attribute name="search" value="/WEB-INF/jsp/tiles/search.jsp"/>
-                <put-attribute name="marker-genes" value="/WEB-INF/jsp/tiles/search/marker-genes.jsp"/>
             </definition>
         </put-attribute>
     </definition>

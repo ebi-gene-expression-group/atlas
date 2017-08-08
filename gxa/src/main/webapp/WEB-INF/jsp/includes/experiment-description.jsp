@@ -22,9 +22,9 @@
 
         <c:if test="${hasExtraInfo}">
         <a id="extra-info"
-           href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
+           href="${pageContext.request.contextPath}/external-resources/${experimentAccession}/extra-info.png">
             <img alt="more information"
-                 src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/overview_button.png">
+                 src="${pageContext.request.contextPath}/resources/images/overview_button.png">
         </a>
         </c:if>
 
@@ -67,7 +67,7 @@
         <div id="alternativeViews">See also:
             <c:forEach var="alternativeViewAccession" items="${alternativeViews}" varStatus="i">
                 <a class="thick-link" title="Alternative view"
-                   href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${alternativeViewAccession}">
+                   href="${pageContext.request.contextPath}/experiments/${alternativeViewAccession}">
                         ${alternativeViewDescriptions.get(i.index)}
                 </a>
 

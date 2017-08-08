@@ -8,10 +8,7 @@ module.exports = {
   entry: {
     atlasAutocomplete: ['./bundles/autocomplete/index.js'],
     markerGenesSearchResults: ['./bundles/marker-genes/index.js'],
-<<<<<<< HEAD
-=======
     experimentPage: ['./bundles/experiment-page/src/index.js'],
->>>>>>> demo_sc_experimentPage
     // Put dependencies one line per package
     dependencies: [
       'prop-types', 'react', 'react-autocomplete', 'react-dom', 'react-refetch', 'urijs'  // autocomplete, marker-genes
