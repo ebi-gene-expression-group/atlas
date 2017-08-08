@@ -1,0 +1,21 @@
+.gxaDifferentialResultsTooltip {
+    padding: 2px !important;
+    box-shadow: 0 0 1em darkgrey;
+    max-width: 500px;
+    font-size: x-small;
+    opacity: 0.98 !important;
+}
+
+.gxaDifferentialResultsTooltip table {
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.gxaDifferentialResultsTooltip th {
+    border-bottom: 1px solid lightgrey !important;
+    background-color: floralwhite;
+}
+
+.gxaDifferentialResultsTooltip td {
+    border: 1px solid lightgrey;
+}

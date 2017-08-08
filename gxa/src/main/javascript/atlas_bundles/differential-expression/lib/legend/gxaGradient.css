@@ -1,0 +1,22 @@
+.gxaDiffLegendLevelCell {
+    display: table-cell;
+    width: 10%;
+    white-space: nowrap;
+    font-size: x-small;
+    vertical-align: middle;
+    text-align: right;
+
+}
+
+.gxaDiffLegendGradientCell {
+    display: table-cell;
+    width: 80%;
+}
+
+
+.gxaDiffLegendGradient {
+    vertical-align: middle;
+    height: 15px;
+    width: 100%;
+    display: block;
+}

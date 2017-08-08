@@ -1,0 +1,7 @@
+.gxaDifferentialResultsTable th, .gxaDifferentialResultsTable td {
+    text-align: center;
+}
+
+.gxaDifferentialResultsTable .react-ebi-species-icon {
+    font-size: 300%;
+}
