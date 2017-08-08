@@ -14712,7 +14712,7 @@ var Experiment = function (_Component2) {
         _this3.state = {
             params: _queryString2.default.parse(props.location.search),
             geneId: "",
-            k: "",
+            k: 0,
             clusterId: []
         };
         return _this3;
@@ -18666,7 +18666,7 @@ var TSNEPlotContainer = function (_React$Component) {
 
 TSNEPlotContainer.propTypes = {
     clustersData: _propTypes2.default.object.isRequired,
-    k: _propTypes2.default.string,
+    k: _propTypes2.default.number,
     clusterId: _propTypes2.default.arrayOf(_propTypes2.default.number),
     handleOptionsChange: _propTypes2.default.func.isRequired
 };
@@ -18811,13 +18811,6 @@ var ScatterPlot = function (_React$Component) {
         value: function highlightCluster(clusterId) {
             var _this2 = this;
 
-            // for (let cluster of clusterId) {
-            //     const c = this.refs.chart.chart.series[cluster].data;
-            //     for (let i = 0; i < c.length; i++) {
-            //         this.refs.chart.chart.series[cluster].data[i].setState('hover');
-            //     }
-            // }
-
             if (clusterId.length) {
                 this.refs.chart.chart.series.forEach(function (series, seriesIndex) {
                     var c = _this2.refs.chart.chart.series[seriesIndex].data;
@@ -18827,7 +18820,7 @@ var ScatterPlot = function (_React$Component) {
                         } else {
                             var thisPointColor = (0, _color2.default)(_this2.refs.chart.chart.series[seriesIndex].data[i].graphic.attr('fill'));
                             // this.refs.chart.chart.series[seriesIndex].data[i].graphic.attr({fill: thisPointColor.desaturate(0.65).lighten(0.25).rgb().string()})
-                            _this2.refs.chart.chart.series[seriesIndex].data[i].graphic.attr({ fill: thisPointColor.whiten(0.15).desaturate(0.50).lighten(0.25).rgb().string() });
+                            _this2.refs.chart.chart.series[seriesIndex].data[i].graphic.attr({ fill: thisPointColor.grayscale().rgb().string() });
                         }
                     }
                 });
