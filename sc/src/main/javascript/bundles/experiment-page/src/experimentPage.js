@@ -11,7 +11,7 @@ class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter
+            <BrowserRouter basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}
                 >
                 <div>
                     <Route path='/' render={props => (
@@ -55,11 +55,6 @@ class Experiment extends Component {
         _newparam[param] = (param === "k" ? item.target.value : item);
         this.setState(_newparam);
 
-//        const stringified = queryString.stringify({
-//            geneId: (param === "geneId" ? item : this.state.geneId),
-//            k: (param === "k" ? item.target.value : this.state.k)
-//        });
-debugger;
         this.props.history.push("?" + queryString.stringify({
                 geneId: (param === "geneId" ? item : this.state.geneId),
                 k: (param === "k" ? item.target.value : this.state.k)})

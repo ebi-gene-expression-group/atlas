@@ -58,7 +58,8 @@ var ExperimentPage = function (_Component) {
 
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                null,
+                { basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString()
+                },
                 _react2.default.createElement(
                     'div',
                     null,
@@ -111,11 +112,6 @@ var Experiment = function (_Component2) {
             _newparam[param] = param === "k" ? item.target.value : item;
             this.setState(_newparam);
 
-            //        const stringified = queryString.stringify({
-            //            geneId: (param === "geneId" ? item : this.state.geneId),
-            //            k: (param === "k" ? item.target.value : this.state.k)
-            //        });
-            debugger;
             this.props.history.push("?" + _queryString2.default.stringify({
                 geneId: param === "geneId" ? item : this.state.geneId,
                 k: param === "k" ? item.target.value : this.state.k }) + "&clusterId=[" + this.state.clusterId + "]");
