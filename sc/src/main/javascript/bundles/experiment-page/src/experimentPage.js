@@ -11,7 +11,7 @@ class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter
+            <BrowserRouter basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}
                 >
                 <div>
                     <Route path='/' render={props => (
