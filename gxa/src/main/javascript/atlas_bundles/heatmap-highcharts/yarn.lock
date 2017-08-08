@@ -15,19 +15,16 @@ add-dom-event-listener@1.x:
   dependencies:
     object-assign "4.x"
 
-amdefine@>=0.0.4:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
-
 anatomogram@latest:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.4.3.tgz#db8a7fefaa8f41492fb0efe43f20a2719d8c9d56"
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/anatomogram/-/anatomogram-1.4.5.tgz#8546453541ac486cfa66cff95910b9734055a68b"
   dependencies:
+    lodash "^4.17.4"
     prop-types "^15.5.10"
     react "^15.6.1"
     react-dom "^15.6.1"
     react-svg "^2.1.21"
-    transform-props-with "^2.2.0"
+    recompose "^0.24.0"
 
 array-flatten@1.1.1:
   version "1.1.1"
@@ -43,6 +40,10 @@ babel-runtime@6.x, babel-runtime@^6.11.6:
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
+
+change-emitter@^0.1.2:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/change-emitter/-/change-emitter-0.1.6.tgz#e8b2fe3d7f1ab7d69a32199aff91ea6931409515"
 
 classnames@^2.2.5:
   version "2.2.5"
@@ -238,8 +239,8 @@ express@^4.15.2:
     vary "~1.1.1"
 
 expression-atlas-heatmap-highcharts@latest:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.1.tgz#e503569d1f050ed32122a4c07569c0821a6e6569"
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.3.4.tgz#4b96cff93b5516001bf8437625c5d134b9b34a7d"
   dependencies:
     anatomogram latest
     color "^2.0.0"
@@ -254,10 +255,10 @@ expression-atlas-heatmap-highcharts@latest:
     rc-slider "^8.3.1"
     react "^15.6.1"
     react-bootstrap "^0.31.2"
+    react-debounce-render "^2.0.0"
     react-dom "^15.6.1"
     react-ga "^2.2.0"
     react-highcharts "^12.0.0"
-    react-hot-loader "^1.3.1"
     react-refetch "^1.0.0"
     sanitize-html "^1.14.1"
     uncontrollable "^4.1.0"
@@ -272,7 +273,7 @@ expression-atlas-number-format@latest:
     react-dom "^15.6.1"
     urijs "^1.18.10"
 
-fbjs@^0.8.9:
+fbjs@^0.8.1, fbjs@^0.8.9:
   version "0.8.14"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.14.tgz#d1dbe2be254c35a91e09f31f9cd50a40b2a0ed1c"
   dependencies:
@@ -323,7 +324,7 @@ highcharts@^5.0.0, highcharts@^5.0.9:
   version "5.0.11"
   resolved "git://github.com/gxa/highcharts-dist.git#5ed3f714677352fc4c9375a226683c946da4c3df"
 
-hoist-non-react-statics@^1.0.3:
+hoist-non-react-statics@^1.0.0, hoist-non-react-statics@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -412,7 +413,7 @@ lodash.keys@^3.1.2:
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
 
-lodash@^4.10.0, lodash@^4.11.0, lodash@^4.17.4:
+lodash@^4.11.0, lodash@^4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -594,6 +595,13 @@ react-bootstrap@^0.31.2:
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
+react-debounce-render@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-debounce-render/-/react-debounce-render-2.0.0.tgz#2615632a37f2a48832497b87dddba206e8a7e94c"
+  dependencies:
+    lodash "^4.17.4"
+    react "^15.6.1"
+
 react-dom@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.1.tgz#2cb0ed4191038e53c209eb3a79a23e2a4cf99470"
@@ -616,17 +624,6 @@ react-highcharts@^12.0.0:
   resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-12.0.0.tgz#a7c8b5f5b56b37afe8e7fe02ec8bee72e376158a"
   dependencies:
     highcharts "^5.0.0"
-
-react-hot-api@^0.4.5:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/react-hot-api/-/react-hot-api-0.4.7.tgz#a7e22a56d252e11abd9366b61264cf4492c58171"
-
-react-hot-loader@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-1.3.1.tgz#c95647ae78b73dfceff6ec71ffcb04182ff6daf9"
-  dependencies:
-    react-hot-api "^0.4.5"
-    source-map "^0.4.4"
 
 react-overlays@^0.7.0:
   version "0.7.0"
@@ -680,6 +677,15 @@ readable-stream@^2.0.2:
     safe-buffer "~5.1.1"
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
+
+recompose@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.24.0.tgz#262e93f974439eb17e7779824d88cce90492a5dd"
+  dependencies:
+    change-emitter "^0.1.2"
+    fbjs "^0.8.1"
+    hoist-non-react-statics "^1.0.0"
+    symbol-observable "^1.0.4"
 
 regenerator-runtime@^0.10.0:
   version "0.10.5"
@@ -752,12 +758,6 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-source-map@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
-  dependencies:
-    amdefine ">=0.0.4"
-
 "statuses@>= 1.3.1 < 2", statuses@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
@@ -772,11 +772,9 @@ svg-injector@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/svg-injector/-/svg-injector-1.1.3.tgz#8fba18d7419e5f818e712c4f82d83ee357610e61"
 
-transform-props-with@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/transform-props-with/-/transform-props-with-2.2.0.tgz#25290e3fe95f3f07f124b0fb473299fba4641add"
-  dependencies:
-    lodash "^4.10.0"
+symbol-observable@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
 
 type-is@~1.6.15:
   version "1.6.15"
