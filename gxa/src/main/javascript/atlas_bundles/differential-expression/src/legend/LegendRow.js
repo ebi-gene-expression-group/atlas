@@ -4,21 +4,16 @@ import PropTypes from 'prop-types'
 import './gxaGradient.css'
 
 const LegendRow = ({lowValueColour, highValueColour, lowExpressionLevel, highExpressionLevel}) => {
-
   const spanStyle = {
     backgroundImage: `linear-gradient(to right, ${lowValueColour}, ${highValueColour})`
-  };
+  }
 
   return (
-    lowExpressionLevel || highExpressionLevel
-      ? <div style={{display: `table-row`}}>
-        <div className={`gxaGradientLevel gxaGradientLevelMin`}>{lowExpressionLevel}</div>
-        <div style={{display: `table-cell`}}>
-          <span className={`gxaGradientColour`} style={spanStyle} />
-        </div>
-        <div className={`gxaGradientLevel gxaGradientLevelMax`}>{highExpressionLevel}</div>
-      </div>
-      : null
+    <div style={{display: `table-row`}}>
+      <div className={`gxaDiffLegendLevelCell`}>{lowExpressionLevel}</div>
+      <div className={`gxaDiffLegendGradientCell`}><span className={`gxaDiffLegendGradient`} style={spanStyle}/></div>
+      <div className={`gxaDiffLegendLevelCell`}>{highExpressionLevel}</div>
+    </div>
   )
 }
 

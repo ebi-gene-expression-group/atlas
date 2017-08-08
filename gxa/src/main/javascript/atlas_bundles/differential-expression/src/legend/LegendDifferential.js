@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import LegendRow from './LegendRow'
 
 const LegendDifferential = ({minDownLevel, maxDownLevel, minUpLevel, maxUpLevel}) =>
-  <div className={`gxaLegend`}>
-    <div style={{display: `inline-table`}}>
+  <div className={`row column expanded`}>
+    <div style={{display: `table`, width: `100%`, borderSpacing: `4px`  }}>
       {isNaN(minDownLevel) && isNaN(maxDownLevel) ?
         null :
         <LegendRow lowExpressionLevel={<span>{minDownLevel}</span>}

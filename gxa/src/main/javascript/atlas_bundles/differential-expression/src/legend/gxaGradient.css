@@ -1,23 +1,22 @@
-.gxaGradientColour {
-    overflow: auto;
-    vertical-align: middle;
-    width: 200px;
-    height: 15px;
-    margin: 2px 6px 2px 6px;
-    display: inline-block;
-}
-
-.gxaGradientLevel {
-    white-space: nowrap;
-    font-size: 10px;
-    vertical-align: middle;
+.gxaDiffLegendLevelCell {
     display: table-cell;
-}
-
-.gxaGradientLevelMin {
+    width: 10%;
+    white-space: nowrap;
+    font-size: x-small;
+    vertical-align: middle;
     text-align: right;
+
 }
 
-.gxaGradientLevelMax {
-    text-align: left;
+.gxaDiffLegendGradientCell {
+    display: table-cell;
+    width: 80%;
+}
+
+
+.gxaDiffLegendGradient {
+    vertical-align: middle;
+    height: 15px;
+    width: 100%;
+    display: block;
 }
