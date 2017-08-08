@@ -33,10 +33,10 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}")
+    @RequestMapping(value = "/experiments/{experimentAccession}/")
     public String baselineExperimentData(@PathVariable String experimentAccession,
                                          @RequestParam(value = "geneId", required = false, defaultValue = "") String geneId,
-                                         @RequestParam(value = "k", required = false, defaultValue = "") Integer K,
+                                         @RequestParam(value = "k", required = false, defaultValue = "") String k,
                                          @RequestParam(value = "clusterId", required = false, defaultValue = "") String clusterId,
                                          Model model) {
 

@@ -28,6 +28,6 @@
         experimentAccession: "${experimentAccession}",
         suggesterEndpoint:"json/suggestions",
         clustersData: data,
-        referenceDataSourceUrlTemplate:"${pageContext.request.contextPath}/gxa_sc/json/experiments/${experimentAccession}/expression?query={0}"
+        referenceDataSourceUrlTemplate:"${pageContext.request.contextPath}/json/experiments/${experimentAccession}/expression?query={0}"
     }, 'container');
 </script>

@@ -58,8 +58,7 @@ var ExperimentPage = function (_Component) {
 
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                { basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString()
-                },
+                null,
                 _react2.default.createElement(
                     'div',
                     null,
@@ -116,12 +115,10 @@ var Experiment = function (_Component2) {
             //            geneId: (param === "geneId" ? item : this.state.geneId),
             //            k: (param === "k" ? item.target.value : this.state.k)
             //        });
-
+            debugger;
             this.props.history.push("?" + _queryString2.default.stringify({
                 geneId: param === "geneId" ? item : this.state.geneId,
-                k: param === "k" ? item.target.value : this.state.k,
-                clusterId: this.state.clusterId
-            }));
+                k: param === "k" ? item.target.value : this.state.k }) + "&clusterId=[" + this.state.clusterId + "]");
         }
     }, {
         key: 'componentDidMount',
@@ -140,11 +137,6 @@ var Experiment = function (_Component2) {
                 'div',
                 { className: 'row' },
                 _react2.default.createElement(
-                    'h3',
-                    null,
-                    'Experiment Page section'
-                ),
-                _react2.default.createElement(
                     'div',
                     { className: 'small-6 columns' },
                     _react2.default.createElement(_singleCellTsnePlot2.default, { clustersData: this.props.clustersData,
@@ -156,6 +148,8 @@ var Experiment = function (_Component2) {
                     'div',
                     { className: 'small-6 columns' },
                     _react2.default.createElement(_singleCellGeneTsnePlot2.default, { atlasUrl: this.props.atlasUrl,
+                        clustersData: this.props.clustersData,
+                        k: this.state.k,
                         suggesterEndpoint: this.props.suggesterEndpoint,
                         referenceDataSourceUrlTemplate: this.props.referenceDataSourceUrlTemplate,
                         geneId: this.state.geneId,

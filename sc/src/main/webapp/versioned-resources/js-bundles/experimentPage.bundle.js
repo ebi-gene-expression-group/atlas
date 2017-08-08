@@ -18123,9 +18123,15 @@ var Experiment = function (_Component2) {
             _newparam[param] = param === "k" ? item.target.value : item;
             this.setState(_newparam);
 
+            //        const stringified = queryString.stringify({
+            //            geneId: (param === "geneId" ? item : this.state.geneId),
+            //            k: (param === "k" ? item.target.value : this.state.k)
+            //        });
+
             this.props.history.push("?" + _queryString2.default.stringify({
                 geneId: param === "geneId" ? item : this.state.geneId,
-                k: param === "k" ? item.target.value : this.state.k
+                k: param === "k" ? item.target.value : this.state.k,
+                clusterId: this.state.clusterId
             }));
         }
     }, {
@@ -18134,7 +18140,7 @@ var Experiment = function (_Component2) {
             this.setState({
                 geneId: this.state.params.geneId,
                 k: this.state.params.k,
-                clusterId: JSON.parse(this.state.params.clusterId)
+                clusterId: JSON.parse(this.state.params.clusterId || '[]')
             });
         }
     }, {
@@ -18144,11 +18150,6 @@ var Experiment = function (_Component2) {
             return _react2.default.createElement(
                 'div',
                 { className: 'row' },
-                _react2.default.createElement(
-                    'h3',
-                    null,
-                    'Experiment Page section'
-                ),
                 _react2.default.createElement(
                     'div',
                     { className: 'small-6 columns' },
@@ -22057,7 +22058,8 @@ var TSNEPlotContainer = function (_React$Component) {
             var clusterSelected = this.props.k ? this.props.k : Object.keys(this.props.clustersData)[0];
 
             return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'columns small-5' }, _react2.default.createElement('label', null, 'Clustering: ', this.props.k), _react2.default.createElement('select', { value: clusterSelected, onChange: this.props.handleOptionsChange }, clusterOptions)), _react2.default.createElement('div', { className: 'columns small-12' }, _react2.default.createElement(_ScatterPlot2.default, { dataset: getDataSeries(getSeriesMap(this.props.clustersData, clusterSelected)),
-                options: referencePlotOptions
+                options: referencePlotOptions,
+                clusterId: this.props.clusterId
             })));
         }
     }]);
@@ -22202,6 +22204,54 @@ var ScatterPlot = function (_React$Component) {
         key: 'shouldComponentUpdate',
         value: function shouldComponentUpdate(nextProps, nextState) {
             return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+        }
+    }, {
+        key: 'highlightCluster',
+        value: function highlightCluster(clusterId) {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = clusterId[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var cluster = _step.value;
+
+                    var c = this.refs.chart.chart.series[cluster].data;
+                    for (var i = 0; i < c.length; i++) {
+                        this.refs.chart.chart.series[cluster].data[i].setState('hover');
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            this.highlightCluster(nextProps.clusterId);
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.highlightCluster(this.props.clusterId);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevProps.clusterId !== this.props.clusterId) {
+                this.highlightCluster(this.props.clusterId);
+            }
         }
     }, {
         key: 'render',

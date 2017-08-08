@@ -11,7 +11,7 @@ class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}
+            <BrowserRouter
                 >
                 <div>
                     <Route path='/' render={props => (
@@ -59,12 +59,12 @@ class Experiment extends Component {
 //            geneId: (param === "geneId" ? item : this.state.geneId),
 //            k: (param === "k" ? item.target.value : this.state.k)
 //        });
-
+debugger;
         this.props.history.push("?" + queryString.stringify({
-            geneId: (param === "geneId" ? item : this.state.geneId),
-            k: (param === "k" ? item.target.value : this.state.k),
-            clusterId: this.state.clusterId
-        }));
+                geneId: (param === "geneId" ? item : this.state.geneId),
+                k: (param === "k" ? item.target.value : this.state.k)})
+            + "&clusterId=[" + this.state.clusterId + "]"
+        );
     };
 
     componentDidMount() {
@@ -79,7 +79,6 @@ class Experiment extends Component {
 
         return (
             <div className="row">
-                <h3>Experiment Page section</h3>
                 <div className="small-6 columns">
                     <ReferencePlot clustersData={this.props.clustersData}
                                    k={this.state.k}
@@ -90,6 +89,8 @@ class Experiment extends Component {
                 <div className="small-6 columns">
 
                     <GeneTSNEPlot atlasUrl={this.props.atlasUrl}
+                                  clustersData={this.props.clustersData}
+                                  k={this.state.k}
                                   suggesterEndpoint={this.props.suggesterEndpoint}
                                   referenceDataSourceUrlTemplate={this.props.referenceDataSourceUrlTemplate}
                                   geneId={this.state.geneId}
