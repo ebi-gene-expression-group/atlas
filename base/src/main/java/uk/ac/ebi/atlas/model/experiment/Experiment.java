@@ -17,7 +17,14 @@ import uk.ac.ebi.atlas.utils.ExperimentInfo;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*
 The displayName is a bit confusing - it's used for baseline landing page and I think only there.
@@ -39,7 +46,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     private List<String> dataProviderDescription;
     private List<String> alternativeViews;
     private List<String> alternativeViewDescriptions;
-    protected final ImmutableMap<String, DataColumnDescriptor> dataColumnDescriptorsPerId;
+    private final ImmutableMap<String, DataColumnDescriptor> dataColumnDescriptorsPerId;
     private final ExperimentDisplayDefaults experimentDisplayDefaults;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
@@ -187,7 +194,7 @@ public abstract class Experiment<DataColumnDescriptor extends DescribesDataColum
     }
 
     public ImmutableCollection<ImmutableMap<String, String>> getGenomeBrowsers() {
-        return type.isMicroRna() ? ImmutableList.<ImmutableMap<String, String>>of() : species.getGenomeBrowsers();
+        return type.isMicroRna() ? ImmutableList.of() : species.getGenomeBrowsers();
     }
 
     public ImmutableCollection<String> getGenomeBrowserNames() {
