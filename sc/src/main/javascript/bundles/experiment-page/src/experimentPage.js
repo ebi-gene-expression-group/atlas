@@ -11,7 +11,7 @@ class ExperimentPage extends Component {
 
     render() {
         return (
-            <BrowserRouter basename={URI(`experiments/${this.props.experimentAccession}`, URI(this.props.atlasUrl).path()).toString()}
+            <BrowserRouter
                 >
                 <div>
                     <Route path='/' render={props => (
@@ -45,7 +45,7 @@ class Experiment extends Component {
         this.state = {
             params: queryString.parse(props.location.search),
             geneId: "",
-            k: "",
+            k: 0,
             clusterId: [],
         };
     }

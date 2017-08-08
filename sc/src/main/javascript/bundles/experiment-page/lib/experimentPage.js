@@ -58,8 +58,7 @@ var ExperimentPage = function (_Component) {
 
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                { basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString()
-                },
+                null,
                 _react2.default.createElement(
                     'div',
                     null,
@@ -99,7 +98,7 @@ var Experiment = function (_Component2) {
         _this3.state = {
             params: _queryString2.default.parse(props.location.search),
             geneId: "",
-            k: "",
+            k: 0,
             clusterId: []
         };
         return _this3;
