@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.controllers.HtmlExceptionHandlingController;
 import uk.ac.ebi.atlas.model.experiment.baseline.BaselineExperiment;
@@ -32,10 +33,12 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}")
+    @RequestMapping(value = "/experiments/{experimentAccession}/")
     public String baselineExperimentData(@PathVariable String experimentAccession,
+                                         @RequestParam(value = "geneId", required = false, defaultValue = "") String geneId,
+                                         @RequestParam(value = "k", required = false, defaultValue = "") String k,
+                                         @RequestParam(value = "clusterId", required = false, defaultValue = "") String clusterId,
                                          Model model) {
-
 
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
@@ -51,12 +54,15 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
         model.addAttribute("messagesAboutCells", ImmutableList.of(howManySamples, updates));
         model.addAttribute("species", experiment.getSpecies().getName());
 
+        model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
+
         switch (experimentAccession.toUpperCase()) {
             case "E-MTAB-2865":
                 model.addAttribute("datasetVersion", "32203_points");
                 return "experiment-spatial";
             case "E-MTAB-4388":
-                return "experiment-reference-plot";
+                return "experiment-page";
+//                return "experiment-reference-plot";
             case "E-MTAB-5061":
                 return "experiment-tsne-plot";
             default:

@@ -9,7 +9,7 @@
     "ci": "webpack --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
     "prod": "NODE_ENV=production webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
-  "author": "Wojciech Bażant <wbazant@ebi.ac.uk> and Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
+  "author": "Wojciech Bażant <wbazant@ebi.ac.uk>, Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> and Elisabet Barrera <barrera@ebi.ac.uk>",
   "license": "Apache 2.0",
   "private": true,
   "devDependencies": {
@@ -19,6 +19,10 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
+<<<<<<< HEAD
+=======
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+>>>>>>> demo_sc_experimentPage
     "clean-webpack-plugin": "^0.1.16",
     "webpack": "^3.0.0",
     "webpack-shell-plugin": "^0.5.0"
