@@ -33,7 +33,7 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/")
+    @RequestMapping(value = "/experiments/{experimentAccession}")
     public String baselineExperimentData(@PathVariable String experimentAccession,
                                          @RequestParam(value = "geneId", required = false, defaultValue = "") String geneId,
                                          @RequestParam(value = "k", required = false, defaultValue = "") String k,
@@ -56,18 +56,7 @@ public class SingleCellExperimentPageController extends HtmlExceptionHandlingCon
 
         model.addAttribute("resourcesVersion", env.getProperty("resources.version"));
 
-        switch (experimentAccession.toUpperCase()) {
-            case "E-MTAB-2865":
-                model.addAttribute("datasetVersion", "32203_points");
-                return "experiment-spatial";
-            case "E-MTAB-4388":
-                return "experiment-page";
-//                return "experiment-reference-plot";
-            case "E-MTAB-5061":
-                return "experiment-tsne-plot";
-            default:
-                return "experiment-base";
-        }
+        return "experiment-page";
     }
 
 

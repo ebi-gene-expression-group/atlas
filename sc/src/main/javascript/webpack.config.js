@@ -6,8 +6,8 @@ var WebpackShellPlugin = require('webpack-shell-plugin')
 module.exports = {
   // define the bundles we want
   entry: {
-    atlasAutocomplete: ['./bundles/autocomplete/index.js'],
-    markerGenesSearchResults: ['./bundles/marker-genes/index.js'],
+    atlasAutocomplete: ['./bundles/autocomplete'],
+    markerGenesSearchResults: ['./bundles/marker-genes'],
     experimentPage: ['./bundles/experiment-page/src/index.js'],
     // Put dependencies one line per package
     dependencies: [

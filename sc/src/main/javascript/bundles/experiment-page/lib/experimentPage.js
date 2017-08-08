@@ -58,7 +58,8 @@ var ExperimentPage = function (_Component) {
 
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
-                null,
+                { basename: (0, _urijs2.default)('experiments/' + this.props.experimentAccession, (0, _urijs2.default)(this.props.atlasUrl).path()).toString()
+                },
                 _react2.default.createElement(
                     'div',
                     null,
@@ -120,7 +121,7 @@ var Experiment = function (_Component2) {
         value: function componentDidMount() {
             this.setState({
                 geneId: this.state.params.geneId,
-                k: this.state.params.k,
+                k: Number.parseInt(this.state.params.k),
                 clusterId: JSON.parse(this.state.params.clusterId || '[]')
             });
         }
