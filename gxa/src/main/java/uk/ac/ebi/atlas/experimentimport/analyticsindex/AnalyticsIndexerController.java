@@ -37,9 +37,9 @@ public class AnalyticsIndexerController {
     @RequestMapping(value = "/analyticsIndex/buildIndex", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
-                                      @RequestParam(value = "threads", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_THREADS_8) int numThreads,
-                                      @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE_8192) int batchSize,
-                                      @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS_24) int timeout)
+                                      @RequestParam(value = "threads", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_THREADS) int numThreads,
+                                      @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_SOLR_BATCH_SIZE) int batchSize,
+                                      @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS) int timeout)
     {
 
         try {

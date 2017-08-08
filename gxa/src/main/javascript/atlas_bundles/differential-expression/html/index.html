@@ -1,68 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" class="fontface">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta charset="utf-8">
-    <title>Expression Atlas &lt; Demo pages</title>
-    <meta name="HandheldFriendly" content="true" />
-    <meta name="MobileOptimized" content="width" />
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#70BDBD"> <!-- Android Chrome mobile browser tab color -->
+    <title>Demo</title>
 
     <!-- CSS: implied media=all -->
     <!-- CSS concatenated and minified via ant build script-->
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/css/ebi-global.css" type="text/css" media="all">
-    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.1/fonts.css" type="text/css" media="all">
-
-    <link rel="stylesheet" href="http://localhost:8080/gxa/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-    <link rel="stylesheet" href="http://localhost:8080/gxa/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/css/foundation.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/css/ebi-global.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/web_guidelines/EBI-Icon-fonts/v1.2/fonts.css" type="text/css" media="all">
 
     <!-- Use this CSS file for any custom styling -->
-    <link rel="stylesheet" href="http://localhost:8080/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <!-- <link rel="stylesheet" href="css/custom.css" type="text/css" media="all"> -->
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/atlas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://www.ebi.ac.uk/gxa/resources/css/foundation/theme-atlas.css" type="text/css" media="all">
+    <!-- end CSS-->
 
-    <link rel="stylesheet" href="http://localhost:8080/gxa/resources/css/alt-customized-bootstrap-3.3.5.css">
-
-    <!-- All JavaScript at the bottom, except for Modernizr and jQuery -->
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/modernizr/modernizr.custom.49274.js"></script>
+    <!-- All JavaScript at the bottom, except for jQuery -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 </head>
 
 <body>
-
-
-<div id="wrapper" class="container_24">
-    <div id="content" class="grid_24">
-        <div id="atlas-content">
-        </div>
-    </div>
+<div id="wrapper" class="row expanded">
+    <div id="target"></div>
 </div>
 
-    <!-- JavaScript -->
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/cookiebanner.js"></script>
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foot.js"></script>
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/script.js"></script>
+<!-- JavaScript -->
+<script defer="defer" src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/script.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/libraries/foundation-6/js/foundation.js"></script>
+<script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.2/js/foundationExtendEBI.js"></script>
 
-    <!-- The Foundation theme JavaScript -->
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/libraries/foundation-6/js/foundation.js"></script>
-    <script src="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/js/foundationExtendEBI.js"></script>
-    <script type="text/JavaScript">$(document).foundation();</script>
-    <script type="text/JavaScript">$(document).foundationExtendEBI();</script>
+<!-- The Foundation theme JavaScript -->
+<script type="text/JavaScript">$(document).foundation();</script>
+<script type="text/JavaScript">$(document).foundationExtendEBI();</script>
+
 </body>
 
-<script src="../dist/vendorCommons.bundle.js"></script>
-<script src="../dist/differentialExpression.bundle.js"></script>
+<script src="vendorCommons.bundle.js"></script>
+<script src="differentialExpression.bundle.js"></script>
 
 <script>
-    differentialExpression({
-        target: 'atlas-content',
-        atlasHostUrl: 'http://localhost:8080/gxa/',
-        geneQuery: '',
-        conditionQuery: 'lung',
-        species: 'homo sapiens'
-    });
+  differentialExpression.render({
+      atlasUrl: 'http://localhost:8080/gxa/',
+      geneQuery: 'zinc finger',
+      conditionQuery: '',
+      species: '' },
+    'target'
+  );
 </script>
 
 </html>

@@ -1,43 +1,7 @@
-table.table-striped tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-table.table-striped tr:nth-child(odd) {
-    background: #FFF;
-}
-
-table.gxaDifferentialFacetedSearchResults, table.gxaDifferentialFacetedSearchResults td {
-    border: none;
-    width: inherit;
-}
-
-table.gxaDifferentialFacetedSearchResults th, table.gxaDifferentialFacetedSearchResults th span {
-    font-weight: bold;
-}
-
-table.gxaDifferentialFacetedSearchResults th {
-    background: transparent;
+.gxaDifferentialResultsTable th, .gxaDifferentialResultsTable td {
     text-align: center;
-    font-size: 90%;
-    border: 0 solid #ddd;
-    border-bottom-width: 2px;
-    vertical-align: bottom;
 }
 
-table.gxaDifferentialFacetedSearchResults tr td {
-    padding: 8px;
-    line-height: 1.42857143;
-    vertical-align: middle;
-    border-top: 1px solid #ddd;
-    text-align: center;
-    font-size: 90%;
-}
-
-table.gxaDifferentialFacetedSearchResults tr td.col_species .react-ebi-species-icon {
+.gxaDifferentialResultsTable .react-ebi-species-icon {
     font-size: 300%;
-    margin-left: 4px;
-}
-
-td.gxaExperimentalVariable {
-    text-align: center;
 }

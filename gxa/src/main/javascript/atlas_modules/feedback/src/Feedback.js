@@ -8,7 +8,7 @@ import BootstrapFormGroup from 'react-bootstrap/lib/FormGroup'
 import BootstrapFormControl from 'react-bootstrap/lib/FormControl'
 
 import EmojiSpritesFile from './assets/emojione.sprites.png'
-import {emojify} from 'react-emojione';
+import {emojify} from 'react-emojione'
 
 import './gxaFeedback.css'
 
@@ -27,48 +27,48 @@ var FeedbackPersistence = function createFeedbackComponent(FeedbackUIComponent){
           created : new Date().toISOString(),
           shownTimes : 0,
           show : true
-            };
+            }
       },
 
       _shouldShow: function () {
-        var timeDiff = Math.abs(new Date().getTime() - new Date(this.state.created).getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        var timeDiff = Math.abs(new Date().getTime() - new Date(this.state.created).getTime())
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
 
-        return this.state.show && diffDays >0 && this.state.shownTimes < 50;
+        return this.state.show && diffDays >0 && this.state.shownTimes < 50
       },
 
       _hide: function () {
-        this.setState({show: false});
+        this.setState({show: false})
       },
 
       _complete : function (userResponse, optionalUserComment) {
-        this.setState({show: false});
-        this.props.collectionCallback(userResponse, new Date().toISOString()+(optionalUserComment||""));
+        this.setState({show: false})
+        this.props.collectionCallback(userResponse, new Date().toISOString()+(optionalUserComment||""))
       },
 
 
       render: function () {
         var it = this._shouldShow()
                   ? <FeedbackUIComponent key={"box"} onComplete={this._complete} onRequestHide={this._hide} />
-                  : <div key="nullKey" />;
+                  : <div key="nullKey" />
         return (
           <ReactCSSTransitionGroup transitionName="feedbackBoxTransitionWrapper" transitionEnterTimeout={500} transitionLeaveTimeout={1000} >
             {it}
           </ReactCSSTransitionGroup>
 
-        );
+        )
       },
 
 
       componentDidMount: function () {
         if(this._shouldShow()){
           this.setState(function(previousState) {
-            return {shownTimes: previousState.shownTimes+1};
-          });
+            return {shownTimes: previousState.shownTimes+1}
+          })
         }
       }
     })
-  );
+  )
 }
 
 var FeedbackBox = React.createClass({
@@ -88,24 +88,24 @@ var FeedbackBox = React.createClass({
 
     componentDidUpdate: function () {
       if(this.state.askingWhyTheResultsWereNotUseful && this.state.feedbackMessage.length===0){
-        this.setTimeout(function() {if(this.state.feedbackMessage.length===0) {this._submitNegativeAnswer();}}.bind(this), 5000);
+        this.setTimeout(function() {if(this.state.feedbackMessage.length===0) {this._submitNegativeAnswer()}}.bind(this), 5000)
       }
     },
 
     _updateStateWithFormAnswer: function(e) {
-      this.setState({feedbackMessage: e.target.value});
+      this.setState({feedbackMessage: e.target.value})
     },
 
     _submitNegativeAnswer: function() {
-      this._submitAnswer(0, this.state.feedbackMessage);
+      this._submitAnswer(0, this.state.feedbackMessage)
     },
 
     _submitPositiveAnswer: function () {
-      this._submitAnswer(10);
+      this._submitAnswer(10)
     },
 
     _submitAnswer: function(score, optionalMessage) {
-      this.props.onComplete.apply(this, arguments);
+      this.props.onComplete.apply(this, arguments)
     },
 
     render: function () {
@@ -141,7 +141,7 @@ var FeedbackBox = React.createClass({
           </div>
       </div>)
     }
-  });
+  })
 
   var Smiley = React.createClass({
     propTypes: {
@@ -152,7 +152,7 @@ var FeedbackBox = React.createClass({
     },
 
     _onClick: function() {
-      this.props.onClickCallback(this.props.value);
+      this.props.onClickCallback(this.props.value)
     },
 
     _emojifyOptions: {
@@ -174,9 +174,9 @@ var FeedbackBox = React.createClass({
           {emojify(this.props.emoji, this._emojifyOptions)}
           </span>
         </span>
-      );
+      )
     }
-  });
+  })
 
   var FeedbackSmileys = React.createClass({
       propTypes: {
@@ -190,23 +190,23 @@ var FeedbackBox = React.createClass({
         return {
           score: -1,
           feedbackMessage: ""
-        };
+        }
       },
 
       _interactionHappened: function() {
-        return this.state.score !== this.getInitialState().score;
+        return this.state.score !== this.getInitialState().score
       },
 
       _updateStateWithFormAnswer: function(e) {
-        this.setState({feedbackMessage: e.target.value});
+        this.setState({feedbackMessage: e.target.value})
       },
 
       _smileyClicked: function(newScore) {
-        this.setState({score: newScore});
+        this.setState({score: newScore})
       },
 
       _submit: function() {
-        this.props.onComplete(this.state.score, this.state.feedbackMessage);
+        this.props.onComplete(this.state.score, this.state.feedbackMessage)
       },
 
       componentDidUpdate: function () {
@@ -214,9 +214,9 @@ var FeedbackBox = React.createClass({
           this.setTimeout(
             function() {
               if(this.state.feedbackMessage.length===0) {
-                this._submit();
+                this._submit()
               }
-            }.bind(this), 5000);
+            }.bind(this), 5000)
         }
       },
 
@@ -234,7 +234,7 @@ var FeedbackBox = React.createClass({
                     onClickCallback={this._smileyClicked}
                     selected={this.state.score===ar[1]}
                   />
-                );
+                )
               }.bind(this))}
             </div>
             <form style={{display: this._interactionHappened() ? "block" :"none"}}>
@@ -257,11 +257,11 @@ var FeedbackBox = React.createClass({
               </BootstrapFormGroup>
             </form>
           </div>
-        );
+        )
       }
 
-  });
+  })
 
 
 
-module.exports = FeedbackPersistence(FeedbackSmileys);
+export default FeedbackPersistence(FeedbackSmileys)

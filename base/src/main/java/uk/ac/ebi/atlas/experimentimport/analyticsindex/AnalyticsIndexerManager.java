@@ -22,9 +22,9 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AnalyticsIndexerManager {
-    protected static final String DEFAULT_THREADS_8 = "8";
-    protected static final String DEFAULT_SOLR_BATCH_SIZE_8192 = "8192";
-    protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
+    protected static final String DEFAULT_THREADS = "8";
+    protected static final String DEFAULT_SOLR_BATCH_SIZE = "32768";
+    protected static final String DEFAULT_TIMEOUT_IN_HOURS = "24";
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsIndexerManager.class);
     private static final int LONGER_THAN_BIGGEST_EXPERIMENT_INDEX_TIME = 60;   // in minutes
     private final AnalyticsIndexerMonitor analyticsIndexerMonitor;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import BaselineHeatmapWidget from './BaselineHeatmapWidget.jsx'
 
-const AtlasFeedback = require('expression-atlas-feedback')
+import AtlasFeedback from 'expression-atlas-feedback'
 
 class BaselineHeatmaps extends React.Component {
 

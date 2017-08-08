@@ -1,7 +1,7 @@
 {
   "name": "expression-atlas-feedback",
-  "version": "1.2.0",
-  "description": "Feedback feature for the experiment page",
+  "version": "1.3.0",
+  "description": "Feedback box component for Atlas search results",
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "rm -rf lib && babel src -d lib --copy-files"
