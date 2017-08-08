@@ -15,15 +15,12 @@
 <script>
     <c:if test="${hasDifferentialResults}">
     $(function() {
-        expressionAtlasDifferentialExpression({
-            target: "gxaDifferentialTab",
+        expressionAtlasDifferentialExpression.render({
             atlasUrl: "${pageContext.request.contextPath}/",
-            identifier: "${identifier}",
-            query: "${query}",
             geneQuery: "${geneQuery}",
             conditionQuery: "${conditionQuery}",
             species: "${species}"
-        });
+        }, "gxaDifferentialTab",);
     });
     </c:if>
 </script>
