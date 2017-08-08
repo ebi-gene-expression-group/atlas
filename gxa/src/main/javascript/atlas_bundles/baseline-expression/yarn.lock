@@ -1979,9 +1979,9 @@ express@^4.13.3, express@^4.15.2:
     utils-merge "1.0.0"
     vary "~1.1.1"
 
-expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.1.2.tgz:
-  version "1.1.2"
-  resolved "../../atlas_modules/expression-atlas-feedback-v1.1.2.tgz#236e72014091adc97ccee282806226ec09561ae3"
+expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz:
+  version "1.2.0"
+  resolved "../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz#46aa37409f015f34fc2952a8c6ab2bc316c036e6"
   dependencies:
     react "^15.6.1"
     react-addons-css-transition-group "^15.6.0"
@@ -1991,9 +1991,9 @@ expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.1.2.t
     react-localstorage "^0.3.1"
     react-timer-mixin "^0.13.3"
 
-expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz:
-  version "1.2.0"
-  resolved "../../atlas_modules/expression-atlas-feedback-v1.2.0.tgz#46aa37409f015f34fc2952a8c6ab2bc316c036e6"
+expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz:
+  version "1.3.0"
+  resolved "../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz#f49871b542a2b2ec9d6ab7ae90203aa8883a9d97"
   dependencies:
     react "^15.6.1"
     react-addons-css-transition-group "^15.6.0"
@@ -3029,14 +3029,6 @@ isomorphic-fetch@^2.1.1:
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
-
-jquery.browser@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/jquery.browser/-/jquery.browser-0.1.0.tgz#9c72a6095fd2814b44476ea8f716677b72a6a2bb"
-
-jquery@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 js-base64@^2.1.9:
   version "2.1.9"

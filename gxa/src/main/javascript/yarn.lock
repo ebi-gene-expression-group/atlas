@@ -2131,6 +2131,18 @@ expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.2.0.tgz:
     react-localstorage "^0.3.1"
     react-timer-mixin "^0.13.3"
 
+expression-atlas-feedback@./atlas_modules/expression-atlas-feedback-v1.3.0.tgz:
+  version "1.3.0"
+  resolved "./atlas_modules/expression-atlas-feedback-v1.3.0.tgz#f49871b542a2b2ec9d6ab7ae90203aa8883a9d97"
+  dependencies:
+    react "^15.6.1"
+    react-addons-css-transition-group "^15.6.0"
+    react-bootstrap "^0.31.2"
+    react-dom "^15.6.1"
+    react-emojione "^3.1.10"
+    react-localstorage "^0.3.1"
+    react-timer-mixin "^0.13.3"
+
 expression-atlas-heatmap-highcharts@latest:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/expression-atlas-heatmap-highcharts/-/expression-atlas-heatmap-highcharts-3.2.3.tgz#fe232378e3ef25bee9d2a4277fc8957379161ed0"

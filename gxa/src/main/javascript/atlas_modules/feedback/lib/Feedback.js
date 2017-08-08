@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -331,4 +335,4 @@ var FeedbackSmileys = _react2.default.createClass({
 
 });
 
-module.exports = FeedbackPersistence(FeedbackSmileys);
+exports.default = FeedbackPersistence(FeedbackSmileys);

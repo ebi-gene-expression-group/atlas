@@ -2049,6 +2049,18 @@ expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.2.0.t
     react-localstorage "^0.3.1"
     react-timer-mixin "^0.13.3"
 
+expression-atlas-feedback@../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz:
+  version "1.3.0"
+  resolved "../../atlas_modules/expression-atlas-feedback-v1.3.0.tgz#f49871b542a2b2ec9d6ab7ae90203aa8883a9d97"
+  dependencies:
+    react "^15.6.1"
+    react-addons-css-transition-group "^15.6.0"
+    react-bootstrap "^0.31.2"
+    react-dom "^15.6.1"
+    react-emojione "^3.1.10"
+    react-localstorage "^0.3.1"
+    react-timer-mixin "^0.13.3"
+
 expression-atlas-number-format@latest:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/expression-atlas-number-format/-/expression-atlas-number-format-2.0.2.tgz#a800bfd319565bc21b559035280d83d28bb82141"
@@ -3015,14 +3027,6 @@ isomorphic-fetch@^2.1.1:
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
-
-jquery-ui-bundle@^1.12.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/jquery-ui-bundle/-/jquery-ui-bundle-1.12.1.tgz#d6be2e4c377494e2378b1cae2920a91d1182d8c4"
-
-jquery@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 js-base64@^2.1.9:
   version "2.1.9"

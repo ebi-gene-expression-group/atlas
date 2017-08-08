@@ -1,1 +1,3 @@
-module.exports = require('./Feedback.js');
+import Feedback from './Feedback'
+
+export default Feedback
