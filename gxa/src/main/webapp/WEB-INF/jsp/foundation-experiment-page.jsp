@@ -2,7 +2,7 @@
 <%--@elvariable id="type" type="atlas.model.ExperimentType"--%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/experiment.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customized-bootstrap-3.3.5.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/alt-customized-bootstrap-3.3.5.css">
 
 <%@ include file="includes/experiment-description.jsp" %>
 
